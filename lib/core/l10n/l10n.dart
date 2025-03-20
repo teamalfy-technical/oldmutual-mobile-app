@@ -77,6 +77,7 @@ class AppTranslations extends Translations {
       'reset_calculator': 'Reset Calculator',
       'download_as_pdf': 'Download results as PDF',
       'enable_notifications': 'Enable notifications',
+      'crop_photo': 'Crop Photo',
       'support_title': 'How may we help you ?',
       'support_desc':
           'We are available 24/7 to help you with any questions you may have or feedback you might want to give',

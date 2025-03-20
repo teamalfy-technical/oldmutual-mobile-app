@@ -16,51 +16,52 @@ class PSettingsPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: Text('settings'.tr)),
-      body: Column(
-        children: [
-          PAppSize.s32.verticalSpace,
-          Container(
-            padding: EdgeInsets.all(PAppSize.s24),
-            decoration: BoxDecoration(
-              shape: BoxShape.circle,
-              color: PAppColor.blackColor,
-            ),
-            child: Assets.icons.settingsIcon.svg(),
-          ),
-          PAppSize.s36.verticalSpace,
-          Divider(color: PAppColor.fillColor),
-          ListTile(
-            title: Text(
-              'enable_notifications'.tr,
-              style: Theme.of(context).textTheme.bodyMedium,
-            ),
-            trailing: Obx(
-              () => CupertinoSwitch(
-                activeTrackColor: PAppColor.primary,
-                thumbColor:
-                    ctrl.notification.value
-                        ? PAppColor.whiteColor
-                        : PAppColor.text100,
-                value: ctrl.notification.value,
-                onChanged: ctrl.onNotificationChanged,
-              ),
-            ),
-          ),
-          Divider(color: PAppColor.fillColor),
-          ListTile(
-            onTap:
-                () => PHelperFunction.switchScreen(
-                  destination: Routes.supportPage,
+      body:
+          Column(
+            children: [
+              PAppSize.s32.verticalSpace,
+              Container(
+                padding: EdgeInsets.all(PAppSize.s24),
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  color: PAppColor.blackColor,
                 ),
-            title: Text(
-              'support'.tr,
-              style: Theme.of(context).textTheme.bodyMedium,
-            ),
-            trailing: Assets.icons.arrowForwardIos.svg(),
-          ),
-          Divider(color: PAppColor.fillColor),
-        ],
-      ),
+                child: Assets.icons.settingsIcon.svg(),
+              ),
+              PAppSize.s36.verticalSpace,
+              Divider(color: PAppColor.fillColor),
+              ListTile(
+                title: Text(
+                  'enable_notifications'.tr,
+                  style: Theme.of(context).textTheme.bodyMedium,
+                ),
+                trailing: Obx(
+                  () => CupertinoSwitch(
+                    activeTrackColor: PAppColor.primary,
+                    thumbColor:
+                        ctrl.notification.value
+                            ? PAppColor.whiteColor
+                            : PAppColor.text100,
+                    value: ctrl.notification.value,
+                    onChanged: ctrl.onNotificationChanged,
+                  ),
+                ),
+              ),
+              Divider(color: PAppColor.fillColor),
+              ListTile(
+                onTap:
+                    () => PHelperFunction.switchScreen(
+                      destination: Routes.supportPage,
+                    ),
+                title: Text(
+                  'support'.tr,
+                  style: Theme.of(context).textTheme.bodyMedium,
+                ),
+                trailing: Assets.icons.arrowForwardIos.svg(),
+              ),
+              Divider(color: PAppColor.fillColor),
+            ],
+          ).scrollable(),
     );
   }
 }

@@ -14,49 +14,51 @@ class PSupportPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: Text('support'.tr)),
-      body: Column(
-        children: [
-          PAppSize.s32.verticalSpace,
-          Container(
-            padding: EdgeInsets.all(PAppSize.s24),
-            decoration: BoxDecoration(
-              shape: BoxShape.circle,
-              color: PAppColor.blackColor,
-            ),
-            child: Assets.icons.supportIcon.svg(),
-          ),
-          PAppSize.s36.verticalSpace,
-          Text(
-            'support_title'.tr,
-            style: Theme.of(
-              context,
-            ).textTheme.bodyLarge?.copyWith(fontWeight: FontWeight.w600),
-          ),
+      body:
+          Column(
+            children: [
+              PAppSize.s32.verticalSpace,
+              Container(
+                padding: EdgeInsets.all(PAppSize.s24),
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  color: PAppColor.blackColor,
+                ),
+                child: Assets.icons.supportIcon.svg(),
+              ),
+              PAppSize.s36.verticalSpace,
+              Text(
+                'support_title'.tr,
+                style: Theme.of(
+                  context,
+                ).textTheme.bodyLarge?.copyWith(fontWeight: FontWeight.w600),
+              ),
 
-          PAppSize.s32.verticalSpace,
+              PAppSize.s32.verticalSpace,
 
-          Text(
-            'support_desc'.tr,
-            textAlign: TextAlign.center,
-            style: Theme.of(context).textTheme.bodyMedium,
-          ),
+              Text(
+                'support_desc'.tr,
+                textAlign: TextAlign.center,
+                style: Theme.of(context).textTheme.bodyMedium,
+              ),
 
-          PAppSize.s32.verticalSpace,
+              PAppSize.s32.verticalSpace,
 
-          Text(
-            'send_us_email'.tr,
-            textAlign: TextAlign.center,
-            style: Theme.of(context).textTheme.bodyMedium,
-          ),
-          Text(
-            '@customerchatbot.io'.tr,
-            textAlign: TextAlign.center,
-            style: Theme.of(
-              context,
-            ).textTheme.bodyLarge?.copyWith(fontWeight: FontWeight.w600),
-          ),
-        ],
-      ).symmetric(horizontal: PAppSize.s20),
+              Text(
+                'send_us_email'.tr,
+                textAlign: TextAlign.center,
+                style: Theme.of(context).textTheme.bodyMedium,
+              ),
+              PAppSize.s2.verticalSpace,
+              Text(
+                '@customerchatbot.io'.tr,
+                textAlign: TextAlign.center,
+                style: Theme.of(
+                  context,
+                ).textTheme.bodyLarge?.copyWith(fontWeight: FontWeight.w600),
+              ),
+            ],
+          ).symmetric(horizontal: PAppSize.s20).scrollable(),
     );
   }
 }
