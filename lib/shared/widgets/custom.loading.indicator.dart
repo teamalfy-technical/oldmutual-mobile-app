@@ -21,7 +21,7 @@ class PCustomLoadingIndicator extends StatelessWidget {
     return centered
         ? Center(
           child:
-              Platform.isAndroid
+              Platform.isIOS
                   ? CupertinoActivityIndicator(color: color, radius: size / 2)
                   : SizedBox(
                     width: size,

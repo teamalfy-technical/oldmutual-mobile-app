@@ -65,7 +65,7 @@ class PLoginPage extends StatelessWidget {
                             (PDeviceUtil.getDeviceWidth(context) / 3)
                                 .verticalSpace,
                             PGradientButton(
-                              label: 'login'.tr,
+                              label: 'sign_in'.tr,
                               width: PDeviceUtil.getDeviceWidth(context) * 0.55,
                               onTap: () {
                                 if (ctrl.loginFormKey.currentState!

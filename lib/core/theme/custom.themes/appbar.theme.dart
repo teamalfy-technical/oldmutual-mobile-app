@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:oldmutual_pensions_app/core/utils/utils.dart';
 
 class PAppBarTheme {
@@ -10,7 +11,7 @@ class PAppBarTheme {
     scrolledUnderElevation: PAppSize.s0,
     backgroundColor: PAppColor.transparentColor,
     surfaceTintColor: PAppColor.transparentColor,
-    // systemOverlayStyle: SystemUiOverlayStyle.dark,
+    systemOverlayStyle: SystemUiOverlayStyle.dark,
     // systemOverlayStyle: SystemUiOverlayStyle(
     //   statusBarBrightness: Brightness.dark,
     //   statusBarIconBrightness: Brightness.dark,

@@ -84,6 +84,7 @@ class AppTranslations extends Translations {
       'send_us_email': 'Send Us An Email',
       'support': 'Support',
       'email_hint': 'Enter Email',
+
       'resend': 'Resend',
       'not_receive_code': 'Didn\'t receive code',
       'send_otp': 'Send OTP',

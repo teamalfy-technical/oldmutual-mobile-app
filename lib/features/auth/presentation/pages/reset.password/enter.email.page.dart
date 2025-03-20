@@ -41,7 +41,7 @@ class PEnterEmailPage extends StatelessWidget {
                           (PDeviceUtil.getDeviceWidth(context) / 3)
                               .verticalSpace,
                           PGradientButton(
-                            label: 'sent_otp'.tr,
+                            label: 'send_otp'.tr,
                             width: PDeviceUtil.getDeviceWidth(context) * 0.55,
                             onTap: () {
                               if (ctrl.emailFormKey.currentState!.validate()) {
