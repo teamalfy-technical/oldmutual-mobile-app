@@ -65,7 +65,10 @@ class PMoreServicesPage extends StatelessWidget {
 
           Divider(color: PAppColor.fillColor),
           ListTile(
-            onTap: () {},
+            onTap:
+                () => PHelperFunction.switchScreen(
+                  destination: Routes.settingsPage,
+                ),
             title: Text(
               'settings'.tr,
               style: Theme.of(context).textTheme.bodyMedium,

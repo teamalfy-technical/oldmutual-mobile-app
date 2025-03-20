@@ -24,10 +24,9 @@ class PCustomFilledTextfield extends StatelessWidget {
           controller: controller,
           decoration: InputDecoration(
             hintText: hint,
-
             contentPadding: EdgeInsets.symmetric(
               horizontal: PAppSize.s20,
-              vertical: 4,
+              vertical: PAppSize.s6,
             ),
             isDense: true,
             border: OutlineInputBorder(

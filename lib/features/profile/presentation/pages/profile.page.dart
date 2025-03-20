@@ -19,7 +19,7 @@ class PProfilePage extends StatelessWidget {
           Stack(
             children: [
               Container(
-                padding: EdgeInsets.all(PAppSize.s30),
+                padding: EdgeInsets.all(PAppSize.s24),
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
                   color: PAppColor.blackColor,

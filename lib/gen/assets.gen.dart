@@ -99,9 +99,17 @@ class $AssetsIconsGen {
   SvgGenImage get profileIcon =>
       const SvgGenImage('assets/icons/profile.icon.svg');
 
+  /// File path: assets/icons/settings.icon.svg
+  SvgGenImage get settingsIcon =>
+      const SvgGenImage('assets/icons/settings.icon.svg');
+
   /// File path: assets/icons/success.icon.svg
   SvgGenImage get successIcon =>
       const SvgGenImage('assets/icons/success.icon.svg');
+
+  /// File path: assets/icons/support.icon.svg
+  SvgGenImage get supportIcon =>
+      const SvgGenImage('assets/icons/support.icon.svg');
 
   /// File path: assets/icons/user.profile.icon.svg
   SvgGenImage get userProfileIcon =>
@@ -136,7 +144,9 @@ class $AssetsIconsGen {
     notificationIcon,
     phoneIcon,
     profileIcon,
+    settingsIcon,
     successIcon,
+    supportIcon,
     userProfileIcon,
     warningGreenIcon,
     warningIcon,

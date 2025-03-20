@@ -76,6 +76,12 @@ class AppTranslations extends Translations {
       'your_results': 'Your Results',
       'reset_calculator': 'Reset Calculator',
       'download_as_pdf': 'Download results as PDF',
+      'enable_notifications': 'Enable notifications',
+      'support_title': 'How may we help you ?',
+      'support_desc':
+          'We are available 24/7 to help you with any questions you may have or feedback you might want to give',
+      'send_us_email': 'Send Us An Email',
+      'support': 'Support',
       'email_hint': 'Enter Email',
       'resend': 'Resend',
       'not_receive_code': 'Didn\'t receive code',

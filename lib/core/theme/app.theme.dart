@@ -21,6 +21,7 @@ class PAppTheme {
     bottomSheetTheme: PBottomSheetTheme.lightBottomSheetThemeData,
     inputDecorationTheme: PTextFormFieldTheme.lightInputDecorationTheme,
     iconTheme: PIconTheme.lightIconThemeData,
+    textSelectionTheme: TextSelectionThemeData(cursorColor: PAppColor.primary),
   );
   static ThemeData darkTheme = ThemeData(
     useMaterial3: true,
@@ -38,5 +39,6 @@ class PAppTheme {
     bottomSheetTheme: PBottomSheetTheme.darkBottomSheetThemeData,
     inputDecorationTheme: PTextFormFieldTheme.darkInputDecorationTheme,
     iconTheme: PIconTheme.darkIconThemeData,
+    textSelectionTheme: TextSelectionThemeData(cursorColor: PAppColor.primary),
   );
 }

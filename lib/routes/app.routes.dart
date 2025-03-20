@@ -20,6 +20,7 @@ abstract class Routes {
   static const futureValueCalcPage = _Paths.futureValueCalcPage;
   static const calculateResultPage = _Paths.calculateResultPage;
   static const settingsPage = _Paths.settingsPage;
+  static const supportPage = _Paths.supportPage;
 }
 
 abstract class _Paths {
@@ -39,4 +40,5 @@ abstract class _Paths {
   static const futureValueCalcPage = '/future-value-calc-page';
   static const calculateResultPage = '/calculate-results-page';
   static const settingsPage = '/settings-page';
+  static const supportPage = '/support-page';
 }
