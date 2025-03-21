@@ -4,6 +4,6 @@
 // export 'domain/use_cases/login_use_case.dart';
 // export 'presentation/screens/login_screen.dart';
 export 'presentation/pages/login/login.page.dart';
-export 'presentation/pages/signup/member.id.page.dart';
+export 'presentation/pages/signup/phone.number.page.dart';
 export 'presentation/vm/auth.vm.dart';
 export 'presentation/vm/timer.vm.dart';

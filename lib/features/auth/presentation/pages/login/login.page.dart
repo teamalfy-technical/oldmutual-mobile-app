@@ -54,6 +54,7 @@ class PLoginPage extends StatelessWidget {
                               child: PAuthLinkButton(
                                 title: '${'forgot_password'.tr}? ',
                                 subtitle: 'reset'.tr,
+                                subtitleColor: PAppColor.primary,
                                 fontSize: PAppSize.s14,
                                 onTap:
                                     () => PHelperFunction.switchScreen(

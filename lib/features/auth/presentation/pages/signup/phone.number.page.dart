@@ -8,8 +8,8 @@ import 'package:oldmutual_pensions_app/shared/shared.dart';
 
 import '../../../../../gen/assets.gen.dart';
 
-class PMemberIdPage extends StatelessWidget {
-  PMemberIdPage({super.key});
+class PPhoneNumberPage extends StatelessWidget {
+  PPhoneNumberPage({super.key});
 
   final ctrl = Get.put(PAuthVm());
 
@@ -29,13 +29,21 @@ class PMemberIdPage extends StatelessWidget {
                       Column(
                         children: [
                           PCustomTextField(
-                            labelText: 'member_id'.tr,
-                            hintText: 'hint_member_id'.tr,
-                            prefixIcon: Assets.icons.memberIcon.path,
-                            controller: ctrl.memberIDTEC,
-                            validator: PValidator.validateText,
+                            labelText: 'phone'.tr,
+                            hintText: 'hint_phone'.tr,
+                            prefixIcon: Assets.icons.phoneIcon.path,
+                            controller: ctrl.phoneTEC,
+                            validator: PValidator.validatePhoneNumber,
                             // focusColor: PAppColor.primary,
                           ),
+                          // PCustomTextField(
+                          //   labelText: 'member_id'.tr,
+                          //   hintText: 'hint_member_id'.tr,
+                          //   prefixIcon: Assets.icons.memberIcon.path,
+                          //   controller: ctrl.memberIDTEC,
+                          //   validator: PValidator.validateText,
+                          //   // focusColor: PAppColor.primary,
+                          // ),
                           PAppSize.s20.verticalSpace,
                           PCustomCheckbox(
                             value: ctrl.agreeToTerms.value,

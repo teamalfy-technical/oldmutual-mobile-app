@@ -60,7 +60,7 @@ class PCreatePasswordPage extends StatelessWidget {
                             PCustomPasswordTextField(
                               labelText:
                                   isSignup
-                                      ? 'confirm_password'
+                                      ? 'confirm_password'.tr
                                       : 're_enter_password'.tr,
                               hintText: 'hint_password'.tr,
                               prefixIcon: Assets.icons.lockIcon.path,

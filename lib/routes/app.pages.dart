@@ -21,7 +21,7 @@ part 'app.routes.dart';
 class AppPages {
   AppPages._();
 
-  static const initial = Routes.signupPage;
+  static const initial = Routes.splashPage;
 
   static final routes = [
     GetPage(name: _Paths.splashPage, page: () => PSplashPage()),
@@ -40,7 +40,7 @@ class AppPages {
     ),
     GetPage(
       name: _Paths.signupPage,
-      page: () => PMemberIdPage(),
+      page: () => PPhoneNumberPage(),
       transition: Transition.native,
       transitionDuration: const Duration(milliseconds: PAppSize.s700),
     ),
@@ -66,8 +66,18 @@ class AppPages {
     //   name: _Paths.signupPage,
     //   page: () => const SSignupPage(),
     // ),
-    GetPage(name: _Paths.dashboardPage, page: () => PDashboardPage()),
-    GetPage(name: _Paths.homePage, page: () => PHomePage()),
+    GetPage(
+      name: _Paths.dashboardPage,
+      page: () => PDashboardPage(),
+      transition: Transition.circularReveal,
+      transitionDuration: const Duration(milliseconds: PAppSize.s700),
+    ),
+    GetPage(
+      name: _Paths.homePage,
+      page: () => PHomePage(),
+      transition: Transition.circularReveal,
+      transitionDuration: const Duration(milliseconds: PAppSize.s700),
+    ),
     GetPage(name: _Paths.notificationPage, page: () => PNotificationPage()),
     GetPage(name: _Paths.factsheetPage, page: () => PFactSheetPage()),
     GetPage(name: _Paths.beneficiariesPage, page: () => PBeneficiaryPage()),

@@ -59,7 +59,8 @@ class PSplashPage extends StatelessWidget {
                 child: Text(
                   'welcome_text'.tr,
                   textAlign: TextAlign.center,
-                  style: Theme.of(context).textTheme.headlineMedium?.copyWith(
+                  style: Theme.of(context).textTheme.headlineLarge?.copyWith(
+                    fontSize: PAppSize.s36,
                     color:
                         PHelperFunction.isDarkMode(context)
                             ? PAppColor.whiteColor

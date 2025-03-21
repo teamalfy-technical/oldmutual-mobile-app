@@ -36,6 +36,7 @@ class PVerifyOTPPage extends StatelessWidget {
                         ),
                         PAppSize.s20.verticalSpace,
                         PCustomPinput(
+                          length: 6,
                           onCompleted: (pin) {
                             ctrl.verifyOTP(pin: pin, isSignup: isSignup);
                           },
@@ -90,7 +91,7 @@ class PVerifyOTPPage extends StatelessWidget {
               //       ),
               // ),
             ],
-          ).horizontal(PAppSize.s28),
+          ).horizontal(PAppSize.s25),
         ),
       ),
     );
