@@ -1,9 +1,10 @@
 import 'package:dio/dio.dart' as dio;
+import 'package:get/get.dart';
 import 'package:oldmutual_pensions_app/core/network/network.dart';
 import 'package:oldmutual_pensions_app/core/utils/utils.dart';
 import 'package:oldmutual_pensions_app/env/env.dart';
 
-//final ApiService apiService = sl<ApiService>();
+final ApiService apiService = Get.put(ApiServiceImpl());
 
 abstract class ApiService {
   ///[payload] ==> payload that will be attached to request ,

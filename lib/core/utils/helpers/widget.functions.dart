@@ -5,7 +5,7 @@ import 'package:logger/logger.dart';
 import 'package:oldmutual_pensions_app/core/utils/utils.dart';
 import 'package:oldmutual_pensions_app/gen/assets.gen.dart';
 
-var oldmutualLogger = Logger(printer: PrettyPrinter(lineLength: 500));
+var pensionAppLogger = Logger(printer: PrettyPrinter(lineLength: 500));
 
 Future showCustomBottomSheet({
   required BuildContext context,

@@ -15,7 +15,7 @@ final CustomRepositoryWrapper customRepositoryWrapper = Get.put(
 
 abstract class CustomRepositoryWrapper {
   // returns an error or anything else
-  Future<Either<OFailure, T>> wrapRepositoryFunction<T>({
+  Future<Either<PFailure, T>> wrapRepositoryFunction<T>({
     required AsyncFunction<T> function,
     CustomError? customError,
   });
@@ -27,7 +27,7 @@ class CustomRepositoryWrapperImpl implements CustomRepositoryWrapper {
   );
 
   @override
-  Future<Either<OFailure, T>> wrapRepositoryFunction<T>({
+  Future<Either<PFailure, T>> wrapRepositoryFunction<T>({
     required AsyncFunction<T> function,
     CustomError? customError,
   }) async {

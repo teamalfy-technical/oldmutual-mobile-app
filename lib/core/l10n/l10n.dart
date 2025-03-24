@@ -23,6 +23,7 @@ class AppTranslations extends Translations {
       'code_expires_in': 'Code expires in',
       'verifying_to_msg': 'Verifying OTP...',
       'verified_otp_msg': 'OTP Verified',
+      'signing_up': 'Signing UP...',
       'welcome': 'Welcome',
       'welcome_back': 'Welcome Back',
       'create_password': 'Create Password',
@@ -93,6 +94,9 @@ class AppTranslations extends Translations {
       'hint_password': 'Enter Password',
       'enter_phone_number': 'Enter Phone Number',
       'phone': 'Phone',
+      'success': 'Success',
+      'error': 'Error',
+      'action_required': 'Action Required',
       'skip': 'Skip',
       'slide_one_title': 'Secure Your Future \nwith Ease',
       'slide_one_desc':

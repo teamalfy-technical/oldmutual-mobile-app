@@ -54,11 +54,9 @@ class PHelperFunction {
   static Map<String, String> appTokenHeader() {
     String? token = '';
     //HSecureStorage().getAuthResponse()?.token;
-    oldmutualLogger.d('Token: $token');
+    pensionAppLogger.d('Token: $token');
     return {
       'Authorization': 'Bearer $token',
-      'Accept': 'application/json',
-      'x-secret-key': 'oevPSLtmu9ooHrSsCtnRnYPRVRMyfmhv',
       //'Content-Type': 'application/json'
     };
   }

@@ -1,34 +1,24 @@
-class ApiResponse {
-  bool? status;
-  String? error;
-  String? title;
-  dynamic data;
-  String? userId;
+class ApiResponse<T> {
+  bool? success;
+  T? data;
+  String? message;
 
-  ApiResponse({this.status, this.error, this.title, this.data, this.userId});
+  ApiResponse({this.success, this.data, this.message});
 
-  ApiResponse.fromJson(Map<String, dynamic> json) {
-    status = json['status'];
-    error = json['error'];
-    title = json['title'];
-    // data =
-    //     (json['data'] is String) ? json['data'] : Data.fromJson(json['data']);
-    data = json['data'];
-    userId = json['userId'];
+  ApiResponse.fromJson(
+    Map<String, dynamic> json,
+    T Function(dynamic) fromJsonT,
+  ) {
+    success = json['success'];
+    data = json['data'] != null ? fromJsonT(json['data']) : null;
+    message = json['message'];
   }
 
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = <String, dynamic>{};
-    data['status'] = status;
-    data['error'] = error;
-    data['title'] = title;
-    // if (data['data'] is Map) {
-    //   data['data'] = this.data.toJson();
-    // } else {
-    //   data['data'] = this.data;
-    // }
-    data['data'] = this.data;
-    data['userId'] = userId;
-    return data;
+  Map<String, dynamic> toJson(Object? Function(T value)? toJsonT) {
+    final Map<String, dynamic> json = <String, dynamic>{};
+    json['success'] = success;
+    json['data'] = data != null && toJsonT != null ? toJsonT(data as T) : null;
+    json['message'] = message;
+    return json;
   }
 }

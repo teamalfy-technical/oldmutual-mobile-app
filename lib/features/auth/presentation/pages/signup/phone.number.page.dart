@@ -30,20 +30,12 @@ class PPhoneNumberPage extends StatelessWidget {
                         children: [
                           PCustomTextField(
                             labelText: 'phone'.tr,
-                            hintText: 'hint_phone'.tr,
+                            hintText: 'enter_phone_number'.tr,
                             prefixIcon: Assets.icons.phoneIcon.path,
                             controller: ctrl.phoneTEC,
                             validator: PValidator.validatePhoneNumber,
                             // focusColor: PAppColor.primary,
                           ),
-                          // PCustomTextField(
-                          //   labelText: 'member_id'.tr,
-                          //   hintText: 'hint_member_id'.tr,
-                          //   prefixIcon: Assets.icons.memberIcon.path,
-                          //   controller: ctrl.memberIDTEC,
-                          //   validator: PValidator.validateText,
-                          //   // focusColor: PAppColor.primary,
-                          // ),
                           PAppSize.s20.verticalSpace,
                           PCustomCheckbox(
                             value: ctrl.agreeToTerms.value,
@@ -58,7 +50,7 @@ class PPhoneNumberPage extends StatelessWidget {
                             onTap: () {
                               if (ctrl.memberIDFormKey.currentState!
                                   .validate()) {
-                                ctrl.getMemberInfo();
+                                ctrl.signup();
                               }
                             },
                           ),

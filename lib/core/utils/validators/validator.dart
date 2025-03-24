@@ -101,11 +101,11 @@ class PValidator {
     }
 
     // RegExp for phone number validation (e.g., a 10-digit us phone number format)
-    final phoneRegExp = RegExp(r'^\d{10}$');
+    final phoneRegExp = RegExp(r'^\d{12}$');
 
     // check of special characters
     if (!phoneRegExp.hasMatch(value)) {
-      return 'Invalid phone number format (10 digits required).';
+      return 'Invalid phone number format (12 digits required).';
     }
 
     return null;

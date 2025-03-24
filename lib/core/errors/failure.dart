@@ -10,8 +10,8 @@ abstract class Failure extends Equatable {
   List<Object?> get props => [];
 }
 
-class OFailure extends Failure {
-  const OFailure({required this.message});
+class PFailure extends Failure {
+  const PFailure({required this.message});
 
   final String message;
 

@@ -26,8 +26,8 @@ class PSecureStorage {
       await _storage.write(authResKey, value);
 
   /// Generic function to save auth response into [GetStorage]
-  Future<void> saveBusinessProfile<T>(T value) async =>
-      await _storage.write(businessProfileKey, value);
+  // Future<void> saveBusinessProfile<T>(T value) async =>
+  //     await _storage.write(businessProfileKey, value);
 
   // /// Non-generic function to read auth response data from [GetStorage]
   // BusinessProfile? getBusinessProfile() {

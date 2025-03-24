@@ -12,7 +12,7 @@ abstract class Env {
     //defaultValue: 'https://3af3-102-88-69-24.ngrok-free.app/api',
     // defaultValue:
     //     'https://app-matchesy-api-sa-prod-001.azurewebsites.net/api',
-    defaultValue: 'http://pensions.teamalfy.co.uk',
+    defaultValue: 'http://pensions.teamalfy.co.uk/api',
     obfuscate: true,
   )
   static final String baseUrl = _Env.baseUrl;
@@ -26,7 +26,7 @@ abstract class Env {
 
   /// [Login] user endpoint
   @EnviedField(defaultValue: '/login', obfuscate: true)
-  static final String login = _Env.login;
+  static final String signin = _Env.signin;
 
   /// [Signup] endpoint
   @EnviedField(defaultValue: '/signup', obfuscate: true)

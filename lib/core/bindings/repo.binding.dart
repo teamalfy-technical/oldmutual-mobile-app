@@ -1,12 +1,10 @@
 import 'package:get/get.dart';
+import 'package:oldmutual_pensions_app/features/auth/auth.dart';
 
 class RepoBinding implements Bindings {
   @override
   void dependencies() {
-    // Get.lazyPut<AuthRepo>(
-    //   () => AuthRepoImpl(),
-    //   tag: (AuthRepo).toString(),
-    // );
+    Get.lazyPut<AuthRepo>(() => AuthRepoImpl(), tag: (AuthRepo).toString());
 
     // Get.lazyPut<ProfileRepo>(
     //   () => ProfileRepoImpl(),

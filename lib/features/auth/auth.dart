@@ -3,6 +3,13 @@
 // export 'domain/entities/user.dart';
 // export 'domain/use_cases/login_use_case.dart';
 // export 'presentation/screens/login_screen.dart';
+export 'application/auth.service.dart';
+export 'application/auth.service.impl.dart';
+export 'data/ds/auth.ds.dart';
+export 'data/ds/auth.ds.impl.dart';
+export 'data/repos/auth.repo.dart';
+export 'data/repos/auth.repo.impl.dart';
+export 'domain/models/member.model.dart';
 export 'presentation/pages/login/login.page.dart';
 export 'presentation/pages/signup/phone.number.page.dart';
 export 'presentation/vm/auth.vm.dart';

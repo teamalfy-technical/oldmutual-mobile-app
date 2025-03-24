@@ -37,20 +37,20 @@ class DioClient {
     dio.interceptors.add(
       InterceptorsWrapper(
         onRequest: (options, handler) {
-          oldmutualLogger.i("📤 Request: ${options.method} ${options.uri}");
-          oldmutualLogger.i("📝 Headers: ${options.headers}");
-          oldmutualLogger.i("📦 Payload: ${options.data}");
-          oldmutualLogger.i("📦 QueryParams: ${options.queryParameters}");
+          pensionAppLogger.i("📤 Request: ${options.method} ${options.uri}");
+          pensionAppLogger.i("📝 Headers: ${options.headers}");
+          pensionAppLogger.i("📦 Payload: ${options.data}");
+          pensionAppLogger.i("📦 QueryParams: ${options.queryParameters}");
           return handler.next(options);
         },
         onResponse: (response, handler) {
-          oldmutualLogger.d(
+          pensionAppLogger.d(
             "✅ Response: ${response.statusCode} ${response.data}",
           );
           return handler.next(response);
         },
         onError: (DioException e, handler) {
-          oldmutualLogger.e("❌ Error: ${e.response?.statusCode} ${e.message}");
+          pensionAppLogger.e("❌ Error: ${e.response?.statusCode} ${e.message}");
           return handler.next(e);
         },
       ),

@@ -16,7 +16,7 @@ abstract class CatchApiErrorWrapper {
 class CatchApiErrorWrapperImpl implements CatchApiErrorWrapper {
   @override
   dynamic handleError({err, stackTrace}) {
-    oldmutualLogger.e('Error: ${err.toString()}');
+    pensionAppLogger.e('Error: ${err.toString()}');
 
     String? errorMessage = '';
     // if (err.runtimeType != NoInternetException) {
@@ -36,17 +36,17 @@ class CatchApiErrorWrapperImpl implements CatchApiErrorWrapper {
           } else if (err.response?.statusCode == 401) {
             errorMessage =
                 err.response?.data['message'] ?? 'Unauthorized request';
-            oldmutualLogger.e(err.response?.data);
+            pensionAppLogger.e(err.response?.data);
           } else if (err.response?.statusCode == 403) {
             errorMessage = err.response?.data['message'] ?? 'Forbidden Access';
-            oldmutualLogger.e(err.response?.data);
+            pensionAppLogger.e(err.response?.data);
           } else if (err.response?.statusCode == 404) {
             errorMessage = err.message ?? 'Requested resource is not found';
           } else if (err.response?.statusCode == 422) {
             // ApiErrorResponse error =
             //     ApiErrorResponse.fromJson(err.response?.data);
 
-            oldmutualLogger.e(err.response?.data);
+            pensionAppLogger.e(err.response?.data);
 
             errorMessage = err.response?.data['message'] ?? 'Bad request';
           } else if (err.response?.data is Map &&
@@ -77,7 +77,7 @@ class CatchApiErrorWrapperImpl implements CatchApiErrorWrapper {
       } else {
         errorMessage = ServerException.getErrorMessage(err);
       }
-      return OFailure(message: errorMessage ?? err.toString());
+      return PFailure(message: errorMessage ?? err.toString());
     } else {
       return UnknownFailure();
     }

@@ -1,12 +1,13 @@
 import 'package:get/get.dart';
+import 'package:oldmutual_pensions_app/features/auth/auth.dart';
 
 class ServiceBinding implements Bindings {
   @override
   void dependencies() {
-    // Get.lazyPut<AuthService>(
-    //   () => AuthServiceImpl(),
-    //   tag: (AuthService).toString(),
-    // );
+    Get.lazyPut<AuthService>(
+      () => AuthServiceImpl(),
+      tag: (AuthService).toString(),
+    );
 
     // Get.lazyPut<ProfileService>(
     //   () => ProfileServiceImpl(),

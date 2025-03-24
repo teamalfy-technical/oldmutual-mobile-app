@@ -1,7 +1,6 @@
 // Helper Imports
 export 'helpers/api.service.dart';
 export 'helpers/dio.client.dart';
-export 'response/api.error.response.dart';
 export 'response/api.response.dart';
 // Response Imports
 export 'response/auth.response.dart';

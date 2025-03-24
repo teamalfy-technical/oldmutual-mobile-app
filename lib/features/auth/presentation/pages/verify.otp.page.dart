@@ -38,6 +38,7 @@ class PVerifyOTPPage extends StatelessWidget {
                         PCustomPinput(
                           length: 6,
                           onCompleted: (pin) {
+                            ctrl.updateOTP(pin);
                             ctrl.verifyOTP(pin: pin, isSignup: isSignup);
                           },
                         ),
@@ -77,19 +78,15 @@ class PVerifyOTPPage extends StatelessWidget {
                         PGradientButton(
                           label: 'next'.tr,
                           width: PDeviceUtil.getDeviceWidth(context) * 0.55,
-                          // onTap: () => ctrl.verifyOTP(pin: pin),
+                          onTap:
+                              () => ctrl.verifyOTP(
+                                pin: ctrl.otpcode.value,
+                                isSignup: isSignup,
+                              ),
                         ).centered(),
                       ],
                     ).scrollable(),
               ),
-              // PAuthLinkButton(
-              //   title: '${'dont_have_account'.tr} ',
-              //   subtitle: 'sign_up'.tr,
-              //   onTap:
-              //       () => PHelperFunction.switchScreen(
-              //         destination: Routes.signupPage,
-              //       ),
-              // ),
             ],
           ).horizontal(PAppSize.s25),
         ),

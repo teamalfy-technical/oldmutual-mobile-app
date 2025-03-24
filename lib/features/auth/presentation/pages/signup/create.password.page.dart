@@ -17,7 +17,7 @@ class PCreatePasswordPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(isSignup ? '${'welcome'.tr} Angela' : 'reset_password'.tr),
+        title: Text(isSignup ? 'welcome'.tr : 'reset_password'.tr),
       ),
       body: PAnnotatedRegion(
         child: SafeArea(
