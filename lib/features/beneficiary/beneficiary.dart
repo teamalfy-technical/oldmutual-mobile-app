@@ -1,0 +1,9 @@
+export 'application/service/beneficiary.service.dart';
+export 'application/service/beneficiary.service.impl.dart';
+export 'data/ds/beneficiary.ds.dart';
+export 'data/ds/beneficiary.ds.impl.dart';
+export 'data/repos/beneficiary.repo.dart';
+export 'data/repos/beneficiary.repo.impl.dart';
+export 'domain/models/beneficiary.model.dart';
+export 'presentation/pages/beneficiary.page.dart';
+export 'presentation/widgets/beneficiary.widget.dart';
