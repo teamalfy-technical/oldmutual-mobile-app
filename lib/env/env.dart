@@ -53,6 +53,10 @@ abstract class Env {
   ///
   /// -------------------- User Endpoints Starts Here ------------------------- ///
 
+  /// [UpdateFcmToken] endpoint
+  @EnviedField(defaultValue: '/store/fcm-token', obfuscate: true)
+  static final String updateFcmToken = _Env.updateFcmToken;
+
   /// [Logout] endpoint
   @EnviedField(defaultValue: '/logout', obfuscate: true)
   static final String logout = _Env.logout;

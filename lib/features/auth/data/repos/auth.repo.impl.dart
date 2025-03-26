@@ -9,7 +9,7 @@ final AuthRepo authRepo = Get.put(AuthRepoImpl());
 
 class AuthRepoImpl implements AuthRepo {
   @override
-  Future<Either<PFailure, ApiResponse<List<Member>>>> addPassword({
+  Future<Either<PFailure, ApiResponse<List<Message>>>> addPassword({
     required String phone,
     required String password,
     required String confirmPassword,
@@ -25,7 +25,7 @@ class AuthRepoImpl implements AuthRepo {
   }
 
   @override
-  Future<Either<PFailure, ApiResponse<List<Member>>>> forgotPassword({
+  Future<Either<PFailure, ApiResponse<List<Message>>>> forgotPassword({
     required String? email,
     required String? phone,
   }) async {
@@ -36,7 +36,7 @@ class AuthRepoImpl implements AuthRepo {
   }
 
   @override
-  Future<Either<PFailure, ApiResponse<List<Member>>>> resetPassword({
+  Future<Either<PFailure, ApiResponse<List<Message>>>> resetPassword({
     required String otp,
     required String? email,
     required String? phone,
@@ -71,7 +71,7 @@ class AuthRepoImpl implements AuthRepo {
   }
 
   @override
-  Future<Either<PFailure, ApiResponse<List<Member>>>> signup({
+  Future<Either<PFailure, ApiResponse<List<Message>>>> signup({
     required String terms,
     required String phone,
   }) async {
@@ -81,12 +81,21 @@ class AuthRepoImpl implements AuthRepo {
   }
 
   @override
-  Future<Either<PFailure, ApiResponse<Member>>> verifyOTP({
+  Future<Either<PFailure, ApiResponse<Message>>> verifyOTP({
     required String phone,
     required String otp,
   }) async {
     return await customRepositoryWrapper.wrapRepositoryFunction(
       function: () async => await authDs.verifyOTP(phone: phone, otp: otp),
+    );
+  }
+
+  @override
+  Future<Either<PFailure, ApiResponse<List<Message>>>> updateFcmToken({
+    required String token,
+  }) async {
+    return await customRepositoryWrapper.wrapRepositoryFunction(
+      function: () async => await authDs.updateFcmToken(token: token),
     );
   }
 }

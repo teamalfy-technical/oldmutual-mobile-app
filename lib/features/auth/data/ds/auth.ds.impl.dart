@@ -9,7 +9,7 @@ final AuthDs authDs = Get.put(AuthDsImpl());
 
 class AuthDsImpl implements AuthDs {
   @override
-  Future<ApiResponse<List<Member>>> addPassword({
+  Future<ApiResponse<List<Message>>> addPassword({
     required String phone,
     required String password,
     required String confirmPassword,
@@ -33,7 +33,7 @@ class AuthDsImpl implements AuthDs {
   }
 
   @override
-  Future<ApiResponse<List<Member>>> forgotPassword({
+  Future<ApiResponse<List<Message>>> forgotPassword({
     required String? email,
     required String? phone,
   }) async {
@@ -52,7 +52,7 @@ class AuthDsImpl implements AuthDs {
   }
 
   @override
-  Future<ApiResponse<List<Member>>> resetPassword({
+  Future<ApiResponse<List<Message>>> resetPassword({
     required String otp,
     required String? email,
     required String? phone,
@@ -99,7 +99,7 @@ class AuthDsImpl implements AuthDs {
   }
 
   @override
-  Future<ApiResponse<List<Member>>> signup({
+  Future<ApiResponse<List<Message>>> signup({
     required String terms,
     required String phone,
   }) async {
@@ -110,15 +110,15 @@ class AuthDsImpl implements AuthDs {
         payload: payload,
         endPoint: Env.signup,
       );
-      return ApiResponse<List<Member>>.fromJson(
+      return ApiResponse<List<Message>>.fromJson(
         res,
-        (data) => (data as List).map((e) => Member.fromJson(e)).toList(),
+        (data) => (data as List).map((e) => Message.fromJson(e)).toList(),
       );
     });
   }
 
   @override
-  Future<ApiResponse<Member>> verifyOTP({
+  Future<ApiResponse<Message>> verifyOTP({
     required String phone,
     required String otp,
   }) async {
@@ -130,6 +130,24 @@ class AuthDsImpl implements AuthDs {
         endPoint: Env.verifyOTP,
       );
       return ApiResponse<Member>.fromJson(res, (data) => Member.fromJson(data));
+    });
+  }
+
+  @override
+  Future<ApiResponse<List<Message>>> updateFcmToken({
+    required String token,
+  }) async {
+    return await asyncFunctionWrapper.handleAsyncNetworkCall(() async {
+      final payload = dio.FormData.fromMap({'device_token': token});
+      final res = await apiService.callService(
+        requestType: RequestType.post,
+        payload: payload,
+        endPoint: Env.updateFcmToken,
+      );
+      return ApiResponse<List<Message>>.fromJson(
+        res,
+        (data) => (data as List).map((e) => Message.fromJson(e)).toList(),
+      );
     });
   }
 }

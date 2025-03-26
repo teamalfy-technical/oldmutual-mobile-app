@@ -57,6 +57,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:oldmutual_pensions_app/core/utils/utils.dart';
+import 'package:oldmutual_pensions_app/features/auth/auth.dart';
 import 'package:oldmutual_pensions_app/features/notification/domain/models/notification.dart';
 
 int id = 0;
@@ -203,11 +204,13 @@ class PNotificationService {
   }
 
   /// save token to backend server
-  // Future<void> saveToken() async {
-  //   final result = await authService.updateFcmToken(fcmToken: await getToken());
-  //   result.fold((err) => matchesyLogger.e(err.getMessage()),
-  //       (res) => matchesyLogger.d(res.data));
-  // }
+  Future<void> saveToken() async {
+    final result = await authService.updateFcmToken(token: await getToken());
+    result.fold(
+      (err) => pensionAppLogger.e(err.getMessage()),
+      (res) => pensionAppLogger.d(res.data),
+    );
+  }
 
   requestIOSPermissions() {
     flutterLocalNotificationsPlugin

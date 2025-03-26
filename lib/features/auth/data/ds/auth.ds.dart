@@ -2,17 +2,17 @@ import 'package:oldmutual_pensions_app/core/network/network.dart';
 import 'package:oldmutual_pensions_app/features/auth/auth.dart';
 
 abstract class AuthDs {
-  Future<ApiResponse<List<Member>>> signup({
+  Future<ApiResponse<List<Message>>> signup({
     required String terms,
     required String phone,
   });
 
-  Future<ApiResponse<Member>> verifyOTP({
+  Future<ApiResponse<Message>> verifyOTP({
     required String phone,
     required String otp,
   });
 
-  Future<ApiResponse<List<Member>>> addPassword({
+  Future<ApiResponse<List<Message>>> addPassword({
     required String phone,
     required String password,
     required String confirmPassword,
@@ -23,12 +23,14 @@ abstract class AuthDs {
     required String password,
   });
 
-  Future<ApiResponse<List<Member>>> forgotPassword({
+  Future<ApiResponse<List<Message>>> updateFcmToken({required String token});
+
+  Future<ApiResponse<List<Message>>> forgotPassword({
     required String? email,
     required String? phone,
   });
 
-  Future<ApiResponse<List<Member>>> resetPassword({
+  Future<ApiResponse<List<Message>>> resetPassword({
     required String otp,
     required String? email,
     required String? phone,
