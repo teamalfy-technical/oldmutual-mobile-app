@@ -52,8 +52,7 @@ class PHelperFunction {
   static List<T> removeDuplicates<T>(List<T> list) => list.toSet().toList();
 
   static Map<String, String> appTokenHeader() {
-    String? token = '';
-    //HSecureStorage().getAuthResponse()?.token;
+    String? token = PSecureStorage().getAuthResponse()?.token;
     pensionAppLogger.d('Token: $token');
     return {
       'Authorization': 'Bearer $token',

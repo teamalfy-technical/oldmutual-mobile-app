@@ -3,7 +3,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:oldmutual_pensions_app/core/utils/utils.dart';
 import 'package:oldmutual_pensions_app/features/auth/presentation/vm/auth.vm.dart';
-import 'package:oldmutual_pensions_app/routes/app.pages.dart';
 import 'package:oldmutual_pensions_app/shared/shared.dart';
 
 import '../../../../../gen/assets.gen.dart';
@@ -45,10 +44,7 @@ class PEnterEmailPage extends StatelessWidget {
                             width: PDeviceUtil.getDeviceWidth(context) * 0.55,
                             onTap: () {
                               if (ctrl.emailFormKey.currentState!.validate()) {
-                                PHelperFunction.switchScreen(
-                                  destination: Routes.verifyOTPPage,
-                                  args: false,
-                                );
+                                ctrl.forgotPassword();
                               }
                             },
                           ),

@@ -38,10 +38,18 @@ class PSplashVm extends GetxController {
           replace: true,
         );
       } else {
-        PHelperFunction.switchScreen(
-          destination: Routes.signupPage,
-          replace: true,
-        );
+        if (PSecureStorage().getAuthResponse() != null) {
+          // pensionAppLogger.e(PSecureStorage().getAuthResponse()?.toJson());
+          PHelperFunction.switchScreen(
+            destination: Routes.dashboardPage,
+            replace: true,
+          );
+        } else {
+          PHelperFunction.switchScreen(
+            destination: Routes.signupPage,
+            replace: true,
+          );
+        }
       }
     });
   }

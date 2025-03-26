@@ -21,25 +21,28 @@ class AuthServiceImpl implements AuthService {
   }
 
   @override
+<<<<<<< HEAD
   Future<Either<PFailure, ApiResponse<List<Message>>>> forgotPassword({
     required String? email,
     required String? phone,
+=======
+  Future<Either<PFailure, ApiResponse<List<Member>>>> forgotPassword({
+    required String email,
+>>>>>>> dev
   }) {
-    return authRepo.forgotPassword(email: email, phone: phone);
+    return authRepo.forgotPassword(email: email);
   }
 
   @override
   Future<Either<PFailure, ApiResponse<List<Message>>>> resetPassword({
     required String otp,
-    required String? email,
-    required String? phone,
+    required String email,
     required String password,
     required String confirmPassword,
   }) {
     return authRepo.resetPassword(
       otp: otp,
       email: email,
-      phone: phone,
       password: password,
       confirmPassword: confirmPassword,
     );
@@ -49,8 +52,13 @@ class AuthServiceImpl implements AuthService {
   Future<Either<PFailure, ApiResponse<Member>>> signIn({
     required String phone,
     required String password,
+    required String deviceToken,
   }) {
-    return authRepo.signIn(phone: phone, password: password);
+    return authRepo.signIn(
+      phone: phone,
+      password: password,
+      deviceToken: deviceToken,
+    );
   }
 
   @override
@@ -62,7 +70,11 @@ class AuthServiceImpl implements AuthService {
   }
 
   @override
+<<<<<<< HEAD
   Future<Either<PFailure, ApiResponse<Message>>> verifyOTP({
+=======
+  Future<Either<PFailure, ApiResponse<List<Member>>>> verifyOTP({
+>>>>>>> dev
     required String phone,
     required String otp,
   }) {
@@ -70,9 +82,20 @@ class AuthServiceImpl implements AuthService {
   }
 
   @override
+<<<<<<< HEAD
   Future<Either<PFailure, ApiResponse<List<Message>>>> updateFcmToken({
     required String token,
   }) {
     return authRepo.updateFcmToken(token: token);
+=======
+  Future<Either<PFailure, ApiResponse<List<BioData>>>> getBioData({
+    required String employerNumber,
+    required String staffNumber,
+  }) {
+    return authRepo.getBioData(
+      employerNumber: employerNumber,
+      staffNumber: staffNumber,
+    );
+>>>>>>> dev
   }
 }

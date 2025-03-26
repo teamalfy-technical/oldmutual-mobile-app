@@ -31,18 +31,19 @@ class PDashboardPage extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
                       Text(
-                        '${'welcome'.tr}, Angela',
+                        '${'welcome'.tr}, ${PSecureStorage().getAuthResponse()?.name ?? ''}',
                         style: Theme.of(context).textTheme.titleSmall?.copyWith(
                           color: PAppColor.whiteColor,
                         ),
                       ),
-                      PAppSize.s6.verticalSpace,
+                      PAppSize.s8.verticalSpace,
                       Text(
                         'Your Schemes',
                         style: Theme.of(context).textTheme.titleLarge?.copyWith(
                           color: PAppColor.whiteColor,
                         ),
                       ),
+                      PAppSize.s6.verticalSpace,
                     ],
                   ).only(bottom: PDeviceUtil.getDeviceWidth(context) * 0.19),
                 ),
@@ -56,7 +57,7 @@ class PDashboardPage extends StatelessWidget {
             ),
 
             Positioned(
-              top: PDeviceUtil.getDeviceHeight(context) / 6,
+              top: PDeviceUtil.getDeviceHeight(context) * 0.2,
               left: PAppSize.s16,
               right: PAppSize.s16,
               child: ListView.builder(
@@ -69,6 +70,7 @@ class PDashboardPage extends StatelessWidget {
                     onTap: () {
                       PHelperFunction.switchScreen(
                         destination: Routes.homePage,
+                        replace: true,
                       );
                     },
                   );

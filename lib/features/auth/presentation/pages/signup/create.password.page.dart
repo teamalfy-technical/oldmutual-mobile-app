@@ -41,7 +41,7 @@ class PCreatePasswordPage extends StatelessWidget {
                                     prefixIcon: Assets.icons.phoneIcon.path,
                                     controller: ctrl.phoneTEC,
                                     enabled: false,
-                                    validator: PValidator.validatePassword,
+                                    validator: PValidator.validatePhoneNumber,
                                     // focusColor: PAppColor.primary,
                                   ),
                                 ],
@@ -76,7 +76,12 @@ class PCreatePasswordPage extends StatelessWidget {
                               label: 'next'.tr,
                               width: PDeviceUtil.getDeviceWidth(context) * 0.55,
                               onTap:
-                                  () => ctrl.createPassword(isSignup: isSignup),
+                                  () =>
+                                      isSignup
+                                          ? ctrl.createPassword(
+                                            isSignup: isSignup,
+                                          )
+                                          : ctrl.resetPassword(),
                             ),
                           ],
                         ).scrollable(),

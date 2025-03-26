@@ -33,12 +33,17 @@ class AuthDsImpl implements AuthDs {
   }
 
   @override
+<<<<<<< HEAD
   Future<ApiResponse<List<Message>>> forgotPassword({
     required String? email,
     required String? phone,
+=======
+  Future<ApiResponse<List<Member>>> forgotPassword({
+    required String email,
+>>>>>>> dev
   }) async {
     return await asyncFunctionWrapper.handleAsyncNetworkCall(() async {
-      final payload = dio.FormData.fromMap({'email': email, 'phone': phone});
+      final payload = dio.FormData.fromMap({'email': email});
       final res = await apiService.callService(
         requestType: RequestType.post,
         payload: payload,
@@ -54,8 +59,7 @@ class AuthDsImpl implements AuthDs {
   @override
   Future<ApiResponse<List<Message>>> resetPassword({
     required String otp,
-    required String? email,
-    required String? phone,
+    required String email,
     required String password,
     required String confirmPassword,
   }) async {
@@ -63,7 +67,6 @@ class AuthDsImpl implements AuthDs {
       final payload = dio.FormData.fromMap({
         'otp': otp,
         'email': email,
-        'phone': phone,
         'password': password,
         'c_password': confirmPassword,
       });
@@ -83,11 +86,13 @@ class AuthDsImpl implements AuthDs {
   Future<ApiResponse<Member>> signIn({
     required String phone,
     required String password,
+    required String deviceToken,
   }) async {
     return await asyncFunctionWrapper.handleAsyncNetworkCall(() async {
       final payload = dio.FormData.fromMap({
         'phone': phone,
         'password': password,
+        'device_token': deviceToken,
       });
       final res = await apiService.callService(
         requestType: RequestType.post,
@@ -118,7 +123,11 @@ class AuthDsImpl implements AuthDs {
   }
 
   @override
+<<<<<<< HEAD
   Future<ApiResponse<Message>> verifyOTP({
+=======
+  Future<ApiResponse<List<Member>>> verifyOTP({
+>>>>>>> dev
     required String phone,
     required String otp,
   }) async {
@@ -129,7 +138,37 @@ class AuthDsImpl implements AuthDs {
         payload: payload,
         endPoint: Env.verifyOTP,
       );
-      return ApiResponse<Member>.fromJson(res, (data) => Member.fromJson(data));
+      // return ApiResponse<Member>.fromJson(res, (data) => Member.fromJson(data));
+      return ApiResponse<List<Member>>.fromJson(
+        res,
+        (data) => (data as List).map((e) => Member.fromJson(e)).toList(),
+      );
+    });
+  }
+
+  @override
+  Future<ApiResponse<List<BioData>>> getBioData({
+    required String employerNumber,
+    required String staffNumber,
+  }) async {
+    return await asyncFunctionWrapper.handleAsyncNetworkCall(() async {
+      final queryParams = {
+        'employer_number': employerNumber,
+        'staff_number': staffNumber,
+      };
+      final res = await apiService.callService(
+        requestType: RequestType.get,
+        queryParams: queryParams,
+        endPoint: Env.getBeneficiaries,
+      );
+      // return ApiResponse<Member>.fromJson(res, (data) => Member.fromJson(data));
+      return ApiResponse<List<BioData>>.fromJson(
+        res,
+        (data) =>
+            (data['MemberDetails'] as List)
+                .map((e) => BioData.fromJson(e))
+                .toList(),
+      );
     });
   }
 

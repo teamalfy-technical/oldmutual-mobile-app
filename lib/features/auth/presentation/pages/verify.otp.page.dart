@@ -44,9 +44,9 @@ class PVerifyOTPPage extends StatelessWidget {
                         ),
                         PAppSize.s10.verticalSpace,
                         Obx(() {
-                          final seconds = timerCtrl.seconds.value;
-                          final formattedTime =
-                              "00:${seconds.toString().padLeft(2, '0')}";
+                          // final seconds = timerCtrl.seconds.value;
+                          // final formattedTime =
+                          //     "00:${seconds.toString().padLeft(2, '0')}";
                           return PAuthLinkButton(
                             title:
                                 timerCtrl.completed.value
@@ -59,10 +59,14 @@ class PVerifyOTPPage extends StatelessWidget {
                             subtitle:
                                 timerCtrl.completed.value
                                     ? 'resend'.tr
-                                    : formattedTime,
+                                    : timerCtrl.formattedTime,
                             onTap:
                                 timerCtrl.completed.value
                                     ? () {
+                                      ctrl.verifyOTP(
+                                        pin: ctrl.otpcode.value,
+                                        isSignup: isSignup,
+                                      );
                                       timerCtrl.startCountdown();
                                     }
                                     : null,

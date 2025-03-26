@@ -107,10 +107,11 @@ Future showConfirmDialog({
 Future showLoadingdialog({
   required BuildContext context,
   required Widget content,
+  bool barrierDismissible = false,
 }) {
   return showAdaptiveDialog(
     context: context,
-    barrierDismissible: false,
+    barrierDismissible: true,
     builder: (context) {
       return AlertDialog.adaptive(
         backgroundColor:
@@ -133,10 +134,11 @@ Future showLoadingdialog({
 Future showSucccessdialog({
   required BuildContext context,
   required String title,
+  bool barrierDismissible = false,
 }) {
   return showAdaptiveDialog(
     context: context,
-    barrierDismissible: false,
+    barrierDismissible: barrierDismissible,
     builder: (context) {
       return AlertDialog.adaptive(
         backgroundColor:

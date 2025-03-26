@@ -12,7 +12,7 @@ class PCustomLoadingIndicator extends StatelessWidget {
   const PCustomLoadingIndicator({
     super.key,
     this.size = PAppSize.s20,
-    this.color = PAppColor.whiteColor,
+    this.color = PAppColor.primary,
     this.centered = true,
   });
 
