@@ -1,5 +1,6 @@
 import 'package:get/get.dart';
 import 'package:oldmutual_pensions_app/features/auth/auth.dart';
+import 'package:oldmutual_pensions_app/features/beneficiary/beneficiary.dart';
 
 class ServiceBinding implements Bindings {
   @override
@@ -9,10 +10,10 @@ class ServiceBinding implements Bindings {
       tag: (AuthService).toString(),
     );
 
-    // Get.lazyPut<ProfileService>(
-    //   () => ProfileServiceImpl(),
-    //   tag: (ProfileService).toString(),
-    // );
+    Get.lazyPut<BeneficiaryService>(
+      () => BeneficiaryServiceImpl(),
+      tag: (BeneficiaryService).toString(),
+    );
 
     // Get.lazyPut<PostService>(
     //   () => PostServiceImpl(),

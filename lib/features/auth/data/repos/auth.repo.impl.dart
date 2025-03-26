@@ -26,20 +26,17 @@ class AuthRepoImpl implements AuthRepo {
 
   @override
   Future<Either<PFailure, ApiResponse<List<Member>>>> forgotPassword({
-    required String? email,
-    required String? phone,
+    required String email,
   }) async {
     return await customRepositoryWrapper.wrapRepositoryFunction(
-      function:
-          () async => await authDs.forgotPassword(email: email, phone: phone),
+      function: () async => await authDs.forgotPassword(email: email),
     );
   }
 
   @override
   Future<Either<PFailure, ApiResponse<List<Member>>>> resetPassword({
     required String otp,
-    required String? email,
-    required String? phone,
+    required String email,
     required String password,
     required String confirmPassword,
   }) async {
@@ -48,7 +45,6 @@ class AuthRepoImpl implements AuthRepo {
           () async => await authDs.resetPassword(
             otp: otp,
             email: email,
-            phone: phone,
             password: password,
             confirmPassword: confirmPassword,
           ),
@@ -59,12 +55,17 @@ class AuthRepoImpl implements AuthRepo {
   Future<Either<PFailure, ApiResponse<Member>>> signIn({
     required String phone,
     required String password,
+    required String deviceToken,
   }) async {
     return await customRepositoryWrapper.wrapRepositoryFunction(
       function: () async {
-        final res = await authDs.signIn(phone: phone, password: password);
+        final res = await authDs.signIn(
+          phone: phone,
+          password: password,
+          deviceToken: deviceToken,
+        );
         pensionAppLogger.d(res);
-        PSecureStorage().saveAuthResponse(res);
+        PSecureStorage().saveAuthResponse(res.data);
         return res;
       },
     );
@@ -81,12 +82,26 @@ class AuthRepoImpl implements AuthRepo {
   }
 
   @override
-  Future<Either<PFailure, ApiResponse<Member>>> verifyOTP({
+  Future<Either<PFailure, ApiResponse<List<Member>>>> verifyOTP({
     required String phone,
     required String otp,
   }) async {
     return await customRepositoryWrapper.wrapRepositoryFunction(
       function: () async => await authDs.verifyOTP(phone: phone, otp: otp),
+    );
+  }
+
+  @override
+  Future<Either<PFailure, ApiResponse<List<BioData>>>> getBioData({
+    required String employerNumber,
+    required String staffNumber,
+  }) async {
+    return await customRepositoryWrapper.wrapRepositoryFunction(
+      function:
+          () async => await authDs.getBioData(
+            employerNumber: employerNumber,
+            staffNumber: staffNumber,
+          ),
     );
   }
 }

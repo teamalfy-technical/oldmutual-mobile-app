@@ -1,15 +1,16 @@
 import 'package:get/get.dart';
 import 'package:oldmutual_pensions_app/features/auth/auth.dart';
+import 'package:oldmutual_pensions_app/features/beneficiary/beneficiary.dart';
 
 class DataSourceBinding implements Bindings {
   @override
   void dependencies() {
     Get.lazyPut<AuthDs>(() => AuthDsImpl(), tag: (AuthDs).toString());
 
-    // Get.lazyPut<ProfileDs>(
-    //   () => ProfileDsImpl(),
-    //   tag: (ProfileDs).toString(),
-    // );
+    Get.lazyPut<BeneficiaryDs>(
+      () => BeneficiaryDsImpl(),
+      tag: (BeneficiaryDs).toString(),
+    );
 
     // Get.lazyPut<PostDs>(
     //   () => PostDsImpl(),

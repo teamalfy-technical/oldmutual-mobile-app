@@ -68,8 +68,9 @@ class PPhoneNumberPage extends StatelessWidget {
                     destination: Routes.loginPage,
                   ),
             ),
+            // PAppSize.s10.verticalSpace,
           ],
-        ).horizontal(PAppSize.s28),
+        ).symmetric(horizontal: PAppSize.s28, vertical: PAppSize.s10),
       ),
     );
   }

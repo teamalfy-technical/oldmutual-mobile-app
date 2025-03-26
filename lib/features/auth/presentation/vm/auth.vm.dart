@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:oldmutual_pensions_app/core/utils/utils.dart';
 import 'package:oldmutual_pensions_app/features/auth/application/auth.service.impl.dart';
+import 'package:oldmutual_pensions_app/features/notification/presentation/vm/notification.service.dart';
 import 'package:oldmutual_pensions_app/routes/app.pages.dart';
 import 'package:oldmutual_pensions_app/shared/widgets/popup.dialog.dart';
 
@@ -92,6 +93,7 @@ class PAuthVm extends GetxController {
 
     showLoadingdialog(
       context: context,
+      barrierDismissible: true,
       content: Text(
         'verifying_to_msg'.tr,
         style: Theme.of(context).textTheme.bodyMedium,
@@ -122,6 +124,16 @@ class PAuthVm extends GetxController {
     );
   }
 
+  void checkIfPasswordMatch() {
+    if (passwordTEC.text.trim() != confirmPasswordTEC.text.trim()) {
+      PPopupDialog(context).errorMessage(
+        title: 'action_required'.tr,
+        message: 'Passwords do not match',
+      );
+      return;
+    }
+  }
+
   /// [Function] Create password for either sign
   /// or reset password flow
   /// @ params - bool isSignup
@@ -129,17 +141,8 @@ class PAuthVm extends GetxController {
     String phone = phoneTEC.text.trim();
     String password = passwordTEC.text.trim();
     String confirmPassword = confirmPasswordTEC.text.trim();
-    // if (isSignup) {
-    //   PHelperFunction.switchScreen(
-    //     destination: Routes.signupPage,
-    //     replace: true,
-    //   );
-    // } else {
-    //   PHelperFunction.switchScreen(
-    //     destination: Routes.loginPage,
-    //     replace: true,
-    //   );
-    // }
+
+    checkIfPasswordMatch();
 
     final result = await authService.addPassword(
       phone: phone,
@@ -154,7 +157,78 @@ class PAuthVm extends GetxController {
       },
       (res) {
         clearFields();
-        PHelperFunction.switchScreen(destination: Routes.loginPage, args: true);
+        PHelperFunction.switchScreen(
+          destination: Routes.loginPage,
+          replace: true,
+        );
+      },
+    );
+  }
+
+  /// [Function] Forgot password to send password reset link
+  Future<void> forgotPassword() async {
+    String email = emailTEC.text.trim();
+
+    showLoadingdialog(
+      context: context,
+      content: Text(
+        'sending_reset_link'.tr,
+        style: Theme.of(context).textTheme.bodyMedium,
+      ),
+    );
+
+    final result = await authService.forgotPassword(email: email);
+    result.fold(
+      (err) {
+        PPopupDialog(
+          context,
+        ).errorMessage(title: 'error'.tr, message: err.message);
+      },
+      (res) {
+        PHelperFunction.pop();
+        PHelperFunction.switchScreen(
+          destination: Routes.verifyOTPPage,
+          args: false,
+        );
+      },
+    );
+  }
+
+  /// [Function] Forgot password to reset
+  Future<void> resetPassword() async {
+    String email = emailTEC.text.trim();
+    String password = passwordTEC.text.trim();
+    String confirmPassword = confirmPasswordTEC.text.trim();
+
+    checkIfPasswordMatch();
+
+    showLoadingdialog(
+      context: context,
+      content: Text(
+        'creating_new_password_msg'.tr,
+        style: Theme.of(context).textTheme.bodyMedium,
+      ),
+    );
+
+    final result = await authService.resetPassword(
+      otp: otpcode.value,
+      email: email,
+      password: password,
+      confirmPassword: confirmPassword,
+    );
+    result.fold(
+      (err) {
+        PPopupDialog(
+          context,
+        ).errorMessage(title: 'error'.tr, message: err.message);
+      },
+      (res) {
+        PHelperFunction.pop();
+        clearFields();
+        PHelperFunction.switchScreen(
+          destination: Routes.loginPage,
+          replace: true,
+        );
       },
     );
   }
@@ -172,7 +246,20 @@ class PAuthVm extends GetxController {
   Future<void> login() async {
     String phone = phoneTEC.text.trim();
     String password = passwordTEC.text.trim();
-    final result = await authService.signIn(phone: phone, password: password);
+    final deviceToken = await PNotificationService().getToken();
+    // pensionAppLogger.e(deviceToken);
+    showLoadingdialog(
+      context: context,
+      content: Text(
+        'signing_in'.tr,
+        style: Theme.of(context).textTheme.bodyMedium,
+      ),
+    );
+    final result = await authService.signIn(
+      phone: phone,
+      password: password,
+      deviceToken: deviceToken,
+    );
     result.fold(
       (err) {
         PPopupDialog(context).errorMessage(
@@ -182,12 +269,13 @@ class PAuthVm extends GetxController {
       },
       (res) {
         clearFields();
+        PHelperFunction.pop();
         PPopupDialog(
           context,
         ).successMessage(title: 'success'.tr, message: res.message ?? '');
         PHelperFunction.switchScreen(
           destination: Routes.dashboardPage,
-          args: true,
+          replace: true,
         );
       },
     );

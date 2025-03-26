@@ -9,7 +9,7 @@ abstract class AuthRepo {
     required String phone,
   });
 
-  Future<Either<PFailure, ApiResponse<Member>>> verifyOTP({
+  Future<Either<PFailure, ApiResponse<List<Member>>>> verifyOTP({
     required String phone,
     required String otp,
   });
@@ -23,17 +23,21 @@ abstract class AuthRepo {
   Future<Either<PFailure, ApiResponse<Member>>> signIn({
     required String phone,
     required String password,
+    required String deviceToken,
+  });
+
+  Future<Either<PFailure, ApiResponse<List<BioData>>>> getBioData({
+    required String employerNumber,
+    required String staffNumber,
   });
 
   Future<Either<PFailure, ApiResponse<List<Member>>>> forgotPassword({
-    required String? email,
-    required String? phone,
+    required String email,
   });
 
   Future<Either<PFailure, ApiResponse<List<Member>>>> resetPassword({
     required String otp,
-    required String? email,
-    required String? phone,
+    required String email,
     required String password,
     required String confirmPassword,
   });

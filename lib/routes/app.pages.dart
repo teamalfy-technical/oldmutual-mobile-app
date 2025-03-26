@@ -46,7 +46,7 @@ class AppPages {
     ),
     GetPage(
       name: _Paths.verifyOTPPage,
-      page: () => PVerifyOTPPage(isSignup: Get.arguments),
+      page: () => PVerifyOTPPage(isSignup: Get.arguments ?? true),
       transition: Transition.native,
       transitionDuration: const Duration(milliseconds: PAppSize.s700),
     ),

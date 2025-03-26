@@ -1,5 +1,5 @@
 import 'package:get_storage/get_storage.dart';
-import 'package:oldmutual_pensions_app/core/network/network.dart';
+import 'package:oldmutual_pensions_app/features/auth/domain/models/member.model.dart';
 
 class PSecureStorage {
   static final PSecureStorage _instance = PSecureStorage._internal();
@@ -39,13 +39,11 @@ class PSecureStorage {
   // }
 
   // /// Non-generic function to read auth response data from [GetStorage]
-  AuthResponse? getAuthResponse() {
+  Member? getAuthResponse() {
     if (_storage.read(authResKey) == null) {
       return null;
     }
-    return AuthResponse.fromJson(
-      _storage.read(authResKey) as Map<String, dynamic>,
-    );
+    return Member.fromJson(_storage.read(authResKey) as Map<String, dynamic>);
   }
 
   /// Generic function to remove data from [GetStorage]

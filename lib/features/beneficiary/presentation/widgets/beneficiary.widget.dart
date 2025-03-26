@@ -1,32 +1,36 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 import 'package:oldmutual_pensions_app/core/utils/utils.dart';
+import 'package:oldmutual_pensions_app/features/beneficiary/beneficiary.dart';
 import 'package:oldmutual_pensions_app/gen/assets.gen.dart';
 
 class PBeneficiaryWidget extends StatelessWidget {
-  final Map<String, dynamic> beneficiary;
+  final Beneficiary beneficiary;
   final int index;
+  final LoadingState loading;
   final Function(bool)? onExpansionChanged;
   const PBeneficiaryWidget({
     super.key,
     required this.beneficiary,
     required this.index,
+    required this.loading,
     this.onExpansionChanged,
   });
 
   @override
   Widget build(BuildContext context) {
-    debugPrint(beneficiary['show'].toString());
+    // debugPrint(beneficiary['show'].toString());
     return Column(
       children: [
         ExpansionTile(
           title: Text(
-            beneficiary['name'] ?? '',
+            beneficiary.fullName ?? '',
             style: Theme.of(context).textTheme.bodyLarge,
           ),
           tilePadding: EdgeInsets.symmetric(horizontal: PAppSize.s22),
-          initiallyExpanded: beneficiary['show'] ?? false,
+          initiallyExpanded: beneficiary.show ?? false,
           expandedAlignment: Alignment.centerLeft,
           expandedCrossAxisAlignment: CrossAxisAlignment.start,
           childrenPadding: EdgeInsets.symmetric(
@@ -48,7 +52,7 @@ class PBeneficiaryWidget extends StatelessWidget {
           ),
 
           trailing:
-              beneficiary['show'] == false
+              beneficiary.show == false
                   ? SizedBox(
                     width: 125,
                     child: Row(
@@ -66,13 +70,26 @@ class PBeneficiaryWidget extends StatelessWidget {
                   )
                   : Assets.icons.arrowDownIos.svg(),
           children: [
-            detailWidget(context, 'dob'.tr, beneficiary['dob']),
+            detailWidget(
+              context,
+              'dob'.tr,
+              PFormatter.formatDate(
+                dateFormat: DateFormat('dd-MM-yyyy'),
+                date: DateTime.parse(
+                  beneficiary.birthDate ?? DateTime.now().toIso8601String(),
+                ),
+              ),
+            ),
             detailWidget(
               context,
               'benefit_percentage'.tr,
-              beneficiary['percentage'],
+              '${beneficiary.percAlloc}%',
             ),
-            detailWidget(context, 'relation'.tr, beneficiary['relation']),
+            detailWidget(
+              context,
+              'relation'.tr,
+              beneficiary.relationship ?? '',
+            ),
           ],
         ),
         Divider(color: PAppColor.fillColor),

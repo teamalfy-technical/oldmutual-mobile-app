@@ -9,6 +9,7 @@ export 'data/ds/auth.ds.dart';
 export 'data/ds/auth.ds.impl.dart';
 export 'data/repos/auth.repo.dart';
 export 'data/repos/auth.repo.impl.dart';
+export 'domain/models/biodata.model.dart';
 export 'domain/models/member.model.dart';
 export 'presentation/pages/login/login.page.dart';
 export 'presentation/pages/signup/phone.number.page.dart';

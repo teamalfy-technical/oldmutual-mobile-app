@@ -71,6 +71,7 @@ class PLoginPage extends StatelessWidget {
                               onTap: () {
                                 if (ctrl.loginFormKey.currentState!
                                     .validate()) {
+                                  PDeviceUtil.hideKeyboard(context);
                                   ctrl.login();
                                 }
                               },
@@ -90,7 +91,7 @@ class PLoginPage extends StatelessWidget {
                     ),
               ),
             ],
-          ).horizontal(PAppSize.s28),
+          ).symmetric(horizontal: PAppSize.s28, vertical: PAppSize.s10),
         ),
       ),
     );

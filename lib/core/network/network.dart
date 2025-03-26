@@ -5,6 +5,6 @@ export 'response/api.response.dart';
 // Response Imports
 export 'response/auth.response.dart';
 // Wrapper Imports
-export 'wrappers/catch_error_wrapper.dart';
-export 'wrappers/custom_repository_wrapper.dart';
-export 'wrappers/network_call_wrapper.dart';
+export 'wrappers/catch.error.wrapper.dart';
+export 'wrappers/custom.repository.wrapper.dart';
+export 'wrappers/network.call.wrapper.dart';

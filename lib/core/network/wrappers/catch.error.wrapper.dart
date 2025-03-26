@@ -30,8 +30,10 @@ class CatchApiErrorWrapperImpl implements CatchApiErrorWrapper {
               err.response?.statusCode == 200) {
             errorMessage = err.response!.data['data'];
           } else if (err.response?.statusCode == 400) {
-            errorMessage =
-                err.response?.data['errors']['message'][0] ?? 'Bad request';
+            final data = err.response?.data['data'];
+            pensionAppLogger.e(data);
+
+            errorMessage = extractError(err.response?.data['data']);
             //errorMessage = err.response?.data['error'];
           } else if (err.response?.statusCode == 401) {
             errorMessage =
@@ -81,5 +83,16 @@ class CatchApiErrorWrapperImpl implements CatchApiErrorWrapper {
     } else {
       return UnknownFailure();
     }
+  }
+
+  String extractError(Map<String, dynamic> response) {
+    if (response.containsKey("data")) {
+      for (var entry in response["data"].entries) {
+        if (entry.value is List && entry.value.isNotEmpty) {
+          return entry.value.first; // Return the first error message found
+        }
+      }
+    }
+    return "Bad Request"; // Return an empty string if no error is found
   }
 }
