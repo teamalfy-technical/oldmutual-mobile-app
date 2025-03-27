@@ -19,7 +19,9 @@ class PCustomListTile extends StatelessWidget {
         Text(
           title,
           textAlign: TextAlign.start,
-          style: Theme.of(context).textTheme.bodyLarge,
+          style: Theme.of(
+            context,
+          ).textTheme.bodyLarge?.copyWith(fontWeight: FontWeight.w600),
         ),
         PAppSize.s12.verticalSpace,
         Text(subtitle, style: Theme.of(context).textTheme.bodyMedium),

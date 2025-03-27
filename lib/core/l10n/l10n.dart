@@ -25,6 +25,7 @@ class AppTranslations extends Translations {
       'verified_otp_msg': 'OTP Verified',
       'signing_up': 'Signing UP...',
       'signing_in': 'Signing IN...',
+      'employer_number': 'Employer Number',
       'welcome': 'Welcome',
       'welcome_back': 'Welcome Back',
       'create_password': 'Create Password',

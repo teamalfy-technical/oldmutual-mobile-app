@@ -2,6 +2,7 @@ import 'package:get/get.dart';
 import 'package:oldmutual_pensions_app/features/auth/auth.dart';
 import 'package:oldmutual_pensions_app/features/beneficiary/beneficiary.dart';
 import 'package:oldmutual_pensions_app/features/contribution.history/contribution.history.dart';
+import 'package:oldmutual_pensions_app/features/profile/profile.dart';
 
 class ServiceBinding implements Bindings {
   @override
@@ -19,6 +20,11 @@ class ServiceBinding implements Bindings {
     Get.lazyPut<ContributionHistoryService>(
       () => ContributionHistoryServiceImpl(),
       tag: (ContributionHistoryService).toString(),
+    );
+
+    Get.lazyPut<ProfileService>(
+      () => ProfileServiceImpl(),
+      tag: (ProfileService).toString(),
     );
 
     // Get.lazyPut<SearchService>(

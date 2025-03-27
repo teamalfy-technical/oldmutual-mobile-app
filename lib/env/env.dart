@@ -69,6 +69,10 @@ abstract class Env {
   @EnviedField(defaultValue: '/change-password', obfuscate: true)
   static final String changePassword = _Env.changePassword;
 
+  /// [DeleteAccount] endpoint
+  @EnviedField(defaultValue: '/delete-account', obfuscate: true)
+  static final String deleteAccount = _Env.deleteAccount;
+
   /// -------------------- User Endpoints Ends Here ------------------------- ///
   ///
   ///

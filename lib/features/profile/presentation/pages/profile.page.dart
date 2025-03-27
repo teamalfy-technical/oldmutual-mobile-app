@@ -5,6 +5,7 @@ import 'package:oldmutual_pensions_app/core/utils/utils.dart';
 import 'package:oldmutual_pensions_app/features/profile/presentation/vm/profile.vm.dart';
 import 'package:oldmutual_pensions_app/gen/assets.gen.dart';
 import 'package:oldmutual_pensions_app/shared/widgets/custom.listtile.dart';
+import 'package:redacted/redacted.dart';
 
 class PProfilePage extends StatelessWidget {
   PProfilePage({super.key});
@@ -59,27 +60,48 @@ class PProfilePage extends StatelessWidget {
             Divider(color: PAppColor.fillColor),
             PCustomListTile(
               title: 'membership_id'.tr,
-              subtitle: '**********************',
+              subtitle:
+                  ctrl.profile.value.memberNumber ?? '*********************',
+            ).redacted(
+              context: context,
+              redact: ctrl.loading.value == LoadingState.loading ? true : false,
             ),
 
             Divider(color: PAppColor.fillColor),
             PCustomListTile(
               title: 'ghana_card_id'.tr,
-              subtitle: '*********************',
+              subtitle:
+                  PSecureStorage().getBioData()?.tin ?? '*********************',
+            ).redacted(
+              context: context,
+              redact: ctrl.loading.value == LoadingState.loading ? true : false,
+            ),
+
+            Divider(color: PAppColor.fillColor),
+            PCustomListTile(
+              title: 'employer_number'.tr,
+              subtitle:
+                  ctrl.profile.value.employerNumber ?? '*********************',
+            ).redacted(
+              context: context,
+              redact: ctrl.loading.value == LoadingState.loading ? true : false,
             ),
 
             Divider(color: PAppColor.fillColor),
             PCustomListTile(
               title: 'ssnit_number'.tr,
-              subtitle: '*********************',
+              subtitle:
+                  ctrl.profile.value.ssnitNumber ?? '*********************',
+            ).redacted(
+              context: context,
+              redact: ctrl.loading.value == LoadingState.loading ? true : false,
             ),
 
-            Divider(color: PAppColor.fillColor),
-            PCustomListTile(
-              title: 'date_of_number'.tr,
-              subtitle: '*********************',
-            ),
-
+            // Divider(color: PAppColor.fillColor),
+            // PCustomListTile(
+            //   title: 'date_of_number'.tr,
+            //   subtitle:  PSecureStorage().getBioData(). ?? '*********************'
+            // ).redacted(context: context, redact: ctrl.loading.value == LoadingState.loading ? true :false),
             Divider(color: PAppColor.fillColor),
           ],
         ),
