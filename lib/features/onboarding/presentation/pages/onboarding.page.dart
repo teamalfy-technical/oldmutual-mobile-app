@@ -5,7 +5,6 @@ import 'package:oldmutual_pensions_app/core/utils/utils.dart';
 import 'package:oldmutual_pensions_app/features/onboarding/domain/models/onboarding.model.dart';
 import 'package:oldmutual_pensions_app/features/onboarding/presentation/vm/onboarding.vm.dart';
 import 'package:oldmutual_pensions_app/features/onboarding/presentation/widgets/onboarding.widget.dart';
-import 'package:oldmutual_pensions_app/routes/app.pages.dart';
 import 'package:oldmutual_pensions_app/shared/widgets/gradient.button.dart';
 import 'package:oldmutual_pensions_app/shared/widgets/text.button.dart';
 
@@ -127,11 +126,7 @@ class POnboardingPage extends StatelessWidget {
                               PHelperFunction.isDarkMode(context)
                                   ? PAppColor.whiteColor
                                   : PAppColor.text700,
-                          onPressed:
-                              () => PHelperFunction.switchScreen(
-                                destination: Routes.signupPage,
-                                replace: true,
-                              ),
+                          onPressed: () => ctrl.navigateToSignup(),
                         ),
                       ],
                     ),

@@ -21,14 +21,8 @@ class AuthServiceImpl implements AuthService {
   }
 
   @override
-<<<<<<< HEAD
-  Future<Either<PFailure, ApiResponse<List<Message>>>> forgotPassword({
-    required String? email,
-    required String? phone,
-=======
   Future<Either<PFailure, ApiResponse<List<Member>>>> forgotPassword({
     required String email,
->>>>>>> dev
   }) {
     return authRepo.forgotPassword(email: email);
   }
@@ -70,11 +64,7 @@ class AuthServiceImpl implements AuthService {
   }
 
   @override
-<<<<<<< HEAD
-  Future<Either<PFailure, ApiResponse<Message>>> verifyOTP({
-=======
   Future<Either<PFailure, ApiResponse<List<Member>>>> verifyOTP({
->>>>>>> dev
     required String phone,
     required String otp,
   }) {
@@ -82,20 +72,20 @@ class AuthServiceImpl implements AuthService {
   }
 
   @override
-<<<<<<< HEAD
   Future<Either<PFailure, ApiResponse<List<Message>>>> updateFcmToken({
     required String token,
   }) {
     return authRepo.updateFcmToken(token: token);
-=======
+  }
+
+  @override
   Future<Either<PFailure, ApiResponse<List<BioData>>>> getBioData({
-    required String employerNumber,
-    required String staffNumber,
+    String? employerNumber,
+    String? staffNumber,
   }) {
     return authRepo.getBioData(
       employerNumber: employerNumber,
       staffNumber: staffNumber,
     );
->>>>>>> dev
   }
 }

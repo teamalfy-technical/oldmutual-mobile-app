@@ -1,6 +1,7 @@
 import 'package:get/get.dart';
 import 'package:oldmutual_pensions_app/features/auth/auth.dart';
 import 'package:oldmutual_pensions_app/features/beneficiary/beneficiary.dart';
+import 'package:oldmutual_pensions_app/features/contribution.history/contribution.history.dart';
 
 class DataSourceBinding implements Bindings {
   @override
@@ -12,10 +13,10 @@ class DataSourceBinding implements Bindings {
       tag: (BeneficiaryDs).toString(),
     );
 
-    // Get.lazyPut<PostDs>(
-    //   () => PostDsImpl(),
-    //   tag: (PostDs).toString(),
-    // );
+    Get.lazyPut<ContributionHistoryDs>(
+      () => ContributionHistoryDsImpl(),
+      tag: (ContributionHistoryDs).toString(),
+    );
 
     // Get.lazyPut<SearchDs>(
     //   () => SearchDsImpl(),

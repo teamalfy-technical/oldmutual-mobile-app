@@ -111,7 +111,7 @@ Future showLoadingdialog({
 }) {
   return showAdaptiveDialog(
     context: context,
-    barrierDismissible: true,
+    barrierDismissible: barrierDismissible,
     builder: (context) {
       return AlertDialog.adaptive(
         backgroundColor:

@@ -39,7 +39,6 @@ class PSplashVm extends GetxController {
         );
       } else {
         if (PSecureStorage().getAuthResponse() != null) {
-          // pensionAppLogger.e(PSecureStorage().getAuthResponse()?.toJson());
           PHelperFunction.switchScreen(
             destination: Routes.dashboardPage,
             replace: true,

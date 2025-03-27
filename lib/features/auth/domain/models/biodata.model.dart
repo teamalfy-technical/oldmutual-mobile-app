@@ -1,7 +1,7 @@
 class BioData {
   String? memberNo;
   String? fullName;
-  int? monthlySalary;
+  double? monthlySalary;
   double? monthlyContribution;
   String? tin;
   String? ssnitNumber;
@@ -34,8 +34,8 @@ class BioData {
   BioData.fromJson(Map<String, dynamic> json) {
     memberNo = json['member_no'];
     fullName = json['FullName'];
-    monthlySalary = json['monthly_salary'];
-    monthlyContribution = json['MonthlyContribution'];
+    monthlySalary = json['monthly_salary'].toDouble();
+    monthlyContribution = json['MonthlyContribution'].toDouble();
     tin = json['tin'];
     ssnitNumber = json['ssnit_number'];
     mobileNo = json['mobile_no'];

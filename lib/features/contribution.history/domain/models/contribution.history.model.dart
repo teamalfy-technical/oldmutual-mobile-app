@@ -34,14 +34,14 @@ class TransactionHistory {
   String? status;
   int? accountValue;
   double? totalContributionTally;
-  int? employerContribution;
-  int? transferReceived;
-  int? totalRedemption;
-  int? gainLoss;
-  int? currentPrice;
+  double? employerContribution;
+  double? transferReceived;
+  double? totalRedemption;
+  double? gainLoss;
+  double? currentPrice;
   String? dateJoined;
   String? retirementData;
-  int? unitsBf;
+  double? unitsBf;
   List<Transactions>? transactions;
 
   TransactionHistory({
@@ -62,15 +62,15 @@ class TransactionHistory {
   TransactionHistory.fromJson(Map<String, dynamic> json) {
     status = json['status'];
     accountValue = json['account_value'];
-    totalContributionTally = json['total_contribution_tally'];
-    employerContribution = json['employer_contribution'];
-    transferReceived = json['transfer_received'];
-    totalRedemption = json['total_redemption'];
-    gainLoss = json['gain_loss'];
-    currentPrice = json['current_price'];
+    totalContributionTally = json['total_contribution_tally'].toDouble();
+    employerContribution = json['employer_contribution'].toDouble();
+    transferReceived = json['transfer_received'].toDouble();
+    totalRedemption = json['total_redemption'].toDouble();
+    gainLoss = json['gain_loss'].toDouble();
+    currentPrice = json['current_price'].toDouble();
     dateJoined = json['date_joined'];
     retirementData = json['retirement_data'];
-    unitsBf = json['units_bf'];
+    unitsBf = json['units_bf'].toDouble();
     if (json['transactions'] != null) {
       transactions = <Transactions>[];
       json['transactions'].forEach((v) {
@@ -109,7 +109,7 @@ class Transactions {
   String? schemeName;
   double? unitsAllocated;
   double? unitPrice;
-  int? employerContribution;
+  double? employerContribution;
   String? narration;
 
   Transactions({
@@ -128,15 +128,15 @@ class Transactions {
 
   Transactions.fromJson(Map<String, dynamic> json) {
     paymentDate = json['payment_date'];
-    received = json['received'];
+    received = json['received'].toDouble();
     pensionTypeId = json['pension_type_id'];
     paymentFlag = json['payment_flag'];
     pensionTypeName = json['pension_type_name'];
     schemeId = json['scheme_id'];
     schemeName = json['scheme_name'];
-    unitsAllocated = json['units_allocated'];
-    unitPrice = json['unit_price'];
-    employerContribution = json['employer_contribution'];
+    unitsAllocated = json['units_allocated'].toDouble();
+    unitPrice = json['unit_price'].toDouble();
+    employerContribution = json['employer_contribution'].toDouble();
     narration = json['narration'];
   }
 

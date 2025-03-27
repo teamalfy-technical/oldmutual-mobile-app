@@ -1,6 +1,7 @@
 import 'package:get/get.dart';
 import 'package:oldmutual_pensions_app/features/auth/auth.dart';
 import 'package:oldmutual_pensions_app/features/beneficiary/beneficiary.dart';
+import 'package:oldmutual_pensions_app/features/contribution.history/contribution.history.dart';
 
 class RepoBinding implements Bindings {
   @override
@@ -12,10 +13,10 @@ class RepoBinding implements Bindings {
       tag: (BeneficiaryRepo).toString(),
     );
 
-    // Get.lazyPut<PostRepo>(
-    //   () => PostRepoImpl(),
-    //   tag: (PostRepo).toString(),
-    // );
+    Get.lazyPut<ContributionHistoryRepo>(
+      () => ContributionHistoryRepoImpl(),
+      tag: (ContributionHistoryRepo).toString(),
+    );
 
     // Get.lazyPut<SearchRepo>(
     //   () => SearchRepoImpl(),

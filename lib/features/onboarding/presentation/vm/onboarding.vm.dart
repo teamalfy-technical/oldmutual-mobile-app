@@ -25,13 +25,14 @@ class POnboardingVm extends GetxController {
         curve: Curves.fastOutSlowIn,
       );
     } else {
-      // mark onboarding as completed
-      PSecureStorage().saveData(PSecureStorage().onboardingKey, true);
-      // navigate to sign up
-      PHelperFunction.switchScreen(
-        destination: Routes.signupPage,
-        replace: true,
-      );
+      navigateToSignup();
     }
+  }
+
+  navigateToSignup() {
+    // mark onboarding as completed
+    PSecureStorage().saveData(PSecureStorage().onboardingKey, true);
+    // navigate to sign up
+    PHelperFunction.switchScreen(destination: Routes.signupPage, replace: true);
   }
 }

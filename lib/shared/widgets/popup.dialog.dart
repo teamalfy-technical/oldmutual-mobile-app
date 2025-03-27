@@ -38,7 +38,10 @@ class PPopupDialog {
           PHelperFunction.isDarkMode(context)
               ? PAppColor.lightBlackColor
               : PAppColor.whiteColor,
-      icon: Assets.icons.successIcon.svg(),
+      icon: Assets.icons.successIcon.svg(
+        height: PAppSize.s24,
+        width: PAppSize.s24,
+      ),
       // leftBarIndicatorColor: PAppColor.errorColor,
       title: title,
       padding: EdgeInsets.all(PAppSize.s20),

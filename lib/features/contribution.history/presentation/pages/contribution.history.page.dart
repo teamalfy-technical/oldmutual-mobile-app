@@ -62,13 +62,28 @@ class PContributionHistoryPage extends StatelessWidget {
 
                   PAppSize.s25.verticalSpace,
 
-                  ListView.builder(
-                    shrinkWrap: true,
-                    itemCount: ctrl.histories.length,
-                    itemBuilder: (context, index) {
-                      final history = ctrl.histories[index];
-                      return ContributionHistoryWidget(history: history);
-                    },
+                  Expanded(
+                    child: ListView.builder(
+                      shrinkWrap: true,
+                      itemCount:
+                          ctrl
+                              .history
+                              .value
+                              .transactionHistory
+                              ?.transactions
+                              ?.length,
+                      itemBuilder: (context, index) {
+                        final transaction =
+                            ctrl
+                                .history
+                                .value
+                                .transactionHistory!
+                                .transactions![index];
+                        return ContributionHistoryWidget(
+                          transaction: transaction,
+                        );
+                      },
+                    ),
                   ),
                 ],
               ).all(PAppSize.s20),

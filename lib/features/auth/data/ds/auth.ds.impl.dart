@@ -33,14 +33,8 @@ class AuthDsImpl implements AuthDs {
   }
 
   @override
-<<<<<<< HEAD
-  Future<ApiResponse<List<Message>>> forgotPassword({
-    required String? email,
-    required String? phone,
-=======
   Future<ApiResponse<List<Member>>> forgotPassword({
     required String email,
->>>>>>> dev
   }) async {
     return await asyncFunctionWrapper.handleAsyncNetworkCall(() async {
       final payload = dio.FormData.fromMap({'email': email});
@@ -123,11 +117,7 @@ class AuthDsImpl implements AuthDs {
   }
 
   @override
-<<<<<<< HEAD
-  Future<ApiResponse<Message>> verifyOTP({
-=======
   Future<ApiResponse<List<Member>>> verifyOTP({
->>>>>>> dev
     required String phone,
     required String otp,
   }) async {
@@ -148,8 +138,8 @@ class AuthDsImpl implements AuthDs {
 
   @override
   Future<ApiResponse<List<BioData>>> getBioData({
-    required String employerNumber,
-    required String staffNumber,
+    String? employerNumber,
+    String? staffNumber,
   }) async {
     return await asyncFunctionWrapper.handleAsyncNetworkCall(() async {
       final queryParams = {
@@ -158,16 +148,14 @@ class AuthDsImpl implements AuthDs {
       };
       final res = await apiService.callService(
         requestType: RequestType.get,
-        queryParams: queryParams,
-        endPoint: Env.getBeneficiaries,
+        // queryParams: queryParams,
+        endPoint: Env.getBiodata,
       );
       // return ApiResponse<Member>.fromJson(res, (data) => Member.fromJson(data));
+
       return ApiResponse<List<BioData>>.fromJson(
         res,
-        (data) =>
-            (data['MemberDetails'] as List)
-                .map((e) => BioData.fromJson(e))
-                .toList(),
+        (data) => (data as List).map((e) => BioData.fromJson(e)).toList(),
       );
     });
   }

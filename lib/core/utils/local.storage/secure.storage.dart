@@ -1,5 +1,5 @@
 import 'package:get_storage/get_storage.dart';
-import 'package:oldmutual_pensions_app/features/auth/domain/models/member.model.dart';
+import 'package:oldmutual_pensions_app/features/auth/auth.dart';
 
 class PSecureStorage {
   static final PSecureStorage _instance = PSecureStorage._internal();
@@ -12,6 +12,7 @@ class PSecureStorage {
 
   final String onboardingKey = 'onboarding';
   final String authResKey = 'auth_res_key';
+  final String bioDataKey = 'bio_data_key';
   final String businessProfileKey = 'business_profile_key';
 
   /// Generic function to save data into [GetStorage]
@@ -24,6 +25,9 @@ class PSecureStorage {
   /// Generic function to save auth response into [GetStorage]
   Future<void> saveAuthResponse<T>(T value) async =>
       await _storage.write(authResKey, value);
+
+  Future<void> saveBioData<T>(T value) async =>
+      await _storage.write(bioDataKey, value);
 
   /// Generic function to save auth response into [GetStorage]
   // Future<void> saveBusinessProfile<T>(T value) async =>
@@ -44,6 +48,13 @@ class PSecureStorage {
       return null;
     }
     return Member.fromJson(_storage.read(authResKey) as Map<String, dynamic>);
+  }
+
+  BioData? getBioData() {
+    if (_storage.read(authResKey) == null) {
+      return null;
+    }
+    return BioData.fromJson(_storage.read(bioDataKey) as Map<String, dynamic>);
   }
 
   /// Generic function to remove data from [GetStorage]

@@ -23,7 +23,10 @@ class PFormatter {
 
   /// --- format currency
   static String formatCurrency({required double amount}) {
-    return NumberFormat.currency(locale: 'en_US', symbol: '\$').format(amount);
+    return NumberFormat.currency(
+      locale: 'en_GH',
+      symbol: 'GHS ',
+    ).format(amount);
   }
 
   static String formatMoneyValue(String rawValue) {
@@ -38,16 +41,16 @@ class PFormatter {
 
     if (value >= 1000000000) {
       // Format as Billion (₵1.0B)
-      return '₵${formatter.format(value / 1000000000)}B';
+      return 'GHS${formatter.format(value / 1000000000)}B';
     } else if (value >= 1000000) {
       // Format as Million (₵700M)
-      return '₵${formatter.format(value / 1000000)}M';
+      return 'GHS${formatter.format(value / 1000000)}M';
     } else if (value >= 1000) {
       // Format as Thousand (₵700K)
-      return '₵${formatter.format(value / 1000)}K';
+      return 'GHS${formatter.format(value / 1000)}K';
     } else {
       // For values less than 1000, just add the Cedi symbol
-      return '₵${formatter.format(value)}';
+      return 'GHS${formatter.format(value)}';
     }
   }
 

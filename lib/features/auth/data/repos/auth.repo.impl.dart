@@ -25,14 +25,8 @@ class AuthRepoImpl implements AuthRepo {
   }
 
   @override
-<<<<<<< HEAD
-  Future<Either<PFailure, ApiResponse<List<Message>>>> forgotPassword({
-    required String? email,
-    required String? phone,
-=======
   Future<Either<PFailure, ApiResponse<List<Member>>>> forgotPassword({
     required String email,
->>>>>>> dev
   }) async {
     return await customRepositoryWrapper.wrapRepositoryFunction(
       function: () async => await authDs.forgotPassword(email: email),
@@ -70,8 +64,7 @@ class AuthRepoImpl implements AuthRepo {
           password: password,
           deviceToken: deviceToken,
         );
-        pensionAppLogger.d(res);
-        PSecureStorage().saveAuthResponse(res.data);
+        PSecureStorage().saveAuthResponse(res.data?.toJson());
         return res;
       },
     );
@@ -88,11 +81,7 @@ class AuthRepoImpl implements AuthRepo {
   }
 
   @override
-<<<<<<< HEAD
-  Future<Either<PFailure, ApiResponse<Message>>> verifyOTP({
-=======
   Future<Either<PFailure, ApiResponse<List<Member>>>> verifyOTP({
->>>>>>> dev
     required String phone,
     required String otp,
   }) async {
@@ -102,16 +91,18 @@ class AuthRepoImpl implements AuthRepo {
   }
 
   @override
-<<<<<<< HEAD
   Future<Either<PFailure, ApiResponse<List<Message>>>> updateFcmToken({
     required String token,
   }) async {
     return await customRepositoryWrapper.wrapRepositoryFunction(
       function: () async => await authDs.updateFcmToken(token: token),
-=======
+    );
+  }
+
+  @override
   Future<Either<PFailure, ApiResponse<List<BioData>>>> getBioData({
-    required String employerNumber,
-    required String staffNumber,
+    String? employerNumber,
+    String? staffNumber,
   }) async {
     return await customRepositoryWrapper.wrapRepositoryFunction(
       function:
@@ -119,7 +110,6 @@ class AuthRepoImpl implements AuthRepo {
             employerNumber: employerNumber,
             staffNumber: staffNumber,
           ),
->>>>>>> dev
     );
   }
 }

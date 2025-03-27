@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:oldmutual_pensions_app/core/utils/utils.dart';
 import 'package:oldmutual_pensions_app/features/auth/application/auth.service.impl.dart';
-import 'package:oldmutual_pensions_app/features/notification/presentation/vm/notification.service.dart';
 import 'package:oldmutual_pensions_app/routes/app.pages.dart';
 import 'package:oldmutual_pensions_app/shared/widgets/popup.dialog.dart';
 
@@ -246,7 +245,7 @@ class PAuthVm extends GetxController {
   Future<void> login() async {
     String phone = phoneTEC.text.trim();
     String password = passwordTEC.text.trim();
-    final deviceToken = await PNotificationService().getToken();
+    // final deviceToken = await PNotificationService().getToken();
     // pensionAppLogger.e(deviceToken);
     showLoadingdialog(
       context: context,
@@ -258,7 +257,9 @@ class PAuthVm extends GetxController {
     final result = await authService.signIn(
       phone: phone,
       password: password,
-      deviceToken: deviceToken,
+      deviceToken:
+          "fWPHVMVIS02jVK2oLA8PEY:APA91bH86c5B2BueEZ3wYBPoZK-cbsXcm1nj1LRecAZXlsufX-sNZdb8iacWhaiTz1O0TrE9AIxSeiU-2ZRJV589aJXYAC0nhLV0W3nAYyvpSNG4SzYdDY4",
+      //deviceToken,
     );
     result.fold(
       (err) {
@@ -268,17 +269,25 @@ class PAuthVm extends GetxController {
         );
       },
       (res) async {
-        await PNotificationService().saveToken();
+        // await PNotificationService().saveToken();
+        await getBioData();
         clearFields();
-        PHelperFunction.pop();
-        PPopupDialog(
-          context,
-        ).successMessage(title: 'success'.tr, message: res.message ?? '');
         PHelperFunction.switchScreen(
           destination: Routes.dashboardPage,
           replace: true,
         );
+        PPopupDialog(
+          context,
+        ).successMessage(title: 'success'.tr, message: res.message ?? '');
       },
     );
+  }
+
+  Future<void> getBioData() async {
+    final result = await authService.getBioData();
+    result.fold((err) {}, (res) {
+      PSecureStorage().saveBioData(res.data?.first.toJson());
+      PHelperFunction.pop();
+    });
   }
 }
