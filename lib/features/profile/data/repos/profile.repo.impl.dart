@@ -9,14 +9,14 @@ final ProfileRepo profileRepo = Get.put(ProfileRepoImpl());
 
 class ProfileRepoImpl implements ProfileRepo {
   @override
-  Future<Either<PFailure, ApiResponse<Message>>> changePassword() async {
+  Future<Either<PFailure, ApiResponse<List<Message>>>> changePassword() async {
     return await customRepositoryWrapper.wrapRepositoryFunction(
       function: () async => await profileDs.changePassword(),
     );
   }
 
   @override
-  Future<Either<PFailure, ApiResponse<Message>>> deleteAccount() async {
+  Future<Either<PFailure, ApiResponse<List<Message>>>> deleteAccount() async {
     return await customRepositoryWrapper.wrapRepositoryFunction(
       function: () async => await profileDs.deleteAccount(),
     );

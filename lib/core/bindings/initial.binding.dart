@@ -4,6 +4,7 @@ import 'package:oldmutual_pensions_app/features/beneficiary/presentation/vm/bene
 import 'package:oldmutual_pensions_app/features/contribution.history/presentation/vm/contribution.history.vm.dart';
 import 'package:oldmutual_pensions_app/features/future.value.calculator/future.value.calculator.dart';
 import 'package:oldmutual_pensions_app/features/home/presentation/vm/home.vm.dart';
+import 'package:oldmutual_pensions_app/features/notification/presentation/vm/notification.vm.dart';
 import 'package:oldmutual_pensions_app/features/profile/presentation/vm/profile.vm.dart';
 import 'package:oldmutual_pensions_app/features/settings/settings.dart';
 import 'package:oldmutual_pensions_app/features/splash/presentation/vm/splash.vm.dart';
@@ -21,6 +22,7 @@ class InitialBinding implements Bindings {
     Get.lazyPut(() => PFutureValueCalcVm());
     Get.lazyPut(() => PSettingsPage());
     Get.lazyPut(() => PProfileVm());
+    Get.lazyPut(() => PNotificationVM());
     // Get.lazyPut(() => TLoginVm());
     // Get.lazyPut(() => TSignupVm());
     // Get.lazyPut(() => TDashboardVm());

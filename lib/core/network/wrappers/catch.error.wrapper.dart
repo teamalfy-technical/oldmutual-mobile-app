@@ -43,18 +43,17 @@ class CatchApiErrorWrapperImpl implements CatchApiErrorWrapper {
             errorMessage = err.response?.data['message'] ?? 'Forbidden Access';
             pensionAppLogger.e(err.response?.data);
           } else if (err.response?.statusCode == 404) {
-            errorMessage = err.message ?? 'Requested resource is not found';
+            errorMessage =
+                err.response?.data['message'] ??
+                'Requested resource is not found';
           } else if (err.response?.statusCode == 422) {
             // ApiErrorResponse error =
             //     ApiErrorResponse.fromJson(err.response?.data);
-
             pensionAppLogger.e(err.response?.data);
-
             errorMessage = err.response?.data['message'] ?? 'Bad request';
           } else if (err.response?.data is Map &&
               err.response!.data.containsKey('data')) {
             final error = err.response!.data['data'];
-
             // final error = errorMessageFromJson(e.response!.data.toString()).message;
             // Check the type of message and handle accordingly
             if (error is List) {

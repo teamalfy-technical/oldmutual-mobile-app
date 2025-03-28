@@ -1,9 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:logger/logger.dart';
 import 'package:oldmutual_pensions_app/core/utils/utils.dart';
 import 'package:oldmutual_pensions_app/gen/assets.gen.dart';
+import 'package:oldmutual_pensions_app/shared/shared.dart';
 
 var pensionAppLogger = Logger(printer: PrettyPrinter(lineLength: 500));
 
@@ -58,100 +60,63 @@ void showOptionsMenu(
 
 Future showConfirmDialog({
   required BuildContext context,
-  required String title,
   required Widget content,
-  bool hideNegBtn = false,
-  required Widget positiveButton,
   String? negativeText,
+  String? positiveText,
   required Function() onPostiveTap,
   Function()? onNegativeTap,
 }) {
   return showAdaptiveDialog(
     context: context,
-    barrierDismissible: hideNegBtn ? false : true,
+    barrierDismissible: true,
     builder: (context) {
       return AlertDialog.adaptive(
         backgroundColor: PAppColor.whiteColor,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(PAppSize.s5),
         ),
-        title: Text(title, textAlign: TextAlign.center),
-        content: content,
-        actions: [
-          // (positiveButton is Text)
-          //     ? TextButton(
-          //         onPressed: onPostiveTap,
-          //         child: positiveButton,
-          //       )
-          //     : TextButton(
-          //         style:
-          //             TextButton.styleFrom(minimumSize: const Size(50, 40)),
-          //         onPressed: onPostiveTap,
-          //         child: positiveButton,
-          //       ),
-          TextButton(onPressed: onPostiveTap, child: positiveButton),
-          hideNegBtn
-              ? const SizedBox.shrink()
-              : TextButton(
+        content: SizedBox(
+          width: PDeviceUtil.getDeviceWidth(context),
+          height: PDeviceUtil.getDeviceHeight(context) * 0.22,
+          child: Column(
+            children: [
+              content,
+
+              Spacer(),
+
+              PGradientButton(
+                label: positiveText ?? 'yes'.tr.toUpperCase(),
+                height: PAppSize.buttonHeightMid,
+                onTap: onPostiveTap,
+              ),
+              PAppSize.s8.verticalSpace,
+              OutlinedButton.icon(
                 onPressed: onNegativeTap ?? () => PHelperFunction.pop(),
-                child: Text(
-                  negativeText ?? 'cancel'.tr,
-                  style: const TextStyle(color: PAppColor.errorColor),
+                style: OutlinedButton.styleFrom(
+                  padding: EdgeInsets.symmetric(horizontal: PAppSize.s14),
+                  foregroundColor: PAppColor.blackColor,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(PAppSize.s24),
+                  ),
+                  side: BorderSide(width: 1, color: PAppColor.blackColor),
+                ),
+                icon: Assets.icons.arrowIcon.svg(color: PAppColor.blackColor),
+                iconAlignment: IconAlignment.end,
+                label: Text(
+                  negativeText ?? 'cancel'.tr.toUpperCase(),
+                  style: TextStyle(
+                    fontWeight: FontWeight.w500,
+                    color: PAppColor.blackColor,
+                  ),
                 ),
               ),
-        ],
+            ],
+          ),
+        ),
       );
     },
   );
 }
-
-// 0597191559
-// Future showConfirmDialog({
-//   required BuildContext context,
-//   required String title,
-//   required Widget content,
-//   bool hideNegBtn = false,
-//   String? negativeText,
-//   required Function() onPostiveTap,
-//   Function()? onNegativeTap,
-// }) {
-//   // final l10n = AppLocalizations.of(context)!;
-//   return showAdaptiveDialog(
-//     context: context,
-//     barrierDismissible: hideNegBtn ? false : true,
-//     builder: (context) {
-//       return AlertDialog.adaptive(
-//         backgroundColor:
-//             PHelperFunction.isDarkMode(context)
-//                 ? PAppColor.lightBlackColor
-//                 : PAppColor.whiteColor,
-//         shape: RoundedRectangleBorder(
-//           borderRadius: BorderRadius.circular(PAppSize.s10),
-//         ),
-//         title: Text(title),
-//         content: content,
-//         actions: [
-//           TextButton(
-//             onPressed: onPostiveTap,
-//             child: Text(
-//               negativeText ?? 'continue'.tr,
-//               style: const TextStyle(color: PAppColor.primaryDark),
-//             ),
-//           ),
-//           hideNegBtn
-//               ? const SizedBox.shrink()
-//               : TextButton(
-//                 onPressed: onNegativeTap ?? () => PHelperFunction.pop(),
-//                 child: Text(
-//                   negativeText ?? 'cancel'.tr,
-//                   style: const TextStyle(color: PAppColor.errorColor),
-//                 ),
-//               ),
-//         ],
-//       );
-//     },
-//   );
-// }
 
 Future showLoadingdialog({
   required BuildContext context,

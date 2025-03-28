@@ -26,7 +26,6 @@ abstract class AuthDs {
   Future<ApiResponse<Member>> signIn({
     required String phone,
     required String password,
-    required String deviceToken,
   });
 
   Future<ApiResponse<List<Message>>> updateFcmToken({required String token});

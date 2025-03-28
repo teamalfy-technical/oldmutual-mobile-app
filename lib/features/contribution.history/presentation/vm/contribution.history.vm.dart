@@ -104,6 +104,8 @@ class PContributionHistoryVm extends GetxController {
       },
       (res) {
         updateLoadingState(LoadingState.completed);
+        selectedYear = res.data?.first;
+        selectedMonth = contributionMonths.first;
         contributionYears.value = res.data ?? [];
       },
     );

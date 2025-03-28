@@ -2,6 +2,8 @@ import 'package:get/get.dart';
 import 'package:oldmutual_pensions_app/features/auth/auth.dart';
 import 'package:oldmutual_pensions_app/features/beneficiary/beneficiary.dart';
 import 'package:oldmutual_pensions_app/features/contribution.history/contribution.history.dart';
+import 'package:oldmutual_pensions_app/features/home/home.dart';
+import 'package:oldmutual_pensions_app/features/notification/notification.dart';
 import 'package:oldmutual_pensions_app/features/profile/profile.dart';
 
 class DataSourceBinding implements Bindings {
@@ -20,6 +22,16 @@ class DataSourceBinding implements Bindings {
     );
 
     Get.lazyPut<ProfileDs>(() => ProfileDsImpl(), tag: (ProfileDs).toString());
+
+    Get.lazyPut<NotificationDs>(
+      () => NotificationDsImpl(),
+      tag: (NotificationDs).toString(),
+    );
+
+    Get.lazyPut<DashboardDs>(
+      () => DashboardDsImpl(),
+      tag: (DashboardDs).toString(),
+    );
 
     // Get.lazyPut<SearchDs>(
     //   () => SearchDsImpl(),

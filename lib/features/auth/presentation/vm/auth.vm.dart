@@ -254,13 +254,7 @@ class PAuthVm extends GetxController {
         style: Theme.of(context).textTheme.bodyMedium,
       ),
     );
-    final result = await authService.signIn(
-      phone: phone,
-      password: password,
-      deviceToken:
-          "fWPHVMVIS02jVK2oLA8PEY:APA91bH86c5B2BueEZ3wYBPoZK-cbsXcm1nj1LRecAZXlsufX-sNZdb8iacWhaiTz1O0TrE9AIxSeiU-2ZRJV589aJXYAC0nhLV0W3nAYyvpSNG4SzYdDY4",
-      //deviceToken,
-    );
+    final result = await authService.signIn(phone: phone, password: password);
     result.fold(
       (err) {
         PPopupDialog(context).errorMessage(

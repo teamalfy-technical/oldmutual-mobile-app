@@ -9,12 +9,12 @@ final ProfileService profileService = Get.put(ProfileServiceImpl());
 
 class ProfileServiceImpl implements ProfileService {
   @override
-  Future<Either<PFailure, ApiResponse<Message>>> changePassword() {
+  Future<Either<PFailure, ApiResponse<List<Message>>>> changePassword() {
     return profileRepo.changePassword();
   }
 
   @override
-  Future<Either<PFailure, ApiResponse<Message>>> deleteAccount() {
+  Future<Either<PFailure, ApiResponse<List<Message>>>> deleteAccount() {
     return profileRepo.deleteAccount();
   }
 

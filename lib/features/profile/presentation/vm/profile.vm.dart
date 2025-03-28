@@ -8,7 +8,6 @@ import 'package:image_picker/image_picker.dart';
 import 'package:oldmutual_pensions_app/core/utils/utils.dart';
 import 'package:oldmutual_pensions_app/features/auth/auth.dart';
 import 'package:oldmutual_pensions_app/features/profile/application/service/profile.service.impl.dart';
-import 'package:oldmutual_pensions_app/routes/app.pages.dart';
 import 'package:oldmutual_pensions_app/shared/shared.dart';
 
 class PProfileVm extends GetxController {
@@ -17,13 +16,10 @@ class PProfileVm extends GetxController {
   var profile = Member().obs;
 
   var loading = LoadingState.completed.obs;
-  var submitting = LoadingState.completed.obs;
 
   final context = Get.context!;
 
   updateLoadingState(LoadingState loadingState) => loading.value = loadingState;
-  updateSubmittingState(LoadingState loadingState) =>
-      submitting.value = loadingState;
 
   @override
   void onInit() {
@@ -45,29 +41,6 @@ class PProfileVm extends GetxController {
       (res) {
         updateLoadingState(LoadingState.completed);
         profile.value = res.data ?? Member();
-      },
-    );
-  }
-
-  Future<void> signout() async {
-    updateSubmittingState(LoadingState.loading);
-    final result = await profileService.logout();
-    result.fold(
-      (err) {
-        updateSubmittingState(LoadingState.error);
-        PPopupDialog(
-          context,
-        ).errorMessage(title: 'error'.tr, message: err.message);
-      },
-      (res) {
-        updateSubmittingState(LoadingState.completed);
-        PHelperFunction.switchScreen(
-          destination: Routes.loginPage,
-          replace: true,
-        );
-        PPopupDialog(
-          context,
-        ).successMessage(title: 'success'.tr, message: res.message ?? '');
       },
     );
   }

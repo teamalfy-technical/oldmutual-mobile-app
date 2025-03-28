@@ -70,11 +70,15 @@ class AppTranslations extends Translations {
       'filter_by_month': 'Filter By Month',
       'apply': 'Apply',
       'enter_year': 'Enter year (e.g. 2025)',
-      'signout': 'Signout',
+      'signout': 'Logout',
+      'delete_account': 'Delete account',
       'signout_desc': 'Sign out from your account safely',
       'no_results_found': 'No results found',
       'signout_dialog_desc':
-          'Are you sure you want to sign out? \nWe’ll be excited to welcome you back soon!',
+          'Are you sure you want to sign out of your account?',
+      'signing_out': 'Signing OUT...',
+      'deleting_account': 'Deleting ACCOUNT...',
+
       'continue': 'Continue',
       'cancel': 'Cancel',
       'successful': 'Successful',

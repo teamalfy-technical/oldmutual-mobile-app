@@ -60,6 +60,60 @@ class PSettingsPage extends StatelessWidget {
                 trailing: Assets.icons.arrowForwardIos.svg(),
               ),
               Divider(color: PAppColor.fillColor),
+              ListTile(
+                onTap: () {
+                  showConfirmDialog(
+                    context: context,
+                    content: Text(
+                      'signout_dialog_desc'.tr,
+                      style: Theme.of(context).textTheme.bodyLarge,
+                    ),
+                    onPostiveTap: () => ctrl.signout(),
+                  );
+                },
+                title: Text(
+                  'signout'.tr,
+                  style: Theme.of(context).textTheme.bodyMedium,
+                ),
+                trailing: Assets.icons.arrowForwardIos.svg(),
+              ),
+              Divider(color: PAppColor.fillColor),
+              PAppSize.s16.verticalSpace,
+              Align(
+                    alignment: Alignment.bottomLeft,
+                    child: Text(
+                      'delete_account'.tr,
+                      textAlign: TextAlign.start,
+                      style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                        color: PAppColor.redColor,
+                      ),
+                    ),
+                  )
+                  .symmetric(horizontal: PAppSize.s20)
+                  .onPressed(
+                    onTap: () {
+                      showConfirmDialog(
+                        context: context,
+                        content: RichText(
+                          textAlign: TextAlign.center,
+                          text: TextSpan(
+                            text: 'Are you sure you want to permanently',
+                            style: Theme.of(context).textTheme.bodyLarge
+                                ?.copyWith(color: PAppColor.blackColor),
+                            children: [
+                              TextSpan(
+                                text: ' delete your account?',
+                                style: Theme.of(context).textTheme.bodyLarge
+                                    ?.copyWith(color: PAppColor.redColor),
+                              ),
+                            ],
+                          ),
+                        ),
+
+                        onPostiveTap: () => ctrl.deleteAccount(),
+                      );
+                    },
+                  ),
             ],
           ).scrollable(),
     );

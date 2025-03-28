@@ -6,6 +6,7 @@ import 'package:oldmutual_pensions_app/gen/assets.gen.dart';
 class PGradientButton extends StatelessWidget {
   final String label;
   final double? width;
+  final double? height;
   final double radius;
   final Function()? onTap;
   final bool showIcon;
@@ -13,6 +14,7 @@ class PGradientButton extends StatelessWidget {
     super.key,
     required this.label,
     this.width,
+    this.height = PAppSize.buttonHeight,
     this.onTap,
     this.showIcon = true,
     this.radius = PAppSize.s24,
@@ -24,7 +26,7 @@ class PGradientButton extends StatelessWidget {
     return Container(
       alignment: Alignment.center,
       width: btnWidth,
-      height: PAppSize.buttonHeight,
+      height: height,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(radius),
         gradient: LinearGradient(
@@ -33,22 +35,33 @@ class PGradientButton extends StatelessWidget {
             PAppColor.primaryDark,
             PAppColor.primary,
           ],
+        ), // Match button shape
+      ),
+      child: ElevatedButton(
+        onPressed: onTap,
+        style: ElevatedButton.styleFrom(
+          side: BorderSide.none,
+          backgroundColor: Colors.transparent, // Make background transparent
+          shadowColor: Colors.transparent, // Remove shadow
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+        ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(
+              label,
+              style: TextStyle(
+                fontWeight: FontWeight.w500,
+                color: PAppColor.whiteColor,
+              ),
+            ),
+            showIcon
+                ? PAppSize.s8.horizontalSpace
+                : PAppSize.s0.horizontalSpace,
+            showIcon ? Assets.icons.arrowIcon.svg() : SizedBox.shrink(),
+          ],
         ),
       ),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Text(
-            label,
-            style: TextStyle(
-              fontWeight: FontWeight.bold,
-              color: PAppColor.whiteColor,
-            ),
-          ),
-          showIcon ? PAppSize.s8.horizontalSpace : PAppSize.s0.horizontalSpace,
-          showIcon ? Assets.icons.arrowIcon.svg() : SizedBox.shrink(),
-        ],
-      ),
-    ).onPressed(onTap: onTap);
+    );
   }
 }

@@ -5,7 +5,6 @@ import 'package:intl/intl.dart';
 import 'package:oldmutual_pensions_app/core/utils/utils.dart';
 import 'package:oldmutual_pensions_app/features/profile/presentation/vm/profile.vm.dart';
 import 'package:oldmutual_pensions_app/gen/assets.gen.dart';
-import 'package:oldmutual_pensions_app/shared/shared.dart';
 import 'package:oldmutual_pensions_app/shared/widgets/custom.listtile.dart';
 import 'package:redacted/redacted.dart';
 
@@ -104,49 +103,6 @@ class PProfilePage extends StatelessWidget {
             ),
 
             Divider(color: PAppColor.fillColor),
-
-            SizedBox(
-              width: double.infinity,
-              child: OutlinedButton.icon(
-                iconAlignment: IconAlignment.end,
-                onPressed: () {
-                  showConfirmDialog(
-                    positiveButton: Obx(
-                      () =>
-                          ctrl.submitting.value == LoadingState.loading
-                              ? const PCustomLoadingIndicator(
-                                color: PAppColor.primary,
-                                size: PAppSize.s12,
-                              )
-                              : Text(
-                                'continue'.tr,
-                                style: TextStyle(color: PAppColor.primary),
-                              ),
-                    ),
-
-                    context: context,
-                    title: 'signout'.tr,
-                    content: Text('signout_dialog_desc'.tr),
-                    onPostiveTap: () => ctrl.signout(),
-                  );
-                },
-                style: OutlinedButton.styleFrom(
-                  side: BorderSide.none,
-                  backgroundColor: PAppColor.primary.withOpacityExt(0.3),
-                ),
-                label: Text(
-                  'signout'.tr,
-                  style: Theme.of(
-                    context,
-                  ).textTheme.titleMedium?.copyWith(color: PAppColor.primary),
-                ),
-                icon: Icon(
-                  Icons.exit_to_app,
-                  color: PAppColor.primary,
-                  size: PAppSize.s24,
-                ),
-              ),
-            ).symmetric(horizontal: PAppSize.s20, vertical: PAppSize.s20),
 
             // Divider(color: PAppColor.fillColor),
             // PCustomListTile(

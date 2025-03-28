@@ -204,7 +204,10 @@ class PNotificationService {
   }
 
   /// save token to backend server
+  /// cache it on device
   Future<void> saveToken() async {
+    final token = await getToken();
+    PSecureStorage().saveData(PSecureStorage().deviceTokenKey, token);
     final result = await authService.updateFcmToken(token: await getToken());
     result.fold(
       (err) => pensionAppLogger.e(err.getMessage()),

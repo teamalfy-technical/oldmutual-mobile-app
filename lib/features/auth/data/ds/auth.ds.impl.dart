@@ -80,13 +80,11 @@ class AuthDsImpl implements AuthDs {
   Future<ApiResponse<Member>> signIn({
     required String phone,
     required String password,
-    required String deviceToken,
   }) async {
     return await asyncFunctionWrapper.handleAsyncNetworkCall(() async {
       final payload = dio.FormData.fromMap({
         'phone': phone,
         'password': password,
-        'device_token': deviceToken,
       });
       final res = await apiService.callService(
         requestType: RequestType.post,

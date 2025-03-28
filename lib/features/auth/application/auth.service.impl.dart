@@ -46,13 +46,8 @@ class AuthServiceImpl implements AuthService {
   Future<Either<PFailure, ApiResponse<Member>>> signIn({
     required String phone,
     required String password,
-    required String deviceToken,
   }) {
-    return authRepo.signIn(
-      phone: phone,
-      password: password,
-      deviceToken: deviceToken,
-    );
+    return authRepo.signIn(phone: phone, password: password);
   }
 
   @override

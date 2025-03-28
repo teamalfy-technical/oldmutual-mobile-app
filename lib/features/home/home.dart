@@ -1,3 +1,9 @@
+export '../dashboard/data/ds/dashboard.ds.dart';
+export '../dashboard/data/ds/dashboard.ds.impl.dart';
+export '../dashboard/data/repos/dashboard.repo.dart';
+export '../dashboard/data/repos/dashboard.repo.impl.dart';
+export '../dashboard/domain/models/scheme.model.dart';
+export '../dashboard/domain/models/selected.scheme.model.dart';
 export 'presentation/pages/home.page.dart';
 export 'presentation/pages/home.view.dart';
 export 'presentation/vm/home.vm.dart';

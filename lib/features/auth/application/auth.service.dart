@@ -23,7 +23,6 @@ abstract class AuthService {
   Future<Either<PFailure, ApiResponse<Member>>> signIn({
     required String phone,
     required String password,
-    required String deviceToken,
   });
 
   Future<Either<PFailure, ApiResponse<List<BioData>>>> getBioData({

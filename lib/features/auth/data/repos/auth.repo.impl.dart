@@ -55,15 +55,10 @@ class AuthRepoImpl implements AuthRepo {
   Future<Either<PFailure, ApiResponse<Member>>> signIn({
     required String phone,
     required String password,
-    required String deviceToken,
   }) async {
     return await customRepositoryWrapper.wrapRepositoryFunction(
       function: () async {
-        final res = await authDs.signIn(
-          phone: phone,
-          password: password,
-          deviceToken: deviceToken,
-        );
+        final res = await authDs.signIn(phone: phone, password: password);
         PSecureStorage().saveAuthResponse(res.data?.toJson());
         return res;
       },

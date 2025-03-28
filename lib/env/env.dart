@@ -110,12 +110,29 @@ abstract class Env {
   /// -------------------- Notifications Endpoints Starts Here ------------------------- ///
 
   /// [EnableNotifications] endpoint
-  @EnviedField(defaultValue: '/enable-notifications', obfuscate: true)
+  @EnviedField(defaultValue: '/Enable-notifications', obfuscate: true)
   static final String enableNotifications = _Env.enableNotifications;
 
   /// [DisableNotifications] endpoint
-  @EnviedField(defaultValue: '/disable-notifications', obfuscate: true)
+  @EnviedField(defaultValue: '/Disable-notifications', obfuscate: true)
   static final String disableNotifications = _Env.disableNotifications;
 
+  /// [GetNotifications] endpoint
+  @EnviedField(defaultValue: '/notifications', obfuscate: true)
+  static final String getNotifications = _Env.getNotifications;
+
   /// -------------------- Notifications Endpoints Ends Here ------------------------- ///
+  ///
+  ///
+  /// -------------------- Scheme Endpoints Starts Here ------------------------- ///
+
+  /// [GetMemberSchemes] endpoint
+  @EnviedField(defaultValue: '/member/scheme', obfuscate: true)
+  static final String getMemberSchemes = _Env.getMemberSchemes;
+
+  /// [SelectedMemberSchemes] endpoint
+  @EnviedField(defaultValue: '/member/select-scheme', obfuscate: true)
+  static final String getSelectedMemberScheme = _Env.getSelectedMemberScheme;
+
+  /// -------------------- Scheme Endpoints Ends Here ------------------------- ///
 }

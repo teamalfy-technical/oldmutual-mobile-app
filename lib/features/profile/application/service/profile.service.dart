@@ -5,7 +5,7 @@ import 'package:oldmutual_pensions_app/features/auth/auth.dart';
 
 abstract class ProfileService {
   Future<Either<PFailure, ApiResponse<Member>>> getProfile();
-  Future<Either<PFailure, ApiResponse<Message>>> changePassword();
-  Future<Either<PFailure, ApiResponse<Message>>> deleteAccount();
+  Future<Either<PFailure, ApiResponse<List<Message>>>> changePassword();
+  Future<Either<PFailure, ApiResponse<List<Message>>>> deleteAccount();
   Future<Either<PFailure, ApiResponse<List<Message>>>> logout();
 }
