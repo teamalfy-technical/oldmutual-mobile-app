@@ -6,13 +6,9 @@ part 'env.g.dart';
 @Envied(obfuscate: true)
 //@Envied(path: '.env.dev')
 abstract class Env {
-  /// App Base url for [Matchesy]
-  /// https://55ac-102-89-47-237.ngrok-free.app/swagger/index.html
   @EnviedField(
-    //defaultValue: 'https://3af3-102-88-69-24.ngrok-free.app/api',
-    // defaultValue:
-    //     'https://app-matchesy-api-sa-prod-001.azurewebsites.net/api',
-    defaultValue: 'http://pensions.teamalfy.co.uk/api',
+    // defaultValue: 'http://pensions.teamalfy.co.uk/api',
+    defaultValue: 'https://old-mutual-api-production.up.railway.app/api',
     obfuscate: true,
   )
   static final String baseUrl = _Env.baseUrl;
@@ -95,9 +91,9 @@ abstract class Env {
   @EnviedField(defaultValue: '/contributions/summary', obfuscate: true)
   static final String getContributionsSummary = _Env.getContributionsSummary;
 
-  /// [GetContributionsYears] endpoint
-  @EnviedField(defaultValue: '/contributions/years', obfuscate: true)
-  static final String getContributionsYears = _Env.getContributionsYears;
+  /// [GetContributedYears] endpoint
+  @EnviedField(defaultValue: '/contributed/years', obfuscate: true)
+  static final String getContributedYears = _Env.getContributedYears;
 
   /// -------------------- Contribution Endpoints Ends Here ------------------------- ///
   ///

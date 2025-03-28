@@ -67,7 +67,16 @@ class AppTranslations extends Translations {
       'contribution_history_tag':
           'Get to view your yearly contribution history',
       'filter_by_year': 'Filter By Year',
+      'filter_by_month': 'Filter By Month',
+      'apply': 'Apply',
       'enter_year': 'Enter year (e.g. 2025)',
+      'signout': 'Signout',
+      'signout_desc': 'Sign out from your account safely',
+      'no_results_found': 'No results found',
+      'signout_dialog_desc':
+          'Are you sure you want to sign out? \nWe’ll be excited to welcome you back soon!',
+      'continue': 'Continue',
+      'cancel': 'Cancel',
       'successful': 'Successful',
       'unsuccessful': 'Unsuccessful',
       'all': 'All',

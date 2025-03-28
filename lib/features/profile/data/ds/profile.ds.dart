@@ -5,5 +5,5 @@ abstract class ProfileDs {
   Future<ApiResponse<Member>> getProfile();
   Future<ApiResponse<Message>> changePassword();
   Future<ApiResponse<Message>> deleteAccount();
-  Future<ApiResponse<Message>> logout();
+  Future<ApiResponse<List<Message>>> logout();
 }

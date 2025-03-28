@@ -18,7 +18,7 @@ class PCustomFilledTextfield extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(label),
+        Text(label, textAlign: TextAlign.start),
         PAppSize.s4.verticalSpace,
         TextField(
           controller: controller,

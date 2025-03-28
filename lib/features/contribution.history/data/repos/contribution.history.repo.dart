@@ -14,6 +14,6 @@ abstract class ContributionHistoryRepo {
   filterContributions({required String month, required String year});
   Future<Either<PFailure, ApiResponse<ContributionSummary>>>
   getContributionSummary();
-  Future<Either<PFailure, ApiResponse<List<ContributionYear>>>>
+  Future<Either<PFailure, ApiResponse<List<ContributedYear>>>>
   getContributionYears();
 }

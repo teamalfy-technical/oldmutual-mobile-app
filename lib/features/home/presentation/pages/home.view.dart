@@ -2,13 +2,15 @@ import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 import 'package:oldmutual_pensions_app/core/utils/utils.dart';
 import 'package:oldmutual_pensions_app/features/contribution.history/contribution.history.dart';
+import 'package:oldmutual_pensions_app/features/contribution.history/presentation/widgets/contribution.history.widget.redact.dart';
 import 'package:oldmutual_pensions_app/features/dashboard/dashboard.dart';
 import 'package:oldmutual_pensions_app/features/home/presentation/widgets/home.stats.widget.dart';
 import 'package:oldmutual_pensions_app/gen/assets.gen.dart';
 import 'package:oldmutual_pensions_app/routes/app.pages.dart';
-import 'package:oldmutual_pensions_app/shared/widgets/custom.loading.indicator.dart';
+import 'package:oldmutual_pensions_app/shared/widgets/empty.state.widget.dart';
 import 'package:redacted/redacted.dart';
 
 class PHomeView extends StatelessWidget {
@@ -128,21 +130,22 @@ class PHomeView extends StatelessWidget {
                                     : false,
                           ),
                           PAppSize.s4.verticalSpace,
-                          Text(
-                            'Last contribution date 10/3/2024',
-                            style: Theme.of(
-                              context,
-                            ).textTheme.bodySmall?.copyWith(
-                              fontSize: PAppSize.s14,
-                              color: PAppColor.text100,
+                          if (ctrl.summmary.value.lastContributionDate != null)
+                            Text(
+                              'Last contribution date ${PFormatter.formatDate(dateFormat: DateFormat('dd/MM/yyyy'), date: DateTime.parse(ctrl.summmary.value.lastContributionDate ?? DateTime.now().toIso8601String()))}',
+                              style: Theme.of(
+                                context,
+                              ).textTheme.bodySmall?.copyWith(
+                                fontSize: PAppSize.s14,
+                                color: PAppColor.text100,
+                              ),
+                            ).redacted(
+                              context: context,
+                              redact:
+                                  ctrl.loading.value == LoadingState.loading
+                                      ? true
+                                      : false,
                             ),
-                          ).redacted(
-                            context: context,
-                            redact:
-                                ctrl.loading.value == LoadingState.loading
-                                    ? true
-                                    : false,
-                          ),
                         ],
                       ),
                     ),
@@ -228,7 +231,22 @@ class PHomeView extends StatelessWidget {
                     ),
 
                     ctrl.loading.value == LoadingState.loading
-                        ? PCustomLoadingIndicator()
+                        ? ListView.builder(
+                          shrinkWrap: true,
+                          itemCount: 10,
+                          itemBuilder: (context, index) {
+                            return ContributionHistoryWidgetRedact(
+                              loadingState: ctrl.loading.value,
+                            );
+                          },
+                        )
+                        : ctrl
+                            .history
+                            .value
+                            .transactionHistory!
+                            .transactions!
+                            .isEmpty
+                        ? PEmptyStateWidget(message: 'no_results_found'.tr)
                         : ListView.builder(
                           shrinkWrap: true,
                           physics: NeverScrollableScrollPhysics(),

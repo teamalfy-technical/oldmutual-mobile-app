@@ -39,7 +39,7 @@ class ContributionHistoryRepoImpl implements ContributionHistoryRepo {
   }
 
   @override
-  Future<Either<PFailure, ApiResponse<List<ContributionYear>>>>
+  Future<Either<PFailure, ApiResponse<List<ContributedYear>>>>
   getContributionYears() async {
     return await customRepositoryWrapper.wrapRepositoryFunction(
       function: () async => await contributionHistoryDs.getContributionYears(),

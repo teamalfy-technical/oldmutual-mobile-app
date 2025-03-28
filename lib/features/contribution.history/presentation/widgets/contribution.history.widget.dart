@@ -15,16 +15,14 @@ class ContributionHistoryWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListTile(
       title: Text(
-        transaction.pensionTypeName ?? '',
+        transaction.narration ?? '',
         style: Theme.of(
           context,
         ).textTheme.bodyLarge?.copyWith(fontWeight: FontWeight.w500),
       ).redacted(context: context, redact: false),
       contentPadding: EdgeInsets.symmetric(horizontal: PAppSize.s0),
       subtitle: Text(
-        PFormatter.formatCurrency(
-          amount: transaction.employerContribution ?? 0,
-        ),
+        PFormatter.formatCurrency(amount: transaction.received ?? 0),
         style: Theme.of(
           context,
         ).textTheme.bodySmall?.copyWith(fontWeight: FontWeight.w400),

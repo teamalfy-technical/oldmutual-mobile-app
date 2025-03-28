@@ -2,10 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:oldmutual_pensions_app/core/utils/utils.dart';
+import 'package:oldmutual_pensions_app/features/beneficiary/beneficiary.dart';
 import 'package:oldmutual_pensions_app/features/beneficiary/presentation/vm/beneficiary.vm.dart';
-import 'package:oldmutual_pensions_app/features/beneficiary/presentation/widgets/beneficiary.widget.dart';
 import 'package:oldmutual_pensions_app/gen/assets.gen.dart';
 import 'package:oldmutual_pensions_app/shared/shared.dart';
+import 'package:oldmutual_pensions_app/shared/widgets/empty.state.widget.dart';
 
 class PBeneficiaryPage extends StatefulWidget {
   const PBeneficiaryPage({super.key});
@@ -34,7 +35,17 @@ class _PBeneficiaryPageState extends State<PBeneficiaryPage> {
             () => Expanded(
               child:
                   ctrl.loading.value == LoadingState.loading
-                      ? PCustomLoadingIndicator()
+                      ? ListView.builder(
+                        shrinkWrap: true,
+                        itemCount: 10,
+                        itemBuilder: (context, index) {
+                          return PBeneficiaryWidgetRedact(
+                            loading: ctrl.loading.value,
+                          );
+                        },
+                      )
+                      : ctrl.beneficiaries.isEmpty
+                      ? PEmptyStateWidget(message: 'no_results_found'.tr)
                       : ListView.builder(
                         shrinkWrap: true,
                         itemCount: ctrl.beneficiaries.length,

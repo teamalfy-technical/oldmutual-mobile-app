@@ -12,5 +12,5 @@ abstract class ContributionHistoryDs {
     required String year,
   });
   Future<ApiResponse<ContributionSummary>> getContributionSummary();
-  Future<ApiResponse<List<ContributionYear>>> getContributionYears();
+  Future<ApiResponse<List<ContributedYear>>> getContributionYears();
 }

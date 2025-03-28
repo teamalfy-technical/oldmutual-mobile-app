@@ -42,7 +42,11 @@ class PContributionHistoryVm extends GetxController {
 
   var summmary = ContributionSummary().obs;
   var history = ContributionHistory().obs;
-  var contributionYears = <ContributionYear>[].obs;
+  var contributionYears = <ContributedYear>[].obs;
+  var contributionMonths =
+      ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12'].obs;
+  ContributedYear? selectedYear;
+  String? selectedMonth;
 
   var loading = LoadingState.completed.obs;
 
@@ -56,6 +60,16 @@ class PContributionHistoryVm extends GetxController {
   void onInit() {
     super.onInit();
     getContributionsSummary();
+  }
+
+  onYearChanged(value) {
+    selectedYear = value;
+    update();
+  }
+
+  onMonthChanged(value) {
+    selectedMonth = value;
+    update();
   }
 
   /// Function to get all contribution summary
@@ -78,7 +92,7 @@ class PContributionHistoryVm extends GetxController {
   }
 
   /// Function to get all contribution years
-  Future<void> getContributionsYears() async {
+  Future<void> getContributedYears() async {
     updateLoadingState(LoadingState.loading);
     final result = await contributionHistoryService.getContributionYears();
     result.fold(
@@ -106,9 +120,10 @@ class PContributionHistoryVm extends GetxController {
           context,
         ).errorMessage(title: 'error'.tr, message: err.message);
       },
-      (res) {
+      (res) async {
         updateLoadingState(LoadingState.completed);
         history.value = res.data ?? ContributionHistory();
+        await getContributedYears();
       },
     );
   }
@@ -136,10 +151,17 @@ class PContributionHistoryVm extends GetxController {
 
   /// Function to filter all contributions
   Future<void> filterContributions() async {
+    if (selectedMonth == null || selectedYear == null) {
+      PPopupDialog(context).informationMessage(
+        title: 'action_required'.tr,
+        message: 'Choose year and month to filter',
+      );
+      return;
+    }
     updateLoadingState(LoadingState.loading);
     final result = await contributionHistoryService.filterContributions(
-      month: '',
-      year: '',
+      year: selectedYear?.fundYear.toString() ?? DateTime.now().year.toString(),
+      month: selectedMonth ?? DateTime.now().month.toString(),
     );
     result.fold(
       (err) {

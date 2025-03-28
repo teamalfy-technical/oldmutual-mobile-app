@@ -7,3 +7,4 @@ export 'data/repos/beneficiary.repo.impl.dart';
 export 'domain/models/beneficiary.model.dart';
 export 'presentation/pages/beneficiary.page.dart';
 export 'presentation/widgets/beneficiary.widget.dart';
+export 'presentation/widgets/beneficiary.widget.redact.dart';

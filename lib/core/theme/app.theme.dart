@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:oldmutual_pensions_app/core/theme/theme.dart';
 import 'package:oldmutual_pensions_app/core/utils/utils.dart';
 
+import 'custom.themes/dropdown.button.theme.dart';
+
 class PAppTheme {
   PAppTheme._();
 
@@ -21,6 +23,7 @@ class PAppTheme {
     bottomSheetTheme: PBottomSheetTheme.lightBottomSheetThemeData,
     inputDecorationTheme: PTextFormFieldTheme.lightInputDecorationTheme,
     iconTheme: PIconTheme.lightIconThemeData,
+    dropdownMenuTheme: PDropdownButtonTheme.lightDropdownMenuTheme,
     textSelectionTheme: TextSelectionThemeData(cursorColor: PAppColor.primary),
   );
   static ThemeData darkTheme = ThemeData(
@@ -39,6 +42,7 @@ class PAppTheme {
     bottomSheetTheme: PBottomSheetTheme.darkBottomSheetThemeData,
     inputDecorationTheme: PTextFormFieldTheme.darkInputDecorationTheme,
     iconTheme: PIconTheme.darkIconThemeData,
+    dropdownMenuTheme: PDropdownButtonTheme.darkDropdownMenuTheme,
     textSelectionTheme: TextSelectionThemeData(cursorColor: PAppColor.primary),
   );
 }

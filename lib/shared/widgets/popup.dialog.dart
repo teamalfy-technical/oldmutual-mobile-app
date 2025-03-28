@@ -85,43 +85,55 @@ class PPopupDialog {
     ).show(context);
   }
 
-  void warningMessage(String message) {
+  void warningMessage({required String title, required String message}) {
     Flushbar(
       flushbarPosition: FlushbarPosition.TOP,
       flushbarStyle: FlushbarStyle.GROUNDED,
       backgroundColor:
           PHelperFunction.isDarkMode(context)
               ? PAppColor.lightBlackColor
-              : PAppColor.warning50,
-      icon: const Icon(
-        Icons.error,
-        color: PAppColor.warning700,
-        size: PAppSize.s24,
-      ),
-      shouldIconPulse: false,
-      messageColor: PAppColor.warning700,
+              : PAppColor.whiteColor,
+      icon: Assets.icons.warningIcon.svg(color: PAppColor.warning700),
+      // leftBarIndicatorColor: PAppColor.errorColor,
+      title: title,
+      padding: EdgeInsets.all(PAppSize.s20),
+      titleSize: PAppSize.s16,
+      titleColor:
+          PHelperFunction.isDarkMode(context)
+              ? PAppColor.whiteColor
+              : PAppColor.warning700,
+      messageColor:
+          PHelperFunction.isDarkMode(context)
+              ? PAppColor.whiteColor
+              : PAppColor.warning700,
       message: message,
-      duration: const Duration(milliseconds: PAppSize.s3000),
+      duration: const Duration(milliseconds: PAppSize.s4000),
     ).show(context);
   }
 
-  void informationMessage(String message) {
+  void informationMessage({required String title, required String message}) {
     Flushbar(
       flushbarPosition: FlushbarPosition.TOP,
       flushbarStyle: FlushbarStyle.GROUNDED,
       backgroundColor:
           PHelperFunction.isDarkMode(context)
               ? PAppColor.lightBlackColor
-              : PAppColor.info50,
-      icon: const Icon(
-        Icons.error,
-        color: PAppColor.info700,
-        size: PAppSize.s24,
-      ),
-      shouldIconPulse: false,
-      messageColor: PAppColor.info700,
+              : PAppColor.whiteColor,
+      icon: Assets.icons.warningIcon.svg(color: PAppColor.info700),
+      // leftBarIndicatorColor: PAppColor.errorColor,
+      title: title,
+      padding: EdgeInsets.all(PAppSize.s20),
+      titleSize: PAppSize.s16,
+      titleColor:
+          PHelperFunction.isDarkMode(context)
+              ? PAppColor.whiteColor
+              : PAppColor.info700,
+      messageColor:
+          PHelperFunction.isDarkMode(context)
+              ? PAppColor.whiteColor
+              : PAppColor.info700,
       message: message,
-      duration: const Duration(milliseconds: PAppSize.s5000),
+      duration: const Duration(milliseconds: PAppSize.s4000),
     ).show(context);
   }
 
@@ -133,6 +145,6 @@ class PPopupDialog {
   }
 
   void comingSoonSnack([String? message]) {
-    informationMessage('We are still baking this feature');
+    //informationMessage('We are still baking this feature');
   }
 }

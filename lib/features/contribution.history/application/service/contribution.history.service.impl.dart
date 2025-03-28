@@ -31,7 +31,7 @@ class ContributionHistoryServiceImpl implements ContributionHistoryService {
   }
 
   @override
-  Future<Either<PFailure, ApiResponse<List<ContributionYear>>>>
+  Future<Either<PFailure, ApiResponse<List<ContributedYear>>>>
   getContributionYears() {
     return contributionHistoryRepo.getContributionYears();
   }

@@ -48,15 +48,15 @@ class ProfileDsImpl implements ProfileDs {
   }
 
   @override
-  Future<ApiResponse<Message>> logout() async {
+  Future<ApiResponse<List<Message>>> logout() async {
     return await asyncFunctionWrapper.handleAsyncNetworkCall(() async {
       final res = await apiService.callService(
         requestType: RequestType.post,
         endPoint: Env.logout,
       );
-      return ApiResponse<Message>.fromJson(
+      return ApiResponse<List<Message>>.fromJson(
         res,
-        (data) => Message.fromJson(data),
+        (data) => (data as List).map((e) => Message.fromJson(e)).toList(),
       );
     });
   }

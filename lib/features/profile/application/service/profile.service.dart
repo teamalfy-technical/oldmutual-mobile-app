@@ -7,5 +7,5 @@ abstract class ProfileService {
   Future<Either<PFailure, ApiResponse<Member>>> getProfile();
   Future<Either<PFailure, ApiResponse<Message>>> changePassword();
   Future<Either<PFailure, ApiResponse<Message>>> deleteAccount();
-  Future<Either<PFailure, ApiResponse<Message>>> logout();
+  Future<Either<PFailure, ApiResponse<List<Message>>>> logout();
 }

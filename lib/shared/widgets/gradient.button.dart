@@ -6,12 +6,16 @@ import 'package:oldmutual_pensions_app/gen/assets.gen.dart';
 class PGradientButton extends StatelessWidget {
   final String label;
   final double? width;
+  final double radius;
   final Function()? onTap;
+  final bool showIcon;
   const PGradientButton({
     super.key,
     required this.label,
     this.width,
     this.onTap,
+    this.showIcon = true,
+    this.radius = PAppSize.s24,
   });
 
   @override
@@ -22,7 +26,7 @@ class PGradientButton extends StatelessWidget {
       width: btnWidth,
       height: PAppSize.buttonHeight,
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(PAppSize.s24),
+        borderRadius: BorderRadius.circular(radius),
         gradient: LinearGradient(
           colors: [
             PAppColor.primaryDark,
@@ -41,8 +45,8 @@ class PGradientButton extends StatelessWidget {
               color: PAppColor.whiteColor,
             ),
           ),
-          PAppSize.s8.horizontalSpace,
-          Assets.icons.arrowIcon.svg(),
+          showIcon ? PAppSize.s8.horizontalSpace : PAppSize.s0.horizontalSpace,
+          showIcon ? Assets.icons.arrowIcon.svg() : SizedBox.shrink(),
         ],
       ),
     ).onPressed(onTap: onTap);
