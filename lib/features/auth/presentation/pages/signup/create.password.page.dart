@@ -11,7 +11,7 @@ class PCreatePasswordPage extends StatelessWidget {
   final bool isSignup;
   PCreatePasswordPage({super.key, this.isSignup = true});
 
-  final ctrl = Get.put(PAuthVm());
+  final ctrl = Get.find<PAuthVm>();
 
   @override
   Widget build(BuildContext context) {

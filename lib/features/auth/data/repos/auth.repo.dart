@@ -9,7 +9,7 @@ abstract class AuthRepo {
     required String phone,
   });
 
-  Future<Either<PFailure, ApiResponse<List<Member>>>> verifyOTP({
+  Future<Either<PFailure, ApiResponse<Member>>> verifyOTP({
     required String phone,
     required String otp,
   });
@@ -34,7 +34,7 @@ abstract class AuthRepo {
     required String token,
   });
 
-  Future<Either<PFailure, ApiResponse<List<Member>>>> forgotPassword({
+  Future<Either<PFailure, ApiResponse<List<Message>>>> forgotPassword({
     required String email,
   });
 

@@ -68,7 +68,10 @@ class PSettingsPage extends StatelessWidget {
                       'signout_dialog_desc'.tr,
                       style: Theme.of(context).textTheme.bodyLarge,
                     ),
-                    onPostiveTap: () => ctrl.signout(),
+                    onPostiveTap: () {
+                      PHelperFunction.pop();
+                      ctrl.signout();
+                    },
                   );
                 },
                 title: Text(
@@ -110,7 +113,10 @@ class PSettingsPage extends StatelessWidget {
                           ),
                         ),
 
-                        onPostiveTap: () => ctrl.deleteAccount(),
+                        onPostiveTap: () {
+                          PHelperFunction.pop();
+                          ctrl.deleteAccount();
+                        },
                       );
                     },
                   ),

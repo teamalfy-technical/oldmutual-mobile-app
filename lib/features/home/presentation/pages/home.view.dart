@@ -234,6 +234,7 @@ class PHomeView extends StatelessWidget {
                         ? ListView.builder(
                           shrinkWrap: true,
                           itemCount: 10,
+                          padding: EdgeInsets.zero,
                           itemBuilder: (context, index) {
                             return ContributionHistoryWidgetRedact(
                               loadingState: ctrl.loading.value,
@@ -250,6 +251,7 @@ class PHomeView extends StatelessWidget {
                         : ListView.builder(
                           shrinkWrap: true,
                           physics: NeverScrollableScrollPhysics(),
+                          padding: EdgeInsets.zero,
                           itemCount:
                               ctrl
                                   .history

@@ -16,7 +16,7 @@ class AuthDsImpl implements AuthDs {
   }) async {
     return await asyncFunctionWrapper.handleAsyncNetworkCall(() async {
       final payload = dio.FormData.fromMap({
-        'phone': phone,
+        // 'phone': phone,
         'password': password,
         'c_password': confirmPassword,
       });
@@ -25,15 +25,15 @@ class AuthDsImpl implements AuthDs {
         payload: payload,
         endPoint: Env.addPassword,
       );
-      return ApiResponse<List<Member>>.fromJson(
+      return ApiResponse<List<Message>>.fromJson(
         res,
-        (data) => (data as List).map((e) => Member.fromJson(e)).toList(),
+        (data) => (data as List).map((e) => Message.fromJson(e)).toList(),
       );
     });
   }
 
   @override
-  Future<ApiResponse<List<Member>>> forgotPassword({
+  Future<ApiResponse<List<Message>>> forgotPassword({
     required String email,
   }) async {
     return await asyncFunctionWrapper.handleAsyncNetworkCall(() async {
@@ -43,9 +43,9 @@ class AuthDsImpl implements AuthDs {
         payload: payload,
         endPoint: Env.forgotPassword,
       );
-      return ApiResponse<List<Member>>.fromJson(
+      return ApiResponse<List<Message>>.fromJson(
         res,
-        (data) => (data as List).map((e) => Member.fromJson(e)).toList(),
+        (data) => (data as List).map((e) => Message.fromJson(e)).toList(),
       );
     });
   }
@@ -115,7 +115,7 @@ class AuthDsImpl implements AuthDs {
   }
 
   @override
-  Future<ApiResponse<List<Member>>> verifyOTP({
+  Future<ApiResponse<Member>> verifyOTP({
     required String phone,
     required String otp,
   }) async {
@@ -127,10 +127,7 @@ class AuthDsImpl implements AuthDs {
         endPoint: Env.verifyOTP,
       );
       // return ApiResponse<Member>.fromJson(res, (data) => Member.fromJson(data));
-      return ApiResponse<List<Member>>.fromJson(
-        res,
-        (data) => (data as List).map((e) => Member.fromJson(e)).toList(),
-      );
+      return ApiResponse<Member>.fromJson(res, (data) => Member.fromJson(data));
     });
   }
 

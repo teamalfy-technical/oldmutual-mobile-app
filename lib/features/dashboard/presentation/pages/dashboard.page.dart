@@ -2,21 +2,19 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:oldmutual_pensions_app/core/utils/utils.dart';
-import 'package:oldmutual_pensions_app/features/dashboard/presentation/widgets/pension.tier.widget.dart';
+import 'package:oldmutual_pensions_app/features/dashboard/dashboard.dart';
+import 'package:oldmutual_pensions_app/features/dashboard/presentation/vm/dashboard.vm.dart';
 import 'package:oldmutual_pensions_app/gen/assets.gen.dart';
 import 'package:oldmutual_pensions_app/routes/app.pages.dart';
-import 'package:oldmutual_pensions_app/shared/widgets/annotated.region.dart';
+import 'package:oldmutual_pensions_app/shared/shared.dart';
 
 class PDashboardPage extends StatelessWidget {
-  const PDashboardPage({super.key});
+  PDashboardPage({super.key});
+
+  final ctrl = Get.put(PDashboardVm());
 
   @override
   Widget build(BuildContext context) {
-    final schemes = [
-      {'title': 'Pension Tier 1', 'amount': 'GHS 48,000', 'date': '12-05-2023'},
-      {'title': 'Pension Tier 2', 'amount': 'GHS 57,000', 'date': '12-06-2023'},
-      {'title': 'Pension Tier 3', 'amount': 'GHS 70,000', 'date': '12-06-2023'},
-    ];
     return Scaffold(
       body: PAnnotatedRegion(
         child: Stack(
@@ -60,21 +58,41 @@ class PDashboardPage extends StatelessWidget {
               top: PDeviceUtil.getDeviceHeight(context) * 0.2,
               left: PAppSize.s16,
               right: PAppSize.s16,
-              child: ListView.builder(
-                itemCount: schemes.length,
-                shrinkWrap: true,
-                itemBuilder: (context, index) {
-                  final scheme = schemes[index];
-                  return PensionTierWidget(
-                    scheme: scheme,
-                    onTap: () {
-                      PHelperFunction.switchScreen(
-                        destination: Routes.homePage,
-                        replace: true,
-                      );
-                    },
-                  );
-                },
+              child: Obx(
+                () =>
+                    ctrl.loading.value == LoadingState.loading
+                        ? ListView.builder(
+                          shrinkWrap: true,
+                          itemCount: 5,
+                          itemBuilder: (context, index) {
+                            return PensionTierRedactWidget(
+                              loading: ctrl.loading.value,
+                            );
+                          },
+                        )
+                        : ctrl.schemes.isEmpty
+                        ? PEmptyStateWidget(message: 'no_results_found'.tr)
+                        : ListView.builder(
+                          itemCount: ctrl.schemes.length,
+                          shrinkWrap: true,
+                          itemBuilder: (context, index) {
+                            final scheme = ctrl.schemes[index];
+                            return PensionTierWidget(
+                              scheme: scheme,
+                              onTap: () {
+                                ctrl.getMemberSelectedScheme(
+                                  employerNumber: scheme.employerNumber ?? '',
+                                  memberNumber: scheme.memberNumber ?? '',
+                                  ssnitNumber: scheme.ssnitNumber ?? '',
+                                );
+                                PHelperFunction.switchScreen(
+                                  destination: Routes.homePage,
+                                  replace: true,
+                                );
+                              },
+                            );
+                          },
+                        ),
               ),
             ),
           ],

@@ -29,6 +29,7 @@ class PAuthVm extends GetxController {
   final authService = Get.put(AuthServiceImpl());
 
   onTermsCheckboxChanged(bool? value) => agreeToTerms.value = value ?? false;
+
   onObscureChanged() => obscure.value = !obscure.value;
 
   final context = Get.context!;
@@ -143,6 +144,15 @@ class PAuthVm extends GetxController {
 
     checkIfPasswordMatch();
 
+    showLoadingdialog(
+      context: context,
+      barrierDismissible: true,
+      content: Text(
+        'setting_up_account'.tr,
+        style: Theme.of(context).textTheme.bodyMedium,
+      ),
+    );
+
     final result = await authService.addPassword(
       phone: phone,
       password: password,
@@ -150,16 +160,24 @@ class PAuthVm extends GetxController {
     );
     result.fold(
       (err) {
+        PHelperFunction.pop();
         PPopupDialog(
           context,
         ).errorMessage(title: 'error'.tr, message: err.message);
       },
       (res) {
-        clearFields();
-        PHelperFunction.switchScreen(
-          destination: Routes.loginPage,
-          replace: true,
-        );
+        PHelperFunction.pop();
+        // show success dialog
+        showSucccessdialog(context: context, title: res.message ?? '');
+        Future.delayed(Duration(seconds: 2), () {
+          PHelperFunction.pop();
+          // navigate to next screen
+          clearFields();
+          PHelperFunction.switchScreen(
+            destination: Routes.loginPage,
+            replace: true,
+          );
+        });
       },
     );
   }

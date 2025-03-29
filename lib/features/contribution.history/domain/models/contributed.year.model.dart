@@ -11,8 +11,8 @@ class ContributedYear {
 
   ContributedYear.fromJson(Map<String, dynamic> json) {
     fundYear = json['fund_year'];
-    totalContribution = json['TotalContribution'].toDouble();
-    employeeContribution = json['EmployeeContribution'].toDouble();
+    totalContribution = json['TotalContribution']?.toDouble();
+    employeeContribution = json['EmployeeContribution']?.toDouble();
   }
 
   Map<String, dynamic> toJson() {

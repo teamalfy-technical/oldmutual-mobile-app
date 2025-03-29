@@ -7,7 +7,7 @@ abstract class AuthDs {
     required String phone,
   });
 
-  Future<ApiResponse<List<Member>>> verifyOTP({
+  Future<ApiResponse<Member>> verifyOTP({
     required String phone,
     required String otp,
   });
@@ -30,7 +30,7 @@ abstract class AuthDs {
 
   Future<ApiResponse<List<Message>>> updateFcmToken({required String token});
 
-  Future<ApiResponse<List<Member>>> forgotPassword({required String email});
+  Future<ApiResponse<List<Message>>> forgotPassword({required String email});
 
   Future<ApiResponse<List<Message>>> resetPassword({
     required String otp,

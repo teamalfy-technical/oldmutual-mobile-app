@@ -101,7 +101,7 @@ class POnboardingPage extends StatelessWidget {
                                   : 'next'.tr.toUpperCase(),
                           width:
                               ctrl.pageIndex.value == 3
-                                  ? PDeviceUtil.getDeviceWidth(context) * 0.42
+                                  ? PDeviceUtil.getDeviceWidth(context) * 0.43
                                   : PDeviceUtil.getDeviceWidth(context) * 0.28,
                           onTap: () => ctrl.navigateToNextScreen(),
                         ),

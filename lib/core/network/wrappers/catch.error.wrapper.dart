@@ -37,10 +37,10 @@ class CatchApiErrorWrapperImpl implements CatchApiErrorWrapper {
             //errorMessage = err.response?.data['error'];
           } else if (err.response?.statusCode == 401) {
             errorMessage =
-                err.response?.data['message'] ?? 'Unauthorized request';
+                err.response?.data['error'] ?? 'Unauthorized request';
             pensionAppLogger.e(err.response?.data);
           } else if (err.response?.statusCode == 403) {
-            errorMessage = err.response?.data['message'] ?? 'Forbidden Access';
+            errorMessage = err.response?.data['error'] ?? 'Forbidden Access';
             pensionAppLogger.e(err.response?.data);
           } else if (err.response?.statusCode == 404) {
             errorMessage =
@@ -72,8 +72,7 @@ class CatchApiErrorWrapperImpl implements CatchApiErrorWrapper {
             errorMessage = err.message;
           }
         } else {
-          errorMessage = err.response?.data['message'];
-          //errorMessage = ServerException.getErrorMessage(err);
+          errorMessage = err.response?.data['error'];
         }
       } else {
         errorMessage = ServerException.getErrorMessage(err);

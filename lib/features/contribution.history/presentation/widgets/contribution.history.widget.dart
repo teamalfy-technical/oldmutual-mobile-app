@@ -21,6 +21,7 @@ class ContributionHistoryWidget extends StatelessWidget {
         ).textTheme.bodyLarge?.copyWith(fontWeight: FontWeight.w500),
       ).redacted(context: context, redact: false),
       contentPadding: EdgeInsets.symmetric(horizontal: PAppSize.s0),
+
       subtitle: Text(
         PFormatter.formatCurrency(amount: transaction.received ?? 0),
         style: Theme.of(
@@ -31,9 +32,11 @@ class ContributionHistoryWidget extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.end,
         children: [
           Text(
-            transaction.paymentFlag == 'B'
-                ? 'successful'.tr
-                : 'unsuccessful'.tr,
+            // transaction.paymentFlag == 'B'
+            //     ?
+            //     'unsuccessful'.tr
+            //     :
+            'successful'.tr,
             style: Theme.of(context).textTheme.bodySmall?.copyWith(
               color:
                   transaction.paymentFlag == 'B'

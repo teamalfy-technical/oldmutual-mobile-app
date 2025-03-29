@@ -25,7 +25,7 @@ class AuthRepoImpl implements AuthRepo {
   }
 
   @override
-  Future<Either<PFailure, ApiResponse<List<Member>>>> forgotPassword({
+  Future<Either<PFailure, ApiResponse<List<Message>>>> forgotPassword({
     required String email,
   }) async {
     return await customRepositoryWrapper.wrapRepositoryFunction(
@@ -76,12 +76,16 @@ class AuthRepoImpl implements AuthRepo {
   }
 
   @override
-  Future<Either<PFailure, ApiResponse<List<Member>>>> verifyOTP({
+  Future<Either<PFailure, ApiResponse<Member>>> verifyOTP({
     required String phone,
     required String otp,
   }) async {
     return await customRepositoryWrapper.wrapRepositoryFunction(
-      function: () async => await authDs.verifyOTP(phone: phone, otp: otp),
+      function: () async {
+        final res = await authDs.verifyOTP(phone: phone, otp: otp);
+        PSecureStorage().saveAuthResponse(res.data?.toJson());
+        return res;
+      },
     );
   }
 

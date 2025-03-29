@@ -22,14 +22,14 @@ class ContributionSummary {
   });
 
   ContributionSummary.fromJson(Map<String, dynamic> json) {
-    totalContributions = json['total_contributions'];
+    totalContributions = json['total_contributions']?.toDouble();
     totalEmployerContributions =
-        json['total_employer_contributions'].toDouble();
-    totalUnits = json['total_units'];
-    currentUnitPrice = json['current_unit_price'];
-    currentValue = json['current_value'];
-    gainLoss = json['gain_loss'];
-    totalInterest = json['total_interest'];
+        json['total_employer_contributions']?.toDouble();
+    totalUnits = json['total_units']?.toDouble();
+    currentUnitPrice = json['current_unit_price']?.toDouble();
+    currentValue = json['current_value']?.toDouble();
+    gainLoss = json['gain_loss']?.toDouble();
+    totalInterest = json['total_interest']?.toDouble();
     status = json['status'];
     lastContributionDate = json['last_contribution_date'];
   }

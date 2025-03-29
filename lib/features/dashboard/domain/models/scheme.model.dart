@@ -25,7 +25,7 @@ class Scheme {
     memberNumber = json['MemberNumber'];
     memberId = json['MemberId'];
     effectiveDate = json['EffectiveDate'];
-    monthlyContribution = json['MonthlyContribution'];
+    monthlyContribution = json['MonthlyContribution'].toDouble();
     ssnitNumber = json['ssnitNumber'];
     employerNumber = json['EmployerNumber'];
   }

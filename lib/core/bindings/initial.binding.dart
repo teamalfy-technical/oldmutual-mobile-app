@@ -14,7 +14,7 @@ class InitialBinding implements Bindings {
   void dependencies() {
     Get.lazyPut(() => PSplashVm());
     Get.lazyPut(() => PSplashVm());
-    Get.lazyPut(() => PAuthVm());
+    Get.lazyPut(() => PAuthVm(), fenix: true);
     Get.lazyPut(() => PTimerVm());
     Get.lazyPut(() => PHomeVm());
     Get.lazyPut(() => PBeneficiaryVm());

@@ -21,7 +21,7 @@ class AuthServiceImpl implements AuthService {
   }
 
   @override
-  Future<Either<PFailure, ApiResponse<List<Member>>>> forgotPassword({
+  Future<Either<PFailure, ApiResponse<List<Message>>>> forgotPassword({
     required String email,
   }) {
     return authRepo.forgotPassword(email: email);
@@ -59,7 +59,7 @@ class AuthServiceImpl implements AuthService {
   }
 
   @override
-  Future<Either<PFailure, ApiResponse<List<Member>>>> verifyOTP({
+  Future<Either<PFailure, ApiResponse<Member>>> verifyOTP({
     required String phone,
     required String otp,
   }) {

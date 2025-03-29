@@ -9,7 +9,7 @@ class PVerifyOTPPage extends StatelessWidget {
   final bool isSignup;
   PVerifyOTPPage({super.key, this.isSignup = true});
 
-  final ctrl = Get.put(PAuthVm());
+  final ctrl = Get.find<PAuthVm>();
   final timerCtrl = Get.put(PTimerVm());
 
   @override

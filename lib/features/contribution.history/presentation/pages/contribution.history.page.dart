@@ -6,7 +6,6 @@ import 'package:oldmutual_pensions_app/features/contribution.history/contributio
 import 'package:oldmutual_pensions_app/features/contribution.history/presentation/widgets/contribution.history.widget.redact.dart';
 import 'package:oldmutual_pensions_app/shared/shared.dart';
 import 'package:oldmutual_pensions_app/shared/widgets/custom.dropdown.dart';
-import 'package:oldmutual_pensions_app/shared/widgets/empty.state.widget.dart';
 
 class PContributionHistoryPage extends StatelessWidget {
   PContributionHistoryPage({super.key});
@@ -57,12 +56,33 @@ class PContributionHistoryPage extends StatelessWidget {
 
                           PAppSize.s18.horizontalSpace,
 
-                          PGradientButton(
-                            label: 'apply'.tr,
-                            showIcon: false,
-                            radius: PAppSize.s5,
-                            width: PDeviceUtil.getDeviceWidth(context) * 0.28,
-                            onTap: () => ctrl.filterContributions(),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.end,
+                            children: [
+                              Text(
+                                'clear_filters'.tr,
+                                style: Theme.of(
+                                  context,
+                                ).textTheme.bodySmall?.copyWith(
+                                  color: PAppColor.primary,
+                                  fontWeight: FontWeight.w600,
+                                  decoration: TextDecoration.underline,
+                                  decorationColor: PAppColor.primary,
+                                  //  fontSize: PAppSize.s13,
+                                ),
+                              ).onPressed(
+                                onTap: () => ctrl.getAllContributions(),
+                              ),
+                              PAppSize.s4.verticalSpace,
+                              PGradientButton(
+                                label: 'apply'.tr,
+                                showIcon: false,
+                                radius: PAppSize.s5,
+                                width:
+                                    PDeviceUtil.getDeviceWidth(context) * 0.28,
+                                onTap: () => ctrl.filterContributions(),
+                              ),
+                            ],
                           ),
 
                           // PCustomCheckbox(

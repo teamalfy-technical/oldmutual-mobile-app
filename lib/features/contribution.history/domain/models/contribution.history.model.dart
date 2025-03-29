@@ -62,15 +62,15 @@ class TransactionHistory {
   TransactionHistory.fromJson(Map<String, dynamic> json) {
     status = json['status'];
     accountValue = json['account_value'];
-    totalContributionTally = json['total_contribution_tally'].toDouble();
-    employerContribution = json['employer_contribution'].toDouble();
-    transferReceived = json['transfer_received'].toDouble();
-    totalRedemption = json['total_redemption'].toDouble();
-    gainLoss = json['gain_loss'].toDouble();
-    currentPrice = json['current_price'].toDouble();
+    totalContributionTally = json['total_contribution_tally']?.toDouble();
+    employerContribution = json['employer_contribution']?.toDouble();
+    transferReceived = json['transfer_received']?.toDouble();
+    totalRedemption = json['total_redemption']?.toDouble();
+    gainLoss = json['gain_loss']?.toDouble();
+    currentPrice = json['current_price']?.toDouble();
     dateJoined = json['date_joined'];
     retirementData = json['retirement_data'];
-    unitsBf = json['units_bf'].toDouble();
+    unitsBf = json['units_bf']?.toDouble();
     if (json['transactions'] != null) {
       transactions = <Transactions>[];
       json['transactions'].forEach((v) {
@@ -128,15 +128,15 @@ class Transactions {
 
   Transactions.fromJson(Map<String, dynamic> json) {
     paymentDate = json['payment_date'];
-    received = json['received'].toDouble();
+    received = json['received']?.toDouble();
     pensionTypeId = json['pension_type_id'];
     paymentFlag = json['payment_flag'];
     pensionTypeName = json['pension_type_name'];
     schemeId = json['scheme_id'];
     schemeName = json['scheme_name'];
-    unitsAllocated = json['units_allocated'].toDouble();
-    unitPrice = json['unit_price'].toDouble();
-    employerContribution = json['employer_contribution'].toDouble();
+    unitsAllocated = json['units_allocated']?.toDouble();
+    unitPrice = json['unit_price']?.toDouble();
+    employerContribution = json['employer_contribution']?.toDouble();
     narration = json['narration'];
   }
 

@@ -77,8 +77,9 @@ class AppTranslations extends Translations {
       'signout_dialog_desc':
           'Are you sure you want to sign out of your account?',
       'signing_out': 'Signing OUT...',
+      'setting_up_account': 'Setting Up Your Account...',
       'deleting_account': 'Deleting ACCOUNT...',
-
+      'clear_filters': 'Clear Filters',
       'continue': 'Continue',
       'cancel': 'Cancel',
       'successful': 'Successful',

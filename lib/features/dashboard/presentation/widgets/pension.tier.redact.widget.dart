@@ -1,14 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:intl/intl.dart';
 import 'package:oldmutual_pensions_app/core/utils/utils.dart';
-import 'package:oldmutual_pensions_app/features/home/home.dart';
+import 'package:redacted/redacted.dart';
 
-class PensionTierWidget extends StatelessWidget {
+class PensionTierRedactWidget extends StatelessWidget {
   final Function()? onTap;
-  const PensionTierWidget({super.key, required this.scheme, this.onTap});
-
-  final Scheme scheme;
+  final LoadingState loading;
+  const PensionTierRedactWidget({super.key, this.onTap, required this.loading});
 
   @override
   Widget build(BuildContext context) {
@@ -34,17 +32,14 @@ class PensionTierWidget extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            scheme.penTypeDescription ?? '',
+            '******************',
             style: Theme.of(context).textTheme.titleSmall,
           ),
           PAppSize.s16.verticalSpace,
-          Text(
-            PFormatter.formatCurrency(amount: scheme.monthlyContribution ?? 0),
-            style: Theme.of(context).textTheme.titleSmall,
-          ),
+          Text('**************', style: Theme.of(context).textTheme.titleSmall),
           PAppSize.s4.verticalSpace,
           Text(
-            'Started on ${PFormatter.formatDate(dateFormat: DateFormat('dd-MM-yyyy'), date: DateTime.parse(scheme.effectiveDate ?? DateTime.now().toIso8601String()))}',
+            '*********************',
             style: Theme.of(context).textTheme.bodySmall?.copyWith(
               fontSize: PAppSize.s12,
               color: PAppColor.blackColor.withOpacityExt(PAppSize.s0_5),
@@ -52,6 +47,9 @@ class PensionTierWidget extends StatelessWidget {
           ),
         ],
       ),
-    ).onPressed(onTap: onTap);
+    ).redacted(
+      context: context,
+      redact: loading == LoadingState.loading ? true : false,
+    );
   }
 }

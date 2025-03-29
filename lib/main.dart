@@ -56,7 +56,7 @@ class MyApp extends StatelessWidget {
           getPages: AppPages.routes,
           theme: PAppTheme.lightTheme,
           darkTheme: PAppTheme.darkTheme,
-          themeMode: ThemeMode.system,
+          themeMode: ThemeMode.light,
           scrollBehavior: const CupertinoScrollBehavior(),
         );
       },
