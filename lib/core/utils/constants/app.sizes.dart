@@ -58,6 +58,7 @@ class PAppSize {
   static const double s120 = 120.0;
   static const double s130 = 130.0;
   static const double s136 = 136.0;
+  static const double s150 = 150.0;
   static const double s156 = 156.0;
   static const double s160 = 160.0;
   static const double s165 = 165.0;

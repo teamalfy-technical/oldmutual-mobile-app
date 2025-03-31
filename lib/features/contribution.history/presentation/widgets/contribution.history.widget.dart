@@ -38,10 +38,10 @@ class ContributionHistoryWidget extends StatelessWidget {
             //     :
             'successful'.tr,
             style: Theme.of(context).textTheme.bodySmall?.copyWith(
-              color:
-                  transaction.paymentFlag == 'B'
-                      ? PAppColor.primary
-                      : PAppColor.redColor,
+              color: PAppColor.primary,
+              // transaction.paymentFlag == 'B'
+              //     ? PAppColor.primary
+              //     : PAppColor.redColor,
               fontWeight: FontWeight.w400,
             ),
           ).redacted(context: context, redact: false),

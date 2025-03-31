@@ -87,4 +87,24 @@ class PHelperFunction {
       return num.toInt().toString();
     }
   }
+
+  // static Future<void> setStatusBarColorForIOS(BuildContext context,
+  //     [Color statusBarColor = PAppColor.primaryDark]) async {
+  //   if (Platform.isIOS && isLightMode(context)) {
+  //     await FlutterStatusbarcolor.setStatusBarColor(statusBarColor);
+  //     if (useWhiteForeground(statusBarColor)) {
+  //       FlutterStatusbarcolor.setStatusBarWhiteForeground(true);
+  //     } else {
+  //       FlutterStatusbarcolor.setStatusBarWhiteForeground(false);
+  //     }
+  //   }
+  //   if (Platform.isIOS && isDarkMode(context)) {
+  //     await FlutterStatusbarcolor.setStatusBarColor(GAppColor.blackColor);
+  //     if (useWhiteForeground(GAppColor.blackColor)) {
+  //       FlutterStatusbarcolor.setStatusBarWhiteForeground(true);
+  //     } else {
+  //       FlutterStatusbarcolor.setStatusBarWhiteForeground(false);
+  //     }
+  //   }
+  // }
 }

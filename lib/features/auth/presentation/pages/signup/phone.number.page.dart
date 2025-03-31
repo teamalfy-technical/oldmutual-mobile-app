@@ -1,3 +1,4 @@
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -40,7 +41,39 @@ class PPhoneNumberPage extends StatelessWidget {
                           PCustomCheckbox(
                             value: ctrl.agreeToTerms.value,
                             onChanged: ctrl.onTermsCheckboxChanged,
-                            child: Text('agree_to_terms'.tr),
+                            child: RichText(
+                              text: TextSpan(
+                                text: '${'i_agree_to'.tr} ',
+                                style: Theme.of(context).textTheme.bodyMedium
+                                    ?.copyWith(color: PAppColor.blackColor),
+                                children: [
+                                  TextSpan(
+                                    text: 'terms_conditions'.tr,
+                                    style: Theme.of(
+                                      context,
+                                    ).textTheme.bodyMedium?.copyWith(
+                                      color: PAppColor.primary,
+                                      decoration: TextDecoration.underline,
+                                      decorationColor: PAppColor.primary,
+                                    ),
+                                    recognizer:
+                                        TapGestureRecognizer()
+                                          ..onTap =
+                                              () =>
+                                                  PHelperFunction.switchScreen(
+                                                    destination:
+                                                        Routes.webviewPage,
+                                                    args: [
+                                                      'terms_conditions'.tr,
+                                                      PAppConstant
+                                                          .termsConditionsLink,
+                                                    ],
+                                                  ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            //Text('agree_to_terms'.tr),
                           ),
                           (PDeviceUtil.getDeviceWidth(context) / 2.5)
                               .verticalSpace,

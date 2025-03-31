@@ -80,6 +80,8 @@ class AppTranslations extends Translations {
       'setting_up_account': 'Setting Up Your Account...',
       'deleting_account': 'Deleting ACCOUNT...',
       'clear_filters': 'Clear Filters',
+      'i_agree_to': 'I agree to the',
+      'terms_conditions': 'Terms & Conditions',
       'continue': 'Continue',
       'cancel': 'Cancel',
       'successful': 'Successful',

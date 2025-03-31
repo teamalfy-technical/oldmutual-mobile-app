@@ -21,6 +21,7 @@ abstract class Routes {
   static const calculateResultPage = _Paths.calculateResultPage;
   static const settingsPage = _Paths.settingsPage;
   static const supportPage = _Paths.supportPage;
+  static const webviewPage = _Paths.webviewPage;
 }
 
 abstract class _Paths {
@@ -41,4 +42,5 @@ abstract class _Paths {
   static const calculateResultPage = '/calculate-results-page';
   static const settingsPage = '/settings-page';
   static const supportPage = '/support-page';
+  static const webviewPage = '/webview-page';
 }
