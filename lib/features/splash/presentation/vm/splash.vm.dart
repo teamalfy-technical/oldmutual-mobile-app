@@ -44,10 +44,20 @@ class PSplashVm extends GetxController {
             replace: true,
           );
         } else {
-          PHelperFunction.switchScreen(
-            destination: Routes.signupPage,
-            replace: true,
+          bool? isRegistered = PSecureStorage().readData<bool>(
+            PSecureStorage().registerdKey,
           );
+          if (isRegistered != null && isRegistered) {
+            PHelperFunction.switchScreen(
+              destination: Routes.loginPage,
+              replace: true,
+            );
+          } else {
+            PHelperFunction.switchScreen(
+              destination: Routes.signupPage,
+              replace: true,
+            );
+          }
         }
       }
     });

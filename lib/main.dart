@@ -40,7 +40,7 @@ class MyApp extends StatelessWidget {
       builder: (_, child) {
         return GetMaterialApp(
           debugShowCheckedModeBanner: false,
-          title: 'Pensions App',
+          title: 'Old Mutual Pensions',
           useInheritedMediaQuery: true,
           locale: Get.deviceLocale,
           navigatorKey: appNavigatorKey,

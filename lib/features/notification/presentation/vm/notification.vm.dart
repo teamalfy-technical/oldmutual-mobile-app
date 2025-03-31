@@ -16,6 +16,12 @@ class PNotificationVM extends GetxController {
 
   updateLoadingState(LoadingState loadingState) => loading.value = loadingState;
 
+  @override
+  onInit() {
+    getNotifications();
+    super.onInit();
+  }
+
   /// Function to disable notifications
   Future<void> disableNotifications() async {
     final result = await notificationService.disableNotifications(

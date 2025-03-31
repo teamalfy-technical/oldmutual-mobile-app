@@ -7,9 +7,9 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:264180873072:android:00c6ff35ff33805d0b41b5",
+        "mobilesdk_app_id": "1:264180873072:android:c8eeb65bc66e50240b41b5",
         "android_client_info": {
-          "package_name": "com.oldmutual.pensions.app.oldmutual_pensions_app"
+          "package_name": "com.oldmutual.pensions.app"
         }
       },
       "oauth_client": [],

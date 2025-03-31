@@ -39,7 +39,16 @@ class DioClient {
         onRequest: (options, handler) {
           pensionAppLogger.i("📤 Request: ${options.method} ${options.uri}");
           pensionAppLogger.i("📝 Headers: ${options.headers}");
-          pensionAppLogger.i("📦 Payload: ${options.data}");
+          if (options.data is FormData) {
+            FormData formData = options.data as FormData;
+            for (var field in formData.fields) {
+              pensionAppLogger.i("📦 Payload: ${field.key} = ${field.value}");
+            }
+          } else {
+            pensionAppLogger.i(
+              "📦 Payload: ${options.data is FormData ? options.data : options.data}",
+            );
+          }
           pensionAppLogger.i("📦 QueryParams: ${options.queryParameters}");
           return handler.next(options);
         },

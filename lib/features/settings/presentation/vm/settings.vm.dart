@@ -50,6 +50,7 @@ class PSettingsVm extends GetxController {
       },
       (res) {
         PHelperFunction.pop();
+        clearCache();
         showSucccessdialog(context: context, title: res.message ?? '');
         Future.delayed(Duration(seconds: 2), () {
           PHelperFunction.pop();
@@ -61,6 +62,13 @@ class PSettingsVm extends GetxController {
         });
       },
     );
+  }
+
+  // Erase data from login cache
+  void clearCache() {
+    PSecureStorage().removeData(PSecureStorage().bioDataKey);
+    PSecureStorage().removeData(PSecureStorage().deviceTokenKey);
+    PSecureStorage().removeData(PSecureStorage().authResKey);
   }
 
   Future<void> deleteAccount() async {

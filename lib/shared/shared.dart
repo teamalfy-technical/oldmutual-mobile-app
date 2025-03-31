@@ -7,6 +7,7 @@ export 'widgets/custom.checkbox.dart';
 export 'widgets/custom.line.chart.dart';
 export 'widgets/custom.loading.indicator.dart';
 export 'widgets/custom.password.textfield.dart';
+export 'widgets/custom.phone.textfield.dart';
 export 'widgets/custom.pin.put.dart';
 export 'widgets/custom.textfield.dart';
 export 'widgets/empty.state.widget.dart';

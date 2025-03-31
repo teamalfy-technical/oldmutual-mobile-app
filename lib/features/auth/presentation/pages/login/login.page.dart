@@ -30,13 +30,17 @@ class PLoginPage extends StatelessWidget {
                         Column(
                           children: [
                             PAppSize.s20.verticalSpace,
-                            PCustomTextField(
+                            // PCustomTextField(
+                            //   labelText: 'phone'.tr,
+                            //   hintText: 'enter_phone_number'.tr,
+                            //   prefixIcon: Assets.icons.phoneIcon.path,
+                            //   controller: ctrl.phoneTEC,
+                            //   validator: PValidator.validatePhoneNumber,
+                            //   // focusColor: PAppColor.primary,
+                            // ),
+                            PCustomPhoneTextfield(
+                              ctrl: ctrl,
                               labelText: 'phone'.tr,
-                              hintText: 'enter_phone_number'.tr,
-                              prefixIcon: Assets.icons.phoneIcon.path,
-                              controller: ctrl.phoneTEC,
-                              validator: PValidator.validatePhoneNumber,
-                              // focusColor: PAppColor.primary,
                             ),
                             PAppSize.s20.verticalSpace,
                             PCustomPasswordTextField(

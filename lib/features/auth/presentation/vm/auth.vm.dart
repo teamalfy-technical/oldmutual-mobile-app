@@ -1,3 +1,4 @@
+import 'package:country_picker/country_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:oldmutual_pensions_app/core/utils/utils.dart';
@@ -36,9 +37,31 @@ class PAuthVm extends GetxController {
 
   void updateOTP(String pin) => otpcode.value = pin;
 
+  var selectedCountry =
+      Country(
+        phoneCode: '233',
+        e164Sc: 1,
+        countryCode: 'GH',
+        level: 1,
+        geographic: true,
+        name: 'Ghana',
+        example: '2012345678',
+        displayName: 'Ghana (GH) [+233]',
+        displayNameNoCountryCode: 'Ghana (GH)',
+        e164Key: '1-GH-0',
+      ).obs;
+
+  void setSelectedCountry(Country country) {
+    selectedCountry.value = country;
+    selectedCountry.value.flagEmoji;
+  }
+
   /// Function to sign up user by sending OTP code
   Future<void> signup() async {
-    String phone = phoneTEC.text.trim();
+    String phone = PFormatter.formatPhone(
+      code: selectedCountry.value.phoneCode,
+      phone: phoneTEC.text.trim(),
+    );
 
     if (!agreeToTerms.value) {
       PPopupDialog(context).errorMessage(
@@ -80,7 +103,11 @@ class PAuthVm extends GetxController {
   /// @params => isSignup
   Future<void> verifyOTP({required String pin, required bool isSignup}) async {
     // final context = Get.context!;
-    String phone = phoneTEC.text.trim();
+
+    String phone = PFormatter.formatPhone(
+      code: selectedCountry.value.phoneCode,
+      phone: phoneTEC.text.trim(),
+    );
 
     if (otpcode.isEmpty) {
       PPopupDialog(context).errorMessage(
@@ -130,17 +157,22 @@ class PAuthVm extends GetxController {
         title: 'action_required'.tr,
         message: 'Passwords do not match',
       );
-      return;
     }
+    return;
   }
 
   /// [Function] Create password for either sign
   /// or reset password flow
   /// @ params - bool isSignup
   Future<void> createPassword({required bool isSignup}) async {
-    String phone = phoneTEC.text.trim();
+    // String phone = phoneTEC.text.trim();
     String password = passwordTEC.text.trim();
     String confirmPassword = confirmPasswordTEC.text.trim();
+
+    String phone = PFormatter.formatPhone(
+      code: selectedCountry.value.phoneCode,
+      phone: phoneTEC.text.trim(),
+    );
 
     checkIfPasswordMatch();
 
@@ -167,6 +199,8 @@ class PAuthVm extends GetxController {
       },
       (res) {
         PHelperFunction.pop();
+        PSecureStorage().removeData(PSecureStorage().authResKey);
+        PSecureStorage().saveData<bool>(PSecureStorage().registerdKey, true);
         // show success dialog
         showSucccessdialog(context: context, title: res.message ?? '');
         Future.delayed(Duration(seconds: 2), () {
@@ -261,7 +295,10 @@ class PAuthVm extends GetxController {
   /// @params - String pin
   /// @params - bool isSignup
   Future<void> login() async {
-    String phone = phoneTEC.text.trim();
+    String phone = PFormatter.formatPhone(
+      code: selectedCountry.value.phoneCode,
+      phone: phoneTEC.text.trim(),
+    );
     String password = passwordTEC.text.trim();
     // final deviceToken = await PNotificationService().getToken();
     // pensionAppLogger.e(deviceToken);
@@ -275,15 +312,20 @@ class PAuthVm extends GetxController {
     final result = await authService.signIn(phone: phone, password: password);
     result.fold(
       (err) {
+        PHelperFunction.pop();
         PPopupDialog(context).errorMessage(
-          title: 'Incorrect email or password',
-          message: err.message,
+          title: 'error'.tr,
+          message:
+              err.message == '${'unauthorised'.tr}.'
+                  ? 'phone_exist_msg'.tr
+                  : err.message,
         );
       },
       (res) async {
         // await PNotificationService().saveToken();
         await getBioData();
         clearFields();
+        PHelperFunction.pop();
         PHelperFunction.switchScreen(
           destination: Routes.dashboardPage,
           replace: true,

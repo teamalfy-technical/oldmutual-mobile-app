@@ -37,10 +37,10 @@ class CatchApiErrorWrapperImpl implements CatchApiErrorWrapper {
             //errorMessage = err.response?.data['error'];
           } else if (err.response?.statusCode == 401) {
             errorMessage =
-                err.response?.data['error'] ?? 'Unauthorized request';
+                err.response?.data['message'] ?? 'Unauthorized request';
             pensionAppLogger.e(err.response?.data);
           } else if (err.response?.statusCode == 403) {
-            errorMessage = err.response?.data['error'] ?? 'Forbidden Access';
+            errorMessage = err.response?.data['message'] ?? 'Forbidden Access';
             pensionAppLogger.e(err.response?.data);
           } else if (err.response?.statusCode == 404) {
             errorMessage =
@@ -84,8 +84,15 @@ class CatchApiErrorWrapperImpl implements CatchApiErrorWrapper {
   }
 
   String extractError(Map<String, dynamic> response) {
+    pensionAppLogger.e(response);
     if (response.containsKey("data")) {
       for (var entry in response["data"].entries) {
+        if (entry.value is List && entry.value.isNotEmpty) {
+          return entry.value.first; // Return the first error message found
+        }
+      }
+    } else {
+      for (var entry in response.entries) {
         if (entry.value is List && entry.value.isNotEmpty) {
           return entry.value.first; // Return the first error message found
         }

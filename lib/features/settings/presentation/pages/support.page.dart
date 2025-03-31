@@ -44,6 +44,39 @@ class PSupportPage extends StatelessWidget {
 
               PAppSize.s32.verticalSpace,
 
+              Divider(color: PAppColor.fillColor),
+
+              Text(
+                'call_us_on'.tr,
+                textAlign: TextAlign.center,
+                style: Theme.of(context).textTheme.bodyMedium,
+              ),
+              PAppSize.s2.verticalSpace,
+              Text(
+                PAppConstant.phoneSupport,
+                textAlign: TextAlign.center,
+                style: Theme.of(
+                  context,
+                ).textTheme.bodyLarge?.copyWith(fontWeight: FontWeight.w600),
+              ),
+
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Expanded(child: Divider(color: PAppColor.fillColor)),
+                  PAppSize.s4.horizontalSpace,
+                  Text(
+                    'or'.tr,
+                    textAlign: TextAlign.center,
+                    style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
+                  PAppSize.s4.horizontalSpace,
+                  Expanded(child: Divider(color: PAppColor.fillColor)),
+                ],
+              ),
+
               Text(
                 'send_us_email'.tr,
                 textAlign: TextAlign.center,
@@ -51,12 +84,13 @@ class PSupportPage extends StatelessWidget {
               ),
               PAppSize.s2.verticalSpace,
               Text(
-                '@customerchatbot.io'.tr,
+                PAppConstant.emailSupport,
                 textAlign: TextAlign.center,
                 style: Theme.of(
                   context,
                 ).textTheme.bodyLarge?.copyWith(fontWeight: FontWeight.w600),
               ),
+              Divider(color: PAppColor.fillColor),
             ],
           ).symmetric(horizontal: PAppSize.s20).scrollable(),
     );

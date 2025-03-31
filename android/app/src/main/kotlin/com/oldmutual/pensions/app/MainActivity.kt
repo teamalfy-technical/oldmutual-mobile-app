@@ -1,4 +1,4 @@
-package com.oldmutual.pensions.app.oldmutual_pensions_app
+package com.oldmutual.pensions.app
 
 import io.flutter.embedding.android.FlutterActivity
 

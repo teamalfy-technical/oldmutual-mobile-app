@@ -7,8 +7,6 @@ import 'package:oldmutual_pensions_app/features/auth/presentation/vm/auth.vm.dar
 import 'package:oldmutual_pensions_app/routes/app.pages.dart';
 import 'package:oldmutual_pensions_app/shared/shared.dart';
 
-import '../../../../../gen/assets.gen.dart';
-
 class PPhoneNumberPage extends StatelessWidget {
   PPhoneNumberPage({super.key});
 
@@ -29,14 +27,18 @@ class PPhoneNumberPage extends StatelessWidget {
                   child:
                       Column(
                         children: [
-                          PCustomTextField(
+                          PCustomPhoneTextfield(
+                            ctrl: ctrl,
                             labelText: 'phone'.tr,
-                            hintText: 'enter_phone_number'.tr,
-                            prefixIcon: Assets.icons.phoneIcon.path,
-                            controller: ctrl.phoneTEC,
-                            validator: PValidator.validatePhoneNumber,
-                            // focusColor: PAppColor.primary,
                           ),
+                          // PCustomTextField(
+                          //   labelText: 'phone'.tr,
+                          //   hintText: 'enter_phone_number'.tr,
+                          //   prefixIcon: Assets.icons.phoneIcon.path,
+                          //   controller: ctrl.phoneTEC,
+                          //   validator: PValidator.validatePhoneNumber,
+                          //   // focusColor: PAppColor.primary,
+                          // ),
                           PAppSize.s20.verticalSpace,
                           PCustomCheckbox(
                             value: ctrl.agreeToTerms.value,

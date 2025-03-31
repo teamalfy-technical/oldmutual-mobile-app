@@ -2,7 +2,7 @@
     <uses-permission android:name="android.permission.INTERNET"/>
     
     <application
-        android:label="oldmutual_pensions_app"
+        android:label="Old Mutual Pensions"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity

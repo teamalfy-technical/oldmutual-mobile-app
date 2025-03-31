@@ -11,7 +11,7 @@ class PFormatter {
 
   static String formatPhone({required String code, required String phone}) {
     var formatted = phone.startsWith('0') ? phone.substring(1) : phone;
-    return '+$code$formatted';
+    return '$code$formatted';
   }
 
   /// --- format time
