@@ -13,31 +13,36 @@ class NotificationServiceImpl implements NotificationService {
   Future<Either<PFailure, ApiResponse<List<Message>>>> disableNotifications({
     required String deviceToken,
   }) async {
-    return await customRepositoryWrapper.wrapRepositoryFunction(
-      function:
-          () async => await notificationDs.disableNotifications(
-            deviceToken: deviceToken,
-          ),
-    );
+    return notificationRepo.disableNotifications(deviceToken: deviceToken);
   }
 
   @override
   Future<Either<PFailure, ApiResponse<List<Message>>>> enableNotifications({
     required deviceToken,
   }) async {
-    return await customRepositoryWrapper.wrapRepositoryFunction(
-      function:
-          () async => await notificationDs.enableNotifications(
-            deviceToken: deviceToken,
-          ),
-    );
+    return notificationRepo.enableNotifications(deviceToken: deviceToken);
   }
 
   @override
   Future<Either<PFailure, ApiResponse<List<NotificationModel>>>>
   getNotifications() async {
-    return await customRepositoryWrapper.wrapRepositoryFunction(
-      function: () async => await notificationDs.getNotifications(),
-    );
+    return notificationRepo.getNotifications();
+  }
+
+  @override
+  Future<Either<PFailure, ApiResponse<int>>> getUnreadNotificationsCount() {
+    return notificationRepo.getUnreadNotificationsCount();
+  }
+
+  @override
+  Future<Either<PFailure, ApiResponse<NotificationModel>>>
+  markNotificationAsRead({required String id}) {
+    return notificationRepo.markNotificationAsRead(id: id);
+  }
+
+  @override
+  Future<Either<PFailure, ApiResponse<List<NotificationModel>>>>
+  markNotificationsAsRead({required List<String> ids}) {
+    return notificationRepo.markNotificationsAsRead(ids: ids);
   }
 }

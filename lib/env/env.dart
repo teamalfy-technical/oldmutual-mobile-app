@@ -121,6 +121,29 @@ abstract class Env {
   @EnviedField(defaultValue: '/notifications', obfuscate: true)
   static final String getNotifications = _Env.getNotifications;
 
+  /// [GetReadNotification] endpoint
+  @EnviedField(
+    defaultValue: '/notifications/read-notification',
+    obfuscate: true,
+  )
+  static final String getReadNotification = _Env.getReadNotification;
+
+  /// [MarkNotificationAsRead] endpoint
+  @EnviedField(defaultValue: '/notifications/mark-as-read', obfuscate: true)
+  static final String markNotificationAsRead = _Env.markNotificationAsRead;
+
+  /// [MarkNotificationAsRead] endpoint
+  @EnviedField(
+    defaultValue: '/notifications/mark-selected-as-read',
+    obfuscate: true,
+  )
+  static final String markNotificationsAsRead = _Env.markNotificationsAsRead;
+
+  /// [GetUnreadNotificationCount] endpoint
+  @EnviedField(defaultValue: '/notifications/unread-count', obfuscate: true)
+  static final String getUnreadNotificationCount =
+      _Env.getUnreadNotificationCount;
+
   /// -------------------- Notifications Endpoints Ends Here ------------------------- ///
   ///
   ///

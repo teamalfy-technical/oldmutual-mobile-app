@@ -12,4 +12,13 @@ abstract class NotificationRepo {
   });
   Future<Either<PFailure, ApiResponse<List<NotificationModel>>>>
   getNotifications();
+
+  Future<Either<PFailure, ApiResponse<NotificationModel>>> getReadNotification({
+    required String id,
+  });
+  Future<Either<PFailure, ApiResponse<List<NotificationModel>>>>
+  markNotificationsAsRead({required List<String> ids});
+  Future<Either<PFailure, ApiResponse<NotificationModel>>>
+  markNotificationAsRead({required String id});
+  Future<Either<PFailure, ApiResponse<int>>> getUnreadNotificationsCount();
 }

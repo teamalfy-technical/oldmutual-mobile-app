@@ -53,4 +53,65 @@ class NotificationDsImpl implements NotificationDs {
       );
     });
   }
+
+  @override
+  Future<ApiResponse<NotificationModel>> getReadNotification({
+    required String id,
+  }) async {
+    return await asyncFunctionWrapper.handleAsyncNetworkCall(() async {
+      final res = await apiService.callService(
+        requestType: RequestType.get,
+        endPoint: '${Env.getReadNotification}/$id',
+      );
+      return ApiResponse<NotificationModel>.fromJson(
+        res,
+        (data) => NotificationModel.fromJson(data),
+      );
+    });
+  }
+
+  @override
+  Future<ApiResponse<int>> getUnreadNotificationsCount() async {
+    return await asyncFunctionWrapper.handleAsyncNetworkCall(() async {
+      final res = await apiService.callService(
+        requestType: RequestType.get,
+        endPoint: Env.getUnreadNotificationCount,
+      );
+      return res['data'];
+    });
+  }
+
+  @override
+  Future<ApiResponse<NotificationModel>> markNotificationAsRead({
+    required String id,
+  }) async {
+    return await asyncFunctionWrapper.handleAsyncNetworkCall(() async {
+      final res = await apiService.callService(
+        requestType: RequestType.get,
+        endPoint: '${Env.markNotificationAsRead}/$id',
+      );
+      return ApiResponse<NotificationModel>.fromJson(
+        res,
+        (data) => NotificationModel.fromJson(data),
+      );
+    });
+  }
+
+  @override
+  Future<ApiResponse<List<NotificationModel>>> markNotificationsAsRead({
+    required List<String> ids,
+  }) async {
+    return await asyncFunctionWrapper.handleAsyncNetworkCall(() async {
+      final res = await apiService.callService(
+        requestType: RequestType.post,
+        payload: FormData({'notification_ids[]': ids}),
+        endPoint: Env.markNotificationsAsRead,
+      );
+      return ApiResponse<List<NotificationModel>>.fromJson(
+        res,
+        (data) =>
+            (data as List).map((e) => NotificationModel.fromJson(e)).toList(),
+      );
+    });
+  }
 }

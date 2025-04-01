@@ -1,93 +1,69 @@
 class NotificationModel {
   String? id;
-  String? notifyUserId;
-  String? title;
-  String? body;
-  String? imageUrl;
-  NotificationType? notificationType;
-  String? createdDate;
-  bool? isRead;
+  String? type;
+  int? notifiableId;
+  String? notifiableType;
+  Data? data;
+  String? readAt;
+  String? createdAt;
+  String? updatedAt;
 
   NotificationModel({
     this.id,
-    this.notifyUserId,
-    this.title,
-    this.body,
-    this.imageUrl,
-    this.notificationType,
-    this.createdDate,
-    this.isRead,
+    this.type,
+    this.notifiableId,
+    this.notifiableType,
+    this.data,
+    this.readAt,
+    this.createdAt,
+    this.updatedAt,
   });
 
   NotificationModel.fromJson(Map<String, dynamic> json) {
     id = json['id'];
-    notifyUserId = json['notifyUserId'];
-    title = json['title'];
-    body = json['body'];
-    imageUrl = json['imageUrl'];
-    notificationType = json['notificationType'] != null
-        ? NotificationType.fromJson(json['notificationType'])
-        : null;
-    createdDate = json['createdDate'];
-    isRead = json['isRead'];
+    type = json['type'];
+    notifiableId = json['notifiable_id'];
+    notifiableType = json['notifiable_type'];
+    data = json['data'] != null ? Data.fromJson(json['data']) : null;
+    readAt = json['read_at'];
+    createdAt = json['created_at'];
+    updatedAt = json['updated_at'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
     data['id'] = id;
-    data['notifyUserId'] = notifyUserId;
-    data['title'] = title;
-    data['body'] = body;
-    data['imageUrl'] = imageUrl;
-    data['notificationType'] = notificationType?.toJson();
-    data['createdDate'] = createdDate;
-    data['isRead'] = isRead;
+    data['type'] = type;
+    data['notifiable_id'] = notifiableId;
+    data['notifiable_type'] = notifiableType;
+    if (this.data != null) {
+      data['data'] = this.data!.toJson();
+    }
+    data['read_at'] = readAt;
+    data['created_at'] = createdAt;
+    data['updated_at'] = updatedAt;
     return data;
   }
 }
 
-class NotificationType {
-  String? fromUserId;
-  String? toUserId;
-  String? postId;
-  String? followerId;
-  String? type;
-  String? opinionId;
-  String? subCommentId;
-  String? gymRequesterId;
+class Data {
+  String? title;
+  String? message;
+  String? paymentDate;
 
-  NotificationType({
-    this.fromUserId,
-    this.toUserId,
-    this.postId,
-    this.followerId,
-    this.type,
-    this.opinionId,
-    this.subCommentId,
-    this.gymRequesterId,
-  });
+  Data({this.title, this.message, this.paymentDate});
 
-  NotificationType.fromJson(Map<String, dynamic> json) {
-    fromUserId = json['fromUserId'];
-    toUserId = json['toUserId'];
-    postId = json['postId'];
-    followerId = json['followerId'];
-    type = json['type'];
-    opinionId = json['opinionId'];
-    subCommentId = json['subCommentId'];
-    gymRequesterId = json['gymRequesterId'];
+  Data.fromJson(Map<String, dynamic> json) {
+    title = json['title'];
+    message = json['message'];
+    paymentDate = json['payment_date'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
-    data['fromUserId'] = fromUserId;
-    data['toUserId'] = toUserId;
-    data['postId'] = postId;
-    data['followerId'] = followerId;
-    data['type'] = type;
-    data['opinionId'] = opinionId;
-    data['subCommentId'] = subCommentId;
-    data['gymRequesterId'] = gymRequesterId;
+    data['title'] = title;
+    data['message'] = message;
+    data['payment_date'] = paymentDate;
     return data;
   }
 }

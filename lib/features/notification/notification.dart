@@ -6,3 +6,5 @@ export 'data/repos/notification.repo.dart';
 export 'data/repos/notification.repo.impl.dart';
 export 'domain/models/notification.dart';
 export 'presentation/pages/notification.page.dart';
+export 'presentation/widgets/notification.redact.widget.dart';
+export 'presentation/widgets/notification.widget.dart';

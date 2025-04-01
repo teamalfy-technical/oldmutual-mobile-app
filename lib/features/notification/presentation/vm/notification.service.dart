@@ -58,7 +58,6 @@ import 'package:flutter/services.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:oldmutual_pensions_app/core/utils/utils.dart';
 import 'package:oldmutual_pensions_app/features/auth/auth.dart';
-import 'package:oldmutual_pensions_app/features/notification/domain/models/notification.dart';
 
 int id = 0;
 
@@ -117,10 +116,10 @@ onSelectedNotification(NotificationResponse notificationResponse) {
     case NotificationResponseType.selectedNotification:
       if (notificationResponse.payload != null) {
         selectNotificationStream.add(notificationResponse.payload);
-        PNotificationService.handleNotificationClick(
-          null,
-          NotificationType.fromJson(jsonDecode(notificationResponse.payload!)),
-        );
+        // PNotificationService.handleNotificationClick(
+        //   null,
+        //   NotificationType.fromJson(jsonDecode(notificationResponse.payload!)),
+        // );
       }
       break;
     case NotificationResponseType.selectedNotificationAction:
@@ -441,20 +440,20 @@ class PNotificationService {
     RemoteMessage? initialMessage =
         await FirebaseMessaging.instance.getInitialMessage();
     if (initialMessage != null) {
-      handleNotificationClick(
-        null,
-        NotificationType.fromJson(initialMessage.data),
-      );
+      // handleNotificationClick(
+      //   null,
+      //   NotificationType.fromJson(initialMessage.data),
+      // );
     }
     // when app is in background
     FirebaseMessaging.onMessageOpenedApp.listen((message) {
-      handleNotificationClick(null, NotificationType.fromJson(message.data));
+      //handleNotificationClick(null, NotificationType.fromJson(message.data));
     });
   }
 
   static void handleNotificationClick(
     BuildContext? context,
-    NotificationType notificationType,
+    //NotificationType notificationType,
   ) {
     // NotificationType notificationType = NotificationType.fromJson(message.data);
     // switch (notificationType.type) {

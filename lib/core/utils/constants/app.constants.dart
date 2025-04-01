@@ -8,8 +8,8 @@ class PAppConstant {
   static const String phoneSupport = '+233 (0) 303 968 667';
 
   static int notificationChannelId = 001;
-  static String notificationChannelKey = "Pensions App";
-  static String notificationChannelName = "Pensions notifications";
+  static String notificationChannelKey = "Old Mutual Pensions";
+  static String notificationChannelName = "Old Mutual Pensions notifications";
   static String notificationChannelDescription =
-      "Notification channel to receive notifications on Pensions app";
+      "Notification channel to receive notifications on Old Mutual Pensions";
 }
