@@ -15,7 +15,7 @@ class ContributionHistoryWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListTile(
       title: Text(
-        transaction.narration ?? '',
+        transaction.pensionTypeName ?? '',
         style: Theme.of(
           context,
         ).textTheme.bodyLarge?.copyWith(fontWeight: FontWeight.w500),

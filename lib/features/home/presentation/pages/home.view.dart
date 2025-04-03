@@ -204,24 +204,74 @@ class PHomeView extends StatelessWidget {
                     ),
                     PAppSize.s6.verticalSpace,
                     // line chart
-                    SizedBox(
-                      width: PDeviceUtil.getDeviceWidth(context) + 20,
-                      height: PDeviceUtil.getDeviceHeight(context) * 0.3,
-                      child: PCustomLineChart(
-                        data: [
-                          FlSpot(1, 1),
-                          FlSpot(2, 2),
-                          FlSpot(3, 4),
-                          FlSpot(4, 6),
-                          // FlSpot(100, 1),
-                          // FlSpot(200, 2),
-                          // FlSpot(400, 3),
-                          // FlSpot(600, 4),
-                          // FlSpot(700, 5),
-                          // FlSpot(800, 6),
-                        ],
-                      ),
-                    ),
+                    ctrl.loading.value == LoadingState.loading
+                        ? Container(
+                          width: PDeviceUtil.getDeviceWidth(context),
+                          height: PDeviceUtil.getDeviceHeight(context) * 0.3,
+                          padding: EdgeInsets.all(PAppSize.s20),
+                          color: PAppColor.whiteColor,
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: [
+                              Container(
+                                width: PDeviceUtil.getDeviceWidth(context),
+                                height: PAppSize.s20,
+                                color: PAppColor.whiteColor,
+                              ),
+                              Container(
+                                width: PDeviceUtil.getDeviceWidth(context),
+                                height: PAppSize.s20,
+                                color: PAppColor.whiteColor,
+                              ),
+                              Container(
+                                width: PDeviceUtil.getDeviceWidth(context),
+                                height: PAppSize.s20,
+                                color: PAppColor.whiteColor,
+                              ),
+                              Container(
+                                width: PDeviceUtil.getDeviceWidth(context),
+                                height: PAppSize.s20,
+                                color: PAppColor.whiteColor,
+                              ),
+                            ],
+                          ),
+                        ).redacted(
+                          context: context,
+                          redact:
+                              ctrl.loading.value == LoadingState.loading
+                                  ? true
+                                  : false,
+                        )
+                        : SizedBox(
+                          width: PDeviceUtil.getDeviceWidth(context),
+                          height: PDeviceUtil.getDeviceHeight(context) * 0.3,
+                          child: PCustomLineChart(
+                            data:
+                                ctrl
+                                    .history
+                                    .value
+                                    .transactionHistory!
+                                    .transactions!
+                                    .take(3)
+                                    .map(
+                                      (e) => FlSpot(
+                                        DateTime.parse(
+                                          e.paymentDate ??
+                                              DateTime.now().toIso8601String(),
+                                        ).month.toDouble(),
+                                        e.received ?? 0,
+                                      ),
+                                    )
+                                    .toList(),
+                            // data: [
+                            //   FlSpot(1, 1),
+                            //   FlSpot(2, 2),
+                            //   FlSpot(3, 4),
+                            //   FlSpot(4, 6),
+
+                            // ],
+                          ),
+                        ),
                     // recent contributions
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -264,12 +314,18 @@ class PHomeView extends StatelessWidget {
                             );
                           },
                         )
-                        : ctrl
-                            .history
-                            .value
-                            .transactionHistory!
-                            .transactions!
-                            .isEmpty
+                        : (ctrl
+                                    .history
+                                    .value
+                                    .transactionHistory
+                                    ?.transactions ==
+                                null ||
+                            ctrl
+                                .history
+                                .value
+                                .transactionHistory!
+                                .transactions!
+                                .isEmpty)
                         ? PEmptyStateWidget(message: 'no_results_found'.tr)
                         : ListView.builder(
                           shrinkWrap: true,

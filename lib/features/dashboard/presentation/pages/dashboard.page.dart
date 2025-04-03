@@ -64,43 +64,53 @@ class PDashboardPage extends StatelessWidget {
 
             Positioned(
               top: PDeviceUtil.getDeviceHeight(context) * 0.2,
+              // bottom: PDeviceUtil.getDeviceHeight(context) * 0.02,
               left: PAppSize.s16,
               right: PAppSize.s16,
               child: Obx(
-                () =>
-                    ctrl.loading.value == LoadingState.loading
-                        ? ListView.builder(
-                          shrinkWrap: true,
-                          itemCount: 5,
-                          itemBuilder: (context, index) {
-                            return PensionTierRedactWidget(
-                              loading: ctrl.loading.value,
-                            );
-                          },
-                        )
-                        : ctrl.schemes.isEmpty
-                        ? PEmptyStateWidget(message: 'no_results_found'.tr)
-                        : ListView.builder(
-                          itemCount: ctrl.schemes.length,
-                          shrinkWrap: true,
-                          itemBuilder: (context, index) {
-                            final scheme = ctrl.schemes[index];
-                            return PensionTierWidget(
-                              scheme: scheme,
-                              onTap: () {
-                                ctrl.getMemberSelectedScheme(
-                                  employerNumber: scheme.employerNumber ?? '',
-                                  memberNumber: scheme.memberNumber ?? '',
-                                  ssnitNumber: scheme.ssnitNumber ?? '',
-                                );
-                                PHelperFunction.switchScreen(
-                                  destination: Routes.homePage,
-                                  replace: true,
-                                );
-                              },
-                            );
-                          },
-                        ),
+                () => RefreshIndicator(
+                  onRefresh: ctrl.getMemberSchemes,
+                  color: PAppColor.primary,
+                  child:
+                      ctrl.loading.value == LoadingState.loading
+                          ? ListView.builder(
+                            shrinkWrap: true,
+                            itemCount: 5,
+                            itemBuilder: (context, index) {
+                              return PensionTierRedactWidget(
+                                loading: ctrl.loading.value,
+                              );
+                            },
+                          )
+                          : ctrl.schemes.isEmpty
+                          ? PEmptyStateWidget(message: 'no_results_found'.tr)
+                          : ListView.builder(
+                            itemCount: ctrl.schemes.length,
+                            shrinkWrap: true,
+                            itemBuilder: (context, index) {
+                              final scheme = ctrl.schemes[index];
+                              return PensionTierWidget(
+                                scheme: scheme,
+                                onTap: () {
+                                  ctrl.getMemberSelectedScheme(
+                                    employerNumber: scheme.employerNumber ?? '',
+                                    memberNumber: scheme.memberNumber ?? '',
+                                    ssnitNumber: scheme.ssnitNumber ?? '',
+                                  );
+                                  PHelperFunction.switchScreen(
+                                    destination: Routes.homePage,
+                                    replace: true,
+                                  );
+                                },
+                              ).only(
+                                bottom:
+                                    index == ctrl.schemes.length - 1
+                                        ? PAppSize.s20
+                                        : 0,
+                              );
+                            },
+                          ),
+                ),
               ),
             ),
           ],

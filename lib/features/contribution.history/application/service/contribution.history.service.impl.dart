@@ -35,15 +35,4 @@ class ContributionHistoryServiceImpl implements ContributionHistoryService {
   getContributionYears() {
     return contributionHistoryRepo.getContributionYears();
   }
-
-  @override
-  Future<Either<PFailure, ApiResponse<ContributionHistory>>> getContributions({
-    required String employerNumber,
-    required String staffNumber,
-  }) async {
-    return contributionHistoryRepo.getContributions(
-      employerNumber: employerNumber,
-      staffNumber: staffNumber,
-    );
-  }
 }

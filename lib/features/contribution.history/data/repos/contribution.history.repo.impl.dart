@@ -45,18 +45,4 @@ class ContributionHistoryRepoImpl implements ContributionHistoryRepo {
       function: () async => await contributionHistoryDs.getContributionYears(),
     );
   }
-
-  @override
-  Future<Either<PFailure, ApiResponse<ContributionHistory>>> getContributions({
-    required String employerNumber,
-    required String staffNumber,
-  }) async {
-    return await customRepositoryWrapper.wrapRepositoryFunction(
-      function:
-          () async => await contributionHistoryDs.getContributions(
-            employerNumber: employerNumber,
-            staffNumber: staffNumber,
-          ),
-    );
-  }
 }

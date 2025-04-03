@@ -47,4 +47,15 @@ class ContributionSummary {
     data['last_contribution_date'] = lastContributionDate;
     return data;
   }
+
+  bool get isEmpty =>
+      totalContributions == null &&
+      totalEmployerContributions == null &&
+      totalUnits == null &&
+      currentUnitPrice == null &&
+      currentValue == null &&
+      gainLoss == null &&
+      totalInterest == null &&
+      status == null &&
+      lastContributionDate == null;
 }

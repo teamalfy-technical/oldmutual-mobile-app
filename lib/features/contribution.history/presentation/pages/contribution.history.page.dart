@@ -3,7 +3,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:oldmutual_pensions_app/core/utils/utils.dart';
 import 'package:oldmutual_pensions_app/features/contribution.history/contribution.history.dart';
-import 'package:oldmutual_pensions_app/features/contribution.history/presentation/widgets/contribution.history.widget.redact.dart';
 import 'package:oldmutual_pensions_app/shared/shared.dart';
 import 'package:oldmutual_pensions_app/shared/widgets/custom.dropdown.dart';
 
@@ -70,9 +69,7 @@ class PContributionHistoryPage extends StatelessWidget {
                                   decorationColor: PAppColor.primary,
                                   //  fontSize: PAppSize.s13,
                                 ),
-                              ).onPressed(
-                                onTap: () => ctrl.getAllContributions(),
-                              ),
+                              ).onPressed(onTap: () => ctrl.resetFilters()),
                               PAppSize.s4.verticalSpace,
                               PGradientButton(
                                 label: 'apply'.tr,

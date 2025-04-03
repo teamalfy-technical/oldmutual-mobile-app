@@ -1,5 +1,6 @@
 import 'package:get/get.dart';
 import 'package:oldmutual_pensions_app/core/utils/utils.dart';
+import 'package:oldmutual_pensions_app/features/contribution.history/contribution.history.dart';
 import 'package:oldmutual_pensions_app/features/dashboard/dashboard.dart';
 import 'package:oldmutual_pensions_app/shared/shared.dart';
 
@@ -59,9 +60,11 @@ class PDashboardVm extends GetxController {
           context,
         ).errorMessage(title: 'error'.tr, message: err.message);
       },
-      (res) {
+      (res) async {
         // updateLoadingState(LoadingState.completed);
         selectedScheme.value = res.data ?? SelectedScheme();
+
+        await Get.put(PContributionHistoryVm()).getContributionsSummary();
       },
     );
   }

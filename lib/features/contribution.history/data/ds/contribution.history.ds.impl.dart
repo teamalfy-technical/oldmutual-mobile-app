@@ -74,25 +74,4 @@ class ContributionHistoryDsImpl implements ContributionHistoryDs {
       );
     });
   }
-
-  @override
-  Future<ApiResponse<ContributionHistory>> getContributions({
-    required String employerNumber,
-    required String staffNumber,
-  }) async {
-    return await asyncFunctionWrapper.handleAsyncNetworkCall(() async {
-      final res = await apiService.callService(
-        requestType: RequestType.get,
-        queryParams: {
-          'employer_number': employerNumber,
-          'staff_number': staffNumber,
-        },
-        endPoint: Env.getContributions,
-      );
-      return ApiResponse<ContributionHistory>.fromJson(
-        res,
-        (data) => ContributionHistory.fromJson(data),
-      );
-    });
-  }
 }

@@ -41,10 +41,15 @@ class PCustomLineChart extends StatelessWidget {
       leftTitles: AxisTitles(
         sideTitles: SideTitles(
           showTitles: true,
-          // reservedSize: 16,
+          // reservedSize: 50,
           minIncluded: false,
-          maxIncluded: true,
+          maxIncluded: false,
           interval: 1,
+          getTitlesWidget: (value, meta) {
+            // return Text('Day ${value.toInt()}');
+            return Text('${value.toInt()}', style: TextStyle(fontSize: 8));
+            // return Text('${value.toInt()}');
+          },
         ),
       ),
       bottomTitles: AxisTitles(
@@ -59,9 +64,18 @@ class PCustomLineChart extends StatelessWidget {
               {'index': 2, 'month': 'Feb'},
               {'index': 3, 'month': 'Mar'},
               {'index': 4, 'month': 'Apr'},
+              {'index': 5, 'month': 'May'},
+              {'index': 6, 'month': 'Jun'},
+              {'index': 7, 'month': 'Jul'},
+              {'index': 8, 'month': 'Aug'},
+              {'index': 9, 'month': 'Sep'},
+              {'index': 10, 'month': 'Oct'},
+              {'index': 11, 'month': 'Nov'},
+              {'index': 12, 'month': 'Dev'},
             ];
             // return Text('Day ${value.toInt()}');
             return Text('${months[value.toInt() - 1]['month']}');
+            // return Text('${value.toInt()}');
           },
         ),
       ),

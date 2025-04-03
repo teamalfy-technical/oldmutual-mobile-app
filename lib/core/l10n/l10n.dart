@@ -58,6 +58,7 @@ class AppTranslations extends Translations {
       'future_value_calculator_tag':
           'Project your future Pension Savings Outcome',
       'contribution_progress': 'Contribution progress',
+      'none': 'None',
       'settings': 'Settings',
       'beneficiaries_tag': 'Contact 0303968667 for any detail changes',
       'email': 'Email',
