@@ -57,8 +57,9 @@ class AppTranslations extends Translations {
       'future_value_calculator': 'Future Value Calculator',
       'future_value_calculator_tag':
           'Project your future Pension Savings Outcome',
+      'contribution_progress': 'Contribution progress',
       'settings': 'Settings',
-      'beneficiaries_tag': 'Contact 000976000 for any detail changes',
+      'beneficiaries_tag': 'Contact 0303968667 for any detail changes',
       'email': 'Email',
       'dob': 'Date of Birth',
       'benefit_percentage': 'Benefit Percentage',

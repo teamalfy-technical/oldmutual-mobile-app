@@ -5,12 +5,10 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:oldmutual_pensions_app/core/utils/utils.dart';
 import 'package:oldmutual_pensions_app/features/contribution.history/contribution.history.dart';
-import 'package:oldmutual_pensions_app/features/contribution.history/presentation/widgets/contribution.history.widget.redact.dart';
-import 'package:oldmutual_pensions_app/features/dashboard/dashboard.dart';
-import 'package:oldmutual_pensions_app/features/home/presentation/widgets/home.stats.widget.dart';
+import 'package:oldmutual_pensions_app/features/home/home.dart';
 import 'package:oldmutual_pensions_app/gen/assets.gen.dart';
 import 'package:oldmutual_pensions_app/routes/app.pages.dart';
-import 'package:oldmutual_pensions_app/shared/widgets/empty.state.widget.dart';
+import 'package:oldmutual_pensions_app/shared/shared.dart';
 import 'package:redacted/redacted.dart';
 
 class PHomeView extends StatelessWidget {
@@ -27,7 +25,8 @@ class PHomeView extends StatelessWidget {
             children: [
               Container(
                 width: PDeviceUtil.getDeviceWidth(context),
-                height: PDeviceUtil.getDeviceHeight(context) / 4.0,
+                // height: PDeviceUtil.getDeviceHeight(context) / 4.0,
+                height: PDeviceUtil.getDeviceHeight(context) * 0.25,
                 decoration: BoxDecoration(color: PAppColor.blackColor),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -41,11 +40,23 @@ class PHomeView extends StatelessWidget {
                   ],
                 ),
               ),
-              Image.asset(
-                Assets.images.dashboardBg.path,
-                fit: BoxFit.cover,
-                width: PDeviceUtil.getDeviceWidth(context),
-                height: PDeviceUtil.getDeviceHeight(context) / 2,
+              Expanded(
+                child: Container(
+                  color: PAppColor.whiteColor.withOpacityExt(PAppSize.s0_5),
+                  child: Opacity(
+                    opacity: PAppSize.s0_3,
+                    child: Image.asset(
+                      Assets.images.dashboardBg.path,
+                      fit: BoxFit.cover,
+                      width: PDeviceUtil.getDeviceWidth(context),
+                      height: PDeviceUtil.getDeviceHeight(context) * 0.75,
+                      colorBlendMode: BlendMode.dstATop,
+                      color: PAppColor.whiteColor.withOpacityExt(
+                        PAppSize.s0_6,
+                      ), // Adjust opacity
+                    ),
+                  ),
+                ),
               ),
             ],
           ),
@@ -179,10 +190,22 @@ class PHomeView extends StatelessWidget {
                         ),
                       ],
                     ),
+                    PAppSize.s32.verticalSpace,
+                    Align(
+                      alignment: Alignment.topLeft,
+                      child: Text(
+                        'contribution_progress'.tr,
+                        style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                          fontSize: PAppSize.s14,
+                          fontWeight: FontWeight.w600,
+                          color: PAppColor.text700,
+                        ),
+                      ).symmetric(horizontal: PAppSize.s14),
+                    ),
                     PAppSize.s6.verticalSpace,
                     // line chart
                     SizedBox(
-                      width: PDeviceUtil.getDeviceWidth(context),
+                      width: PDeviceUtil.getDeviceWidth(context) + 20,
                       height: PDeviceUtil.getDeviceHeight(context) * 0.3,
                       child: PCustomLineChart(
                         data: [

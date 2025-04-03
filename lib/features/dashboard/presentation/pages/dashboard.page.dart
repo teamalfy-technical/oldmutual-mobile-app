@@ -23,7 +23,8 @@ class PDashboardPage extends StatelessWidget {
               children: [
                 Container(
                   width: PDeviceUtil.getDeviceWidth(context),
-                  height: PDeviceUtil.getDeviceHeight(context) / 3.5,
+                  // height: PDeviceUtil.getDeviceHeight(context) / 3.5,
+                  height: PDeviceUtil.getDeviceHeight(context) * 0.3,
                   decoration: BoxDecoration(color: PAppColor.blackColor),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.end,
@@ -43,13 +44,20 @@ class PDashboardPage extends StatelessWidget {
                       ),
                       PAppSize.s6.verticalSpace,
                     ],
-                  ).only(bottom: PDeviceUtil.getDeviceWidth(context) * 0.19),
+                  ).only(bottom: PDeviceUtil.getDeviceWidth(context) * 0.15),
                 ),
-                Image.asset(
-                  Assets.images.dashboardBg.path,
-                  fit: BoxFit.cover,
-                  width: PDeviceUtil.getDeviceWidth(context),
-                  height: PDeviceUtil.getDeviceHeight(context) / 2.75,
+                Opacity(
+                  opacity: PAppSize.s0_3,
+                  child: Image.asset(
+                    Assets.images.dashboardBg.path,
+                    fit: BoxFit.cover,
+                    width: PDeviceUtil.getDeviceWidth(context),
+                    height: PDeviceUtil.getDeviceHeight(context) * 0.70,
+                    colorBlendMode: BlendMode.dstATop,
+                    color: PAppColor.whiteColor.withOpacityExt(
+                      PAppSize.s0_5,
+                    ), // Adjust opacity
+                  ),
                 ),
               ],
             ),

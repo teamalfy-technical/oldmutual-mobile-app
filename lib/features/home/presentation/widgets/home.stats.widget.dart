@@ -20,7 +20,7 @@ class PHomeStatsWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       padding: EdgeInsets.all(PAppSize.s14),
-      margin: EdgeInsets.only(bottom: PAppSize.s25),
+      // margin: EdgeInsets.only(bottom: PAppSize.s25),
       width: PDeviceUtil.getDeviceWidth(context),
       decoration: BoxDecoration(
         color: PAppColor.whiteColor,

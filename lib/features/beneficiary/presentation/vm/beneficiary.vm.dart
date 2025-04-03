@@ -32,7 +32,9 @@ class PBeneficiaryVm extends GetxController {
         ).errorMessage(title: 'error'.tr, message: err.message);
       },
       (res) {
-        res.data?.first.show = true;
+        if (res.data!.isNotEmpty) {
+          res.data?.first.show = true;
+        }
         updateLoadingState(LoadingState.completed);
         beneficiaries.value = res.data ?? [];
       },

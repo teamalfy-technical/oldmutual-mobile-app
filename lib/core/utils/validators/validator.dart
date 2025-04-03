@@ -39,31 +39,31 @@ class PValidator {
       return 'Password is required.';
     }
 
-    // if (!value.contains(RegExp(r'[A-Z]')) &&
-    //     !value.contains(RegExp(r'[0-9]')) &&
-    //     !value.contains(RegExp(r'[!@#$%^&*(),.?":{}|<>]'))) {
-    //   return 'Not strong enough';
-    // }
+    if (!value.contains(RegExp(r'[A-Z]')) &&
+        !value.contains(RegExp(r'[0-9]')) &&
+        !value.contains(RegExp(r'[!@#$%^&*(),.?":{}|<>]'))) {
+      return 'Not strong enough';
+    }
 
-    // // check for minimum password length
-    // if (value.length < 8) {
-    //   return 'Password must be at least 8 characters long.';
-    // }
+    // check for minimum password length
+    if (value.length < 8) {
+      return 'Password must be at least 8 characters long.';
+    }
 
-    // // check of uppercase letters
-    // if (!value.contains(RegExp(r'[A-Z]'))) {
-    //   return 'Password must contain at least one uppercase letter.';
-    // }
+    // check of uppercase letters
+    if (!value.contains(RegExp(r'[A-Z]'))) {
+      return 'Password must contain at least one uppercase letter.';
+    }
 
-    // // check of number
-    // if (!value.contains(RegExp(r'[0-9]'))) {
-    //   return 'Password must contain at least one number.';
-    // }
+    // check of number
+    if (!value.contains(RegExp(r'[0-9]'))) {
+      return 'Password must contain at least one number.';
+    }
 
-    // // check of special characters
-    // if (!value.contains(RegExp(r'[!@#$%^&*(),.?":{}|<>]'))) {
-    //   return 'Password much contain at least one special character.';
-    // }
+    // check of special characters
+    if (!value.contains(RegExp(r'[!@#$%^&*(),.?":{}|<>]'))) {
+      return 'Password much contain at least one special character.';
+    }
 
     return null;
   }

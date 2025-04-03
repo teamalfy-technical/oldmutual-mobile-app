@@ -31,7 +31,7 @@ class PHomePage extends StatelessWidget {
         bottomNavigationBar: BottomNavigationBar(
           currentIndex: ctrl.currentIndex.value,
           onTap: ctrl.onPageChanged,
-          elevation: PAppSize.s1,
+          elevation: PAppSize.s2,
           backgroundColor:
               PHelperFunction.isDarkMode(context)
                   ? PAppColor.blackColor
