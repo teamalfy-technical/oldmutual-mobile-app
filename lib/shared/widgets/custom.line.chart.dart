@@ -15,12 +15,12 @@ class PCustomLineChart extends StatelessWidget {
         lineBarsData: [_buildLineChartBarData()],
         titlesData: _buildTitlesData(),
       ),
-    ).centered().all(PAppSize.s10);
+    ).centered();
   }
 
   FlGridData _buildGridData() {
     return FlGridData(
-      show: false, // show line
+      show: true, // show line
       drawHorizontalLine: false,
       drawVerticalLine: false,
     );
@@ -36,45 +36,76 @@ class PCustomLineChart extends StatelessWidget {
   FlTitlesData _buildTitlesData() {
     return FlTitlesData(
       show: true, // show line
-      rightTitles: AxisTitles(sideTitles: SideTitles(showTitles: false)),
+      rightTitles: AxisTitles(
+        sideTitles: SideTitles(
+          showTitles: true,
+          interval: 500,
+          reservedSize: PAppSize.s10,
+          getTitlesWidget: (value, meta) {
+            return Text(
+              PFormatter.formatMoneyValue(value.toInt().toString()),
+              style: TextStyle(
+                fontSize: PAppSize.s10,
+                color: PAppColor.transparentColor,
+              ),
+            );
+          },
+        ),
+      ),
       topTitles: AxisTitles(sideTitles: SideTitles(showTitles: false)),
+
+      // bottomTitles: AxisTitles(
+      //   sideTitles: SideTitles(
+      //     showTitles: true,
+      //     interval: 500, // Adjust as needed
+      //     reservedSize: 40,
+      //   ),
+      // ),
       leftTitles: AxisTitles(
         sideTitles: SideTitles(
           showTitles: true,
           // reservedSize: 50,
           minIncluded: false,
           maxIncluded: false,
-          interval: 1,
+          interval: 500,
+          reservedSize: 30,
           getTitlesWidget: (value, meta) {
-            // return Text('Day ${value.toInt()}');
-            return Text('${value.toInt()}', style: TextStyle(fontSize: 8));
-            // return Text('${value.toInt()}');
+            return Text(
+              // 'GHS ${value.toInt()}',
+              PFormatter.formatMoneyValue(value.toInt().toString()),
+              style: TextStyle(fontSize: PAppSize.s10),
+            );
           },
         ),
       ),
       bottomTitles: AxisTitles(
         sideTitles: SideTitles(
           showTitles: true,
-          minIncluded: false,
-          maxIncluded: false,
-          // interval: 1,
+          // minIncluded: false,
+          // maxIncluded: false,
+          interval: 1, // Adjust as needed
+          // reservedSize: 50,
           getTitlesWidget: (value, meta) {
             final months = [
-              {'index': 1, 'month': 'Jan'},
-              {'index': 2, 'month': 'Feb'},
-              {'index': 3, 'month': 'Mar'},
-              {'index': 4, 'month': 'Apr'},
-              {'index': 5, 'month': 'May'},
-              {'index': 6, 'month': 'Jun'},
-              {'index': 7, 'month': 'Jul'},
-              {'index': 8, 'month': 'Aug'},
-              {'index': 9, 'month': 'Sep'},
-              {'index': 10, 'month': 'Oct'},
-              {'index': 11, 'month': 'Nov'},
-              {'index': 12, 'month': 'Dev'},
+              {'index': 0, 'month': 'Jan'},
+              {'index': 1, 'month': 'Feb'},
+              {'index': 2, 'month': 'Mar'},
+              {'index': 3, 'month': 'Apr'},
+              {'index': 4, 'month': 'May'},
+              {'index': 5, 'month': 'Jun'},
+              {'index': 6, 'month': 'Jul'},
+              {'index': 7, 'month': 'Aug'},
+              {'index': 8, 'month': 'Sep'},
+              {'index': 9, 'month': 'Oct'},
+              {'index': 10, 'month': 'Nov'},
+              {'index': 11, 'month': 'Dec'},
+              // {'index': 12, 'month': 'Dec'},
             ];
             // return Text('Day ${value.toInt()}');
-            return Text('${months[value.toInt() - 1]['month']}');
+            return Text(
+              '${months[value.toInt() - 1]['month']}',
+              style: TextStyle(fontSize: PAppSize.s10),
+            );
             // return Text('${value.toInt()}');
           },
         ),

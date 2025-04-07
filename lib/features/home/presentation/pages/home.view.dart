@@ -16,6 +16,86 @@ class PHomeView extends StatelessWidget {
 
   final ctrl = Get.put(PContributionHistoryVm());
 
+  List<FlSpot> convertToSpots() {
+    final data = filterLatestContributionsPerMonth();
+    return List.generate(data.length, (index) {
+      double y = data[index].received ?? 0;
+      final x =
+          DateTime.parse(
+            data[index].paymentDate ?? DateTime.now().toIso8601String(),
+          ).month.toDouble();
+      // pensionAppLogger.e(x);
+      return FlSpot(x, y);
+    });
+  }
+
+  // List<Transactions> filterLatestContributionsPastYear() {
+  //   final DateTime now = DateTime.now();
+  //   final DateTime oneYearAgo = DateTime(now.year - 1, now.month, now.day);
+  //   final Map<String, Transactions> latestPerMonth = {};
+
+  //   final data = ctrl.history.value.transactionHistory!.transactions!;
+
+  //   for (var item in data) {
+  //     final dateString = item.paymentDate;
+  //     if (dateString == null) continue;
+
+  //     final date = DateTime.tryParse(dateString);
+  //     if (date == null || date.isBefore(oneYearAgo)) continue;
+
+  //     final key = '${date.year}-${date.month.toString().padLeft(2, '0')}';
+
+  //     final existing = latestPerMonth[key];
+  //     if (existing == null) {
+  //       latestPerMonth[key] = item;
+  //     } else {
+  //       final existingDate = DateTime.tryParse(
+  //         existing.paymentDate ?? DateTime.now().toIso8601String(),
+  //       );
+  //       if (existingDate == null || date.isAfter(existingDate)) {
+  //         latestPerMonth[key] = item;
+  //       }
+  //     }
+  //   }
+
+  //   pensionAppLogger.e(latestPerMonth.values.toList());
+
+  //   return latestPerMonth.values.toList()..sort(
+  //     (a, b) => DateTime.parse(
+  //       a.paymentDate ?? '',
+  //     ).compareTo(DateTime.parse(b.paymentDate ?? '')),
+  //   );
+  // }
+
+  List<Transactions> filterLatestContributionsPerMonth(
+    // List<Map<String, dynamic>> data,
+  ) {
+    final Map<String, Transactions> uniqueContributions = {};
+
+    final data =
+        ctrl.history.value.transactionHistory!.transactions!.take(3).toList();
+
+    for (var item in data) {
+      final date = DateTime.parse(item.paymentDate ?? '');
+      final key = '${date.year}-${date.month.toString().padLeft(2, '0')}';
+
+      final existing = uniqueContributions[key];
+      final currentValue = item.received ?? 0;
+
+      // Keep the higher or latest contribution for that month
+      if (existing == null) {
+        uniqueContributions[key] = item;
+      } else {
+        final existingValue = existing.received ?? 0;
+        if (currentValue > existingValue) {
+          uniqueContributions[key] = item;
+        }
+      }
+    }
+
+    return uniqueContributions.values.toList();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Obx(
@@ -164,7 +244,7 @@ class PHomeView extends StatelessWidget {
                       children: [
                         Expanded(
                           child: PHomeStatsWidget(
-                            title: 'Accrued Interest',
+                            title: 'accrued_interest'.tr,
                             loading: ctrl.loading.value,
                             subTitle: PFormatter.formatCurrency(
                               amount: ctrl.summmary.value.totalInterest ?? 0,
@@ -175,7 +255,7 @@ class PHomeView extends StatelessWidget {
                         PAppSize.s16.horizontalSpace,
                         Expanded(
                           child: PHomeStatsWidget(
-                            title: 'Total Redemptions',
+                            title: 'total_redemptions'.tr,
                             loading: ctrl.loading.value,
                             subTitle: PFormatter.formatCurrency(
                               amount:
@@ -190,7 +270,7 @@ class PHomeView extends StatelessWidget {
                         ),
                       ],
                     ),
-                    PAppSize.s32.verticalSpace,
+                    PAppSize.s25.verticalSpace,
                     Align(
                       alignment: Alignment.topLeft,
                       child: Text(
@@ -200,9 +280,9 @@ class PHomeView extends StatelessWidget {
                           fontWeight: FontWeight.w600,
                           color: PAppColor.text700,
                         ),
-                      ).symmetric(horizontal: PAppSize.s14),
+                      ).symmetric(horizontal: PAppSize.s0),
                     ),
-                    PAppSize.s6.verticalSpace,
+                    PAppSize.s12.verticalSpace,
                     // line chart
                     ctrl.loading.value == LoadingState.loading
                         ? Container(
@@ -243,35 +323,19 @@ class PHomeView extends StatelessWidget {
                                   : false,
                         )
                         : SizedBox(
-                          width: PDeviceUtil.getDeviceWidth(context),
+                          width: PDeviceUtil.getDeviceWidth(context) + 300,
                           height: PDeviceUtil.getDeviceHeight(context) * 0.3,
                           child: PCustomLineChart(
-                            data:
-                                ctrl
-                                    .history
-                                    .value
-                                    .transactionHistory!
-                                    .transactions!
-                                    .take(3)
-                                    .map(
-                                      (e) => FlSpot(
-                                        DateTime.parse(
-                                          e.paymentDate ??
-                                              DateTime.now().toIso8601String(),
-                                        ).month.toDouble(),
-                                        e.received ?? 0,
-                                      ),
-                                    )
-                                    .toList(),
+                            data: convertToSpots(),
                             // data: [
                             //   FlSpot(1, 1),
                             //   FlSpot(2, 2),
                             //   FlSpot(3, 4),
                             //   FlSpot(4, 6),
-
                             // ],
                           ),
                         ),
+                    PAppSize.s6.verticalSpace,
                     // recent contributions
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,

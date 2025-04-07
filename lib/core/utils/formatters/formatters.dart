@@ -1,4 +1,5 @@
 import 'package:intl/intl.dart';
+import 'package:oldmutual_pensions_app/core/utils/utils.dart';
 
 class PFormatter {
   PFormatter._();
@@ -38,19 +39,19 @@ class PFormatter {
     ); // 'en_GH' for Ghana locale
 
     // return '₵${formatter.format(value)}';
-
+    pensionAppLogger.e(value);
     if (value >= 1000000000) {
       // Format as Billion (₵1.0B)
-      return 'GHS${formatter.format(value / 1000000000)}B';
+      return 'GHS ${formatter.format(value / 1000000000)}B';
     } else if (value >= 1000000) {
       // Format as Million (₵700M)
-      return 'GHS${formatter.format(value / 1000000)}M';
+      return 'GHS ${formatter.format(value / 1000000)}M';
     } else if (value >= 1000) {
       // Format as Thousand (₵700K)
-      return 'GHS${formatter.format(value / 1000)}K';
+      return 'GHS ${formatter.format(value / 1000)}K';
     } else {
       // For values less than 1000, just add the Cedi symbol
-      return 'GHS${formatter.format(value)}';
+      return 'GHS ${formatter.format(value)}';
     }
   }
 

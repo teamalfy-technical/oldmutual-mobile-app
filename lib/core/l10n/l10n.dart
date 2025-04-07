@@ -5,7 +5,7 @@ class AppTranslations extends Translations {
   Map<String, Map<String, String>> get keys => {
     'en_US': {
       'app_name': 'Pensions App',
-      'welcome_text': 'Welcome to Old \nMututal Pension App',
+      'welcome_text': 'Welcome to \nOld Mutual Pension \nApp',
       'next': 'Next',
       'get_started': 'Get Started',
       'let_get_started': 'Let\'s Get Started',
@@ -141,6 +141,8 @@ class AppTranslations extends Translations {
       'slide_four_title': 'Join Thousands \nSecuring Their Future',
       'slide_four_desc':
           'Sign up today and take control of your \npension savings.',
+      'accrued_interest': 'Accrued Interest',
+      'total_redemptions': 'Total Redemptions',
     },
     'hi_IN': {'app_name': 'Pensions App'},
     'fr_FR': {'app_name': 'Pensions App'},

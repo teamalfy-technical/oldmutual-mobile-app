@@ -17,20 +17,6 @@ class PSplashVm extends GetxController {
   /// check if user is logged in or not
   /// [showSplashPage]
   void showSplashPage() async {
-    // final message = await Get.put(SAuthVm()).checkIfUserIsLoggedIn();
-    // if (message == 'okay'.tr) {
-    //   PHelperFunction.switchScreen(
-    //       destination: Routes.dashboardPage, replace: true);
-    // } else {
-    //   if (SSecureStorage().readData(SSecureStorage().onboardingKey) == null) {
-    //     SHelperFunction.switchScreen(
-    //         destination: Routes.onboardingPage, replace: true);
-    //   } else {
-    //     SHelperFunction.switchScreen(
-    //         destination: Routes.loginPage, replace: true);
-    //   }
-    // }
-
     Timer(Duration(seconds: 3), () {
       if (PSecureStorage().readData(PSecureStorage().onboardingKey) == null) {
         PHelperFunction.switchScreen(

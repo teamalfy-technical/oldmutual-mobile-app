@@ -55,20 +55,25 @@ class PDashboardPage extends StatelessWidget {
                     height: PDeviceUtil.getDeviceHeight(context) * 0.70,
                     colorBlendMode: BlendMode.dstATop,
                     color: PAppColor.whiteColor.withOpacityExt(
-                      PAppSize.s0_5,
+                      PAppSize.s0_6,
                     ), // Adjust opacity
                   ),
                 ),
               ],
             ),
 
-            Positioned(
-              top: PDeviceUtil.getDeviceHeight(context) * 0.2,
-              // bottom: PDeviceUtil.getDeviceHeight(context) * 0.02,
-              left: PAppSize.s16,
-              right: PAppSize.s16,
-              child: Obx(
-                () => RefreshIndicator(
+            Obx(
+              () => Positioned(
+                top:
+                    (ctrl.schemes.isEmpty &&
+                            ctrl.loading.value == LoadingState.completed)
+                        ? PDeviceUtil.getDeviceHeight(context) * 0.45
+                        : PDeviceUtil.getDeviceHeight(context) * 0.22,
+                // bottom: PDeviceUtil.getDeviceHeight(context) * 0.02,
+                left: PAppSize.s16,
+                right: PAppSize.s16,
+                bottom: PAppSize.s0,
+                child: RefreshIndicator(
                   onRefresh: ctrl.getMemberSchemes,
                   color: PAppColor.primary,
                   child:
@@ -102,11 +107,6 @@ class PDashboardPage extends StatelessWidget {
                                     replace: true,
                                   );
                                 },
-                              ).only(
-                                bottom:
-                                    index == ctrl.schemes.length - 1
-                                        ? PAppSize.s20
-                                        : 0,
                               );
                             },
                           ),

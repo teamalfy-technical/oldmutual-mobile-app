@@ -40,7 +40,10 @@ class PHomeStatsWidget extends StatelessWidget {
         children: [
           Text(
             title,
-            style: Theme.of(context).textTheme.titleSmall?.copyWith(),
+            style: Theme.of(context).textTheme.titleSmall?.copyWith(
+              overflow: TextOverflow.ellipsis,
+              fontSize: PAppSize.s15,
+            ),
           ).redacted(
             context: context,
             redact: loading == LoadingState.loading ? true : false,
@@ -49,7 +52,8 @@ class PHomeStatsWidget extends StatelessWidget {
           Text(
             subTitle,
             style: Theme.of(context).textTheme.titleMedium?.copyWith(
-              fontSize: PAppSize.s20,
+              fontSize: PAppSize.s18,
+              overflow: TextOverflow.ellipsis,
               fontWeight: FontWeight.w700,
             ),
           ).redacted(
