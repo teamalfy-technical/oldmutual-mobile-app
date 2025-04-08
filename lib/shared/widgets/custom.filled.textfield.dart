@@ -6,11 +6,13 @@ class PCustomFilledTextfield extends StatelessWidget {
   final String label;
   final String hint;
   final TextEditingController controller;
+  final TextInputType textInputType;
   const PCustomFilledTextfield({
     super.key,
     required this.label,
     required this.hint,
     required this.controller,
+    this.textInputType = TextInputType.text,
   });
 
   @override
@@ -22,6 +24,7 @@ class PCustomFilledTextfield extends StatelessWidget {
         PAppSize.s4.verticalSpace,
         TextField(
           controller: controller,
+          keyboardType: textInputType,
           decoration: InputDecoration(
             hintText: hint,
             contentPadding: EdgeInsets.symmetric(

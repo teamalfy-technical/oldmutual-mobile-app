@@ -270,7 +270,7 @@ class PHomeView extends StatelessWidget {
                         ),
                       ],
                     ),
-                    PAppSize.s25.verticalSpace,
+                    PAppSize.s24.verticalSpace,
                     Align(
                       alignment: Alignment.topLeft,
                       child: Text(
@@ -282,7 +282,7 @@ class PHomeView extends StatelessWidget {
                         ),
                       ).symmetric(horizontal: PAppSize.s0),
                     ),
-                    PAppSize.s12.verticalSpace,
+                    PAppSize.s16.verticalSpace,
                     // line chart
                     ctrl.loading.value == LoadingState.loading
                         ? Container(
@@ -325,17 +325,9 @@ class PHomeView extends StatelessWidget {
                         : SizedBox(
                           width: PDeviceUtil.getDeviceWidth(context) + 300,
                           height: PDeviceUtil.getDeviceHeight(context) * 0.3,
-                          child: PCustomLineChart(
-                            data: convertToSpots(),
-                            // data: [
-                            //   FlSpot(1, 1),
-                            //   FlSpot(2, 2),
-                            //   FlSpot(3, 4),
-                            //   FlSpot(4, 6),
-                            // ],
-                          ),
+                          child: PCustomLineChart(data: convertToSpots()),
                         ),
-                    PAppSize.s6.verticalSpace,
+                    PAppSize.s24.verticalSpace,
                     // recent contributions
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,

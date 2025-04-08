@@ -58,51 +58,147 @@ class PProfilePage extends StatelessWidget {
               ],
             ).centered(),
             PAppSize.s28.verticalSpace,
-            Divider(color: PAppColor.fillColor),
-            PCustomListTile(
-              title: 'membership_id'.tr,
-              subtitle:
-                  ctrl.profile.value.memberNumber ?? '*********************',
-            ).redacted(
-              context: context,
-              redact: ctrl.loading.value == LoadingState.loading ? true : false,
-            ),
+            Expanded(
+              child:
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Divider(color: PAppColor.fillColor),
+                      PCustomListTile(
+                        title: 'full_name'.tr,
+                        subtitle:
+                            ctrl.profile.value.name ?? '*********************',
+                      ).redacted(
+                        context: context,
+                        redact:
+                            ctrl.loading.value == LoadingState.loading
+                                ? true
+                                : false,
+                      ),
+                      Divider(color: PAppColor.fillColor),
+                      PCustomListTile(
+                        title: 'email_address'.tr,
+                        subtitle:
+                            ctrl.profile.value.email ?? '*********************',
+                      ).redacted(
+                        context: context,
+                        redact:
+                            ctrl.loading.value == LoadingState.loading
+                                ? true
+                                : false,
+                      ),
+                      Divider(color: PAppColor.fillColor),
+                      PCustomListTile(
+                        title: 'mobile_number'.tr,
+                        subtitle:
+                            PSecureStorage().getBioData()?.mobileNo ??
+                            '*********************',
+                      ).redacted(
+                        context: context,
+                        redact:
+                            ctrl.loading.value == LoadingState.loading
+                                ? true
+                                : false,
+                      ),
+                      Divider(color: PAppColor.fillColor),
+                      PCustomListTile(
+                        title: 'membership_id'.tr,
+                        subtitle:
+                            ctrl.profile.value.memberNumber ??
+                            '*********************',
+                      ).redacted(
+                        context: context,
+                        redact:
+                            ctrl.loading.value == LoadingState.loading
+                                ? true
+                                : false,
+                      ),
+                      Divider(color: PAppColor.fillColor),
+                      PCustomListTile(
+                        title: 'tin_number'.tr,
+                        subtitle:
+                            PSecureStorage().getBioData()?.tin ??
+                            '*********************',
+                      ).redacted(
+                        context: context,
+                        redact:
+                            ctrl.loading.value == LoadingState.loading
+                                ? true
+                                : false,
+                      ),
 
-            Divider(color: PAppColor.fillColor),
-            PCustomListTile(
-              title: 'ghana_card_id'.tr,
-              subtitle:
-                  PSecureStorage().getBioData()?.tin ?? '*********************',
-            ).redacted(
-              context: context,
-              redact: ctrl.loading.value == LoadingState.loading ? true : false,
-            ),
+                      // PCustomListTile(
+                      //   title: 'ghana_card_id'.tr,
+                      //   subtitle:
+                      //       PSecureStorage().getBioData()?.tin ?? '*********************',
+                      // ).redacted(
+                      //   context: context,
+                      //   redact: ctrl.loading.value == LoadingState.loading ? true : false,
+                      // ),
+                      Divider(color: PAppColor.fillColor),
+                      PCustomListTile(
+                        title: 'ssnit_number'.tr,
+                        subtitle:
+                            ctrl.profile.value.ssnitNumber ??
+                            '*********************',
+                      ).redacted(
+                        context: context,
+                        redact:
+                            ctrl.loading.value == LoadingState.loading
+                                ? true
+                                : false,
+                      ),
 
-            Divider(color: PAppColor.fillColor),
-            PCustomListTile(
-              title: 'ssnit_number'.tr,
-              subtitle:
-                  ctrl.profile.value.ssnitNumber ?? '*********************',
-            ).redacted(
-              context: context,
-              redact: ctrl.loading.value == LoadingState.loading ? true : false,
-            ),
+                      Divider(color: PAppColor.fillColor),
+                      PCustomListTile(
+                        title: 'dob'.tr,
+                        subtitle: PFormatter.formatDate(
+                          dateFormat: DateFormat('dd-MM-yyyy'),
+                          date: DateTime.parse(
+                            ctrl.profile.value.dob ??
+                                DateTime.now().toIso8601String(),
+                          ),
+                        ),
+                      ).redacted(
+                        context: context,
+                        redact:
+                            ctrl.loading.value == LoadingState.loading
+                                ? true
+                                : false,
+                      ),
 
-            Divider(color: PAppColor.fillColor),
-            PCustomListTile(
-              title: 'dob'.tr,
-              subtitle: PFormatter.formatDate(
-                dateFormat: DateFormat('dd-MM-yyyy'),
-                date: DateTime.parse(
-                  ctrl.profile.value.dob ?? DateTime.now().toIso8601String(),
-                ),
-              ),
-            ).redacted(
-              context: context,
-              redact: ctrl.loading.value == LoadingState.loading ? true : false,
-            ),
+                      Divider(color: PAppColor.fillColor),
+                      PCustomListTile(
+                        title: 'scheme_name'.tr,
+                        subtitle:
+                            PSecureStorage().getBioData()?.schemeName ??
+                            '*********************',
+                      ).redacted(
+                        context: context,
+                        redact:
+                            ctrl.loading.value == LoadingState.loading
+                                ? true
+                                : false,
+                      ),
 
-            Divider(color: PAppColor.fillColor),
+                      Divider(color: PAppColor.fillColor),
+                      PCustomListTile(
+                        title: 'pension_type'.tr,
+                        subtitle:
+                            PSecureStorage().getBioData()?.pensionTypeName ??
+                            '*********************',
+                      ).redacted(
+                        context: context,
+                        redact:
+                            ctrl.loading.value == LoadingState.loading
+                                ? true
+                                : false,
+                      ),
+
+                      Divider(color: PAppColor.fillColor),
+                    ],
+                  ).scrollable(),
+            ),
 
             // Divider(color: PAppColor.fillColor),
             // PCustomListTile(

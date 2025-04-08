@@ -3,7 +3,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:oldmutual_pensions_app/core/utils/utils.dart';
 import 'package:oldmutual_pensions_app/features/future.value.calculator/future.value.calculator.dart';
-import 'package:oldmutual_pensions_app/routes/app.pages.dart';
 import 'package:oldmutual_pensions_app/shared/shared.dart';
 import 'package:oldmutual_pensions_app/shared/widgets/custom.filled.textfield.dart';
 
@@ -26,60 +25,78 @@ class PFutureValueCalcPage extends StatelessWidget {
           PAppSize.s25.verticalSpace,
           // Filter
           Expanded(
-            child:
-                Column(
-                  children: [
-                    Row(
-                      children: [
-                        Expanded(
-                          child: PCustomFilledTextfield(
-                            label: 'contribution_rate'.tr,
-                            hint: 'contribution_rate_hint'.tr,
-                            controller: ctrl.contributionRateTEC,
+            child: Obx(
+              () =>
+                  Column(
+                    children: [
+                      Row(
+                        children: [
+                          Expanded(
+                            child: PCustomFilledTextfield(
+                              label: 'initial_lump_sum'.tr,
+                              hint: '',
+                              textInputType: TextInputType.number,
+                              controller: ctrl.initialLumpSumTEC,
+                            ),
                           ),
-                        ),
-                        PAppSize.s25.horizontalSpace,
-                        Expanded(
-                          child: PCustomFilledTextfield(
-                            label: 'current_age'.tr,
-                            hint: 'current_age_hint'.tr,
-                            controller: ctrl.currentAgeTEC,
+                          PAppSize.s25.horizontalSpace,
+                          Expanded(
+                            child: PCustomFilledTextfield(
+                              label: 'monthly_contribution'.tr,
+                              hint: '',
+                              textInputType: TextInputType.number,
+                              controller: ctrl.monthlyContributionTEC,
+                            ),
                           ),
-                        ),
-                      ],
-                    ),
-                    PAppSize.s25.verticalSpace,
-                    Row(
-                      children: [
-                        Expanded(
-                          child: PCustomFilledTextfield(
-                            label: 'retirement_age'.tr,
-                            hint: 'retirement_age_hint'.tr,
-                            controller: ctrl.retirementAgeTEC,
+                        ],
+                      ),
+                      PAppSize.s25.verticalSpace,
+                      Row(
+                        children: [
+                          Expanded(
+                            child: PCustomFilledTextfield(
+                              label: 'annual_interest_rate'.tr,
+                              hint: '',
+                              textInputType: TextInputType.number,
+                              controller: ctrl.annualInterestRateTEC,
+                            ),
                           ),
-                        ),
-                        PAppSize.s25.horizontalSpace,
-                        Expanded(
-                          child: PCustomFilledTextfield(
-                            label: 'interest_rate'.tr,
-                            hint: 'interest_rate_hint'.tr,
-                            controller: ctrl.interestRateTEC,
+                          PAppSize.s25.horizontalSpace,
+                          Expanded(
+                            child: PCustomFilledTextfield(
+                              label: 'number_of_years'.tr,
+                              hint: '',
+                              textInputType: TextInputType.number,
+                              controller: ctrl.numOfYearstRateTEC,
+                            ),
                           ),
-                        ),
-                      ],
-                    ),
+                        ],
+                      ),
 
-                    (PDeviceUtil.getDeviceWidth(context) / 3).verticalSpace,
-                    PGradientButton(
-                      label: 'calculate'.tr,
-                      width: PDeviceUtil.getDeviceWidth(context) * 0.55,
-                      onTap:
-                          () => PHelperFunction.switchScreen(
-                            destination: Routes.calculateResultPage,
-                          ),
-                    ),
-                  ],
-                ).symmetric(horizontal: PAppSize.s22).scrollable(),
+                      (PDeviceUtil.getDeviceWidth(context) * 0.05)
+                          .verticalSpace,
+
+                      Align(
+                        alignment: Alignment.centerLeft,
+                        child: Text(
+                          '${'fv'.tr.toUpperCase()} = GHS ${ctrl.total.value.toStringAsFixed(2)}',
+                          textAlign: TextAlign.start,
+                          style:
+                              Theme.of(
+                                context,
+                              ).textTheme.headlineMedium?.copyWith(),
+                        ),
+                      ),
+
+                      (PDeviceUtil.getDeviceWidth(context) / 3).verticalSpace,
+                      PGradientButton(
+                        label: 'calculate'.tr,
+                        width: PDeviceUtil.getDeviceWidth(context) * 0.55,
+                        onTap: () => ctrl.calculateFutureValue(),
+                      ),
+                    ],
+                  ).symmetric(horizontal: PAppSize.s22).scrollable(),
+            ),
           ),
         ],
       ),

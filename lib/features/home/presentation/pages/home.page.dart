@@ -8,6 +8,7 @@ import 'package:oldmutual_pensions_app/features/more.services/presentation/pages
 import 'package:oldmutual_pensions_app/features/notification/presentation/pages/notification.page.dart';
 import 'package:oldmutual_pensions_app/features/profile/profile.dart';
 import 'package:oldmutual_pensions_app/gen/assets.gen.dart';
+import 'package:oldmutual_pensions_app/shared/widgets/annotated.region.dart';
 
 class PHomePage extends StatelessWidget {
   PHomePage({super.key});
@@ -79,7 +80,7 @@ class PHomePage extends StatelessWidget {
           ],
         ),
 
-        body: _pages[ctrl.currentIndex.value],
+        body: PAnnotatedRegion(child: _pages[ctrl.currentIndex.value]),
       ),
     );
   }

@@ -6,7 +6,6 @@ import 'package:oldmutual_pensions_app/features/beneficiary/beneficiary.dart';
 import 'package:oldmutual_pensions_app/features/beneficiary/presentation/vm/beneficiary.vm.dart';
 import 'package:oldmutual_pensions_app/gen/assets.gen.dart';
 import 'package:oldmutual_pensions_app/shared/shared.dart';
-import 'package:oldmutual_pensions_app/shared/widgets/empty.state.widget.dart';
 
 class PBeneficiaryPage extends StatefulWidget {
   const PBeneficiaryPage({super.key});
@@ -25,7 +24,9 @@ class _PBeneficiaryPageState extends State<PBeneficiaryPage> {
       body: Column(
         children: [
           PPageTagWidget(
-            tag: 'beneficiaries_tag'.tr,
+            tag: 'beneficiaries_tag'.trParams({
+              'phone': PAppConstant.beneficiaryPhoneSupport,
+            }),
             icon: Assets.icons.warningGreenIcon.svg(),
             textAlign: TextAlign.center,
           ),
