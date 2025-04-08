@@ -46,15 +46,16 @@ class PProfilePage extends StatelessWidget {
                             ? null
                             : PAppColor.transparentColor,
                   ),
-                ).onPressed(onTap: () => ctrl.chooseFromGallery()),
-                // PCachedImageWidget(url: url, height: height),
-                Positioned(
-                  right: PAppSize.s10,
-                  bottom: 0,
-                  child: Assets.icons.addIcon.svg().onPressed(
-                    onTap: () => ctrl.chooseFromGallery(),
-                  ),
                 ),
+                //.onPressed(onTap: () => ctrl.chooseFromGallery()),
+                // PCachedImageWidget(url: url, height: height),
+                // Positioned(
+                //   right: PAppSize.s10,
+                //   bottom: 0,
+                //   child: Assets.icons.addIcon.svg().onPressed(
+                //     onTap: () => ctrl.chooseFromGallery(),
+                //   ),
+                // ),
               ],
             ).centered(),
             PAppSize.s28.verticalSpace,
