@@ -79,7 +79,7 @@ class PFutureValueCalcPage extends StatelessWidget {
                       Align(
                         alignment: Alignment.centerLeft,
                         child: Text(
-                          '${'fv'.tr.toUpperCase()} = GHS ${ctrl.total.value.toStringAsFixed(2)}',
+                          '${'fv'.tr.toUpperCase()} = ${PFormatter.formatCurrency(amount: ctrl.total.value)}',
                           textAlign: TextAlign.start,
                           style:
                               Theme.of(

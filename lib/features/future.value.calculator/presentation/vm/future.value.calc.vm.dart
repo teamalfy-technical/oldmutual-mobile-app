@@ -37,7 +37,7 @@ class PFutureValueCalcVm extends GetxController {
         message: 'Please fill in all fields',
       );
     } else {
-      final initialLumpSum = double.parse(initialLumpSumTEC.text.trim());
+      // final initialLumpSum = double.parse(initialLumpSumTEC.text.trim());
       final monthlyContribution = double.parse(
         monthlyContributionTEC.text.trim(),
       );
@@ -45,9 +45,11 @@ class PFutureValueCalcVm extends GetxController {
           double.parse(annualInterestRateTEC.text.trim()) / 100;
       final numOfYearstRate = double.parse(numOfYearstRateTEC.text.trim());
 
-      total.value =
+      final result =
           calculateCompoundInterest(
-            initialLumpSum,
+            initialLumpSumTEC.text.isEmpty
+                ? 1
+                : double.parse(initialLumpSumTEC.text.trim()),
             annualInterestRate,
             numOfYearstRate,
           ) +
@@ -56,12 +58,17 @@ class PFutureValueCalcVm extends GetxController {
             annualInterestRate,
             numOfYearstRate,
           );
+
+      pensionAppLogger.e(total.value);
+
+      total.value = (result * 100).truncateToDouble() / 100;
     }
   }
 
   bool get validateFields {
-    if (initialLumpSumTEC.text.trim().isEmpty ||
-        monthlyContributionTEC.text.trim().isEmpty ||
+    if (
+    //initialLumpSumTEC.text.trim().isEmpty ||
+    monthlyContributionTEC.text.trim().isEmpty ||
         annualInterestRateTEC.text.trim().isEmpty ||
         numOfYearstRateTEC.text.trim().isEmpty) {
       return false;
@@ -69,15 +76,24 @@ class PFutureValueCalcVm extends GetxController {
     return true;
   }
 
+  /// [Formula] 1 => P(1 + r/n)^(n * t)
+  /// P = Initial Lump Sum
+  /// r = Annual interest rate (as a decimal, e.g 5% = 0.05)
+  /// n = Number of times interest is compounded per year
+  /// t = Number of years
+  double calculateCompoundInterest(double P, double r, double t) {
+    return P * pow((1 + r / n), n * t);
+  }
+
+  /// [Formula] 2 => M((1 + r/n)^(n*t) - 1) / (r/n)
+  /// M = Monthly Contribution
+  /// r = Annual interest rate (as a decimal, e.g 5% = 0.05)
+  /// n = Number of times interest is compounded per year (monthly compounding -> n = 12)
+  /// t = Number of years
   double calculateMonthlyContribution(double M, double r, double l) {
     double ratePerPeriod = r / n;
     double exponent = n * l;
     double compoundFactor = pow(1 + ratePerPeriod, exponent).toDouble();
     return M * ((compoundFactor - 1) / ratePerPeriod);
-  }
-
-  // P(1+r/n)^(n*l)
-  double calculateCompoundInterest(double P, double r, double l) {
-    return P * pow((1 + r / n), n * l);
   }
 }
