@@ -74,6 +74,47 @@ class PNotificationVM extends GetxController {
       (res) {
         updateLoadingState(LoadingState.completed);
         notifications.value = res.data ?? [];
+        // markNotificationsAsRead(
+        //   ids: notifications.map((e) => e.id ?? '').toList(),
+        // );
+      },
+    );
+  }
+
+  /// Function to mark notifications as read
+  Future<void> markNotificationsAsRead({required List<String> ids}) async {
+    final result = await notificationService.markNotificationsAsRead(ids: ids);
+    result.fold(
+      (err) {
+        PPopupDialog(
+          context,
+        ).errorMessage(title: 'error'.tr, message: err.message);
+      },
+      (res) {
+        notifications.value = res.data ?? [];
+      },
+    );
+  }
+
+  /// Function to mark notification as read
+  Future<void> markNotificationAsRead({
+    required NotificationModel notificationModel,
+  }) async {
+    final result = await notificationService.markNotificationAsRead(
+      id: notificationModel.id ?? '0',
+    );
+    result.fold(
+      (err) {
+        PPopupDialog(
+          context,
+        ).errorMessage(title: 'error'.tr, message: err.message);
+      },
+      (res) {
+        final index = notifications.indexWhere(
+          (element) => element.id == res.data?.id,
+        );
+        notifications.setAll(index, [res.data ?? NotificationModel()]);
+        update();
       },
     );
   }

@@ -146,6 +146,8 @@ class AppTranslations extends Translations {
           'Sign up today and take control of your \npension savings.',
       'accrued_interest': 'Accrued Interest',
       'total_redemptions': 'Total Redemptions',
+      'anchor': 'Anchor',
+      'benchmark': 'Benchmark',
     },
     'hi_IN': {'app_name': 'Pensions App'},
     'fr_FR': {'app_name': 'Pensions App'},

@@ -17,7 +17,7 @@ class PHomePage extends StatelessWidget {
 
   final List<Widget> _pages = [
     PHomeView(),
-    PFactSheetPage1(),
+    PFactSheetPage(),
     PNotificationPage(),
     PProfilePage(),
     PMoreServicesPage(),

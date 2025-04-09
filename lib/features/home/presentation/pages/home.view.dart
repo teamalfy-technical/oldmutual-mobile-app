@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:oldmutual_pensions_app/core/utils/utils.dart';
 import 'package:oldmutual_pensions_app/features/contribution.history/contribution.history.dart';
+import 'package:oldmutual_pensions_app/features/factsheet/presentation/widgets/chart.redact.widget.dart';
 import 'package:oldmutual_pensions_app/features/home/home.dart';
 import 'package:oldmutual_pensions_app/gen/assets.gen.dart';
 import 'package:oldmutual_pensions_app/routes/app.pages.dart';
@@ -285,43 +286,7 @@ class PHomeView extends StatelessWidget {
                     PAppSize.s16.verticalSpace,
                     // line chart
                     ctrl.loading.value == LoadingState.loading
-                        ? Container(
-                          width: PDeviceUtil.getDeviceWidth(context),
-                          height: PDeviceUtil.getDeviceHeight(context) * 0.3,
-                          padding: EdgeInsets.all(PAppSize.s20),
-                          color: PAppColor.whiteColor,
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            children: [
-                              Container(
-                                width: PDeviceUtil.getDeviceWidth(context),
-                                height: PAppSize.s20,
-                                color: PAppColor.whiteColor,
-                              ),
-                              Container(
-                                width: PDeviceUtil.getDeviceWidth(context),
-                                height: PAppSize.s20,
-                                color: PAppColor.whiteColor,
-                              ),
-                              Container(
-                                width: PDeviceUtil.getDeviceWidth(context),
-                                height: PAppSize.s20,
-                                color: PAppColor.whiteColor,
-                              ),
-                              Container(
-                                width: PDeviceUtil.getDeviceWidth(context),
-                                height: PAppSize.s20,
-                                color: PAppColor.whiteColor,
-                              ),
-                            ],
-                          ),
-                        ).redacted(
-                          context: context,
-                          redact:
-                              ctrl.loading.value == LoadingState.loading
-                                  ? true
-                                  : false,
-                        )
+                        ? PChartRedactWidget(loadingState: ctrl.loading.value)
                         : SizedBox(
                           width: PDeviceUtil.getDeviceWidth(context) + 300,
                           height: PDeviceUtil.getDeviceHeight(context) * 0.3,

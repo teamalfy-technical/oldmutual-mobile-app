@@ -22,77 +22,75 @@ class PNotificationWidget extends StatelessWidget {
         borderRadius: BorderRadius.circular(PAppSize.s8),
       ),
       child: Row(
+        children: [
+          Container(
+            width: PAppSize.s50,
+            height: PAppSize.s50,
+            decoration: BoxDecoration(
+              color:
+                  notification.readAt != null
+                      ? PAppColor.blackColor
+                      : PAppColor.primary.withOpacityExt(PAppSize.s0_2),
+              shape: BoxShape.circle,
+            ),
+            child:
+                Assets.icons.notificationGreenIcon
+                    .svg(width: PAppSize.s20, height: PAppSize.s20)
+                    .centered(),
+          ),
+          PAppSize.s8.horizontalSpace,
+          // title & subtitle
+          Expanded(
+            child: Text(
+              '${notification.data?.message} ',
+              style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                color:
+                    PHelperFunction.isDarkMode(context)
+                        ? PAppColor.text50
+                        : PAppColor.text500,
+                fontWeight: FontWeight.w500,
+              ),
+            ),
+          ),
+          PAppSize.s8.horizontalSpace,
+          Column(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.end,
             children: [
-              Container(
-                width: PAppSize.s50,
-                height: PAppSize.s50,
-                decoration: BoxDecoration(
-                  color:
-                      notification.readAt == null
-                          ? PAppColor.blackColor
-                          : PAppColor.primary.withOpacityExt(PAppSize.s0_2),
-                  shape: BoxShape.circle,
-                ),
-                child:
-                    Assets.icons.notificationGreenIcon
-                        .svg(width: PAppSize.s20, height: PAppSize.s20)
-                        .centered(),
-              ),
-              PAppSize.s8.horizontalSpace,
-              // title & subtitle
-              Expanded(
-                child: Text(
-                  '${notification.data?.message} ',
-                  style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                    color:
-                        PHelperFunction.isDarkMode(context)
-                            ? PAppColor.text50
-                            : PAppColor.text500,
-                    fontWeight: FontWeight.w500,
+              Text(
+                PFormatter.formatTime(
+                  date: DateTime.parse(
+                    notification.data?.paymentDate ??
+                        notification.createdAt ??
+                        DateTime.now().toIso8601String(),
                   ),
+                  dateFormat: DateFormat.jm(),
+                ).toLowerCase(),
+                style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                  fontSize: PAppSize.s13,
+                  fontWeight: FontWeight.w300,
                 ),
               ),
-              PAppSize.s8.horizontalSpace,
-              Column(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                crossAxisAlignment: CrossAxisAlignment.end,
-                children: [
-                  Text(
-                    PFormatter.formatTime(
-                      date: DateTime.parse(
-                        notification.data?.paymentDate ??
-                            notification.createdAt ??
-                            DateTime.now().toIso8601String(),
-                      ),
-                      dateFormat: DateFormat.jm(),
-                    ).toLowerCase(),
-                    style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                      fontSize: PAppSize.s13,
-                      fontWeight: FontWeight.w300,
-                    ),
+              PAppSize.s8.verticalSpace,
+              Text(
+                PFormatter.formatDate(
+                  date: DateTime.parse(
+                    notification.data?.paymentDate ??
+                        notification.createdAt ??
+                        DateTime.now().toIso8601String(),
                   ),
-                  PAppSize.s8.verticalSpace,
-                  Text(
-                    PFormatter.formatDate(
-                      date: DateTime.parse(
-                        notification.data?.paymentDate ??
-                            notification.createdAt ??
-                            DateTime.now().toIso8601String(),
-                      ),
-                      dateFormat: DateFormat('dd-MM-yy'),
-                    ),
-                    style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                      fontSize: PAppSize.s13,
-                      fontWeight: FontWeight.w300,
-                    ),
-                  ),
-                ],
+                  dateFormat: DateFormat('dd-MM-yy'),
+                ),
+                style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                  fontSize: PAppSize.s13,
+                  fontWeight: FontWeight.w300,
+                ),
               ),
             ],
-          )
-          .symmetric(horizontal: PAppSize.s12, vertical: PAppSize.s6)
-          .onPressed(onTap: onTap),
-    );
+          ),
+        ],
+      ).symmetric(horizontal: PAppSize.s12, vertical: PAppSize.s6),
+    ).onPressed(onTap: onTap);
     // return ListTile(
     //   leading: CircleAvatar(
     //     radius: 24,

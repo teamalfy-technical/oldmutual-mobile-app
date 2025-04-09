@@ -17,28 +17,41 @@ class PNotificationPage extends StatelessWidget {
         title: Text('notification'.tr),
       ),
       body: Obx(
-        () =>
-            ctrl.loading.value == LoadingState.loading
-                ? ListView.builder(
-                  itemCount: 10,
-                  itemBuilder: (context, index) {
-                    return PNotificationRedactWidget(
-                      loading: ctrl.loading.value,
-                    );
-                  },
-                )
-                : ctrl.notifications.isEmpty
-                ? PEmptyStateWidget(message: 'no_results_found'.tr)
-                : ListView.separated(
-                  separatorBuilder:
-                      (context, index) => Divider(color: PAppColor.fillColor2),
-                  itemCount: ctrl.notifications.length,
-                  itemBuilder: (context, index) {
-                    return PNotificationWidget(
-                      notification: ctrl.notifications[index],
-                    );
-                  },
-                ),
+        () => RefreshIndicator(
+          onRefresh: ctrl.getNotifications,
+          color: PAppColor.primary,
+          child:
+              ctrl.loading.value == LoadingState.loading
+                  ? ListView.builder(
+                    itemCount: 10,
+                    itemBuilder: (context, index) {
+                      return PNotificationRedactWidget(
+                        loading: ctrl.loading.value,
+                      );
+                    },
+                  )
+                  : ctrl.notifications.isEmpty
+                  ? PEmptyStateWidget(message: 'no_results_found'.tr)
+                  : ListView.separated(
+                    separatorBuilder:
+                        (context, index) =>
+                            Divider(color: PAppColor.fillColor2),
+                    itemCount: ctrl.notifications.length,
+                    itemBuilder: (context, index) {
+                      final notification = ctrl.notifications[index];
+                      return PNotificationWidget(
+                        onTap: () {
+                          if (notification.readAt == null) {
+                            ctrl.markNotificationAsRead(
+                              notificationModel: notification,
+                            );
+                          }
+                        },
+                        notification: notification,
+                      );
+                    },
+                  ),
+        ),
       ),
     );
   }

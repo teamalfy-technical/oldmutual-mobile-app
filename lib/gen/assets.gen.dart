@@ -51,6 +51,10 @@ class $AssetsIconsGen {
   /// File path: assets/icons/add.icon.svg
   SvgGenImage get addIcon => const SvgGenImage('assets/icons/add.icon.svg');
 
+  /// File path: assets/icons/anchor.icon.svg
+  SvgGenImage get anchorIcon =>
+      const SvgGenImage('assets/icons/anchor.icon.svg');
+
   /// File path: assets/icons/arrow.down.ios.svg
   SvgGenImage get arrowDownIos =>
       const SvgGenImage('assets/icons/arrow.down.ios.svg');
@@ -61,6 +65,10 @@ class $AssetsIconsGen {
 
   /// File path: assets/icons/arrow.icon.svg
   SvgGenImage get arrowIcon => const SvgGenImage('assets/icons/arrow.icon.svg');
+
+  /// File path: assets/icons/benchmark.icon.svg
+  SvgGenImage get benchmarkIcon =>
+      const SvgGenImage('assets/icons/benchmark.icon.svg');
 
   /// File path: assets/icons/email.icon.svg
   SvgGenImage get emailIcon => const SvgGenImage('assets/icons/email.icon.svg');
@@ -131,9 +139,11 @@ class $AssetsIconsGen {
   /// List of all assets
   List<SvgGenImage> get values => [
     addIcon,
+    anchorIcon,
     arrowDownIos,
     arrowForwardIos,
     arrowIcon,
+    benchmarkIcon,
     emailIcon,
     eyeIcon,
     factsheetIcon,

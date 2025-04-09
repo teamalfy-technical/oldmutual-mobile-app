@@ -84,7 +84,7 @@ class PFutureValueCalcPage extends StatelessWidget {
                 Align(
                   alignment: Alignment.centerLeft,
                   child: Text(
-                    '${'fv'.tr.toUpperCase()} = ${PFormatter.formatCurrency(amount: ctrl.total.value)}',
+                    PFormatter.formatCurrency(amount: ctrl.total.value),
                     textAlign: TextAlign.start,
                     style:
                         Theme.of(context).textTheme.headlineMedium?.copyWith(),
