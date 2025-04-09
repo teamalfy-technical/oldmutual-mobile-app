@@ -68,12 +68,15 @@ class PCustomBarChartNew extends StatelessWidget {
           showTitles: showRightTitles,
           getTitlesWidget: (value, meta) {
             final titlesData = rightTitles ?? [];
-            return Text(
-              titlesData.isEmpty
-                  ? value.toInt().toString()
-                  : titlesData[value.toInt()],
-              textAlign: TextAlign.center,
-              style: TextStyle(fontSize: PAppSize.s10),
+            return Transform.rotate(
+              angle: -1.5708, // -90 degrees in radians
+              child: Text(
+                titlesData.isEmpty
+                    ? value.toInt().toString()
+                    : titlesData[value.toInt()],
+                textAlign: TextAlign.center,
+                style: TextStyle(fontSize: PAppSize.s10),
+              ),
             );
           },
         ),

@@ -3,6 +3,7 @@ import 'package:oldmutual_pensions_app/features/auth/auth.dart';
 import 'package:oldmutual_pensions_app/features/beneficiary/beneficiary.dart';
 import 'package:oldmutual_pensions_app/features/contribution.history/contribution.history.dart';
 import 'package:oldmutual_pensions_app/features/dashboard/dashboard.dart';
+import 'package:oldmutual_pensions_app/features/factsheet/factsheet.dart';
 import 'package:oldmutual_pensions_app/features/notification/notification.dart';
 import 'package:oldmutual_pensions_app/features/profile/profile.dart';
 
@@ -39,20 +40,10 @@ class ServiceBinding implements Bindings {
       tag: (DashboardService).toString(),
     );
 
-    // Get.lazyPut<SearchService>(
-    //   () => SearchServiceImpl(),
-    //   tag: (SearchService).toString(),
-    // );
-
-    // Get.lazyPut<NotificationService>(
-    //   () => NotificationServiceImpl(),
-    //   tag: (NotificationService).toString(),
-    // );
-
-    // Get.lazyPut<ChatService>(
-    //   () => ChatServiceImpl(),
-    //   tag: (ChatService).toString(),
-    // );
+    Get.lazyPut<FactsheetService>(
+      () => FactsheetServiceImpl(),
+      tag: (FactsheetService).toString(),
+    );
 
     /// [Data Source] injection
     //TDataSourceBindings().dependencies();

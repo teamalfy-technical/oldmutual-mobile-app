@@ -158,4 +158,46 @@ abstract class Env {
   static final String getSelectedMemberScheme = _Env.getSelectedMemberScheme;
 
   /// -------------------- Scheme Endpoints Ends Here ------------------------- ///
+  ///
+  ///
+  /// -------------------- Performance Endpoints Starts Here ------------------------- ///
+
+  /// [GetPerformances] endpoint
+  @EnviedField(defaultValue: '/all/performances', obfuscate: true)
+  static final String getPerformances = _Env.getPerformances;
+
+  /// [AddStorePerformance] endpoint
+  @EnviedField(defaultValue: '/store/performance', obfuscate: true)
+  static final String addPerformance = _Env.addPerformance;
+
+  /// [UpdateStorePerformance] endpoint
+  @EnviedField(defaultValue: '/update/performance', obfuscate: true)
+  static final String updatePerformance = _Env.updatePerformance;
+
+  /// [DeleteStorePerformance] endpoint
+  @EnviedField(defaultValue: '/delete/performance', obfuscate: true)
+  static final String deletePerformance = _Env.deletePerformance;
+
+  /// -------------------- Performance Endpoints Ends Here ------------------------- ///
+  ///
+  ///
+  /// -------------------- Fund-Composition Endpoints Starts Here ------------------------- ///
+
+  /// [GetFundComposition] endpoint
+  @EnviedField(defaultValue: '/all/fund-composition', obfuscate: true)
+  static final String getFundComposition = _Env.getFundComposition;
+
+  /// [AddFundComposition] endpoint
+  @EnviedField(defaultValue: '/store/fund-composition', obfuscate: true)
+  static final String addFundComposition = _Env.addFundComposition;
+
+  /// [UpdateFundComposition ] endpoint
+  @EnviedField(defaultValue: '/update/fund-composition', obfuscate: true)
+  static final String updateFundComposition = _Env.updateFundComposition;
+
+  /// [DeleteFundComposition] endpoint
+  @EnviedField(defaultValue: '/delete/fund-composition', obfuscate: true)
+  static final String deleteFundComposition = _Env.deleteFundComposition;
+
+  /// -------------------- Fund-Composition Endpoints Ends Here ------------------------- ///
 }

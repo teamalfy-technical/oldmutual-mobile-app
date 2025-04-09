@@ -22,6 +22,30 @@ class PFutureValueCalcVm extends GetxController {
 
   final context = Get.context!;
 
+  //  Descriptions of variables
+  List<Map<String, dynamic>> fvDescriptions = [
+    {
+      "title": "Initial Lump Sum",
+      "description":
+          "Enter the amount you're starting with in your pension account. Example: If you already have GHS 10,000 saved, enter that here.",
+    },
+    {
+      "title": "Monthly Contribution",
+      "description":
+          "Enter how much you plan to contribute every month going forward. This helps us project how your pension will grow with regular savings.",
+    },
+    {
+      "title": "Annual Interest Rate",
+      "description":
+          "Enter the expected yearly interest rate (as a percentage). Example: If your expect fund to grow by 10% per year, enter “10”.",
+    },
+    {
+      "title": "Number of Year",
+      "description":
+          "Enter how many years you plan to contribute before retirement. This helps us calculate how long your money will grow.",
+    },
+  ];
+
   void resetCalculator() {
     initialLumpSumTEC.clear();
     monthlyContributionTEC.clear();

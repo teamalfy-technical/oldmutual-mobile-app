@@ -7,7 +7,7 @@ import 'package:oldmutual_pensions_app/features/auth/presentation/pages/verify.o
 import 'package:oldmutual_pensions_app/features/beneficiary/presentation/pages/beneficiary.page.dart';
 import 'package:oldmutual_pensions_app/features/contribution.history/presentation/pages/contribution.history.page.dart';
 import 'package:oldmutual_pensions_app/features/dashboard/presentation/pages/dashboard.page.dart';
-import 'package:oldmutual_pensions_app/features/factsheet/presentation/pages/factsheet.page.dart';
+import 'package:oldmutual_pensions_app/features/factsheet/presentation/pages/factsheet.page.old.dart';
 import 'package:oldmutual_pensions_app/features/future.value.calculator/future.value.calculator.dart';
 import 'package:oldmutual_pensions_app/features/home/presentation/pages/home.page.dart';
 import 'package:oldmutual_pensions_app/features/notification/notification.dart';
@@ -80,16 +80,13 @@ class AppPages {
       transitionDuration: const Duration(milliseconds: PAppSize.s700),
     ),
     GetPage(name: _Paths.notificationPage, page: () => PNotificationPage()),
-    GetPage(name: _Paths.factsheetPage, page: () => PFactSheetPage()),
+    GetPage(name: _Paths.factsheetPage, page: () => PFactSheetPage1()),
     GetPage(name: _Paths.beneficiariesPage, page: () => PBeneficiaryPage()),
     GetPage(
       name: _Paths.contributionHistoryPage,
       page: () => PContributionHistoryPage(),
     ),
-    GetPage(
-      name: _Paths.calculateResultPage,
-      page: () => PCalculateResultsPage(),
-    ),
+    GetPage(name: _Paths.calculateResultPage, page: () => PFactSheetPage()),
     GetPage(
       name: _Paths.futureValueCalcPage,
       page: () => PFutureValueCalcPage(),

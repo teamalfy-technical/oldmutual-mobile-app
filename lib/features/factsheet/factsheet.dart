@@ -1,1 +1,10 @@
+export 'application/service/factsheet.service.dart';
+export 'application/service/factsheet.service.impl.dart';
+export 'data/ds/factsheet.ds.dart';
+export 'data/ds/factsheet.ds.impl.dart';
+export 'data/repos/factsheet.repo.dart';
+export 'data/repos/factsheet.repo.impl.dart';
+export 'domain/models/fund.composition.model.dart';
+export 'domain/models/performance.model.dart';
 export 'presentation/pages/factsheet.page.dart';
+export 'presentation/pages/factsheet.page.old.dart';
