@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:oldmutual_pensions_app/core/utils/utils.dart';
 import 'package:oldmutual_pensions_app/features/future.value.calculator/future.value.calculator.dart';
+import 'package:oldmutual_pensions_app/gen/assets.gen.dart';
 import 'package:oldmutual_pensions_app/shared/shared.dart';
 import 'package:oldmutual_pensions_app/shared/widgets/custom.filled.textfield.dart';
 
@@ -35,7 +36,9 @@ class PFutureValueCalcPage extends StatelessWidget {
                             child: PCustomFilledTextfield(
                               label: 'initial_lump_sum'.tr,
                               hint: '',
-                              textInputType: TextInputType.number,
+                              textInputType: TextInputType.numberWithOptions(
+                                decimal: true,
+                              ),
                               controller: ctrl.initialLumpSumTEC,
                             ),
                           ),
@@ -44,7 +47,9 @@ class PFutureValueCalcPage extends StatelessWidget {
                             child: PCustomFilledTextfield(
                               label: 'monthly_contribution'.tr,
                               hint: '',
-                              textInputType: TextInputType.number,
+                              textInputType: TextInputType.numberWithOptions(
+                                decimal: true,
+                              ),
                               controller: ctrl.monthlyContributionTEC,
                             ),
                           ),
@@ -57,7 +62,9 @@ class PFutureValueCalcPage extends StatelessWidget {
                             child: PCustomFilledTextfield(
                               label: 'annual_interest_rate'.tr,
                               hint: '',
-                              textInputType: TextInputType.number,
+                              textInputType: TextInputType.numberWithOptions(
+                                decimal: true,
+                              ),
                               controller: ctrl.annualInterestRateTEC,
                             ),
                           ),
@@ -66,7 +73,9 @@ class PFutureValueCalcPage extends StatelessWidget {
                             child: PCustomFilledTextfield(
                               label: 'number_of_years'.tr,
                               hint: '',
-                              textInputType: TextInputType.number,
+                              textInputType: TextInputType.numberWithOptions(
+                                decimal: true,
+                              ),
                               controller: ctrl.numOfYearstRateTEC,
                             ),
                           ),
@@ -93,6 +102,23 @@ class PFutureValueCalcPage extends StatelessWidget {
                         label: 'calculate'.tr,
                         width: PDeviceUtil.getDeviceWidth(context) * 0.55,
                         onTap: () => ctrl.calculateFutureValue(),
+                      ),
+                      PAppSize.s24.verticalSpace,
+                      OutlinedButton.icon(
+                        onPressed: ctrl.resetCalculator,
+                        label: Text('reset_calculator'.tr),
+                        icon: Assets.icons.arrowIcon.svg(),
+                        style: OutlinedButton.styleFrom(
+                          foregroundColor: PAppColor.primary,
+                          padding: EdgeInsets.zero,
+                          minimumSize: Size(
+                            PDeviceUtil.getDeviceWidth(context) * 0.55,
+                            PAppSize.buttonHeight,
+                          ),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(PAppSize.s24),
+                          ),
+                        ),
                       ),
                     ],
                   ).symmetric(horizontal: PAppSize.s22).scrollable(),

@@ -27,7 +27,7 @@ class PFutureValueCalcVm extends GetxController {
     monthlyContributionTEC.clear();
     annualInterestRateTEC.clear();
     numOfYearstRateTEC.clear();
-    PHelperFunction.pop();
+    total.value = 0.0;
   }
 
   void calculateFutureValue() {
