@@ -1,179 +1,162 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:oldmutual_pensions_app/core/utils/utils.dart';
+import 'package:oldmutual_pensions_app/features/factsheet/factsheet.dart';
 
 class PCustomBarChart extends StatelessWidget {
-  final List<BarChartGroupData> data;
-  final bool showLeftTitles;
-  final bool showRightTitles;
-  final bool showTopTitles;
-  final bool showBottomTitles;
-  final bool showGridData;
-  final bool showBorderData;
-
-  final List<String>? bottomTitles;
-  final List<String>? leftTitles;
-  final List<String>? topTitles;
-  final List<String>? rightTitles;
-  const PCustomBarChart({
-    super.key,
-    required this.data,
-    this.showLeftTitles = true,
-    this.showBottomTitles = true,
-    this.showTopTitles = false,
-    this.showRightTitles = false,
-    this.showGridData = true,
-    this.showBorderData = false,
-    this.bottomTitles,
-    this.leftTitles,
-    this.topTitles,
-    this.rightTitles,
-  });
+  final List<FundCompositionModel> data;
+  const PCustomBarChart({super.key, required this.data});
 
   @override
   Widget build(BuildContext context) {
-    return BarChart(
-      BarChartData(
-        gridData: _buildGridData(),
-        borderData: _buildBorderData(),
-        barGroups: data,
-        titlesData: _buildTitlesData(),
-      ),
-    ).centered().all(PAppSize.s10);
-  }
+    final maxY = data
+        .map((e) => double.tryParse(e.percentage ?? "0") ?? 0)
+        .reduce((a, b) => a > b ? a : b);
 
-  FlGridData _buildGridData() {
-    return FlGridData(
-      show: showGridData,
-      drawHorizontalLine: true,
-      drawVerticalLine: false,
-    );
-  }
+    final colors = [
+      PAppColor.primary,
+      PAppColor.yellowColor,
+      PAppColor.orangeColor,
+      Color(0xFFD9D9D9),
+      PAppColor.primaryTextColor,
+      PAppColor.primary,
+    ];
 
-  FlBorderData _buildBorderData() {
-    return FlBorderData(
-      show: showBorderData,
-      border: Border.all(color: Colors.black, width: 1),
-    );
-  }
-
-  FlTitlesData _buildTitlesData() {
-    return FlTitlesData(
-      show: true,
-      rightTitles: AxisTitles(
-        sideTitles: SideTitles(
-          showTitles: showRightTitles,
-          getTitlesWidget: (value, meta) {
-            final titlesData = rightTitles ?? [];
-            return Text(
-              titlesData.isEmpty
-                  ? value.toInt().toString()
-                  : titlesData[value.toInt()],
-              textAlign: TextAlign.center,
-              style: TextStyle(fontSize: PAppSize.s10),
-            );
-          },
-        ),
-      ),
-      topTitles: AxisTitles(
-        sideTitles: SideTitles(
-          showTitles: showTopTitles,
-          reservedSize: PAppSize.s40,
-          getTitlesWidget: (value, meta) {
-            final titlesData = topTitles ?? [];
-            final index = value.toInt();
-            final rawLabel =
-                (index >= 0 && index < titlesData.length)
-                    ? titlesData[index]
-                    : '';
-
-            final formattedLabel = PFormatter.formatMoneyValue(rawLabel);
-
-            final barValue =
-                (index >= 0 && index < data.length)
-                    ? data[index].barRods.first.toY
-                    : 0;
-
-            double maxY =
-                topTitles!.length
-                    .toDouble(); // PHelperFunction.findMaxValue(values: topTitles ?? []);
-            final offsetY = (1 - (barValue / maxY)) * 50;
-            return Transform.translate(
-              offset: Offset(0, offsetY),
-              child: Text(
-                'Pension Value \n $formattedLabel',
-                textAlign: TextAlign.center,
-                style: TextStyle(fontSize: PAppSize.s10),
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: PAppSize.s24),
+      child: RotatedBox(
+        quarterTurns: 1,
+        child: BarChart(
+          BarChartData(
+            alignment: BarChartAlignment.spaceBetween,
+            maxY: maxY + 10,
+            minY: -6,
+            borderData: FlBorderData(
+              show: true,
+              border: Border(
+                bottom: BorderSide(
+                  color: PAppColor.blackColor,
+                  width: PAppSize.s1,
+                ),
               ),
-            );
-            // final titlesData = topTitles ?? [];
-            // // Assuming value is the x-axis index, get your bar value manually
-            // final barValue =
-            //     titlesData.isEmpty
-            //         ? double.parse(titlesData[value.toInt()])
-            //         : getBarValue(value);
+            ),
+            gridData: FlGridData(show: false),
+            titlesData: FlTitlesData(
+              leftTitles: AxisTitles(sideTitles: SideTitles(showTitles: false)),
+              rightTitles: AxisTitles(
+                sideTitles: SideTitles(
+                  showTitles: true,
+                  minIncluded: false,
+                  reservedSize: PAppSize.s30,
+                  interval: PAppSize.s20,
+                  getTitlesWidget: (value, meta) {
+                    return Transform.rotate(
+                      angle: -1.5708, // -90 degrees in radians
+                      child: Text(
+                        value.toString(),
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          fontSize: PAppSize.s10,
+                          fontWeight: FontWeight.w500,
+                          color: PAppColor.text700,
+                        ),
+                      ),
+                    );
+                  },
+                ),
+              ),
+              topTitles: AxisTitles(
+                sideTitles: SideTitles(
+                  showTitles: true,
+                  // reservedSize: 50,
+                  getTitlesWidget: (value, meta) {
+                    final index = value.toInt();
+                    if (index < data.length) {
+                      final percentage =
+                          double.tryParse(data[index].percentage ?? '0') ?? 0.0;
 
-            // final offsetY = (1 - (barValue / maxY)) * 100; //
-            // return Transform.translate(
-            //   offset: Offset(0, offsetY),
-            //   child: Text(
-            //     'Pension Value \nGHS $barValue',
-            //     style: TextStyle(fontSize: PAppSize.s10),
-            //     textAlign: TextAlign.center,
-            //   ),
-            // );
-            // return Text(
-            //   titlesData.isEmpty
-            //       ? value.toInt().toString()
-            //       : titlesData[value.toInt()],
-            //   textAlign: TextAlign.center,
-            //   style: TextStyle(fontSize: PAppSize.s10),
-            // );
-          },
-        ),
-      ),
-      leftTitles: AxisTitles(
-        sideTitles: SideTitles(
-          showTitles: showLeftTitles,
-          interval: 1,
-          getTitlesWidget: (value, meta) {
-            final titlesData = leftTitles ?? [];
-            return Text(
-              titlesData.isEmpty
-                  ? value.toInt().toString()
-                  : titlesData[value.toInt()],
-              style: TextStyle(fontSize: PAppSize.s10),
-            );
-          },
-        ),
-      ),
-      bottomTitles: AxisTitles(
-        sideTitles: SideTitles(
-          // reservedSize: PAppSize.s20,
-          showTitles: showBottomTitles,
-          getTitlesWidget: (value, meta) {
-            final months = bottomTitles ?? ['Jan', 'Feb', 'Mar', 'Apr', 'May'];
-            return Text(
-              months[value.toInt()],
-              style: TextStyle(fontSize: PAppSize.s10),
-            ).only(top: PAppSize.s10);
-          },
+                      // Calculate the offset for the top title based on the bar height
+                      final barHeight = percentage;
+
+                      // Ensure the title is placed above the bar
+                      final yOffset =
+                          (1 - (barHeight / maxY)) *
+                          (PDeviceUtil.getDeviceWidth(context) * 0.5);
+
+                      return Transform.translate(
+                        offset: Offset(
+                          4,
+                          yOffset,
+                        ), // move label closer to the top of bar
+                        child: Transform.rotate(
+                          angle: -1.5708, // rotate back from chart rotation
+                          child: Text(
+                            '${percentage.toStringAsFixed(2)}%',
+                            style: TextStyle(
+                              fontSize: PAppSize.s10,
+                              fontWeight: FontWeight.w500,
+                              color: PAppColor.text700,
+                            ),
+                          ),
+                        ),
+                      );
+                    }
+                    return const SizedBox.shrink();
+                  },
+                ),
+              ),
+              bottomTitles: AxisTitles(
+                sideTitles: SideTitles(
+                  showTitles: true,
+                  reservedSize: PAppSize.s50,
+                  getTitlesWidget: (value, meta) {
+                    final index = value.toInt();
+                    if (index < data.length) {
+                      return Transform.translate(
+                        offset: Offset(18, 16), //
+                        child: Transform.rotate(
+                          alignment: Alignment.center,
+                          angle: -1.5708, // -90 degrees in radians
+                          child: Text(
+                            data[index].asset ?? '',
+                            style: TextStyle(
+                              fontSize: PAppSize.s10,
+                              fontWeight: FontWeight.w500,
+                              color: PAppColor.text700,
+                            ),
+                          ),
+                        ),
+                      );
+                    }
+                    return const SizedBox.shrink();
+                  },
+                ),
+              ),
+            ),
+            barGroups:
+                data.asMap().entries.map((entry) {
+                  final index = entry.key;
+                  final data = entry.value;
+                  final percentage =
+                      double.tryParse(data.percentage ?? "0") ?? 0.0;
+
+                  final color = colors[index % colors.length];
+
+                  return BarChartGroupData(
+                    x: index,
+                    barRods: [
+                      BarChartRodData(
+                        toY: percentage,
+                        color: color,
+                        width: PAppSize.s18,
+                        borderRadius: BorderRadius.zero,
+                      ),
+                    ],
+                  );
+                }).toList(),
+          ),
         ),
       ),
     );
   }
-
-  double getBarValue(double xValue) {
-    final group = data.firstWhere(
-      (g) => g.x == xValue,
-      orElse: () => BarChartGroupData(x: 0, barRods: []),
-    );
-    return group.barRods.isNotEmpty ? group.barRods.first.toY : 0;
-  }
-}
-
-double calculateOffset(double value, double maxY) {
-  final ratio = value / maxY;
-  return (1 - ratio) *
-      20; // less offset for taller barstweak 20 as a multiplier to adjust the "drop"
 }

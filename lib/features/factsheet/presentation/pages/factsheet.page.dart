@@ -31,7 +31,11 @@ class PFactSheetPage extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              PPageTagWidget(tag: 'factsheet_hint'.tr),
+              PPageTagWidget(
+                tag: 'factsheet_hint'.tr,
+                textAlign: TextAlign.start,
+                horizontalPadding: PAppSize.s32,
+              ),
               Expanded(
                 child: RefreshIndicator(
                   onRefresh: ctrl.getPerformances,
@@ -68,11 +72,13 @@ class PFactSheetPage extends StatelessWidget {
                                       data: ctrl.performances,
                                     ),
                                     Positioned(
-                                      left: PAppSize.s0,
+                                      left:
+                                          PDeviceUtil.getDeviceWidth(context) *
+                                          0.1,
                                       right: PAppSize.s0,
                                       bottom:
                                           PDeviceUtil.getDeviceHeight(context) *
-                                          0.042,
+                                          0.045,
                                       child: Row(
                                         mainAxisAlignment:
                                             MainAxisAlignment.center,
@@ -117,7 +123,7 @@ class PFactSheetPage extends StatelessWidget {
                                   ],
                                 ),
                       ),
-                      PAppSize.s16.verticalSpace,
+                      PAppSize.s10.verticalSpace,
                       Text(
                         'fund_composition'.tr,
                         textAlign: TextAlign.start,
@@ -142,7 +148,7 @@ class PFactSheetPage extends StatelessWidget {
                                 ? PChartRedactWidget(
                                   loadingState: ctrl.loading.value,
                                 )
-                                : PCustomBarChartNew(data: ctrl.compositions),
+                                : PCustomBarChart(data: ctrl.compositions),
                       ),
                     ],
                   ).symmetric(horizontal: PAppSize.s20),

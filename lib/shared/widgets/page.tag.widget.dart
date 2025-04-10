@@ -7,11 +7,13 @@ class PPageTagWidget extends StatelessWidget {
   final String tag;
   final SvgPicture? icon;
   final TextAlign textAlign;
+  final double horizontalPadding;
   const PPageTagWidget({
     super.key,
     required this.tag,
     this.textAlign = TextAlign.start,
     this.icon,
+    this.horizontalPadding = PAppSize.s16,
   });
 
   @override
@@ -21,7 +23,7 @@ class PPageTagWidget extends StatelessWidget {
       color: PAppColor.blackColor,
       padding: EdgeInsets.symmetric(
         vertical: PAppSize.s16,
-        horizontal: PAppSize.s16,
+        horizontal: horizontalPadding,
       ),
       child:
           icon == null

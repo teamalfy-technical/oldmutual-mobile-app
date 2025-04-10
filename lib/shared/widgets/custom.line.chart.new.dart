@@ -9,8 +9,11 @@ class PCustomLineChartNew extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // sort data by year
+    final sortedData = data..sort((a, b) => a.year!.compareTo(b.year ?? 0));
+
     final anchorSpots =
-        data
+        sortedData
             .map(
               (e) => FlSpot(
                 e.year!.toDouble(),
@@ -20,7 +23,7 @@ class PCustomLineChartNew extends StatelessWidget {
             .toList();
 
     final benchmarkSpots =
-        data
+        sortedData
             .map(
               (e) => FlSpot(
                 e.year!.toDouble(),
@@ -30,6 +33,7 @@ class PCustomLineChartNew extends StatelessWidget {
             .toList();
     return LineChart(
       LineChartData(
+        minY: 0,
         gridData: _buildGridData(),
         borderData: _buildBorderData(),
         lineBarsData: [
@@ -83,7 +87,7 @@ class PCustomLineChartNew extends StatelessWidget {
       leftTitles: AxisTitles(
         sideTitles: SideTitles(
           showTitles: true,
-          interval: 10,
+          interval: benchmarkInterval,
           reservedSize: PAppSize.s50,
           getTitlesWidget:
               (value, _) => Text(
@@ -117,5 +121,20 @@ class PCustomLineChartNew extends StatelessWidget {
       barWidth: PAppSize.s3,
       isCurved: false,
     );
+  }
+
+  double get benchmarkInterval {
+    // final benchmarkStrings = ["14.08%", "14.69%", "35.4%", "29.36", "28.04%"];
+    final benchmarks =
+        data.map((s) {
+          return double.tryParse(s.benchmark!.replaceAll('%', '')) ?? 0;
+        }).toList();
+    double maxValue = benchmarks.reduce((a, b) => a > b ? a : b);
+
+    // Determine a nice dynamic interval
+    double interval = maxValue / 5;
+
+    // Round interval to nearest 5 for nicer ticks
+    return (interval / 5).ceil() * 5;
   }
 }

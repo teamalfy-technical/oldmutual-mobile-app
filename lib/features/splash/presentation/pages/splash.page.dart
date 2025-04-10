@@ -47,7 +47,11 @@ class PSplashPage extends StatelessWidget {
                 children: [
                   Expanded(
                     child: Container(
-                      padding: EdgeInsets.only(top: PAppSize.s12, left: 0),
+                      padding: EdgeInsets.only(
+                        top: PAppSize.s12,
+                        left: PAppSize.s0,
+                        bottom: PAppSize.s0,
+                      ),
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.only(
                           topLeft: Radius.circular(PAppSize.s10),
@@ -120,7 +124,11 @@ class PSplashPage extends StatelessWidget {
                             // Spacer(),
                             Positioned(
                               bottom:
-                                  PDeviceUtil.getDeviceHeight(context) * 0.01,
+                                  PDeviceUtil.isIOS()
+                                      ? PDeviceUtil.getDeviceHeight(context) *
+                                          0.015
+                                      : PDeviceUtil.getDeviceHeight(context) *
+                                          0.03,
                               left: PAppSize.s8,
                               right: PAppSize.s8,
                               child: PCustomLoadingIndicator(

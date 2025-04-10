@@ -58,7 +58,7 @@ class PFactSheetPage1 extends StatelessWidget {
                 Expanded(
                   //width: PDeviceUtil.getDeviceWidth(context),
                   // height: PDeviceUtil.getDeviceHeight(context) * 0.35,
-                  child: PCustomBarChart(
+                  child: PCustomBarChartOld(
                     showBottomTitles: false,
                     data: [
                       BarChartGroupData(
