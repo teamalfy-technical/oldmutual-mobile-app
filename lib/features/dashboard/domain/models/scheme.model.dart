@@ -7,6 +7,7 @@ class Scheme {
   double? monthlyContribution;
   String? ssnitNumber;
   String? employerNumber;
+  double? schemeCurrentValue;
 
   Scheme({
     this.masterSchemeDescription,
@@ -17,6 +18,7 @@ class Scheme {
     this.monthlyContribution,
     this.ssnitNumber,
     this.employerNumber,
+    this.schemeCurrentValue,
   });
 
   Scheme.fromJson(Map<String, dynamic> json) {
@@ -28,6 +30,7 @@ class Scheme {
     monthlyContribution = json['MonthlyContribution'].toDouble();
     ssnitNumber = json['ssnitNumber'];
     employerNumber = json['EmployerNumber'];
+    schemeCurrentValue = json['SchemeCurrentValue'];
   }
 
   Map<String, dynamic> toJson() {
@@ -40,6 +43,7 @@ class Scheme {
     data['MonthlyContribution'] = monthlyContribution;
     data['ssnitNumber'] = ssnitNumber;
     data['EmployerNumber'] = employerNumber;
+    data['SchemeCurrentValue'] = schemeCurrentValue;
     return data;
   }
 }

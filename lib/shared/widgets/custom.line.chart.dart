@@ -4,7 +4,12 @@ import 'package:oldmutual_pensions_app/core/utils/utils.dart';
 
 class PCustomLineChart extends StatelessWidget {
   final List<FlSpot> data;
-  const PCustomLineChart({super.key, required this.data});
+  final double interval;
+  const PCustomLineChart({
+    super.key,
+    required this.data,
+    required this.interval,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -39,7 +44,7 @@ class PCustomLineChart extends StatelessWidget {
       rightTitles: AxisTitles(
         sideTitles: SideTitles(
           showTitles: true,
-          interval: 500,
+          interval: interval,
           reservedSize: PAppSize.s10,
           getTitlesWidget: (value, meta) {
             return Text(
@@ -54,20 +59,13 @@ class PCustomLineChart extends StatelessWidget {
       ),
       topTitles: AxisTitles(sideTitles: SideTitles(showTitles: false)),
 
-      // bottomTitles: AxisTitles(
-      //   sideTitles: SideTitles(
-      //     showTitles: true,
-      //     interval: 500, // Adjust as needed
-      //     reservedSize: 40,
-      //   ),
-      // ),
       leftTitles: AxisTitles(
         sideTitles: SideTitles(
           showTitles: true,
           // reservedSize: 50,
           minIncluded: false,
           maxIncluded: false,
-          interval: 500,
+          interval: interval,
           reservedSize: 30,
           getTitlesWidget: (value, meta) {
             return Text(

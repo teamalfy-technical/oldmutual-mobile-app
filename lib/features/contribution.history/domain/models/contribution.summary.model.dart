@@ -7,6 +7,7 @@ class ContributionSummary {
   double? gainLoss;
   double? totalInterest;
   String? status;
+  double? totalRedemption;
   String? lastContributionDate;
 
   ContributionSummary({
@@ -18,6 +19,7 @@ class ContributionSummary {
     this.gainLoss,
     this.totalInterest,
     this.status,
+    this.totalRedemption,
     this.lastContributionDate,
   });
 
@@ -31,6 +33,7 @@ class ContributionSummary {
     gainLoss = json['gain_loss']?.toDouble();
     totalInterest = json['total_interest']?.toDouble();
     status = json['status'];
+    totalRedemption = json['total_redemption']?.toDouble();
     lastContributionDate = json['last_contribution_date'];
   }
 
@@ -44,6 +47,7 @@ class ContributionSummary {
     data['gain_loss'] = gainLoss;
     data['total_interest'] = totalInterest;
     data['status'] = status;
+    data['total_redemption'] = totalRedemption;
     data['last_contribution_date'] = lastContributionDate;
     return data;
   }
@@ -57,5 +61,6 @@ class ContributionSummary {
       gainLoss == null &&
       totalInterest == null &&
       status == null &&
+      totalRedemption == null &&
       lastContributionDate == null;
 }

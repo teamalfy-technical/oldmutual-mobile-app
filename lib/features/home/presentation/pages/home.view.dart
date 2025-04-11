@@ -30,6 +30,16 @@ class PHomeView extends StatelessWidget {
     });
   }
 
+  double get interval {
+    final data = filterLatestContributionsPerMonth();
+    final contribution = data.map((s) => s.received ?? 0).toList();
+    double maxValue = contribution.reduce((a, b) => a > b ? a : b);
+    // Determine a nice dynamic interval
+    double interval = maxValue / 5;
+    // Round interval to nearest 5 for nicer ticks
+    return (interval / 5).ceil() * 5;
+  }
+
   // List<Transactions> filterLatestContributionsPastYear() {
   //   final DateTime now = DateTime.now();
   //   final DateTime oneYearAgo = DateTime(now.year - 1, now.month, now.day);
@@ -191,7 +201,7 @@ class PHomeView extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            'Total Contribution',
+                            'total_contribution'.tr,
                             style: Theme.of(context).textTheme.titleSmall
                                 ?.copyWith(color: PAppColor.text50),
                           ).redacted(
@@ -259,12 +269,7 @@ class PHomeView extends StatelessWidget {
                             title: 'total_redemptions'.tr,
                             loading: ctrl.loading.value,
                             subTitle: PFormatter.formatCurrency(
-                              amount:
-                                  ctrl
-                                      .summmary
-                                      .value
-                                      .totalEmployerContributions ??
-                                  0,
+                              amount: ctrl.summmary.value.totalRedemption ?? 0,
                             ),
                             onTap: () {},
                           ),
@@ -290,7 +295,10 @@ class PHomeView extends StatelessWidget {
                         : SizedBox(
                           width: PDeviceUtil.getDeviceWidth(context) + 300,
                           height: PDeviceUtil.getDeviceHeight(context) * 0.3,
-                          child: PCustomLineChart(data: convertToSpots()),
+                          child: PCustomLineChart(
+                            data: convertToSpots(),
+                            interval: interval,
+                          ),
                         ),
                     PAppSize.s24.verticalSpace,
                     // recent contributions

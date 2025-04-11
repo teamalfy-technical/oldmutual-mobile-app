@@ -163,7 +163,7 @@ class PNotificationService {
     // _firebaseMessaging.subscribeToTopic('test');
   }
 
-  Future<String> getToken() async {
+  Future<String?> getToken() async {
     String? token;
     if (Platform.isIOS) {
       // String? apnsToken = await _firebaseMessaging.getAPNSToken();
@@ -199,19 +199,22 @@ class PNotificationService {
     }
 
     pensionAppLogger.d("FCM Token: ${await _firebaseMessaging.getToken()}");
-    return token!;
+    return token;
   }
 
   /// save token to backend server
   /// cache it on device
   Future<void> saveToken() async {
     final token = await getToken();
-    PSecureStorage().saveData(PSecureStorage().deviceTokenKey, token);
-    final result = await authService.updateFcmToken(token: await getToken());
-    result.fold(
-      (err) => pensionAppLogger.e(err.getMessage()),
-      (res) => pensionAppLogger.d(res.data),
-    );
+    if (token != null) {
+      pensionAppLogger.w('FCM Token: $token');
+      PSecureStorage().saveData(PSecureStorage().deviceTokenKey, token);
+      final result = await authService.updateFcmToken(token: token);
+      result.fold(
+        (err) => pensionAppLogger.e(err.getMessage()),
+        (res) => pensionAppLogger.d(res.data),
+      );
+    }
   }
 
   requestIOSPermissions() {

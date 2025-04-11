@@ -52,21 +52,23 @@ class PContributionHistoryVm extends GetxController {
 
   /// Function to get all contribution summary
   Future<void> getContributionsSummary() async {
-    updateLoadingState(LoadingState.loading);
-    final result = await contributionHistoryService.getContributionSummary();
-    result.fold(
-      (err) {
-        updateLoadingState(LoadingState.error);
-        PPopupDialog(
-          context,
-        ).errorMessage(title: 'error'.tr, message: err.message);
-      },
-      (res) async {
-        updateLoadingState(LoadingState.completed);
-        summmary.value = res.data ?? ContributionSummary();
-        await getAllContributions();
-      },
-    );
+    if (summmary.value.isEmpty) {
+      updateLoadingState(LoadingState.loading);
+      final result = await contributionHistoryService.getContributionSummary();
+      result.fold(
+        (err) {
+          updateLoadingState(LoadingState.error);
+          PPopupDialog(
+            context,
+          ).errorMessage(title: 'error'.tr, message: err.message);
+        },
+        (res) async {
+          updateLoadingState(LoadingState.completed);
+          summmary.value = res.data ?? ContributionSummary();
+        },
+      );
+    }
+    await getAllContributions();
   }
 
   /// Function to get all contribution years

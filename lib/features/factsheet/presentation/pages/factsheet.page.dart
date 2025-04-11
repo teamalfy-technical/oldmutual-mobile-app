@@ -111,7 +111,6 @@ class PFactSheetPage extends StatelessWidget {
                                                   context,
                                                 ).textTheme.bodySmall?.copyWith(
                                                   fontWeight: FontWeight.w500,
-
                                                   fontSize: PAppSize.s10,
                                                 ),
                                               ),

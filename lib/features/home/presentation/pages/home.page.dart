@@ -28,7 +28,6 @@ class PHomePage extends StatelessWidget {
     return Obx(
       () => Scaffold(
         backgroundColor: PAppColor.fillColor,
-
         bottomNavigationBar: BottomNavigationBar(
           currentIndex: ctrl.currentIndex.value,
           onTap: ctrl.onPageChanged,
@@ -79,7 +78,6 @@ class PHomePage extends StatelessWidget {
             ),
           ],
         ),
-
         body: PAnnotatedRegion(child: _pages[ctrl.currentIndex.value]),
       ),
     );

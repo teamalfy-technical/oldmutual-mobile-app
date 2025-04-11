@@ -1,5 +1,4 @@
 import 'package:intl/intl.dart';
-import 'package:oldmutual_pensions_app/core/utils/utils.dart';
 
 class PFormatter {
   PFormatter._();
@@ -39,7 +38,6 @@ class PFormatter {
     ); // 'en_GH' for Ghana locale
 
     // return '₵${formatter.format(value)}';
-    pensionAppLogger.e(value);
     if (value >= 1000000000) {
       // Format as Billion (₵1.0B)
       return 'GHS ${formatter.format(value / 1000000000)}B';

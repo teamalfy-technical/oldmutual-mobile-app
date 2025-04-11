@@ -12,6 +12,7 @@ class PensionTierWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // final balance = scheme.
     return Container(
       padding: EdgeInsets.all(PAppSize.s12),
       margin: EdgeInsets.only(bottom: PAppSize.s20),
@@ -34,12 +35,12 @@ class PensionTierWidget extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            scheme.penTypeDescription ?? '',
+            scheme.masterSchemeDescription ?? '',
             style: Theme.of(context).textTheme.titleSmall,
           ),
           PAppSize.s16.verticalSpace,
           Text(
-            PFormatter.formatCurrency(amount: scheme.monthlyContribution ?? 0),
+            PFormatter.formatCurrency(amount: scheme.schemeCurrentValue ?? 0),
             style: Theme.of(context).textTheme.titleSmall,
           ),
           PAppSize.s4.verticalSpace,

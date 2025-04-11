@@ -44,6 +44,7 @@ class PFactSheetPage1 extends StatelessWidget {
                       FlSpot(3, 4),
                       FlSpot(4, 6),
                     ],
+                    interval: 1,
                   ),
                 ),
                 PAppSize.s22.verticalSpace,

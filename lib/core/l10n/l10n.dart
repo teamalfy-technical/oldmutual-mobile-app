@@ -148,6 +148,7 @@ class AppTranslations extends Translations {
       'total_redemptions': 'Total Redemptions',
       'anchor': 'Anchor',
       'benchmark': 'Benchmark',
+      'total_contribution': 'Total Contribution',
     },
     'hi_IN': {'app_name': 'Pensions App'},
     'fr_FR': {'app_name': 'Pensions App'},
