@@ -38,9 +38,12 @@ abstract class AuthRepo {
     required String email,
   });
 
-  Future<Either<PFailure, ApiResponse<List<Message>>>> resetPassword({
-    required String otp,
+  Future<Either<PFailure, ApiResponse<Member>>> verifyForgotPasswordOTP({
     required String email,
+    required String otp,
+  });
+
+  Future<Either<PFailure, ApiResponse<List<Message>>>> resetPassword({
     required String password,
     required String confirmPassword,
   });

@@ -75,13 +75,15 @@ class PCreatePasswordPage extends StatelessWidget {
                             PGradientButton(
                               label: 'next'.tr,
                               width: PDeviceUtil.getDeviceWidth(context) * 0.55,
-                              onTap:
-                                  () =>
-                                      isSignup
-                                          ? ctrl.createPassword(
-                                            isSignup: isSignup,
-                                          )
-                                          : ctrl.resetPassword(),
+                              onTap: () {
+                                if (ctrl.createPasswordFormKey.currentState!
+                                    .validate()) {
+                                  PDeviceUtil.hideKeyboard(context);
+                                  isSignup
+                                      ? ctrl.createPassword(isSignup: isSignup)
+                                      : ctrl.resetPassword();
+                                }
+                              },
                             ),
                           ],
                         ).scrollable(),

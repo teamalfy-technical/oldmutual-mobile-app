@@ -51,16 +51,28 @@ class AuthDsImpl implements AuthDs {
   }
 
   @override
-  Future<ApiResponse<List<Message>>> resetPassword({
+  Future<ApiResponse<Member>> verifyForgotPasswordOTP({
     required String otp,
     required String email,
+  }) async {
+    return await asyncFunctionWrapper.handleAsyncNetworkCall(() async {
+      final payload = dio.FormData.fromMap({'otp': otp, 'email': email});
+      final res = await apiService.callService(
+        requestType: RequestType.post,
+        payload: payload,
+        endPoint: Env.verifyForgotPasswordOTP,
+      );
+      return ApiResponse<Member>.fromJson(res, (data) => Member.fromJson(data));
+    });
+  }
+
+  @override
+  Future<ApiResponse<List<Message>>> resetPassword({
     required String password,
     required String confirmPassword,
   }) async {
     return await asyncFunctionWrapper.handleAsyncNetworkCall(() async {
       final payload = dio.FormData.fromMap({
-        'otp': otp,
-        'email': email,
         'password': password,
         'c_password': confirmPassword,
       });
@@ -69,9 +81,9 @@ class AuthDsImpl implements AuthDs {
         payload: payload,
         endPoint: Env.resetPassword,
       );
-      return ApiResponse<List<Member>>.fromJson(
+      return ApiResponse<List<Message>>.fromJson(
         res,
-        (data) => (data as List).map((e) => Member.fromJson(e)).toList(),
+        (data) => (data as List).map((e) => Message.fromJson(e)).toList(),
       );
     });
   }
@@ -132,15 +144,8 @@ class AuthDsImpl implements AuthDs {
   }
 
   @override
-  Future<ApiResponse<List<BioData>>> getBioData({
-    String? employerNumber,
-    String? staffNumber,
-  }) async {
+  Future<ApiResponse<List<BioData>>> getBioData() async {
     return await asyncFunctionWrapper.handleAsyncNetworkCall(() async {
-      final queryParams = {
-        'employer_number': employerNumber,
-        'staff_number': staffNumber,
-      };
       final res = await apiService.callService(
         requestType: RequestType.get,
         // queryParams: queryParams,

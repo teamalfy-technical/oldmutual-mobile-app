@@ -29,14 +29,10 @@ class AuthServiceImpl implements AuthService {
 
   @override
   Future<Either<PFailure, ApiResponse<List<Message>>>> resetPassword({
-    required String otp,
-    required String email,
     required String password,
     required String confirmPassword,
   }) {
     return authRepo.resetPassword(
-      otp: otp,
-      email: email,
       password: password,
       confirmPassword: confirmPassword,
     );
@@ -74,13 +70,15 @@ class AuthServiceImpl implements AuthService {
   }
 
   @override
-  Future<Either<PFailure, ApiResponse<List<BioData>>>> getBioData({
-    String? employerNumber,
-    String? staffNumber,
+  Future<Either<PFailure, ApiResponse<List<BioData>>>> getBioData() {
+    return authRepo.getBioData();
+  }
+
+  @override
+  Future<Either<PFailure, ApiResponse<Member>>> verifyForgotPasswordOTP({
+    required String email,
+    required String otp,
   }) {
-    return authRepo.getBioData(
-      employerNumber: employerNumber,
-      staffNumber: staffNumber,
-    );
+    return authRepo.verifyForgotPasswordOTP(email: email, otp: otp);
   }
 }

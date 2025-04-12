@@ -35,16 +35,12 @@ class AuthRepoImpl implements AuthRepo {
 
   @override
   Future<Either<PFailure, ApiResponse<List<Message>>>> resetPassword({
-    required String otp,
-    required String email,
     required String password,
     required String confirmPassword,
   }) async {
     return await customRepositoryWrapper.wrapRepositoryFunction(
       function:
           () async => await authDs.resetPassword(
-            otp: otp,
-            email: email,
             password: password,
             confirmPassword: confirmPassword,
           ),
@@ -104,11 +100,24 @@ class AuthRepoImpl implements AuthRepo {
     String? staffNumber,
   }) async {
     return await customRepositoryWrapper.wrapRepositoryFunction(
-      function:
-          () async => await authDs.getBioData(
-            employerNumber: employerNumber,
-            staffNumber: staffNumber,
-          ),
+      function: () async => await authDs.getBioData(),
+    );
+  }
+
+  @override
+  Future<Either<PFailure, ApiResponse<Member>>> verifyForgotPasswordOTP({
+    required String email,
+    required String otp,
+  }) async {
+    return await customRepositoryWrapper.wrapRepositoryFunction(
+      function: () async {
+        final res = await authDs.verifyForgotPasswordOTP(
+          email: email,
+          otp: otp,
+        );
+        PSecureStorage().saveAuthResponse(res.data?.toJson());
+        return res;
+      },
     );
   }
 }

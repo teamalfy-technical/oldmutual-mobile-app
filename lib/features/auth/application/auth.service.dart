@@ -25,10 +25,7 @@ abstract class AuthService {
     required String password,
   });
 
-  Future<Either<PFailure, ApiResponse<List<BioData>>>> getBioData({
-    String? employerNumber,
-    String? staffNumber,
-  });
+  Future<Either<PFailure, ApiResponse<List<BioData>>>> getBioData();
 
   Future<Either<PFailure, ApiResponse<List<Message>>>> updateFcmToken({
     required String token,
@@ -38,9 +35,12 @@ abstract class AuthService {
     required String email,
   });
 
-  Future<Either<PFailure, ApiResponse<List<Message>>>> resetPassword({
-    required String otp,
+  Future<Either<PFailure, ApiResponse<Member>>> verifyForgotPasswordOTP({
     required String email,
+    required String otp,
+  });
+
+  Future<Either<PFailure, ApiResponse<List<Message>>>> resetPassword({
     required String password,
     required String confirmPassword,
   });

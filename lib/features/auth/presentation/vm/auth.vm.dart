@@ -109,6 +109,7 @@ class PAuthVm extends GetxController {
       code: selectedCountry.value.phoneCode,
       phone: phoneTEC.text.trim(),
     );
+    String email = emailTEC.text.trim();
 
     if (otpcode.isEmpty) {
       PPopupDialog(context).errorMessage(
@@ -127,7 +128,10 @@ class PAuthVm extends GetxController {
         style: Theme.of(context).textTheme.bodyMedium,
       ),
     );
-    final result = await authService.verifyOTP(otp: pin, phone: phone);
+    final result =
+        isSignup
+            ? await authService.verifyOTP(otp: pin, phone: phone)
+            : await authService.verifyForgotPasswordOTP(otp: pin, email: email);
     result.fold(
       (err) {
         PHelperFunction.pop();
@@ -248,7 +252,6 @@ class PAuthVm extends GetxController {
 
   /// [Function] Forgot password to reset
   Future<void> resetPassword() async {
-    String email = emailTEC.text.trim();
     String password = passwordTEC.text.trim();
     String confirmPassword = confirmPasswordTEC.text.trim();
 
@@ -263,8 +266,6 @@ class PAuthVm extends GetxController {
     );
 
     final result = await authService.resetPassword(
-      otp: otpcode.value,
-      email: email,
       password: password,
       confirmPassword: confirmPassword,
     );

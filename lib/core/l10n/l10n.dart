@@ -148,6 +148,7 @@ class AppTranslations extends Translations {
       'total_redemptions': 'Total Redemptions',
       'anchor': 'Anchor',
       'benchmark': 'Benchmark',
+      'sending_reset_link': 'Sending Password Reset Link...',
       'total_contribution': 'Total Contribution',
     },
     'hi_IN': {'app_name': 'Pensions App'},

@@ -40,6 +40,10 @@ abstract class Env {
   @EnviedField(defaultValue: '/forgot-password', obfuscate: true)
   static final String forgotPassword = _Env.forgotPassword;
 
+  /// [VerifyForgotPasswordOTP] endpoint
+  @EnviedField(defaultValue: '/verify/reset-password/otp', obfuscate: true)
+  static final String verifyForgotPasswordOTP = _Env.verifyForgotPasswordOTP;
+
   /// [ResetPassword] endpoint
   @EnviedField(defaultValue: '/reset-password', obfuscate: true)
   static final String resetPassword = _Env.resetPassword;
