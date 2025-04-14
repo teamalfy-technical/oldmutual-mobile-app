@@ -7,4 +7,5 @@ export '../dashboard/domain/models/selected.scheme.model.dart';
 export 'presentation/pages/home.page.dart';
 export 'presentation/pages/home.view.dart';
 export 'presentation/vm/home.vm.dart';
+export 'presentation/vm/inactivity.service.dart';
 export 'presentation/widgets/home.stats.widget.dart';

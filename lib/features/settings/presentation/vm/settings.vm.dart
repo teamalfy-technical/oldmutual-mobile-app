@@ -31,6 +31,8 @@ class PSettingsVm extends GetxController {
     }
   }
 
+  // Clear user data, token, etc.
+  // Then navigate to login screen
   Future<void> signout() async {
     showLoadingdialog(
       context: context,
