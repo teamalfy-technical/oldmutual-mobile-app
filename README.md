@@ -14,6 +14,14 @@ dart run build_runner build --delete-conflicting-outputs
 
 flutter clean && flutter pub get && flutter packages pub run build_runner build --delete-conflicting-outputs
 
+## Build APK for Production
+
+flutter build apk --flavor prod
+
+## Build AppBundle for Production
+
+flutter build appbundle --flavor prod
+
 ## Project Structure 📁
 
 This document provides an overview of our Flutter project's folder structure to ensure consistency and maintainability.

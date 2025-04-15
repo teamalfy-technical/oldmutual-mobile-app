@@ -21,8 +21,8 @@ import 'features/notification/presentation/vm/notification.service.dart';
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Env.init();
-  // final currentEnv = await Environment.current();
-  // print("Connecting to ${currentEnv.apiBaseUrl}");
+  final currentEnv = await Environment.current();
+  print("Connecting to ${currentEnv.apiBaseUrl}");
   await GetStorage.init();
   await initFirebaseApp();
   FirebaseMessaging.onBackgroundMessage(
