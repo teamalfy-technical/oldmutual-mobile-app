@@ -1,17 +1,30 @@
 // lib/env/env.dart
 import 'package:envied/envied.dart';
+import 'package:oldmutual_pensions_app/flavor.config.dart';
 
 part 'env.g.dart';
+
+class ApiConfig {
+  late EnvironmentType currentEnv;
+  static Future<EnvironmentType> get baseUrl async =>
+      await Environment.current();
+}
 
 @Envied(obfuscate: true)
 //@Envied(path: '.env.dev')
 abstract class Env {
-  @EnviedField(
-    // defaultValue: 'http://pensions.teamalfy.co.uk/api',
-    defaultValue: 'https://old-mutual-api-production.up.railway.app/api',
-    obfuscate: true,
-  )
-  static final String baseUrl = _Env.baseUrl;
+  static late String baseUrl;
+
+  static Future<void> init() async {
+    baseUrl = (await Environment.current()).apiBaseUrl;
+  }
+
+  // @EnviedField(
+  //   // defaultValue: 'http://pensions.teamalfy.co.uk/api',
+  //   defaultValue: currentEnv.apiBaseUrl,
+  //   obfuscate: true,
+  // )
+  // static final String baseUrl = _Env.baseUrl;
 
   ///              All endpoints for [Pensions App]
   /// ------------------------------------------------------------

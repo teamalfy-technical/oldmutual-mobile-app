@@ -8,7 +8,7 @@ import 'package:flutter/foundation.dart'
 ///
 /// Example:
 /// ```dart
-/// import 'firebase_options.dart';
+/// import 'firebase_options_prod.dart';
 /// // ...
 /// await Firebase.initializeApp(
 ///   options: DefaultFirebaseOptions.currentPlatform,
@@ -51,7 +51,7 @@ class DefaultFirebaseOptions {
 
   static const FirebaseOptions android = FirebaseOptions(
     apiKey: 'AIzaSyBd3GWWdGu70kbxGAKp5ovbkP88XHdlvIw',
-    appId: '1:264180873072:android:c8eeb65bc66e50240b41b5',
+    appId: '1:264180873072:android:865a845f809a26cd0b41b5',
     messagingSenderId: '264180873072',
     projectId: 'om-pensions-app',
     storageBucket: 'om-pensions-app.firebasestorage.app',
@@ -59,11 +59,10 @@ class DefaultFirebaseOptions {
 
   static const FirebaseOptions ios = FirebaseOptions(
     apiKey: 'AIzaSyACFX1JcYHUJpKfesvbLZhQb_t12uADs9w',
-    appId: '1:264180873072:ios:17261af2296392a90b41b5',
+    appId: '1:264180873072:ios:747b77823b314f2d0b41b5',
     messagingSenderId: '264180873072',
     projectId: 'om-pensions-app',
     storageBucket: 'om-pensions-app.firebasestorage.app',
-    iosBundleId: 'com.oldmutual.pensions.app.oldmutualPensionsApp',
+    iosBundleId: 'com.oldmutual.pensions.app',
   );
-
 }

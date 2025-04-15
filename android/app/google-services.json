@@ -7,9 +7,28 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:264180873072:android:c8eeb65bc66e50240b41b5",
+        "mobilesdk_app_id": "1:264180873072:android:865a845f809a26cd0b41b5",
         "android_client_info": {
           "package_name": "com.oldmutual.pensions.app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBd3GWWdGu70kbxGAKp5ovbkP88XHdlvIw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:264180873072:android:d4fd1edfff4294fe0b41b5",
+        "android_client_info": {
+          "package_name": "com.oldmutual.pensions.app.dev"
         }
       },
       "oauth_client": [],

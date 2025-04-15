@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:oldmutual_pensions_app/core/errors/errors.dart';
 import 'package:oldmutual_pensions_app/core/utils/utils.dart';
+import 'package:oldmutual_pensions_app/features/settings/presentation/vm/settings.vm.dart';
+import 'package:oldmutual_pensions_app/routes/app.pages.dart';
 
 final CatchApiErrorWrapper catchApiErrorWrapper = Get.put(
   CatchApiErrorWrapperImpl(),
@@ -36,11 +38,19 @@ class CatchApiErrorWrapperImpl implements CatchApiErrorWrapper {
             errorMessage = extractError(err.response?.data['data']);
             //errorMessage = err.response?.data['error'];
           } else if (err.response?.statusCode == 401) {
-            errorMessage =
-                err.response?.data['message'] ?? 'Unauthorized request';
+            if (Get.currentRoute != Routes.loginPage) {
+              Get.put(PSettingsVm()).signout();
+            }
+            // errorMessage =
+            //     err.response?.data['message'] ?? 'Unauthorized request';
             pensionAppLogger.e(err.response?.data);
           } else if (err.response?.statusCode == 403) {
-            errorMessage = err.response?.data['message'] ?? 'Forbidden Access';
+            if (Get.currentRoute != Routes.loginPage) {
+              Get.put(PSettingsVm()).signout();
+            } else {
+              errorMessage =
+                  err.response?.data['message'] ?? 'Forbidden Access';
+            }
             pensionAppLogger.e(err.response?.data);
           } else if (err.response?.statusCode == 404) {
             errorMessage =
@@ -51,6 +61,14 @@ class CatchApiErrorWrapperImpl implements CatchApiErrorWrapper {
             //     ApiErrorResponse.fromJson(err.response?.data);
             pensionAppLogger.e(err.response?.data);
             errorMessage = err.response?.data['message'] ?? 'Bad request';
+          } else if (err.response?.statusCode == 429) {
+            if (Get.currentRoute != Routes.loginPage) {
+              Get.put(PSettingsVm()).signout();
+            }
+            // ApiErrorResponse error =
+            //     ApiErrorResponse.fromJson(err.response?.data);
+            pensionAppLogger.e(err.response?.data);
+            // errorMessage = err.response?.data['message'] ?? 'Bad request';
           } else if (err.response?.data is Map &&
               err.response!.data.containsKey('data')) {
             final error = err.response!.data['data'];

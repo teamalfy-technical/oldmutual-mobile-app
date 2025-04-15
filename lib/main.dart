@@ -9,13 +9,20 @@ import 'package:oldmutual_pensions_app/core/bindings/bindings.dart';
 import 'package:oldmutual_pensions_app/core/l10n/l10n.dart';
 import 'package:oldmutual_pensions_app/core/theme/app.theme.dart';
 import 'package:oldmutual_pensions_app/core/utils/utils.dart';
-import 'package:oldmutual_pensions_app/firebase_options.dart';
+import 'package:oldmutual_pensions_app/env/env.dart';
+import 'package:oldmutual_pensions_app/firebase_options_dev.dart' as dev;
+import 'package:oldmutual_pensions_app/firebase_options_prod.dart' as prod;
+import 'package:oldmutual_pensions_app/flavor.config.dart';
 import 'package:oldmutual_pensions_app/routes/app.pages.dart';
 import 'package:oldmutual_pensions_app/shared/shared.dart';
 
 import 'features/notification/presentation/vm/notification.service.dart';
 
 Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Env.init();
+  // final currentEnv = await Environment.current();
+  // print("Connecting to ${currentEnv.apiBaseUrl}");
   await GetStorage.init();
   await initFirebaseApp();
   FirebaseMessaging.onBackgroundMessage(
@@ -68,7 +75,19 @@ class MyApp extends StatelessWidget {
 }
 
 Future<void> initFirebaseApp() async {
-  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+  final currentEnv = await Environment.current();
+  switch (currentEnv) {
+    case EnvironmentType.dev:
+      await Firebase.initializeApp(
+        options: dev.DefaultFirebaseOptions.currentPlatform,
+      );
+      break;
+    default:
+      await Firebase.initializeApp(
+        options: prod.DefaultFirebaseOptions.currentPlatform,
+      );
+  }
+  // await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   // await FirebaseMessaging.instance.getInitialMessage();
   await PNotificationService().init();
 }

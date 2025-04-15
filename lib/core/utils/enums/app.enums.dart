@@ -19,6 +19,6 @@ enum FileType { video, image, unknown }
 
 enum Direction { left, right }
 
-enum Environment { dev, prod }
+// enum Environment { dev, prod }
 
 enum ConnectivityStatus { connected, disconnected }
