@@ -150,6 +150,8 @@ class AppTranslations extends Translations {
       'benchmark': 'Benchmark',
       'sending_reset_link': 'Sending Password Reset Link...',
       'total_contribution': 'Total Contribution',
+      'report_downloaded_msg':
+          'Your @year report has been downloaded successfully.',
     },
     'hi_IN': {'app_name': 'Pensions App'},
     'fr_FR': {'app_name': 'Pensions App'},

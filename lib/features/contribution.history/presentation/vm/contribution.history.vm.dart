@@ -33,12 +33,19 @@ class PContributionHistoryVm extends GetxController {
   String? selectedMonth;
 
   var loading = LoadingState.completed.obs;
+  var generating = LoadingState.completed.obs;
 
   final context = Get.context!;
 
   final bioData = PSecureStorage().getBioData();
 
   updateLoadingState(LoadingState loadingState) => loading.value = loadingState;
+  updateGeneratingState(LoadingState loadingState) =>
+      generating.value = loadingState;
+
+  // Reports variables
+  var generatedReport = GenerateReport().obs;
+  var reportStatus = ReportStatus().obs;
 
   onYearChanged(value) {
     selectedYear = value;
@@ -167,6 +174,75 @@ class PContributionHistoryVm extends GetxController {
       (res) {
         updateLoadingState(LoadingState.completed);
         history.value = res.data ?? ContributionHistory();
+      },
+    );
+  }
+
+  /// Function to generate report
+  Future<void> generateReport() async {
+    updateGeneratingState(LoadingState.loading);
+    final result = await contributionHistoryService.generateReport(
+      year: int.parse(selectedYear?.fundYear ?? DateTime.now().year.toString()),
+    );
+    result.fold(
+      (err) {
+        updateGeneratingState(LoadingState.error);
+        PPopupDialog(
+          context,
+        ).errorMessage(title: 'error'.tr, message: err.message);
+      },
+      (res) {
+        updateGeneratingState(LoadingState.completed);
+        generatedReport.value = res;
+      },
+    );
+  }
+
+  /// Function to get report status
+  Future<void> getReportStatus() async {
+    updateGeneratingState(LoadingState.loading);
+    final result = await contributionHistoryService.getReport(
+      reportId: generatedReport.value.message?.reportId ?? 0,
+    );
+    result.fold(
+      (err) {
+        updateGeneratingState(LoadingState.error);
+        PPopupDialog(
+          context,
+        ).errorMessage(title: 'error'.tr, message: err.message);
+      },
+      (res) {
+        updateGeneratingState(LoadingState.completed);
+        PPopupDialog(
+          context,
+        ).errorMessage(title: 'success'.tr, message: res.message ?? '');
+        // reportStatus.value = res;
+      },
+    );
+  }
+
+  /// Function to check report status
+  Future<void> checkReportStatus() async {
+    updateGeneratingState(LoadingState.loading);
+    final result = await contributionHistoryService.checkReportStatus(
+      reportId: generatedReport.value.message?.reportId ?? 0,
+    );
+    result.fold(
+      (err) {
+        updateGeneratingState(LoadingState.error);
+        PPopupDialog(
+          context,
+        ).errorMessage(title: 'error'.tr, message: err.message);
+      },
+      (res) {
+        updateGeneratingState(LoadingState.completed);
+        reportStatus.value = res;
+        PPopupDialog(context).errorMessage(
+          title: res.status ?? '',
+          message: 'report_downloaded_msg'.trParams({
+            'year': selectedYear?.fundYear ?? '',
+          }),
+        );
       },
     );
   }

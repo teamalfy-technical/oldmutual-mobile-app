@@ -112,6 +112,18 @@ abstract class Env {
   @EnviedField(defaultValue: '/contributed/years', obfuscate: true)
   static final String getContributedYears = _Env.getContributedYears;
 
+  /// [GenerateReport] endpoint
+  @EnviedField(defaultValue: '/generate/report-pdf', obfuscate: true)
+  static final String generateReport = _Env.generateReport;
+
+  /// [GetReport] endpoint
+  @EnviedField(defaultValue: '/reports/download', obfuscate: true)
+  static final String getReport = _Env.getReport;
+
+  /// [CheckReportStatus] endpoint
+  @EnviedField(defaultValue: '/reports/check-status', obfuscate: true)
+  static final String checkReportStatus = _Env.checkReportStatus;
+
   /// -------------------- Contribution Endpoints Ends Here ------------------------- ///
   ///
   ///

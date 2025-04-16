@@ -45,4 +45,35 @@ class ContributionHistoryRepoImpl implements ContributionHistoryRepo {
       function: () async => await contributionHistoryDs.getContributionYears(),
     );
   }
+
+  @override
+  Future<Either<PFailure, ReportStatus>> checkReportStatus({
+    required int reportId,
+  }) async {
+    return await customRepositoryWrapper.wrapRepositoryFunction(
+      function:
+          () async =>
+              await contributionHistoryDs.checkReportStatus(reportId: reportId),
+    );
+  }
+
+  @override
+  Future<Either<PFailure, GenerateReport>> generateReport({
+    required int year,
+  }) async {
+    return await customRepositoryWrapper.wrapRepositoryFunction(
+      function:
+          () async => await contributionHistoryDs.generateReport(year: year),
+    );
+  }
+
+  @override
+  Future<Either<PFailure, ApiResponse<Message>>> getReport({
+    required int reportId,
+  }) async {
+    return await customRepositoryWrapper.wrapRepositoryFunction(
+      function:
+          () async => await contributionHistoryDs.getReport(reportId: reportId),
+    );
+  }
 }
