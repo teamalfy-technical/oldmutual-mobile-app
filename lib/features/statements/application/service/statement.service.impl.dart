@@ -1,0 +1,29 @@
+import 'package:fpdart/fpdart.dart';
+import 'package:get/get.dart';
+import 'package:oldmutual_pensions_app/core/errors/failure.dart';
+import 'package:oldmutual_pensions_app/core/network/network.dart';
+import 'package:oldmutual_pensions_app/features/contribution.history/contribution.history.dart';
+import 'package:oldmutual_pensions_app/features/statements/statements.dart';
+
+final StatementService statementService = Get.put(StatementServiceImpl());
+
+class StatementServiceImpl implements StatementService {
+  @override
+  Future<Either<PFailure, ReportStatus>> checkReportStatus({
+    required int reportId,
+  }) {
+    return statementRepo.checkReportStatus(reportId: reportId);
+  }
+
+  @override
+  Future<Either<PFailure, GenerateReport>> generateReport({required int year}) {
+    return statementRepo.generateReport(year: year);
+  }
+
+  @override
+  Future<Either<PFailure, ApiResponse<Message>>> getReport({
+    required int reportId,
+  }) {
+    return statementRepo.getReport(reportId: reportId);
+  }
+}

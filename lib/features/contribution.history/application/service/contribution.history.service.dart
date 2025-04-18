@@ -13,12 +13,4 @@ abstract class ContributionHistoryService {
   getContributionSummary();
   Future<Either<PFailure, ApiResponse<List<ContributedYear>>>>
   getContributionYears();
-
-  Future<Either<PFailure, GenerateReport>> generateReport({required int year});
-  Future<Either<PFailure, ApiResponse<Message>>> getReport({
-    required int reportId,
-  });
-  Future<Either<PFailure, ReportStatus>> checkReportStatus({
-    required int reportId,
-  });
 }

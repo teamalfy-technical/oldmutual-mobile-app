@@ -62,7 +62,30 @@ class PMoreServicesPage extends StatelessWidget {
             ),
             trailing: Assets.icons.arrowForwardIos.svg(),
           ),
-
+          Divider(color: PAppColor.fillColor),
+          ListTile(
+            onTap:
+                () => PHelperFunction.switchScreen(
+                  destination: Routes.futureValueCalcPage,
+                ),
+            title: Text(
+              'redemption_and_transfer'.tr,
+              style: Theme.of(context).textTheme.bodyMedium,
+            ),
+            trailing: Assets.icons.arrowForwardIos.svg(),
+          ),
+          Divider(color: PAppColor.fillColor),
+          ListTile(
+            onTap:
+                () => PHelperFunction.switchScreen(
+                  destination: Routes.futureValueCalcPage,
+                ),
+            title: Text(
+              'statements'.tr,
+              style: Theme.of(context).textTheme.bodyMedium,
+            ),
+            trailing: Assets.icons.arrowForwardIos.svg(),
+          ),
           Divider(color: PAppColor.fillColor),
           ListTile(
             onTap:

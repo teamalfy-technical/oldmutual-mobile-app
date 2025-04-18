@@ -9,6 +9,7 @@ import 'package:oldmutual_pensions_app/features/notification/presentation/vm/not
 import 'package:oldmutual_pensions_app/features/profile/presentation/vm/profile.vm.dart';
 import 'package:oldmutual_pensions_app/features/settings/settings.dart';
 import 'package:oldmutual_pensions_app/features/splash/presentation/vm/splash.vm.dart';
+import 'package:oldmutual_pensions_app/features/statements/presentation/vm/statement.vm.dart';
 
 class InitialBinding implements Bindings {
   @override
@@ -25,6 +26,7 @@ class InitialBinding implements Bindings {
     Get.lazyPut(() => PSettingsPage());
     Get.lazyPut(() => PProfileVm());
     Get.lazyPut(() => PNotificationVM());
+    Get.lazyPut(() => PStatementVm());
     Get.putAsync(() async => PInactivityService());
     // Get.lazyPut(() => TLoginVm());
     // Get.lazyPut(() => TSignupVm());

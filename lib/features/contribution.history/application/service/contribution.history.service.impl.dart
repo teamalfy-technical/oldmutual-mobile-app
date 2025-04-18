@@ -35,23 +35,4 @@ class ContributionHistoryServiceImpl implements ContributionHistoryService {
   getContributionYears() {
     return contributionHistoryRepo.getContributionYears();
   }
-
-  @override
-  Future<Either<PFailure, ReportStatus>> checkReportStatus({
-    required int reportId,
-  }) {
-    return contributionHistoryRepo.checkReportStatus(reportId: reportId);
-  }
-
-  @override
-  Future<Either<PFailure, GenerateReport>> generateReport({required int year}) {
-    return contributionHistoryRepo.generateReport(year: year);
-  }
-
-  @override
-  Future<Either<PFailure, ApiResponse<Message>>> getReport({
-    required int reportId,
-  }) {
-    return contributionHistoryRepo.getReport(reportId: reportId);
-  }
 }

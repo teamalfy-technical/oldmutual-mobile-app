@@ -6,6 +6,7 @@ import 'package:oldmutual_pensions_app/features/dashboard/dashboard.dart';
 import 'package:oldmutual_pensions_app/features/factsheet/factsheet.dart';
 import 'package:oldmutual_pensions_app/features/notification/notification.dart';
 import 'package:oldmutual_pensions_app/features/profile/profile.dart';
+import 'package:oldmutual_pensions_app/features/statements/statements.dart';
 
 class ServiceBinding implements Bindings {
   @override
@@ -43,6 +44,11 @@ class ServiceBinding implements Bindings {
     Get.lazyPut<FactsheetService>(
       () => FactsheetServiceImpl(),
       tag: (FactsheetService).toString(),
+    );
+
+    Get.lazyPut<StatementService>(
+      () => StatementServiceImpl(),
+      tag: (StatementService).toString(),
     );
 
     /// [Data Source] injection

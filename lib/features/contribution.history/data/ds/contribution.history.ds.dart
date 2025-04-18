@@ -10,8 +10,4 @@ abstract class ContributionHistoryDs {
   });
   Future<ApiResponse<ContributionSummary>> getContributionSummary();
   Future<ApiResponse<List<ContributedYear>>> getContributionYears();
-
-  Future<GenerateReport> generateReport({required int year});
-  Future<ApiResponse<Message>> getReport({required int reportId});
-  Future<ReportStatus> checkReportStatus({required int reportId});
 }

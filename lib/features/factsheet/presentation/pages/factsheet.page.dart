@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:oldmutual_pensions_app/core/utils/utils.dart';
-import 'package:oldmutual_pensions_app/features/contribution.history/presentation/vm/contribution.history.vm.dart';
 import 'package:oldmutual_pensions_app/features/factsheet/presentation/vm/factsheet.vm.dart';
 import 'package:oldmutual_pensions_app/features/factsheet/presentation/widgets/chart.redact.widget.dart';
 import 'package:oldmutual_pensions_app/gen/assets.gen.dart';
@@ -150,22 +149,6 @@ class PFactSheetPage extends StatelessWidget {
                                 )
                                 : PCustomBarChart(data: ctrl.compositions),
                       ),
-                      PAppSize.s16.verticalSpace,
-                      Align(
-                        alignment: Alignment.center,
-                        child: Text(
-                          'download_as_pdf'.tr,
-                          textAlign: TextAlign.start,
-                          style: Theme.of(context).textTheme.bodyLarge
-                              ?.copyWith(fontWeight: FontWeight.w600),
-                        ).onPressed(
-                          onTap:
-                              () =>
-                                  Get.find<PContributionHistoryVm>()
-                                      .generateReport(),
-                        ),
-                      ),
-                      PAppSize.s16.verticalSpace,
                     ],
                   ).symmetric(horizontal: PAppSize.s20),
                 ),
