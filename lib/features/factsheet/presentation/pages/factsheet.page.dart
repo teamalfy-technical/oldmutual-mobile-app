@@ -151,17 +151,19 @@ class PFactSheetPage extends StatelessWidget {
                                 : PCustomBarChart(data: ctrl.compositions),
                       ),
                       PAppSize.s16.verticalSpace,
-                      Text(
-                        'download_as_pdf'.tr,
-                        textAlign: TextAlign.start,
-                        style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                          fontWeight: FontWeight.w600,
+                      Align(
+                        alignment: Alignment.center,
+                        child: Text(
+                          'download_as_pdf'.tr,
+                          textAlign: TextAlign.start,
+                          style: Theme.of(context).textTheme.bodyLarge
+                              ?.copyWith(fontWeight: FontWeight.w600),
+                        ).onPressed(
+                          onTap:
+                              () =>
+                                  Get.find<PContributionHistoryVm>()
+                                      .generateReport(),
                         ),
-                      ).onPressed(
-                        onTap:
-                            () =>
-                                Get.find<PContributionHistoryVm>()
-                                    .generateReport(),
                       ),
                       PAppSize.s16.verticalSpace,
                     ],

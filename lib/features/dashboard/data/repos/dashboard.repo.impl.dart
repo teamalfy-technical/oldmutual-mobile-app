@@ -20,6 +20,7 @@ class DashboardRepoImpl implements DashboardRepo {
     required String employerNumber,
     required String ssnitNumber,
     required String memberNumber,
+    required String masterScheme,
   }) async {
     return await customRepositoryWrapper.wrapRepositoryFunction(
       function:
@@ -27,6 +28,7 @@ class DashboardRepoImpl implements DashboardRepo {
             employerNumber: employerNumber,
             ssnitNumber: ssnitNumber,
             memberNumber: memberNumber,
+            masterScheme: masterScheme,
           ),
     );
   }

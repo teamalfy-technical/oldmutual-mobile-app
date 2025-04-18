@@ -17,7 +17,7 @@ class PCustomLineChartNew extends StatelessWidget {
             .map(
               (e) => FlSpot(
                 e.year!.toDouble(),
-                double.parse(e.anchor.toString().replaceAll('%', '')),
+                double.parse(e.performance.toString().replaceAll('%', '')),
               ),
             )
             .toList();

@@ -1,7 +1,8 @@
 class PerformanceModel {
   int? id;
   int? year;
-  String? anchor;
+  String? scheme;
+  String? performance;
   String? benchmark;
   String? createdAt;
   String? updatedAt;
@@ -9,7 +10,8 @@ class PerformanceModel {
   PerformanceModel({
     this.id,
     this.year,
-    this.anchor,
+    this.scheme,
+    this.performance,
     this.benchmark,
     this.createdAt,
     this.updatedAt,
@@ -18,7 +20,8 @@ class PerformanceModel {
   PerformanceModel.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     year = json['year'];
-    anchor = json['anchor'];
+    scheme = json['scheme'];
+    performance = json['performance'];
     benchmark = json['benchmark'];
     createdAt = json['created_at'];
     updatedAt = json['updated_at'];
@@ -28,7 +31,8 @@ class PerformanceModel {
     final Map<String, dynamic> data = <String, dynamic>{};
     data['id'] = id;
     data['year'] = year;
-    data['anchor'] = anchor;
+    data['scheme'] = scheme;
+    data['performance'] = performance;
     data['benchmark'] = benchmark;
     data['created_at'] = createdAt;
     data['updated_at'] = updatedAt;

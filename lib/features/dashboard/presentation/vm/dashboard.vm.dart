@@ -46,12 +46,14 @@ class PDashboardVm extends GetxController {
     required String employerNumber,
     required String memberNumber,
     required String ssnitNumber,
+    required String masterScheme,
   }) async {
     // updateLoadingState(LoadingState.loading);
     final result = await dashboardService.getSelectedMemberScheme(
       employerNumber: employerNumber,
       memberNumber: memberNumber,
       ssnitNumber: ssnitNumber,
+      masterScheme: masterScheme,
     );
     result.fold(
       (err) {

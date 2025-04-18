@@ -101,6 +101,8 @@ class PDashboardPage extends StatelessWidget {
                                     employerNumber: scheme.employerNumber ?? '',
                                     memberNumber: scheme.memberNumber ?? '',
                                     ssnitNumber: scheme.ssnitNumber ?? '',
+                                    masterScheme:
+                                        scheme.masterSchemeDescription ?? '',
                                   );
                                   PHelperFunction.switchScreen(
                                     destination: Routes.homePage,

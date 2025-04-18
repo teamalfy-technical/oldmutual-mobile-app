@@ -27,12 +27,14 @@ class DashboardDsImpl implements DashboardDs {
     required String employerNumber,
     required String ssnitNumber,
     required String memberNumber,
+    required String masterScheme,
   }) async {
     return await asyncFunctionWrapper.handleAsyncNetworkCall(() async {
       final payload = dio.FormData.fromMap({
         'employer_number': employerNumber,
         'ssnit_number': ssnitNumber,
         'member_number': memberNumber,
+        'master_scheme': masterScheme,
       });
       final res = await apiService.callService(
         requestType: RequestType.post,

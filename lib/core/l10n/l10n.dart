@@ -152,6 +152,8 @@ class AppTranslations extends Translations {
       'total_contribution': 'Total Contribution',
       'report_downloaded_msg':
           'Your @year report has been downloaded successfully.',
+      'redemption_and_transfer': 'Redemption & Transfers',
+      'statements': 'Statements',
     },
     'hi_IN': {'app_name': 'Pensions App'},
     'fr_FR': {'app_name': 'Pensions App'},

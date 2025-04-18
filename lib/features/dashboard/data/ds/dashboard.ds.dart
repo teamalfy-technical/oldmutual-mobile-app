@@ -7,5 +7,6 @@ abstract class DashboardDs {
     required String employerNumber,
     required String ssnitNumber,
     required String memberNumber,
+    required String masterScheme,
   });
 }
