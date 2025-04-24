@@ -70,6 +70,9 @@ class $AssetsIconsGen {
   SvgGenImage get benchmarkIcon =>
       const SvgGenImage('assets/icons/benchmark.icon.svg');
 
+  /// File path: assets/icons/edit.icon.svg
+  SvgGenImage get editIcon => const SvgGenImage('assets/icons/edit.icon.svg');
+
   /// File path: assets/icons/email.icon.svg
   SvgGenImage get emailIcon => const SvgGenImage('assets/icons/email.icon.svg');
 
@@ -120,6 +123,10 @@ class $AssetsIconsGen {
   SvgGenImage get supportIcon =>
       const SvgGenImage('assets/icons/support.icon.svg');
 
+  /// File path: assets/icons/trash.red.icon.svg
+  SvgGenImage get trashRedIcon =>
+      const SvgGenImage('assets/icons/trash.red.icon.svg');
+
   /// File path: assets/icons/user.profile.icon.svg
   SvgGenImage get userProfileIcon =>
       const SvgGenImage('assets/icons/user.profile.icon.svg');
@@ -144,6 +151,7 @@ class $AssetsIconsGen {
     arrowForwardIos,
     arrowIcon,
     benchmarkIcon,
+    editIcon,
     emailIcon,
     eyeIcon,
     factsheetIcon,
@@ -158,6 +166,7 @@ class $AssetsIconsGen {
     settingsIcon,
     successIcon,
     supportIcon,
+    trashRedIcon,
     userProfileIcon,
     warningGreenIcon,
     warningIcon,

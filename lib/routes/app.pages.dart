@@ -4,12 +4,14 @@ import 'package:oldmutual_pensions_app/features/auth/auth.dart';
 import 'package:oldmutual_pensions_app/features/auth/presentation/pages/reset.password/enter.email.page.dart';
 import 'package:oldmutual_pensions_app/features/auth/presentation/pages/signup/create.password.page.dart';
 import 'package:oldmutual_pensions_app/features/auth/presentation/pages/verify.otp.page.dart';
+import 'package:oldmutual_pensions_app/features/beneficiary/presentation/pages/add.beneficiary.page.dart';
 import 'package:oldmutual_pensions_app/features/beneficiary/presentation/pages/beneficiary.page.dart';
 import 'package:oldmutual_pensions_app/features/contribution.history/presentation/pages/contribution.history.page.dart';
 import 'package:oldmutual_pensions_app/features/dashboard/presentation/pages/dashboard.page.dart';
 import 'package:oldmutual_pensions_app/features/future.value.calculator/future.value.calculator.dart';
 import 'package:oldmutual_pensions_app/features/home/presentation/pages/home.page.dart';
 import 'package:oldmutual_pensions_app/features/notification/notification.dart';
+import 'package:oldmutual_pensions_app/features/redemptions/redemption.dart';
 import 'package:oldmutual_pensions_app/features/settings/settings.dart';
 import 'package:oldmutual_pensions_app/features/statements/presentation/pages/statement.page.dart';
 import 'package:oldmutual_pensions_app/features/webview/webview.dart';
@@ -81,7 +83,24 @@ class AppPages {
     ),
     GetPage(name: _Paths.notificationPage, page: () => PNotificationPage()),
     GetPage(name: _Paths.factsheetPage, page: () => PFactSheetPage()),
+    GetPage(
+      name: _Paths.redemptionAndTransferPage,
+      page: () => PRedemptionTransferPage(),
+    ),
+    GetPage(name: _Paths.redemptionPage, page: () => PRedemptionPage()),
     GetPage(name: _Paths.beneficiariesPage, page: () => PBeneficiaryPage()),
+    GetPage(
+      name: _Paths.manageBeneficiaryPage,
+      page:
+          () => PManageBeneficiaryPage(
+            beneficiary: Get.arguments[0],
+            isEdit: Get.arguments[1],
+          ),
+    ),
+    // GetPage(
+    //   name: _Paths.addbeneficiaryPage,
+    //   page: () => PEditBeneficiaryPage(),
+    // ),
     GetPage(
       name: _Paths.contributionHistoryPage,
       page: () => PContributionHistoryPage(),

@@ -24,6 +24,7 @@ class PAppTheme {
     inputDecorationTheme: PTextFormFieldTheme.lightInputDecorationTheme,
     iconTheme: PIconTheme.lightIconThemeData,
     dropdownMenuTheme: PDropdownButtonTheme.lightDropdownMenuTheme,
+    radioTheme: PRadioTheme.lightRadioThemeData,
     textSelectionTheme: TextSelectionThemeData(cursorColor: PAppColor.primary),
   );
   static ThemeData darkTheme = ThemeData(
@@ -43,6 +44,7 @@ class PAppTheme {
     inputDecorationTheme: PTextFormFieldTheme.darkInputDecorationTheme,
     iconTheme: PIconTheme.darkIconThemeData,
     dropdownMenuTheme: PDropdownButtonTheme.darkDropdownMenuTheme,
+    radioTheme: PRadioTheme.darkRadioThemeData,
     textSelectionTheme: TextSelectionThemeData(cursorColor: PAppColor.primary),
   );
 }

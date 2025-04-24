@@ -87,6 +87,7 @@ Future showConfirmDialog({
               PGradientButton(
                 label: positiveText ?? 'yes'.tr.toUpperCase(),
                 height: PAppSize.buttonHeightMid,
+                width: PDeviceUtil.getDeviceWidth(context) * 0.32,
                 onTap: onPostiveTap,
               ),
               PAppSize.s8.verticalSpace,
@@ -95,6 +96,10 @@ Future showConfirmDialog({
                 style: OutlinedButton.styleFrom(
                   padding: EdgeInsets.symmetric(horizontal: PAppSize.s14),
                   foregroundColor: PAppColor.blackColor,
+                  minimumSize: Size(
+                    PDeviceUtil.getDeviceWidth(context) * 0.32,
+                    PAppSize.buttonHeightMid,
+                  ),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(PAppSize.s24),
                   ),
@@ -148,6 +153,8 @@ Future showLoadingdialog({
 Future showSucccessdialog({
   required BuildContext context,
   required String title,
+  Widget? subtitle,
+  MainAxisAlignment mainAxisAlignment = MainAxisAlignment.spaceAround,
   bool barrierDismissible = false,
 }) {
   return showAdaptiveDialog(
@@ -165,10 +172,15 @@ Future showSucccessdialog({
         content: SizedBox(
           height: PDeviceUtil.getDeviceHeight(context) * 0.25,
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            mainAxisAlignment: mainAxisAlignment,
             children: [
-              Text(title, style: Theme.of(context).textTheme.bodyMedium),
-              Assets.icons.successIcon.svg(),
+              Text(
+                title,
+                style: Theme.of(
+                  context,
+                ).textTheme.bodyLarge?.copyWith(fontWeight: FontWeight.w600),
+              ),
+              subtitle ?? Assets.icons.successIcon.svg(),
             ],
           ),
         ),

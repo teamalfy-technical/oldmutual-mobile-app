@@ -44,7 +44,6 @@ class PCustomCheckbox extends StatelessWidget {
         )
         : Row(
           crossAxisAlignment: CrossAxisAlignment.center,
-
           children: [
             Expanded(child: child),
             PAppSize.s2.horizontalSpace,

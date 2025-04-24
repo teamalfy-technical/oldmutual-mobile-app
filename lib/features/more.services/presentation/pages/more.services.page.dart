@@ -66,7 +66,7 @@ class PMoreServicesPage extends StatelessWidget {
           ListTile(
             onTap:
                 () => PHelperFunction.switchScreen(
-                  destination: Routes.futureValueCalcPage,
+                  destination: Routes.redemptionAndTransferPage,
                 ),
             title: Text(
               'redemption_and_transfer'.tr,
