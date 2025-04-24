@@ -14,9 +14,17 @@ dart run build_runner build --delete-conflicting-outputs
 
 flutter clean && flutter pub get && flutter packages pub run build_runner build --delete-conflicting-outputs
 
+## Build APK for Development
+
+flutter build apk --flavor dev
+
 ## Build APK for Production
 
 flutter build apk --flavor prod
+
+## Build AppBundle for Development
+
+flutter build appbundle --flavor dev
 
 ## Build AppBundle for Production
 

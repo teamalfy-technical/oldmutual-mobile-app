@@ -47,23 +47,29 @@ class PGradientButton extends StatelessWidget {
             borderRadius: BorderRadius.circular(radius),
           ),
         ),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text(
-              label,
-              style: TextStyle(
-                fontWeight: FontWeight.w500,
-                color: PAppColor.whiteColor,
-              ),
-            ),
-
+        child:
             showIcon
-                ? PAppSize.s8.horizontalSpace
-                : PAppSize.s0.horizontalSpace,
-            showIcon ? Assets.icons.arrowIcon.svg() : SizedBox.shrink(),
-          ],
-        ),
+                ? Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      label,
+                      style: TextStyle(
+                        fontWeight: FontWeight.w500,
+                        color: PAppColor.whiteColor,
+                      ),
+                    ),
+                    PAppSize.s8.horizontalSpace,
+                    Assets.icons.arrowIcon.svg(),
+                  ],
+                )
+                : Text(
+                  label,
+                  style: TextStyle(
+                    fontWeight: FontWeight.w500,
+                    color: PAppColor.whiteColor,
+                  ),
+                ),
       ),
     );
   }

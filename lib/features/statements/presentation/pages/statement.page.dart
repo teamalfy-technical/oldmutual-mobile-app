@@ -106,7 +106,7 @@ class PStatementPage extends StatelessWidget {
                           label: 'generate'.tr,
                           showIcon: false,
                           radius: PAppSize.s12,
-                          width: PDeviceUtil.getDeviceWidth(context) * 0.28,
+                          width: PDeviceUtil.getDeviceWidth(context) * 0.30,
                           height: PAppSize.s32,
                           onTap: () => ctrl.filterContributions(),
                         ),
