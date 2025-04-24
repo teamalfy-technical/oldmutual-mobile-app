@@ -11,6 +11,7 @@ import 'package:oldmutual_pensions_app/features/future.value.calculator/future.v
 import 'package:oldmutual_pensions_app/features/home/presentation/pages/home.page.dart';
 import 'package:oldmutual_pensions_app/features/notification/notification.dart';
 import 'package:oldmutual_pensions_app/features/settings/settings.dart';
+import 'package:oldmutual_pensions_app/features/statements/presentation/pages/statement.page.dart';
 import 'package:oldmutual_pensions_app/features/webview/webview.dart';
 
 import '../features/onboarding/presentation/pages/onboarding.page.dart';
@@ -90,6 +91,7 @@ class AppPages {
       name: _Paths.futureValueCalcPage,
       page: () => PFutureValueCalcPage(),
     ),
+    GetPage(name: _Paths.statementPage, page: () => PStatementPage()),
     GetPage(name: _Paths.settingsPage, page: () => PSettingsPage()),
     GetPage(name: _Paths.supportPage, page: () => PSupportPage()),
     GetPage(

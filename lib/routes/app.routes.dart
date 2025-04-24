@@ -18,6 +18,7 @@ abstract class Routes {
   static const beneficiariesPage = _Paths.beneficiariesPage;
   static const contributionHistoryPage = _Paths.contributionHistoryPage;
   static const futureValueCalcPage = _Paths.futureValueCalcPage;
+  static const statementPage = _Paths.statementPage;
   static const settingsPage = _Paths.settingsPage;
   static const supportPage = _Paths.supportPage;
   static const webviewPage = _Paths.webviewPage;
@@ -38,6 +39,7 @@ abstract class _Paths {
   static const beneficiariesPage = '/beneficiaries-page';
   static const contributionHistoryPage = '/contribution-history-page';
   static const futureValueCalcPage = '/future-value-calc-page';
+  static const statementPage = '/statement-page';
   static const settingsPage = '/settings-page';
   static const supportPage = '/support-page';
   static const webviewPage = '/webview-page';

@@ -3,149 +3,201 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:oldmutual_pensions_app/core/utils/utils.dart';
 import 'package:oldmutual_pensions_app/features/contribution.history/contribution.history.dart';
+import 'package:oldmutual_pensions_app/features/statements/presentation/vm/statement.vm.dart';
 import 'package:oldmutual_pensions_app/shared/shared.dart';
 import 'package:oldmutual_pensions_app/shared/widgets/custom.dropdown.dart';
 
-class PContributionHistoryPage extends StatelessWidget {
-  PContributionHistoryPage({super.key});
+class PStatementPage extends StatelessWidget {
+  PStatementPage({super.key});
 
-  final ctrl = Get.put(PContributionHistoryVm());
+  final ctrl = Get.put(PStatementVm());
 
   @override
   Widget build(BuildContext context) {
+    List<Map<String, dynamic>> data = [
+      {
+        'period': '2024',
+        'generated_on': '10-05-2024',
+        'actions': 'Download PDF',
+      },
+      {
+        'period': '2023',
+        'generated_on': '10-05-2023',
+        'actions': 'Download PDF',
+      },
+      {
+        'period': 'All',
+        'generated_on': '10-05-2023',
+        'actions': 'Download PDF',
+      },
+    ];
+
     return Scaffold(
-      appBar: AppBar(title: Text('contribution_history'.tr)),
-      body: Obx(
-        () => Column(
-          children: [
-            PPageTagWidget(
-              tag: 'contribution_history_tag'.tr,
-              textAlign: TextAlign.center,
-            ),
+      appBar: AppBar(title: Text('statements'.tr)),
+      body: Column(
+        children: [
+          PPageTagWidget(
+            tag: 'statements_hint_tag'.tr,
+            textAlign: TextAlign.center,
+          ),
 
-            // Filter
-            Expanded(
-              child: Column(
-                children: [
-                  GetBuilder<PContributionHistoryVm>(
-                    builder: (ctrl) {
-                      return Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        crossAxisAlignment: CrossAxisAlignment.end,
+          // Filter
+          Expanded(
+            child: Column(
+              children: [
+                GetBuilder<PContributionHistoryVm>(
+                  builder: (ctrl) {
+                    return Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      children: [
+                        Expanded(
+                          child: PCustomDropdown<ContributedYear>(
+                            label: '',
+                            value: ctrl.selectedYear,
+                            onChanged: ctrl.onYearChanged,
+                            items: ctrl.contributionYears,
+                            radius: PAppSize.s12,
+                            height: PAppSize.s33,
+                          ),
+                        ),
+
+                        PAppSize.s18.horizontalSpace,
+
+                        Expanded(
+                          child: Container(
+                            padding: EdgeInsets.symmetric(
+                              horizontal: PAppSize.s10,
+                              vertical: PAppSize.s1,
+                            ),
+                            decoration: BoxDecoration(
+                              color: PAppColor.fillColor2,
+                              borderRadius: BorderRadius.circular(PAppSize.s12),
+                            ),
+                            child: Obx(
+                              () => PCustomCheckbox(
+                                value: ctrl.all.value,
+                                onChanged: ctrl.onAllChanged,
+                                checkboxDirection: Direction.right,
+                                fillColor: WidgetStateProperty.resolveWith((
+                                  states,
+                                ) {
+                                  if (states.contains(WidgetState.selected)) {
+                                    return PAppColor.primary;
+                                  } else {
+                                    return Color(
+                                      0xFFD9D9D9,
+                                    ).withOpacityExt(PAppSize.s0_6);
+                                  }
+                                }),
+                                child: Text(
+                                  'all'.tr,
+                                  // style: Theme.of(context).textTheme.bodySmall
+                                  //     ?.copyWith(fontSize: PAppSize.s14),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+
+                        PAppSize.s18.horizontalSpace,
+
+                        PGradientButton(
+                          label: 'generate'.tr,
+                          showIcon: false,
+                          radius: PAppSize.s12,
+                          width: PDeviceUtil.getDeviceWidth(context) * 0.28,
+                          height: PAppSize.s32,
+                          onTap: () => ctrl.filterContributions(),
+                        ),
+
+                        // PCustomCheckbox(
+                        //   value: ctrl.all.value,
+                        //   scale: PAppSize.s1_3,
+                        //   onChanged: ctrl.onAllChanged,
+                        //   checkboxDirection: Direction.right,
+                        //   child: Text(
+                        //     'all'.tr,
+                        //     style: Theme.of(context).textTheme.headlineSmall
+                        //         ?.copyWith(fontWeight: FontWeight.w400),
+                        //   ),
+                        // ),
+                      ],
+                    );
+                  },
+                ),
+
+                PAppSize.s25.verticalSpace,
+
+                Expanded(
+                  child:
+                      Table(
+                        // border: TableBorder.all(),
                         children: [
-                          Expanded(
-                            child: PCustomDropdown<ContributedYear>(
-                              label: 'filter_by_year'.tr,
-                              value: ctrl.selectedYear,
-                              onChanged: ctrl.onYearChanged,
-                              items: ctrl.contributionYears,
-                            ),
-                          ),
-
-                          PAppSize.s20.horizontalSpace,
-
-                          Expanded(
-                            child: PCustomDropdown<String>(
-                              label: 'filter_by_month'.tr,
-                              value: ctrl.selectedMonth,
-                              onChanged: ctrl.onMonthChanged,
-                              items: ctrl.contributionMonths,
-                            ),
-                          ),
-
-                          PAppSize.s18.horizontalSpace,
-
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.end,
+                          TableRow(
                             children: [
                               Text(
-                                'clear_filters'.tr,
-                                style: Theme.of(
-                                  context,
-                                ).textTheme.bodySmall?.copyWith(
-                                  color: PAppColor.primary,
-                                  fontWeight: FontWeight.w600,
-                                  decoration: TextDecoration.underline,
-                                  decorationColor: PAppColor.primary,
-                                  //  fontSize: PAppSize.s13,
-                                ),
-                              ).onPressed(onTap: () => ctrl.resetFilters()),
-                              PAppSize.s4.verticalSpace,
-                              PGradientButton(
-                                label: 'apply'.tr,
-                                showIcon: false,
-                                radius: PAppSize.s5,
-                                width:
-                                    PDeviceUtil.getDeviceWidth(context) * 0.28,
-                                onTap: () => ctrl.filterContributions(),
+                                'period'.tr,
+                                textAlign: TextAlign.start,
+                                style: Theme.of(context).textTheme.headlineSmall
+                                    ?.copyWith(fontSize: PAppSize.s16),
+                              ),
+                              Text(
+                                'generated_on'.tr,
+                                textAlign: TextAlign.start,
+                                style: Theme.of(context).textTheme.headlineSmall
+                                    ?.copyWith(fontSize: PAppSize.s16),
+                              ),
+                              Text(
+                                'actions'.tr,
+                                textAlign: TextAlign.end,
+                                style: Theme.of(context).textTheme.headlineSmall
+                                    ?.copyWith(fontSize: PAppSize.s16),
                               ),
                             ],
                           ),
-
-                          // PCustomCheckbox(
-                          //   value: ctrl.all.value,
-                          //   scale: PAppSize.s1_3,
-                          //   onChanged: ctrl.onAllChanged,
-                          //   checkboxDirection: Direction.right,
-                          //   child: Text(
-                          //     'all'.tr,
-                          //     style: Theme.of(context).textTheme.headlineSmall
-                          //         ?.copyWith(fontWeight: FontWeight.w400),
-                          //   ),
-                          // ),
-                        ],
-                      );
-                    },
-                  ),
-
-                  PAppSize.s25.verticalSpace,
-
-                  Expanded(
-                    child:
-                        ctrl.loading.value == LoadingState.loading
-                            ? ListView.builder(
-                              shrinkWrap: true,
-                              itemCount: 10,
-                              itemBuilder: (context, index) {
-                                return ContributionHistoryWidgetRedact(
-                                  loadingState: ctrl.loading.value,
-                                );
-                              },
-                            )
-                            : ctrl
-                                .history
-                                .value
-                                .transactionHistory!
-                                .transactions!
-                                .isEmpty
-                            ? PEmptyStateWidget(message: 'no_results_found'.tr)
-                            : ListView.builder(
-                              shrinkWrap: true,
-                              itemCount:
-                                  ctrl
-                                      .history
-                                      .value
-                                      .transactionHistory
-                                      ?.transactions
-                                      ?.length,
-                              itemBuilder: (context, index) {
-                                final transaction =
-                                    ctrl
-                                        .history
-                                        .value
-                                        .transactionHistory!
-                                        .transactions![index];
-                                return ContributionHistoryWidget(
-                                  transaction: transaction,
-                                );
-                              },
+                          ...data.map(
+                            (item) => TableRow(
+                              children: [
+                                Text(
+                                  item['period'],
+                                  textAlign: TextAlign.start,
+                                  style:
+                                      Theme.of(
+                                        context,
+                                      ).textTheme.bodySmall?.copyWith(),
+                                ).symmetric(vertical: PAppSize.s8),
+                                Text(
+                                  item['generated_on'].toString(),
+                                  textAlign: TextAlign.start,
+                                  style:
+                                      Theme.of(
+                                        context,
+                                      ).textTheme.bodySmall?.copyWith(),
+                                ).symmetric(vertical: PAppSize.s8),
+                                Text(
+                                      item['actions'].toString(),
+                                      textAlign: TextAlign.end,
+                                      style: Theme.of(
+                                        context,
+                                      ).textTheme.bodySmall?.copyWith(
+                                        color: PAppColor.primary,
+                                        decoration: TextDecoration.underline,
+                                        decorationColor: PAppColor.primary,
+                                      ),
+                                    )
+                                    .onPressed(onTap: () {})
+                                    .symmetric(vertical: PAppSize.s8),
+                              ],
                             ),
-                  ),
-                ],
-              ).all(PAppSize.s20),
-            ),
-          ],
-        ),
+                          ),
+                        ],
+                      ).scrollable(),
+                ),
+              ],
+            ).all(PAppSize.s20),
+          ),
+        ],
       ),
     );
   }

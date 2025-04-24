@@ -306,6 +306,7 @@ class PAuthVm extends GetxController {
     // pensionAppLogger.e(deviceToken);
     showLoadingdialog(
       context: context,
+      barrierDismissible: false,
       content: Text(
         'signing_in'.tr,
         style: Theme.of(context).textTheme.bodyMedium,
@@ -324,7 +325,9 @@ class PAuthVm extends GetxController {
         );
       },
       (res) async {
-        await PNotificationService().saveToken();
+        if (PDeviceUtil.isAndroid()) {
+          await PNotificationService().saveToken();
+        }
         await getBioData();
         clearFields();
         PHelperFunction.pop();

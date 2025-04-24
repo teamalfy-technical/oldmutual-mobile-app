@@ -44,7 +44,7 @@ class PGradientButton extends StatelessWidget {
           backgroundColor: Colors.transparent, // Make background transparent
           shadowColor: Colors.transparent, // Remove shadow
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(PAppSize.s8),
+            borderRadius: BorderRadius.circular(radius),
           ),
         ),
         child: Row(

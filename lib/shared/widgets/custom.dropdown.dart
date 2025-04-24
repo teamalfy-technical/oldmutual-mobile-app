@@ -10,6 +10,7 @@ class PCustomDropdown<T> extends StatelessWidget {
   final T? value;
   final Widget? hint;
   final List<T> items;
+  final double radius;
   final Function(T?)? onChanged;
 
   PCustomDropdown({
@@ -21,6 +22,7 @@ class PCustomDropdown<T> extends StatelessWidget {
     this.onChanged,
     this.hint,
     required this.label,
+    this.radius = PAppSize.s5,
   });
 
   @override
@@ -36,6 +38,7 @@ class PCustomDropdown<T> extends StatelessWidget {
         PAppSize.s4.verticalSpace,
         SizedBox(
           height: height,
+
           child: DropdownButtonFormField<T>(
             focusColor: PAppColor.fillColor2,
             dropdownColor:
@@ -52,18 +55,19 @@ class PCustomDropdown<T> extends StatelessWidget {
             decoration: InputDecoration(
               border: OutlineInputBorder(
                 borderSide: BorderSide.none,
-                borderRadius: BorderRadius.circular(PAppSize.s5),
+                borderRadius: BorderRadius.circular(radius),
               ),
               enabledBorder: OutlineInputBorder(
                 borderSide: BorderSide.none,
-                borderRadius: BorderRadius.circular(PAppSize.s5),
+                borderRadius: BorderRadius.circular(radius),
               ),
               focusedBorder: OutlineInputBorder(
                 borderSide: BorderSide.none,
-                borderRadius: BorderRadius.circular(PAppSize.s5),
+                borderRadius: BorderRadius.circular(radius),
               ),
               filled: true,
               fillColor: PAppColor.fillColor2,
+              // contentPadding: EdgeInsets.zero,
               contentPadding: const EdgeInsets.symmetric(
                 vertical: PAppSize.s2,
                 horizontal: PAppSize.s10,

@@ -9,6 +9,7 @@ class PCustomCheckbox extends StatelessWidget {
   final Function(bool?)? onChanged;
   final Direction checkboxDirection;
   final BorderSide? side;
+  final WidgetStateProperty<Color?>? fillColor;
   const PCustomCheckbox({
     super.key,
     required this.child,
@@ -17,6 +18,7 @@ class PCustomCheckbox extends StatelessWidget {
     this.scale = PAppSize.s1,
     this.checkboxDirection = Direction.left,
     this.side,
+    this.fillColor,
   });
 
   @override
@@ -27,23 +29,24 @@ class PCustomCheckbox extends StatelessWidget {
           children: [
             Transform.scale(
               scale: scale,
-
               child: Checkbox(
                 side: side,
                 value: value,
                 onChanged: onChanged,
                 materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                visualDensity: VisualDensity.compact,
+                fillColor: fillColor,
               ),
             ),
             PAppSize.s8.horizontalSpace,
-            child,
+            Expanded(child: child),
           ],
         )
         : Row(
-          crossAxisAlignment: CrossAxisAlignment.end,
+          crossAxisAlignment: CrossAxisAlignment.center,
 
           children: [
-            child,
+            Expanded(child: child),
             PAppSize.s2.horizontalSpace,
             Transform.scale(
               scale: scale,
@@ -53,6 +56,7 @@ class PCustomCheckbox extends StatelessWidget {
                 onChanged: onChanged,
                 materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
                 visualDensity: VisualDensity.compact,
+                fillColor: fillColor,
               ),
             ),
           ],
