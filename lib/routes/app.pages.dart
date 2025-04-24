@@ -11,6 +11,7 @@ import 'package:oldmutual_pensions_app/features/dashboard/presentation/pages/das
 import 'package:oldmutual_pensions_app/features/future.value.calculator/future.value.calculator.dart';
 import 'package:oldmutual_pensions_app/features/home/presentation/pages/home.page.dart';
 import 'package:oldmutual_pensions_app/features/notification/notification.dart';
+import 'package:oldmutual_pensions_app/features/redemptions/presentation/pages/porting.page.dart';
 import 'package:oldmutual_pensions_app/features/redemptions/redemption.dart';
 import 'package:oldmutual_pensions_app/features/settings/settings.dart';
 import 'package:oldmutual_pensions_app/features/statements/presentation/pages/statement.page.dart';
@@ -88,6 +89,7 @@ class AppPages {
       page: () => PRedemptionTransferPage(),
     ),
     GetPage(name: _Paths.redemptionPage, page: () => PRedemptionPage()),
+    GetPage(name: _Paths.portingPage, page: () => PPortingPage()),
     GetPage(name: _Paths.beneficiariesPage, page: () => PBeneficiaryPage()),
     GetPage(
       name: _Paths.manageBeneficiaryPage,

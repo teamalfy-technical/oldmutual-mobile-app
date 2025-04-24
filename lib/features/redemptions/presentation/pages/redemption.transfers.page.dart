@@ -65,7 +65,11 @@ class PRedemptionTransferPage extends StatelessWidget {
                     PHelperFunction.switchScreen(
                       destination: Routes.redemptionPage,
                     );
-                  } else {}
+                  } else {
+                    PHelperFunction.switchScreen(
+                      destination: Routes.portingPage,
+                    );
+                  }
                 },
               ),
             ],

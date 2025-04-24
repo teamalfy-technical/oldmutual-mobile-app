@@ -188,6 +188,16 @@ class AppTranslations extends Translations {
       'submit_request': 'Submit Request',
       'redeem_pension_msg':
           'Your redemption request has been received. Funds will be processed in 24 hours',
+      'porting': 'Porting',
+      'porting_hint_tag': 'Port to Another Scheme',
+      'porting_confirm_msg':
+          'I confirm that I am the account holder and authorize this porting request.',
+      'receiving_scheme_name': 'Receiving Scheme Name',
+      'amount_to_port': 'Amount to Port',
+      'reason_for_porting': 'Reason for Porting',
+      'scheme_id_hint': 'Scheme ID (optional)',
+      'porting_msg':
+          'Your porting request has been submitted. You’ll be notified once processed',
     },
     'hi_IN': {'app_name': 'Pensions App'},
     'fr_FR': {'app_name': 'Pensions App'},

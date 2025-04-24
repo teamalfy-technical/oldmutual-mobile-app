@@ -44,4 +44,22 @@ class PRedemptionVm extends GetxController {
       PHelperFunction.pop();
     });
   }
+
+  /// Function to port pension scheme
+  Future<void> portPensionScheme() async {
+    showSucccessdialog(
+      context: context,
+      mainAxisAlignment: MainAxisAlignment.center,
+      title: '${'success'.tr}!',
+      subtitle: Text(
+        'porting_msg'.tr,
+        style: Theme.of(
+          context,
+        ).textTheme.bodySmall?.copyWith(color: PAppColor.text700),
+      ),
+    );
+    Future.delayed(Duration(milliseconds: 5000), () {
+      PHelperFunction.pop();
+    });
+  }
 }

@@ -19,6 +19,7 @@ abstract class Routes {
   static const manageBeneficiaryPage = _Paths.manageBeneficiaryPage;
   static const redemptionAndTransferPage = _Paths.redemptionAndTransferPage;
   static const redemptionPage = _Paths.redemptionPage;
+  static const portingPage = _Paths.portingPage;
   static const contributionHistoryPage = _Paths.contributionHistoryPage;
   static const futureValueCalcPage = _Paths.futureValueCalcPage;
   static const statementPage = _Paths.statementPage;
@@ -44,6 +45,7 @@ abstract class _Paths {
   static const manageBeneficiaryPage = '/manage-beneficiary-page';
   static const redemptionAndTransferPage = '/add-beneficiary-page';
   static const redemptionPage = '/redemption-page';
+  static const portingPage = '/porting-page';
   static const contributionHistoryPage = '/contribution-history-page';
   static const futureValueCalcPage = '/future-value-calc-page';
   static const statementPage = '/statement-page';
