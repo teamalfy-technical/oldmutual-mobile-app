@@ -7,12 +7,14 @@ class PCustomFilledTextfield extends StatelessWidget {
   final String hint;
   final TextEditingController controller;
   final TextInputType textInputType;
+  final String? Function(String?)? validator;
   const PCustomFilledTextfield({
     super.key,
     required this.label,
     required this.hint,
     required this.controller,
     this.textInputType = TextInputType.text,
+    this.validator,
   });
 
   @override
@@ -26,11 +28,16 @@ class PCustomFilledTextfield extends StatelessWidget {
           style: TextStyle(overflow: TextOverflow.ellipsis),
         ),
         PAppSize.s4.verticalSpace,
-        TextField(
+        TextFormField(
           controller: controller,
           keyboardType: textInputType,
+          validator: validator,
           decoration: InputDecoration(
             hintText: hint,
+            errorStyle: Theme.of(context).textTheme.bodySmall?.copyWith(
+              fontSize: PAppSize.s10,
+              color: PAppColor.errorColor,
+            ),
             contentPadding: EdgeInsets.symmetric(
               horizontal: PAppSize.s20,
               vertical: PAppSize.s6,

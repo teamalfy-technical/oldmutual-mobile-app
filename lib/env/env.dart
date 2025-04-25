@@ -95,6 +95,14 @@ abstract class Env {
   @EnviedField(defaultValue: '/beneficiaries', obfuscate: true)
   static final String getBeneficiaries = _Env.getBeneficiaries;
 
+  /// [UpdateBeneficiary] endpoint
+  @EnviedField(defaultValue: '/beneficiary/update', obfuscate: true)
+  static final String updateBeneficiary = _Env.updateBeneficiary;
+
+  /// [DeleteBeneficiary] endpoint
+  @EnviedField(defaultValue: '/delete/beneficiary', obfuscate: true)
+  static final String deleteBeneficiary = _Env.deleteBeneficiary;
+
   /// -------------------- Beneficiary Endpoints Ends Here ------------------------- ///
   ///
   ///

@@ -68,7 +68,7 @@ class PProfilePage extends StatelessWidget {
                       PCustomListTile(
                         title: 'full_name'.tr,
                         subtitle:
-                            ctrl.profile.value.name ?? '*********************',
+                            ctrl.profile.value.name ?? 'not_applicable'.tr,
                       ).redacted(
                         context: context,
                         redact:
@@ -80,7 +80,7 @@ class PProfilePage extends StatelessWidget {
                       PCustomListTile(
                         title: 'email_address'.tr,
                         subtitle:
-                            ctrl.profile.value.email ?? '*********************',
+                            ctrl.profile.value.email ?? 'not_applicable'.tr,
                       ).redacted(
                         context: context,
                         redact:
@@ -93,7 +93,7 @@ class PProfilePage extends StatelessWidget {
                         title: 'mobile_number'.tr,
                         subtitle:
                             PSecureStorage().getBioData()?.mobileNo ??
-                            '*********************',
+                            'not_applicable'.tr,
                       ).redacted(
                         context: context,
                         redact:
@@ -106,7 +106,7 @@ class PProfilePage extends StatelessWidget {
                         title: 'membership_id'.tr,
                         subtitle:
                             ctrl.profile.value.memberNumber ??
-                            '*********************',
+                            'not_applicable'.tr,
                       ).redacted(
                         context: context,
                         redact:
@@ -119,7 +119,7 @@ class PProfilePage extends StatelessWidget {
                         title: 'tin_number'.tr,
                         subtitle:
                             PSecureStorage().getBioData()?.tin ??
-                            '*********************',
+                            'not_applicable'.tr,
                       ).redacted(
                         context: context,
                         redact:
@@ -141,7 +141,7 @@ class PProfilePage extends StatelessWidget {
                         title: 'ssnit_number'.tr,
                         subtitle:
                             ctrl.profile.value.ssnitNumber ??
-                            '*********************',
+                            'not_applicable'.tr,
                       ).redacted(
                         context: context,
                         redact:
@@ -173,7 +173,7 @@ class PProfilePage extends StatelessWidget {
                         title: 'scheme_name'.tr,
                         subtitle:
                             PSecureStorage().getBioData()?.schemeName ??
-                            '*********************',
+                            'not_applicable'.tr,
                       ).redacted(
                         context: context,
                         redact:
@@ -187,7 +187,7 @@ class PProfilePage extends StatelessWidget {
                         title: 'pension_type'.tr,
                         subtitle:
                             PSecureStorage().getBioData()?.pensionTypeName ??
-                            '*********************',
+                            'not_applicable'.tr,
                       ).redacted(
                         context: context,
                         redact:

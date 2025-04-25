@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 import 'package:oldmutual_pensions_app/core/utils/utils.dart';
 import 'package:oldmutual_pensions_app/features/beneficiary/beneficiary.dart';
 import 'package:oldmutual_pensions_app/shared/widgets/popup.dialog.dart';
@@ -10,6 +11,9 @@ class PBeneficiaryVm extends GetxController {
   var beneficiaries = <Beneficiary>[].obs;
 
   var loading = LoadingState.completed.obs;
+  var submitting = LoadingState.completed.obs;
+
+  final formKey = GlobalKey<FormState>();
 
   final nameTEC = TextEditingController();
   final dobTEC = TextEditingController();
@@ -17,18 +21,58 @@ class PBeneficiaryVm extends GetxController {
   final benefitPercentageTEC = TextEditingController();
   final contactTEC = TextEditingController();
 
-  var split = true.obs;
+  var split = false.obs;
 
-  onSplitChanged(bool? value) => split.value = value ?? false;
+  onSplitChanged(bool? value, bool isEdit) {
+    split.value = value ?? false;
+    splitPercentageContribution(isEdit);
+  }
+
+  splitPercentageContribution(bool isEdit) {
+    if (split.value == true) {
+      final splittedPercentage =
+          isEdit
+              ? 100 / beneficiaries.length
+              : 100 / (beneficiaries.length + 1);
+      benefitPercentageTEC.text = splittedPercentage.toStringAsFixed(2);
+    } else {
+      benefitPercentageTEC.clear();
+    }
+  }
 
   final context = Get.context!;
 
   updateLoadingState(LoadingState loadingState) => loading.value = loadingState;
+  updateSubmittingState(LoadingState loadingState) =>
+      submitting.value = loadingState;
 
   @override
   void onInit() {
     super.onInit();
     getBeneficiaries();
+  }
+
+  updateEditFields(Beneficiary? beneficiary) {
+    if (beneficiary != null) {
+      nameTEC.text = beneficiary.fullName ?? '';
+      dobTEC.text = PFormatter.formatDate(
+        dateFormat: DateFormat('dd-MM-yyyy'),
+        date: DateTime.parse(
+          beneficiary.birthDate ?? DateTime.now().toIso8601String(),
+        ),
+      );
+      relationTEC.text = beneficiary.relationship ?? '';
+      benefitPercentageTEC.text = beneficiary.percAlloc.toString();
+      contactTEC.text = beneficiary.address ?? '';
+    }
+  }
+
+  clearFields() {
+    nameTEC.clear();
+    dobTEC.clear();
+    relationTEC.clear();
+    benefitPercentageTEC.clear();
+    contactTEC.clear();
   }
 
   /// Function to get all beneficiaries
@@ -52,44 +96,119 @@ class PBeneficiaryVm extends GetxController {
     );
   }
 
+  // check to make sure the split percentage adds up to 100% when percentage is not splitted
+  bool isSplitPercentageValid() {
+    if (split.value == false) {
+      final perAlloc = beneficiaries.map((e) => e.percAlloc ?? 0);
+      final totalAlloc = perAlloc.reduce((a, b) => a + b);
+      final total = totalAlloc + double.parse(benefitPercentageTEC.text.trim());
+      if (total > 100) {
+        PPopupDialog(context).errorMessage(
+          title: 'action_required'.tr,
+          message:
+              'Total percentage can\'t be more than 100%. Your previous total benefit allocation is $totalAlloc%',
+        );
+        return false;
+      }
+    }
+    return true;
+  }
+
   /// Function to edit a beneficiary
-  Future<void> editBeneficiary() async {
+  Future<void> editBeneficiary(Beneficiary beneficiary) async {
+    // if (!isSplitPercentageValid()) return;
+    updateSubmittingState(LoadingState.loading);
+    final result = await beneficiaryService.updateBeneficiary(
+      beneficiaryId: beneficiary.beneficiaryId ?? 0,
+      fullName: nameTEC.text.trim(),
+      relationship: relationTEC.text.trim(),
+      percAlloc: benefitPercentageTEC.text.trim(),
+      birthDate: dobTEC.text.trim(),
+      address: contactTEC.text.trim(),
+    );
+    result.fold(
+      (err) {
+        updateSubmittingState(LoadingState.error);
+        PPopupDialog(
+          context,
+        ).errorMessage(title: 'error'.tr, message: err.message);
+      },
+      (res) {
+        updateSubmittingState(LoadingState.completed);
+        showSuccessMessage('save_beneficiary_changes_msg'.tr);
+      },
+    );
+  }
+
+  showSuccessMessage(String messge) {
     showSucccessdialog(
       context: context,
       mainAxisAlignment: MainAxisAlignment.center,
       title: '${'success'.tr}!',
       subtitle: Text(
-        'save_beneficiary_changes_msg'.tr,
+        messge,
         style: Theme.of(
           context,
         ).textTheme.bodySmall?.copyWith(color: PAppColor.text700),
       ),
     );
     Future.delayed(Duration(milliseconds: 3000), () {
+      PHelperFunction.pop();
       PHelperFunction.pop();
     });
   }
 
   /// Function to add a beneficiary
   Future<void> addBeneficiary() async {
-    showSucccessdialog(
-      context: context,
-      mainAxisAlignment: MainAxisAlignment.center,
-      title: '${'success'.tr}!',
-      subtitle: Text(
-        'save_beneficiary_changes_msg'.tr,
-        style: Theme.of(
-          context,
-        ).textTheme.bodySmall?.copyWith(color: PAppColor.text700),
-      ),
+    updateSubmittingState(LoadingState.loading);
+    final result = await beneficiaryService.updateBeneficiary(
+      fullName: nameTEC.text.trim(),
+      relationship: relationTEC.text.trim(),
+      percAlloc: benefitPercentageTEC.text.trim(),
+      birthDate: dobTEC.text.trim(),
+      address: contactTEC.text.trim(),
     );
-    Future.delayed(Duration(milliseconds: 3000), () {
-      PHelperFunction.pop();
-    });
+    result.fold(
+      (err) {
+        updateSubmittingState(LoadingState.error);
+        PPopupDialog(
+          context,
+        ).errorMessage(title: 'error'.tr, message: err.message);
+      },
+      (res) {
+        updateSubmittingState(LoadingState.completed);
+        showSuccessMessage('save_beneficiary_changes_msg'.tr);
+      },
+    );
   }
 
   /// Function to delete a beneficiary
-  Future<void> deleteBeneficiary() async {
-    PHelperFunction.pop();
+  Future<void> deleteBeneficiary(Beneficiary beneficiary) async {
+    showLoadingdialog(
+      context: context,
+      barrierDismissible: true,
+      content: Text(
+        'deleting_beneficiary'.tr,
+        style: Theme.of(context).textTheme.bodyMedium,
+      ),
+    );
+    final result = await beneficiaryService.deleteBeneficiary(
+      beneficiaryId: beneficiary.beneficiaryId ?? 0,
+    );
+    result.fold(
+      (err) {
+        PHelperFunction.pop();
+        PPopupDialog(
+          context,
+        ).errorMessage(title: 'error'.tr, message: err.message);
+      },
+      (res) {
+        PHelperFunction.pop();
+        showSucccessdialog(context: context, title: res.message ?? '');
+        Future.delayed(Duration(seconds: 2), () {
+          PHelperFunction.pop();
+        });
+      },
+    );
   }
 }

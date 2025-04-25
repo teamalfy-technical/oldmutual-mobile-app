@@ -117,7 +117,9 @@ class PBeneficiaryWidget extends StatelessWidget {
                             positiveText: 'delete'.tr.toUpperCase(),
                             onPostiveTap: () {
                               PHelperFunction.pop();
-                              Get.find<PBeneficiaryVm>().deleteBeneficiary();
+                              Get.find<PBeneficiaryVm>().deleteBeneficiary(
+                                beneficiary,
+                              );
                             },
                           );
                         },

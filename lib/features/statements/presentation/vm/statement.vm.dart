@@ -1,8 +1,12 @@
+import 'dart:io';
+
+// import 'package:flutter_downloader/flutter_downloader.dart';
 import 'package:get/get.dart';
 import 'package:oldmutual_pensions_app/core/utils/utils.dart';
 import 'package:oldmutual_pensions_app/features/contribution.history/contribution.history.dart';
 import 'package:oldmutual_pensions_app/features/statements/statements.dart';
 import 'package:oldmutual_pensions_app/shared/shared.dart';
+import 'package:path_provider/path_provider.dart';
 
 class PStatementVm extends GetxController {
   static PStatementVm get instance => Get.find();
@@ -12,24 +16,8 @@ class PStatementVm extends GetxController {
   onAllChanged(bool? value) => all.value = value ?? false;
 
   var contributionYears = <ContributedYear>[].obs;
-  var contributionMonths =
-      [
-        'none'.tr,
-        '1',
-        '2',
-        '3',
-        '4',
-        '5',
-        '6',
-        '7',
-        '8',
-        '9',
-        '10',
-        '11',
-        '12',
-      ].obs;
+
   ContributedYear? selectedYear;
-  String? selectedMonth;
 
   var loading = LoadingState.completed.obs;
   var generating = LoadingState.completed.obs;
@@ -45,16 +33,18 @@ class PStatementVm extends GetxController {
   // Reports variables
   var generatedReport = GenerateReport().obs;
   var reportStatus = ReportStatus().obs;
+  var reports = <ReportStatus>{}.obs;
 
   onYearChanged(value) {
     selectedYear = value;
     update();
   }
 
-  onMonthChanged(value) {
-    selectedMonth = value;
-    update();
-  }
+  // @override
+  // void onInit() {
+  //   getContributedYears();
+  //   super.onInit();
+  // }
 
   /// Function to get all contribution years
   Future<void> getContributedYears() async {
@@ -62,7 +52,7 @@ class PStatementVm extends GetxController {
     final result = await contributionHistoryService.getContributionYears();
     result.fold(
       (err) {
-        updateLoadingState(LoadingState.error);
+        // updateLoadingState(LoadingState.error);
         PPopupDialog(
           context,
         ).errorMessage(title: 'error'.tr, message: err.message);
@@ -80,14 +70,12 @@ class PStatementVm extends GetxController {
         );
 
         selectedYear = res.data?.first;
-        selectedMonth = contributionMonths.first;
         contributionYears.value = res.data ?? [];
       },
     );
   }
 
   resetFilters() {
-    selectedMonth = contributionMonths.first;
     selectedYear = contributionYears.first;
   }
 
@@ -99,6 +87,13 @@ class PStatementVm extends GetxController {
 
   /// Function to generate report
   Future<void> generateReport() async {
+    if (selectedYear == null || selectedYear?.fundYear == 'none'.tr) {
+      PPopupDialog(context).informationMessage(
+        title: 'action_required'.tr,
+        message: 'Select a year to proceed',
+      );
+      return;
+    }
     updateGeneratingState(LoadingState.loading);
     final result = await statementRepo.generateReport(
       year: int.parse(selectedYear?.fundYear ?? DateTime.now().year.toString()),
@@ -156,7 +151,8 @@ class PStatementVm extends GetxController {
       (res) {
         updateGeneratingState(LoadingState.completed);
         reportStatus.value = res;
-        PPopupDialog(context).errorMessage(
+        reports.add(reportStatus.value);
+        PPopupDialog(context).successMessage(
           title: res.status ?? '',
           message: 'report_downloaded_msg'.trParams({
             'year': selectedYear?.fundYear ?? '',
@@ -164,5 +160,32 @@ class PStatementVm extends GetxController {
         );
       },
     );
+  }
+
+  /// Function to download report file
+  Future<void> downloadFile(String url) async {
+    Directory? directory;
+
+    if (Platform.isAndroid) {
+      directory =
+          await getExternalStorageDirectory(); // e.g. /storage/emulated/0/Android/data/<package>/files
+    } else if (Platform.isIOS) {
+      directory =
+          await getApplicationDocumentsDirectory(); // e.g. /var/mobile/Containers/Data/Application/<uuid>/Documents
+    }
+
+    final saveDir = directory?.path;
+
+    // if (saveDir != null) {
+    //   final taskId = await FlutterDownloader.enqueue(
+    //     url: url,
+    //     headers: {}, // optional headers
+    //     savedDir: saveDir,
+    //     showNotification:
+    //         true, // show download progress in status bar (for Android)
+    //     openFileFromNotification:
+    //         true, // click on notification to open downloaded file (for Android)
+    //   );
+    // }
   }
 }

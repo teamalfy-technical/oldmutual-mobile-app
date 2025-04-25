@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:oldmutual_pensions_app/core/utils/utils.dart';
 import 'package:oldmutual_pensions_app/gen/assets.gen.dart';
+import 'package:oldmutual_pensions_app/shared/shared.dart';
 
 class PGradientButton extends StatelessWidget {
   final String label;
@@ -10,6 +11,7 @@ class PGradientButton extends StatelessWidget {
   final double radius;
   final Function()? onTap;
   final bool showIcon;
+  final LoadingState loading;
   const PGradientButton({
     super.key,
     required this.label,
@@ -18,6 +20,7 @@ class PGradientButton extends StatelessWidget {
     this.onTap,
     this.showIcon = true,
     this.radius = PAppSize.s24,
+    this.loading = LoadingState.completed,
   });
 
   @override
@@ -48,7 +51,9 @@ class PGradientButton extends StatelessWidget {
           ),
         ),
         child:
-            showIcon
+            loading == LoadingState.loading
+                ? PCustomLoadingIndicator()
+                : showIcon
                 ? Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [

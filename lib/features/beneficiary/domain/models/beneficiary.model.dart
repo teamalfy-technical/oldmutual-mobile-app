@@ -1,9 +1,9 @@
 class Beneficiary {
   int? beneficiaryId;
   String? fullName;
-  int? percAlloc;
+  double? percAlloc;
   String? birthDate;
-  dynamic address;
+  String? address;
   String? relationship;
   String? pensionTypeId;
   String? pensionTypeName;
@@ -28,7 +28,7 @@ class Beneficiary {
   Beneficiary.fromJson(Map<String, dynamic> json) {
     beneficiaryId = json['beneficiary_id'];
     fullName = json['FullName'];
-    percAlloc = json['perc_alloc'];
+    percAlloc = json['perc_alloc']?.toDouble();
     birthDate = json['birth_date'];
     address = json['address'];
     relationship = json['Relationship'];

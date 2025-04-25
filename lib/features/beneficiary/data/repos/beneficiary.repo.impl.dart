@@ -14,4 +14,38 @@ class BeneficiaryRepoImpl implements BeneficiaryRepo {
       function: () async => await beneficiaryDs.getBeneficiaries(),
     );
   }
+
+  @override
+  Future<Either<PFailure, ApiResponse<List<Beneficiary>>>> deleteBeneficiary({
+    required int beneficiaryId,
+  }) async {
+    return await customRepositoryWrapper.wrapRepositoryFunction(
+      function:
+          () async => await beneficiaryDs.deleteBeneficiary(
+            beneficiaryId: beneficiaryId,
+          ),
+    );
+  }
+
+  @override
+  Future<Either<PFailure, ApiResponse<List<Beneficiary>>>> updateBeneficiary({
+    int? beneficiaryId,
+    required String fullName,
+    required String relationship,
+    required String birthDate,
+    required String percAlloc,
+    required String address,
+  }) async {
+    return await customRepositoryWrapper.wrapRepositoryFunction(
+      function:
+          () async => await beneficiaryDs.updateBeneficiary(
+            beneficiaryId: beneficiaryId,
+            fullName: fullName,
+            relationship: relationship,
+            birthDate: birthDate,
+            percAlloc: percAlloc,
+            address: address,
+          ),
+    );
+  }
 }

@@ -31,6 +31,7 @@
 	<key>UIBackgroundModes</key>
 	<array>
 		<string>remote-notification</string>
+		<string>fetch</string>
 	</array>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
@@ -49,5 +50,10 @@
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
+	<!-- changes this number to configure the maximum number of concurrent tasks -->
+	<key>FDMaximumConcurrentTasks</key>
+	<integer>5</integer>
+	<key>FDAllFilesDownloadedMessage</key>
+	<string>All files have been downloaded</string>
 </dict>
 </plist>

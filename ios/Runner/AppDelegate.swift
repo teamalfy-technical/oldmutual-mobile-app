@@ -2,7 +2,7 @@ import Flutter
 import UIKit
 import flutter_local_notifications
 import Firebase
-import UIKit
+// import flutter_downloader
 
 @main
 @objc class AppDelegate: FlutterAppDelegate {
@@ -10,8 +10,8 @@ import UIKit
     _ application: UIApplication,
     didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?
   ) -> Bool {
-      FirebaseApp.configure()
-     // This is required to make any communication available in the action isolate.
+    FirebaseApp.configure()
+    // This is required to make any communication available in the action isolate.
     FlutterLocalNotificationsPlugin.setPluginRegistrantCallback { (registry) in
         GeneratedPluginRegistrant.register(with: registry)
     }
@@ -19,10 +19,16 @@ import UIKit
       UNUserNotificationCenter.current().delegate = self as UNUserNotificationCenterDelegate
     }
     application.registerForRemoteNotifications()
-    
     GeneratedPluginRegistrant.register(with: self)
+    // FlutterDownloaderPlugin.setPluginRegistrantCallback(registerPlugins)
     return super.application(application, didFinishLaunchingWithOptions: launchOptions)
   }
+
+  // private func registerPlugins(registry: FlutterPluginRegistry) {
+  //   if (!registry.hasPlugin("FlutterDownloaderPlugin")) {
+  //      FlutterDownloaderPlugin.register(with: registry.registrar(forPlugin: "FlutterDownloaderPlugin")!)
+  //   }
+  // }
 
   override func application(
     _ application: UIApplication,

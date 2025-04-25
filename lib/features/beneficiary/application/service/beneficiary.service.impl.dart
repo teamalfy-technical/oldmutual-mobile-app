@@ -10,4 +10,26 @@ class BeneficiaryServiceImpl implements BeneficiaryService {
   @override
   Future<Either<PFailure, ApiResponse<List<Beneficiary>>>> getBeneficiaries() =>
       beneficiaryRepo.getBeneficiaries();
+
+  @override
+  Future<Either<PFailure, ApiResponse<List<Beneficiary>>>> deleteBeneficiary({
+    required int beneficiaryId,
+  }) => beneficiaryRepo.deleteBeneficiary(beneficiaryId: beneficiaryId);
+
+  @override
+  Future<Either<PFailure, ApiResponse<List<Beneficiary>>>> updateBeneficiary({
+    int? beneficiaryId,
+    required String fullName,
+    required String relationship,
+    required String birthDate,
+    required String percAlloc,
+    required String address,
+  }) => beneficiaryRepo.updateBeneficiary(
+    beneficiaryId: beneficiaryId,
+    fullName: fullName,
+    relationship: relationship,
+    birthDate: birthDate,
+    percAlloc: percAlloc,
+    address: address,
+  );
 }

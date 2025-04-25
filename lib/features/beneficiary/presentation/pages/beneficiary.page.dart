@@ -65,24 +65,6 @@ class _PBeneficiaryPageState extends State<PBeneficiaryPage> {
                       },
                     ),
 
-                PCustomCheckbox(
-                  value: ctrl.split.value,
-                  onChanged: ctrl.onSplitChanged,
-                  checkboxDirection: Direction.left,
-                  fillColor: WidgetStateProperty.resolveWith((states) {
-                    if (states.contains(WidgetState.selected)) {
-                      return PAppColor.primary;
-                    } else {
-                      return Color(0xFFD9D9D9).withOpacityExt(PAppSize.s0_6);
-                    }
-                  }),
-                  child: Text(
-                    'split_percentage_label'.tr,
-                    // style: Theme.of(context).textTheme.bodySmall
-                    //     ?.copyWith(fontSize: PAppSize.s14),
-                  ),
-                ).symmetric(horizontal: PAppSize.s20),
-
                 (PDeviceUtil.getDeviceHeight(context) * 0.05).verticalSpace,
 
                 PGradientButton(

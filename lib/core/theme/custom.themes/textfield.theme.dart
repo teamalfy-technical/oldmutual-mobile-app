@@ -23,7 +23,7 @@ class PTextFormFieldTheme {
     ),
     errorStyle: const TextStyle().copyWith(
       fontStyle: FontStyle.normal,
-      color: PAppColor.alert500,
+      color: PAppColor.errorColor,
     ),
     floatingLabelStyle: const TextStyle().copyWith(
       color: PAppColor.blackColor.withOpacityExt(PAppSize.s0_8),
@@ -53,7 +53,7 @@ class PTextFormFieldTheme {
       borderRadius: BorderRadius.circular(PAppSize.s5),
       borderSide: const BorderSide(
         width: PAppSize.s1,
-        color: PAppColor.alert500,
+        color: PAppColor.errorColor,
       ),
     ),
     focusedErrorBorder: const OutlineInputBorder().copyWith(
@@ -83,7 +83,7 @@ class PTextFormFieldTheme {
     ),
     errorStyle: const TextStyle().copyWith(
       fontStyle: FontStyle.normal,
-      color: PAppColor.alert500,
+      color: PAppColor.errorColor,
     ),
     floatingLabelStyle: const TextStyle().copyWith(color: PAppColor.text300),
     border: const OutlineInputBorder().copyWith(
@@ -111,7 +111,7 @@ class PTextFormFieldTheme {
       borderRadius: BorderRadius.circular(PAppSize.s5),
       borderSide: const BorderSide(
         width: PAppSize.s1,
-        color: PAppColor.alert500,
+        color: PAppColor.errorColor,
       ),
     ),
     focusedErrorBorder: const OutlineInputBorder().copyWith(

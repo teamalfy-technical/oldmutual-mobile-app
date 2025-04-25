@@ -6,9 +6,9 @@ class ReportStatus {
   ReportStatus({this.status, this.createdAt, this.downloadUrl});
 
   ReportStatus.fromJson(Map<String, dynamic> json) {
-    status = json['status'].toString();
-    createdAt = json['created_at']?.toDouble();
-    downloadUrl = json['download_url']?.toDouble();
+    status = json['status'];
+    createdAt = json['created_at'];
+    downloadUrl = json['download_url'];
   }
 
   Map<String, dynamic> toJson() {
@@ -17,5 +17,9 @@ class ReportStatus {
     data['created_at'] = createdAt;
     data['download_url'] = downloadUrl;
     return data;
+  }
+
+  bool isEmpty() {
+    return status == null && createdAt == null && downloadUrl == null;
   }
 }

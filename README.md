@@ -12,7 +12,7 @@ dart run build_runner build --delete-conflicting-outputs
 
 ## Update generated files if error occurs
 
-flutter clean && flutter pub get && flutter packages pub run build_runner build --delete-conflicting-outputs
+flutter clean && flutter pub get && dart run build_runner build --delete-conflicting-outputs
 
 ## Build APK for Development
 

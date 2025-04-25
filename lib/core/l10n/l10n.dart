@@ -198,6 +198,9 @@ class AppTranslations extends Translations {
       'scheme_id_hint': 'Scheme ID (optional)',
       'porting_msg':
           'Your porting request has been submitted. You’ll be notified once processed',
+      'download_pdf': 'Download PDF',
+      'not_applicable': 'N/A',
+      'deleting_beneficiary': 'Deleting Beneficiary',
     },
     'hi_IN': {'app_name': 'Pensions App'},
     'fr_FR': {'app_name': 'Pensions App'},
