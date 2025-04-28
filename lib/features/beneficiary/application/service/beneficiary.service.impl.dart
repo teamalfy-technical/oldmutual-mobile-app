@@ -22,7 +22,7 @@ class BeneficiaryServiceImpl implements BeneficiaryService {
     required String fullName,
     required String relationship,
     required String birthDate,
-    required String percAlloc,
+    required double percAlloc,
     required String address,
   }) => beneficiaryRepo.updateBeneficiary(
     beneficiaryId: beneficiaryId,

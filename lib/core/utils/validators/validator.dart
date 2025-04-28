@@ -1,3 +1,5 @@
+import 'package:intl/intl.dart';
+
 class PValidator {
   PValidator._();
 
@@ -6,6 +8,18 @@ class PValidator {
       return 'Field cannot be empty.';
     }
 
+    return null;
+  }
+
+  static String? validateDate(String? value) {
+    if (value == null || value.isEmpty) {
+      return 'Please enter a date';
+    }
+    try {
+      DateFormat('dd-MM-yyyy').parseStrict(value);
+    } catch (_) {
+      return 'Invalid date format';
+    }
     return null;
   }
 

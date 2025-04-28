@@ -41,8 +41,8 @@ class CatchApiErrorWrapperImpl implements CatchApiErrorWrapper {
             if (Get.currentRoute != Routes.loginPage) {
               Get.put(PSettingsVm()).signout();
             }
-            // errorMessage =
-            //     err.response?.data['message'] ?? 'Unauthorized request';
+            errorMessage =
+                err.response?.data['error'] ?? 'Unauthorized request';
             pensionAppLogger.e(err.response?.data);
           } else if (err.response?.statusCode == 403) {
             if (Get.currentRoute != Routes.loginPage) {

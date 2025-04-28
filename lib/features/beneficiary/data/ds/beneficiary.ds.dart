@@ -8,7 +8,7 @@ abstract class BeneficiaryDs {
     required String fullName,
     required String relationship,
     required String birthDate,
-    required String percAlloc,
+    required double percAlloc,
     required String address,
   });
   Future<ApiResponse<List<Beneficiary>>> deleteBeneficiary({

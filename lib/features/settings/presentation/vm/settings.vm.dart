@@ -46,9 +46,18 @@ class PSettingsVm extends GetxController {
     result.fold(
       (err) {
         PHelperFunction.pop();
-        PPopupDialog(
-          context,
-        ).errorMessage(title: 'error'.tr, message: err.message);
+        if (err.message == 'You are not authenticated.') {
+          clearCache();
+          PHelperFunction.switchScreen(
+            destination: Routes.loginPage,
+            replace: true,
+          );
+        }
+        // else {
+        //   PPopupDialog(
+        //     context,
+        //   ).errorMessage(title: 'error'.tr, message: err.message);
+        // }
       },
       (res) {
         PHelperFunction.pop();

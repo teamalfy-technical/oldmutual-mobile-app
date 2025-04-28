@@ -116,26 +116,41 @@ class PBeneficiaryVm extends GetxController {
 
   /// Function to edit a beneficiary
   Future<void> editBeneficiary(Beneficiary beneficiary) async {
-    // if (!isSplitPercentageValid()) return;
-    updateSubmittingState(LoadingState.loading);
+    // pensionAppLogger.d(date);
+    showLoadingdialog(
+      context: context,
+      barrierDismissible: true,
+      content: Text(
+        'updating_beneficiary_msg'.tr,
+        style: Theme.of(context).textTheme.bodyMedium,
+      ),
+    );
     final result = await beneficiaryService.updateBeneficiary(
       beneficiaryId: beneficiary.beneficiaryId ?? 0,
       fullName: nameTEC.text.trim(),
       relationship: relationTEC.text.trim(),
-      percAlloc: benefitPercentageTEC.text.trim(),
-      birthDate: dobTEC.text.trim(),
+      percAlloc: double.parse(benefitPercentageTEC.text.trim()),
+      birthDate: PFormatter.formatDate(
+        dateFormat: DateFormat('yyyy-MM-dd HH:mm:ss'),
+        date: DateTime.parse(
+          beneficiary.birthDate ?? DateTime.now().toIso8601String(),
+        ),
+      ),
       address: contactTEC.text.trim(),
     );
     result.fold(
       (err) {
-        updateSubmittingState(LoadingState.error);
+        PHelperFunction.pop();
         PPopupDialog(
           context,
         ).errorMessage(title: 'error'.tr, message: err.message);
       },
       (res) {
-        updateSubmittingState(LoadingState.completed);
+        PHelperFunction.pop();
         showSuccessMessage('save_beneficiary_changes_msg'.tr);
+        Future.delayed(Duration(seconds: PAppSize.s2.toInt()), () {
+          PHelperFunction.pop();
+        });
       },
     );
   }
@@ -160,24 +175,41 @@ class PBeneficiaryVm extends GetxController {
 
   /// Function to add a beneficiary
   Future<void> addBeneficiary() async {
-    updateSubmittingState(LoadingState.loading);
+    //pensionAppLogger.d(formatBirthDate(dobTEC.text.trim()));
+    showLoadingdialog(
+      context: context,
+      barrierDismissible: true,
+      content: Text(
+        'adding_beneficiary_msg'.tr,
+        style: Theme.of(context).textTheme.bodyMedium,
+      ),
+    );
+    // updateSubmittingState(LoadingState.loading);
     final result = await beneficiaryService.updateBeneficiary(
       fullName: nameTEC.text.trim(),
       relationship: relationTEC.text.trim(),
-      percAlloc: benefitPercentageTEC.text.trim(),
-      birthDate: dobTEC.text.trim(),
+      percAlloc: double.parse(benefitPercentageTEC.text.trim()),
+      birthDate: PFormatter.formatDateStrict(
+        dateFormat: DateFormat('dd-MM-yyyy'),
+        date: dobTEC.text.trim(),
+      ),
       address: contactTEC.text.trim(),
     );
     result.fold(
       (err) {
-        updateSubmittingState(LoadingState.error);
+        PHelperFunction.pop();
+        // updateSubmittingState(LoadingState.error);
         PPopupDialog(
           context,
         ).errorMessage(title: 'error'.tr, message: err.message);
       },
       (res) {
-        updateSubmittingState(LoadingState.completed);
+        // updateSubmittingState(LoadingState.completed);
+        PHelperFunction.pop();
         showSuccessMessage('save_beneficiary_changes_msg'.tr);
+        Future.delayed(Duration(seconds: PAppSize.s2.toInt()), () {
+          PHelperFunction.pop();
+        });
       },
     );
   }
@@ -205,7 +237,7 @@ class PBeneficiaryVm extends GetxController {
       (res) {
         PHelperFunction.pop();
         showSucccessdialog(context: context, title: res.message ?? '');
-        Future.delayed(Duration(seconds: 2), () {
+        Future.delayed(Duration(seconds: PAppSize.s2.toInt()), () {
           PHelperFunction.pop();
         });
       },

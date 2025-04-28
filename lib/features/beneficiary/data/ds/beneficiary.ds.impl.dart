@@ -51,7 +51,7 @@ class BeneficiaryDsImpl implements BeneficiaryDs {
     required String fullName,
     required String relationship,
     required String birthDate,
-    required String percAlloc,
+    required double percAlloc,
     required String address,
   }) async {
     return await asyncFunctionWrapper.handleAsyncNetworkCall(() async {
@@ -79,7 +79,7 @@ class BeneficiaryDsImpl implements BeneficiaryDs {
       return ApiResponse<List<Beneficiary>>.fromJson(
         res,
         (data) =>
-            (data[0]['beneficiary'] as List)
+            (data['beneficiary'] as List)
                 .map((e) => Beneficiary.fromJson(e))
                 .toList(),
       );

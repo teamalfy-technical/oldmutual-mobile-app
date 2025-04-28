@@ -104,7 +104,7 @@ class AppTranslations extends Translations {
       'all': 'All',
       'initial_lump_sum': 'Initial Lump Sum',
       'monthly_contribution': 'Monthly Contribution',
-      'annual_interest_rate': 'Annual Intereset Rate',
+      'annual_interest_rate': 'Annual Interest Rate',
       'number_of_years': 'Number of Years',
       'fv': 'fv',
       'calculate': 'Calculate',
@@ -172,7 +172,7 @@ class AppTranslations extends Translations {
       'delete': 'Delete',
       'add': 'Add',
       'save_beneficiary_changes_msg':
-          'the details have been submitted successfully pending review.',
+          'Beneficiary details have been submitted successfully pending review.',
       'redemption_transfer_hint_tag':
           'Redeem your pension or transfer funds directly',
       'redemption_hint_tag': 'Redeem your pension',
@@ -201,6 +201,8 @@ class AppTranslations extends Translations {
       'download_pdf': 'Download PDF',
       'not_applicable': 'N/A',
       'deleting_beneficiary': 'Deleting Beneficiary',
+      'adding_beneficiary_msg': 'Adding New Beneficiary...',
+      'updating_beneficiary_msg': 'Updating Beneficiary Details...',
     },
     'hi_IN': {'app_name': 'Pensions App'},
     'fr_FR': {'app_name': 'Pensions App'},

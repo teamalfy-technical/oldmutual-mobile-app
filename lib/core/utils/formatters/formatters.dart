@@ -1,3 +1,4 @@
+import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
 
 class PFormatter {
@@ -7,6 +8,16 @@ class PFormatter {
   static String formatDate({required DateFormat dateFormat, DateTime? date}) {
     date ??= DateTime.now();
     return dateFormat.format(date);
+  }
+
+  /// --- format date
+  static String formatDateStrict({
+    required DateFormat dateFormat,
+    String? date,
+  }) {
+    date ??= DateTime.now().toString();
+    final parsedDate = dateFormat.parseStrict(date);
+    return DateFormat('yyyy-MM-dd HH:mm:ss').format(parsedDate);
   }
 
   static String formatPhone({required String code, required String phone}) {
@@ -75,5 +86,35 @@ class PFormatter {
     } else {
       return 'just now';
     }
+  }
+}
+
+/// Custom formatter to insert '-' after dd and MM
+class DateInputFormatter extends TextInputFormatter {
+  @override
+  TextEditingValue formatEditUpdate(
+    TextEditingValue oldValue,
+    TextEditingValue newValue,
+  ) {
+    var text = newValue.text;
+
+    // Remove any existing '-' first
+    text = text.replaceAll('-', '');
+
+    final buffer = StringBuffer();
+    for (int i = 0; i < text.length; i++) {
+      buffer.write(text[i]);
+      // Add - after day (2 digits) and after month (2 more digits)
+      if ((i == 1 || i == 3) && i != text.length - 1) {
+        buffer.write('-');
+      }
+    }
+
+    final formattedText = buffer.toString();
+
+    return TextEditingValue(
+      text: formattedText,
+      selection: TextSelection.collapsed(offset: formattedText.length),
+    );
   }
 }

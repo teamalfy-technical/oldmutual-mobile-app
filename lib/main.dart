@@ -15,7 +15,6 @@ import 'package:oldmutual_pensions_app/firebase_options_dev.dart' as dev;
 import 'package:oldmutual_pensions_app/firebase_options_prod.dart' as prod;
 import 'package:oldmutual_pensions_app/flavor.config.dart';
 import 'package:oldmutual_pensions_app/routes/app.pages.dart';
-import 'package:oldmutual_pensions_app/shared/shared.dart';
 
 import 'features/notification/presentation/vm/notification.service.dart';
 
@@ -49,35 +48,33 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return PInactivityWrapper(
-      child: ScreenUtilInit(
-        designSize: const Size(360, 690),
-        minTextAdapt: true,
-        splitScreenMode: true,
-        builder: (_, child) {
-          return GetMaterialApp(
-            debugShowCheckedModeBanner: false,
-            title: 'Old Mutual Pensions',
-            useInheritedMediaQuery: true,
-            locale: Get.deviceLocale,
-            navigatorKey: appNavigatorKey,
-            scaffoldMessengerKey: scaffoldMessengerKey,
-            translations: AppTranslations(), // Add translations
-            fallbackLocale: const Locale('en', 'US'), // Fallback language
-            defaultTransition: Transition.native,
-            // transitionDuration: const Duration(milliseconds: PAppSize.s700),
-            enableLog: true,
-            logWriterCallback: LocalLogger.write,
-            initialRoute: AppPages.initial,
-            initialBinding: InitialBinding(),
-            getPages: AppPages.routes,
-            theme: PAppTheme.lightTheme,
-            darkTheme: PAppTheme.darkTheme,
-            themeMode: ThemeMode.light,
-            scrollBehavior: const CupertinoScrollBehavior(),
-          );
-        },
-      ),
+    return ScreenUtilInit(
+      designSize: const Size(360, 690),
+      minTextAdapt: true,
+      splitScreenMode: true,
+      builder: (_, child) {
+        return GetMaterialApp(
+          debugShowCheckedModeBanner: false,
+          title: 'Old Mutual Pensions',
+          useInheritedMediaQuery: true,
+          locale: Get.deviceLocale,
+          navigatorKey: appNavigatorKey,
+          scaffoldMessengerKey: scaffoldMessengerKey,
+          translations: AppTranslations(), // Add translations
+          fallbackLocale: const Locale('en', 'US'), // Fallback language
+          defaultTransition: Transition.native,
+          // transitionDuration: const Duration(milliseconds: PAppSize.s700),
+          enableLog: true,
+          logWriterCallback: LocalLogger.write,
+          initialRoute: AppPages.initial,
+          initialBinding: InitialBinding(),
+          getPages: AppPages.routes,
+          theme: PAppTheme.lightTheme,
+          darkTheme: PAppTheme.darkTheme,
+          themeMode: ThemeMode.light,
+          scrollBehavior: const CupertinoScrollBehavior(),
+        );
+      },
     );
   }
 }

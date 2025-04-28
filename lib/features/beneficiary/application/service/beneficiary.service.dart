@@ -10,7 +10,7 @@ abstract class BeneficiaryService {
     required String fullName,
     required String relationship,
     required String birthDate,
-    required String percAlloc,
+    required double percAlloc,
     required String address,
   });
   Future<Either<PFailure, ApiResponse<List<Beneficiary>>>> deleteBeneficiary({

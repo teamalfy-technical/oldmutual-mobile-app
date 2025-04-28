@@ -33,7 +33,7 @@ class BeneficiaryRepoImpl implements BeneficiaryRepo {
     required String fullName,
     required String relationship,
     required String birthDate,
-    required String percAlloc,
+    required double percAlloc,
     required String address,
   }) async {
     return await customRepositoryWrapper.wrapRepositoryFunction(

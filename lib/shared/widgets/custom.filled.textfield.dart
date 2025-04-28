@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:oldmutual_pensions_app/core/utils/utils.dart';
 
@@ -8,6 +9,8 @@ class PCustomFilledTextfield extends StatelessWidget {
   final TextEditingController controller;
   final TextInputType textInputType;
   final String? Function(String?)? validator;
+  final List<TextInputFormatter>? inputFormatters;
+  final int? maxLength;
   const PCustomFilledTextfield({
     super.key,
     required this.label,
@@ -15,6 +18,8 @@ class PCustomFilledTextfield extends StatelessWidget {
     required this.controller,
     this.textInputType = TextInputType.text,
     this.validator,
+    this.inputFormatters,
+    this.maxLength,
   });
 
   @override
@@ -32,8 +37,11 @@ class PCustomFilledTextfield extends StatelessWidget {
           controller: controller,
           keyboardType: textInputType,
           validator: validator,
+          maxLength: maxLength,
+          inputFormatters: inputFormatters,
           decoration: InputDecoration(
             hintText: hint,
+            counter: SizedBox.shrink(),
             errorStyle: Theme.of(context).textTheme.bodySmall?.copyWith(
               fontSize: PAppSize.s10,
               color: PAppColor.errorColor,

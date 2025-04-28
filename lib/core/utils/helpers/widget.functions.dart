@@ -77,17 +77,16 @@ Future showConfirmDialog({
         ),
         content: SizedBox(
           width: PDeviceUtil.getDeviceWidth(context),
-          height: PDeviceUtil.getDeviceHeight(context) * 0.22,
+          height: PDeviceUtil.getDeviceHeight(context) * 0.25,
           child: Column(
             children: [
-              content,
-
-              Spacer(),
-
+              Expanded(child: content),
+              PAppSize.s8.verticalSpace,
+              // Spacer(),
               PGradientButton(
                 label: positiveText ?? 'yes'.tr.toUpperCase(),
                 height: PAppSize.buttonHeightMid,
-                width: PDeviceUtil.getDeviceWidth(context) * 0.32,
+                width: PDeviceUtil.getDeviceWidth(context) * 0.35,
                 onTap: onPostiveTap,
               ),
               PAppSize.s8.verticalSpace,
@@ -97,7 +96,7 @@ Future showConfirmDialog({
                   padding: EdgeInsets.symmetric(horizontal: PAppSize.s14),
                   foregroundColor: PAppColor.blackColor,
                   minimumSize: Size(
-                    PDeviceUtil.getDeviceWidth(context) * 0.32,
+                    PDeviceUtil.getDeviceWidth(context) * 0.35,
                     PAppSize.buttonHeightMid,
                   ),
                   shape: RoundedRectangleBorder(
