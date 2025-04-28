@@ -47,22 +47,25 @@ class _PBeneficiaryPageState extends State<PBeneficiaryPage> {
                     )
                     : ctrl.beneficiaries.isEmpty
                     ? PEmptyStateWidget(message: 'no_results_found'.tr)
-                    : ListView.builder(
-                      shrinkWrap: true,
-                      itemCount: ctrl.beneficiaries.length,
-                      itemBuilder: (context, index) {
-                        final beneficiary = ctrl.beneficiaries[index];
-                        return PBeneficiaryWidget(
-                          beneficiary: beneficiary,
-                          index: index,
-                          loading: ctrl.loading.value,
-                          onExpansionChanged: (value) {
-                            setState(() {
-                              beneficiary.show = value;
-                            });
-                          },
-                        );
-                      },
+                    : RefreshIndicator.adaptive(
+                      onRefresh: () => ctrl.getBeneficiaries(),
+                      child: ListView.builder(
+                        shrinkWrap: true,
+                        itemCount: ctrl.beneficiaries.length,
+                        itemBuilder: (context, index) {
+                          final beneficiary = ctrl.beneficiaries[index];
+                          return PBeneficiaryWidget(
+                            beneficiary: beneficiary,
+                            index: index,
+                            loading: ctrl.loading.value,
+                            onExpansionChanged: (value) {
+                              setState(() {
+                                beneficiary.show = value;
+                              });
+                            },
+                          );
+                        },
+                      ),
                     ),
 
                 (PDeviceUtil.getDeviceHeight(context) * 0.05).verticalSpace,

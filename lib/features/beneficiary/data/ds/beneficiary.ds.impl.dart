@@ -38,7 +38,7 @@ class BeneficiaryDsImpl implements BeneficiaryDs {
       return ApiResponse<List<Beneficiary>>.fromJson(
         res,
         (data) =>
-            (data[0]['beneficiary'] as List)
+            (data['beneficiary'] as List)
                 .map((e) => Beneficiary.fromJson(e))
                 .toList(),
       );

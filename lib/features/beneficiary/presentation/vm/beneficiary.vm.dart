@@ -146,16 +146,17 @@ class PBeneficiaryVm extends GetxController {
         ).errorMessage(title: 'error'.tr, message: err.message);
       },
       (res) {
+        clearFields();
         PHelperFunction.pop();
         showSuccessMessage('save_beneficiary_changes_msg'.tr);
-        Future.delayed(Duration(seconds: PAppSize.s2.toInt()), () {
-          PHelperFunction.pop();
-        });
+        // Future.delayed(Duration(seconds: PAppSize.s2.toInt()), () {
+        //   PHelperFunction.pop();
+        // });
       },
     );
   }
 
-  showSuccessMessage(String messge) {
+  showSuccessMessage(String messge, [bool isOnParentView = false]) {
     showSucccessdialog(
       context: context,
       mainAxisAlignment: MainAxisAlignment.center,
@@ -168,8 +169,12 @@ class PBeneficiaryVm extends GetxController {
       ),
     );
     Future.delayed(Duration(milliseconds: 3000), () {
-      PHelperFunction.pop();
-      PHelperFunction.pop();
+      if (isOnParentView == true) {
+        PHelperFunction.pop();
+      } else {
+        PHelperFunction.pop();
+        PHelperFunction.pop();
+      }
     });
   }
 
@@ -197,6 +202,7 @@ class PBeneficiaryVm extends GetxController {
     );
     result.fold(
       (err) {
+        clearFields();
         PHelperFunction.pop();
         // updateSubmittingState(LoadingState.error);
         PPopupDialog(
@@ -207,9 +213,10 @@ class PBeneficiaryVm extends GetxController {
         // updateSubmittingState(LoadingState.completed);
         PHelperFunction.pop();
         showSuccessMessage('save_beneficiary_changes_msg'.tr);
-        Future.delayed(Duration(seconds: PAppSize.s2.toInt()), () {
-          PHelperFunction.pop();
-        });
+        getBeneficiaries();
+        // Future.delayed(Duration(seconds: PAppSize.s2.toInt()), () {
+        //   PHelperFunction.pop();
+        // });
       },
     );
   }
@@ -236,10 +243,11 @@ class PBeneficiaryVm extends GetxController {
       },
       (res) {
         PHelperFunction.pop();
-        showSucccessdialog(context: context, title: res.message ?? '');
-        Future.delayed(Duration(seconds: PAppSize.s2.toInt()), () {
-          PHelperFunction.pop();
-        });
+        showSuccessMessage(res.message ?? '', true);
+        beneficiaries.remove(beneficiary);
+        // Future.delayed(Duration(seconds: PAppSize.s2.toInt()), () {
+        //   PHelperFunction.pop();
+        // });
       },
     );
   }
