@@ -8,10 +8,28 @@ import 'package:oldmutual_pensions_app/gen/assets.gen.dart';
 import 'package:oldmutual_pensions_app/shared/shared.dart';
 import 'package:redacted/redacted.dart';
 
-class PFactSheetPage extends StatelessWidget {
-  PFactSheetPage({super.key});
+class PFactSheetPage extends StatefulWidget {
+  const PFactSheetPage({super.key});
 
+  @override
+  State<PFactSheetPage> createState() => _PFactSheetPageState();
+}
+
+class _PFactSheetPageState extends State<PFactSheetPage> {
   final ctrl = Get.put(PFactsheetVm());
+
+  @override
+  void initState() {
+    super.initState();
+    // if (ctrl.performances.isEmpty && ctrl.compositions.isEmpty) {
+    // setState(() {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      ctrl.getPerformances();
+    });
+    // });
+
+    //  }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -21,6 +39,7 @@ class PFactSheetPage extends StatelessWidget {
             : ctrl.performances
                 .map((e) => e.year ?? 0)
                 .reduce((a, b) => a < b ? a : b);
+
     return Scaffold(
       appBar: AppBar(
         leading: SizedBox.shrink(),
@@ -88,7 +107,11 @@ class PFactSheetPage extends StatelessWidget {
                                               Assets.icons.anchorIcon.svg(),
                                               PAppSize.s3.horizontalSpace,
                                               Text(
-                                                'anchor'.tr.toUpperCase(),
+                                                ctrl.performances[0].scheme
+                                                        ?.split(' ')[0]
+                                                        .toUpperCase() ??
+                                                    '',
+                                                //  'anchor'.tr.toUpperCase(),
                                                 textAlign: TextAlign.start,
                                                 style: Theme.of(
                                                   context,

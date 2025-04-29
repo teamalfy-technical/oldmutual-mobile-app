@@ -8,3 +8,4 @@ export 'domain/models/fund.composition.model.dart';
 export 'domain/models/performance.model.dart';
 export 'presentation/pages/factsheet.page.dart';
 export 'presentation/pages/factsheet.page.old.dart';
+export 'presentation/widgets/chart.redact.widget.dart';

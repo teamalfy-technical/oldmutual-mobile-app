@@ -73,6 +73,7 @@ class PGradientButton extends StatelessWidget {
                   style: TextStyle(
                     fontWeight: FontWeight.w500,
                     color: PAppColor.whiteColor,
+                    fontSize: PAppSize.s14,
                   ),
                 ),
       ),

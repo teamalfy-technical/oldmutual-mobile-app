@@ -119,7 +119,6 @@ class AppTranslations extends Translations {
       'send_us_email': 'Send Us An Email',
       'support': 'Support',
       'email_hint': 'Enter Email',
-
       'resend': 'Resend',
       'not_receive_code': 'Didn\'t receive code',
       'send_otp': 'Send OTP',
@@ -203,6 +202,8 @@ class AppTranslations extends Translations {
       'deleting_beneficiary': 'Deleting Beneficiary',
       'adding_beneficiary_msg': 'Adding New Beneficiary...',
       'updating_beneficiary_msg': 'Updating Beneficiary Details...',
+      'check_status': 'Check Status',
+      'download': 'Download',
     },
     'hi_IN': {'app_name': 'Pensions App'},
     'fr_FR': {'app_name': 'Pensions App'},

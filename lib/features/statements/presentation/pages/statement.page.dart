@@ -109,25 +109,35 @@ class PStatementPage extends StatelessWidget {
 
                           PAppSize.s18.horizontalSpace,
 
-                          PGradientButton(
-                            label: 'generate'.tr,
-                            showIcon: false,
-                            radius: PAppSize.s12,
-                            loading: ctrl.loading.value,
-                            width: PDeviceUtil.getDeviceWidth(context) * 0.30,
-                            height: PAppSize.s32,
-                            onTap: () {
-                              if (ctrl
-                                      .generatedReport
-                                      .value
-                                      .message
-                                      ?.reportId !=
-                                  null) {
-                                ctrl.checkReportStatus();
-                              } else {
-                                ctrl.generateReport();
-                              }
-                            },
+                          Obx(
+                            () => PGradientButton(
+                              label:
+                                  ctrl
+                                              .generatedReport
+                                              .value
+                                              .message
+                                              ?.reportId !=
+                                          null
+                                      ? 'download'.tr
+                                      : 'generate'.tr,
+                              showIcon: false,
+                              radius: PAppSize.s12,
+                              loading: ctrl.loading.value,
+                              width: PDeviceUtil.getDeviceWidth(context) * 0.30,
+                              height: PAppSize.s32,
+                              onTap: () {
+                                if (ctrl
+                                        .generatedReport
+                                        .value
+                                        .message
+                                        ?.reportId !=
+                                    null) {
+                                  ctrl.checkReportStatus();
+                                } else {
+                                  ctrl.generateReport();
+                                }
+                              },
+                            ),
                           ),
 
                           // PCustomCheckbox(

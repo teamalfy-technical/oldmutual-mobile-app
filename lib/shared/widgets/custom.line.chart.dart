@@ -4,17 +4,21 @@ import 'package:oldmutual_pensions_app/core/utils/utils.dart';
 
 class PCustomLineChart extends StatelessWidget {
   final List<FlSpot> data;
+  final List<String> xLabels;
   final double interval;
   const PCustomLineChart({
     super.key,
     required this.data,
     required this.interval,
+    required this.xLabels,
   });
 
   @override
   Widget build(BuildContext context) {
     return LineChart(
       LineChartData(
+        // minX: 0,
+        // maxX: 5,
         gridData: _buildGridData(),
         borderData: _buildBorderData(),
         lineBarsData: [_buildLineChartBarData()],
@@ -45,7 +49,7 @@ class PCustomLineChart extends StatelessWidget {
         sideTitles: SideTitles(
           showTitles: true,
           interval: interval,
-          reservedSize: PAppSize.s10,
+          reservedSize: PAppSize.s30,
           getTitlesWidget: (value, meta) {
             return Text(
               PFormatter.formatMoneyValue(value.toInt().toString()),
@@ -58,7 +62,6 @@ class PCustomLineChart extends StatelessWidget {
         ),
       ),
       topTitles: AxisTitles(sideTitles: SideTitles(showTitles: false)),
-
       leftTitles: AxisTitles(
         sideTitles: SideTitles(
           showTitles: true,
@@ -66,7 +69,7 @@ class PCustomLineChart extends StatelessWidget {
           minIncluded: false,
           maxIncluded: false,
           interval: interval,
-          reservedSize: 30,
+          reservedSize: PAppSize.s30,
           getTitlesWidget: (value, meta) {
             return Text(
               // 'GHS ${value.toInt()}',
@@ -84,27 +87,14 @@ class PCustomLineChart extends StatelessWidget {
           interval: 1, // Adjust as needed
           // reservedSize: 50,
           getTitlesWidget: (value, meta) {
-            final months = [
-              {'index': 0, 'month': 'Jan'},
-              {'index': 1, 'month': 'Feb'},
-              {'index': 2, 'month': 'Mar'},
-              {'index': 3, 'month': 'Apr'},
-              {'index': 4, 'month': 'May'},
-              {'index': 5, 'month': 'Jun'},
-              {'index': 6, 'month': 'Jul'},
-              {'index': 7, 'month': 'Aug'},
-              {'index': 8, 'month': 'Sep'},
-              {'index': 9, 'month': 'Oct'},
-              {'index': 10, 'month': 'Nov'},
-              {'index': 11, 'month': 'Dec'},
-              // {'index': 12, 'month': 'Dec'},
-            ];
-            // return Text('Day ${value.toInt()}');
+            int index = value.toInt();
+            if (index < 0 || index >= xLabels.length) {
+              return const SizedBox.shrink();
+            }
             return Text(
-              '${months[value.toInt() - 1]['month']}',
+              xLabels[index],
               style: TextStyle(fontSize: PAppSize.s10),
             );
-            // return Text('${value.toInt()}');
           },
         ),
       ),
@@ -116,7 +106,7 @@ class PCustomLineChart extends StatelessWidget {
       spots: data,
       color: PAppColor.primary,
       barWidth: 2,
-      isCurved: false,
+      isCurved: true,
       belowBarData: BarAreaData(
         show: true,
         spotsLine: BarAreaSpotsLine(

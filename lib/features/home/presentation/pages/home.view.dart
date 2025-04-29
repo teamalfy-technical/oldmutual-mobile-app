@@ -5,7 +5,7 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:oldmutual_pensions_app/core/utils/utils.dart';
 import 'package:oldmutual_pensions_app/features/contribution.history/contribution.history.dart';
-import 'package:oldmutual_pensions_app/features/factsheet/presentation/widgets/chart.redact.widget.dart';
+import 'package:oldmutual_pensions_app/features/factsheet/factsheet.dart';
 import 'package:oldmutual_pensions_app/features/home/home.dart';
 import 'package:oldmutual_pensions_app/gen/assets.gen.dart';
 import 'package:oldmutual_pensions_app/routes/app.pages.dart';
@@ -17,21 +17,24 @@ class PHomeView extends StatelessWidget {
 
   final ctrl = Get.put(PContributionHistoryVm());
 
+  List<String> xLabels = [];
+
   List<FlSpot> convertToSpots() {
-    final data = filterLatestContributionsPerMonth();
+    final data = getLastFiveMonthlyTransactions();
     return List.generate(data.length, (index) {
       double y = data[index].received ?? 0;
-      final x =
-          DateTime.parse(
-            data[index].paymentDate ?? DateTime.now().toIso8601String(),
-          ).month.toDouble();
-      // pensionAppLogger.e(x);
-      return FlSpot(x, y);
+      final x = DateTime.parse(
+        data[index].paymentDate ?? DateTime.now().toIso8601String(),
+      );
+      xLabels.add(
+        ' ${PHelperFunction.monthAbbr(x.month)}-${x.year}',
+      ); // e.g., Jan 2024
+      return FlSpot(index.toDouble(), y);
     });
   }
 
   double get interval {
-    final data = filterLatestContributionsPerMonth();
+    final data = getLastFiveMonthlyTransactions();
     final contribution = data.map((s) => s.received ?? 0).toList();
     double maxValue = contribution.reduce((a, b) => a > b ? a : b);
     // Determine a nice dynamic interval
@@ -40,43 +43,43 @@ class PHomeView extends StatelessWidget {
     return (interval / 5).ceil() * 5;
   }
 
-  // List<Transactions> filterLatestContributionsPastYear() {
-  //   final DateTime now = DateTime.now();
-  //   final DateTime oneYearAgo = DateTime(now.year - 1, now.month, now.day);
-  //   final Map<String, Transactions> latestPerMonth = {};
+  List<Transactions> getLastFiveMonthlyTransactions() {
+    final data = ctrl.history.value.transactionHistory!.transactions!;
+    // Parse and sort the data by payment_date in descending order
 
-  //   final data = ctrl.history.value.transactionHistory!.transactions!;
+    data.sort(
+      (a, b) => DateTime.parse(
+        b.paymentDate ?? '',
+      ).compareTo(DateTime.parse(a.paymentDate ?? '')),
+    );
 
-  //   for (var item in data) {
-  //     final dateString = item.paymentDate;
-  //     if (dateString == null) continue;
+    // Set to keep track of unique "YYYY-MM" strings we've already included
+    final Set<String> seenMonths = {};
 
-  //     final date = DateTime.tryParse(dateString);
-  //     if (date == null || date.isBefore(oneYearAgo)) continue;
+    // List to store the final 5 unique-month transactions
 
-  //     final key = '${date.year}-${date.month.toString().padLeft(2, '0')}';
+    final List<Transactions> latestMonthlyTransactions = [];
 
-  //     final existing = latestPerMonth[key];
-  //     if (existing == null) {
-  //       latestPerMonth[key] = item;
-  //     } else {
-  //       final existingDate = DateTime.tryParse(
-  //         existing.paymentDate ?? DateTime.now().toIso8601String(),
-  //       );
-  //       if (existingDate == null || date.isAfter(existingDate)) {
-  //         latestPerMonth[key] = item;
-  //       }
-  //     }
-  //   }
+    // Loop through sorted data
+    for (var txn in data) {
+      final date = DateTime.parse(txn.paymentDate ?? '');
+      // Create a string key like "2024-01" for uniqueness
+      final monthKey = '${date.year}-${date.month.toString().padLeft(2, '0')}';
 
-  //   pensionAppLogger.e(latestPerMonth.values.toList());
+      // If this month is not already in our set, add it
+      if (!seenMonths.contains(monthKey)) {
+        seenMonths.add(monthKey);
+        latestMonthlyTransactions.add(txn);
+      }
 
-  //   return latestPerMonth.values.toList()..sort(
-  //     (a, b) => DateTime.parse(
-  //       a.paymentDate ?? '',
-  //     ).compareTo(DateTime.parse(b.paymentDate ?? '')),
-  //   );
-  // }
+      // Stop once we have 5 unique months
+      if (latestMonthlyTransactions.length == 5) {
+        break;
+      }
+    }
+
+    return latestMonthlyTransactions;
+  }
 
   List<Transactions> filterLatestContributionsPerMonth(
     // List<Map<String, dynamic>> data,
@@ -84,7 +87,7 @@ class PHomeView extends StatelessWidget {
     final Map<String, Transactions> uniqueContributions = {};
 
     final data =
-        ctrl.history.value.transactionHistory!.transactions!.take(3).toList();
+        ctrl.history.value.transactionHistory!.transactions!.take(5).toList();
 
     for (var item in data) {
       final date = DateTime.parse(item.paymentDate ?? '');
@@ -289,7 +292,7 @@ class PHomeView extends StatelessWidget {
                       ).symmetric(horizontal: PAppSize.s0),
                     ),
                     PAppSize.s16.verticalSpace,
-                    // line chart
+                    //  line chart
                     ctrl.loading.value == LoadingState.loading
                         ? PChartRedactWidget(loadingState: ctrl.loading.value)
                         : SizedBox(
@@ -297,6 +300,7 @@ class PHomeView extends StatelessWidget {
                           height: PDeviceUtil.getDeviceHeight(context) * 0.3,
                           child: PCustomLineChart(
                             data: convertToSpots(),
+                            xLabels: xLabels,
                             interval: interval,
                           ),
                         ),

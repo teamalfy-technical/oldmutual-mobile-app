@@ -71,6 +71,7 @@ class PStatementVm extends GetxController {
 
         selectedYear = res.data?.first;
         contributionYears.value = res.data ?? [];
+        update();
       },
     );
   }
