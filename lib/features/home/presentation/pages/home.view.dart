@@ -22,13 +22,14 @@ class PHomeView extends StatelessWidget {
   List<FlSpot> convertToSpots() {
     final data = getLastFiveMonthlyTransactions();
     return List.generate(data.length, (index) {
-      double y = data[index].received ?? 0;
+      double y = double.parse(data[index].received?.toStringAsFixed(2) ?? '0');
       final x = DateTime.parse(
         data[index].paymentDate ?? DateTime.now().toIso8601String(),
       );
       xLabels.add(
         ' ${PHelperFunction.monthAbbr(x.month)}-${x.year}',
-      ); // e.g., Jan 2024
+      ); // e.g., Jan-2024
+      // pensionAppLogger.e(y);
       return FlSpot(index.toDouble(), y);
     });
   }

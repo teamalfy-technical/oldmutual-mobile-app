@@ -52,7 +52,7 @@ class PCustomLineChart extends StatelessWidget {
           reservedSize: PAppSize.s30,
           getTitlesWidget: (value, meta) {
             return Text(
-              PFormatter.formatMoneyValue(value.toInt().toString()),
+              PFormatter.formatMoneyValue(value),
               style: TextStyle(
                 fontSize: PAppSize.s10,
                 color: PAppColor.transparentColor,
@@ -66,15 +66,15 @@ class PCustomLineChart extends StatelessWidget {
         sideTitles: SideTitles(
           showTitles: true,
           // reservedSize: 50,
-          minIncluded: false,
-          maxIncluded: false,
+          minIncluded: true,
+          maxIncluded: true,
           interval: interval,
           reservedSize: PAppSize.s30,
           getTitlesWidget: (value, meta) {
+            pensionAppLogger.e(PFormatter.formatMoneyValue(value));
             return Text(
-              // 'GHS ${value.toInt()}',
-              PFormatter.formatMoneyValue(value.toInt().toString()),
-              style: TextStyle(fontSize: PAppSize.s10),
+              PFormatter.formatMoneyValue(value),
+              style: TextStyle(fontSize: PAppSize.s9),
             );
           },
         ),
@@ -85,7 +85,7 @@ class PCustomLineChart extends StatelessWidget {
           // minIncluded: false,
           // maxIncluded: false,
           interval: 1, // Adjust as needed
-          // reservedSize: 50,
+          reservedSize: PAppSize.s30,
           getTitlesWidget: (value, meta) {
             int index = value.toInt();
             if (index < 0 || index >= xLabels.length) {
@@ -93,8 +93,8 @@ class PCustomLineChart extends StatelessWidget {
             }
             return Text(
               xLabels[index],
-              style: TextStyle(fontSize: PAppSize.s10),
-            );
+              style: TextStyle(fontSize: PAppSize.s9),
+            ).only(top: PAppSize.s14);
           },
         ),
       ),

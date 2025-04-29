@@ -40,11 +40,9 @@ class PFormatter {
     ).format(amount);
   }
 
-  static String formatMoneyValue(String rawValue) {
-    final value = int.tryParse(rawValue) ?? 0;
-
+  static String formatMoneyValue(double value) {
     final formatter = NumberFormat(
-      '#,###',
+      '#,##0.00',
       'en_GH',
     ); // 'en_GH' for Ghana locale
 

@@ -9,6 +9,7 @@ class PNotificationVM extends GetxController {
   final context = Get.context!;
 
   var notifications = <NotificationModel>[].obs;
+  var unreadCount = 0.obs;
 
   final token = PSecureStorage().readData(PSecureStorage().deviceTokenKey);
 
@@ -74,9 +75,27 @@ class PNotificationVM extends GetxController {
       (res) {
         updateLoadingState(LoadingState.completed);
         notifications.value = res.data ?? [];
+        getUnreadNotificationCount();
         // markNotificationsAsRead(
         //   ids: notifications.map((e) => e.id ?? '').toList(),
         // );
+      },
+    );
+  }
+
+  /// Function to get unread notifications count
+  Future<void> getUnreadNotificationCount() async {
+    final result = await notificationService.getUnreadNotificationsCount();
+    result.fold(
+      (err) {
+        updateLoadingState(LoadingState.error);
+        PPopupDialog(
+          context,
+        ).errorMessage(title: 'error'.tr, message: err.message);
+      },
+      (res) {
+        // updateLoadingState(LoadingState.completed);
+        unreadCount.value = res.data ?? 0;
       },
     );
   }

@@ -5,7 +5,7 @@ import 'package:oldmutual_pensions_app/features/factsheet/factsheet.dart';
 import 'package:oldmutual_pensions_app/features/home/presentation/pages/home.view.dart';
 import 'package:oldmutual_pensions_app/features/home/presentation/vm/home.vm.dart';
 import 'package:oldmutual_pensions_app/features/more.services/presentation/pages/more.services.page.dart';
-import 'package:oldmutual_pensions_app/features/notification/presentation/pages/notification.page.dart';
+import 'package:oldmutual_pensions_app/features/notification/notification.dart';
 import 'package:oldmutual_pensions_app/features/profile/profile.dart';
 import 'package:oldmutual_pensions_app/gen/assets.gen.dart';
 import 'package:oldmutual_pensions_app/shared/widgets/annotated.region.dart';
@@ -59,9 +59,20 @@ class PHomePage extends StatelessWidget {
               label: 'factsheet'.tr,
             ),
             BottomNavigationBarItem(
-              icon: Assets.icons.notificationIcon.svg(
-                color: ctrl.currentIndex.value == 2 ? PAppColor.primary : null,
-              ),
+              icon:
+                  Get.find<PNotificationVM>().unreadCount.value > 0
+                      ? Assets.icons.notificationCountIcon.svg(
+                        color:
+                            ctrl.currentIndex.value == 2
+                                ? PAppColor.primary
+                                : null,
+                      )
+                      : Assets.icons.notificationIcon.svg(
+                        color:
+                            ctrl.currentIndex.value == 2
+                                ? PAppColor.primary
+                                : null,
+                      ),
               label: 'notification'.tr,
             ),
             BottomNavigationBarItem(

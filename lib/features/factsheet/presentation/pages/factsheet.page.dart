@@ -24,11 +24,23 @@ class _PFactSheetPageState extends State<PFactSheetPage> {
     // if (ctrl.performances.isEmpty && ctrl.compositions.isEmpty) {
     // setState(() {
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      ctrl.getPerformances();
+      // ctrl.getPerformances();
     });
     // });
 
     //  }
+  }
+
+  String get getSchemeType {
+    return ctrl.performances[0].scheme!.contains(
+          SchemeType.aspire.name.toUpperCase(),
+        )
+        ? SchemeType.aspire.name.toUpperCase()
+        : ctrl.performances[0].scheme!.contains(
+          SchemeType.prestige.name.toUpperCase(),
+        )
+        ? SchemeType.prestige.name.toUpperCase()
+        : SchemeType.anchor.name.toLowerCase();
   }
 
   @override
@@ -107,11 +119,7 @@ class _PFactSheetPageState extends State<PFactSheetPage> {
                                               Assets.icons.anchorIcon.svg(),
                                               PAppSize.s3.horizontalSpace,
                                               Text(
-                                                ctrl.performances[0].scheme
-                                                        ?.split(' ')[0]
-                                                        .toUpperCase() ??
-                                                    '',
-                                                //  'anchor'.tr.toUpperCase(),
+                                                getSchemeType.toUpperCase(),
                                                 textAlign: TextAlign.start,
                                                 style: Theme.of(
                                                   context,

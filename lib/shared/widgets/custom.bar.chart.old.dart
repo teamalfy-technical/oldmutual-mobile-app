@@ -87,7 +87,9 @@ class PCustomBarChartOld extends StatelessWidget {
                     ? titlesData[index]
                     : '';
 
-            final formattedLabel = PFormatter.formatMoneyValue(rawLabel);
+            final formattedLabel = PFormatter.formatMoneyValue(
+              double.parse(rawLabel),
+            );
 
             final barValue =
                 (index >= 0 && index < data.length)

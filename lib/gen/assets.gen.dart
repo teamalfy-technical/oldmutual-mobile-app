@@ -96,6 +96,10 @@ class $AssetsIconsGen {
   /// File path: assets/icons/more.icon.svg
   SvgGenImage get moreIcon => const SvgGenImage('assets/icons/more.icon.svg');
 
+  /// File path: assets/icons/notification.count.icon.svg
+  SvgGenImage get notificationCountIcon =>
+      const SvgGenImage('assets/icons/notification.count.icon.svg');
+
   /// File path: assets/icons/notification.green.icon.svg
   SvgGenImage get notificationGreenIcon =>
       const SvgGenImage('assets/icons/notification.green.icon.svg');
@@ -159,6 +163,7 @@ class $AssetsIconsGen {
     lockIcon,
     memberIcon,
     moreIcon,
+    notificationCountIcon,
     notificationGreenIcon,
     notificationIcon,
     phoneIcon,
