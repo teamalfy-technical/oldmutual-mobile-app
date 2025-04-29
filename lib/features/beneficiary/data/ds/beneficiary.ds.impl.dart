@@ -60,7 +60,7 @@ class BeneficiaryDsImpl implements BeneficiaryDs {
         payload:
             beneficiaryId == null
                 ? dio.FormData.fromMap({
-                  'fullName': fullName,
+                  'FullName': fullName,
                   'Relationship': relationship,
                   'birth_date': birthDate,
                   'perc_alloc': percAlloc,
@@ -68,7 +68,7 @@ class BeneficiaryDsImpl implements BeneficiaryDs {
                 })
                 : dio.FormData.fromMap({
                   'beneficiary_id': beneficiaryId,
-                  'fullName': fullName,
+                  'FullName': fullName,
                   'Relationship': relationship,
                   'birth_date': birthDate,
                   'perc_alloc': percAlloc,

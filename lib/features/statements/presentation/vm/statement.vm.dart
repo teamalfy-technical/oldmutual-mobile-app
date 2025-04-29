@@ -1,6 +1,7 @@
 import 'dart:io';
 
 // import 'package:flutter_downloader/flutter_downloader.dart';
+import 'package:flutter_downloader/flutter_downloader.dart';
 import 'package:get/get.dart';
 import 'package:oldmutual_pensions_app/core/utils/utils.dart';
 import 'package:oldmutual_pensions_app/features/contribution.history/contribution.history.dart';
@@ -37,6 +38,7 @@ class PStatementVm extends GetxController {
 
   onYearChanged(value) {
     selectedYear = value;
+    generatedReport.value = GenerateReport();
     update();
   }
 
@@ -108,6 +110,9 @@ class PStatementVm extends GetxController {
       },
       (res) {
         updateGeneratingState(LoadingState.completed);
+        PPopupDialog(
+          context,
+        ).successMessage(title: 'success'.tr, message: res.data ?? '');
         generatedReport.value = res;
       },
     );
@@ -130,7 +135,7 @@ class PStatementVm extends GetxController {
         updateGeneratingState(LoadingState.completed);
         PPopupDialog(
           context,
-        ).errorMessage(title: 'success'.tr, message: res.message ?? '');
+        ).successMessage(title: 'success'.tr, message: res.message ?? '');
         // reportStatus.value = res;
       },
     );
@@ -152,6 +157,7 @@ class PStatementVm extends GetxController {
       (res) {
         updateGeneratingState(LoadingState.completed);
         reportStatus.value = res;
+        reportStatus.value.copyWith(period: selectedYear?.fundYear ?? '');
         reports.add(reportStatus.value);
         PPopupDialog(context).successMessage(
           title: res.status ?? '',
@@ -177,16 +183,16 @@ class PStatementVm extends GetxController {
 
     final saveDir = directory?.path;
 
-    // if (saveDir != null) {
-    //   final taskId = await FlutterDownloader.enqueue(
-    //     url: url,
-    //     headers: {}, // optional headers
-    //     savedDir: saveDir,
-    //     showNotification:
-    //         true, // show download progress in status bar (for Android)
-    //     openFileFromNotification:
-    //         true, // click on notification to open downloaded file (for Android)
-    //   );
-    // }
+    if (saveDir != null) {
+      final taskId = await FlutterDownloader.enqueue(
+        url: url,
+        headers: {}, // optional headers
+        savedDir: saveDir,
+        showNotification:
+            true, // show download progress in status bar (for Android)
+        openFileFromNotification:
+            true, // click on notification to open downloaded file (for Android)
+      );
+    }
   }
 }

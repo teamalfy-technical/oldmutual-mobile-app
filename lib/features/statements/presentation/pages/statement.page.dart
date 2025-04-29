@@ -197,7 +197,7 @@ class PStatementPage extends StatelessWidget {
                                   (item) => TableRow(
                                     children: [
                                       Text(
-                                        '${DateTime.parse(item.createdAt ?? DateTime.now().toIso8601String()).year}',
+                                        ctrl.selectedYear?.fundYear ?? '',
                                         textAlign: TextAlign.start,
                                         style:
                                             Theme.of(

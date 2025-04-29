@@ -2,8 +2,9 @@ class ReportStatus {
   String? status;
   String? createdAt;
   String? downloadUrl;
+  String? period;
 
-  ReportStatus({this.status, this.createdAt, this.downloadUrl});
+  ReportStatus({this.status, this.createdAt, this.downloadUrl, this.period});
 
   ReportStatus.fromJson(Map<String, dynamic> json) {
     status = json['status'];
@@ -17,6 +18,20 @@ class ReportStatus {
     data['created_at'] = createdAt;
     data['download_url'] = downloadUrl;
     return data;
+  }
+
+  ReportStatus copyWith({
+    String? status,
+    String? createdAt,
+    String? downloadUrl,
+    String? period,
+  }) {
+    return ReportStatus(
+      status: status ?? status,
+      createdAt: createdAt ?? createdAt,
+      downloadUrl: downloadUrl ?? downloadUrl,
+      period: period ?? period,
+    );
   }
 
   bool isEmpty() {

@@ -2,6 +2,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_downloader/flutter_downloader.dart';
 // import 'package:flutter_downloader/flutter_downloader.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -24,12 +25,12 @@ Future<void> main() async {
   final currentEnv = await Environment.current();
   pensionAppLogger.e("Connecting to ${currentEnv.apiBaseUrl}");
   // Plugin must be initialized before using
-  // await FlutterDownloader.initialize(
-  //   debug:
-  //       true, // optional: set to false to disable printing logs to console (default: true)
-  //   ignoreSsl:
-  //       false, // option: set to false to disable working with http links (default: false)
-  // );
+  await FlutterDownloader.initialize(
+    debug:
+        true, // optional: set to false to disable printing logs to console (default: true)
+    ignoreSsl:
+        false, // option: set to false to disable working with http links (default: false)
+  );
   await GetStorage.init();
   await initFirebaseApp();
   FirebaseMessaging.onBackgroundMessage(

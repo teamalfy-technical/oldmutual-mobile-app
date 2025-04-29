@@ -71,7 +71,6 @@ class PCustomLineChart extends StatelessWidget {
           interval: interval,
           reservedSize: PAppSize.s30,
           getTitlesWidget: (value, meta) {
-            pensionAppLogger.e(PFormatter.formatMoneyValue(value));
             return Text(
               PFormatter.formatMoneyValue(value),
               style: TextStyle(fontSize: PAppSize.s9),

@@ -10,6 +10,10 @@ class GenerateReport {
         json['message'] != null ? IMessage.fromJson(json['message']) : null;
   }
 
+  GenerateReport copyWith({String? data, IMessage? message}) {
+    return GenerateReport(data: data ?? data, message: message ?? message);
+  }
+
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
     data['data'] = data;
