@@ -124,9 +124,9 @@ abstract class Env {
   @EnviedField(defaultValue: '/generate/report-pdf', obfuscate: true)
   static final String generateReport = _Env.generateReport;
 
-  /// [GetReport] endpoint
+  /// [DownloadReport] endpoint
   @EnviedField(defaultValue: '/reports/download', obfuscate: true)
-  static final String getReport = _Env.getReport;
+  static final String downloadReport = _Env.downloadReport;
 
   /// [CheckReportStatus] endpoint
   @EnviedField(defaultValue: '/reports/check-status', obfuscate: true)
@@ -237,4 +237,21 @@ abstract class Env {
   static final String deleteFundComposition = _Env.deleteFundComposition;
 
   /// -------------------- Fund-Composition Endpoints Ends Here ------------------------- ///
+  ///
+  ///
+  /// -------------------- Redemptions & Tranfers Endpoints Starts Here ------------------------- ///
+
+  /// [CreateRedemptionRequest] endpoint
+  @EnviedField(defaultValue: '/redemption/request', obfuscate: true)
+  static final String createRedemptionRequest = _Env.createRedemptionRequest;
+
+  /// [GetRedemptions] endpoint
+  @EnviedField(defaultValue: '/redemptions', obfuscate: true)
+  static final String getRedemptions = _Env.getRedemptions;
+
+  /// [CreatePortingRequest] endpoint
+  @EnviedField(defaultValue: '/porting/requests', obfuscate: true)
+  static final String createPortingRequest = _Env.createPortingRequest;
+
+  /// -------------------- Redemptions & Tranfers Endpoints Ends Here ------------------------- ///
 }

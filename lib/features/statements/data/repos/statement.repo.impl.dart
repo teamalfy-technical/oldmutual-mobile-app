@@ -28,11 +28,12 @@ class StatementRepoImpl implements StatementRepo {
   }
 
   @override
-  Future<Either<PFailure, ApiResponse<Message>>> getReport({
+  Future<Either<PFailure, ApiResponse<Message>>> downloadReport({
     required int reportId,
   }) async {
     return await customRepositoryWrapper.wrapRepositoryFunction(
-      function: () async => await statementDs.getReport(reportId: reportId),
+      function:
+          () async => await statementDs.downloadReport(reportId: reportId),
     );
   }
 }

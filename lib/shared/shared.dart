@@ -5,6 +5,7 @@ export 'widgets/auth.link.button.dart';
 export 'widgets/custom.bar.chart.dart';
 export 'widgets/custom.bar.chart.old.dart';
 export 'widgets/custom.checkbox.dart';
+export 'widgets/custom.dropdown.dart';
 export 'widgets/custom.line.chart.dart';
 export 'widgets/custom.line.chart.new.dart';
 export 'widgets/custom.loading.indicator.dart';

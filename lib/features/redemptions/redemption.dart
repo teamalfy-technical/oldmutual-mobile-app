@@ -1,3 +1,12 @@
+export 'application/service/redemption.service.dart';
+export 'application/service/redemption.service.impl.dart';
+export 'data/ds/redemption.ds.dart';
+export 'data/ds/redemption.ds.impl.dart';
+export 'data/repos/redemption.repo.dart';
+export 'data/repos/redemption.repo.impl.dart';
+export 'domain/models/porting.model.dart';
+export 'domain/models/redemption.model.dart';
 export 'presentation/pages/redemption.page.dart';
 export 'presentation/pages/redemption.transfers.page.dart';
 export 'presentation/vm/redemption.vm.dart';
+export 'presentation/widgets/id.card.widget.dart';

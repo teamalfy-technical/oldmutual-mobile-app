@@ -15,24 +15,6 @@ class PStatementPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    List<Map<String, dynamic>> data = [
-      {
-        'period': '2024',
-        'generated_on': '10-05-2024',
-        'actions': 'Download PDF',
-      },
-      {
-        'period': '2023',
-        'generated_on': '10-05-2023',
-        'actions': 'Download PDF',
-      },
-      {
-        'period': 'All',
-        'generated_on': '10-05-2023',
-        'actions': 'Download PDF',
-      },
-    ];
-
     return Scaffold(
       appBar: AppBar(title: Text('statements'.tr)),
       body: Column(

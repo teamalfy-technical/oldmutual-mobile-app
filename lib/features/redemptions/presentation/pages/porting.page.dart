@@ -6,10 +6,26 @@ import 'package:oldmutual_pensions_app/features/redemptions/redemption.dart';
 import 'package:oldmutual_pensions_app/shared/shared.dart';
 import 'package:oldmutual_pensions_app/shared/widgets/custom.filled.textfield.dart';
 
-class PPortingPage extends StatelessWidget {
-  PPortingPage({super.key});
+class PPortingPage extends StatefulWidget {
+  const PPortingPage({super.key});
 
+  @override
+  State<PPortingPage> createState() => _PPortingPageState();
+}
+
+class _PPortingPageState extends State<PPortingPage> {
   final ctrl = Get.put(PRedemptionVm());
+
+  @override
+  void initState() {
+    super.initState();
+    ctrl.currentSchemeNameTEC.text =
+        PSecureStorage().getAuthResponse()?.masterScheme ??
+        ''; // Assign the value here
+    ctrl.currentSchemeTypeTEC.text =
+        PSecureStorage().getAuthResponse()?.schemeType ??
+        ''; // Assign the value here
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -24,88 +40,162 @@ class PPortingPage extends StatelessWidget {
 
           PAppSize.s25.verticalSpace,
           // Filter
-          Obx(
-            () =>
-                Column(
-                  children: [
-                    Row(
-                      children: [
-                        Expanded(
-                          child: PCustomFilledTextfield(
-                            label: 'receiving_scheme_name'.tr,
-                            hint: '',
-                            textInputType: TextInputType.multiline,
-                            controller: ctrl.amountTEC,
-                          ),
-                        ),
-                        PAppSize.s25.horizontalSpace,
-                        Expanded(
-                          child: PCustomFilledTextfield(
-                            label: 'amount_to_port'.tr,
-                            hint: '',
-                            textInputType: TextInputType.numberWithOptions(
-                              decimal: true,
+          Expanded(
+            child: Obx(
+              () =>
+                  Column(
+                    children: [
+                      Row(
+                        children: [
+                          Expanded(
+                            child: PCustomFilledTextfield(
+                              label: 'name_of_current_employer'.tr,
+                              hint: '',
+                              textInputType: TextInputType.name,
+                              controller: ctrl.currentEmployerNameTEC,
                             ),
-                            controller: ctrl.reasonTEC,
                           ),
-                        ),
-                      ],
-                    ),
-                    PAppSize.s25.verticalSpace,
-                    Row(
-                      children: [
-                        Expanded(
-                          child: PCustomFilledTextfield(
-                            label: 'reason_for_porting'.tr,
-                            hint: '',
-                            textInputType: TextInputType.multiline,
-                            controller: ctrl.bankNameTEC,
+                          PAppSize.s25.horizontalSpace,
+                          Expanded(
+                            child: PCustomFilledTextfield(
+                              label: 'current_scheme_name'.tr,
+                              hint: '',
+                              textInputType: TextInputType.name,
+                              controller: ctrl.currentSchemeNameTEC,
+                              enabled: false,
+                            ),
                           ),
-                        ),
-                        PAppSize.s25.horizontalSpace,
-                        Expanded(
-                          child: PCustomFilledTextfield(
-                            label: 'scheme_id_hint'.tr,
-                            hint: '',
-                            textInputType: TextInputType.text,
-                            controller: ctrl.accountNumberTEC,
-                          ),
-                        ),
-                      ],
-                    ),
-
-                    PAppSize.s20.verticalSpace,
-
-                    PCustomCheckbox(
-                      value: ctrl.agree.value,
-                      onChanged: ctrl.onAgreeChanged,
-                      checkboxDirection: Direction.left,
-                      fillColor: WidgetStateProperty.resolveWith((states) {
-                        if (states.contains(WidgetState.selected)) {
-                          return PAppColor.primary;
-                        } else {
-                          return Color(
-                            0xFFD9D9D9,
-                          ).withOpacityExt(PAppSize.s0_6);
-                        }
-                      }),
-                      child: Text(
-                        'porting_confirm_msg'.tr,
-                        // style: Theme.of(context).textTheme.bodySmall
-                        //     ?.copyWith(fontSize: PAppSize.s14),
+                        ],
                       ),
-                    ),
+                      PAppSize.s25.verticalSpace,
+                      Row(
+                        children: [
+                          Expanded(
+                            child: PCustomFilledTextfield(
+                              label: 'current_scheme_type'.tr,
+                              hint: '',
+                              textInputType: TextInputType.text,
+                              controller: ctrl.currentSchemeTypeTEC,
+                              enabled: false,
+                            ),
+                          ),
+                          PAppSize.s25.horizontalSpace,
+                          Expanded(
+                            child: PCustomFilledTextfield(
+                              label: 'name_of_prev_employer'.tr,
+                              hint: '',
+                              textInputType: TextInputType.name,
+                              controller: ctrl.prevEmployerNameTEC,
+                            ),
+                          ),
+                        ],
+                      ),
+                      PAppSize.s25.verticalSpace,
+                      Row(
+                        children: [
+                          Expanded(
+                            child: PCustomFilledTextfield(
+                              label: 'prev_scheme_name'.tr,
+                              hint: '',
+                              textInputType: TextInputType.name,
+                              controller: ctrl.prevSchemeNameTEC,
+                            ),
+                          ),
+                          PAppSize.s25.horizontalSpace,
+                          Expanded(
+                            child: PCustomFilledTextfield(
+                              label: 'prev_scheme_Type'.tr,
+                              hint: '',
+                              textInputType: TextInputType.text,
+                              controller: ctrl.prevSchemeTypeTEC,
+                            ),
+                          ),
+                        ],
+                      ),
+                      PAppSize.s25.verticalSpace,
+                      Row(
+                        children: [
+                          Expanded(
+                            child: PCustomFilledTextfield(
+                              label: 'name_of_prev_trustee'.tr,
+                              hint: '',
+                              textInputType: TextInputType.name,
+                              controller: ctrl.prevTrusteeNameTEC,
+                            ),
+                          ),
+                          PAppSize.s25.horizontalSpace,
+                          Expanded(
+                            child: PCustomFilledTextfield(
+                              label: 'prev_trustee_contact_name'.tr,
+                              hint: '',
+                              textInputType: TextInputType.name,
+                              controller: ctrl.prevTrusteeContactNameTEC,
+                            ),
+                          ),
+                        ],
+                      ),
 
-                    (PDeviceUtil.getDeviceHeight(context) * 0.1).verticalSpace,
+                      PAppSize.s25.verticalSpace,
 
-                    PGradientButton(
-                      label: 'submit_request'.tr,
-                      width: PDeviceUtil.getDeviceWidth(context) * 0.50,
-                      onTap: () => ctrl.portPensionScheme(),
-                    ),
-                  ],
-                ).symmetric(horizontal: PAppSize.s22).scrollable(),
+                      PCustomFilledTextfield(
+                        label: 'prev_trustee_contact_number'.tr,
+                        hint: '',
+                        textInputType: TextInputType.number,
+                        controller: ctrl.prevTrusteeContactNumberTEC,
+                      ),
+
+                      PAppSize.s20.verticalSpace,
+
+                      // front ID upload
+                      PIdCardWidget(
+                        label: 'upload_front_of_id_card'.tr,
+                        file: ctrl.idFront.value,
+                        onCameraTap: () => ctrl.chooseFromCamera(true),
+                        onGalleryTap: () => ctrl.chooseFromGallery(true),
+                      ),
+
+                      PAppSize.s28.verticalSpace,
+
+                      // Back ID upload
+                      PIdCardWidget(
+                        label: 'upload_back_of_id_card'.tr,
+                        file: ctrl.idBack.value,
+                        onCameraTap: () => ctrl.chooseFromCamera(false),
+                        onGalleryTap: () => ctrl.chooseFromGallery(false),
+                      ),
+
+                      PAppSize.s20.verticalSpace,
+
+                      PCustomCheckbox(
+                        value: ctrl.agreePorting.value,
+                        onChanged: ctrl.onAgreeToPortingChanged,
+                        checkboxDirection: Direction.left,
+                        fillColor: WidgetStateProperty.resolveWith((states) {
+                          if (states.contains(WidgetState.selected)) {
+                            return PAppColor.primary;
+                          } else {
+                            return Color(
+                              0xFFD9D9D9,
+                            ).withOpacityExt(PAppSize.s0_6);
+                          }
+                        }),
+                        child: Text(
+                          'porting_confirm_msg'.tr,
+                          // style: Theme.of(context).textTheme.bodySmall
+                          //     ?.copyWith(fontSize: PAppSize.s14),
+                        ),
+                      ),
+                    ],
+                  ).symmetric(horizontal: PAppSize.s22).scrollable(),
+            ),
           ),
+          PAppSize.s20.verticalSpace,
+          PGradientButton(
+            label: 'submit_request'.tr,
+            width: PDeviceUtil.getDeviceWidth(context) * 0.50,
+            onTap: () => ctrl.submitPortingRequest(),
+          ),
+          PAppSize.s20.verticalSpace,
         ],
       ),
     );

@@ -19,12 +19,14 @@ class DashboardServiceImpl implements DashboardService {
     required String ssnitNumber,
     required String memberNumber,
     required String masterScheme,
+    required String schemeType,
   }) {
     return homeRepo.getSelectedMemberScheme(
       employerNumber: employerNumber,
       ssnitNumber: ssnitNumber,
       memberNumber: memberNumber,
       masterScheme: masterScheme,
+      schemeType: schemeType,
     );
   }
 }

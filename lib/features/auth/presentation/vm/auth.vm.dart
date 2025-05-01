@@ -67,7 +67,7 @@ class PAuthVm extends GetxController {
     if (!agreeToTerms.value) {
       PPopupDialog(context).errorMessage(
         title: 'action_required'.tr,
-        message: 'You need to agree to our terms and conditions bo continue.',
+        message: 'You need to agree to our terms and conditions to continue.',
       );
       return;
     }

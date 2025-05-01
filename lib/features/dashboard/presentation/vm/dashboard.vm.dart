@@ -47,6 +47,7 @@ class PDashboardVm extends GetxController {
     required String memberNumber,
     required String ssnitNumber,
     required String masterScheme,
+    required String schemeType,
   }) async {
     // updateLoadingState(LoadingState.loading);
     final result = await dashboardService.getSelectedMemberScheme(
@@ -54,6 +55,7 @@ class PDashboardVm extends GetxController {
       memberNumber: memberNumber,
       ssnitNumber: ssnitNumber,
       masterScheme: masterScheme,
+      schemeType: schemeType,
     );
     result.fold(
       (err) {
@@ -65,7 +67,15 @@ class PDashboardVm extends GetxController {
       (res) async {
         // updateLoadingState(LoadingState.completed);
         selectedScheme.value = res.data ?? SelectedScheme();
-
+        final updatedMember = PSecureStorage().getAuthResponse()?.copyWith(
+          masterScheme: res.data?.masterScheme ?? '',
+          schemeType: res.data?.schemeType ?? '',
+          id: res.data?.id ?? 0,
+          emailVerifiedAt: res.data?.emailVerifiedAt ?? '',
+          avatar: res.data?.avatar ?? '',
+        );
+        PSecureStorage().saveAuthResponse(updatedMember?.toJson());
+        pensionAppLogger.e(PSecureStorage().getAuthResponse()?.toJson());
         await Get.put(PContributionHistoryVm()).getContributionsSummary();
       },
     );

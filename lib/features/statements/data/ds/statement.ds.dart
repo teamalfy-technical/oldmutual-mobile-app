@@ -3,6 +3,6 @@ import 'package:oldmutual_pensions_app/features/contribution.history/contributio
 
 abstract class StatementDs {
   Future<GenerateReport> generateReport({required int year});
-  Future<ApiResponse<Message>> getReport({required int reportId});
+  Future<ApiResponse<Message>> downloadReport({required int reportId});
   Future<ReportStatus> checkReportStatus({required int reportId});
 }

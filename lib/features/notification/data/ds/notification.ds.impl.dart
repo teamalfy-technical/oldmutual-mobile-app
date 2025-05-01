@@ -77,7 +77,7 @@ class NotificationDsImpl implements NotificationDs {
         requestType: RequestType.get,
         endPoint: Env.getUnreadNotificationCount,
       );
-      return res['data'];
+      return ApiResponse<int>.fromJson(res, (data) => res['data']);
     });
   }
 

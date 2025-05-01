@@ -8,7 +8,6 @@ class SelectedScheme {
   String? ssnitNumber;
   String? emailVerifiedAt;
   String? avatar;
-  String? otp;
   String? lastLoggedIn;
   String? lastLoggedInIp;
   String? lastLoggedInAgent;
@@ -20,6 +19,9 @@ class SelectedScheme {
   String? dateJoined;
   String? sex;
   String? nationality;
+  String? role;
+  String? masterScheme;
+  String? schemeType;
 
   SelectedScheme({
     this.id,
@@ -31,7 +33,6 @@ class SelectedScheme {
     this.ssnitNumber,
     this.emailVerifiedAt,
     this.avatar,
-    this.otp,
     this.lastLoggedIn,
     this.lastLoggedInIp,
     this.lastLoggedInAgent,
@@ -43,6 +44,9 @@ class SelectedScheme {
     this.dateJoined,
     this.sex,
     this.nationality,
+    this.role,
+    this.masterScheme,
+    this.schemeType,
   });
 
   SelectedScheme.fromJson(Map<String, dynamic> json) {
@@ -55,7 +59,6 @@ class SelectedScheme {
     ssnitNumber = json['ssnit_number'];
     emailVerifiedAt = json['email_verified_at'];
     avatar = json['avatar'];
-    otp = json['otp'];
     lastLoggedIn = json['last_logged_in'];
     lastLoggedInIp = json['last_logged_in_ip'];
     lastLoggedInAgent = json['last_logged_in_agent'];
@@ -67,6 +70,9 @@ class SelectedScheme {
     dateJoined = json['date_joined'];
     sex = json['sex'];
     nationality = json['nationality'];
+    role = json['role'];
+    masterScheme = json['master_scheme'];
+    schemeType = json['scheme_type'];
   }
 
   Map<String, dynamic> toJson() {
@@ -80,7 +86,6 @@ class SelectedScheme {
     data['ssnit_number'] = ssnitNumber;
     data['email_verified_at'] = emailVerifiedAt;
     data['avatar'] = avatar;
-    data['otp'] = otp;
     data['last_logged_in'] = lastLoggedIn;
     data['last_logged_in_ip'] = lastLoggedInIp;
     data['last_logged_in_agent'] = lastLoggedInAgent;
@@ -92,6 +97,9 @@ class SelectedScheme {
     data['date_joined'] = dateJoined;
     data['sex'] = sex;
     data['nationality'] = nationality;
+    data['role'] = role;
+    data['master_scheme'] = masterScheme;
+    data['scheme_type'] = schemeType;
     return data;
   }
 }

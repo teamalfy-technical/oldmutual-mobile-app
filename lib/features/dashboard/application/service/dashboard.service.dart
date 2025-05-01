@@ -11,5 +11,6 @@ abstract class DashboardService {
     required String ssnitNumber,
     required String memberNumber,
     required String masterScheme,
+    required String schemeType,
   });
 }

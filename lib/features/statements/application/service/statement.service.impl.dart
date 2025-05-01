@@ -21,9 +21,9 @@ class StatementServiceImpl implements StatementService {
   }
 
   @override
-  Future<Either<PFailure, ApiResponse<Message>>> getReport({
+  Future<Either<PFailure, ApiResponse<Message>>> downloadReport({
     required int reportId,
   }) {
-    return statementRepo.getReport(reportId: reportId);
+    return statementRepo.downloadReport(reportId: reportId);
   }
 }

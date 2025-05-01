@@ -103,6 +103,7 @@ class PDashboardPage extends StatelessWidget {
                                     ssnitNumber: scheme.ssnitNumber ?? '',
                                     masterScheme:
                                         scheme.masterSchemeDescription ?? '',
+                                    schemeType: scheme.penTypeDescription ?? '',
                                   );
                                   PHelperFunction.switchScreen(
                                     destination: Routes.homePage,

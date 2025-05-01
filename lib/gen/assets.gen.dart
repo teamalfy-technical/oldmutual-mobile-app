@@ -194,6 +194,10 @@ class $AssetsImagesGen {
   AssetGenImage get lightBlurBg =>
       const AssetGenImage('assets/images/light.blur.bg.png');
 
+  /// File path: assets/images/placeholder.img.png
+  AssetGenImage get placeholderImg =>
+      const AssetGenImage('assets/images/placeholder.img.png');
+
   /// File path: assets/images/slide.four.png
   AssetGenImage get slideFour =>
       const AssetGenImage('assets/images/slide.four.png');
@@ -219,6 +223,7 @@ class $AssetsImagesGen {
     darkBlurBg,
     dashboardBg,
     lightBlurBg,
+    placeholderImg,
     slideFour,
     slideOne,
     slideThree,

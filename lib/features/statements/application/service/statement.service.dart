@@ -5,7 +5,7 @@ import 'package:oldmutual_pensions_app/features/contribution.history/contributio
 
 abstract class StatementService {
   Future<Either<PFailure, GenerateReport>> generateReport({required int year});
-  Future<Either<PFailure, ApiResponse<Message>>> getReport({
+  Future<Either<PFailure, ApiResponse<Message>>> downloadReport({
     required int reportId,
   });
   Future<Either<PFailure, ReportStatus>> checkReportStatus({

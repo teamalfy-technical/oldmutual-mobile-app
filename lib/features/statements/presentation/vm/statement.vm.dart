@@ -121,7 +121,7 @@ class PStatementVm extends GetxController {
   /// Function to get report status
   Future<void> getReportStatus() async {
     updateGeneratingState(LoadingState.loading);
-    final result = await statementRepo.getReport(
+    final result = await statementRepo.downloadReport(
       reportId: generatedReport.value.message?.reportId ?? 0,
     );
     result.fold(

@@ -14,9 +14,9 @@ class DioClient {
 
   static Dio initWithBaseUrl({
     required String baseUrl,
-    int connectionTimeout = 20,
-    int receiveTimeout = 20,
-    int sendTimeout = 45,
+    int connectionTimeout = 30,
+    int receiveTimeout = 60,
+    int sendTimeout = 60,
     ResponseType responseType = ResponseType.json,
   }) {
     final dio = Dio(
