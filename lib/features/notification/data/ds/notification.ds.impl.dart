@@ -1,3 +1,4 @@
+import 'package:dio/dio.dart' as dio;
 import 'package:get/get.dart';
 import 'package:oldmutual_pensions_app/core/network/network.dart';
 import 'package:oldmutual_pensions_app/core/utils/utils.dart';
@@ -14,6 +15,7 @@ class NotificationDsImpl implements NotificationDs {
     return await asyncFunctionWrapper.handleAsyncNetworkCall(() async {
       final res = await apiService.callService(
         requestType: RequestType.post,
+        payload: dio.FormData.fromMap({'device_token': deviceToken}),
         endPoint: Env.disableNotifications,
       );
       return ApiResponse<List<Message>>.fromJson(
@@ -30,6 +32,7 @@ class NotificationDsImpl implements NotificationDs {
     return await asyncFunctionWrapper.handleAsyncNetworkCall(() async {
       final res = await apiService.callService(
         requestType: RequestType.post,
+        payload: dio.FormData.fromMap({'device_token': deviceToken}),
         endPoint: Env.enableNotifications,
       );
       return ApiResponse<List<Message>>.fromJson(

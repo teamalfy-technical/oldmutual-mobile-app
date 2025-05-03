@@ -46,7 +46,7 @@ class PCustomPasswordTextField extends StatelessWidget {
         TextFormField(
           controller: controller,
           obscureText: obscure,
-          validator: PValidator.validatePassword,
+          // validator: PValidator.validatePassword,
           onChanged: onChanged,
           decoration: InputDecoration(
             errorBorder: const OutlineInputBorder().copyWith(

@@ -291,6 +291,7 @@ class PRedemptionVm extends GetxController {
     );
     Future.delayed(Duration(milliseconds: PAppSize.s5000), () {
       PHelperFunction.pop();
+      PHelperFunction.pop();
     });
   }
 }

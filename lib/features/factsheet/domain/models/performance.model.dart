@@ -19,7 +19,7 @@ class PerformanceModel {
 
   PerformanceModel.fromJson(Map<String, dynamic> json) {
     id = json['id'];
-    year = json['year'];
+    year = json['year'] is String ? int.parse(json['year']) : json['year'];
     scheme = json['scheme'];
     performance = json['performance'];
     benchmark = json['benchmark'];

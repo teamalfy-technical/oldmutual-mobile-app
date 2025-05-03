@@ -147,11 +147,11 @@ abstract class Env {
   /// -------------------- Notifications Endpoints Starts Here ------------------------- ///
 
   /// [EnableNotifications] endpoint
-  @EnviedField(defaultValue: '/Enable-notifications', obfuscate: true)
+  @EnviedField(defaultValue: '/enable-notifications', obfuscate: true)
   static final String enableNotifications = _Env.enableNotifications;
 
   /// [DisableNotifications] endpoint
-  @EnviedField(defaultValue: '/Disable-notifications', obfuscate: true)
+  @EnviedField(defaultValue: '/disable-notifications', obfuscate: true)
   static final String disableNotifications = _Env.disableNotifications;
 
   /// [GetNotifications] endpoint

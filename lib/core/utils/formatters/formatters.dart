@@ -42,7 +42,8 @@ class PFormatter {
 
   static String formatMoneyValue(double value) {
     final formatter = NumberFormat(
-      '#,##0.00',
+      // '#,##0.00',
+      '#,###',
       'en_GH',
     ); // 'en_GH' for Ghana locale
 
@@ -60,6 +61,7 @@ class PFormatter {
       // For values less than 1000, just add the Cedi symbol
       return 'GHS ${formatter.format(value)}';
     }
+    //GHS
   }
 
   static String convertToAgo(DateTime input) {

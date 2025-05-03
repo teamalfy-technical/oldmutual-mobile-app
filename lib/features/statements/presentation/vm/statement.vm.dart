@@ -1,12 +1,13 @@
 import 'dart:io';
 
 // import 'package:flutter_downloader/flutter_downloader.dart';
-import 'package:flutter_downloader/flutter_downloader.dart';
+import 'package:dio/dio.dart';
 import 'package:get/get.dart';
 import 'package:oldmutual_pensions_app/core/utils/utils.dart';
 import 'package:oldmutual_pensions_app/features/contribution.history/contribution.history.dart';
 import 'package:oldmutual_pensions_app/features/statements/statements.dart';
 import 'package:oldmutual_pensions_app/shared/shared.dart';
+import 'package:open_file/open_file.dart';
 import 'package:path_provider/path_provider.dart';
 
 class PStatementVm extends GetxController {
@@ -33,8 +34,8 @@ class PStatementVm extends GetxController {
 
   // Reports variables
   var generatedReport = GenerateReport().obs;
-  var reportStatus = ReportStatus().obs;
-  var reports = <ReportStatus>{}.obs;
+  var reportDownload = ReportDownload().obs;
+  var reports = <ReportDownload>{}.obs;
 
   onYearChanged(value) {
     selectedYear = value;
@@ -98,7 +99,7 @@ class PStatementVm extends GetxController {
       return;
     }
     updateGeneratingState(LoadingState.loading);
-    final result = await statementRepo.generateReport(
+    final result = await statementService.generateReport(
       year: int.parse(selectedYear?.fundYear ?? DateTime.now().year.toString()),
     );
     result.fold(
@@ -119,9 +120,9 @@ class PStatementVm extends GetxController {
   }
 
   /// Function to get report status
-  Future<void> getReportStatus() async {
+  Future<void> downloadGeneratedReport() async {
     updateGeneratingState(LoadingState.loading);
-    final result = await statementRepo.downloadReport(
+    final result = await statementService.downloadReport(
       reportId: generatedReport.value.message?.reportId ?? 0,
     );
     result.fold(
@@ -133,9 +134,21 @@ class PStatementVm extends GetxController {
       },
       (res) {
         updateGeneratingState(LoadingState.completed);
-        PPopupDialog(
-          context,
-        ).successMessage(title: 'success'.tr, message: res.message ?? '');
+        // PPopupDialog(
+        //   context,
+        // ).successMessage(title: 'success'.tr, message: res.message ?? '');
+        reportDownload.value = res.data ?? ReportDownload();
+        reportDownload.value.copyWith(
+          period: selectedYear?.fundYear ?? '',
+          createdAt: DateTime.now().toIso8601String(),
+        );
+        reports.add(reportDownload.value);
+        // openFile(
+        //   url: res.data?.downloadUrl ?? '',
+        //   // "https://example.com/sample.pdf",
+        //   fileName: "contributions_report_3_1746207518.pdf",
+        //   // fileName: "intro98.pdf",
+        // );
         // reportStatus.value = res;
       },
     );
@@ -143,8 +156,8 @@ class PStatementVm extends GetxController {
 
   /// Function to check report status
   Future<void> checkReportStatus() async {
-    updateGeneratingState(LoadingState.loading);
-    final result = await statementRepo.checkReportStatus(
+    // updateGeneratingState(LoadingState.loading);
+    final result = await statementService.checkReportStatus(
       reportId: generatedReport.value.message?.reportId ?? 0,
     );
     result.fold(
@@ -156,9 +169,9 @@ class PStatementVm extends GetxController {
       },
       (res) {
         updateGeneratingState(LoadingState.completed);
-        reportStatus.value = res;
-        reportStatus.value.copyWith(period: selectedYear?.fundYear ?? '');
-        reports.add(reportStatus.value);
+        // reportStatus.value = res;
+        // reportStatus.value.copyWith(period: selectedYear?.fundYear ?? '');
+        // reports.add(reportStatus.value);
         PPopupDialog(context).successMessage(
           title: res.status ?? '',
           message: 'report_downloaded_msg'.trParams({
@@ -169,30 +182,78 @@ class PStatementVm extends GetxController {
     );
   }
 
-  /// Function to download report file
-  Future<void> downloadFile(String url) async {
-    Directory? directory;
+  openFile({required String url, required String fileName}) async {
+    pensionAppLogger.e(url);
+    final file = await downloadFile(url, fileName);
+    if (file == null) return;
+    OpenFile.open(file.path);
+  }
 
-    if (Platform.isAndroid) {
-      directory =
-          await getExternalStorageDirectory(); // e.g. /storage/emulated/0/Android/data/<package>/files
-    } else if (Platform.isIOS) {
-      directory =
-          await getApplicationDocumentsDirectory(); // e.g. /var/mobile/Containers/Data/Application/<uuid>/Documents
-    }
-
-    final saveDir = directory?.path;
-
-    if (saveDir != null) {
-      final taskId = await FlutterDownloader.enqueue(
-        url: url,
-        headers: {}, // optional headers
-        savedDir: saveDir,
-        showNotification:
-            true, // show download progress in status bar (for Android)
-        openFileFromNotification:
-            true, // click on notification to open downloaded file (for Android)
+  // Download file into private folder not visible to user
+  Future<File?> downloadFile(String url, String fileName) async {
+    final appStorage = await getApplicationDocumentsDirectory();
+    // final appStorage =
+    //     Platform.isAndroid
+    //         ? await getExternalStorageDirectory()
+    //         : await getApplicationDocumentsDirectory();
+    final file = File("${appStorage.path}/$fileName");
+    String? token = PSecureStorage().getAuthResponse()?.token;
+    try {
+      final response = await Dio().get(
+        url,
+        // filePath,
+        options: Options(
+          responseType: ResponseType.bytes,
+          // headers: PHelperFunction.appTokenHeader(),
+          followRedirects: false,
+          headers: {
+            "Authorization": "Bearer $token",
+            "Accept": "application/pdf",
+          },
+        ),
       );
+
+      pensionAppLogger.e(
+        "Response content-type: ${response.headers['content-type']}",
+      );
+      pensionAppLogger.e("Response status: ${response.statusCode}");
+
+      // Decode bytes to string (just to check what's inside)
+      pensionAppLogger.e(String.fromCharCodes(response.data!));
+
+      final raf = file.openSync(mode: FileMode.write);
+      raf.writeFromSync(response.data);
+      await raf.close();
+      return file;
+    } catch (err) {
+      return null;
     }
   }
+
+  /// Function to download report file
+  // Future<void> downloadFile(String url) async {
+  //   Directory? directory;
+
+  //   if (Platform.isAndroid) {
+  //     directory =
+  //         await getExternalStorageDirectory(); // e.g. /storage/emulated/0/Android/data/<package>/files
+  //   } else if (Platform.isIOS) {
+  //     directory =
+  //         await getApplicationDocumentsDirectory(); // e.g. /var/mobile/Containers/Data/Application/<uuid>/Documents
+  //   }
+
+  //   final saveDir = directory?.path;
+
+  //   if (saveDir != null) {
+  //     final taskId = await FlutterDownloader.enqueue(
+  //       url: url,
+  //       headers: {}, // optional headers
+  //       savedDir: saveDir,
+  //       showNotification:
+  //           true, // show download progress in status bar (for Android)
+  //       openFileFromNotification:
+  //           true, // click on notification to open downloaded file (for Android)
+  //     );
+  //   }
+  // }
 }

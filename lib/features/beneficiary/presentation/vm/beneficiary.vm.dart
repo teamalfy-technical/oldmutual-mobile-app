@@ -245,6 +245,7 @@ class PBeneficiaryVm extends GetxController {
         PHelperFunction.pop();
         showSuccessMessage(res.message ?? '', true);
         beneficiaries.remove(beneficiary);
+        getBeneficiaries();
         // Future.delayed(Duration(seconds: PAppSize.s2.toInt()), () {
         //   PHelperFunction.pop();
         // });

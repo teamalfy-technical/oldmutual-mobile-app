@@ -6,7 +6,6 @@ import 'package:oldmutual_pensions_app/core/utils/utils.dart';
 import 'package:oldmutual_pensions_app/features/contribution.history/contribution.history.dart';
 import 'package:oldmutual_pensions_app/features/statements/presentation/vm/statement.vm.dart';
 import 'package:oldmutual_pensions_app/shared/shared.dart';
-import 'package:oldmutual_pensions_app/shared/widgets/custom.dropdown.dart';
 
 class PStatementPage extends StatelessWidget {
   PStatementPage({super.key});
@@ -49,76 +48,78 @@ class PStatementPage extends StatelessWidget {
                             ),
                           ),
 
+                          // PAppSize.s18.horizontalSpace,
+
+                          // Expanded(
+                          //   child: Container(
+                          //     padding: EdgeInsets.symmetric(
+                          //       horizontal: PAppSize.s10,
+                          //       vertical: PAppSize.s1,
+                          //     ),
+                          //     decoration: BoxDecoration(
+                          //       color: PAppColor.fillColor2,
+                          //       borderRadius: BorderRadius.circular(
+                          //         PAppSize.s12,
+                          //       ),
+                          //     ),
+                          //     child: Obx(
+                          //       () => PCustomCheckbox(
+                          //         value: ctrl.all.value,
+                          //         onChanged: ctrl.onAllChanged,
+                          //         checkboxDirection: Direction.right,
+                          //         fillColor: WidgetStateProperty.resolveWith((
+                          //           states,
+                          //         ) {
+                          //           if (states.contains(WidgetState.selected)) {
+                          //             return PAppColor.primary;
+                          //           } else {
+                          //             return Color(
+                          //               0xFFD9D9D9,
+                          //             ).withOpacityExt(PAppSize.s0_6);
+                          //           }
+                          //         }),
+                          //         child: Text(
+                          //           'all'.tr,
+                          //           // style: Theme.of(context).textTheme.bodySmall
+                          //           //     ?.copyWith(fontSize: PAppSize.s14),
+                          //         ),
+                          //       ),
+                          //     ),
+                          //   ),
+                          // ),
                           PAppSize.s18.horizontalSpace,
 
                           Expanded(
-                            child: Container(
-                              padding: EdgeInsets.symmetric(
-                                horizontal: PAppSize.s10,
-                                vertical: PAppSize.s1,
+                            child: Obx(
+                              () => PGradientButton(
+                                label:
+                                    ctrl
+                                                .generatedReport
+                                                .value
+                                                .message
+                                                ?.reportId !=
+                                            null
+                                        ? 'download'.tr
+                                        : 'generate'.tr,
+                                showIcon: false,
+                                radius: PAppSize.s12,
+                                loading: ctrl.loading.value,
+                                width:
+                                    PDeviceUtil.getDeviceWidth(context) * 0.30,
+                                height: PAppSize.s32,
+                                onTap: () {
+                                  if (ctrl
+                                          .generatedReport
+                                          .value
+                                          .message
+                                          ?.reportId !=
+                                      null) {
+                                    ctrl.downloadGeneratedReport();
+                                  } else {
+                                    ctrl.generateReport();
+                                  }
+                                },
                               ),
-                              decoration: BoxDecoration(
-                                color: PAppColor.fillColor2,
-                                borderRadius: BorderRadius.circular(
-                                  PAppSize.s12,
-                                ),
-                              ),
-                              child: Obx(
-                                () => PCustomCheckbox(
-                                  value: ctrl.all.value,
-                                  onChanged: ctrl.onAllChanged,
-                                  checkboxDirection: Direction.right,
-                                  fillColor: WidgetStateProperty.resolveWith((
-                                    states,
-                                  ) {
-                                    if (states.contains(WidgetState.selected)) {
-                                      return PAppColor.primary;
-                                    } else {
-                                      return Color(
-                                        0xFFD9D9D9,
-                                      ).withOpacityExt(PAppSize.s0_6);
-                                    }
-                                  }),
-                                  child: Text(
-                                    'all'.tr,
-                                    // style: Theme.of(context).textTheme.bodySmall
-                                    //     ?.copyWith(fontSize: PAppSize.s14),
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ),
-
-                          PAppSize.s18.horizontalSpace,
-
-                          Obx(
-                            () => PGradientButton(
-                              label:
-                                  ctrl
-                                              .generatedReport
-                                              .value
-                                              .message
-                                              ?.reportId !=
-                                          null
-                                      ? 'download'.tr
-                                      : 'generate'.tr,
-                              showIcon: false,
-                              radius: PAppSize.s12,
-                              loading: ctrl.loading.value,
-                              width: PDeviceUtil.getDeviceWidth(context) * 0.30,
-                              height: PAppSize.s32,
-                              onTap: () {
-                                if (ctrl
-                                        .generatedReport
-                                        .value
-                                        .message
-                                        ?.reportId !=
-                                    null) {
-                                  ctrl.checkReportStatus();
-                                } else {
-                                  ctrl.generateReport();
-                                }
-                              },
                             ),
                           ),
 
@@ -140,7 +141,7 @@ class PStatementPage extends StatelessWidget {
 
                   PAppSize.s25.verticalSpace,
 
-                  ctrl.reportStatus.value.isEmpty()
+                  ctrl.reportDownload.value.isEmpty()
                       ? SizedBox.shrink()
                       : Expanded(
                         child:
@@ -216,8 +217,10 @@ class PStatementPage extends StatelessWidget {
                                           )
                                           .onPressed(
                                             onTap:
-                                                () => ctrl.downloadFile(
-                                                  item.downloadUrl ?? '',
+                                                () => ctrl.openFile(
+                                                  url: item.downloadUrl ?? '',
+                                                  fileName:
+                                                      'Contributions_${ctrl.selectedYear?.fundYear}_Report.pdf',
                                                 ),
                                           )
                                           .symmetric(vertical: PAppSize.s8),

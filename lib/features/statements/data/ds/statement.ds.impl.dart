@@ -33,15 +33,17 @@ class StatementDsImpl implements StatementDs {
   }
 
   @override
-  Future<ApiResponse<Message>> downloadReport({required int reportId}) async {
+  Future<ApiResponse<ReportDownload>> downloadReport({
+    required int reportId,
+  }) async {
     return await asyncFunctionWrapper.handleAsyncNetworkCall(() async {
       final res = await apiService.callService(
         requestType: RequestType.get,
         endPoint: '${Env.downloadReport}/$reportId',
       );
-      return ApiResponse<Message>.fromJson(
+      return ApiResponse<ReportDownload>.fromJson(
         res,
-        (data) => Message.fromJson(data),
+        (data) => ReportDownload.fromJson(data),
       );
     });
   }

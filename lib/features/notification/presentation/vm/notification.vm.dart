@@ -37,13 +37,14 @@ class PNotificationVM extends GetxController {
       (res) {
         PPopupDialog(
           context,
-        ).errorMessage(title: 'error'.tr, message: res.message ?? '');
+        ).successMessage(title: 'success'.tr, message: res.message ?? '');
       },
     );
   }
 
   /// Function to enable notifications
   Future<void> enableNotifications() async {
+    pensionAppLogger.e(token);
     final result = await notificationService.enableNotifications(
       deviceToken: token ?? '',
     );
@@ -56,7 +57,7 @@ class PNotificationVM extends GetxController {
       (res) {
         PPopupDialog(
           context,
-        ).errorMessage(title: 'error'.tr, message: res.message ?? '');
+        ).successMessage(title: 'success'.tr, message: res.message ?? '');
       },
     );
   }
