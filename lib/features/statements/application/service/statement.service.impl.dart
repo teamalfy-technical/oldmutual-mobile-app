@@ -16,8 +16,11 @@ class StatementServiceImpl implements StatementService {
   }
 
   @override
-  Future<Either<PFailure, GenerateReport>> generateReport({required int year}) {
-    return statementRepo.generateReport(year: year);
+  Future<Either<PFailure, GenerateReport>> generateReport({
+    required int year,
+    required bool all,
+  }) {
+    return statementRepo.generateReport(year: year, all: all);
   }
 
   @override

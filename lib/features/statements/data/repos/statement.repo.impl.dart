@@ -21,9 +21,11 @@ class StatementRepoImpl implements StatementRepo {
   @override
   Future<Either<PFailure, GenerateReport>> generateReport({
     required int year,
+    required bool all,
   }) async {
     return await customRepositoryWrapper.wrapRepositoryFunction(
-      function: () async => await statementDs.generateReport(year: year),
+      function:
+          () async => await statementDs.generateReport(year: year, all: all),
     );
   }
 

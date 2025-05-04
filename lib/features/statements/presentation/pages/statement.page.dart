@@ -48,76 +48,60 @@ class PStatementPage extends StatelessWidget {
                             ),
                           ),
 
-                          // PAppSize.s18.horizontalSpace,
+                          PAppSize.s18.horizontalSpace,
 
-                          // Expanded(
-                          //   child: Container(
-                          //     padding: EdgeInsets.symmetric(
-                          //       horizontal: PAppSize.s10,
-                          //       vertical: PAppSize.s1,
-                          //     ),
-                          //     decoration: BoxDecoration(
-                          //       color: PAppColor.fillColor2,
-                          //       borderRadius: BorderRadius.circular(
-                          //         PAppSize.s12,
-                          //       ),
-                          //     ),
-                          //     child: Obx(
-                          //       () => PCustomCheckbox(
-                          //         value: ctrl.all.value,
-                          //         onChanged: ctrl.onAllChanged,
-                          //         checkboxDirection: Direction.right,
-                          //         fillColor: WidgetStateProperty.resolveWith((
-                          //           states,
-                          //         ) {
-                          //           if (states.contains(WidgetState.selected)) {
-                          //             return PAppColor.primary;
-                          //           } else {
-                          //             return Color(
-                          //               0xFFD9D9D9,
-                          //             ).withOpacityExt(PAppSize.s0_6);
-                          //           }
-                          //         }),
-                          //         child: Text(
-                          //           'all'.tr,
-                          //           // style: Theme.of(context).textTheme.bodySmall
-                          //           //     ?.copyWith(fontSize: PAppSize.s14),
-                          //         ),
-                          //       ),
-                          //     ),
-                          //   ),
-                          // ),
+                          Expanded(
+                            child: Container(
+                              padding: EdgeInsets.symmetric(
+                                horizontal: PAppSize.s10,
+                                vertical: PAppSize.s1,
+                              ),
+                              decoration: BoxDecoration(
+                                color: PAppColor.fillColor2,
+                                borderRadius: BorderRadius.circular(
+                                  PAppSize.s12,
+                                ),
+                              ),
+                              child: Obx(
+                                () => PCustomCheckbox(
+                                  value: ctrl.all.value,
+                                  onChanged: ctrl.onAllChanged,
+                                  checkboxDirection: Direction.right,
+                                  fillColor: WidgetStateProperty.resolveWith((
+                                    states,
+                                  ) {
+                                    if (states.contains(WidgetState.selected)) {
+                                      return PAppColor.primary;
+                                    } else {
+                                      return Color(
+                                        0xFFD9D9D9,
+                                      ).withOpacityExt(PAppSize.s0_6);
+                                    }
+                                  }),
+                                  child: Text(
+                                    'all'.tr,
+                                    // style: Theme.of(context).textTheme.bodySmall
+                                    //     ?.copyWith(fontSize: PAppSize.s14),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
                           PAppSize.s18.horizontalSpace,
 
                           Expanded(
                             child: Obx(
                               () => PGradientButton(
-                                label:
-                                    ctrl
-                                                .generatedReport
-                                                .value
-                                                .message
-                                                ?.reportId !=
-                                            null
-                                        ? 'download'.tr
-                                        : 'generate'.tr,
+                                label: 'generate'.tr,
                                 showIcon: false,
+
                                 radius: PAppSize.s12,
-                                loading: ctrl.loading.value,
+                                loading: ctrl.generating.value,
                                 width:
                                     PDeviceUtil.getDeviceWidth(context) * 0.30,
                                 height: PAppSize.s32,
                                 onTap: () {
-                                  if (ctrl
-                                          .generatedReport
-                                          .value
-                                          .message
-                                          ?.reportId !=
-                                      null) {
-                                    ctrl.downloadGeneratedReport();
-                                  } else {
-                                    ctrl.generateReport();
-                                  }
+                                  ctrl.generateReport();
                                 },
                               ),
                             ),
@@ -141,7 +125,7 @@ class PStatementPage extends StatelessWidget {
 
                   PAppSize.s25.verticalSpace,
 
-                  ctrl.reportDownload.value.isEmpty()
+                  ctrl.reports.isEmpty
                       ? SizedBox.shrink()
                       : Expanded(
                         child:
@@ -180,7 +164,7 @@ class PStatementPage extends StatelessWidget {
                                   (item) => TableRow(
                                     children: [
                                       Text(
-                                        ctrl.selectedYear?.fundYear ?? '',
+                                        item.period ?? '',
                                         textAlign: TextAlign.start,
                                         style:
                                             Theme.of(
@@ -220,7 +204,9 @@ class PStatementPage extends StatelessWidget {
                                                 () => ctrl.openFile(
                                                   url: item.downloadUrl ?? '',
                                                   fileName:
-                                                      'Contributions_${ctrl.selectedYear?.fundYear}_Report.pdf',
+                                                      ctrl.all.value
+                                                          ? 'All_Contributions_Report.pdf'
+                                                          : 'Contributions_${item.period ?? ''}_Report.pdf',
                                                 ),
                                           )
                                           .symmetric(vertical: PAppSize.s8),

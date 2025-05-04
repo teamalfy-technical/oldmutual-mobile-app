@@ -52,7 +52,7 @@ class PGradientButton extends StatelessWidget {
         ),
         child:
             loading == LoadingState.loading
-                ? PCustomLoadingIndicator()
+                ? PCustomLoadingIndicator(size: PAppSize.s8)
                 : showIcon
                 ? Row(
                   mainAxisAlignment: MainAxisAlignment.center,

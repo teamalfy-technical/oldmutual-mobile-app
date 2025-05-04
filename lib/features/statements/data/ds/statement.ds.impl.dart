@@ -21,11 +21,14 @@ class StatementDsImpl implements StatementDs {
   }
 
   @override
-  Future<GenerateReport> generateReport({required int year}) async {
+  Future<GenerateReport> generateReport({
+    required int year,
+    required bool all,
+  }) async {
     return await asyncFunctionWrapper.handleAsyncNetworkCall(() async {
       final res = await apiService.callService(
         requestType: RequestType.post,
-        queryParams: {'year': year},
+        queryParams: all ? null : {'year': year},
         endPoint: Env.generateReport,
       );
       return GenerateReport.fromJson(res);

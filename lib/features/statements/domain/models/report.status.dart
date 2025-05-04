@@ -15,6 +15,7 @@ class ReportDownload {
     expiresAt = json['expires_at'];
     createdAt = json['created_at'];
     downloadUrl = json['download_url'];
+    period = json['period'];
   }
 
   Map<String, dynamic> toJson() {
@@ -22,6 +23,7 @@ class ReportDownload {
     data['expires_at'] = expiresAt;
     data['created_at'] = createdAt;
     data['download_url'] = downloadUrl;
+    data['period'] = period;
     return data;
   }
 
@@ -32,10 +34,10 @@ class ReportDownload {
     String? period,
   }) {
     return ReportDownload(
-      expiresAt: expiresAt ?? expiresAt,
-      createdAt: createdAt ?? createdAt,
-      downloadUrl: downloadUrl ?? downloadUrl,
-      period: period ?? period,
+      expiresAt: expiresAt ?? this.expiresAt,
+      createdAt: createdAt ?? this.createdAt,
+      downloadUrl: downloadUrl ?? this.downloadUrl,
+      period: period ?? this.period,
     );
   }
 
@@ -73,10 +75,10 @@ class ReportStatus {
     String? period,
   }) {
     return ReportStatus(
-      status: status ?? status,
-      createdAt: createdAt ?? createdAt,
-      downloadUrl: downloadUrl ?? downloadUrl,
-      period: period ?? period,
+      status: status ?? this.status,
+      createdAt: createdAt ?? this.createdAt,
+      downloadUrl: downloadUrl ?? this.downloadUrl,
+      period: period ?? this.period,
     );
   }
 

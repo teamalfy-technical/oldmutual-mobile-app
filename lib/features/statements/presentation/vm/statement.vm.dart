@@ -71,6 +71,7 @@ class PStatementVm extends GetxController {
             totalContribution: 0.0,
           ),
         );
+        res.data?.sort((a, b) => b.fundYear!.compareTo(a.fundYear ?? ''));
 
         selectedYear = res.data?.first;
         contributionYears.value = res.data ?? [];
@@ -100,6 +101,7 @@ class PStatementVm extends GetxController {
     }
     updateGeneratingState(LoadingState.loading);
     final result = await statementService.generateReport(
+      all: all.value,
       year: int.parse(selectedYear?.fundYear ?? DateTime.now().year.toString()),
     );
     result.fold(
@@ -110,17 +112,20 @@ class PStatementVm extends GetxController {
         ).errorMessage(title: 'error'.tr, message: err.message);
       },
       (res) {
-        updateGeneratingState(LoadingState.completed);
-        PPopupDialog(
-          context,
-        ).successMessage(title: 'success'.tr, message: res.data ?? '');
+        // updateGeneratingState(LoadingState.completed);
+        // PPopupDialog(
+        //   context,
+        // ).successMessage(title: 'success'.tr, message: res.data ?? '');
         generatedReport.value = res;
+        Future.delayed(Duration(seconds: 6), () {
+          downloadGeneratedReport(res);
+        });
       },
     );
   }
 
   /// Function to get report status
-  Future<void> downloadGeneratedReport() async {
+  Future<void> downloadGeneratedReport(GenerateReport report) async {
     updateGeneratingState(LoadingState.loading);
     final result = await statementService.downloadReport(
       reportId: generatedReport.value.message?.reportId ?? 0,
@@ -137,12 +142,17 @@ class PStatementVm extends GetxController {
         // PPopupDialog(
         //   context,
         // ).successMessage(title: 'success'.tr, message: res.message ?? '');
-        reportDownload.value = res.data ?? ReportDownload();
-        reportDownload.value.copyWith(
-          period: selectedYear?.fundYear ?? '',
+        final base = ReportDownload.fromJson(res.data!.toJson());
+
+        final updatedReport = base.copyWith(
+          period: all.value ? 'All' : selectedYear?.fundYear ?? '',
           createdAt: DateTime.now().toIso8601String(),
         );
-        reports.add(reportDownload.value);
+        reports.add(updatedReport);
+        pensionAppLogger.e(reports.map((e) => e.toJson()).toList());
+        // PPopupDialog(
+        //   context,
+        // ).successMessage(title: 'success'.tr, message: report.data ?? '');
         // openFile(
         //   url: res.data?.downloadUrl ?? '',
         //   // "https://example.com/sample.pdf",
