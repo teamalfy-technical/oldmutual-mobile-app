@@ -79,6 +79,13 @@ class PHomeView extends StatelessWidget {
       }
     }
 
+    //Now sort the final 5 by paymentAmount ascending
+    latestMonthlyTransactions.sort((a, b) {
+      final aAmount = a.received ?? 0;
+      final bAmount = b.received ?? 0;
+      return aAmount.compareTo(bAmount);
+    });
+
     return latestMonthlyTransactions;
   }
 
