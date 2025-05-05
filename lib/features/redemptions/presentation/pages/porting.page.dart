@@ -45,97 +45,151 @@ class _PPortingPageState extends State<PPortingPage> {
               () =>
                   Column(
                     children: [
-                      Row(
-                        children: [
-                          Expanded(
-                            child: PCustomFilledTextfield(
-                              label: 'name_of_current_employer'.tr,
-                              hint: '',
-                              textInputType: TextInputType.name,
-                              controller: ctrl.currentEmployerNameTEC,
-                            ),
-                          ),
-                          PAppSize.s25.horizontalSpace,
-                          Expanded(
-                            child: PCustomFilledTextfield(
-                              label: 'current_scheme_name'.tr,
-                              hint: '',
-                              textInputType: TextInputType.name,
-                              controller: ctrl.currentSchemeNameTEC,
-                              enabled: false,
-                            ),
-                          ),
-                        ],
+                      // Row(
+                      //   children: [
+                      //     Expanded(
+                      //       child: PCustomFilledTextfield(
+                      //         label: 'name_of_current_employer'.tr,
+                      //         hint: '',
+                      //         textInputType: TextInputType.name,
+                      //         controller: ctrl.currentEmployerNameTEC,
+                      //       ),
+                      //     ),
+                      //     PAppSize.s25.horizontalSpace,
+                      //     Expanded(
+                      //       child: PCustomFilledTextfield(
+                      //         label: 'current_scheme_name'.tr,
+                      //         hint: '',
+                      //         textInputType: TextInputType.name,
+                      //         controller: ctrl.currentSchemeNameTEC,
+                      //         enabled: false,
+                      //       ),
+                      //     ),
+                      //   ],
+                      // ),
+                      PCustomFilledTextfield(
+                        label: 'name_of_current_employer'.tr,
+                        hint: '',
+                        textInputType: TextInputType.name,
+                        controller: ctrl.currentEmployerNameTEC,
                       ),
-                      PAppSize.s25.verticalSpace,
-                      Row(
-                        children: [
-                          Expanded(
-                            child: PCustomFilledTextfield(
-                              label: 'current_scheme_type'.tr,
-                              hint: '',
-                              textInputType: TextInputType.text,
-                              controller: ctrl.currentSchemeTypeTEC,
-                              enabled: false,
-                            ),
-                          ),
-                          PAppSize.s25.horizontalSpace,
-                          Expanded(
-                            child: PCustomFilledTextfield(
-                              label: 'name_of_prev_employer'.tr,
-                              hint: '',
-                              textInputType: TextInputType.name,
-                              controller: ctrl.prevEmployerNameTEC,
-                            ),
-                          ),
-                        ],
+                      PAppSize.s20.verticalSpace,
+                      PCustomFilledTextfield(
+                        label: 'current_scheme_name'.tr,
+                        hint: '',
+                        textInputType: TextInputType.name,
+                        controller: ctrl.currentSchemeNameTEC,
+                        enabled: false,
                       ),
-                      PAppSize.s25.verticalSpace,
-                      Row(
-                        children: [
-                          Expanded(
-                            child: PCustomFilledTextfield(
-                              label: 'prev_scheme_name'.tr,
-                              hint: '',
-                              textInputType: TextInputType.name,
-                              controller: ctrl.prevSchemeNameTEC,
-                            ),
-                          ),
-                          PAppSize.s25.horizontalSpace,
-                          Expanded(
-                            child: PCustomFilledTextfield(
-                              label: 'prev_scheme_Type'.tr,
-                              hint: '',
-                              textInputType: TextInputType.text,
-                              controller: ctrl.prevSchemeTypeTEC,
-                            ),
-                          ),
-                        ],
+                      PAppSize.s20.verticalSpace,
+                      PCustomFilledTextfield(
+                        label: 'current_scheme_type'.tr,
+                        hint: '',
+                        textInputType: TextInputType.text,
+                        controller: ctrl.currentSchemeTypeTEC,
+                        enabled: false,
                       ),
-                      PAppSize.s25.verticalSpace,
-                      Row(
-                        children: [
-                          Expanded(
-                            child: PCustomFilledTextfield(
-                              label: 'name_of_prev_trustee'.tr,
-                              hint: '',
-                              textInputType: TextInputType.name,
-                              controller: ctrl.prevTrusteeNameTEC,
-                            ),
-                          ),
-                          PAppSize.s25.horizontalSpace,
-                          Expanded(
-                            child: PCustomFilledTextfield(
-                              label: 'prev_trustee_contact_name'.tr,
-                              hint: '',
-                              textInputType: TextInputType.name,
-                              controller: ctrl.prevTrusteeContactNameTEC,
-                            ),
-                          ),
-                        ],
+                      PAppSize.s20.verticalSpace,
+                      PCustomFilledTextfield(
+                        label: 'name_of_prev_employer'.tr,
+                        hint: '',
+                        textInputType: TextInputType.name,
+                        controller: ctrl.prevEmployerNameTEC,
+                      ),
+                      // Row(
+                      //   children: [
+                      //     Expanded(
+                      //       child: PCustomFilledTextfield(
+                      //         label: 'current_scheme_type'.tr,
+                      //         hint: '',
+                      //         textInputType: TextInputType.text,
+                      //         controller: ctrl.currentSchemeTypeTEC,
+                      //         enabled: false,
+                      //       ),
+                      //     ),
+                      //     PAppSize.s25.horizontalSpace,
+                      //     Expanded(
+                      //       child: PCustomFilledTextfield(
+                      //         label: 'name_of_prev_employer'.tr,
+                      //         hint: '',
+                      //         textInputType: TextInputType.name,
+                      //         controller: ctrl.prevEmployerNameTEC,
+                      //       ),
+                      //     ),
+                      //   ],
+                      // ),
+                      PAppSize.s20.verticalSpace,
+                      PCustomFilledTextfield(
+                        label: 'prev_scheme_name'.tr,
+                        hint: '',
+                        textInputType: TextInputType.name,
+                        controller: ctrl.prevSchemeNameTEC,
+                      ),
+                      PAppSize.s20.verticalSpace,
+                      PCustomFilledTextfield(
+                        label: 'prev_scheme_Type'.tr,
+                        hint: '',
+                        textInputType: TextInputType.text,
+                        controller: ctrl.prevSchemeTypeTEC,
+                      ),
+                      // Row(
+                      //   children: [
+                      //     Expanded(
+                      //       child: PCustomFilledTextfield(
+                      //         label: 'prev_scheme_name'.tr,
+                      //         hint: '',
+                      //         textInputType: TextInputType.name,
+                      //         controller: ctrl.prevSchemeNameTEC,
+                      //       ),
+                      //     ),
+                      //     PAppSize.s25.horizontalSpace,
+                      //     Expanded(
+                      //       child: PCustomFilledTextfield(
+                      //         label: 'prev_scheme_Type'.tr,
+                      //         hint: '',
+                      //         textInputType: TextInputType.text,
+                      //         controller: ctrl.prevSchemeTypeTEC,
+                      //       ),
+                      //     ),
+                      //   ],
+                      // ),
+                      PAppSize.s20.verticalSpace,
+                      PCustomFilledTextfield(
+                        label: 'name_of_prev_trustee'.tr,
+                        hint: '',
+                        textInputType: TextInputType.name,
+                        controller: ctrl.prevTrusteeNameTEC,
+                      ),
+                      PAppSize.s20.verticalSpace,
+                      PCustomFilledTextfield(
+                        label: 'prev_trustee_contact_name'.tr,
+                        hint: '',
+                        textInputType: TextInputType.name,
+                        controller: ctrl.prevTrusteeContactNameTEC,
                       ),
 
-                      PAppSize.s25.verticalSpace,
+                      // Row(
+                      //   children: [
+                      //     Expanded(
+                      //       child: PCustomFilledTextfield(
+                      //         label: 'name_of_prev_trustee'.tr,
+                      //         hint: '',
+                      //         textInputType: TextInputType.name,
+                      //         controller: ctrl.prevTrusteeNameTEC,
+                      //       ),
+                      //     ),
+                      //     PAppSize.s25.horizontalSpace,
+                      //     Expanded(
+                      //       child: PCustomFilledTextfield(
+                      //         label: 'prev_trustee_contact_name'.tr,
+                      //         hint: '',
+                      //         textInputType: TextInputType.name,
+                      //         controller: ctrl.prevTrusteeContactNameTEC,
+                      //       ),
+                      //     ),
+                      //   ],
+                      // ),
+                      PAppSize.s20.verticalSpace,
 
                       PCustomFilledTextfield(
                         label: 'prev_trustee_contact_number'.tr,
