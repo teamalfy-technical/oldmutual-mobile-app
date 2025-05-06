@@ -11,6 +11,26 @@ class PValidator {
     return null;
   }
 
+  // PSecureStorage().getAuthResponse()!.schemeType!.contains('TIER 2')
+
+  static String? validateSchemeAmount(String? value) {
+    if (value == null || value.isEmpty) {
+      return 'Field cannot be empty.';
+    }
+
+    final number = int.tryParse(value);
+    if (number == null) {
+      return 'Please enter a valid number';
+    }
+
+    //  final totalAmount = PSecureStorage().getAuthResponse()!.a!.contains('TIER 2')
+    //     if (number > 100) { // Replace 100 with your desired max value
+    //       return 'Value cannot be greater than 100';
+    //     }
+
+    return null;
+  }
+
   static String? validateDate(String? value) {
     if (value == null || value.isEmpty) {
       return 'Please enter a date';

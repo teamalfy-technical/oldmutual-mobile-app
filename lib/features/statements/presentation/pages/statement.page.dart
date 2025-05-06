@@ -187,7 +187,7 @@ class PStatementPage extends StatelessWidget {
                                             ).textTheme.bodySmall?.copyWith(),
                                       ).symmetric(vertical: PAppSize.s8),
                                       Text(
-                                            'download_pdf'.tr,
+                                            'view_pdf'.tr,
                                             textAlign: TextAlign.end,
                                             style: Theme.of(
                                               context,

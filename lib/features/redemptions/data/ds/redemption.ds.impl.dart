@@ -59,8 +59,8 @@ class RedemptionDsImpl implements RedemptionDs {
   Future<ApiResponse<Redemption>> createRedemptionRequest({
     required String nationId,
     required String redemptionType,
-    required double percentage,
-    required double amount,
+    required String percentage,
+    required String amount,
     required String redemptionReason,
     required String bankAccount,
     required String bankName,
@@ -75,7 +75,7 @@ class RedemptionDsImpl implements RedemptionDs {
         payload: dio.FormData.fromMap({
           'national_id': nationId,
           'redemption_type': redemptionType,
-          'percentage': percentage.toInt(),
+          'percentage': percentage,
           'amount': amount,
           'redemption_reason': redemptionReason,
           'bank_account': bankAccount,

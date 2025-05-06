@@ -1,6 +1,10 @@
+import 'dart:async';
+
 import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_downloader/flutter_downloader.dart';
 // import 'package:flutter_downloader/flutter_downloader.dart';
@@ -20,6 +24,15 @@ import 'package:oldmutual_pensions_app/routes/app.pages.dart';
 import 'features/notification/presentation/vm/notification.service.dart';
 
 Future<void> main() async {
+  // runZonedGuarded(() async {
+
+  await initDependencies();
+  //   runApp(MyApp());
+  // }, FirebaseCrashlytics.instance.recordError);
+  runApp(MyApp());
+}
+
+Future<void> initDependencies() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Env.init();
   final currentEnv = await Environment.current();
@@ -32,11 +45,21 @@ Future<void> main() async {
         false, // option: set to false to disable working with http links (default: false)
   );
   await GetStorage.init();
+  // 🔐 Initialize Firebase first
   await initFirebaseApp();
-  FirebaseMessaging.onBackgroundMessage(
-    _backgroundHandler,
-  ); // Set the background handler
-  runApp(MyApp());
+
+  await FirebaseCrashlytics.instance.setCrashlyticsCollectionEnabled(
+    !kDebugMode,
+  );
+
+  // Optional: capture Flutter errors automatically
+  FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterFatalError;
+  // if (kDebugMode) {
+  //   await FirebaseCrashlytics.instance.setCrashlyticsCollectionEnabled(false);
+  // } else {
+  //   await FirebaseCrashlytics.instance.setCrashlyticsCollectionEnabled(true);
+  // }
+  FirebaseMessaging.onBackgroundMessage(_backgroundHandler);
 }
 
 GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
@@ -95,6 +118,7 @@ Future<void> initFirebaseApp() async {
   }
   // await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   // await FirebaseMessaging.instance.getInitialMessage();
+
   await PNotificationService().init();
 }
 

@@ -19,7 +19,8 @@ class PRedemptionVm extends GetxController {
 
   final nationIdTEC = TextEditingController();
   final percentageTEC = TextEditingController();
-  final reasonTEC = TextEditingController();
+  final otherReasonTEC = TextEditingController();
+  // final reasonTEC = TextEditingController();
   final amountTEC = TextEditingController();
 
   final bankNameTEC = TextEditingController();
@@ -39,11 +40,44 @@ class PRedemptionVm extends GetxController {
 
   var selectedRedemptionOption = 'withdraw'.obs;
 
+  var priceValue = 'percentage'.obs;
+
   String? selectedRedemptionType = 'Total';
+  String? selectedRedemptionReason;
   List<String> redemptionTypes =
       PSecureStorage().getAuthResponse()!.schemeType!.contains('TIER 2')
           ? ['Total']
           : ['Total', 'Partial'];
+
+  List<String> redemptionReasons =
+      PSecureStorage().getAuthResponse()!.schemeType!.contains('TIER 2')
+          ? [
+            'Retirement',
+            'Voluntary Retirement',
+            'Death',
+            'Total Incapacity',
+            'Permanent Emigration from Ghana',
+            'Other (Specify)',
+          ]
+          : PSecureStorage().getAuthResponse()!.masterScheme!.contains(
+            'PRESTIGE',
+          )
+          ? [
+            'Voluntary Retirement',
+            'Death',
+            'Total Incapacity',
+            'Permanent Emigration from Ghana',
+            'Other (Specify)',
+          ]
+          : [
+            'Retirement',
+            'Voluntary Retirement',
+            'Resignation',
+            'Death',
+            'Total Incapacity',
+            'Permanent Emigration from Ghana',
+            'Other (Specify)',
+          ];
 
   // @override
   // void onInit() {
@@ -59,6 +93,16 @@ class PRedemptionVm extends GetxController {
   onRedemptionChanged(value) {
     selectedRedemptionType = value;
     update();
+  }
+
+  onRedemptionReasonChanged(value) {
+    selectedRedemptionReason = value;
+
+    update();
+  }
+
+  onPriceAmountChanged(val) {
+    priceValue.value = val;
   }
 
   onRedemptionOptionChanged(val) {
@@ -132,7 +176,7 @@ class PRedemptionVm extends GetxController {
   clearFields() {
     nationIdTEC.clear();
     percentageTEC.clear();
-    reasonTEC.clear();
+    otherReasonTEC.clear();
     amountTEC.clear();
     bankNameTEC.clear();
     accountNumberTEC.clear();
@@ -150,6 +194,7 @@ class PRedemptionVm extends GetxController {
     idFront.value = File('');
     idBack.value = File('');
     selectedRedemptionType = null;
+    selectedRedemptionReason = null;
     update();
   }
 
@@ -189,9 +234,13 @@ class PRedemptionVm extends GetxController {
     final result = await redemptionService.createRedemptionRequest(
       nationId: nationIdTEC.text.trim(),
       redemptionType: selectedRedemptionType ?? '',
-      percentage: double.parse(percentageTEC.text.trim()),
-      amount: double.parse(amountTEC.text.trim()),
-      redemptionReason: reasonTEC.text.trim(),
+      percentage:
+          priceValue.value == 'percentage' ? percentageTEC.text.trim() : '',
+      amount: priceValue.value == 'amount' ? amountTEC.text.trim() : '',
+      redemptionReason:
+          selectedRedemptionReason == 'other'.tr
+              ? otherReasonTEC.text.trim()
+              : selectedRedemptionReason ?? '',
       bankAccount: accountNumberTEC.text.trim(),
       bankName: bankNameTEC.text.trim(),
       accountHolderName: accountHolderNameTEC.text.trim(),

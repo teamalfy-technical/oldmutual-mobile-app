@@ -11,6 +11,8 @@ class PCustomFilledTextfield extends StatelessWidget {
   final String? Function(String?)? validator;
   final List<TextInputFormatter>? inputFormatters;
   final int? maxLength;
+  final int? maxLines;
+  final int? minLines;
   final bool enabled;
   const PCustomFilledTextfield({
     super.key,
@@ -22,6 +24,8 @@ class PCustomFilledTextfield extends StatelessWidget {
     this.inputFormatters,
     this.maxLength,
     this.enabled = true,
+    this.maxLines,
+    this.minLines,
   });
 
   @override
@@ -40,6 +44,8 @@ class PCustomFilledTextfield extends StatelessWidget {
           keyboardType: textInputType,
           validator: validator,
           maxLength: maxLength,
+          maxLines: maxLines,
+          minLines: minLines,
           inputFormatters: inputFormatters,
           enabled: enabled,
           decoration: InputDecoration(

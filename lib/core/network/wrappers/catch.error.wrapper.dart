@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:oldmutual_pensions_app/core/errors/errors.dart';
@@ -27,6 +28,10 @@ class CatchApiErrorWrapperImpl implements CatchApiErrorWrapper {
     if (err is DioException) {
       debugPrint('DioException caught-----------');
       if (err.response != null) {
+        FirebaseCrashlytics.instance.recordError(
+          err.response?.data,
+          StackTrace.current,
+        );
         if (err.response!.statusCode != 500) {
           if (err.response?.data['status'] == 'error' &&
               err.response?.statusCode == 200) {
@@ -36,6 +41,7 @@ class CatchApiErrorWrapperImpl implements CatchApiErrorWrapper {
             pensionAppLogger.e(data);
 
             errorMessage = extractError(err.response?.data['data']);
+
             //errorMessage = err.response?.data['error'];
           } else if (err.response?.statusCode == 401) {
             if (Get.currentRoute != Routes.loginPage) {

@@ -9,8 +9,8 @@ abstract class RedemptionService {
   Future<Either<PFailure, ApiResponse<Redemption>>> createRedemptionRequest({
     required String nationId,
     required String redemptionType,
-    required double percentage,
-    required double amount,
+    required String percentage,
+    required String amount,
     required String redemptionReason,
     required String bankAccount,
     required String bankName,

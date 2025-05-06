@@ -6,6 +6,7 @@ class PRadioListTileWidget<T> extends StatelessWidget {
   final String label;
   final T value;
   final T? groupValue;
+  final double fontSize;
   final Function(T?)? onChanged;
 
   const PRadioListTileWidget({
@@ -14,6 +15,7 @@ class PRadioListTileWidget<T> extends StatelessWidget {
     required this.value,
     required this.groupValue,
     required this.onChanged,
+    this.fontSize = PAppSize.s14,
   });
 
   @override
@@ -29,7 +31,7 @@ class PRadioListTileWidget<T> extends StatelessWidget {
           style: Theme.of(context).textTheme.bodySmall?.copyWith(
             fontWeight: FontWeight.w400,
             color: PAppColor.blackColor,
-            // fontSize: ZAppSize.s10,
+            fontSize: fontSize,
           ),
         ),
       ],

@@ -15,18 +15,18 @@ class PRedemptionPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: Text('redemption'.tr)),
-      body: Column(
-        children: [
-          PPageTagWidget(
-            tag: 'redemption_hint_tag'.tr,
-            textAlign: TextAlign.center,
-          ),
+      body: Obx(
+        () => Column(
+          children: [
+            PPageTagWidget(
+              tag: 'redemption_hint_tag'.tr,
+              textAlign: TextAlign.center,
+            ),
 
-          PAppSize.s25.verticalSpace,
-          // Filter
-          Expanded(
-            child: Obx(
-              () =>
+            PAppSize.s25.verticalSpace,
+            // Filter
+            Expanded(
+              child:
                   Column(
                     children: [
                       Row(
@@ -56,81 +56,110 @@ class PRedemptionPage extends StatelessWidget {
                           ),
                         ],
                       ),
-                      PAppSize.s25.verticalSpace,
+                      PAppSize.s20.verticalSpace,
+                      GetBuilder<PRedemptionVm>(
+                        builder: (ctrl) {
+                          return PCustomDropdown<String>(
+                            label: 'redemption_reason'.tr,
+                            value: ctrl.selectedRedemptionReason,
+                            onChanged: ctrl.onRedemptionReasonChanged,
+                            items: ctrl.redemptionReasons,
+                            radius: PAppSize.s5,
+                            height: PAppSize.s36,
+                          );
+                        },
+                      ),
+
+                      GetBuilder<PRedemptionVm>(
+                        builder: (ctrl) {
+                          return ctrl.selectedRedemptionReason ==
+                                  'Other (Specify)'
+                              ? Column(
+                                children: [
+                                  PAppSize.s20.verticalSpace,
+                                  PCustomFilledTextfield(
+                                    label: 'state_reason'.tr,
+                                    hint: '',
+
+                                    textInputType: TextInputType.multiline,
+                                    controller: ctrl.otherReasonTEC,
+                                  ),
+                                ],
+                              )
+                              : SizedBox.shrink();
+                        },
+                      ),
+
+                      PAppSize.s14.verticalSpace,
+
                       Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Expanded(
-                            child: PCustomFilledTextfield(
-                              label: 'percentage'.tr,
-                              hint: '',
-                              textInputType: TextInputType.numberWithOptions(
-                                decimal: true,
-                              ),
-                              controller: ctrl.percentageTEC,
-                            ),
+                          PRadioListTileWidget(
+                            label: 'by_percentage'.tr,
+                            value: 'percentage',
+                            fontSize: PAppSize.s12,
+                            groupValue: ctrl.priceValue.value,
+                            onChanged: ctrl.onPriceAmountChanged,
                           ),
-                          PAppSize.s25.horizontalSpace,
-                          Expanded(
-                            child: PCustomFilledTextfield(
-                              label: 'redemption_reason'.tr,
-                              hint: '',
-                              textInputType: TextInputType.multiline,
-                              controller: ctrl.reasonTEC,
-                            ),
+                          PAppSize.s4.verticalSpace,
+                          PRadioListTileWidget(
+                            label: 'by_amount'.tr,
+                            value: 'amount',
+                            fontSize: PAppSize.s12,
+                            groupValue: ctrl.priceValue.value,
+                            onChanged: ctrl.onPriceAmountChanged,
                           ),
                         ],
                       ),
-                      PAppSize.s25.verticalSpace,
-                      Row(
-                        children: [
-                          Expanded(
-                            child: PCustomFilledTextfield(
-                              label: 'amount_to_withdraw'.tr,
-                              hint: '',
-                              textInputType: TextInputType.numberWithOptions(
-                                decimal: true,
-                              ),
-                              // enabled:
-                              //     ctrl.selectedRedemptionType == 'Total'
-                              //         ? false
-                              //         : true,
-                              controller: ctrl.amountTEC,
+
+                      PAppSize.s14.verticalSpace,
+                      ctrl.priceValue.value == 'amount'
+                          ? PCustomFilledTextfield(
+                            label: 'amount_to_redeem'.tr,
+                            hint: '',
+                            textInputType: TextInputType.numberWithOptions(
+                              decimal: true,
                             ),
-                          ),
-                          PAppSize.s25.horizontalSpace,
-                          Expanded(
-                            child: PCustomFilledTextfield(
-                              label: 'bank_name'.tr,
-                              hint: '',
-                              textInputType: TextInputType.name,
-                              controller: ctrl.bankNameTEC,
+                            // enabled:
+                            //     ctrl.selectedRedemptionType == 'Total'
+                            //         ? false
+                            //         : true,
+                            controller: ctrl.amountTEC,
+                          )
+                          : PCustomFilledTextfield(
+                            label: 'percentage'.tr,
+                            hint: '',
+                            textInputType: TextInputType.numberWithOptions(
+                              decimal: true,
                             ),
+                            controller: ctrl.percentageTEC,
                           ),
-                        ],
+
+                      PAppSize.s20.verticalSpace,
+                      PCustomFilledTextfield(
+                        label: 'bank_name'.tr,
+                        hint: '',
+                        textInputType: TextInputType.name,
+                        controller: ctrl.bankNameTEC,
                       ),
-                      PAppSize.s25.verticalSpace,
-                      Row(
-                        children: [
-                          Expanded(
-                            child: PCustomFilledTextfield(
-                              label: 'bank_branch'.tr,
-                              hint: '',
-                              textInputType: TextInputType.name,
-                              controller: ctrl.bankBranchTEC,
-                            ),
-                          ),
-                          PAppSize.s25.horizontalSpace,
-                          Expanded(
-                            child: PCustomFilledTextfield(
-                              label: 'account_holder_name'.tr,
-                              hint: '',
-                              textInputType: TextInputType.name,
-                              controller: ctrl.accountHolderNameTEC,
-                            ),
-                          ),
-                        ],
+
+                      PAppSize.s20.verticalSpace,
+                      PCustomFilledTextfield(
+                        label: 'bank_branch'.tr,
+                        hint: '',
+                        textInputType: TextInputType.name,
+                        controller: ctrl.bankBranchTEC,
                       ),
-                      PAppSize.s25.verticalSpace,
+                      PAppSize.s20.verticalSpace,
+                      PCustomFilledTextfield(
+                        label: 'account_holder_name'.tr,
+                        hint: '',
+                        textInputType: TextInputType.name,
+                        controller: ctrl.accountHolderNameTEC,
+                      ),
+                      PAppSize.s20.verticalSpace,
                       PCustomFilledTextfield(
                         label: 'account_number'.tr,
                         hint: '',
@@ -157,42 +186,40 @@ class PRedemptionPage extends StatelessWidget {
                         onCameraTap: () => ctrl.chooseFromCamera(false),
                         onGalleryTap: () => ctrl.chooseFromGallery(false),
                       ),
-
-                      PAppSize.s20.verticalSpace,
-
-                      PCustomCheckbox(
-                        value: ctrl.agreeRedemption.value,
-                        onChanged: ctrl.onAgreeToRedemptionChanged,
-                        checkboxDirection: Direction.left,
-                        fillColor: WidgetStateProperty.resolveWith((states) {
-                          if (states.contains(WidgetState.selected)) {
-                            return PAppColor.primary;
-                          } else {
-                            return Color(
-                              0xFFD9D9D9,
-                            ).withOpacityExt(PAppSize.s0_6);
-                          }
-                        }),
-                        child: Text(
-                          'redemption_confirm_msg'.tr,
-                          // style: Theme.of(context).textTheme.bodySmall
-                          //     ?.copyWith(fontSize: PAppSize.s14),
-                        ),
-                      ),
                     ],
                   ).symmetric(horizontal: PAppSize.s22).scrollable(),
             ),
-          ),
 
-          // (PDeviceUtil.getDeviceHeight(context) * 0.1).verticalSpace,
-          PAppSize.s20.verticalSpace,
-          PGradientButton(
-            label: 'submit_request'.tr,
-            width: PDeviceUtil.getDeviceWidth(context) * 0.50,
-            onTap: () => ctrl.submitRedemptionRequest(),
-          ),
-          PAppSize.s20.verticalSpace,
-        ],
+            PAppSize.s16.verticalSpace,
+
+            PCustomCheckbox(
+              value: ctrl.agreeRedemption.value,
+              onChanged: ctrl.onAgreeToRedemptionChanged,
+              checkboxDirection: Direction.left,
+              fillColor: WidgetStateProperty.resolveWith((states) {
+                if (states.contains(WidgetState.selected)) {
+                  return PAppColor.primary;
+                } else {
+                  return Color(0xFFD9D9D9).withOpacityExt(PAppSize.s0_6);
+                }
+              }),
+              child: Text(
+                'redemption_confirm_msg'.tr,
+                // style: Theme.of(context).textTheme.bodySmall
+                //     ?.copyWith(fontSize: PAppSize.s14),
+              ),
+            ).symmetric(horizontal: PAppSize.s22),
+
+            // (PDeviceUtil.getDeviceHeight(context) * 0.1).verticalSpace,
+            PAppSize.s16.verticalSpace,
+            PGradientButton(
+              label: 'submit_request'.tr,
+              width: PDeviceUtil.getDeviceWidth(context) * 0.50,
+              onTap: () => ctrl.submitRedemptionRequest(),
+            ),
+            PAppSize.s20.verticalSpace,
+          ],
+        ),
       ),
     );
   }
