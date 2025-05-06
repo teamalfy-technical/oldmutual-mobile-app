@@ -5,6 +5,7 @@ import 'package:intl/intl.dart';
 import 'package:oldmutual_pensions_app/core/utils/utils.dart';
 import 'package:oldmutual_pensions_app/features/contribution.history/contribution.history.dart';
 import 'package:oldmutual_pensions_app/features/statements/presentation/vm/statement.vm.dart';
+import 'package:oldmutual_pensions_app/features/statements/presentation/widgets/statement.widget.redact.dart';
 import 'package:oldmutual_pensions_app/shared/shared.dart';
 
 class PStatementPage extends StatelessWidget {
@@ -125,11 +126,20 @@ class PStatementPage extends StatelessWidget {
 
                   PAppSize.s25.verticalSpace,
 
-                  ctrl.reports.isEmpty
-                      ? SizedBox.shrink()
-                      : Expanded(
-                        child:
-                            Table(
+                  Expanded(
+                    child:
+                        ctrl.loading.value == LoadingState.loading
+                            ? ListView.builder(
+                              shrinkWrap: true,
+                              itemCount: 10,
+                              padding: EdgeInsets.zero,
+                              itemBuilder: (context, index) {
+                                return PStatementWidgetRedact(
+                                  loading: ctrl.loading.value,
+                                );
+                              },
+                            )
+                            : Table(
                               // border: TableBorder.all(),
                               children: [
                                 TableRow(
@@ -160,11 +170,11 @@ class PStatementPage extends StatelessWidget {
                                     ),
                                   ],
                                 ),
-                                ...ctrl.reports.map(
+                                ...ctrl.statements.map(
                                   (item) => TableRow(
                                     children: [
                                       Text(
-                                        item.period ?? '',
+                                        item.filters?.year ?? '',
                                         textAlign: TextAlign.start,
                                         style:
                                             Theme.of(
@@ -206,7 +216,7 @@ class PStatementPage extends StatelessWidget {
                                                   fileName:
                                                       ctrl.all.value
                                                           ? 'All_Contributions_Report.pdf'
-                                                          : 'Contributions_${item.period ?? ''}_Report.pdf',
+                                                          : 'Contributions_${item.filters?.year ?? ''}_Report.pdf',
                                                 ),
                                           )
                                           .symmetric(vertical: PAppSize.s8),
@@ -215,7 +225,7 @@ class PStatementPage extends StatelessWidget {
                                 ),
                               ],
                             ).scrollable(),
-                      ),
+                  ),
                 ],
               ).all(PAppSize.s20),
             ),

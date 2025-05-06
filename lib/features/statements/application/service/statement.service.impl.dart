@@ -29,4 +29,9 @@ class StatementServiceImpl implements StatementService {
   }) {
     return statementRepo.downloadReport(reportId: reportId);
   }
+
+  @override
+  Future<Either<PFailure, ApiResponse<List<Statement>>>> getReports() async {
+    return statementRepo.getReports();
+  }
 }

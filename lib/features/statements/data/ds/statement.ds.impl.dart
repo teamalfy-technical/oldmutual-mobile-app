@@ -50,4 +50,22 @@ class StatementDsImpl implements StatementDs {
       );
     });
   }
+
+  @override
+  Future<ApiResponse<List<Statement>>> getReports() async {
+    return await asyncFunctionWrapper.handleAsyncNetworkCall(() async {
+      final res = await apiService.callService(
+        requestType: RequestType.get,
+        endPoint: Env.getReports,
+      );
+
+      // Parse and filter
+      final statements =
+          (res['data'] as List)
+              .map((e) => Statement.fromJson(e))
+              .where((s) => s.downloadUrl != null && s.downloadUrl!.isNotEmpty)
+              .toList();
+      return ApiResponse<List<Statement>>.fromJson(res, (_) => statements);
+    });
+  }
 }

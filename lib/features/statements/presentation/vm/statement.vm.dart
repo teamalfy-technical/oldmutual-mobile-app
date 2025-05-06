@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'dart:math';
 
 // import 'package:flutter_downloader/flutter_downloader.dart';
 import 'package:dio/dio.dart';
@@ -35,7 +36,7 @@ class PStatementVm extends GetxController {
   // Reports variables
   var generatedReport = GenerateReport().obs;
   var reportDownload = ReportDownload().obs;
-  var reports = <ReportDownload>{}.obs;
+  var statements = <Statement>[].obs;
 
   onYearChanged(value) {
     selectedYear = value;
@@ -43,11 +44,31 @@ class PStatementVm extends GetxController {
     update();
   }
 
-  // @override
-  // void onInit() {
-  //   getContributedYears();
-  //   super.onInit();
-  // }
+  @override
+  void onInit() {
+    getAllGeneratedReports();
+    super.onInit();
+  }
+
+  /// Function to get all generated reports
+  Future<void> getAllGeneratedReports() async {
+    updateLoadingState(LoadingState.loading);
+    final result = await statementService.getReports();
+    result.fold(
+      (err) {
+        updateLoadingState(LoadingState.error);
+        PPopupDialog(
+          context,
+        ).errorMessage(title: 'error'.tr, message: err.message);
+      },
+      (res) {
+        updateLoadingState(LoadingState.completed);
+        // if(res.data)
+        res.data?.sort((a, b) => b.createdAt!.compareTo(a.createdAt ?? ''));
+        statements.value = res.data ?? [];
+      },
+    );
+  }
 
   /// Function to get all contribution years
   Future<void> getContributedYears() async {
@@ -155,8 +176,16 @@ class PStatementVm extends GetxController {
           period: all.value ? 'All' : selectedYear?.fundYear ?? '',
           createdAt: DateTime.now().toIso8601String(),
         );
-        reports.add(updatedReport);
-        pensionAppLogger.e(reports.map((e) => e.toJson()).toList());
+        final statement = Statement(
+          id: Random().nextInt(1000),
+          userId: Random().nextInt(10000),
+          filters: Filters(year: updatedReport.period ?? ''),
+          downloadUrl: updatedReport.downloadUrl,
+          createdAt: updatedReport.createdAt,
+          updatedAt: updatedReport.createdAt,
+        );
+        statements.insert(0, statement);
+        pensionAppLogger.e(statements.map((e) => e.toJson()).toList());
         // PPopupDialog(
         //   context,
         // ).successMessage(title: 'success'.tr, message: report.data ?? '');

@@ -21,6 +21,29 @@ class Statement {
     this.updatedAt,
   });
 
+  Statement copyWith({
+    int? id,
+    int? userId,
+    String? type,
+    String? status,
+    String? filePath,
+    String? downloadUrl,
+    Filters? filters,
+    String? createdAt,
+    String? updatedAt,
+  }) {
+    return Statement(
+      id: id ?? this.id,
+      userId: userId ?? this.userId,
+      type: type ?? this.type,
+      status: status ?? this.status,
+      filePath: filePath ?? this.filePath,
+      downloadUrl: downloadUrl ?? this.downloadUrl,
+      createdAt: createdAt ?? this.createdAt,
+      updatedAt: updatedAt ?? this.updatedAt,
+    );
+  }
+
   Statement.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     userId = json['user_id'];
@@ -29,7 +52,11 @@ class Statement {
     filePath = json['file_path'];
     downloadUrl = json['download_url'];
     filters =
-        json['filters'] != null ? Filters.fromJson(json['filters']) : null;
+        json['filters'] != null
+            ? json['filters'] is List
+                ? Filters.fromJson({'year': 'All'})
+                : Filters.fromJson(json['filters'])
+            : null;
     createdAt = json['created_at'];
     updatedAt = json['updated_at'];
   }
@@ -55,6 +82,10 @@ class Filters {
   String? year;
 
   Filters({this.year});
+
+  Filters copyWith({String? year}) {
+    return Filters(year: year ?? this.year);
+  }
 
   Filters.fromJson(Map<String, dynamic> json) {
     year = json['year'];

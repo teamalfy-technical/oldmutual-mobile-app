@@ -132,6 +132,10 @@ abstract class Env {
   @EnviedField(defaultValue: '/reports/check-status', obfuscate: true)
   static final String checkReportStatus = _Env.checkReportStatus;
 
+  /// [GetReport] endpoint
+  @EnviedField(defaultValue: '/reports', obfuscate: true)
+  static final String getReports = _Env.getReports;
+
   /// -------------------- Contribution Endpoints Ends Here ------------------------- ///
   ///
   ///
