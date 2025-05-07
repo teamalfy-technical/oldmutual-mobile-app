@@ -70,7 +70,7 @@ class _PPortingPageState extends State<PPortingPage> {
                         // ),
                         PCustomFilledTextfield(
                           label: 'name_of_current_employer'.tr,
-                          hint: '',
+                          hint: 'Old Mutual Limited',
                           textInputType: TextInputType.name,
                           controller: ctrl.currentEmployerNameTEC,
                         ),
@@ -93,7 +93,7 @@ class _PPortingPageState extends State<PPortingPage> {
                         PAppSize.s20.verticalSpace,
                         PCustomFilledTextfield(
                           label: 'name_of_prev_employer'.tr,
-                          hint: '',
+                          hint: 'Old Mutual Limited',
                           textInputType: TextInputType.name,
                           controller: ctrl.prevEmployerNameTEC,
                         ),
@@ -122,14 +122,14 @@ class _PPortingPageState extends State<PPortingPage> {
                         PAppSize.s20.verticalSpace,
                         PCustomFilledTextfield(
                           label: 'prev_scheme_name'.tr,
-                          hint: '',
+                          hint: 'OLD MUTUAL ASPIRE PENSION SCHEME',
                           textInputType: TextInputType.name,
                           controller: ctrl.prevSchemeNameTEC,
                         ),
                         PAppSize.s20.verticalSpace,
                         PCustomFilledTextfield(
                           label: 'prev_scheme_Type'.tr,
-                          hint: '',
+                          hint: 'INDIVIDUAL PENSION',
                           textInputType: TextInputType.text,
                           controller: ctrl.prevSchemeTypeTEC,
                         ),
@@ -157,14 +157,14 @@ class _PPortingPageState extends State<PPortingPage> {
                         PAppSize.s20.verticalSpace,
                         PCustomFilledTextfield(
                           label: 'name_of_prev_trustee'.tr,
-                          hint: '',
+                          hint: 'Lord Osei',
                           textInputType: TextInputType.name,
                           controller: ctrl.prevTrusteeNameTEC,
                         ),
                         PAppSize.s20.verticalSpace,
                         PCustomFilledTextfield(
                           label: 'prev_trustee_contact_name'.tr,
-                          hint: '',
+                          hint: 'Lord Osei',
                           textInputType: TextInputType.name,
                           controller: ctrl.prevTrusteeContactNameTEC,
                         ),
@@ -194,7 +194,7 @@ class _PPortingPageState extends State<PPortingPage> {
 
                         PCustomFilledTextfield(
                           label: 'prev_trustee_contact_number'.tr,
-                          hint: '',
+                          hint: 'E.g. 0566557878',
                           maxLength: PAppSize.s10.toInt(),
                           textInputType: TextInputType.number,
                           controller: ctrl.prevTrusteeContactNumberTEC,

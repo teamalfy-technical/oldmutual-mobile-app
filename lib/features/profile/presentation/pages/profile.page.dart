@@ -92,7 +92,7 @@ class PProfilePage extends StatelessWidget {
                       PCustomListTile(
                         title: 'mobile_number'.tr,
                         subtitle:
-                            PSecureStorage().getBioData()?.mobileNo ??
+                            PSecureStorage().getAuthResponse()?.phone ??
                             'not_applicable'.tr,
                       ).redacted(
                         context: context,
@@ -160,6 +160,21 @@ class PProfilePage extends StatelessWidget {
                                 DateTime.now().toIso8601String(),
                           ),
                         ),
+                      ).redacted(
+                        context: context,
+                        redact:
+                            ctrl.loading.value == LoadingState.loading
+                                ? true
+                                : false,
+                      ),
+
+                      Divider(color: PAppColor.fillColor),
+
+                      PCustomListTile(
+                        title: 'employer_name'.tr,
+                        subtitle:
+                            PSecureStorage().getBioData()?.employerName ??
+                            'not_applicable'.tr,
                       ).redacted(
                         context: context,
                         redact:

@@ -68,4 +68,23 @@ class StatementDsImpl implements StatementDs {
       return ApiResponse<List<Statement>>.fromJson(res, (_) => statements);
     });
   }
+
+  @override
+  Future<ApiResponse<Statement>> generateReportV2({
+    required int year,
+    required bool all,
+  }) async {
+    return await asyncFunctionWrapper.handleAsyncNetworkCall(() async {
+      final res = await apiService.callService(
+        requestType: RequestType.post,
+        queryParams: all ? null : {'year': year},
+        endPoint: Env.generateReportsV2,
+      );
+
+      return ApiResponse<Statement>.fromJson(
+        res,
+        (data) => Statement.fromJson(data),
+      );
+    });
+  }
 }

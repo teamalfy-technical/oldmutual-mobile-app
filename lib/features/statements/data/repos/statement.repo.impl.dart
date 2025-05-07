@@ -45,4 +45,15 @@ class StatementRepoImpl implements StatementRepo {
       function: () async => await statementDs.getReports(),
     );
   }
+
+  @override
+  Future<Either<PFailure, ApiResponse<Statement>>> generateReportV2({
+    required int year,
+    required bool all,
+  }) async {
+    return await customRepositoryWrapper.wrapRepositoryFunction(
+      function:
+          () async => await statementDs.generateReportV2(year: year, all: all),
+    );
+  }
 }

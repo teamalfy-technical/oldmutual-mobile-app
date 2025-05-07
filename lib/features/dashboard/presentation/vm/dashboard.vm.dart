@@ -43,19 +43,33 @@ class PDashboardVm extends GetxController {
 
   /// Function to get all selected scheme
   Future<void> getMemberSelectedScheme({
+    required String employerName,
     required String employerNumber,
-    required String memberNumber,
     required String ssnitNumber,
+    required String memberName,
+    required String memberNumber,
     required String masterScheme,
     required String schemeType,
+    required String email,
+    required String dob,
+    required String dateJoined,
+    required String sex,
+    required String nationality,
   }) async {
     // updateLoadingState(LoadingState.loading);
     final result = await dashboardService.getSelectedMemberScheme(
+      employerName: employerName,
       employerNumber: employerNumber,
+      memberName: memberName,
       memberNumber: memberNumber,
       ssnitNumber: ssnitNumber,
       masterScheme: masterScheme,
       schemeType: schemeType,
+      email: email,
+      dob: dob,
+      dateJoined: dateJoined,
+      sex: sex,
+      nationality: nationality,
     );
     result.fold(
       (err) {
@@ -73,10 +87,23 @@ class PDashboardVm extends GetxController {
           id: res.data?.id ?? 0,
           emailVerifiedAt: res.data?.emailVerifiedAt ?? '',
           avatar: res.data?.avatar ?? '',
+          phone: res.data?.phone ?? '',
+          email: res.data?.email ?? '',
+          sex: res.data?.sex ?? '',
+          ssnitNumber: res.data?.ssnitNumber ?? '',
+          memberNumber: res.data?.memberNumber ?? '',
+          dob: res.data?.dob ?? '',
+          role: res.data?.role ?? '',
+          nationality: res.data?.nationality ?? '',
+          dateJoined: res.data?.dateJoined ?? '',
+          employerName: res.data?.employerName ?? '',
+          employerNumber: res.data?.employerNumber ?? '',
+          updatedAt: res.data?.updatedAt ?? '',
         );
         PSecureStorage().saveAuthResponse(updatedMember?.toJson());
         pensionAppLogger.e(PSecureStorage().getAuthResponse()?.toJson());
         await Get.put(PContributionHistoryVm()).getContributionsSummary();
+        // await Get.put(PAuthVm()).getBioData();
       },
     );
   }

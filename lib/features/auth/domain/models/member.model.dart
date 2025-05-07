@@ -8,6 +8,7 @@ class Member {
   String? phone;
   String? email;
   String? emailVerifiedAt;
+  String? employerName;
   String? employerNumber;
   String? ssnitNumber;
   String? avatar;
@@ -34,6 +35,7 @@ class Member {
     this.phone,
     this.email,
     this.emailVerifiedAt,
+    this.employerName,
     this.employerNumber,
     this.ssnitNumber,
     this.avatar,
@@ -61,6 +63,7 @@ class Member {
     String? phone,
     String? email,
     String? emailVerifiedAt,
+    String? employerName,
     String? employerNumber,
     String? ssnitNumber,
     String? avatar,
@@ -87,6 +90,7 @@ class Member {
       phone: phone ?? this.phone,
       email: email ?? this.email,
       emailVerifiedAt: emailVerifiedAt ?? this.emailVerifiedAt,
+      employerName: employerName ?? this.employerName,
       employerNumber: employerNumber ?? this.employerNumber,
       ssnitNumber: ssnitNumber ?? this.ssnitNumber,
       avatar: avatar ?? this.avatar,
@@ -115,6 +119,7 @@ class Member {
     phone = json['phone'];
     email = json['email'];
     emailVerifiedAt = json['email_verified_at'];
+    employerName = json['employer_name'];
     employerNumber = json['employer_number'];
     ssnitNumber = json['ssnit_number'];
     avatar = json['avatar'];
@@ -143,6 +148,7 @@ class Member {
     data['phone'] = phone;
     data['email'] = email;
     data['email_verified_at'] = emailVerifiedAt;
+    data['employer_name'] = employerName;
     data['employer_number'] = employerNumber;
     data['ssnit_number'] = ssnitNumber;
     data['avatar'] = avatar;

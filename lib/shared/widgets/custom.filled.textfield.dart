@@ -14,6 +14,7 @@ class PCustomFilledTextfield extends StatelessWidget {
   final int? maxLines;
   final int? minLines;
   final bool enabled;
+  final TextInputAction textInputAction;
   const PCustomFilledTextfield({
     super.key,
     required this.label,
@@ -26,6 +27,7 @@ class PCustomFilledTextfield extends StatelessWidget {
     this.enabled = true,
     this.maxLines,
     this.minLines,
+    this.textInputAction = TextInputAction.next,
   });
 
   @override
@@ -46,6 +48,7 @@ class PCustomFilledTextfield extends StatelessWidget {
           maxLength: maxLength,
           maxLines: maxLines,
           minLines: minLines,
+          textInputAction: textInputAction,
           inputFormatters: inputFormatters,
           enabled: enabled,
           decoration: InputDecoration(
@@ -70,6 +73,20 @@ class PCustomFilledTextfield extends StatelessWidget {
             ),
             enabledBorder: OutlineInputBorder(
               borderSide: BorderSide.none,
+              borderRadius: BorderRadius.circular(PAppSize.s5),
+            ),
+            errorBorder: OutlineInputBorder(
+              borderSide: BorderSide(
+                width: PAppSize.s1,
+                color: PAppColor.errorColor,
+              ),
+              borderRadius: BorderRadius.circular(PAppSize.s5),
+            ),
+            focusedErrorBorder: OutlineInputBorder(
+              borderSide: BorderSide(
+                width: PAppSize.s1,
+                color: PAppColor.errorColor,
+              ),
               borderRadius: BorderRadius.circular(PAppSize.s5),
             ),
             fillColor: PAppColor.fillColor2,

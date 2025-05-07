@@ -3,7 +3,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:oldmutual_pensions_app/core/utils/utils.dart';
 import 'package:oldmutual_pensions_app/features/dashboard/dashboard.dart';
-import 'package:oldmutual_pensions_app/features/dashboard/presentation/vm/dashboard.vm.dart';
 import 'package:oldmutual_pensions_app/gen/assets.gen.dart';
 import 'package:oldmutual_pensions_app/routes/app.pages.dart';
 import 'package:oldmutual_pensions_app/shared/shared.dart';
@@ -98,16 +97,23 @@ class PDashboardPage extends StatelessWidget {
                                 scheme: scheme,
                                 onTap: () {
                                   ctrl.getMemberSelectedScheme(
+                                    employerName: scheme.employerName ?? '',
                                     employerNumber: scheme.employerNumber ?? '',
+                                    memberName: scheme.memberName ?? '',
                                     memberNumber: scheme.memberNumber ?? '',
                                     ssnitNumber: scheme.ssnitNumber ?? '',
                                     masterScheme:
                                         scheme.masterSchemeDescription ?? '',
                                     schemeType: scheme.penTypeDescription ?? '',
+                                    email: scheme.email ?? '',
+                                    dob: scheme.dob ?? '',
+                                    dateJoined: scheme.dateJoined ?? '',
+                                    sex: scheme.sex ?? '',
+                                    nationality: scheme.nationality ?? '',
                                   );
                                   PHelperFunction.switchScreen(
                                     destination: Routes.homePage,
-                                    replace: true,
+                                    replace: false,
                                   );
                                 },
                               );

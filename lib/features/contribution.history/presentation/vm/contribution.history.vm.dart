@@ -36,8 +36,6 @@ class PContributionHistoryVm extends GetxController {
 
   final context = Get.context!;
 
-  final bioData = PSecureStorage().getBioData();
-
   updateLoadingState(LoadingState loadingState) => loading.value = loadingState;
 
   onYearChanged(value) {

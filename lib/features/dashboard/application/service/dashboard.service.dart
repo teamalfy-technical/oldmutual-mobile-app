@@ -7,10 +7,17 @@ abstract class DashboardService {
   Future<Either<PFailure, ApiResponse<List<Scheme>>>> getMemberSchemes();
   Future<Either<PFailure, ApiResponse<SelectedScheme>>>
   getSelectedMemberScheme({
+    required String employerName,
     required String employerNumber,
     required String ssnitNumber,
+    required String memberName,
     required String memberNumber,
     required String masterScheme,
     required String schemeType,
+    required String email,
+    required String dob,
+    required String dateJoined,
+    required String sex,
+    required String nationality,
   });
 }

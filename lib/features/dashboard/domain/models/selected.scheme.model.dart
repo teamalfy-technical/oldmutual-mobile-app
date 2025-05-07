@@ -4,6 +4,7 @@ class SelectedScheme {
   String? memberNumber;
   String? phone;
   String? email;
+  String? employerName;
   String? employerNumber;
   String? ssnitNumber;
   String? emailVerifiedAt;
@@ -29,6 +30,7 @@ class SelectedScheme {
     this.memberNumber,
     this.phone,
     this.email,
+    this.employerName,
     this.employerNumber,
     this.ssnitNumber,
     this.emailVerifiedAt,
@@ -55,6 +57,7 @@ class SelectedScheme {
     memberNumber = json['member_number'];
     phone = json['phone'];
     email = json['email'];
+    employerName = json['employer_name'];
     employerNumber = json['employer_number'];
     ssnitNumber = json['ssnit_number'];
     emailVerifiedAt = json['email_verified_at'];
@@ -82,6 +85,7 @@ class SelectedScheme {
     data['member_number'] = memberNumber;
     data['phone'] = phone;
     data['email'] = email;
+    data['employer_name'] = employerName;
     data['employer_number'] = employerNumber;
     data['ssnit_number'] = ssnitNumber;
     data['email_verified_at'] = emailVerifiedAt;

@@ -187,6 +187,10 @@ class AppTranslations extends Translations {
       'by_amount': 'By Amount',
       'other': 'Other (Specify)',
       'view_pdf': 'View PDF',
+      'employer': 'Employer',
+      'pending_review': 'Pending Review',
+      'employer_name': 'Employer Name',
+      'view_all_schemes': 'View All Schemes',
       'redemption_confirm_msg':
           'I confirm that I am the account holder and that all information provided is correct',
       'submit_request': 'Submit Request',

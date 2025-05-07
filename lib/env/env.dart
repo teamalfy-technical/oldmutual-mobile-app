@@ -124,6 +124,10 @@ abstract class Env {
   @EnviedField(defaultValue: '/generate/report-pdf', obfuscate: true)
   static final String generateReport = _Env.generateReport;
 
+  /// [GenerateReportsV2] endpoint
+  @EnviedField(defaultValue: '/reports', obfuscate: true)
+  static final String generateReportsV2 = _Env.generateReportsV2;
+
   /// [DownloadReport] endpoint
   @EnviedField(defaultValue: '/reports/download', obfuscate: true)
   static final String downloadReport = _Env.downloadReport;
@@ -191,7 +195,7 @@ abstract class Env {
   /// -------------------- Scheme Endpoints Starts Here ------------------------- ///
 
   /// [GetMemberSchemes] endpoint
-  @EnviedField(defaultValue: '/member/scheme', obfuscate: true)
+  @EnviedField(defaultValue: '/member/schemes', obfuscate: true)
   static final String getMemberSchemes = _Env.getMemberSchemes;
 
   /// [SelectedMemberSchemes] endpoint

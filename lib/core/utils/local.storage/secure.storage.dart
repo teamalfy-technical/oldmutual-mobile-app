@@ -13,7 +13,7 @@ class PSecureStorage {
   final String onboardingKey = 'onboarding';
   final String authResKey = 'auth_res_key';
   final String bioDataKey = 'bio_data_key';
-  final String registerdKey = 'is_registered_key';
+  final String registeredKey = 'is_registered_key';
   final String deviceTokenKey = 'device_token_key';
 
   /// Generic function to save data into [GetStorage]

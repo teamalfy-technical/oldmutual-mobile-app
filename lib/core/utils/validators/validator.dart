@@ -1,4 +1,7 @@
+import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:oldmutual_pensions_app/core/utils/formatters/formatters.dart';
+import 'package:oldmutual_pensions_app/features/contribution.history/contribution.history.dart';
 
 class PValidator {
   PValidator._();
@@ -18,15 +21,35 @@ class PValidator {
       return 'Field cannot be empty.';
     }
 
-    final number = int.tryParse(value);
+    final number = double.tryParse(value);
     if (number == null) {
       return 'Please enter a valid number';
     }
 
-    //  final totalAmount = PSecureStorage().getAuthResponse()!.a!.contains('TIER 2')
-    //     if (number > 100) { // Replace 100 with your desired max value
-    //       return 'Value cannot be greater than 100';
-    //     }
+    final totalAmount =
+        Get.put(PContributionHistoryVm()).summmary.value.currentValue ?? 0;
+    if (number > totalAmount) {
+      // Replace 100 with your desired max value
+      return 'Amount cannot be greater than ${PFormatter.formatCurrency(amount: totalAmount)}';
+    }
+
+    return null;
+  }
+
+  static String? validatePercentage(String? value) {
+    if (value == null || value.isEmpty) {
+      return 'Field cannot be empty.';
+    }
+
+    final number = double.tryParse(value);
+    if (number == null) {
+      return 'Please enter a valid number';
+    }
+
+    if (number > 100) {
+      // Replace 100 with your desired max value
+      return 'Percentage cannot be greater than 100';
+    }
 
     return null;
   }

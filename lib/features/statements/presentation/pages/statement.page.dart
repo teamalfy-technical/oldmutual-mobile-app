@@ -102,7 +102,7 @@ class PStatementPage extends StatelessWidget {
                                     PDeviceUtil.getDeviceWidth(context) * 0.30,
                                 height: PAppSize.s32,
                                 onTap: () {
-                                  ctrl.generateReport();
+                                  ctrl.generateReportV2();
                                 },
                               ),
                             ),
@@ -139,92 +139,99 @@ class PStatementPage extends StatelessWidget {
                                 );
                               },
                             )
-                            : Table(
-                              // border: TableBorder.all(),
-                              children: [
-                                TableRow(
-                                  children: [
-                                    Text(
-                                      'period'.tr,
-                                      textAlign: TextAlign.start,
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .headlineSmall
-                                          ?.copyWith(fontSize: PAppSize.s16),
-                                    ),
-                                    Text(
-                                      'generated_on'.tr,
-                                      textAlign: TextAlign.start,
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .headlineSmall
-                                          ?.copyWith(fontSize: PAppSize.s16),
-                                    ),
-                                    Text(
-                                      'actions'.tr,
-                                      textAlign: TextAlign.end,
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .headlineSmall
-                                          ?.copyWith(fontSize: PAppSize.s16),
-                                    ),
-                                  ],
-                                ),
-                                ...ctrl.statements.map(
-                                  (item) => TableRow(
+                            : RefreshIndicator.adaptive(
+                              onRefresh: () => ctrl.getAllGeneratedReports(),
+                              child: Table(
+                                // border: TableBorder.all(),
+                                children: [
+                                  TableRow(
                                     children: [
                                       Text(
-                                        item.filters?.year ?? '',
+                                        'period'.tr,
                                         textAlign: TextAlign.start,
-                                        style:
-                                            Theme.of(
-                                              context,
-                                            ).textTheme.bodySmall?.copyWith(),
-                                      ).symmetric(vertical: PAppSize.s8),
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .headlineSmall
+                                            ?.copyWith(fontSize: PAppSize.s16),
+                                      ),
                                       Text(
-                                        PFormatter.formatDate(
-                                          dateFormat: DateFormat('dd-MM-yyyy'),
-                                          date: DateTime.parse(
-                                            item.createdAt ??
-                                                DateTime.now()
-                                                    .toIso8601String(),
-                                          ),
-                                        ),
+                                        'generated_on'.tr,
                                         textAlign: TextAlign.start,
-                                        style:
-                                            Theme.of(
-                                              context,
-                                            ).textTheme.bodySmall?.copyWith(),
-                                      ).symmetric(vertical: PAppSize.s8),
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .headlineSmall
+                                            ?.copyWith(fontSize: PAppSize.s16),
+                                      ),
                                       Text(
-                                            'view_pdf'.tr,
-                                            textAlign: TextAlign.end,
-                                            style: Theme.of(
-                                              context,
-                                            ).textTheme.bodySmall?.copyWith(
-                                              color: PAppColor.primary,
-                                              decoration:
-                                                  TextDecoration.underline,
-                                              decorationColor:
-                                                  PAppColor.primary,
-                                            ),
-                                          )
-                                          .onPressed(
-                                            onTap:
-                                                () => ctrl.openFile(
-                                                  url: item.downloadUrl ?? '',
-                                                  fileName:
-                                                      ctrl.all.value
-                                                          ? 'All_Contributions_Report.pdf'
-                                                          : 'Contributions_${item.filters?.year ?? ''}_Report.pdf',
-                                                ),
-                                          )
-                                          .symmetric(vertical: PAppSize.s8),
+                                        'actions'.tr,
+                                        textAlign: TextAlign.end,
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .headlineSmall
+                                            ?.copyWith(fontSize: PAppSize.s16),
+                                      ),
                                     ],
                                   ),
-                                ),
-                              ],
-                            ).scrollable(),
+                                  ...ctrl.statements.map(
+                                    (item) => TableRow(
+                                      children: [
+                                        Text(
+                                          item.filters?.year ?? '',
+                                          textAlign: TextAlign.start,
+                                          style:
+                                              Theme.of(
+                                                context,
+                                              ).textTheme.bodySmall?.copyWith(),
+                                        ).symmetric(vertical: PAppSize.s8),
+                                        Text(
+                                          PFormatter.formatDate(
+                                            dateFormat: DateFormat(
+                                              'dd-MM-yyyy',
+                                            ),
+                                            date: DateTime.parse(
+                                              item.createdAt ??
+                                                  DateTime.now()
+                                                      .toIso8601String(),
+                                            ),
+                                          ),
+                                          textAlign: TextAlign.start,
+                                          style:
+                                              Theme.of(
+                                                context,
+                                              ).textTheme.bodySmall?.copyWith(),
+                                        ).symmetric(vertical: PAppSize.s8),
+                                        Text(
+                                              'view_pdf'.tr,
+                                              textAlign: TextAlign.end,
+                                              style: Theme.of(
+                                                context,
+                                              ).textTheme.bodySmall?.copyWith(
+                                                color: PAppColor.primary,
+                                                decoration:
+                                                    TextDecoration.underline,
+                                                decorationColor:
+                                                    PAppColor.primary,
+                                              ),
+                                            )
+                                            .onPressed(
+                                              onTap:
+                                                  () => ctrl.openFile(
+                                                    url: item.downloadUrl ?? '',
+                                                    fileName:
+                                                        ctrl.all.value
+                                                            ? 'All_Contributions_Report.pdf'
+                                                            : 'Contributions_${item.filters?.year ?? ''}_Report.pdf',
+                                                  ),
+                                            )
+                                            .symmetric(vertical: PAppSize.s8),
+                                      ],
+                                    ),
+                                  ),
+                                ],
+                              ).scrollable(
+                                physics: AlwaysScrollableScrollPhysics(),
+                              ),
+                            ),
                   ),
                 ],
               ).all(PAppSize.s20),

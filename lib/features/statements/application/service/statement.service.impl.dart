@@ -34,4 +34,12 @@ class StatementServiceImpl implements StatementService {
   Future<Either<PFailure, ApiResponse<List<Statement>>>> getReports() async {
     return statementRepo.getReports();
   }
+
+  @override
+  Future<Either<PFailure, ApiResponse<Statement>>> generateReportV2({
+    required int year,
+    required bool all,
+  }) {
+    return statementRepo.generateReportV2(year: year, all: all);
+  }
 }

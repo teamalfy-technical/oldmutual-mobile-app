@@ -31,7 +31,7 @@ class PSplashVm extends GetxController {
           );
         } else {
           bool? isRegistered = PSecureStorage().readData<bool>(
-            PSecureStorage().registerdKey,
+            PSecureStorage().registeredKey,
           );
           if (isRegistered != null && isRegistered) {
             PHelperFunction.switchScreen(

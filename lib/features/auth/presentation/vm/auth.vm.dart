@@ -205,7 +205,7 @@ class PAuthVm extends GetxController {
       (res) {
         PHelperFunction.pop();
         PSecureStorage().removeData(PSecureStorage().authResKey);
-        PSecureStorage().saveData<bool>(PSecureStorage().registerdKey, true);
+        PSecureStorage().saveData<bool>(PSecureStorage().registeredKey, true);
         // show success dialog
         showSucccessdialog(context: context, title: res.message ?? '');
         Future.delayed(Duration(seconds: 2), () {
@@ -325,10 +325,11 @@ class PAuthVm extends GetxController {
         );
       },
       (res) async {
+        PSecureStorage().saveData<bool>(PSecureStorage().registeredKey, true);
         if (PDeviceUtil.isAndroid()) {
           await PNotificationService().saveToken();
         }
-        await getBioData();
+        // await getBioData();
         clearFields();
         PHelperFunction.pop();
         PHelperFunction.switchScreen(
@@ -340,13 +341,5 @@ class PAuthVm extends GetxController {
         ).successMessage(title: 'success'.tr, message: res.message ?? '');
       },
     );
-  }
-
-  Future<void> getBioData() async {
-    final result = await authService.getBioData();
-    result.fold((err) {}, (res) {
-      PSecureStorage().saveBioData(res.data?.first.toJson());
-      PHelperFunction.pop();
-    });
   }
 }

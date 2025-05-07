@@ -128,7 +128,7 @@ class PHomeView extends StatelessWidget {
               Container(
                 width: PDeviceUtil.getDeviceWidth(context),
                 // height: PDeviceUtil.getDeviceHeight(context) / 4.0,
-                height: PDeviceUtil.getDeviceHeight(context) * 0.25,
+                height: PDeviceUtil.getDeviceHeight(context) * 0.27,
                 decoration: BoxDecoration(color: PAppColor.blackColor),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -137,11 +137,48 @@ class PHomeView extends StatelessWidget {
                       '${'welcome'.tr}, ${PSecureStorage().getAuthResponse()?.name ?? ''}',
                       style: Theme.of(context).textTheme.titleSmall?.copyWith(
                         color: PAppColor.whiteColor,
+                        fontWeight: FontWeight.w700,
                       ),
+                    ),
+                    PAppSize.s6.verticalSpace,
+                    Text(
+                      '${PSecureStorage().getAuthResponse()?.schemeType}',
+                      style: Theme.of(context).textTheme.titleSmall?.copyWith(
+                        color: PAppColor.whiteColor,
+                        fontWeight: FontWeight.w500,
+                        fontSize: PAppSize.s14,
+                      ),
+                    ),
+                    PAppSize.s6.verticalSpace,
+                    Text(
+                      '${'employer'.tr} : ${PSecureStorage().getAuthResponse()?.employerName ?? ''}',
+                      style: Theme.of(context).textTheme.titleSmall?.copyWith(
+                        color: PAppColor.whiteColor,
+                        fontWeight: FontWeight.w500,
+                        fontSize: PAppSize.s14,
+                      ),
+                    ),
+                    PAppSize.s14.verticalSpace,
+                    Text(
+                      'view_all_schemes'.tr,
+                      textAlign: TextAlign.start,
+                      style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                        color: PAppColor.primary,
+                        fontWeight: FontWeight.w600,
+                        decoration: TextDecoration.underline,
+                        decorationColor: PAppColor.primary,
+                        fontSize: PAppSize.s13,
+                      ),
+                    ).onPressed(
+                      onTap:
+                          () => PHelperFunction.switchScreen(
+                            destination: Routes.dashboardPage,
+                          ),
                     ),
                   ],
                 ),
               ),
+              // PAppSize.s6.verticalSpace,
               Expanded(
                 child: Container(
                   color: PAppColor.whiteColor.withOpacityExt(PAppSize.s0_5),
@@ -164,29 +201,29 @@ class PHomeView extends StatelessWidget {
           ),
 
           Positioned.fill(
-            top: PDeviceUtil.getDeviceHeight(context) / 6,
+            top: PDeviceUtil.getDeviceHeight(context) / 4.8,
             left: PAppSize.s16,
             right: PAppSize.s16,
             child:
                 Column(
                   children: [
-                    Align(
-                      alignment: Alignment.bottomLeft,
-                      child: Text(
-                        'View All Schemes',
-                        textAlign: TextAlign.start,
-                        style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                          color: PAppColor.primary,
-                          fontWeight: FontWeight.w600,
-                          fontSize: PAppSize.s12,
-                        ),
-                      ).onPressed(
-                        onTap:
-                            () => PHelperFunction.switchScreen(
-                              destination: Routes.dashboardPage,
-                            ),
-                      ),
-                    ),
+                    // Align(
+                    //   alignment: Alignment.bottomLeft,
+                    //   child: Text(
+                    //     'View All Schemes',
+                    //     textAlign: TextAlign.start,
+                    //     style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                    //       color: PAppColor.primary,
+                    //       fontWeight: FontWeight.w600,
+                    //       fontSize: PAppSize.s12,
+                    //     ),
+                    //   ).onPressed(
+                    //     onTap:
+                    //         () => PHelperFunction.switchScreen(
+                    //           destination: Routes.dashboardPage,
+                    //         ),
+                    //   ),
+                    // ),
                     PAppSize.s6.verticalSpace,
                     Container(
                       padding: EdgeInsets.all(PAppSize.s14),

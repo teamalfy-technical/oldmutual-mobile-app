@@ -73,59 +73,97 @@ class PBeneficiaryWidget extends StatelessWidget {
                       ],
                     ),
                   )
-                  : Column(
-                    children: [
-                      Assets.icons.arrowDownIos.svg(),
-                      // PAppSize.s1.verticalSpace,
-                      Assets.icons.editIcon.svg().onPressed(
-                        onTap:
-                            () => PHelperFunction.switchScreen(
-                              destination: Routes.manageBeneficiaryPage,
-                              args: [beneficiary, true],
+                  : SizedBox(
+                    width:
+                        beneficiary.schemeName == null
+                            ? PDeviceUtil.getDeviceWidth(context) * 0.50
+                            : null,
+                    child:
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.end,
+                          children: [
+                            beneficiary.schemeName == null
+                                ? Row(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  mainAxisAlignment: MainAxisAlignment.end,
+                                  children: [
+                                    Text(
+                                      'pending_review'.tr,
+                                      style: Theme.of(
+                                        context,
+                                      ).textTheme.bodyLarge?.copyWith(
+                                        color: PAppColor.primary,
+                                        fontSize: PAppSize.s14,
+                                      ),
+                                    ),
+                                    PAppSize.s3.horizontalSpace,
+                                    Assets.icons.arrowDownIos.svg(),
+                                  ],
+                                )
+                                : Assets.icons.arrowDownIos.svg(),
+
+                            // PAppSize.s1.verticalSpace,
+                            Assets.icons.editIcon.svg().onPressed(
+                              onTap:
+                                  () => PHelperFunction.switchScreen(
+                                    destination: Routes.manageBeneficiaryPage,
+                                    args: [beneficiary, true],
+                                  ),
                             ),
-                      ),
-                      PAppSize.s1.verticalSpace,
-                      Assets.icons.trashRedIcon.svg().onPressed(
-                        onTap: () {
-                          showConfirmDialog(
-                            context: context,
-                            content: RichText(
-                              textAlign: TextAlign.center,
-                              text: TextSpan(
-                                text: 'Are you sure you want to',
-                                style: Theme.of(context).textTheme.bodyLarge
-                                    ?.copyWith(color: PAppColor.blackColor),
-                                children: [
-                                  TextSpan(
-                                    text: ' delete',
-                                    style: Theme.of(context).textTheme.bodyLarge
-                                        ?.copyWith(color: PAppColor.redColor),
+                            PAppSize.s1.verticalSpace,
+                            Assets.icons.trashRedIcon.svg().onPressed(
+                              onTap: () {
+                                showConfirmDialog(
+                                  context: context,
+                                  content: RichText(
+                                    textAlign: TextAlign.center,
+                                    text: TextSpan(
+                                      text: 'Are you sure you want to',
+                                      style: Theme.of(
+                                        context,
+                                      ).textTheme.bodyLarge?.copyWith(
+                                        color: PAppColor.blackColor,
+                                      ),
+                                      children: [
+                                        TextSpan(
+                                          text: ' delete',
+                                          style: Theme.of(
+                                            context,
+                                          ).textTheme.bodyLarge?.copyWith(
+                                            color: PAppColor.redColor,
+                                          ),
+                                        ),
+                                        TextSpan(
+                                          text: ' this beneficiary?\n',
+                                          style: Theme.of(
+                                            context,
+                                          ).textTheme.bodyLarge?.copyWith(
+                                            color: PAppColor.blackColor,
+                                          ),
+                                        ),
+                                        TextSpan(
+                                          text: 'This action cannot be undone.',
+                                          style: Theme.of(
+                                            context,
+                                          ).textTheme.bodyLarge?.copyWith(
+                                            color: PAppColor.blackColor,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
                                   ),
-                                  TextSpan(
-                                    text: ' this beneficiary?\n',
-                                    style: Theme.of(context).textTheme.bodyLarge
-                                        ?.copyWith(color: PAppColor.blackColor),
-                                  ),
-                                  TextSpan(
-                                    text: 'This action cannot be undone.',
-                                    style: Theme.of(context).textTheme.bodyLarge
-                                        ?.copyWith(color: PAppColor.blackColor),
-                                  ),
-                                ],
-                              ),
+                                  positiveText: 'delete'.tr.toUpperCase(),
+                                  onPostiveTap: () {
+                                    PHelperFunction.pop();
+                                    Get.find<PBeneficiaryVm>()
+                                        .deleteBeneficiary(beneficiary);
+                                  },
+                                );
+                              },
                             ),
-                            positiveText: 'delete'.tr.toUpperCase(),
-                            onPostiveTap: () {
-                              PHelperFunction.pop();
-                              Get.find<PBeneficiaryVm>().deleteBeneficiary(
-                                beneficiary,
-                              );
-                            },
-                          );
-                        },
-                      ),
-                    ],
-                  ).scrollable(),
+                          ],
+                        ).scrollable(),
+                  ),
           children: [
             PAppSize.s2.verticalSpace,
             detailWidget(

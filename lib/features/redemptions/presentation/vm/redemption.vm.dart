@@ -12,6 +12,8 @@ import 'package:oldmutual_pensions_app/shared/shared.dart';
 class PRedemptionVm extends GetxController {
   static PRedemptionVm get instance => Get.find();
 
+  final redemptionFormKey = GlobalKey<FormState>();
+
   var idFront = File('').obs;
   var idBack = File('').obs;
 
@@ -43,7 +45,7 @@ class PRedemptionVm extends GetxController {
   var priceValue = 'percentage'.obs;
 
   String? selectedRedemptionType = 'Total';
-  String? selectedRedemptionReason;
+  String? selectedRedemptionReason = 'none'.tr;
   List<String> redemptionTypes =
       PSecureStorage().getAuthResponse()!.schemeType!.contains('TIER 2')
           ? ['Total']
@@ -52,6 +54,7 @@ class PRedemptionVm extends GetxController {
   List<String> redemptionReasons =
       PSecureStorage().getAuthResponse()!.schemeType!.contains('TIER 2')
           ? [
+            'None',
             'Retirement',
             'Voluntary Retirement',
             'Death',
@@ -63,6 +66,7 @@ class PRedemptionVm extends GetxController {
             'PRESTIGE',
           )
           ? [
+            'None',
             'Voluntary Retirement',
             'Death',
             'Total Incapacity',
@@ -70,6 +74,7 @@ class PRedemptionVm extends GetxController {
             'Other (Specify)',
           ]
           : [
+            'None',
             'Retirement',
             'Voluntary Retirement',
             'Resignation',
@@ -220,6 +225,13 @@ class PRedemptionVm extends GetxController {
       PPopupDialog(context).errorMessage(
         title: 'action_required'.tr,
         message: 'You need to select redemption type to continue.',
+      );
+      return;
+    }
+    if (selectedRedemptionReason == 'none'.tr) {
+      PPopupDialog(context).errorMessage(
+        title: 'action_required'.tr,
+        message: 'You need to select redemption reason to continue.',
       );
       return;
     }

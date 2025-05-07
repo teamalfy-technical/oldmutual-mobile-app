@@ -111,6 +111,47 @@ class PStatementVm extends GetxController {
     super.onClose();
   }
 
+  /// Function to generate report (V2)
+  Future<void> generateReportV2() async {
+    if (all.value == false) {
+      if (selectedYear == null || selectedYear?.fundYear == 'none'.tr) {
+        PPopupDialog(context).informationMessage(
+          title: 'action_required'.tr,
+          message: 'Select a year to proceed',
+        );
+        return;
+      }
+    }
+    updateGeneratingState(LoadingState.loading);
+    final result = await statementService.generateReportV2(
+      all: all.value,
+      year:
+          selectedYear?.fundYear == 'none'.tr
+              ? DateTime.now().year
+              : int.parse(
+                selectedYear?.fundYear ?? DateTime.now().year.toString(),
+              ),
+    );
+    result.fold(
+      (err) {
+        updateGeneratingState(LoadingState.error);
+        PPopupDialog(
+          context,
+        ).errorMessage(title: 'error'.tr, message: err.message);
+      },
+      (res) {
+        updateGeneratingState(LoadingState.completed);
+        PPopupDialog(
+          context,
+        ).successMessage(title: 'success'.tr, message: res.message ?? '');
+        // statements.insert(0, res.data ?? Statement());
+        Future.delayed(Duration(seconds: 5), () {
+          getAllGeneratedReports();
+        });
+      },
+    );
+  }
+
   /// Function to generate report
   Future<void> generateReport() async {
     if (all.value == false) {

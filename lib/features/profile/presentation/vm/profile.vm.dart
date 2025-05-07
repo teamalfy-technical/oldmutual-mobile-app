@@ -38,11 +38,19 @@ class PProfileVm extends GetxController {
           context,
         ).errorMessage(title: 'error'.tr, message: err.message);
       },
-      (res) {
+      (res) async {
+        await getBioData();
         updateLoadingState(LoadingState.completed);
         profile.value = res.data ?? Member();
       },
     );
+  }
+
+  Future<void> getBioData() async {
+    final result = await authService.getBioData();
+    result.fold((err) {}, (res) {
+      PSecureStorage().saveBioData(res.data?.first.toJson());
+    });
   }
 
   // Pick an image.

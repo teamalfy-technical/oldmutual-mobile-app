@@ -9,6 +9,10 @@ abstract class StatementService {
     required int year,
     required bool all,
   });
+  Future<Either<PFailure, ApiResponse<Statement>>> generateReportV2({
+    required int year,
+    required bool all,
+  });
   Future<Either<PFailure, ApiResponse<ReportDownload>>> downloadReport({
     required int reportId,
   });
