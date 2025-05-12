@@ -12,6 +12,7 @@ class PContributionHistoryVm extends GetxController {
 
   var summmary = ContributionSummary().obs;
   var history = ContributionHistory().obs;
+  var contributions = <Contribution>[].obs;
   var contributionYears = <ContributedYear>[].obs;
   var contributionMonths =
       [
@@ -66,7 +67,7 @@ class PContributionHistoryVm extends GetxController {
         },
       );
     }
-    await getAllContributions();
+    await getAllMonthlyContributions();
   }
 
   /// Function to get all contribution years
@@ -137,6 +138,25 @@ class PContributionHistoryVm extends GetxController {
 
         history.value = res.data ?? ContributionHistory();
         await getContributedYears();
+      },
+    );
+  }
+
+  /// Function to get all monthly contributions for graph
+  Future<void> getAllMonthlyContributions() async {
+    updateLoadingState(LoadingState.loading);
+    final result = await contributionHistoryService.getMonthlyContributions();
+    result.fold(
+      (err) {
+        updateLoadingState(LoadingState.error);
+        PPopupDialog(
+          context,
+        ).errorMessage(title: 'error'.tr, message: err.message);
+      },
+      (res) async {
+        updateLoadingState(LoadingState.completed);
+        contributions.value = res.data ?? [];
+        await getAllContributions();
       },
     );
   }

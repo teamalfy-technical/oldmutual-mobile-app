@@ -120,6 +120,14 @@ abstract class Env {
   @EnviedField(defaultValue: '/contributed/years', obfuscate: true)
   static final String getContributedYears = _Env.getContributedYears;
 
+  /// [GetContributionsMonthly] endpoint
+  @EnviedField(defaultValue: '/contributions/monthly', obfuscate: true)
+  static final String getMonthlyContributions = _Env.getMonthlyContributions;
+
+  /// [GetLatestContribution] endpoint
+  @EnviedField(defaultValue: '/contributions/latest', obfuscate: true)
+  static final String getLatestContribution = _Env.getLatestContribution;
+
   /// [GenerateReport] endpoint
   @EnviedField(defaultValue: '/generate/report-pdf', obfuscate: true)
   static final String generateReport = _Env.generateReport;

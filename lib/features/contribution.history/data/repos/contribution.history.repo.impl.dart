@@ -45,4 +45,21 @@ class ContributionHistoryRepoImpl implements ContributionHistoryRepo {
       function: () async => await contributionHistoryDs.getContributionYears(),
     );
   }
+
+  @override
+  Future<Either<PFailure, ApiResponse<Contribution>>>
+  getLatestContribution() async {
+    return await customRepositoryWrapper.wrapRepositoryFunction(
+      function: () async => await contributionHistoryDs.getLatestContribution(),
+    );
+  }
+
+  @override
+  Future<Either<PFailure, ApiResponse<List<Contribution>>>>
+  getMonthlyContributions() async {
+    return await customRepositoryWrapper.wrapRepositoryFunction(
+      function:
+          () async => await contributionHistoryDs.getMonthlyContributions(),
+    );
+  }
 }

@@ -40,9 +40,10 @@ class PHomeStatsWidget extends StatelessWidget {
         children: [
           Text(
             title,
+
             style: Theme.of(context).textTheme.titleSmall?.copyWith(
-              overflow: TextOverflow.ellipsis,
-              fontSize: PAppSize.s15,
+              // overflow: TextOverflow.ellipsis,
+              fontSize: PAppSize.s14,
             ),
           ).redacted(
             context: context,
@@ -53,7 +54,8 @@ class PHomeStatsWidget extends StatelessWidget {
             subTitle,
             style: Theme.of(context).textTheme.titleMedium?.copyWith(
               fontSize: PAppSize.s18,
-              overflow: TextOverflow.ellipsis,
+              height: PAppSize.s1,
+              // overflow: TextOverflow.ellipsis,
               fontWeight: FontWeight.w700,
             ),
           ).redacted(

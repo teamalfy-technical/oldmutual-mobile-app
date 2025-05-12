@@ -207,6 +207,7 @@ class AppTranslations extends Translations {
       'porting_msg':
           'Your porting request has been submitted. You’ll be notified once processed',
       'download_pdf': 'Download PDF',
+      'download_results_as_pdf': 'Download results as PDF',
       'not_applicable': 'N/A',
       'deleting_beneficiary': 'Deleting Beneficiary',
       'adding_beneficiary_msg': 'Adding New Beneficiary...',
@@ -216,7 +217,6 @@ class AppTranslations extends Translations {
       'submitting_request_msg': 'We\'re processing your request...',
       'national_id': 'National Id',
       'redemption_type': 'Redemption Type',
-      'percentage': 'Percentage',
       'state_reason': 'State your reason (If Other)',
       'account_holder_name': 'Account Holder Name',
       'bank_branch': 'Bank Branch',

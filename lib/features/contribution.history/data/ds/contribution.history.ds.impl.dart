@@ -5,6 +5,7 @@ import 'package:oldmutual_pensions_app/env/env.dart';
 import 'package:oldmutual_pensions_app/features/contribution.history/data/ds/contribution.history.ds.dart';
 import 'package:oldmutual_pensions_app/features/contribution.history/domain/models/contributed.year.model.dart';
 import 'package:oldmutual_pensions_app/features/contribution.history/domain/models/contribution.history.model.dart';
+import 'package:oldmutual_pensions_app/features/contribution.history/domain/models/contribution.model.dart';
 import 'package:oldmutual_pensions_app/features/contribution.history/domain/models/contribution.summary.model.dart';
 
 final ContributionHistoryDs contributionHistoryDs = Get.put(
@@ -71,6 +72,35 @@ class ContributionHistoryDsImpl implements ContributionHistoryDs {
         res,
         (data) =>
             (data as List).map((e) => ContributedYear.fromJson(e)).toList(),
+      );
+    });
+  }
+
+  @override
+  Future<ApiResponse<Contribution>> getLatestContribution() async {
+    return await asyncFunctionWrapper.handleAsyncNetworkCall(() async {
+      final res = await apiService.callService(
+        requestType: RequestType.get,
+
+        endPoint: Env.getLatestContribution,
+      );
+      return ApiResponse<Contribution>.fromJson(
+        res['data'],
+        (data) => Contribution.fromJson(data),
+      );
+    });
+  }
+
+  @override
+  Future<ApiResponse<List<Contribution>>> getMonthlyContributions() async {
+    return await asyncFunctionWrapper.handleAsyncNetworkCall(() async {
+      final res = await apiService.callService(
+        requestType: RequestType.get,
+        endPoint: Env.getMonthlyContributions,
+      );
+      return ApiResponse<List<Contribution>>.fromJson(
+        res['data'],
+        (data) => (data as List).map((e) => Contribution.fromJson(e)).toList(),
       );
     });
   }

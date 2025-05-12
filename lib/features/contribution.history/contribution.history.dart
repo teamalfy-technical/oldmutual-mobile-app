@@ -8,6 +8,7 @@ export 'data/repos/contribution.history.repo.dart';
 export 'data/repos/contribution.history.repo.impl.dart';
 export 'domain/models/contributed.year.model.dart';
 export 'domain/models/contribution.history.model.dart';
+export 'domain/models/contribution.model.dart';
 export 'domain/models/contribution.summary.model.dart';
 export 'presentation/pages/contribution.history.page.dart';
 export 'presentation/vm/contribution.history.vm.dart';

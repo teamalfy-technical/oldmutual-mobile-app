@@ -12,4 +12,8 @@ abstract class ContributionHistoryRepo {
   getContributionSummary();
   Future<Either<PFailure, ApiResponse<List<ContributedYear>>>>
   getContributionYears();
+
+  Future<Either<PFailure, ApiResponse<List<Contribution>>>>
+  getMonthlyContributions();
+  Future<Either<PFailure, ApiResponse<Contribution>>> getLatestContribution();
 }

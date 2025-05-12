@@ -19,24 +19,48 @@ class PHomeView extends StatelessWidget {
 
   List<String> xLabels = [];
 
+  // List<FlSpot> convertToSpots() {
+  //   final data = getLastFiveMonthlyTransactions();
+  //   return List.generate(data.length, (index) {
+  //     double y = double.parse(data[index].received?.toStringAsFixed(2) ?? '0');
+  //     final x = DateTime.parse(
+  //       data[index].paymentDate ?? DateTime.now().toIso8601String(),
+  //     );
+  //     xLabels.add(
+  //       ' ${PHelperFunction.monthAbbr(x.month)}-${x.year}',
+  //     ); // e.g., Jan-2024
+  //     // pensionAppLogger.e(y);
+  //     return FlSpot(index.toDouble(), y);
+  //   });
+  // }
+
   List<FlSpot> convertToSpots() {
-    final data = getLastFiveMonthlyTransactions();
+    final data = ctrl.contributions;
     return List.generate(data.length, (index) {
-      double y = double.parse(data[index].received?.toStringAsFixed(2) ?? '0');
-      final x = DateTime.parse(
-        data[index].paymentDate ?? DateTime.now().toIso8601String(),
+      double y = double.parse(
+        data[index].mainCurrentValue?.toStringAsFixed(2) ?? '0',
       );
-      xLabels.add(
-        ' ${PHelperFunction.monthAbbr(x.month)}-${x.year}',
-      ); // e.g., Jan-2024
+
+      xLabels.add(data[index].month ?? ''); // e.g., Jan-2024
       // pensionAppLogger.e(y);
       return FlSpot(index.toDouble(), y);
     });
   }
 
+  // double get interval {
+  //   final data = getLastFiveMonthlyTransactions();
+  //   final contribution = data.map((s) => s.received ?? 0).toList();
+  //   double maxValue = contribution.reduce((a, b) => a > b ? a : b);
+  //   // Determine a nice dynamic interval
+  //   double interval = maxValue / 5;
+  //   // Round interval to nearest 5 for nicer ticks
+  //   return (interval / 5).ceil() * 5;
+  // }
+
   double get interval {
-    final data = getLastFiveMonthlyTransactions();
-    final contribution = data.map((s) => s.received ?? 0).toList();
+    // final data = getLastFiveMonthlyTransactions();
+    final data = ctrl.contributions;
+    final contribution = data.map((s) => s.mainCurrentValue ?? 0).toList();
     double maxValue = contribution.reduce((a, b) => a > b ? a : b);
     // Determine a nice dynamic interval
     double interval = maxValue / 5;

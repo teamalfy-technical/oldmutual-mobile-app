@@ -10,4 +10,7 @@ abstract class ContributionHistoryDs {
   });
   Future<ApiResponse<ContributionSummary>> getContributionSummary();
   Future<ApiResponse<List<ContributedYear>>> getContributionYears();
+
+  Future<ApiResponse<List<Contribution>>> getMonthlyContributions();
+  Future<ApiResponse<Contribution>> getLatestContribution();
 }

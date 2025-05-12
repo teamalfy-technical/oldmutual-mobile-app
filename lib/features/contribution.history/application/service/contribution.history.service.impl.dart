@@ -35,4 +35,15 @@ class ContributionHistoryServiceImpl implements ContributionHistoryService {
   getContributionYears() {
     return contributionHistoryRepo.getContributionYears();
   }
+
+  @override
+  Future<Either<PFailure, ApiResponse<Contribution>>> getLatestContribution() {
+    return contributionHistoryRepo.getLatestContribution();
+  }
+
+  @override
+  Future<Either<PFailure, ApiResponse<List<Contribution>>>>
+  getMonthlyContributions() {
+    return contributionHistoryRepo.getMonthlyContributions();
+  }
 }

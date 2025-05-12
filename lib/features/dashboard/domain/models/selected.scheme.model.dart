@@ -12,10 +12,10 @@ class SelectedScheme {
   String? lastLoggedIn;
   String? lastLoggedInIp;
   String? lastLoggedInAgent;
-  int? terms;
+  String? terms;
   String? createdAt;
   String? updatedAt;
-  int? notificationsEnabled;
+  String? notificationsEnabled;
   String? dob;
   String? dateJoined;
   String? sex;

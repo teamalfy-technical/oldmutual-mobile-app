@@ -91,7 +91,7 @@ class _PFactSheetPageState extends State<PFactSheetPage> {
                                     ? true
                                     : false,
                           ),
-                      PAppSize.s16.verticalSpace,
+                      PAppSize.s14.verticalSpace,
 
                       // bar chart
                       Expanded(
@@ -183,6 +183,19 @@ class _PFactSheetPageState extends State<PFactSheetPage> {
                                 )
                                 : PCustomBarChart(data: ctrl.compositions),
                       ),
+                      PAppSize.s18.verticalSpace,
+                      Align(
+                        alignment: Alignment.center,
+                        child: PGradientButton(
+                          label: 'download_pdf'.tr.toUpperCase(),
+                          // showIcon: false,
+                          width: PDeviceUtil.getDeviceWidth(context) * 0.65,
+                          height: PAppSize.s40,
+                          // loading: ctrl.submitting.value,
+                          onTap: () {},
+                        ),
+                      ),
+                      PAppSize.s18.verticalSpace,
                     ],
                   ).symmetric(horizontal: PAppSize.s20),
                 ),
