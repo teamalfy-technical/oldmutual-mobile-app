@@ -4,7 +4,6 @@ import 'package:get/get.dart';
 import 'package:oldmutual_pensions_app/core/utils/utils.dart';
 import 'package:oldmutual_pensions_app/features/contribution.history/contribution.history.dart';
 import 'package:oldmutual_pensions_app/shared/shared.dart';
-import 'package:oldmutual_pensions_app/shared/widgets/custom.dropdown.dart';
 
 class PContributionHistoryPage extends StatelessWidget {
   PContributionHistoryPage({super.key});
@@ -117,6 +116,8 @@ class PContributionHistoryPage extends StatelessWidget {
                                 .value
                                 .transactionHistory!
                                 .transactions!
+                                .where((e) => e.paymentFlag != 'B')
+                                .toList()
                                 .isEmpty
                             ? PEmptyStateWidget(message: 'no_results_found'.tr)
                             : ListView.builder(

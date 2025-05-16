@@ -182,7 +182,7 @@ class PHomeView extends StatelessWidget {
                     ),
                     PAppSize.s6.verticalSpace,
                     Text(
-                      '${'employer'.tr} : ${PSecureStorage().getAuthResponse()?.employerName ?? ''}',
+                      PSecureStorage().getAuthResponse()?.employerName ?? '',
                       textAlign: TextAlign.center,
                       style: Theme.of(context).textTheme.titleSmall?.copyWith(
                         color: PAppColor.whiteColor,
@@ -430,11 +430,9 @@ class PHomeView extends StatelessWidget {
                                     .transactionHistory
                                     ?.transactions ==
                                 null ||
-                            ctrl
-                                .history
-                                .value
-                                .transactionHistory!
-                                .transactions!
+                            ctrl.history.value.transactionHistory!.transactions!
+                                .where((e) => e.paymentFlag != 'B')
+                                .toList()
                                 .isEmpty)
                         ? PEmptyStateWidget(message: 'no_results_found'.tr)
                         : ListView.builder(
