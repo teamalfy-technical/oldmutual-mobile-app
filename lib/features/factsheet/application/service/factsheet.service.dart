@@ -32,4 +32,6 @@ abstract class FactsheetService {
   });
   Future<Either<PFailure, ApiResponse<List<FundCompositionModel>>>>
   deleteFundComposition({required int id});
+
+  Future<Either<PFailure, ApiResponse<Factsheet>>> downloadFactsheet();
 }

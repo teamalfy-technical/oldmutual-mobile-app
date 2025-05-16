@@ -4,6 +4,7 @@ class ContributionSummary {
   double? totalUnits;
   double? currentUnitPrice;
   double? currentValue;
+  double? mainCurrentValue;
   double? gainLoss;
   double? totalInterest;
   String? status;
@@ -16,6 +17,7 @@ class ContributionSummary {
     this.totalUnits,
     this.currentUnitPrice,
     this.currentValue,
+    this.mainCurrentValue,
     this.gainLoss,
     this.totalInterest,
     this.status,
@@ -25,13 +27,13 @@ class ContributionSummary {
 
   ContributionSummary.fromJson(Map<String, dynamic> json) {
     totalContributions = json['total_contributions']?.toDouble();
-    totalEmployerContributions =
-        json['total_employer_contributions']?.toDouble();
-    totalUnits = json['total_units']?.toDouble();
-    currentUnitPrice = json['current_unit_price']?.toDouble();
-    currentValue = json['current_value']?.toDouble();
-    gainLoss = json['gain_loss']?.toDouble();
-    totalInterest = json['total_interest']?.toDouble();
+    totalEmployerContributions = json['total_employer_contributions'];
+    totalUnits = json['total_units'];
+    currentUnitPrice = json['current_unit_price'];
+    currentValue = json['current_value'];
+    mainCurrentValue = json['main_current_value'];
+    gainLoss = json['gain_loss'];
+    totalInterest = json['total_interest'];
     status = json['status'];
     totalRedemption = json['total_redemption']?.toDouble();
     lastContributionDate = json['last_contribution_date'];
@@ -44,6 +46,7 @@ class ContributionSummary {
     data['total_units'] = totalUnits;
     data['current_unit_price'] = currentUnitPrice;
     data['current_value'] = currentValue;
+    data['main_current_value'] = mainCurrentValue;
     data['gain_loss'] = gainLoss;
     data['total_interest'] = totalInterest;
     data['status'] = status;
@@ -58,6 +61,7 @@ class ContributionSummary {
       totalUnits == null &&
       currentUnitPrice == null &&
       currentValue == null &&
+      mainCurrentValue == null &&
       gainLoss == null &&
       totalInterest == null &&
       status == null &&

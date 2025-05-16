@@ -33,10 +33,13 @@ class PFormatter {
   }
 
   /// --- format currency
-  static String formatCurrency({required double amount}) {
+  static String formatCurrency({
+    required double amount,
+    String symbol = 'GHS',
+  }) {
     return NumberFormat.currency(
       locale: 'en_GH',
-      symbol: 'GHS ',
+      symbol: symbol,
     ).format(amount);
   }
 

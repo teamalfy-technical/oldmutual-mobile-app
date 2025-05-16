@@ -34,7 +34,7 @@ class PSettingsVm extends GetxController {
   // Clear user data, token, etc.
   // Then navigate to login screen
   Future<void> signout() async {
-    showLoadingdialog(
+    showLoadingDialog(
       context: context,
       barrierDismissible: true,
       content: Text(
@@ -83,7 +83,7 @@ class PSettingsVm extends GetxController {
   }
 
   Future<void> deleteAccount() async {
-    showLoadingdialog(
+    showLoadingDialog(
       context: context,
       barrierDismissible: true,
       content: Text(

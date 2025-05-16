@@ -145,9 +145,7 @@ class PStatementVm extends GetxController {
           context,
         ).successMessage(title: 'success'.tr, message: res.message ?? '');
         // statements.insert(0, res.data ?? Statement());
-        Future.delayed(Duration(seconds: 5), () {
-          getAllGeneratedReports();
-        });
+        Future.delayed(Duration(seconds: 6), () => getAllGeneratedReports());
       },
     );
   }
@@ -270,7 +268,7 @@ class PStatementVm extends GetxController {
   }
 
   openFile({required String url, required String fileName}) async {
-    pensionAppLogger.e(url);
+    // pensionAppLogger.e(url);
     final file = await downloadFile(url, fileName);
     if (file == null) return;
     OpenFile.open(file.path);
@@ -279,16 +277,11 @@ class PStatementVm extends GetxController {
   // Download file into private folder not visible to user
   Future<File?> downloadFile(String url, String fileName) async {
     final appStorage = await getApplicationDocumentsDirectory();
-    // final appStorage =
-    //     Platform.isAndroid
-    //         ? await getExternalStorageDirectory()
-    //         : await getApplicationDocumentsDirectory();
     final file = File("${appStorage.path}/$fileName");
     String? token = PSecureStorage().getAuthResponse()?.token;
     try {
       final response = await Dio().get(
         url,
-        // filePath,
         options: Options(
           responseType: ResponseType.bytes,
           // headers: PHelperFunction.appTokenHeader(),
@@ -313,6 +306,7 @@ class PStatementVm extends GetxController {
       await raf.close();
       return file;
     } catch (err) {
+      pensionAppLogger.e("Error: $err");
       return null;
     }
   }

@@ -141,4 +141,11 @@ class FactsheetRepoImpl implements FactsheetRepo {
           ),
     );
   }
+
+  @override
+  Future<Either<PFailure, ApiResponse<Factsheet>>> downloadFactsheet() async {
+    return await customRepositoryWrapper.wrapRepositoryFunction(
+      function: () async => await factsheetDs.downloadFactsheet(),
+    );
+  }
 }

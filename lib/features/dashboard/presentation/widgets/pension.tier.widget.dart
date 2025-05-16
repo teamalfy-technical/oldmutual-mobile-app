@@ -39,14 +39,15 @@ class PensionTierWidget extends StatelessWidget {
             scheme.masterSchemeDescription ?? '',
             style: Theme.of(
               context,
-            ).textTheme.titleSmall?.copyWith(fontWeight: FontWeight.w600),
+            ).textTheme.titleSmall?.copyWith(fontWeight: FontWeight.w700),
           ),
           PAppSize.s6.verticalSpace,
           Text(
             '${'employer_name'.tr} : ${scheme.employerName ?? ''}',
-            style: Theme.of(
-              context,
-            ).textTheme.titleSmall?.copyWith(fontWeight: FontWeight.w600),
+            style: Theme.of(context).textTheme.titleSmall?.copyWith(
+              fontWeight: FontWeight.w500,
+              fontSize: PAppSize.s13,
+            ),
           ),
           PAppSize.s16.verticalSpace,
           Text(

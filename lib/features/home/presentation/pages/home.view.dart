@@ -47,6 +47,13 @@ class PHomeView extends StatelessWidget {
     });
   }
 
+  List<FlSpot> getMonthlyChangeSpots() {
+    final data = ctrl.contributions;
+    return List.generate(data.length, (i) {
+      return FlSpot(i.toDouble(), data[i].monthlyChange ?? 0);
+    });
+  }
+
   // double get interval {
   //   final data = getLastFiveMonthlyTransactions();
   //   final contribution = data.map((s) => s.received ?? 0).toList();
@@ -176,10 +183,11 @@ class PHomeView extends StatelessWidget {
                     PAppSize.s6.verticalSpace,
                     Text(
                       '${'employer'.tr} : ${PSecureStorage().getAuthResponse()?.employerName ?? ''}',
+                      textAlign: TextAlign.center,
                       style: Theme.of(context).textTheme.titleSmall?.copyWith(
                         color: PAppColor.whiteColor,
                         fontWeight: FontWeight.w500,
-                        fontSize: PAppSize.s14,
+                        fontSize: PAppSize.s12,
                       ),
                     ),
                     PAppSize.s14.verticalSpace,
@@ -287,8 +295,7 @@ class PHomeView extends StatelessWidget {
                           Text(
                             // ctrl.summmary.value.totalContributions.toString(),
                             PFormatter.formatCurrency(
-                              amount:
-                                  ctrl.summmary.value.totalContributions ?? 0,
+                              amount: ctrl.summmary.value.mainCurrentValue ?? 0,
                             ),
                             style: Theme.of(
                               context,
@@ -369,6 +376,7 @@ class PHomeView extends StatelessWidget {
                           height: PDeviceUtil.getDeviceHeight(context) * 0.3,
                           child: PCustomLineChart(
                             data: convertToSpots(),
+                            data2: ctrl.contributions.value,
                             xLabels: xLabels,
                             interval: interval,
                           ),

@@ -235,7 +235,7 @@ class PRedemptionVm extends GetxController {
       );
       return;
     }
-    showLoadingdialog(
+    showLoadingDialog(
       context: context,
       barrierDismissible: true,
       content: Text(
@@ -301,7 +301,7 @@ class PRedemptionVm extends GetxController {
       );
       return;
     }
-    showLoadingdialog(
+    showLoadingDialog(
       context: context,
       barrierDismissible: true,
       content: Text(

@@ -53,7 +53,7 @@ class PCustomBarChart extends StatelessWidget {
                     return Transform.rotate(
                       angle: -1.5708, // -90 degrees in radians
                       child: Text(
-                        value.toString(),
+                        value.toStringAsFixed(2),
                         textAlign: TextAlign.center,
                         style: TextStyle(
                           fontSize: PAppSize.s10,

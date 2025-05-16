@@ -81,4 +81,9 @@ class FactsheetServiceImpl implements FactsheetService {
       benchmark: benchmark,
     );
   }
+
+  @override
+  Future<Either<PFailure, ApiResponse<Factsheet>>> downloadFactsheet() {
+    return factsheetRepo.downloadFactsheet();
+  }
 }

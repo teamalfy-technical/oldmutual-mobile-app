@@ -42,7 +42,7 @@ class DashboardDsImpl implements DashboardDs {
         'employer_name': employerName,
         'employer_number': employerNumber,
         'ssnit_number': ssnitNumber,
-        'member_name': employerNumber,
+        'member_name': memberName,
         'member_number': memberNumber,
         'master_scheme': masterScheme,
         'scheme_type': schemeType,

@@ -122,7 +122,7 @@ Future showConfirmDialog({
   );
 }
 
-Future showLoadingdialog({
+Future showLoadingDialog({
   required BuildContext context,
   required Widget content,
   bool barrierDismissible = false,

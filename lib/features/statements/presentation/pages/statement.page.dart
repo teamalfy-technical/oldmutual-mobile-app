@@ -95,7 +95,6 @@ class PStatementPage extends StatelessWidget {
                               () => PGradientButton(
                                 label: 'generate'.tr,
                                 showIcon: false,
-
                                 radius: PAppSize.s12,
                                 loading: ctrl.generating.value,
                                 width:

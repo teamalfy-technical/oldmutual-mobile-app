@@ -9,6 +9,7 @@ class PGradientButton extends StatelessWidget {
   final double? width;
   final double? height;
   final double radius;
+  final double fontSize;
   final Function()? onTap;
   final bool showIcon;
   final LoadingState loading;
@@ -21,6 +22,7 @@ class PGradientButton extends StatelessWidget {
     this.showIcon = true,
     this.radius = PAppSize.s24,
     this.loading = LoadingState.completed,
+    this.fontSize = PAppSize.s14,
   });
 
   @override
@@ -44,6 +46,7 @@ class PGradientButton extends StatelessWidget {
         onPressed: onTap,
         style: ElevatedButton.styleFrom(
           side: BorderSide.none,
+          padding: EdgeInsets.all(PAppSize.s0),
           backgroundColor: Colors.transparent, // Make background transparent
           shadowColor: Colors.transparent, // Remove shadow
           shape: RoundedRectangleBorder(
@@ -76,7 +79,7 @@ class PGradientButton extends StatelessWidget {
                   style: TextStyle(
                     fontWeight: FontWeight.w500,
                     color: PAppColor.whiteColor,
-                    fontSize: PAppSize.s14,
+                    fontSize: fontSize,
                   ),
                 ),
       ),

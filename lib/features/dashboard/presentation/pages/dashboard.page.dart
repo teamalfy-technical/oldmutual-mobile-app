@@ -4,7 +4,6 @@ import 'package:get/get.dart';
 import 'package:oldmutual_pensions_app/core/utils/utils.dart';
 import 'package:oldmutual_pensions_app/features/dashboard/dashboard.dart';
 import 'package:oldmutual_pensions_app/gen/assets.gen.dart';
-import 'package:oldmutual_pensions_app/routes/app.pages.dart';
 import 'package:oldmutual_pensions_app/shared/shared.dart';
 
 class PDashboardPage extends StatelessWidget {
@@ -96,6 +95,7 @@ class PDashboardPage extends StatelessWidget {
                               return PensionTierWidget(
                                 scheme: scheme,
                                 onTap: () {
+                                  // pensionAppLogger.e(scheme.toJson());
                                   ctrl.getMemberSelectedScheme(
                                     employerName: scheme.employerName ?? '',
                                     employerNumber: scheme.employerNumber ?? '',
@@ -111,10 +111,10 @@ class PDashboardPage extends StatelessWidget {
                                     sex: scheme.sex ?? '',
                                     nationality: scheme.nationality ?? '',
                                   );
-                                  PHelperFunction.switchScreen(
-                                    destination: Routes.homePage,
-                                    replace: false,
-                                  );
+                                  // PHelperFunction.switchScreen(
+                                  //   destination: Routes.homePage,
+                                  //   replace: false,
+                                  // );
                                 },
                               );
                             },
@@ -122,6 +122,12 @@ class PDashboardPage extends StatelessWidget {
                 ),
               ),
             ),
+
+            if (ctrl.selecting.value == LoadingState.loading)
+              Align(
+                alignment: Alignment.center,
+                child: PCustomLoadingIndicator(),
+              ),
           ],
         ),
       ),

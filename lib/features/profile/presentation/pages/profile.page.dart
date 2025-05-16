@@ -68,7 +68,10 @@ class PProfilePage extends StatelessWidget {
                       PCustomListTile(
                         title: 'full_name'.tr,
                         subtitle:
-                            ctrl.profile.value.name ?? 'not_applicable'.tr,
+                            ctrl.profile.value.name ??
+                            PSecureStorage().getAuthResponse()?.name ??
+                            PSecureStorage().getBioData()?.fullName ??
+                            'not_applicable'.tr,
                       ).redacted(
                         context: context,
                         redact:
@@ -80,7 +83,10 @@ class PProfilePage extends StatelessWidget {
                       PCustomListTile(
                         title: 'email_address'.tr,
                         subtitle:
-                            ctrl.profile.value.email ?? 'not_applicable'.tr,
+                            ctrl.profile.value.email ??
+                            PSecureStorage().getAuthResponse()?.email ??
+                            PSecureStorage().getBioData()?.email ??
+                            'not_applicable'.tr,
                       ).redacted(
                         context: context,
                         redact:
@@ -93,6 +99,7 @@ class PProfilePage extends StatelessWidget {
                         title: 'mobile_number'.tr,
                         subtitle:
                             PSecureStorage().getAuthResponse()?.phone ??
+                            PSecureStorage().getBioData()?.mobileNo ??
                             'not_applicable'.tr,
                       ).redacted(
                         context: context,
@@ -105,6 +112,7 @@ class PProfilePage extends StatelessWidget {
                       PCustomListTile(
                         title: 'membership_id'.tr,
                         subtitle:
+                            PSecureStorage().getAuthResponse()?.memberNumber ??
                             ctrl.profile.value.memberNumber ??
                             'not_applicable'.tr,
                       ).redacted(
@@ -140,6 +148,7 @@ class PProfilePage extends StatelessWidget {
                       PCustomListTile(
                         title: 'ssnit_number'.tr,
                         subtitle:
+                            PSecureStorage().getAuthResponse()?.ssnitNumber ??
                             ctrl.profile.value.ssnitNumber ??
                             'not_applicable'.tr,
                       ).redacted(
@@ -156,7 +165,8 @@ class PProfilePage extends StatelessWidget {
                         subtitle: PFormatter.formatDate(
                           dateFormat: DateFormat('dd-MM-yyyy'),
                           date: DateTime.parse(
-                            ctrl.profile.value.dob ??
+                            PSecureStorage().getAuthResponse()?.dob ??
+                                ctrl.profile.value.dob ??
                                 DateTime.now().toIso8601String(),
                           ),
                         ),
@@ -173,6 +183,7 @@ class PProfilePage extends StatelessWidget {
                       PCustomListTile(
                         title: 'employer_name'.tr,
                         subtitle:
+                            PSecureStorage().getAuthResponse()?.employerName ??
                             PSecureStorage().getBioData()?.employerName ??
                             'not_applicable'.tr,
                       ).redacted(
@@ -187,6 +198,7 @@ class PProfilePage extends StatelessWidget {
                       PCustomListTile(
                         title: 'scheme_name'.tr,
                         subtitle:
+                            PSecureStorage().getAuthResponse()?.masterScheme ??
                             PSecureStorage().getBioData()?.schemeName ??
                             'not_applicable'.tr,
                       ).redacted(
@@ -201,6 +213,7 @@ class PProfilePage extends StatelessWidget {
                       PCustomListTile(
                         title: 'pension_type'.tr,
                         subtitle:
+                            PSecureStorage().getAuthResponse()?.schemeType ??
                             PSecureStorage().getBioData()?.pensionTypeName ??
                             'not_applicable'.tr,
                       ).redacted(

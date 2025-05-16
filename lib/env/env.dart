@@ -231,6 +231,10 @@ abstract class Env {
   @EnviedField(defaultValue: '/delete/performance', obfuscate: true)
   static final String deletePerformance = _Env.deletePerformance;
 
+  /// [DownloadFactsheet] endpoint
+  @EnviedField(defaultValue: '/factsheets', obfuscate: true)
+  static final String downloadFactsheet = _Env.downloadFactsheet;
+
   /// -------------------- Performance Endpoints Ends Here ------------------------- ///
   ///
   ///

@@ -117,7 +117,7 @@ class PBeneficiaryVm extends GetxController {
   /// Function to edit a beneficiary
   Future<void> editBeneficiary(Beneficiary beneficiary) async {
     // pensionAppLogger.d(date);
-    showLoadingdialog(
+    showLoadingDialog(
       context: context,
       barrierDismissible: true,
       content: Text(
@@ -181,7 +181,7 @@ class PBeneficiaryVm extends GetxController {
   /// Function to add a beneficiary
   Future<void> addBeneficiary() async {
     //pensionAppLogger.d(formatBirthDate(dobTEC.text.trim()));
-    showLoadingdialog(
+    showLoadingDialog(
       context: context,
       barrierDismissible: true,
       content: Text(
@@ -223,7 +223,7 @@ class PBeneficiaryVm extends GetxController {
 
   /// Function to delete a beneficiary
   Future<void> deleteBeneficiary(Beneficiary beneficiary) async {
-    showLoadingdialog(
+    showLoadingDialog(
       context: context,
       barrierDismissible: true,
       content: Text(

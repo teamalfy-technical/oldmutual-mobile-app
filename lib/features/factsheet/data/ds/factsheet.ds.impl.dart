@@ -3,8 +3,6 @@ import 'package:get/get.dart';
 import 'package:oldmutual_pensions_app/core/network/network.dart';
 import 'package:oldmutual_pensions_app/core/utils/utils.dart';
 import 'package:oldmutual_pensions_app/env/env.dart';
-import 'package:oldmutual_pensions_app/features/factsheet/domain/models/fund.composition.model.dart';
-import 'package:oldmutual_pensions_app/features/factsheet/domain/models/performance.model.dart';
 import 'package:oldmutual_pensions_app/features/factsheet/factsheet.dart';
 
 final FactsheetDs factsheetDs = Get.put(FactsheetDsImpl());
@@ -164,6 +162,20 @@ class FactsheetDsImpl implements FactsheetDs {
       return ApiResponse<PerformanceModel>.fromJson(
         res,
         (data) => PerformanceModel.fromJson(data),
+      );
+    });
+  }
+
+  @override
+  Future<ApiResponse<Factsheet>> downloadFactsheet() async {
+    return await asyncFunctionWrapper.handleAsyncNetworkCall(() async {
+      final res = await apiService.callService(
+        requestType: RequestType.get,
+        endPoint: Env.downloadFactsheet,
+      );
+      return ApiResponse<Factsheet>.fromJson(
+        res,
+        (data) => Factsheet.fromJson(data),
       );
     });
   }

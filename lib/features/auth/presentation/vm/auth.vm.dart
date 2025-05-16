@@ -71,7 +71,7 @@ class PAuthVm extends GetxController {
       );
       return;
     }
-    showLoadingdialog(
+    showLoadingDialog(
       context: context,
       content: Text(
         'signing_up'.tr,
@@ -120,7 +120,7 @@ class PAuthVm extends GetxController {
       return;
     }
 
-    showLoadingdialog(
+    showLoadingDialog(
       context: context,
       barrierDismissible: true,
       content: Text(
@@ -181,7 +181,7 @@ class PAuthVm extends GetxController {
 
     checkIfPasswordMatch();
 
-    showLoadingdialog(
+    showLoadingDialog(
       context: context,
       barrierDismissible: true,
       content: Text(
@@ -225,7 +225,7 @@ class PAuthVm extends GetxController {
   Future<void> forgotPassword() async {
     String email = emailTEC.text.trim();
 
-    showLoadingdialog(
+    showLoadingDialog(
       context: context,
       content: Text(
         'sending_reset_link'.tr,
@@ -257,7 +257,7 @@ class PAuthVm extends GetxController {
 
     checkIfPasswordMatch();
 
-    showLoadingdialog(
+    showLoadingDialog(
       context: context,
       content: Text(
         'creating_new_password_msg'.tr,
@@ -304,7 +304,7 @@ class PAuthVm extends GetxController {
     String password = passwordTEC.text.trim();
     // final deviceToken = await PNotificationService().getToken();
     // pensionAppLogger.e(deviceToken);
-    showLoadingdialog(
+    showLoadingDialog(
       context: context,
       barrierDismissible: false,
       content: Text(

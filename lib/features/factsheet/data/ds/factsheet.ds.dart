@@ -1,6 +1,5 @@
 import 'package:oldmutual_pensions_app/core/network/network.dart';
-import 'package:oldmutual_pensions_app/features/factsheet/domain/models/fund.composition.model.dart';
-import 'package:oldmutual_pensions_app/features/factsheet/domain/models/performance.model.dart';
+import 'package:oldmutual_pensions_app/features/factsheet/factsheet.dart';
 
 abstract class FactsheetDs {
   Future<ApiResponse<List<PerformanceModel>>> getPerformances();
@@ -32,4 +31,6 @@ abstract class FactsheetDs {
   Future<ApiResponse<List<FundCompositionModel>>> deleteFundComposition({
     required int id,
   });
+
+  Future<ApiResponse<Factsheet>> downloadFactsheet();
 }

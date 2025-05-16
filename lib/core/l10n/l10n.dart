@@ -208,6 +208,7 @@ class AppTranslations extends Translations {
           'Your porting request has been submitted. You’ll be notified once processed',
       'download_pdf': 'Download PDF',
       'download_results_as_pdf': 'Download results as PDF',
+      'switch_scheme_msg': 'Hang tight! We’re switching your scheme now...',
       'not_applicable': 'N/A',
       'deleting_beneficiary': 'Deleting Beneficiary',
       'adding_beneficiary_msg': 'Adding New Beneficiary...',
