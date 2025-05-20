@@ -6,7 +6,7 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_downloader/flutter_downloader.dart';
+//import 'package:flutter_downloader/flutter_downloader.dart';
 // import 'package:flutter_downloader/flutter_downloader.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -38,14 +38,14 @@ Future<void> initDependencies() async {
   final currentEnv = await Environment.current();
   pensionAppLogger.e("Connecting to ${currentEnv.apiBaseUrl}");
   // Plugin must be initialized before using
-  await FlutterDownloader.initialize(
-    debug:
-        true, // optional: set to false to disable printing logs to console (default: true)
-    ignoreSsl:
-        false, // option: set to false to disable working with http links (default: false)
-  );
+  // await FlutterDownloader.initialize(
+  //   debug:
+  //       true, // optional: set to false to disable printing logs to console (default: true)
+  //   ignoreSsl:
+  //       false, // option: set to false to disable working with http links (default: false)
+  // );
   await GetStorage.init();
-  // 🔐 Initialize Firebase first
+  //🔐 Initialize Firebase first
   await initFirebaseApp();
 
   await FirebaseCrashlytics.instance.setCrashlyticsCollectionEnabled(
@@ -54,11 +54,7 @@ Future<void> initDependencies() async {
 
   // Optional: capture Flutter errors automatically
   FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterFatalError;
-  // if (kDebugMode) {
-  //   await FirebaseCrashlytics.instance.setCrashlyticsCollectionEnabled(false);
-  // } else {
-  //   await FirebaseCrashlytics.instance.setCrashlyticsCollectionEnabled(true);
-  // }
+
   FirebaseMessaging.onBackgroundMessage(_backgroundHandler);
 }
 
