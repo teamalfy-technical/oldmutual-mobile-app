@@ -295,7 +295,8 @@ class PHomeView extends StatelessWidget {
                           Text(
                             // ctrl.summmary.value.totalContributions.toString(),
                             PFormatter.formatCurrency(
-                              amount: ctrl.summmary.value.mainCurrentValue ?? 0,
+                              amount:
+                                  ctrl.summmary.value.totalContributions ?? 0,
                             ),
                             style: Theme.of(
                               context,

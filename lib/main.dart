@@ -16,6 +16,8 @@ import 'package:oldmutual_pensions_app/core/l10n/l10n.dart';
 import 'package:oldmutual_pensions_app/core/theme/app.theme.dart';
 import 'package:oldmutual_pensions_app/core/utils/utils.dart';
 import 'package:oldmutual_pensions_app/env/env.dart';
+import 'package:oldmutual_pensions_app/features/home/home.dart'
+    show PInactivityService;
 import 'package:oldmutual_pensions_app/firebase_options_dev.dart' as dev;
 import 'package:oldmutual_pensions_app/firebase_options_prod.dart' as prod;
 import 'package:oldmutual_pensions_app/flavor.config.dart';
@@ -37,13 +39,6 @@ Future<void> initDependencies() async {
   await Env.init();
   final currentEnv = await Environment.current();
   pensionAppLogger.e("Connecting to ${currentEnv.apiBaseUrl}");
-  // Plugin must be initialized before using
-  // await FlutterDownloader.initialize(
-  //   debug:
-  //       true, // optional: set to false to disable printing logs to console (default: true)
-  //   ignoreSsl:
-  //       false, // option: set to false to disable working with http links (default: false)
-  // );
   await GetStorage.init();
   //🔐 Initialize Firebase first
   await initFirebaseApp();
@@ -68,33 +63,40 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ScreenUtilInit(
-      designSize: const Size(360, 690),
-      minTextAdapt: true,
-      splitScreenMode: true,
-      builder: (_, child) {
-        return GetMaterialApp(
-          debugShowCheckedModeBanner: false,
-          title: 'Old Mutual Pensions',
-          useInheritedMediaQuery: true,
-          locale: Get.deviceLocale,
-          navigatorKey: appNavigatorKey,
-          scaffoldMessengerKey: scaffoldMessengerKey,
-          translations: AppTranslations(), // Add translations
-          fallbackLocale: const Locale('en', 'US'), // Fallback language
-          defaultTransition: Transition.native,
-          // transitionDuration: const Duration(milliseconds: PAppSize.s700),
-          enableLog: true,
-          logWriterCallback: LocalLogger.write,
-          initialRoute: AppPages.initial,
-          initialBinding: InitialBinding(),
-          getPages: AppPages.routes,
-          theme: PAppTheme.lightTheme,
-          darkTheme: PAppTheme.darkTheme,
-          themeMode: ThemeMode.light,
-          scrollBehavior: const CupertinoScrollBehavior(),
-        );
-      },
+    return Listener(
+      behavior: HitTestBehavior.translucent,
+      onPointerDown: (_) => PInactivityService.instance.resetTimer(),
+      // GestureDetector(
+      //   onTap: () => PInactivityService.instance.resetTimer(),
+      //   onPanDown: (_) => PInactivityService.instance.resetTimer(),
+      child: ScreenUtilInit(
+        designSize: const Size(360, 690),
+        minTextAdapt: true,
+        splitScreenMode: true,
+        builder: (_, child) {
+          return GetMaterialApp(
+            debugShowCheckedModeBanner: false,
+            title: 'Old Mutual Pensions',
+            useInheritedMediaQuery: true,
+            locale: Get.deviceLocale,
+            navigatorKey: appNavigatorKey,
+            scaffoldMessengerKey: scaffoldMessengerKey,
+            translations: AppTranslations(), // Add translations
+            fallbackLocale: const Locale('en', 'US'), // Fallback language
+            defaultTransition: Transition.native,
+            // transitionDuration: const Duration(milliseconds: PAppSize.s700),
+            enableLog: true,
+            logWriterCallback: LocalLogger.write,
+            initialRoute: AppPages.initial,
+            initialBinding: InitialBinding(),
+            getPages: AppPages.routes,
+            theme: PAppTheme.lightTheme,
+            darkTheme: PAppTheme.darkTheme,
+            themeMode: ThemeMode.light,
+            scrollBehavior: const CupertinoScrollBehavior(),
+          );
+        },
+      ),
     );
   }
 }
@@ -112,8 +114,6 @@ Future<void> initFirebaseApp() async {
         options: prod.DefaultFirebaseOptions.currentPlatform,
       );
   }
-  // await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
-  // await FirebaseMessaging.instance.getInitialMessage();
 
   await PNotificationService().init();
 }

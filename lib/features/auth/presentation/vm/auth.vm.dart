@@ -326,9 +326,9 @@ class PAuthVm extends GetxController {
       },
       (res) async {
         PSecureStorage().saveData<bool>(PSecureStorage().registeredKey, true);
-        if (PDeviceUtil.isAndroid()) {
-          await PNotificationService().saveToken();
-        }
+        // if (PDeviceUtil.isAndroid()) {
+        await PNotificationService().saveToken();
+        // }
         // await getBioData();
         clearFields();
         PHelperFunction.pop();

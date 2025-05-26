@@ -59,10 +59,11 @@ class DefaultFirebaseOptions {
 
   static const FirebaseOptions ios = FirebaseOptions(
     apiKey: 'AIzaSyACFX1JcYHUJpKfesvbLZhQb_t12uADs9w',
-    appId: '1:264180873072:ios:4121af262c9cded10b41b5',
+    appId: '1:264180873072:ios:408ab08fd9d8bf750b41b5',
     messagingSenderId: '264180873072',
     projectId: 'om-pensions-app',
     storageBucket: 'om-pensions-app.firebasestorage.app',
-    iosBundleId: 'com.oldmutual.pensions.app.dev',
+    iosBundleId: 'com.oldmutual.pensions.app.devo',
   );
+
 }

@@ -9,7 +9,7 @@
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>com.oldmutual.pensions.app.prod</string>
+	<string>com.oldmutual.pensions.app.devo</string>
 	<key>PROJECT_ID</key>
 	<string>om-pensions-app</string>
 	<key>STORAGE_BUCKET</key>
@@ -25,6 +25,6 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:264180873072:ios:f3792ea265d586df0b41b5</string>
+	<string>1:264180873072:ios:408ab08fd9d8bf750b41b5</string>
 </dict>
 </plist>
