@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:oldmutual_pensions_app/core/utils/utils.dart';
 import 'package:oldmutual_pensions_app/features/auth/application/auth.service.impl.dart';
-import 'package:oldmutual_pensions_app/features/notification/presentation/vm/notification.service.dart';
 import 'package:oldmutual_pensions_app/routes/app.pages.dart';
 import 'package:oldmutual_pensions_app/shared/widgets/popup.dialog.dart';
 
@@ -327,7 +326,7 @@ class PAuthVm extends GetxController {
       (res) async {
         PSecureStorage().saveData<bool>(PSecureStorage().registeredKey, true);
         // if (PDeviceUtil.isAndroid()) {
-        await PNotificationService().saveToken();
+        // await PNotificationService().saveToken();
         // }
         // await getBioData();
         clearFields();

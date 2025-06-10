@@ -153,7 +153,7 @@ class PRedemptionPage extends StatelessWidget {
                             : PCustomFilledTextfield(
                               label: 'percentage'.tr,
                               hint: 'E.g. 50',
-                              // validator: PValidator.validatePercentage,
+                              validator: PValidator.validatePercentage,
                               maxLength: PAppSize.s3.toInt(),
                               textInputType: TextInputType.numberWithOptions(
                                 decimal: true,

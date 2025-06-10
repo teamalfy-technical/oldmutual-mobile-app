@@ -47,7 +47,6 @@ class PValidator {
     }
 
     if (number > 100) {
-      // Replace 100 with your desired max value
       return 'Percentage cannot be greater than 100';
     }
 
