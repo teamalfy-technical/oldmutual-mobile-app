@@ -155,6 +155,10 @@ class PRedemptionPage extends StatelessWidget {
                               hint: 'E.g. 50',
                               validator: PValidator.validatePercentage,
                               maxLength: PAppSize.s3.toInt(),
+                              onChanged: (val) {
+                                PValidator.validatePercentage(val);
+                                ctrl.redemptionFormKey.currentState?.validate();
+                              },
                               textInputType: TextInputType.numberWithOptions(
                                 decimal: true,
                               ),

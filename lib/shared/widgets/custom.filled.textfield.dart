@@ -15,6 +15,7 @@ class PCustomFilledTextfield extends StatelessWidget {
   final int? minLines;
   final bool enabled;
   final TextInputAction textInputAction;
+  final Function(String?)? onChanged;
   const PCustomFilledTextfield({
     super.key,
     required this.label,
@@ -28,6 +29,7 @@ class PCustomFilledTextfield extends StatelessWidget {
     this.maxLines,
     this.minLines,
     this.textInputAction = TextInputAction.next,
+    this.onChanged,
   });
 
   @override
@@ -51,6 +53,7 @@ class PCustomFilledTextfield extends StatelessWidget {
           textInputAction: textInputAction,
           inputFormatters: inputFormatters,
           enabled: enabled,
+          onChanged: onChanged,
           decoration: InputDecoration(
             hintText: hint,
             counter: SizedBox.shrink(),
