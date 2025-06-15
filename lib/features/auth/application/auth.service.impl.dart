@@ -81,4 +81,17 @@ class AuthServiceImpl implements AuthService {
   }) {
     return authRepo.verifyForgotPasswordOTP(email: email, otp: otp);
   }
+
+  @override
+  Future<Either<PFailure, ApiResponse<List<Message>>>> changePassword({
+    required String oldPassword,
+    required String newPassword,
+    required String confirmPassword,
+  }) {
+    return authRepo.changePassword(
+      oldPassword: oldPassword,
+      newPassword: newPassword,
+      confirmPassword: confirmPassword,
+    );
+  }
 }

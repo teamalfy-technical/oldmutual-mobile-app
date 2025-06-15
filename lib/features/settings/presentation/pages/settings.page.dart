@@ -61,6 +61,18 @@ class PSettingsPage extends StatelessWidget {
               ),
               Divider(color: PAppColor.fillColor),
               ListTile(
+                onTap:
+                    () => PHelperFunction.switchScreen(
+                      destination: Routes.changePasswordPage,
+                    ),
+                title: Text(
+                  'change_password'.tr,
+                  style: Theme.of(context).textTheme.bodyMedium,
+                ),
+                trailing: Assets.icons.arrowForwardIos.svg(),
+              ),
+              Divider(color: PAppColor.fillColor),
+              ListTile(
                 onTap: () {
                   showConfirmDialog(
                     context: context,

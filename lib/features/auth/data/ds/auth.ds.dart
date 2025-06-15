@@ -18,6 +18,12 @@ abstract class AuthDs {
     required String confirmPassword,
   });
 
+  Future<ApiResponse<List<Message>>> changePassword({
+    required String oldPassword,
+    required String newPassword,
+    required String confirmPassword,
+  });
+
   Future<ApiResponse<List<BioData>>> getBioData();
 
   Future<ApiResponse<Member>> signIn({

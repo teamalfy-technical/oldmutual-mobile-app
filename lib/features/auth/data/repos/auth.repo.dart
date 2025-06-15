@@ -20,6 +20,12 @@ abstract class AuthRepo {
     required String confirmPassword,
   });
 
+  Future<Either<PFailure, ApiResponse<List<Message>>>> changePassword({
+    required String oldPassword,
+    required String newPassword,
+    required String confirmPassword,
+  });
+
   Future<Either<PFailure, ApiResponse<Member>>> signIn({
     required String phone,
     required String password,

@@ -10,6 +10,7 @@ class PCustomPasswordTextField extends StatelessWidget {
   final Color? focusColor;
   final TextEditingController controller;
   final bool obscure;
+  final String? Function(String?)? validator;
   final TextInputType? textInputType;
   final Function()? onObscureChanged;
   final bool isPasswordStrong;
@@ -27,6 +28,7 @@ class PCustomPasswordTextField extends StatelessWidget {
     this.onObscureChanged,
     this.onChanged,
     this.isPasswordStrong = false,
+    this.validator,
   });
 
   @override
@@ -46,7 +48,8 @@ class PCustomPasswordTextField extends StatelessWidget {
         TextFormField(
           controller: controller,
           obscureText: obscure,
-          // validator: PValidator.validatePassword,
+          validator: validator,
+          //?? PValidator.validatePassword,
           onChanged: onChanged,
           decoration: InputDecoration(
             errorBorder: const OutlineInputBorder().copyWith(

@@ -50,6 +50,7 @@ class PCreatePasswordPage extends StatelessWidget {
                             PCustomPasswordTextField(
                               labelText: 'create_password'.tr,
                               hintText: 'hint_password'.tr,
+                              validator: PValidator.validatePassword,
                               prefixIcon: Assets.icons.lockIcon.path,
                               suffixIcon: Assets.icons.eyeIcon.path,
                               obscure: ctrl.obscure.value,
@@ -63,6 +64,7 @@ class PCreatePasswordPage extends StatelessWidget {
                                       ? 'confirm_password'.tr
                                       : 're_enter_password'.tr,
                               hintText: 'hint_password'.tr,
+                              validator: PValidator.validatePassword,
                               prefixIcon: Assets.icons.lockIcon.path,
                               suffixIcon: Assets.icons.eyeIcon.path,
                               obscure: ctrl.obscure.value,

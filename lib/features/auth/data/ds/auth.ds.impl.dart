@@ -177,4 +177,28 @@ class AuthDsImpl implements AuthDs {
       );
     });
   }
+
+  @override
+  Future<ApiResponse<List<Message>>> changePassword({
+    required String oldPassword,
+    required String newPassword,
+    required String confirmPassword,
+  }) async {
+    return await asyncFunctionWrapper.handleAsyncNetworkCall(() async {
+      final payload = dio.FormData.fromMap({
+        'old_password': oldPassword,
+        'password': newPassword,
+        'c_password': confirmPassword,
+      });
+      final res = await apiService.callService(
+        requestType: RequestType.post,
+        payload: payload,
+        endPoint: Env.changePassword,
+      );
+      return ApiResponse<List<Message>>.fromJson(
+        res,
+        (data) => (data as List).map((e) => Message.fromJson(e)).toList(),
+      );
+    });
+  }
 }

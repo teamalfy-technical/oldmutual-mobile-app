@@ -120,4 +120,22 @@ class AuthRepoImpl implements AuthRepo {
       },
     );
   }
+
+  @override
+  Future<Either<PFailure, ApiResponse<List<Message>>>> changePassword({
+    required String oldPassword,
+    required String newPassword,
+    required String confirmPassword,
+  }) async {
+    return await customRepositoryWrapper.wrapRepositoryFunction(
+      function: () async {
+        final res = await authDs.changePassword(
+          oldPassword: oldPassword,
+          newPassword: newPassword,
+          confirmPassword: confirmPassword,
+        );
+        return res;
+      },
+    );
+  }
 }
