@@ -169,12 +169,14 @@ class PBeneficiaryWidget extends StatelessWidget {
             detailWidget(
               context,
               'dob'.tr,
-              PFormatter.formatDate(
-                dateFormat: DateFormat('dd-MM-yyyy'),
-                date: DateTime.parse(
-                  beneficiary.birthDate ?? DateTime.now().toIso8601String(),
-                ),
-              ),
+              beneficiary.birthDate == null
+                  ? 'not_applicable'.tr
+                  : PFormatter.formatDate(
+                    dateFormat: DateFormat('dd-MM-yyyy'),
+                    date: DateTime.parse(
+                      beneficiary.birthDate ?? DateTime.now().toIso8601String(),
+                    ),
+                  ),
             ),
             detailWidget(
               context,

@@ -8,7 +8,8 @@ class Scheme {
   double? monthlyContribution;
   String? ssnitNumber;
   String? employerNumber;
-  double? schemeCurrentValue;
+  // double?
+  dynamic schemeCurrentValue;
   String? employerName;
   String? email;
   String? dob;

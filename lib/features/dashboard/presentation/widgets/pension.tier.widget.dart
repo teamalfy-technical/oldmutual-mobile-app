@@ -51,7 +51,12 @@ class PensionTierWidget extends StatelessWidget {
           ),
           PAppSize.s16.verticalSpace,
           Text(
-            PFormatter.formatCurrency(amount: scheme.schemeCurrentValue ?? 0),
+            PFormatter.formatCurrency(
+              amount:
+                  scheme.schemeCurrentValue.runtimeType == double
+                      ? scheme.schemeCurrentValue
+                      : 0,
+            ),
             style: Theme.of(
               context,
             ).textTheme.titleSmall?.copyWith(fontWeight: FontWeight.w500),

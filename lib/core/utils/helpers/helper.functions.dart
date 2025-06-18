@@ -1,6 +1,8 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_image_compress/flutter_image_compress.dart';
 import 'package:get/get.dart';
 import 'package:oldmutual_pensions_app/core/utils/utils.dart';
 
@@ -58,6 +60,27 @@ class PHelperFunction {
       'Authorization': 'Bearer $token',
       //'Content-Type': 'application/json'
     };
+  }
+
+  static Future<File> compressFile(File file) async {
+    final compressedFile = await FlutterImageCompress.compressAndGetFile(
+      file.absolute.path,
+      '${file.absolute.path}_compressed.jpg',
+      quality: 70, // You can adjust compression ratio
+    );
+    return File(compressedFile?.path ?? file.path);
+  }
+
+  static Future<String> getFileSize(File file) async {
+    // Get file size in bytes
+    int fileSizeInBytes = await file.length();
+
+    // Convert to MB for easy reading
+    double fileSizeInMB = fileSizeInBytes / (1024 * 1024);
+
+    pensionAppLogger.w('File size: ${fileSizeInMB.toStringAsFixed(2)} MB');
+
+    return '${fileSizeInMB.toStringAsFixed(2)} MB';
   }
 
   static double findMaxValue({required List<String> values}) {

@@ -72,6 +72,7 @@ class RedemptionDsImpl implements RedemptionDs {
     return await asyncFunctionWrapper.handleAsyncNetworkCall(() async {
       final res = await apiService.callService(
         requestType: RequestType.post,
+        // payload: formData,
         payload: dio.FormData.fromMap({
           'national_id': nationId,
           'redemption_type': redemptionType,
@@ -79,9 +80,9 @@ class RedemptionDsImpl implements RedemptionDs {
           'amount': amount,
           'redemption_reason': redemptionReason,
           'bank_account': bankAccount,
-          'bank_name': bankAccount,
+          'bank_name': bankName,
           'account_holder_name': accountHolderName,
-          'bank_branch': bankAccount,
+          'bank_branch': bankBranch,
           'id_front': await dio.MultipartFile.fromFile(
             idFront.path,
             filename: idFront.path.split('/').last.split('.').first,

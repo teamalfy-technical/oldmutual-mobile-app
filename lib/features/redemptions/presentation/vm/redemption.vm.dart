@@ -143,6 +143,7 @@ class PRedemptionVm extends GetxController {
     try {
       image = await ImagePicker().pickImage(source: ImageSource.gallery);
       if (image == null) return;
+
       _cropImage(imagePath: image.path, front: front);
     } on PlatformException catch (err) {
       debugPrint('Failed to pick image: $err');
@@ -170,9 +171,18 @@ class PRedemptionVm extends GetxController {
         ],
       );
       if (croppedFile == null) return;
-      front
-          ? idFront.value = File(croppedFile.path)
-          : idBack.value = File(croppedFile.path);
+
+      // pensionAppLogger.w(
+      //   'FileSize BF: ${await PHelperFunction.getFileSize(File(croppedFile.path))}',
+      // );
+
+      final compressedFile = await PHelperFunction.compressFile(
+        File(croppedFile.path),
+      );
+      // final fileSize = await PHelperFunction.getFileSize(compressedFile);
+      // pensionAppLogger.w('FileSize AF: $fileSize');
+      // pensionAppLogger.w(fileSize);
+      front ? idFront.value = compressedFile : idBack.value = compressedFile;
     } on PlatformException catch (err) {
       debugPrint('Failed to crop photo: $err');
     }
