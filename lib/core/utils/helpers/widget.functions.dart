@@ -63,7 +63,7 @@ Future showConfirmDialog({
   required Widget content,
   String? negativeText,
   String? positiveText,
-  required Function() onPostiveTap,
+  required Function() onPositiveTap,
   Function()? onNegativeTap,
 }) {
   return showAdaptiveDialog(
@@ -87,7 +87,7 @@ Future showConfirmDialog({
                 label: positiveText ?? 'yes'.tr.toUpperCase(),
                 height: PAppSize.buttonHeightMid,
                 width: PDeviceUtil.getDeviceWidth(context) * 0.35,
-                onTap: onPostiveTap,
+                onTap: onPositiveTap,
               ),
               PAppSize.s8.verticalSpace,
               OutlinedButton.icon(
@@ -149,7 +149,7 @@ Future showLoadingDialog({
   );
 }
 
-Future showSucccessdialog({
+Future showSuccessDialog({
   required BuildContext context,
   required String title,
   Widget? subtitle,

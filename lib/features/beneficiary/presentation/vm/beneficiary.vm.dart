@@ -157,7 +157,7 @@ class PBeneficiaryVm extends GetxController {
   }
 
   showSuccessMessage(String messge, [bool isOnParentView = false]) {
-    showSucccessdialog(
+    showSuccessDialog(
       context: context,
       mainAxisAlignment: MainAxisAlignment.center,
       title: '${'success'.tr}!',

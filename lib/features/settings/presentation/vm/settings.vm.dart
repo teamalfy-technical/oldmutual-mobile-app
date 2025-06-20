@@ -108,7 +108,7 @@ class PSettingsVm extends GetxController {
       (res) {
         PHelperFunction.pop();
         clearCache();
-        showSucccessdialog(context: context, title: res.message ?? '');
+        showSuccessDialog(context: context, title: res.message ?? '');
         Future.delayed(Duration(seconds: 2), () {
           PHelperFunction.pop();
           // navigate to next screen
@@ -147,7 +147,7 @@ class PSettingsVm extends GetxController {
       },
       (res) {
         PHelperFunction.pop();
-        showSucccessdialog(context: context, title: res.message ?? '');
+        showSuccessDialog(context: context, title: res.message ?? '');
         Future.delayed(Duration(seconds: 2), () {
           PHelperFunction.pop();
           // navigate to next screen

@@ -280,7 +280,7 @@ class PRedemptionVm extends GetxController {
       (res) async {
         PHelperFunction.pop();
         clearFields();
-        showSuccessDialog(message: 'redeem_pension_msg'.tr);
+        showMySuccessDialog(message: 'redeem_pension_msg'.tr);
       },
     );
   }
@@ -342,14 +342,14 @@ class PRedemptionVm extends GetxController {
       (res) async {
         PHelperFunction.pop();
         clearFields();
-        showSuccessDialog(message: 'porting_msg'.tr);
+        showMySuccessDialog(message: 'porting_msg'.tr);
       },
     );
   }
 
   /// show success message after request completes
-  Future<void> showSuccessDialog({required String message}) async {
-    showSucccessdialog(
+  Future<void> showMySuccessDialog({required String message}) async {
+    showSuccessDialog(
       context: context,
       mainAxisAlignment: MainAxisAlignment.center,
       title: '${'success'.tr}!',

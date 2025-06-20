@@ -28,7 +28,7 @@ class PBeneficiaryWidget extends StatelessWidget {
       children: [
         ExpansionTile(
           title: Text(
-            beneficiary.fullName ?? '',
+            beneficiary.fullName ?? 'not_applicable'.tr,
             style: Theme.of(context).textTheme.bodyLarge,
           ),
           tilePadding: EdgeInsets.symmetric(
@@ -153,7 +153,7 @@ class PBeneficiaryWidget extends StatelessWidget {
                                     ),
                                   ),
                                   positiveText: 'delete'.tr.toUpperCase(),
-                                  onPostiveTap: () {
+                                  onPositiveTap: () {
                                     PHelperFunction.pop();
                                     Get.find<PBeneficiaryVm>()
                                         .deleteBeneficiary(beneficiary);
@@ -186,7 +186,7 @@ class PBeneficiaryWidget extends StatelessWidget {
             detailWidget(
               context,
               'relation'.tr,
-              beneficiary.relationship ?? '',
+              beneficiary.relationship ?? 'not_applicable'.tr,
             ),
           ],
         ),

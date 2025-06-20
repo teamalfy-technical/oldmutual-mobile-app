@@ -13,7 +13,7 @@ class PSplashVm extends GetxController {
     super.onInit();
   }
 
-  /// Disply splash screen
+  /// Display splash screen
   /// check if user is logged in or not
   /// [showSplashPage]
   void showSplashPage() async {

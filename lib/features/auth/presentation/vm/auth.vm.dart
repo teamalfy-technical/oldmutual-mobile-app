@@ -141,7 +141,7 @@ class PAuthVm extends GetxController {
       (res) {
         PHelperFunction.pop();
         // show success dialog
-        showSucccessdialog(context: context, title: 'verified_otp_msg'.tr);
+        showSuccessDialog(context: context, title: 'verified_otp_msg'.tr);
         Future.delayed(Duration(seconds: 2), () {
           PHelperFunction.pop();
           // navigate to next screen
@@ -206,7 +206,7 @@ class PAuthVm extends GetxController {
         PSecureStorage().removeData(PSecureStorage().authResKey);
         PSecureStorage().saveData<bool>(PSecureStorage().registeredKey, true);
         // show success dialog
-        showSucccessdialog(context: context, title: res.message ?? '');
+        showSuccessDialog(context: context, title: res.message ?? '');
         Future.delayed(Duration(seconds: 2), () {
           PHelperFunction.pop();
           // navigate to next screen

@@ -80,7 +80,7 @@ class PSettingsPage extends StatelessWidget {
                       'signout_dialog_desc'.tr,
                       style: Theme.of(context).textTheme.bodyLarge,
                     ),
-                    onPostiveTap: () {
+                    onPositiveTap: () {
                       PHelperFunction.pop();
                       ctrl.signout();
                     },
@@ -93,7 +93,7 @@ class PSettingsPage extends StatelessWidget {
                 trailing: Assets.icons.arrowForwardIos.svg(),
               ),
               Divider(color: PAppColor.fillColor),
-              PAppSize.s16.verticalSpace,
+              // PAppSize.s16.verticalSpace,
               Align(
                     alignment: Alignment.bottomLeft,
                     child: Text(
@@ -104,7 +104,7 @@ class PSettingsPage extends StatelessWidget {
                       ),
                     ),
                   )
-                  .symmetric(horizontal: PAppSize.s20)
+                  .symmetric(horizontal: PAppSize.s16, vertical: PAppSize.s20)
                   .onPressed(
                     onTap: () {
                       showConfirmDialog(
@@ -125,7 +125,7 @@ class PSettingsPage extends StatelessWidget {
                           ),
                         ),
 
-                        onPostiveTap: () {
+                        onPositiveTap: () {
                           PHelperFunction.pop();
                           ctrl.deleteAccount();
                         },

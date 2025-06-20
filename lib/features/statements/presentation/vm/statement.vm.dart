@@ -84,14 +84,7 @@ class PStatementVm extends GetxController {
       (res) {
         // updateLoadingState(LoadingState.completed);
 
-        res.data?.insert(
-          0,
-          ContributedYear(
-            fundYear: 'none'.tr,
-            employeeContribution: 0.0,
-            totalContribution: 0.0,
-          ),
-        );
+        res.data?.insert(0, defaultContributionYear);
         res.data?.sort((a, b) => b.fundYear!.compareTo(a.fundYear ?? ''));
 
         selectedYear = res.data?.first;
@@ -102,8 +95,17 @@ class PStatementVm extends GetxController {
   }
 
   resetFilters() {
-    selectedYear = contributionYears.first;
+    selectedYear =
+        contributionYears.isEmpty
+            ? defaultContributionYear
+            : contributionYears.first;
   }
+
+  ContributedYear get defaultContributionYear => ContributedYear(
+    fundYear: 'none'.tr,
+    employeeContribution: 0.0,
+    totalContribution: 0.0,
+  );
 
   @override
   onClose() {
