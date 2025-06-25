@@ -66,6 +66,7 @@ class PStatementVm extends GetxController {
         // if(res.data)
         res.data?.sort((a, b) => b.createdAt!.compareTo(a.createdAt ?? ''));
         statements.value = res.data ?? [];
+        pensionAppLogger.i('DownloadUrl: ${statements.first.downloadUrl}');
       },
     );
   }
@@ -270,7 +271,7 @@ class PStatementVm extends GetxController {
   }
 
   openFile({required String url, required String fileName}) async {
-    // pensionAppLogger.e(url);
+    pensionAppLogger.e(url);
     final file = await downloadFile(url, fileName);
     if (file == null) return;
     OpenFile.open(file.path);
@@ -308,6 +309,15 @@ class PStatementVm extends GetxController {
       await raf.close();
       return file;
     } catch (err) {
+      // if (err is DioException) {
+      //   if (err.response?.statusCode == 404) {
+      //     // PPopupDialog(context).errorMessage(
+      //     //   title: 'error'.tr,
+      //     //   message: err.response?.data['message'],
+      //     // );
+      //     pensionAppLogger.i(err.response?.data);
+      //   }
+      // }
       pensionAppLogger.e("Error: $err");
       return null;
     }

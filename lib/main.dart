@@ -76,7 +76,7 @@ class MyApp extends StatelessWidget {
         builder: (_, child) {
           return GetMaterialApp(
             debugShowCheckedModeBanner: false,
-            title: 'Old Mutual Pensions',
+            title: 'My OldMutual GH',
             useInheritedMediaQuery: true,
             locale: Get.deviceLocale,
             navigatorKey: appNavigatorKey,

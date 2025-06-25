@@ -72,7 +72,7 @@ android {
             resValue(
                 type = "string",
                 name = "app_name",
-                value = "Old Mutual Pensions Dev")
+                value = "My OldMutual GH Dev")
             applicationIdSuffix = ".dev"
         }
         create("prod") {
@@ -80,7 +80,7 @@ android {
             resValue(
                 type = "string",
                 name = "app_name",
-                value = "Old Mutual Pensions")
+                value = "My OldMutual GH")
             applicationIdSuffix = ""
         }
     }
