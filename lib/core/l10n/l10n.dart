@@ -5,7 +5,7 @@ class AppTranslations extends Translations {
   Map<String, Map<String, String>> get keys => {
     'en_US': {
       'app_name': 'Pensions App',
-      'welcome_text': 'Welcome to \nOld Mutual Pension \nApp',
+      'welcome_text': 'Welcome to \nMy Old Mutual GH \nApp',
       'next': 'Next',
       'get_started': 'Get Started',
       'let_get_started': 'Let\'s Get Started',
