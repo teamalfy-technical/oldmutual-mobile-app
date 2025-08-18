@@ -13,6 +13,7 @@ class PAppSize {
   static const double s0_8 = 0.8;
   static const double s0_9 = 0.9;
   static const double s1 = 1.0;
+  static const double s1_2 = 1.2;
   static const double s1_3 = 1.3;
   static const double s1_5 = 1.5;
   static const double s2 = 2.0;

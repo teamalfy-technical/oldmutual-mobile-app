@@ -70,6 +70,10 @@ class $AssetsIconsGen {
   SvgGenImage get benchmarkIcon =>
       const SvgGenImage('assets/icons/benchmark.icon.svg');
 
+  /// File path: assets/icons/bottom.logo.banner.svg
+  SvgGenImage get bottomLogoBanner =>
+      const SvgGenImage('assets/icons/bottom.logo.banner.svg');
+
   /// File path: assets/icons/edit.icon.svg
   SvgGenImage get editIcon => const SvgGenImage('assets/icons/edit.icon.svg');
 
@@ -127,6 +131,10 @@ class $AssetsIconsGen {
   SvgGenImage get supportIcon =>
       const SvgGenImage('assets/icons/support.icon.svg');
 
+  /// File path: assets/icons/top.logo.banner.svg
+  SvgGenImage get topLogoBanner =>
+      const SvgGenImage('assets/icons/top.logo.banner.svg');
+
   /// File path: assets/icons/trash.red.icon.svg
   SvgGenImage get trashRedIcon =>
       const SvgGenImage('assets/icons/trash.red.icon.svg');
@@ -155,6 +163,7 @@ class $AssetsIconsGen {
     arrowForwardIos,
     arrowIcon,
     benchmarkIcon,
+    bottomLogoBanner,
     editIcon,
     emailIcon,
     eyeIcon,
@@ -171,6 +180,7 @@ class $AssetsIconsGen {
     settingsIcon,
     successIcon,
     supportIcon,
+    topLogoBanner,
     trashRedIcon,
     userProfileIcon,
     warningGreenIcon,
@@ -218,6 +228,10 @@ class $AssetsImagesGen {
   AssetGenImage get splashImg =>
       const AssetGenImage('assets/images/splash.img.png');
 
+  /// File path: assets/images/splash.overlay.img.png
+  AssetGenImage get splashOverlayImg =>
+      const AssetGenImage('assets/images/splash.overlay.img.png');
+
   /// List of all assets
   List<AssetGenImage> get values => [
     darkBlurBg,
@@ -229,6 +243,7 @@ class $AssetsImagesGen {
     slideThree,
     slideTwo,
     splashImg,
+    splashOverlayImg,
   ];
 }
 

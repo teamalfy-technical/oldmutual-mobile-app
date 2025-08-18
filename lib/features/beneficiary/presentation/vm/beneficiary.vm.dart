@@ -30,10 +30,9 @@ class PBeneficiaryVm extends GetxController {
 
   splitPercentageContribution(bool isEdit) {
     if (split.value == true) {
-      final splittedPercentage =
-          isEdit
-              ? 100 / beneficiaries.length
-              : 100 / (beneficiaries.length + 1);
+      final splittedPercentage = isEdit
+          ? 100 / beneficiaries.length
+          : 100 / (beneficiaries.length + 1);
       benefitPercentageTEC.text = splittedPercentage.toStringAsFixed(2);
     } else {
       benefitPercentageTEC.clear();
@@ -156,13 +155,13 @@ class PBeneficiaryVm extends GetxController {
     );
   }
 
-  showSuccessMessage(String messge, [bool isOnParentView = false]) {
+  showSuccessMessage(String message, [bool isOnParentView = false]) {
     showSuccessDialog(
       context: context,
       mainAxisAlignment: MainAxisAlignment.center,
       title: '${'success'.tr}!',
       subtitle: Text(
-        messge,
+        message,
         style: Theme.of(
           context,
         ).textTheme.bodySmall?.copyWith(color: PAppColor.text700),
