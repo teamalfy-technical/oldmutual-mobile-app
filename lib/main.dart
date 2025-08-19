@@ -76,7 +76,7 @@ class MyApp extends StatelessWidget {
         builder: (_, child) {
           return GetMaterialApp(
             debugShowCheckedModeBanner: false,
-            title: 'My OldMutual GH',
+            title: 'My OldMutual',
             useInheritedMediaQuery: true,
             locale: Get.deviceLocale,
             navigatorKey: appNavigatorKey,
@@ -92,7 +92,7 @@ class MyApp extends StatelessWidget {
             getPages: AppPages.routes,
             theme: PAppTheme.lightTheme,
             darkTheme: PAppTheme.darkTheme,
-            themeMode: ThemeMode.light,
+            themeMode: ThemeMode.system,
             scrollBehavior: const CupertinoScrollBehavior(),
           );
         },

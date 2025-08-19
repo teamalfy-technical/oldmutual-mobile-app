@@ -22,7 +22,7 @@ class PGradientButton extends StatelessWidget {
     this.showIcon = true,
     this.radius = PAppSize.s24,
     this.loading = LoadingState.completed,
-    this.fontSize = PAppSize.s14,
+    this.fontSize = PAppSize.s16,
   });
 
   @override
@@ -35,11 +35,7 @@ class PGradientButton extends StatelessWidget {
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(radius),
         gradient: LinearGradient(
-          colors: [
-            PAppColor.primaryDark,
-            PAppColor.primaryDark,
-            PAppColor.primary,
-          ],
+          colors: [PAppColor.primaryDark, PAppColor.primary],
         ), // Match button shape
       ),
       child: ElevatedButton(
@@ -53,35 +49,34 @@ class PGradientButton extends StatelessWidget {
             borderRadius: BorderRadius.circular(radius),
           ),
         ),
-        child:
-            loading == LoadingState.loading
-                ? PCustomLoadingIndicator(
-                  size: PAppSize.s10,
-                  color: PAppColor.whiteColor,
-                )
-                : showIcon
-                ? Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
-                      label,
-                      style: TextStyle(
-                        fontWeight: FontWeight.w500,
-                        color: PAppColor.whiteColor,
-                      ),
+        child: loading == LoadingState.loading
+            ? PCustomLoadingIndicator(
+                size: PAppSize.s10,
+                color: PAppColor.whiteColor,
+              )
+            : showIcon
+            ? Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    label,
+                    style: TextStyle(
+                      fontWeight: FontWeight.w600,
+                      color: PAppColor.blackColor,
                     ),
-                    PAppSize.s8.horizontalSpace,
-                    Assets.icons.arrowIcon.svg(),
-                  ],
-                )
-                : Text(
-                  label,
-                  style: TextStyle(
-                    fontWeight: FontWeight.w500,
-                    color: PAppColor.whiteColor,
-                    fontSize: fontSize,
                   ),
+                  PAppSize.s8.horizontalSpace,
+                  Assets.icons.arrowIcon.svg(),
+                ],
+              )
+            : Text(
+                label,
+                style: TextStyle(
+                  fontWeight: FontWeight.w600,
+                  color: PAppColor.blackColor,
+                  fontSize: fontSize,
                 ),
+              ),
       ),
     );
   }

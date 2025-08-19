@@ -36,7 +36,7 @@ class PAppBarTheme {
     elevation: PAppSize.s0,
     centerTitle: true,
     scrolledUnderElevation: PAppSize.s0,
-    backgroundColor: PAppColor.transparentColor,
+    backgroundColor: PAppColor.darkAppBarColor,
     surfaceTintColor: PAppColor.transparentColor,
     // systemOverlayStyle: SystemUiOverlayStyle.light,
     iconTheme: IconThemeData(color: PAppColor.blackColor, size: PAppSize.s24),

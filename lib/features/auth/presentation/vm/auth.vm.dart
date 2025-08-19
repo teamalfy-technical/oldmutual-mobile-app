@@ -17,6 +17,7 @@ class PAuthVm extends GetxController {
 
   final memberIDFormKey = GlobalKey<FormState>();
   final loginFormKey = GlobalKey<FormState>();
+  final welcomeBackFormKey = GlobalKey<FormState>();
   final emailFormKey = GlobalKey<FormState>();
   final resetPasswordFormKey = GlobalKey<FormState>();
   final createPasswordFormKey = GlobalKey<FormState>();
@@ -37,19 +38,18 @@ class PAuthVm extends GetxController {
 
   void updateOTP(String pin) => otpcode.value = pin;
 
-  var selectedCountry =
-      Country(
-        phoneCode: '233',
-        e164Sc: 1,
-        countryCode: 'GH',
-        level: 1,
-        geographic: true,
-        name: 'Ghana',
-        example: '2012345678',
-        displayName: 'Ghana (GH) [+233]',
-        displayNameNoCountryCode: 'Ghana (GH)',
-        e164Key: '1-GH-0',
-      ).obs;
+  var selectedCountry = Country(
+    phoneCode: '233',
+    e164Sc: 1,
+    countryCode: 'GH',
+    level: 1,
+    geographic: true,
+    name: 'Ghana',
+    example: '2012345678',
+    displayName: 'Ghana (GH) [+233]',
+    displayNameNoCountryCode: 'Ghana (GH)',
+    e164Key: '1-GH-0',
+  ).obs;
 
   void setSelectedCountry(Country country) {
     selectedCountry.value = country;
@@ -127,10 +127,9 @@ class PAuthVm extends GetxController {
         style: Theme.of(context).textTheme.bodyMedium,
       ),
     );
-    final result =
-        isSignup
-            ? await authService.verifyOTP(otp: pin, phone: phone)
-            : await authService.verifyForgotPasswordOTP(otp: pin, email: email);
+    final result = isSignup
+        ? await authService.verifyOTP(otp: pin, phone: phone)
+        : await authService.verifyForgotPasswordOTP(otp: pin, email: email);
     result.fold(
       (err) {
         PHelperFunction.pop();
@@ -292,6 +291,17 @@ class PAuthVm extends GetxController {
     confirmPasswordTEC.clear();
   }
 
+  /// Function to login existing user
+  /// @params - String pin
+  /// @params - bool isSignup
+  Future<void> loginUserWithPasskey() async {
+    PHelperFunction.switchScreen(
+      destination: Routes.loadingPage,
+      args: 'getting_ready_msg'.tr,
+      replace: true,
+    );
+  }
+
   /// Function to login a user
   /// @params - String pin
   /// @params - bool isSignup
@@ -317,10 +327,9 @@ class PAuthVm extends GetxController {
         PHelperFunction.pop();
         PPopupDialog(context).errorMessage(
           title: 'error'.tr,
-          message:
-              err.message == '${'unauthorised'.tr}.'
-                  ? 'phone_exist_msg'.tr
-                  : err.message,
+          message: err.message == '${'unauthorised'.tr}.'
+              ? 'phone_exist_msg'.tr
+              : err.message,
         );
       },
       (res) async {

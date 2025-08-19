@@ -28,67 +28,65 @@ class PCreatePasswordPage extends StatelessWidget {
                 child: Obx(
                   () => Form(
                     key: ctrl.createPasswordFormKey,
-                    child:
-                        Column(
-                          children: [
-                            if (isSignup)
-                              Column(
-                                children: [
-                                  PAppSize.s20.verticalSpace,
-                                  PCustomTextField(
-                                    labelText: 'phone'.tr,
-                                    hintText: '',
-                                    prefixIcon: Assets.icons.phoneIcon.path,
-                                    controller: ctrl.phoneTEC,
-                                    enabled: false,
-                                    validator: PValidator.validatePhoneNumber,
-                                    // focusColor: PAppColor.primary,
-                                  ),
-                                ],
-                              ),
-                            PAppSize.s20.verticalSpace,
-                            PCustomPasswordTextField(
-                              labelText: 'create_password'.tr,
-                              hintText: 'hint_password'.tr,
-                              validator: PValidator.validatePassword,
-                              prefixIcon: Assets.icons.lockIcon.path,
-                              suffixIcon: Assets.icons.eyeIcon.path,
-                              obscure: ctrl.obscure.value,
-                              onObscureChanged: ctrl.onObscureChanged,
-                              controller: ctrl.passwordTEC,
-                            ),
-                            PAppSize.s20.verticalSpace,
-                            PCustomPasswordTextField(
-                              labelText:
-                                  isSignup
-                                      ? 'confirm_password'.tr
-                                      : 're_enter_password'.tr,
-                              hintText: 'hint_password'.tr,
-                              validator: PValidator.validatePassword,
-                              prefixIcon: Assets.icons.lockIcon.path,
-                              suffixIcon: Assets.icons.eyeIcon.path,
-                              obscure: ctrl.obscure.value,
-                              onObscureChanged: ctrl.onObscureChanged,
-                              controller: ctrl.confirmPasswordTEC,
-                            ),
+                    child: Column(
+                      children: [
+                        if (isSignup)
+                          Column(
+                            children: [
+                              PAppSize.s20.verticalSpace,
+                              PCustomTextField(
+                                labelText: 'phone'.tr,
 
-                            (PDeviceUtil.getDeviceWidth(context) / 5)
-                                .verticalSpace,
-                            PGradientButton(
-                              label: 'next'.tr,
-                              width: PDeviceUtil.getDeviceWidth(context) * 0.55,
-                              onTap: () {
-                                if (ctrl.createPasswordFormKey.currentState!
-                                    .validate()) {
-                                  PDeviceUtil.hideKeyboard(context);
-                                  isSignup
-                                      ? ctrl.createPassword(isSignup: isSignup)
-                                      : ctrl.resetPassword();
-                                }
-                              },
-                            ),
-                          ],
-                        ).scrollable(),
+                                prefixIcon: Assets.icons.phoneIcon.svg(),
+                                controller: ctrl.phoneTEC,
+                                enabled: false,
+                                validator: PValidator.validatePhoneNumber,
+                                // focusColor: PAppColor.primary,
+                              ),
+                            ],
+                          ),
+                        PAppSize.s20.verticalSpace,
+                        PCustomPasswordTextField(
+                          // labelText: 'create_password'.tr,
+                          labelText: 'hint_password'.tr,
+                          validator: PValidator.validatePassword,
+                          prefixIcon: Assets.icons.lockIcon.svg(),
+                          suffixIcon: Assets.icons.eyeIcon.svg(),
+                          obscure: ctrl.obscure.value,
+                          onObscureChanged: ctrl.onObscureChanged,
+                          controller: ctrl.passwordTEC,
+                        ),
+                        PAppSize.s20.verticalSpace,
+                        PCustomPasswordTextField(
+                          // labelText:
+                          //     isSignup
+                          //         ? 'confirm_password'.tr
+                          //         : 're_enter_password'.tr,
+                          labelText: 'hint_password'.tr,
+                          validator: PValidator.validatePassword,
+                          prefixIcon: Assets.icons.lockIcon.svg(),
+                          suffixIcon: Assets.icons.eyeIcon.svg(),
+                          obscure: ctrl.obscure.value,
+                          onObscureChanged: ctrl.onObscureChanged,
+                          controller: ctrl.confirmPasswordTEC,
+                        ),
+
+                        (PDeviceUtil.getDeviceWidth(context) / 5).verticalSpace,
+                        PGradientButton(
+                          label: 'next'.tr,
+                          width: PDeviceUtil.getDeviceWidth(context) * 0.55,
+                          onTap: () {
+                            if (ctrl.createPasswordFormKey.currentState!
+                                .validate()) {
+                              PDeviceUtil.hideKeyboard(context);
+                              isSignup
+                                  ? ctrl.createPassword(isSignup: isSignup)
+                                  : ctrl.resetPassword();
+                            }
+                          },
+                        ),
+                      ],
+                    ).scrollable(),
                   ),
                 ),
               ),

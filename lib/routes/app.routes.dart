@@ -7,6 +7,8 @@ abstract class Routes {
   static const splashPage = _Paths.splashPage;
   static const onboardingPage = _Paths.onboardingPage;
   static const loginPage = _Paths.loginPage;
+  static const welcomeBackPage = _Paths.welcomeBackPage;
+  static const loadingPage = _Paths.loadingPage;
   static const signupPage = _Paths.signupPage;
   static const verifyOTPPage = _Paths.verifyOTPPage;
   static const enterEmailPage = _Paths.enterEmailPage;
@@ -33,6 +35,8 @@ abstract class _Paths {
   static const splashPage = '/splash-page';
   static const onboardingPage = '/onboarding-page';
   static const loginPage = '/login-page';
+  static const loadingPage = '/loading-page';
+  static const welcomeBackPage = '/welcome-back-page';
   static const signupPage = '/sign-up-page';
   static const verifyOTPPage = '/verify-otp-page';
   static const enterEmailPage = '/enter-email-page';

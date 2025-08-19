@@ -24,32 +24,30 @@ class PEnterEmailPage extends StatelessWidget {
               Expanded(
                 child: Form(
                   key: ctrl.emailFormKey,
-                  child:
-                      Column(
-                        children: [
-                          PAppSize.s20.verticalSpace,
-                          PCustomTextField(
-                            labelText: 'email'.tr,
-                            hintText: 'email_hint'.tr,
-                            prefixIcon: Assets.icons.emailIcon.path,
-                            controller: ctrl.emailTEC,
-                            validator: PValidator.validateEmail,
-                            // focusColor: PAppColor.primary,
-                          ),
+                  child: Column(
+                    children: [
+                      PAppSize.s20.verticalSpace,
+                      PCustomTextField(
+                        labelText: 'email'.tr,
 
-                          (PDeviceUtil.getDeviceWidth(context) / 3)
-                              .verticalSpace,
-                          PGradientButton(
-                            label: 'send_otp'.tr,
-                            width: PDeviceUtil.getDeviceWidth(context) * 0.55,
-                            onTap: () {
-                              if (ctrl.emailFormKey.currentState!.validate()) {
-                                ctrl.forgotPassword();
-                              }
-                            },
-                          ),
-                        ],
-                      ).scrollable(),
+                        prefixIcon: Assets.icons.emailIcon.svg(),
+                        controller: ctrl.emailTEC,
+                        validator: PValidator.validateEmail,
+                        // focusColor: PAppColor.primary,
+                      ),
+
+                      (PDeviceUtil.getDeviceWidth(context) / 3).verticalSpace,
+                      PGradientButton(
+                        label: 'send_otp'.tr,
+                        width: PDeviceUtil.getDeviceWidth(context) * 0.55,
+                        onTap: () {
+                          if (ctrl.emailFormKey.currentState!.validate()) {
+                            ctrl.forgotPassword();
+                          }
+                        },
+                      ),
+                    ],
+                  ).scrollable(),
                 ),
               ),
               // don't have an account

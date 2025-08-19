@@ -32,7 +32,7 @@ class PAppTheme {
     fontFamily: 'Montserrat',
     brightness: Brightness.dark,
     primaryColor: PAppColor.primary,
-    scaffoldBackgroundColor: PAppColor.blackColor,
+    scaffoldBackgroundColor: PAppColor.darkBgColor,
     appBarTheme: PAppBarTheme.darkAppBarTheme,
     textTheme: PTextTheme.darkTextTheme,
     elevatedButtonTheme: PElevatedButtonTheme.darkElevatedButtonTheme,

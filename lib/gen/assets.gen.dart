@@ -87,6 +87,9 @@ class $AssetsIconsGen {
   SvgGenImage get factsheetIcon =>
       const SvgGenImage('assets/icons/factsheet.icon.svg');
 
+  /// File path: assets/icons/ghana.flag.svg
+  SvgGenImage get ghanaFlag => const SvgGenImage('assets/icons/ghana.flag.svg');
+
   /// File path: assets/icons/home.icon.svg
   SvgGenImage get homeIcon => const SvgGenImage('assets/icons/home.icon.svg');
 
@@ -111,6 +114,10 @@ class $AssetsIconsGen {
   /// File path: assets/icons/notification.icon.svg
   SvgGenImage get notificationIcon =>
       const SvgGenImage('assets/icons/notification.icon.svg');
+
+  /// File path: assets/icons/password.view.icon.svg
+  SvgGenImage get passwordViewIcon =>
+      const SvgGenImage('assets/icons/password.view.icon.svg');
 
   /// File path: assets/icons/phone.icon.svg
   SvgGenImage get phoneIcon => const SvgGenImage('assets/icons/phone.icon.svg');
@@ -168,6 +175,7 @@ class $AssetsIconsGen {
     emailIcon,
     eyeIcon,
     factsheetIcon,
+    ghanaFlag,
     homeIcon,
     lockIcon,
     memberIcon,
@@ -175,6 +183,7 @@ class $AssetsIconsGen {
     notificationCountIcon,
     notificationGreenIcon,
     notificationIcon,
+    passwordViewIcon,
     phoneIcon,
     profileIcon,
     settingsIcon,

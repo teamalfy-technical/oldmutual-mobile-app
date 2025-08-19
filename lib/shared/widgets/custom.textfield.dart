@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:oldmutual_pensions_app/core/utils/utils.dart';
 
-class PCustomTextField extends StatelessWidget {
+class PCustomTextField extends StatefulWidget {
   final String labelText;
-  final String hintText;
-  final String prefixIcon;
-  final String? suffixIcon;
+  final Widget? prefixIcon;
+  final Widget? suffixIcon;
   final Color? focusColor;
   final TextEditingController controller;
   final TextInputType? textInputType;
@@ -19,8 +17,8 @@ class PCustomTextField extends StatelessWidget {
   const PCustomTextField({
     super.key,
     required this.labelText,
-    required this.hintText,
-    required this.prefixIcon,
+
+    this.prefixIcon,
     this.focusColor,
     required this.controller,
     this.enabled = true,
@@ -33,47 +31,54 @@ class PCustomTextField extends StatelessWidget {
   });
 
   @override
+  State<PCustomTextField> createState() => _PCustomTextFieldState();
+}
+
+class _PCustomTextFieldState extends State<PCustomTextField> {
+  final FocusNode _focusNode = FocusNode();
+
+  @override
+  void initState() {
+    super.initState();
+    _focusNode.addListener(() {
+      setState(() {}); // rebuild when focus changes
+    });
+  }
+
+  @override
+  void dispose() {
+    _focusNode.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          labelText,
-          textAlign: TextAlign.start,
-          style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-            fontSize: PAppSize.s14,
-            fontWeight: FontWeight.w600,
+    return TextFormField(
+      focusNode: _focusNode,
+      controller: widget.controller,
+      validator: widget.validator,
+      enabled: widget.enabled,
+      maxLines: widget.maxLines,
+      minLines: widget.minLines,
+      onChanged: widget.onChanged,
+      decoration: InputDecoration(
+        focusColor: widget.focusColor,
+        prefixIcon: widget.prefixIcon,
+        label: Text(
+          widget.labelText,
+          style: TextStyle(
+            color: _focusNode.hasFocus
+                ? PAppColor.primary
+                : PAppColor.hintTextColor,
           ),
         ),
-        PAppSize.s6.verticalSpace,
-        TextFormField(
-          controller: controller,
-          validator: validator,
-          enabled: enabled,
-          maxLines: maxLines,
-          minLines: minLines,
-          onChanged: onChanged,
-          decoration: InputDecoration(
-            focusColor: focusColor,
-            prefixIcon: prefixIcon
-                .svg(
-                  color:
-                      PHelperFunction.isDarkMode(context)
-                          ? PAppColor.whiteColor
-                          : PAppColor.blackColor,
-                )
-                .symmetric(horizontal: PAppSize.s16),
-            suffixIcon:
-                suffixIcon == null
-                    ? null
-                    : IconButton(
-                      onPressed: () {},
-                      icon: suffixIcon!.svg(color: focusColor),
-                    ),
-            hintText: hintText,
-          ),
-        ),
-      ],
+        suffixIcon: widget.suffixIcon == null
+            ? null
+            : IconButton(
+                onPressed: () {},
+                icon: widget.suffixIcon ?? SizedBox.shrink(),
+              ),
+      ),
     );
   }
 }

@@ -1,6 +1,7 @@
 import 'package:get/get.dart';
 import 'package:oldmutual_pensions_app/core/utils/utils.dart';
 import 'package:oldmutual_pensions_app/features/auth/auth.dart';
+import 'package:oldmutual_pensions_app/features/auth/presentation/pages/login/welcome.back.page.dart';
 import 'package:oldmutual_pensions_app/features/auth/presentation/pages/reset.password/enter.email.page.dart';
 import 'package:oldmutual_pensions_app/features/auth/presentation/pages/signup/create.password.page.dart';
 import 'package:oldmutual_pensions_app/features/auth/presentation/pages/verify.otp.page.dart';
@@ -17,6 +18,7 @@ import 'package:oldmutual_pensions_app/features/settings/presentation/pages/chan
 import 'package:oldmutual_pensions_app/features/settings/settings.dart';
 import 'package:oldmutual_pensions_app/features/statements/presentation/pages/statement.page.dart';
 import 'package:oldmutual_pensions_app/features/webview/webview.dart';
+import 'package:oldmutual_pensions_app/shared/shared.dart';
 
 import '../features/onboarding/presentation/pages/onboarding.page.dart';
 import '../features/splash/presentation/pages/splash.page.dart';
@@ -40,6 +42,18 @@ class AppPages {
     GetPage(
       name: _Paths.loginPage,
       page: () => PLoginPage(),
+      transition: Transition.native,
+      transitionDuration: const Duration(milliseconds: PAppSize.s700),
+    ),
+    GetPage(
+      name: _Paths.welcomeBackPage,
+      page: () => PWelcomeBackPage(),
+      transition: Transition.native,
+      transitionDuration: const Duration(milliseconds: PAppSize.s700),
+    ),
+    GetPage(
+      name: _Paths.loadingPage,
+      page: () => PLoadingPage(message: Get.arguments),
       transition: Transition.native,
       transitionDuration: const Duration(milliseconds: PAppSize.s700),
     ),
@@ -94,11 +108,10 @@ class AppPages {
     GetPage(name: _Paths.beneficiariesPage, page: () => PBeneficiaryPage()),
     GetPage(
       name: _Paths.manageBeneficiaryPage,
-      page:
-          () => PManageBeneficiaryPage(
-            beneficiary: Get.arguments[0],
-            isEdit: Get.arguments[1],
-          ),
+      page: () => PManageBeneficiaryPage(
+        beneficiary: Get.arguments[0],
+        isEdit: Get.arguments[1],
+      ),
     ),
     // GetPage(
     //   name: _Paths.addbeneficiaryPage,

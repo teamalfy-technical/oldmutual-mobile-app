@@ -15,7 +15,7 @@ class PElevatedButtonTheme {
           disabledForegroundColor: PAppColor.greyColor,
           disabledBackgroundColor: PAppColor.greyColor,
           side: const BorderSide(color: PAppColor.primary),
-          minimumSize: const Size.fromHeight(PAppSize.buttonHeight),
+          minimumSize: const Size.fromHeight(PAppSize.buttonHeightMid),
           // padding: const EdgeInsets.symmetric(
           //     vertical: TAppSize.s18, horizontal: TAppSize.s20),
           textStyle: const TextStyle(
@@ -39,11 +39,11 @@ class PElevatedButtonTheme {
           disabledForegroundColor: PAppColor.greyColor,
           disabledBackgroundColor: PAppColor.greyColor,
           side: const BorderSide(color: PAppColor.primary),
-          minimumSize: const Size.fromHeight(PAppSize.buttonHeight),
-          padding: const EdgeInsets.symmetric(
-            vertical: PAppSize.s18,
-            horizontal: PAppSize.s20,
-          ),
+          minimumSize: const Size.fromHeight(PAppSize.buttonHeightMid),
+          // padding: const EdgeInsets.symmetric(
+          //   vertical: PAppSize.s14,
+          //   horizontal: PAppSize.s20,
+          // ),
           textStyle: const TextStyle(
             fontSize: PAppSize.s16,
             color: PAppColor.blackColor,

@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:oldmutual_pensions_app/core/utils/utils.dart';
 
-class PCustomPasswordTextField extends StatelessWidget {
+class PCustomPasswordTextField extends StatefulWidget {
   final String labelText;
-  final String hintText;
-  final String prefixIcon;
-  final String? suffixIcon;
+  final Widget? prefixIcon;
+  final Widget? suffixIcon;
   final Color? focusColor;
   final TextEditingController controller;
   final bool obscure;
@@ -17,9 +15,9 @@ class PCustomPasswordTextField extends StatelessWidget {
   final void Function(String)? onChanged;
   const PCustomPasswordTextField({
     super.key,
+    // required this.labelText,
     required this.labelText,
-    required this.hintText,
-    required this.prefixIcon,
+    this.prefixIcon,
     this.suffixIcon,
     this.focusColor,
     required this.controller,
@@ -32,81 +30,90 @@ class PCustomPasswordTextField extends StatelessWidget {
   });
 
   @override
+  State<PCustomPasswordTextField> createState() =>
+      _PCustomPasswordTextFieldState();
+}
+
+class _PCustomPasswordTextFieldState extends State<PCustomPasswordTextField> {
+  final FocusNode _focusNode = FocusNode();
+
+  @override
+  void initState() {
+    super.initState();
+    _focusNode.addListener(() {
+      setState(() {}); // rebuild when focus changes
+    });
+  }
+
+  @override
+  void dispose() {
+    _focusNode.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          labelText,
-          textAlign: TextAlign.start,
-          style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-            fontSize: PAppSize.s14,
-            fontWeight: FontWeight.w600,
+    return TextFormField(
+      focusNode: _focusNode,
+      controller: widget.controller,
+      obscureText: widget.obscure,
+      validator: widget.validator,
+      //?? PValidator.validatePassword,
+      onChanged: widget.onChanged,
+      decoration: InputDecoration(
+        label: Text(
+          widget.labelText,
+          style: TextStyle(
+            color: _focusNode.hasFocus
+                ? PAppColor.primary
+                : PAppColor.hintTextColor,
           ),
         ),
-        PAppSize.s6.verticalSpace,
-        TextFormField(
-          controller: controller,
-          obscureText: obscure,
-          validator: validator,
-          //?? PValidator.validatePassword,
-          onChanged: onChanged,
-          decoration: InputDecoration(
-            errorBorder: const OutlineInputBorder().copyWith(
-              borderRadius: BorderRadius.circular(PAppSize.s8),
-              borderSide: BorderSide(
-                width: PAppSize.s1,
-                color:
-                    isPasswordStrong
-                        ? PAppColor.primary
-                        : controller.text.isNotEmpty
-                        ? PAppColor.warning500
-                        : PAppColor.alert500,
-              ),
-            ),
-            focusedErrorBorder: const OutlineInputBorder().copyWith(
-              borderRadius: BorderRadius.circular(PAppSize.s8),
-              borderSide: BorderSide(
-                width: PAppSize.s1,
-                color:
-                    isPasswordStrong
-                        ? PAppColor.primary
-                        : controller.text.isNotEmpty
-                        ? PAppColor.warning500
-                        : PAppColor.alert500,
-              ),
-            ),
-            errorStyle: TextStyle(
-              color:
-                  isPasswordStrong
-                      ? PAppColor.primary
-                      : controller.text.isNotEmpty
-                      ? PAppColor.warning500
-                      : PAppColor.alert500,
-            ),
-            focusColor: focusColor,
-            prefixIcon: prefixIcon
-                .svg(
-                  color:
-                      PHelperFunction.isDarkMode(context)
-                          ? PAppColor.whiteColor
-                          : PAppColor.blackColor,
-                )
-                .symmetric(horizontal: PAppSize.s16),
-            suffixIcon:
-                suffixIcon == null
-                    ? null
-                    : IconButton(
-                      onPressed: onObscureChanged,
-                      icon: suffixIcon!.svg(
-                        color:
-                            obscure ? PAppColor.blackColor : PAppColor.primary,
-                      ),
-                    ),
-            hintText: hintText,
+        errorBorder: const OutlineInputBorder().copyWith(
+          borderRadius: BorderRadius.circular(PAppSize.s8),
+          borderSide: BorderSide(
+            width: PAppSize.s1,
+            color: widget.isPasswordStrong
+                ? PAppColor.primary
+                : widget.controller.text.isNotEmpty
+                ? PAppColor.warning500
+                : PAppColor.alert500,
           ),
         ),
-      ],
+        focusedErrorBorder: const OutlineInputBorder().copyWith(
+          borderRadius: BorderRadius.circular(PAppSize.s8),
+          borderSide: BorderSide(
+            width: PAppSize.s1,
+            color: widget.isPasswordStrong
+                ? PAppColor.primary
+                : widget.controller.text.isNotEmpty
+                ? PAppColor.warning500
+                : PAppColor.alert500,
+          ),
+        ),
+        errorStyle: TextStyle(
+          color: widget.isPasswordStrong
+              ? PAppColor.primary
+              : widget.controller.text.isNotEmpty
+              ? PAppColor.warning500
+              : PAppColor.alert500,
+        ),
+        focusColor: widget.focusColor,
+        // prefixIcon: prefixIcon
+        //     .svg(
+        //       color: PHelperFunction.isDarkMode(context)
+        //           ? PAppColor.whiteColor
+        //           : PAppColor.blackColor,
+        //     )
+        //     .symmetric(horizontal: PAppSize.s16),
+        suffixIcon: widget.suffixIcon == null
+            ? null
+            : IconButton(
+                onPressed: widget.onObscureChanged,
+                icon: widget.suffixIcon ?? SizedBox.shrink(),
+              ),
+        // hintText: hintText,
+      ),
     );
   }
 }

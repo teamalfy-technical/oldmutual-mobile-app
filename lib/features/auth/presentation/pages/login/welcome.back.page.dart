@@ -4,10 +4,11 @@ import 'package:get/get.dart';
 import 'package:oldmutual_pensions_app/core/utils/utils.dart';
 import 'package:oldmutual_pensions_app/features/auth/presentation/vm/auth.vm.dart';
 import 'package:oldmutual_pensions_app/gen/assets.gen.dart';
+import 'package:oldmutual_pensions_app/routes/app.pages.dart';
 import 'package:oldmutual_pensions_app/shared/shared.dart';
 
-class PLoginPage extends StatelessWidget {
-  PLoginPage({super.key});
+class PWelcomeBackPage extends StatelessWidget {
+  PWelcomeBackPage({super.key});
 
   final ctrl = Get.put(PAuthVm());
 
@@ -15,7 +16,7 @@ class PLoginPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(''),
+        title: null,
         actions: [
           IconButton(onPressed: () {}, icon: Assets.icons.ghanaFlag.svg()),
         ],
@@ -28,7 +29,7 @@ class PLoginPage extends StatelessWidget {
               Expanded(
                 child: Obx(
                   () => Form(
-                    key: ctrl.loginFormKey,
+                    key: ctrl.welcomeBackFormKey,
                     child: Column(
                       children: [
                         PAppSize.s24.verticalSpace,
@@ -45,38 +46,24 @@ class PLoginPage extends StatelessWidget {
                         //   labelText: 'phone'.tr,
                         // ),
                         Text(
-                          '${'sign_in'.tr},',
+                          '${'hi'.tr},',
                           style: Theme.of(context).textTheme.headlineLarge
-                              ?.copyWith(
-                                fontWeight: FontWeight.w600,
-
-                                // fontSize: 20,
-                              ),
+                              ?.copyWith(fontWeight: FontWeight.w600),
                         ),
                         PAppSize.s4.verticalSpace,
                         Text(
-                          'sign_in_hint'.tr,
-                          style: Theme.of(context).textTheme.bodySmall
-                              ?.copyWith(
-                                fontWeight: FontWeight.w500,
-                                fontSize: PAppSize.s16,
-                                color: PAppColor.secondary700,
-                                // fontSize: 20,
-                              ),
+                          'Bongani',
+                          style: Theme.of(context).textTheme.headlineLarge
+                              ?.copyWith(fontWeight: FontWeight.w500),
                         ),
-                        PAppSize.s34.verticalSpace,
-                        PCustomTextField(
-                          // labelText: 'password'.tr,
-                          controller: ctrl.emailTEC,
-                          labelText: 'hint_email'.tr,
 
-                          textInputType: TextInputType.emailAddress,
-                          validator: PValidator.validateEmail,
-                        ),
                         PAppSize.s24.verticalSpace,
                         PCustomPasswordTextField(
                           labelText: 'hint_password'.tr,
-                          suffixIcon: Assets.icons.passwordViewIcon.svg(),
+                          suffixIcon: Assets.icons.passwordViewIcon.svg(
+                            // color: PAppColor.hintTextColor,
+                          ),
+                          validator: PValidator.validatePassword,
                           obscure: ctrl.obscure.value,
                           onObscureChanged: ctrl.onObscureChanged,
                           controller: ctrl.passwordTEC,
@@ -95,7 +82,7 @@ class PLoginPage extends StatelessWidget {
                         //     ),
                         //   ),
                         // ),
-                        PAppSize.s32.verticalSpace,
+                        PAppSize.s25.verticalSpace,
 
                         // (PDeviceUtil.getDeviceWidth(context) / 3).verticalSpace,
                         PGradientButton(
@@ -103,24 +90,28 @@ class PLoginPage extends StatelessWidget {
                           showIcon: false,
                           width: PDeviceUtil.getDeviceWidth(context),
                           onTap: () {
-                            if (ctrl.loginFormKey.currentState!.validate()) {
+                            if (ctrl.welcomeBackFormKey.currentState!
+                                .validate()) {
                               PDeviceUtil.hideKeyboard(context);
-                              ctrl.login();
+                              ctrl.loginUserWithPasskey();
                             }
                           },
                         ),
 
-                        (PDeviceUtil.getDeviceWidth(context) * 0.25)
-                            .verticalSpace,
+                        // PAppSize.s25.verticalSpace,
 
+                        // (PDeviceUtil.getDeviceWidth(context) * 0.25)
+                        //     .verticalSpace,
                         TextButton(
-                          onPressed: () {},
+                          onPressed: () => PHelperFunction.switchScreen(
+                            destination: Routes.loginPage,
+                          ),
                           child: Text(
-                            '${'forgot_password'.tr}?',
+                            'login_with_different_account'.tr,
                             style: Theme.of(context).textTheme.headlineSmall
                                 ?.copyWith(
                                   fontWeight: FontWeight.w600,
-                                  decoration: TextDecoration.underline,
+
                                   color: PAppColor.primaryLight,
                                   fontSize: PAppSize.s16,
                                 ),

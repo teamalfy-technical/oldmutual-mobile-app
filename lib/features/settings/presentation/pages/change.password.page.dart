@@ -18,55 +18,54 @@ class PChangePasswordPage extends StatelessWidget {
       body: Obx(
         () => Form(
           key: ctrl.changePasswordFormKey,
-          child:
-              Column(
-                children: [
-                  PAppSize.s20.verticalSpace,
-                  PCustomPasswordTextField(
-                    labelText: 'old_password'.tr,
-                    hintText: 'hint_password'.tr,
-                    prefixIcon: Assets.icons.lockIcon.path,
-                    suffixIcon: Assets.icons.eyeIcon.path,
-                    obscure: ctrl.obscureOldPassword.value,
-                    onObscureChanged: ctrl.onObscureOldPasswordChanged,
-                    controller: ctrl.oldPasswordTEC,
-                  ),
-                  PAppSize.s20.verticalSpace,
-                  PCustomPasswordTextField(
-                    labelText: 'new_password'.tr,
-                    hintText: 'hint_password'.tr,
-                    prefixIcon: Assets.icons.lockIcon.path,
-                    suffixIcon: Assets.icons.eyeIcon.path,
-                    validator: PValidator.validatePassword,
-                    obscure: ctrl.obscureNewPassword.value,
-                    onObscureChanged: ctrl.onObscureNewPasswordChanged,
-                    controller: ctrl.newPasswordTEC,
-                  ),
-                  PAppSize.s20.verticalSpace,
-                  PCustomPasswordTextField(
-                    labelText: 'confirm_password'.tr,
-                    hintText: 'hint_password'.tr,
-                    prefixIcon: Assets.icons.lockIcon.path,
-                    suffixIcon: Assets.icons.eyeIcon.path,
-                    validator: PValidator.validatePassword,
-                    obscure: ctrl.obscureNewPassword.value,
-                    onObscureChanged: ctrl.onObscureNewPasswordChanged,
-                    controller: ctrl.confirmPasswordTEC,
-                  ),
+          child: Column(
+            children: [
+              PAppSize.s20.verticalSpace,
+              PCustomPasswordTextField(
+                // labelText: 'old_password'.tr,
+                labelText: 'hint_password'.tr,
+                prefixIcon: Assets.icons.lockIcon.svg(),
+                suffixIcon: Assets.icons.eyeIcon.svg(),
+                obscure: ctrl.obscureOldPassword.value,
+                onObscureChanged: ctrl.onObscureOldPasswordChanged,
+                controller: ctrl.oldPasswordTEC,
+              ),
+              PAppSize.s20.verticalSpace,
+              PCustomPasswordTextField(
+                // labelText: 'new_password'.tr,
+                labelText: 'hint_password'.tr,
+                prefixIcon: Assets.icons.lockIcon.svg(),
+                suffixIcon: Assets.icons.eyeIcon.svg(),
+                validator: PValidator.validatePassword,
+                obscure: ctrl.obscureNewPassword.value,
+                onObscureChanged: ctrl.onObscureNewPasswordChanged,
+                controller: ctrl.newPasswordTEC,
+              ),
+              PAppSize.s20.verticalSpace,
+              PCustomPasswordTextField(
+                // labelText: 'confirm_password'.tr,
+                labelText: 'hint_password'.tr,
+                prefixIcon: Assets.icons.lockIcon.svg(),
+                suffixIcon: Assets.icons.eyeIcon.svg(),
+                validator: PValidator.validatePassword,
+                obscure: ctrl.obscureNewPassword.value,
+                onObscureChanged: ctrl.onObscureNewPasswordChanged,
+                controller: ctrl.confirmPasswordTEC,
+              ),
 
-                  (PDeviceUtil.getDeviceWidth(context) / 5).verticalSpace,
-                  PGradientButton(
-                    label: 'change'.tr,
-                    width: PDeviceUtil.getDeviceWidth(context) * 0.55,
-                    onTap: () {
-                      if (ctrl.changePasswordFormKey.currentState!.validate()) {
-                        PDeviceUtil.hideKeyboard(context);
-                        ctrl.changePassword();
-                      }
-                    },
-                  ),
-                ],
-              ).symmetric(horizontal: PAppSize.s20).scrollable(),
+              (PDeviceUtil.getDeviceWidth(context) / 5).verticalSpace,
+              PGradientButton(
+                label: 'change'.tr,
+                width: PDeviceUtil.getDeviceWidth(context) * 0.55,
+                onTap: () {
+                  if (ctrl.changePasswordFormKey.currentState!.validate()) {
+                    PDeviceUtil.hideKeyboard(context);
+                    ctrl.changePassword();
+                  }
+                },
+              ),
+            ],
+          ).symmetric(horizontal: PAppSize.s20).scrollable(),
         ),
       ),
     );
