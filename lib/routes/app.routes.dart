@@ -6,6 +6,7 @@ abstract class Routes {
 
   static const splashPage = _Paths.splashPage;
   static const onboardingPage = _Paths.onboardingPage;
+  static const welcomePage = _Paths.welcomePage;
   static const loginPage = _Paths.loginPage;
   static const welcomeBackPage = _Paths.welcomeBackPage;
   static const loadingPage = _Paths.loadingPage;
@@ -29,11 +30,14 @@ abstract class Routes {
   static const supportPage = _Paths.supportPage;
   static const changePasswordPage = _Paths.changePasswordPage;
   static const webviewPage = _Paths.webviewPage;
+
+  static const successPage = _Paths.successPage;
 }
 
 abstract class _Paths {
   static const splashPage = '/splash-page';
   static const onboardingPage = '/onboarding-page';
+  static const welcomePage = '/welcome-page';
   static const loginPage = '/login-page';
   static const loadingPage = '/loading-page';
   static const welcomeBackPage = '/welcome-back-page';
@@ -46,7 +50,6 @@ abstract class _Paths {
   static const notificationPage = '/notification-page';
   static const factsheetPage = '/factsheet-page';
   static const beneficiariesPage = '/beneficiaries-page';
-
   static const manageBeneficiaryPage = '/manage-beneficiary-page';
   static const redemptionAndTransferPage = '/add-beneficiary-page';
   static const redemptionPage = '/redemption-page';
@@ -58,4 +61,5 @@ abstract class _Paths {
   static const supportPage = '/support-page';
   static const changePasswordPage = '/change-password-page';
   static const webviewPage = '/webview-page';
+  static const successPage = '/success-page';
 }

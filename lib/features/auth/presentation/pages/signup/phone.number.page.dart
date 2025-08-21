@@ -24,73 +24,61 @@ class PPhoneNumberPage extends StatelessWidget {
               child: Obx(
                 () => Form(
                   key: ctrl.memberIDFormKey,
-                  child:
-                      Column(
-                        children: [
-                          PCustomPhoneTextfield(
-                            ctrl: ctrl,
-                            labelText: 'phone'.tr,
-                          ),
-                          // PCustomTextField(
-                          //   labelText: 'phone'.tr,
-                          //   hintText: 'enter_phone_number'.tr,
-                          //   prefixIcon: Assets.icons.phoneIcon.path,
-                          //   controller: ctrl.phoneTEC,
-                          //   validator: PValidator.validatePhoneNumber,
-                          //   // focusColor: PAppColor.primary,
-                          // ),
-                          PAppSize.s20.verticalSpace,
-                          PCustomCheckbox(
-                            value: ctrl.agreeToTerms.value,
-                            onChanged: ctrl.onTermsCheckboxChanged,
-                            child: RichText(
-                              text: TextSpan(
-                                text: '${'i_agree_to'.tr} ',
+                  child: Column(
+                    children: [
+                      PCustomPhoneTextfield(ctrl: ctrl, labelText: 'phone'.tr),
+                      // PCustomTextField(
+                      //   labelText: 'phone'.tr,
+                      //   hintText: 'enter_phone_number'.tr,
+                      //   prefixIcon: Assets.icons.phoneIcon.path,
+                      //   controller: ctrl.phoneTEC,
+                      //   validator: PValidator.validatePhoneNumber,
+                      //   // focusColor: PAppColor.primary,
+                      // ),
+                      PAppSize.s20.verticalSpace,
+                      PCustomCheckbox(
+                        value: ctrl.agreeToTerms.value,
+                        onChanged: ctrl.onTermsCheckboxChanged,
+                        child: RichText(
+                          text: TextSpan(
+                            text: '${'i_agree_to'.tr} ',
+                            style: Theme.of(context).textTheme.bodyMedium
+                                ?.copyWith(color: PAppColor.blackColor),
+                            children: [
+                              TextSpan(
+                                text: 'terms_conditions'.tr,
                                 style: Theme.of(context).textTheme.bodyMedium
-                                    ?.copyWith(color: PAppColor.blackColor),
-                                children: [
-                                  TextSpan(
-                                    text: 'terms_conditions'.tr,
-                                    style: Theme.of(
-                                      context,
-                                    ).textTheme.bodyMedium?.copyWith(
+                                    ?.copyWith(
                                       color: PAppColor.primary,
                                       decoration: TextDecoration.underline,
                                       decorationColor: PAppColor.primary,
                                     ),
-                                    recognizer:
-                                        TapGestureRecognizer()
-                                          ..onTap =
-                                              () =>
-                                                  PHelperFunction.switchScreen(
-                                                    destination:
-                                                        Routes.webviewPage,
-                                                    args: [
-                                                      'terms_conditions'.tr,
-                                                      PAppConstant
-                                                          .termsConditionsLink,
-                                                    ],
-                                                  ),
+                                recognizer: TapGestureRecognizer()
+                                  ..onTap = () => PHelperFunction.switchScreen(
+                                    destination: Routes.webviewPage,
+                                    args: [
+                                      'terms_conditions'.tr,
+                                      PAppConstant.termsConditionsLink,
+                                    ],
                                   ),
-                                ],
                               ),
-                            ),
-                            //Text('agree_to_terms'.tr),
+                            ],
                           ),
-                          (PDeviceUtil.getDeviceWidth(context) / 2.5)
-                              .verticalSpace,
-                          PGradientButton(
-                            label: 'next'.tr,
-                            width: PDeviceUtil.getDeviceWidth(context) * 0.55,
-                            onTap: () {
-                              if (ctrl.memberIDFormKey.currentState!
-                                  .validate()) {
-                                ctrl.signup();
-                              }
-                            },
-                          ),
-                        ],
-                      ).scrollable(),
+                        ),
+                        //Text('agree_to_terms'.tr),
+                      ),
+                      (PDeviceUtil.getDeviceWidth(context) / 2.5).verticalSpace,
+                      PGradientButton(
+                        label: 'next'.tr,
+                        width: PDeviceUtil.getDeviceWidth(context) * 0.55,
+                        onTap: () {
+                          if (ctrl.memberIDFormKey.currentState!.validate()) {
+                            ctrl.signup();
+                          }
+                        },
+                      ),
+                    ],
+                  ).scrollable(),
                 ),
               ),
             ),
@@ -98,14 +86,12 @@ class PPhoneNumberPage extends StatelessWidget {
             PAuthLinkButton(
               title: '${'already_have_account'.tr} ',
               subtitle: 'sign_in'.tr,
-              onTap:
-                  () => PHelperFunction.switchScreen(
-                    destination: Routes.loginPage,
-                  ),
+              onTap: () =>
+                  PHelperFunction.switchScreen(destination: Routes.loginPage),
             ),
             // PAppSize.s10.verticalSpace,
           ],
-        ).symmetric(horizontal: PAppSize.s28, vertical: PAppSize.s10),
+        ).symmetric(horizontal: PAppSize.s24, vertical: PAppSize.s10),
       ),
     );
   }

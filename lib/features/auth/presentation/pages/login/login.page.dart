@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:oldmutual_pensions_app/core/utils/utils.dart';
 import 'package:oldmutual_pensions_app/features/auth/presentation/vm/auth.vm.dart';
 import 'package:oldmutual_pensions_app/gen/assets.gen.dart';
+import 'package:oldmutual_pensions_app/routes/app.pages.dart';
 import 'package:oldmutual_pensions_app/shared/shared.dart';
 
 class PLoginPage extends StatelessWidget {
@@ -16,6 +17,7 @@ class PLoginPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text(''),
+        leading: SizedBox.shrink(),
         actions: [
           IconButton(onPressed: () {}, icon: Assets.icons.ghanaFlag.svg()),
         ],
@@ -110,11 +112,15 @@ class PLoginPage extends StatelessWidget {
                           },
                         ),
 
-                        (PDeviceUtil.getDeviceWidth(context) * 0.25)
+                        (PDeviceUtil.getDeviceWidth(context) * 0.20)
                             .verticalSpace,
 
                         TextButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            PHelperFunction.switchScreen(
+                              destination: Routes.enterEmailPage,
+                            );
+                          },
                           child: Text(
                             '${'forgot_password'.tr}?',
                             style: Theme.of(context).textTheme.headlineSmall
@@ -126,19 +132,23 @@ class PLoginPage extends StatelessWidget {
                                 ),
                           ),
                         ),
+
+                        PAppSize.s20.verticalSpace,
+
+                        // don't have an account
+                        PAuthLinkButton(
+                          title: '${'dont_have_account'.tr} ',
+                          subtitle: 'create_new'.tr,
+                          subtitleColor: PAppColor.primary,
+                          onTap: () => PHelperFunction.switchScreen(
+                            destination: Routes.signupPage,
+                          ),
+                        ),
                       ],
                     ).scrollable(),
                   ),
                 ),
               ),
-              // don't have an account
-              // PAuthLinkButton(
-              //   title: '${'dont_have_account'.tr} ',
-              //   subtitle: 'sign_up'.tr,
-              //   onTap: () => PHelperFunction.switchScreen(
-              //     destination: Routes.signupPage,
-              //   ),
-              // ),
             ],
           ).symmetric(horizontal: PAppSize.s24, vertical: PAppSize.s10),
         ),

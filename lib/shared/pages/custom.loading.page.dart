@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:oldmutual_pensions_app/core/utils/utils.dart';
 import 'package:oldmutual_pensions_app/shared/shared.dart';
 
-class PLoadingPage extends StatelessWidget {
+class PCustomLoadingPage extends StatelessWidget {
   final String message;
-  const PLoadingPage({super.key, required this.message});
+  const PCustomLoadingPage({super.key, required this.message});
 
   @override
   Widget build(BuildContext context) {

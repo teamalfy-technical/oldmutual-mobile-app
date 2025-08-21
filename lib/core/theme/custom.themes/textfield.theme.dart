@@ -12,7 +12,7 @@ class PTextFormFieldTheme {
     suffixIconColor: PAppColor.greyColor,
     focusColor: PAppColor.primary,
     contentPadding: const EdgeInsets.symmetric(
-      vertical: PAppSize.s18,
+      vertical: PAppSize.s16,
       horizontal: PAppSize.s16,
     ),
 
@@ -35,7 +35,7 @@ class PTextFormFieldTheme {
     border: const OutlineInputBorder().copyWith(
       borderRadius: BorderRadius.circular(PAppSize.s8),
       borderSide: const BorderSide(
-        width: PAppSize.s2,
+        width: PAppSize.s1,
         color: PAppColor.fillColor,
       ),
     ),
@@ -49,21 +49,21 @@ class PTextFormFieldTheme {
     focusedBorder: const OutlineInputBorder().copyWith(
       borderRadius: BorderRadius.circular(PAppSize.s8),
       borderSide: const BorderSide(
-        width: PAppSize.s1,
+        width: PAppSize.s2,
         color: PAppColor.primary,
       ),
     ),
     errorBorder: const OutlineInputBorder().copyWith(
       borderRadius: BorderRadius.circular(PAppSize.s8),
       borderSide: const BorderSide(
-        width: PAppSize.s1,
+        width: PAppSize.s2,
         color: PAppColor.errorColor,
       ),
     ),
     focusedErrorBorder: const OutlineInputBorder().copyWith(
       borderRadius: BorderRadius.circular(PAppSize.s8),
       borderSide: const BorderSide(
-        width: PAppSize.s1,
+        width: PAppSize.s2,
         color: PAppColor.errorColor,
       ),
     ),
@@ -76,7 +76,7 @@ class PTextFormFieldTheme {
     suffixIconColor: PAppColor.greyColor,
     focusColor: PAppColor.primary,
     contentPadding: const EdgeInsets.symmetric(
-      vertical: PAppSize.s18,
+      vertical: PAppSize.s16,
       horizontal: PAppSize.s16,
     ),
     labelStyle: const TextStyle().copyWith(
@@ -96,14 +96,14 @@ class PTextFormFieldTheme {
     border: const OutlineInputBorder().copyWith(
       borderRadius: BorderRadius.circular(PAppSize.s8),
       borderSide: const BorderSide(
-        width: PAppSize.s2,
+        width: PAppSize.s1,
         color: PAppColor.darkBorderColor,
       ),
     ),
     enabledBorder: const OutlineInputBorder().copyWith(
       borderRadius: BorderRadius.circular(PAppSize.s8),
       borderSide: const BorderSide(
-        width: PAppSize.s2,
+        width: PAppSize.s1,
         color: PAppColor.darkBorderColor,
       ),
     ),

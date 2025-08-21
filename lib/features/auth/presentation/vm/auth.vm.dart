@@ -28,6 +28,8 @@ class PAuthVm extends GetxController {
 
   var otpcode = ''.obs;
 
+  var maskedEmail = ''.obs;
+
   final authService = Get.put(AuthServiceImpl());
 
   onTermsCheckboxChanged(bool? value) => agreeToTerms.value = value ?? false;
@@ -102,56 +104,61 @@ class PAuthVm extends GetxController {
   /// @params => pin
   /// @params => isSignup
   Future<void> verifyOTP({required String pin, required bool isSignup}) async {
+    PHelperFunction.switchScreen(
+      destination: Routes.createPasswordPage,
+      // replace: true,
+      args: isSignup,
+    );
     // final context = Get.context!;
 
-    String phone = PFormatter.formatPhone(
-      code: selectedCountry.value.phoneCode,
-      phone: phoneTEC.text.trim(),
-    );
-    String email = emailTEC.text.trim();
+    // String phone = PFormatter.formatPhone(
+    //   code: selectedCountry.value.phoneCode,
+    //   phone: phoneTEC.text.trim(),
+    // );
+    // String email = emailTEC.text.trim();
 
-    if (otpcode.isEmpty) {
-      PPopupDialog(context).errorMessage(
-        title: 'action_required'.tr,
-        message:
-            'You need to enter the 6 digit code sent to your phone or email.',
-      );
-      return;
-    }
+    // if (otpcode.isEmpty) {
+    //   PPopupDialog(context).errorMessage(
+    //     title: 'action_required'.tr,
+    //     message:
+    //         'You need to enter the 6 digit code sent to your phone or email.',
+    //   );
+    //   return;
+    // }
 
-    showLoadingDialog(
-      context: context,
-      barrierDismissible: true,
-      content: Text(
-        'verifying_to_msg'.tr,
-        style: Theme.of(context).textTheme.bodyMedium,
-      ),
-    );
-    final result = isSignup
-        ? await authService.verifyOTP(otp: pin, phone: phone)
-        : await authService.verifyForgotPasswordOTP(otp: pin, email: email);
-    result.fold(
-      (err) {
-        PHelperFunction.pop();
-        PPopupDialog(
-          context,
-        ).errorMessage(title: 'error'.tr, message: err.message);
-      },
-      (res) {
-        PHelperFunction.pop();
-        // show success dialog
-        showSuccessDialog(context: context, title: 'verified_otp_msg'.tr);
-        Future.delayed(Duration(seconds: 2), () {
-          PHelperFunction.pop();
-          // navigate to next screen
-          PHelperFunction.switchScreen(
-            destination: Routes.createPasswordPage,
-            replace: true,
-            args: isSignup,
-          );
-        });
-      },
-    );
+    // showLoadingDialog(
+    //   context: context,
+    //   barrierDismissible: true,
+    //   content: Text(
+    //     'verifying_to_msg'.tr,
+    //     style: Theme.of(context).textTheme.bodyMedium,
+    //   ),
+    // );
+    // final result = isSignup
+    //     ? await authService.verifyOTP(otp: pin, phone: phone)
+    //     : await authService.verifyForgotPasswordOTP(otp: pin, email: email);
+    // result.fold(
+    //   (err) {
+    //     PHelperFunction.pop();
+    //     PPopupDialog(
+    //       context,
+    //     ).errorMessage(title: 'error'.tr, message: err.message);
+    //   },
+    //   (res) {
+    //     PHelperFunction.pop();
+    //     // show success dialog
+    //     showSuccessDialog(context: context, title: 'verified_otp_msg'.tr);
+    //     Future.delayed(Duration(seconds: 2), () {
+    //       PHelperFunction.pop();
+    //       // navigate to next screen
+    //       PHelperFunction.switchScreen(
+    //         destination: Routes.createPasswordPage,
+    //         replace: true,
+    //         args: isSignup,
+    //       );
+    //     });
+    //   },
+    // );
   }
 
   void checkIfPasswordMatch() {
@@ -222,30 +229,35 @@ class PAuthVm extends GetxController {
   /// [Function] Forgot password to send password reset link
   Future<void> forgotPassword() async {
     String email = emailTEC.text.trim();
-
-    showLoadingDialog(
-      context: context,
-      content: Text(
-        'sending_reset_link'.tr,
-        style: Theme.of(context).textTheme.bodyMedium,
-      ),
+    maskedEmail.value = PHelperFunction.maskEmailDomain(email);
+    PHelperFunction.switchScreen(
+      destination: Routes.verifyOTPPage,
+      args: false,
     );
 
-    final result = await authService.forgotPassword(email: email);
-    result.fold(
-      (err) {
-        PPopupDialog(
-          context,
-        ).errorMessage(title: 'error'.tr, message: err.message);
-      },
-      (res) {
-        PHelperFunction.pop();
-        PHelperFunction.switchScreen(
-          destination: Routes.verifyOTPPage,
-          args: false,
-        );
-      },
-    );
+    // showLoadingDialog(
+    //   context: context,
+    //   content: Text(
+    //     'sending_reset_link'.tr,
+    //     style: Theme.of(context).textTheme.bodyMedium,
+    //   ),
+    // );
+
+    // final result = await authService.forgotPassword(email: email);
+    // result.fold(
+    //   (err) {
+    //     PPopupDialog(
+    //       context,
+    //     ).errorMessage(title: 'error'.tr, message: err.message);
+    //   },
+    //   (res) {
+    //     PHelperFunction.pop();
+    //     PHelperFunction.switchScreen(
+    //       destination: Routes.verifyOTPPage,
+    //       args: false,
+    //     );
+    //   },
+    // );
   }
 
   /// [Function] Forgot password to reset

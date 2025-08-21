@@ -71,6 +71,12 @@ class PHelperFunction {
     return File(compressedFile?.path ?? file.path);
   }
 
+  static String maskEmailDomain(String email) {
+    final parts = email.split('@');
+    if (parts.length != 2) return email; // invalid email, return as is
+    return '${parts[0]}****';
+  }
+
   static Future<String> getFileSize(File file) async {
     // Get file size in bytes
     int fileSizeInBytes = await file.length();

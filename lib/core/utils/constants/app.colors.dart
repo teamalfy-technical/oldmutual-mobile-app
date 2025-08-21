@@ -17,9 +17,15 @@ class PAppColor {
   static const Color yellowColor = Color(0xFFFFDD1A);
 
   // Dark theme colors
-  static const Color darkAppBarColor = Color(0xFF58507C);
+
+  static const Color darkAppBarColor2 = Color(0xFF58507C);
+  static const Color darkAppBarColor = Color(0xFF2D293D);
   static const Color darkBgColor = Color(0xFF16141F);
   static const Color darkBorderColor = Color(0xFFB4B4B4);
+  static const Color secondary500 = Color(0xFFC5C1D7);
+  static const Color secondary700 = Color(0xFFA8A2C3);
+  static const Color secondary900 = Color(0xFFE2E0EB);
+  static const Color textDisabledColor = Color(0xFFA7A7AC);
 
   // for dark theme colors
   static const Color blackColor = Color(0xFF1A1A1A);
@@ -60,7 +66,6 @@ class PAppColor {
   static const Color borderPrimary = Color(0xFFD9D9D9);
   static const Color borderSecondary = Color(0xFFE6E6E6);
   static const Color darkGrey = Color(0xFF1F1F1F);
-  static const Color secondary700 = Color(0xFFA8A2C3);
 
   // Text Colors
   static const Color primaryTextColor = Color(0xFF245920);

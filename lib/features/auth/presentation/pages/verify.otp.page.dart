@@ -16,83 +16,134 @@ class PVerifyOTPPage extends StatelessWidget {
   Widget build(BuildContext context) {
     timerCtrl.startCountdown();
     return Scaffold(
-      appBar: AppBar(
-        title: Text(isSignup ? 'verify_phone_number'.tr : 'reset_password'.tr),
-      ),
+      appBar: AppBar(title: Text('verify_phone_number'.tr)),
       body: PAnnotatedRegion(
         child: SafeArea(
           child: Column(
             children: [
               PAppSize.s8.verticalSpace,
               Expanded(
-                child:
-                    Column(
-                      children: [
-                        PAppSize.s20.verticalSpace,
-                        Text(
-                          'verify_phone_number_hint'.tr,
-                          textAlign: TextAlign.center,
-                          style: Theme.of(context).textTheme.bodyLarge,
-                        ),
-                        PAppSize.s20.verticalSpace,
-                        PCustomPinput(
-                          length: 6,
-                          onCompleted: (pin) {
-                            ctrl.updateOTP(pin);
-                            ctrl.verifyOTP(pin: pin, isSignup: isSignup);
-                          },
-                        ),
-                        PAppSize.s10.verticalSpace,
-                        Obx(() {
-                          // final seconds = timerCtrl.seconds.value;
-                          // final formattedTime =
-                          //     "00:${seconds.toString().padLeft(2, '0')}";
-                          return PAuthLinkButton(
-                            title:
-                                timerCtrl.completed.value
-                                    ? '${'not_receive_code'.tr}? '
-                                    : '${'code_expires_in'.tr} ',
-                            subtitleColor:
-                                timerCtrl.completed.value
-                                    ? PAppColor.primary
-                                    : null,
-                            subtitle:
-                                timerCtrl.completed.value
-                                    ? 'resend'.tr
-                                    : timerCtrl.formattedTime,
-                            onTap:
-                                timerCtrl.completed.value
-                                    ? () {
-                                      ctrl.verifyOTP(
-                                        pin: ctrl.otpcode.value,
-                                        isSignup: isSignup,
-                                      );
-                                      timerCtrl.startCountdown();
-                                    }
-                                    : null,
-                          );
-                          // return Text(
-                          //   '${'code_expires_in'.tr} $formattedTime',
-                          //   textAlign: TextAlign.center,
-                          //   style: Theme.of(context).textTheme.bodyMedium,
-                          // );
-                        }),
-                        (PDeviceUtil.getDeviceWidth(context) / 2.5)
-                            .verticalSpace,
-                        PGradientButton(
-                          label: 'next'.tr,
-                          width: PDeviceUtil.getDeviceWidth(context) * 0.55,
-                          onTap:
-                              () => ctrl.verifyOTP(
-                                pin: ctrl.otpcode.value,
-                                isSignup: isSignup,
-                              ),
-                        ).centered(),
-                      ],
-                    ).scrollable(),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    PAppSize.s20.verticalSpace,
+                    Text(
+                      'verify_phone_number_hint'.trParams({
+                        'email': ctrl.maskedEmail.value,
+                      }),
+                      textAlign: TextAlign.start,
+                      style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                        height: 1.3,
+                        color: PAppColor.secondary500,
+                      ),
+                    ),
+                    PAppSize.s20.verticalSpace,
+                    PCustomPinput(
+                      length: 6,
+                      onCompleted: (pin) {
+                        ctrl.updateOTP(pin);
+                        ctrl.verifyOTP(pin: pin, isSignup: isSignup);
+                      },
+                    ),
+                    PAppSize.s3.verticalSpace,
+                    Text(
+                      'one_time_pin'.trParams({
+                        'email': ctrl.maskedEmail.value,
+                      }),
+                      textAlign: TextAlign.start,
+                      style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                        fontSize: PAppSize.s14,
+                        color: PAppColor.textDisabledColor,
+                        letterSpacing: 0,
+                        fontWeight: FontWeight.w400,
+                      ),
+                    ),
+                    PAppSize.s12.verticalSpace,
+                    Obx(() {
+                      // final seconds = timerCtrl.seconds.value;
+                      // final formattedTime =
+                      //     "00:${seconds.toString().padLeft(2, '0')}";
+                      return Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            'did_not_receive_code'.tr,
+                            textAlign: TextAlign.start,
+                            style: Theme.of(context).textTheme.bodyLarge
+                                ?.copyWith(
+                                  fontSize: PAppSize.s14,
+                                  color: PAppColor.whiteColor,
+                                  fontWeight: FontWeight.w500,
+                                ),
+                          ),
+                          Text(
+                            timerCtrl.completed.value
+                                ? 'resend'.tr
+                                : 'resend_in'.trParams({
+                                    'time': '${timerCtrl.formattedTime} sec',
+                                  }),
+                            textAlign: TextAlign.start,
+                            style: Theme.of(context).textTheme.bodyLarge
+                                ?.copyWith(
+                                  fontSize: PAppSize.s14,
+                                  color: timerCtrl.completed.value
+                                      ? PAppColor.primary
+                                      : PAppColor.secondary900,
+                                  fontWeight: FontWeight.w700,
+                                ),
+                          ).onPressed(
+                            onTap: timerCtrl.completed.value
+                                ? () {
+                                    ctrl.verifyOTP(
+                                      pin: ctrl.otpcode.value,
+                                      isSignup: isSignup,
+                                    );
+                                    timerCtrl.startCountdown();
+                                  }
+                                : null,
+                          ),
+                          // PAuthLinkButton(
+                          //   title: timerCtrl.completed.value
+                          //       ? '${'not_receive_code'.tr}? '
+                          //       : '${'code_expires_in'.tr} ',
+                          //   subtitleColor: timerCtrl.completed.value
+                          //       ? PAppColor.primary
+                          //       : null,
+                          //   subtitle: timerCtrl.completed.value
+                          //       ? 'resend'.tr
+                          //       : 'resend_in'.trParams({
+                          //           'time': timerCtrl.formattedTime,
+                          //         }),
+                          //   onTap: timerCtrl.completed.value
+                          //       ? () {
+                          //           ctrl.verifyOTP(
+                          //             pin: ctrl.otpcode.value,
+                          //             isSignup: isSignup,
+                          //           );
+                          //           timerCtrl.startCountdown();
+                          //         }
+                          //       : null,
+                          // ),
+                        ],
+                      );
+                    }),
+                    PAppSize.s28.verticalSpace,
+                    PGradientButton(
+                      label: 'continue'.tr,
+                      showIcon: false,
+                      width: PDeviceUtil.getDeviceWidth(context),
+                      onTap: () {
+                        ctrl.verifyOTP(
+                          isSignup: isSignup,
+                          pin: ctrl.otpcode.value,
+                        );
+                      },
+                    ),
+                  ],
+                ).scrollable(),
               ),
             ],
-          ).horizontal(PAppSize.s25),
+          ).horizontal(PAppSize.s24),
         ),
       ),
     );

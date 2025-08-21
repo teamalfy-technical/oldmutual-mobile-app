@@ -1,3 +1,5 @@
+export 'pages/custom.loading.page.dart';
+export 'pages/custom.success.page.dart';
 export 'widgets/animated.column.dart';
 export 'widgets/animated.listview.dart';
 export 'widgets/annotated.region.dart';
@@ -16,7 +18,6 @@ export 'widgets/custom.textfield.dart';
 export 'widgets/empty.state.widget.dart';
 export 'widgets/gradient.button.dart';
 export 'widgets/inactivity.wrapper.dart';
-export 'widgets/loading.page.dart';
 export 'widgets/page.tag.widget.dart';
 export 'widgets/popup.dialog.dart';
 export 'widgets/radio.listtile.widget.dart';

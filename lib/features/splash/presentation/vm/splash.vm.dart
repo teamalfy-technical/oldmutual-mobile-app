@@ -20,7 +20,7 @@ class PSplashVm extends GetxController {
     Timer(Duration(seconds: 3), () {
       if (PSecureStorage().readData(PSecureStorage().onboardingKey) == null) {
         PHelperFunction.switchScreen(
-          destination: Routes.onboardingPage,
+          destination: Routes.welcomePage,
           replace: true,
         );
       } else {
@@ -40,7 +40,8 @@ class PSplashVm extends GetxController {
             );
           } else {
             PHelperFunction.switchScreen(
-              destination: Routes.signupPage,
+              // destination: Routes.signupPage,
+              destination: Routes.welcomePage,
               replace: true,
             );
           }

@@ -54,6 +54,9 @@ class PAppSize {
   static const double s55 = 55.0;
   static const double s56 = 56.0;
   static const double s60 = 60.0;
+  static const double s65 = 65.0;
+  static const double s70 = 70.0;
+  static const double s72 = 72.0;
   static const double s80 = 80.0;
   static const double s92 = 92.0;
   static const double s100 = 100.0;

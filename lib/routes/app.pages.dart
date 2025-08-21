@@ -16,12 +16,12 @@ import 'package:oldmutual_pensions_app/features/redemptions/presentation/pages/p
 import 'package:oldmutual_pensions_app/features/redemptions/redemption.dart';
 import 'package:oldmutual_pensions_app/features/settings/presentation/pages/change.password.page.dart';
 import 'package:oldmutual_pensions_app/features/settings/settings.dart';
+import 'package:oldmutual_pensions_app/features/splash/splash.dart';
 import 'package:oldmutual_pensions_app/features/statements/presentation/pages/statement.page.dart';
 import 'package:oldmutual_pensions_app/features/webview/webview.dart';
 import 'package:oldmutual_pensions_app/shared/shared.dart';
 
 import '../features/onboarding/presentation/pages/onboarding.page.dart';
-import '../features/splash/presentation/pages/splash.page.dart';
 
 part 'app.routes.dart';
 
@@ -40,6 +40,12 @@ class AppPages {
       transitionDuration: const Duration(milliseconds: PAppSize.s700),
     ),
     GetPage(
+      name: _Paths.welcomePage,
+      page: () => PWelcomePage(),
+      transition: Transition.circularReveal,
+      transitionDuration: const Duration(milliseconds: PAppSize.s700),
+    ),
+    GetPage(
       name: _Paths.loginPage,
       page: () => PLoginPage(),
       transition: Transition.native,
@@ -53,7 +59,18 @@ class AppPages {
     ),
     GetPage(
       name: _Paths.loadingPage,
-      page: () => PLoadingPage(message: Get.arguments),
+      page: () => PCustomLoadingPage(message: Get.arguments),
+      transition: Transition.native,
+      transitionDuration: const Duration(milliseconds: PAppSize.s700),
+    ),
+    GetPage(
+      name: _Paths.successPage,
+      page: () => PCustomSuccessPage(
+        title: Get.arguments[0],
+        message: Get.arguments[1],
+        buttonTitle: Get.arguments[2],
+        onTap: Get.arguments[3],
+      ),
       transition: Transition.native,
       transitionDuration: const Duration(milliseconds: PAppSize.s700),
     ),

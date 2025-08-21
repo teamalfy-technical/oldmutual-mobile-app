@@ -5,8 +5,6 @@ import 'package:oldmutual_pensions_app/core/utils/utils.dart';
 import 'package:oldmutual_pensions_app/features/auth/presentation/vm/auth.vm.dart';
 import 'package:oldmutual_pensions_app/shared/shared.dart';
 
-import '../../../../../gen/assets.gen.dart';
-
 class PEnterEmailPage extends StatelessWidget {
   PEnterEmailPage({super.key});
 
@@ -25,21 +23,31 @@ class PEnterEmailPage extends StatelessWidget {
                 child: Form(
                   key: ctrl.emailFormKey,
                   child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      PAppSize.s20.verticalSpace,
+                      PAppSize.s8.verticalSpace,
+                      Text(
+                        'reset_password_hint'.tr,
+                        style: Theme.of(context).textTheme.headlineSmall
+                            ?.copyWith(
+                              fontWeight: FontWeight.w600,
+                              color: PAppColor.secondary500,
+                              fontSize: PAppSize.s16,
+                            ),
+                      ),
+                      PAppSize.s32.verticalSpace,
                       PCustomTextField(
                         labelText: 'email'.tr,
-
-                        prefixIcon: Assets.icons.emailIcon.svg(),
                         controller: ctrl.emailTEC,
                         validator: PValidator.validateEmail,
-                        // focusColor: PAppColor.primary,
                       ),
 
-                      (PDeviceUtil.getDeviceWidth(context) / 3).verticalSpace,
+                      PAppSize.s25.verticalSpace,
+
                       PGradientButton(
-                        label: 'send_otp'.tr,
-                        width: PDeviceUtil.getDeviceWidth(context) * 0.55,
+                        label: 'continue'.tr,
+                        showIcon: false,
+                        width: PDeviceUtil.getDeviceWidth(context),
                         onTap: () {
                           if (ctrl.emailFormKey.currentState!.validate()) {
                             ctrl.forgotPassword();
@@ -60,7 +68,7 @@ class PEnterEmailPage extends StatelessWidget {
               //       ),
               // ),
             ],
-          ).horizontal(PAppSize.s28),
+          ).horizontal(PAppSize.s24),
         ),
       ),
     );
