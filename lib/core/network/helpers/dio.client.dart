@@ -3,13 +3,19 @@ import 'package:oldmutual_pensions_app/core/utils/utils.dart';
 import 'package:oldmutual_pensions_app/env/env.dart';
 
 class DioClient {
-  static final DioClient _instance = DioClient._internal();
+  // static final DioClient _instance = DioClient._internal();
+  static DioClient? _instance;
   late final Dio _dio;
 
-  factory DioClient() => _instance;
+  // factory DioClient() => _instance;
 
-  DioClient._internal() {
-    _dio = initWithBaseUrl(baseUrl: Env.baseUrl);
+  factory DioClient({String? baseUrl}) {
+    _instance ??= DioClient._internal(baseUrl: baseUrl ?? Env.baseUrl);
+    return _instance!;
+  }
+
+  DioClient._internal({required String baseUrl}) {
+    _dio = initWithBaseUrl(baseUrl: baseUrl);
   }
 
   static Dio initWithBaseUrl({

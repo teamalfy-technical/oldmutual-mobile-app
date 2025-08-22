@@ -201,4 +201,102 @@ class AuthDsImpl implements AuthDs {
       );
     });
   }
+
+  @override
+  Future<ApiResponse<Member>> createAccountOnSelfService({
+    required String email,
+    required String phone,
+    required String verificationToken,
+    required String password,
+    required String confirmPassword,
+  }) async {
+    return await asyncFunctionWrapper.handleAsyncNetworkCall(() async {
+      final payload = dio.FormData.fromMap({
+        'email': email,
+        'phone': phone,
+        'password': password,
+        'c_password': confirmPassword,
+        'verification_token': verificationToken,
+      });
+      final res = await apiService.callService(
+        requestType: RequestType.post,
+        payload: payload,
+        endPoint: Env.selfServiceCreateAccount,
+        client: DioClient(baseUrl: Env.selfServiceBaseUrl),
+      );
+      return ApiResponse<Member>.fromJson(res, (data) => Member.fromJson(data));
+    });
+  }
+
+  @override
+  Future<ApiResponse<List<Message>>> resendOtp({required String phone}) async {
+    return await asyncFunctionWrapper.handleAsyncNetworkCall(() async {
+      final res = await apiService.callService(
+        requestType: RequestType.post,
+        endPoint: '${Env.selfServiceResendOtp}/$phone',
+        client: DioClient(baseUrl: Env.selfServiceBaseUrl),
+      );
+      return ApiResponse<List<Message>>.fromJson(
+        res,
+        (data) => (data as List).map((e) => Message.fromJson(e)).toList(),
+      );
+    });
+  }
+
+  @override
+  Future<ApiResponse<Member>> signIntoSelfService({
+    required String emailOrPhone,
+    required String password,
+  }) async {
+    return await asyncFunctionWrapper.handleAsyncNetworkCall(() async {
+      final payload = dio.FormData.fromMap({
+        'email_or_phone': emailOrPhone,
+
+        'password': password,
+      });
+      final res = await apiService.callService(
+        requestType: RequestType.post,
+        payload: payload,
+        endPoint: Env.selfServiceLogin,
+        client: DioClient(baseUrl: Env.selfServiceBaseUrl),
+      );
+      return ApiResponse<Member>.fromJson(res, (data) => Member.fromJson(data));
+    });
+  }
+
+  @override
+  Future<ApiResponse<List<Message>>> verifyGhanaCard({
+    required String cardNumber,
+  }) async {
+    return await asyncFunctionWrapper.handleAsyncNetworkCall(() async {
+      final payload = dio.FormData.fromMap({'ghana_card_number': cardNumber});
+      final res = await apiService.callService(
+        requestType: RequestType.post,
+        payload: payload,
+        endPoint: Env.selfServiceVerifyGhanaCard,
+        client: DioClient(baseUrl: Env.selfServiceBaseUrl),
+      );
+      return ApiResponse<List<Message>>.fromJson(
+        res,
+        (data) => (data as List).map((e) => Message.fromJson(e)).toList(),
+      );
+    });
+  }
+
+  @override
+  Future<ApiResponse<Member>> verifyOtpOnSelfService({
+    required String phone,
+    required String otp,
+  }) async {
+    return await asyncFunctionWrapper.handleAsyncNetworkCall(() async {
+      final payload = dio.FormData.fromMap({'phone': phone, 'otp': otp});
+      final res = await apiService.callService(
+        requestType: RequestType.post,
+        payload: payload,
+        endPoint: Env.selfServiceVerifyOtp,
+        client: DioClient(baseUrl: Env.selfServiceBaseUrl),
+      );
+      return ApiResponse<Member>.fromJson(res, (data) => Member.fromJson(data));
+    });
+  }
 }

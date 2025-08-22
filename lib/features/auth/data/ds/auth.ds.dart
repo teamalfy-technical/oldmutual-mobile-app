@@ -31,6 +31,30 @@ abstract class AuthDs {
     required String password,
   });
 
+  Future<ApiResponse<Member>> signIntoSelfService({
+    required String emailOrPhone,
+    required String password,
+  });
+
+  Future<ApiResponse<Member>> createAccountOnSelfService({
+    required String email,
+    required String phone,
+    required String verificationToken,
+    required String password,
+    required String confirmPassword,
+  });
+
+  Future<ApiResponse<Member>> verifyOtpOnSelfService({
+    required String phone,
+    required String otp,
+  });
+
+  Future<ApiResponse<List<Message>>> resendOtp({required String phone});
+
+  Future<ApiResponse<List<Message>>> verifyGhanaCard({
+    required String cardNumber,
+  });
+
   Future<ApiResponse<List<Message>>> updateFcmToken({required String token});
 
   Future<ApiResponse<List<Message>>> forgotPassword({required String email});

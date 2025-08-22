@@ -50,4 +50,30 @@ abstract class AuthService {
     required String password,
     required String confirmPassword,
   });
+
+  Future<Either<PFailure, ApiResponse<Member>>> signIntoSelfService({
+    required String emailOrPhone,
+    required String password,
+  });
+
+  Future<Either<PFailure, ApiResponse<Member>>> createAccountOnSelfService({
+    required String email,
+    required String phone,
+    required String verificationToken,
+    required String password,
+    required String confirmPassword,
+  });
+
+  Future<Either<PFailure, ApiResponse<Member>>> verifyOtpOnSelfService({
+    required String phone,
+    required String otp,
+  });
+
+  Future<Either<PFailure, ApiResponse<List<Message>>>> resendOtp({
+    required String phone,
+  });
+
+  Future<Either<PFailure, ApiResponse<List<Message>>>> verifyGhanaCard({
+    required String cardNumber,
+  });
 }

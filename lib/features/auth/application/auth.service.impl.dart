@@ -94,4 +94,46 @@ class AuthServiceImpl implements AuthService {
       confirmPassword: confirmPassword,
     );
   }
+
+  @override
+  Future<Either<PFailure, ApiResponse<Member>>> createAccountOnSelfService({
+    required String email,
+    required String phone,
+    required String verificationToken,
+    required String password,
+    required String confirmPassword,
+  }) {
+    return authRepo.createAccountOnSelfService(
+      email: email,
+      phone: phone,
+      verificationToken: verificationToken,
+      password: password,
+      confirmPassword: confirmPassword,
+    );
+  }
+
+  @override
+  Future<Either<PFailure, ApiResponse<List<Message>>>> resendOtp({
+    required String phone,
+  }) => authRepo.resendOtp(phone: phone);
+
+  @override
+  Future<Either<PFailure, ApiResponse<Member>>> signIntoSelfService({
+    required String emailOrPhone,
+    required String password,
+  }) => authRepo.signIntoSelfService(
+    emailOrPhone: emailOrPhone,
+    password: password,
+  );
+
+  @override
+  Future<Either<PFailure, ApiResponse<List<Message>>>> verifyGhanaCard({
+    required String cardNumber,
+  }) => authRepo.verifyGhanaCard(cardNumber: cardNumber);
+
+  @override
+  Future<Either<PFailure, ApiResponse<Member>>> verifyOtpOnSelfService({
+    required String phone,
+    required String otp,
+  }) => authRepo.verifyOtpOnSelfService(phone: phone, otp: otp);
 }

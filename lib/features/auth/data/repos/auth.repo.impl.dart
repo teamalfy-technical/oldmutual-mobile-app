@@ -15,12 +15,11 @@ class AuthRepoImpl implements AuthRepo {
     required String confirmPassword,
   }) async {
     return await customRepositoryWrapper.wrapRepositoryFunction(
-      function:
-          () async => await authDs.addPassword(
-            phone: phone,
-            password: password,
-            confirmPassword: confirmPassword,
-          ),
+      function: () async => await authDs.addPassword(
+        phone: phone,
+        password: password,
+        confirmPassword: confirmPassword,
+      ),
     );
   }
 
@@ -39,11 +38,10 @@ class AuthRepoImpl implements AuthRepo {
     required String confirmPassword,
   }) async {
     return await customRepositoryWrapper.wrapRepositoryFunction(
-      function:
-          () async => await authDs.resetPassword(
-            password: password,
-            confirmPassword: confirmPassword,
-          ),
+      function: () async => await authDs.resetPassword(
+        password: password,
+        confirmPassword: confirmPassword,
+      ),
     );
   }
 
@@ -134,6 +132,81 @@ class AuthRepoImpl implements AuthRepo {
           newPassword: newPassword,
           confirmPassword: confirmPassword,
         );
+        return res;
+      },
+    );
+  }
+
+  @override
+  Future<Either<PFailure, ApiResponse<Member>>> createAccountOnSelfService({
+    required String email,
+    required String phone,
+    required String verificationToken,
+    required String password,
+    required String confirmPassword,
+  }) async {
+    return await customRepositoryWrapper.wrapRepositoryFunction(
+      function: () async {
+        final res = await authDs.createAccountOnSelfService(
+          email: email,
+          phone: phone,
+          verificationToken: verificationToken,
+          password: password,
+          confirmPassword: confirmPassword,
+        );
+        return res;
+      },
+    );
+  }
+
+  @override
+  Future<Either<PFailure, ApiResponse<List<Message>>>> resendOtp({
+    required String phone,
+  }) async {
+    return await customRepositoryWrapper.wrapRepositoryFunction(
+      function: () async {
+        final res = await authDs.resendOtp(phone: phone);
+        return res;
+      },
+    );
+  }
+
+  @override
+  Future<Either<PFailure, ApiResponse<Member>>> signIntoSelfService({
+    required String emailOrPhone,
+    required String password,
+  }) async {
+    return await customRepositoryWrapper.wrapRepositoryFunction(
+      function: () async {
+        final res = await authDs.signIntoSelfService(
+          emailOrPhone: emailOrPhone,
+          password: password,
+        );
+        return res;
+      },
+    );
+  }
+
+  @override
+  Future<Either<PFailure, ApiResponse<List<Message>>>> verifyGhanaCard({
+    required String cardNumber,
+  }) async {
+    return await customRepositoryWrapper.wrapRepositoryFunction(
+      function: () async {
+        final res = await authDs.verifyGhanaCard(cardNumber: cardNumber);
+        return res;
+      },
+    );
+  }
+
+  @override
+  Future<Either<PFailure, ApiResponse<Member>>> verifyOtpOnSelfService({
+    required String phone,
+    required String otp,
+  }) async {
+    return await customRepositoryWrapper.wrapRepositoryFunction(
+      function: () async {
+        final res = await authDs.verifyOtpOnSelfService(phone: phone, otp: otp);
         return res;
       },
     );
