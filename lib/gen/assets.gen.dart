@@ -87,11 +87,27 @@ class $AssetsIconsGen {
   SvgGenImage get factsheetIcon =>
       const SvgGenImage('assets/icons/factsheet.icon.svg');
 
+  /// File path: assets/icons/fingerprint.svg
+  SvgGenImage get fingerprint =>
+      const SvgGenImage('assets/icons/fingerprint.svg');
+
   /// File path: assets/icons/ghana.flag.svg
   SvgGenImage get ghanaFlag => const SvgGenImage('assets/icons/ghana.flag.svg');
 
   /// File path: assets/icons/home.icon.svg
   SvgGenImage get homeIcon => const SvgGenImage('assets/icons/home.icon.svg');
+
+  /// File path: assets/icons/keyboard.arrow.down.svg
+  SvgGenImage get keyboardArrowDown =>
+      const SvgGenImage('assets/icons/keyboard.arrow.down.svg');
+
+  /// File path: assets/icons/keyboard.arrow.right.svg
+  SvgGenImage get keyboardArrowRight =>
+      const SvgGenImage('assets/icons/keyboard.arrow.right.svg');
+
+  /// File path: assets/icons/link.btn.icon.svg
+  SvgGenImage get linkBtnIcon =>
+      const SvgGenImage('assets/icons/link.btn.icon.svg');
 
   /// File path: assets/icons/lock.icon.svg
   SvgGenImage get lockIcon => const SvgGenImage('assets/icons/lock.icon.svg');
@@ -114,10 +130,6 @@ class $AssetsIconsGen {
   /// File path: assets/icons/notification.icon.svg
   SvgGenImage get notificationIcon =>
       const SvgGenImage('assets/icons/notification.icon.svg');
-
-  /// File path: assets/icons/password.view.icon.svg
-  SvgGenImage get passwordViewIcon =>
-      const SvgGenImage('assets/icons/password.view.icon.svg');
 
   /// File path: assets/icons/phone.icon.svg
   SvgGenImage get phoneIcon => const SvgGenImage('assets/icons/phone.icon.svg');
@@ -150,6 +162,14 @@ class $AssetsIconsGen {
   SvgGenImage get userProfileIcon =>
       const SvgGenImage('assets/icons/user.profile.icon.svg');
 
+  /// File path: assets/icons/visibility.off.svg
+  SvgGenImage get visibilityOff =>
+      const SvgGenImage('assets/icons/visibility.off.svg');
+
+  /// File path: assets/icons/visibility.on.svg
+  SvgGenImage get visibilityOn =>
+      const SvgGenImage('assets/icons/visibility.on.svg');
+
   /// File path: assets/icons/warning.green.icon.svg
   SvgGenImage get warningGreenIcon =>
       const SvgGenImage('assets/icons/warning.green.icon.svg');
@@ -175,15 +195,18 @@ class $AssetsIconsGen {
     emailIcon,
     eyeIcon,
     factsheetIcon,
+    fingerprint,
     ghanaFlag,
     homeIcon,
+    keyboardArrowDown,
+    keyboardArrowRight,
+    linkBtnIcon,
     lockIcon,
     memberIcon,
     moreIcon,
     notificationCountIcon,
     notificationGreenIcon,
     notificationIcon,
-    passwordViewIcon,
     phoneIcon,
     profileIcon,
     settingsIcon,
@@ -192,6 +215,8 @@ class $AssetsIconsGen {
     topLogoBanner,
     trashRedIcon,
     userProfileIcon,
+    visibilityOff,
+    visibilityOn,
     warningGreenIcon,
     warningIcon,
     warningRedIcon,

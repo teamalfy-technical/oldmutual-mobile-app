@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:oldmutual_pensions_app/core/utils/utils.dart';
-import 'package:oldmutual_pensions_app/features/auth/presentation/vm/auth.vm.dart';
+import 'package:oldmutual_pensions_app/features/auth/auth.dart';
 import 'package:oldmutual_pensions_app/gen/assets.gen.dart';
 import 'package:oldmutual_pensions_app/routes/app.pages.dart';
 import 'package:oldmutual_pensions_app/shared/shared.dart';
@@ -60,9 +60,9 @@ class PWelcomeBackPage extends StatelessWidget {
                         PAppSize.s24.verticalSpace,
                         PCustomPasswordTextField(
                           labelText: 'hint_password'.tr,
-                          suffixIcon: Assets.icons.passwordViewIcon.svg(
-                            // color: PAppColor.hintTextColor,
-                          ),
+                          // suffixIcon: Assets.icons.passwordViewIcon.svg(
+                          //   // color: PAppColor.hintTextColor,
+                          // ),
                           validator: PValidator.validatePassword,
                           obscure: ctrl.obscure.value,
                           onObscureChanged: ctrl.onObscureChanged,
@@ -98,7 +98,11 @@ class PWelcomeBackPage extends StatelessWidget {
                           },
                         ),
 
-                        // PAppSize.s25.verticalSpace,
+                        PAppSize.s16.verticalSpace,
+
+                        Assets.icons.fingerprint.svg(),
+
+                        PAppSize.s8.verticalSpace,
 
                         // (PDeviceUtil.getDeviceWidth(context) * 0.25)
                         //     .verticalSpace,
@@ -111,12 +115,62 @@ class PWelcomeBackPage extends StatelessWidget {
                             style: Theme.of(context).textTheme.headlineSmall
                                 ?.copyWith(
                                   fontWeight: FontWeight.w600,
-
-                                  color: PAppColor.primaryLight,
+                                  letterSpacing: 0.5,
+                                  color: PAppColor.primaryRest,
                                   fontSize: PAppSize.s16,
                                 ),
                           ),
                         ),
+
+                        // Explore other services
+                        PCustomExpansionTile(
+                          title: 'explore_other_services'.tr,
+                        ),
+                        // Theme(
+                        //   data: Theme.of(
+                        //     context,
+                        //   ).copyWith(dividerColor: Colors.transparent),
+                        //   child: ExpansionTile(
+                        //     initiallyExpanded: false,
+                        //     onExpansionChanged: (value) {},
+                        //     title: Text(
+                        //       'explore_other_services'.tr,
+                        //       style: Theme.of(context).textTheme.headlineSmall,
+                        //     ),
+                        //     trailing: Icon(Icons.keyboard_arrow_down),
+                        //     children: [
+                        //       ServiceLinkWidget(
+                        //         label: 'special_investments_plan'.tr,
+                        //         onLinkTap: () {},
+                        //       ),
+                        //       PAppSize.s10.verticalSpace,
+                        //       ServiceLinkWidget(
+                        //         label: 'special_investments_plan'.tr,
+                        //         onLinkTap: () {},
+                        //       ),
+                        //       PAppSize.s10.verticalSpace,
+                        //       ServiceLinkWidget(
+                        //         label: 'special_investments_plan'.tr,
+                        //         onLinkTap: () {},
+                        //       ),
+                        //       PAppSize.s10.verticalSpace,
+                        //       ServiceLinkWidget(
+                        //         label: 'special_investments_plan'.tr,
+                        //         onLinkTap: () {},
+                        //       ),
+                        //       PAppSize.s10.verticalSpace,
+                        //       ServiceLinkWidget(
+                        //         label: 'special_investments_plan'.tr,
+                        //         onLinkTap: () {},
+                        //       ),
+                        //       PAppSize.s10.verticalSpace,
+                        //       ServiceLinkWidget(
+                        //         label: 'special_investments_plan'.tr,
+                        //         onLinkTap: () {},
+                        //       ),
+                        //     ],
+                        //   ),
+                        // ),
                       ],
                     ).scrollable(),
                   ),

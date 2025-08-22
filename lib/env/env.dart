@@ -30,6 +30,44 @@ abstract class Env {
   /// ------------------------------------------------------------
   /// ============================================================
   ///
+  ///
+  /// -------------------- Self-Service Endpoints Starts Here ------------------------- ///
+  ///
+  ///
+
+  /// [SelfServiceBaseUrl] user endpoint
+  @EnviedField(
+    defaultValue:
+        'https://omself-service-dev-api.up.railway.app/api/self-service',
+    obfuscate: true,
+  )
+  static final String selfServiceBaseUrl = _Env.selfServiceBaseUrl;
+
+  /// [SelfServiceLogin] user endpoint
+  @EnviedField(defaultValue: '/login', obfuscate: true)
+  static final String selfServiceLogin = _Env.selfServiceLogin;
+
+  /// [SelfServiceCreateAccount] user endpoint
+  @EnviedField(defaultValue: '/create-account', obfuscate: true)
+  static final String selfServiceCreateAccount = _Env.selfServiceCreateAccount;
+
+  /// [SelfServiceVerifyOtp] user endpoint
+  @EnviedField(defaultValue: '/verify-otp', obfuscate: true)
+  static final String selfServiceVerifyOtp = _Env.selfServiceVerifyOtp;
+
+  /// [SelfServiceResendOtp] user endpoint
+  @EnviedField(defaultValue: '/resend-otp', obfuscate: true)
+  static final String selfServiceResendOtp = _Env.selfServiceResendOtp;
+
+  /// [SelfServiceVerifyGhanaCard] user endpoint
+  @EnviedField(
+    defaultValue: '/self-service/mobile-verify-ghanacard',
+    obfuscate: true,
+  )
+  static final String selfServiceVerifyGhanaCard =
+      _Env.selfServiceVerifyGhanaCard;
+
+  /// -------------------- Self-Service  Endpoints Ends Here ------------------------- ///
 
   /// -------------------- Authentication Endpoints Starts Here ------------------------- ///
 

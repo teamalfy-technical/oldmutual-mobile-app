@@ -15,3 +15,5 @@ export 'presentation/pages/login/login.page.dart';
 export 'presentation/pages/signup/phone.number.page.dart';
 export 'presentation/vm/auth.vm.dart';
 export 'presentation/vm/timer.vm.dart';
+export 'presentation/widgets/custom.expansion.tile.dart';
+export 'presentation/widgets/service.link.widget.dart';

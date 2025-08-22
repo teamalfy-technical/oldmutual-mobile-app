@@ -8,6 +8,7 @@ class PAppColor {
   static const Color primary = Color(0xFF50B848);
   static const Color primaryLight = Color(0xFFDCF1DA);
   static const Color primaryDark = Color(0xFF009979);
+  static const Color primaryRest = Color(0xFFB9E2B6);
 
   static const Color greyColorShade300 = Color(0xFFE0E0E0);
   static const Color greyColorShade100 = Color(0xFFf5f5f5);
@@ -26,6 +27,7 @@ class PAppColor {
   static const Color secondary700 = Color(0xFFA8A2C3);
   static const Color secondary900 = Color(0xFFE2E0EB);
   static const Color textDisabledColor = Color(0xFFA7A7AC);
+  static const Color textGrayColor = Color(0xFFCCCCCC);
 
   // for dark theme colors
   static const Color blackColor = Color(0xFF1A1A1A);

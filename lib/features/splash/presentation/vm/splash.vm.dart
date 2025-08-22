@@ -41,7 +41,7 @@ class PSplashVm extends GetxController {
           } else {
             PHelperFunction.switchScreen(
               // destination: Routes.signupPage,
-              destination: Routes.welcomePage,
+              destination: Routes.welcomeBackPage,
               replace: true,
             );
           }

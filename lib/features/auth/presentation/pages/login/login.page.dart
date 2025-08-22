@@ -78,7 +78,7 @@ class PLoginPage extends StatelessWidget {
                         PAppSize.s24.verticalSpace,
                         PCustomPasswordTextField(
                           labelText: 'hint_password'.tr,
-                          suffixIcon: Assets.icons.passwordViewIcon.svg(),
+                          // suffixIcon: Assets.icons.visibilityOn.svg(),
                           obscure: ctrl.obscure.value,
                           onObscureChanged: ctrl.onObscureChanged,
                           controller: ctrl.passwordTEC,

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:oldmutual_pensions_app/core/utils/utils.dart';
+import 'package:oldmutual_pensions_app/gen/assets.gen.dart';
 
 class PCustomPasswordTextField extends StatefulWidget {
   final String labelText;
@@ -106,12 +107,14 @@ class _PCustomPasswordTextFieldState extends State<PCustomPasswordTextField> {
         //           : PAppColor.blackColor,
         //     )
         //     .symmetric(horizontal: PAppSize.s16),
-        suffixIcon: widget.suffixIcon == null
-            ? null
-            : IconButton(
-                onPressed: widget.onObscureChanged,
-                icon: widget.suffixIcon ?? SizedBox.shrink(),
-              ),
+        suffixIcon:
+            widget.suffixIcon ??
+            IconButton(
+              onPressed: widget.onObscureChanged,
+              icon: widget.obscure
+                  ? Assets.icons.visibilityOff.svg()
+                  : Assets.icons.visibilityOn.svg(),
+            ),
         // hintText: hintText,
       ),
     );
