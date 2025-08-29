@@ -7,12 +7,37 @@ import 'package:oldmutual_pensions_app/gen/assets.gen.dart';
 import 'package:oldmutual_pensions_app/routes/app.pages.dart';
 import 'package:oldmutual_pensions_app/shared/shared.dart';
 
-class PWelcomeBackPage extends StatelessWidget {
-  PWelcomeBackPage({super.key});
+class PWelcomeBackPage extends StatefulWidget {
+  const PWelcomeBackPage({super.key});
 
+  @override
+  State<PWelcomeBackPage> createState() => _PWelcomeBackPageState();
+}
+
+class _PWelcomeBackPageState extends State<PWelcomeBackPage>
+    with SingleTickerProviderStateMixin {
   final ctrl = Get.put(PAuthVm());
 
   final formKey = GlobalKey<FormState>();
+
+  late AnimationController _controller;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 200),
+      lowerBound: 1.0,
+      upperBound: 1.2,
+    );
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -43,7 +68,7 @@ class PWelcomeBackPage extends StatelessWidget {
                         ),
                         PAppSize.s4.verticalSpace,
                         Text(
-                          PSecureStorage().getAuthResponse()?.name ?? 'Bongani',
+                          PSecureStorage().getAuthResponse()?.name ?? 'User',
                           textAlign: TextAlign.center,
                           style: Theme.of(context).textTheme.headlineLarge
                               ?.copyWith(fontWeight: FontWeight.w500),
@@ -92,8 +117,25 @@ class PWelcomeBackPage extends StatelessWidget {
 
                         PAppSize.s20.verticalSpace,
 
-                        Assets.icons.fingerprint.svg(),
+                        if (ctrl.isBiometricAvailable.value &&
+                            PSecureStorage().getAuthResponse() != null) ...[
+                          ScaleTransition(
+                            scale: _controller.drive(
+                              CurveTween(curve: Curves.easeInOut),
+                            ),
+                            child: IconButton(
+                              onPressed: () async => await ctrl
+                                  .authenticateWithBiometrics(_controller),
+                              icon: PDeviceUtil.isIOS()
+                                  ? Assets.icons.fingerprint.svg()
+                                  : Assets.icons.faceId.svg(),
+                            ),
+                          ),
 
+                          PAppSize.s4.verticalSpace,
+                        ],
+
+                        // Assets.icons.fingerprint.svg(),
                         PAppSize.s8.verticalSpace,
 
                         // (PDeviceUtil.getDeviceWidth(context) * 0.25)

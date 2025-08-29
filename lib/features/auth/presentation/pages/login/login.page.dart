@@ -38,15 +38,6 @@ class _PLoginPageState extends State<PLoginPage>
     super.dispose();
   }
 
-  Future<void> authenticate() async {
-    // Animate the Face ID icon (shrink → expand → shrink back)
-    await _controller.forward();
-    await _controller.reverse();
-
-    final success = await LocalAuthService().authenticateUser();
-    pensionAppLogger.e(success);
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -156,7 +147,8 @@ class _PLoginPageState extends State<PLoginPage>
                               CurveTween(curve: Curves.easeInOut),
                             ),
                             child: IconButton(
-                              onPressed: () async => await authenticate(),
+                              onPressed: () async => await ctrl
+                                  .authenticateWithBiometrics(_controller),
                               icon: PDeviceUtil.isIOS()
                                   ? Assets.icons.fingerprint.svg()
                                   : Assets.icons.faceId.svg(),

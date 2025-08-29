@@ -78,6 +78,22 @@ class PAuthVm extends GetxController {
     selectedCountry.value.flagEmoji;
   }
 
+  Future<void> authenticateWithBiometrics(
+    AnimationController controller,
+  ) async {
+    // Animate the Face ID icon (shrink → expand → shrink back)
+    await controller.forward();
+    await controller.reverse();
+    final success = await LocalAuthService().authenticateUser();
+    if (success) {
+      PHelperFunction.switchScreen(
+        destination: Routes.dashboardPage,
+        replace: true,
+      );
+    }
+    pensionAppLogger.e(success);
+  }
+
   /// Function to verify user Ghana Card before signup
   Future<void> verifyGhanaCard() async {
     loading(LoadingState.loading);
