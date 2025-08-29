@@ -90,6 +90,16 @@ class PValidator {
     return null;
   }
 
+  static String? validateConfirmPassword(String? value, String? password) {
+    if (value!.isEmpty) {
+      return 'Confirm password is required';
+    }
+    if (value != password) {
+      return 'Passwords do not match';
+    }
+    return null;
+  }
+
   static String? validatePassword(String? value) {
     if (value == null || value.isEmpty) {
       return 'Password is required.';

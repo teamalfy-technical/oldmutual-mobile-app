@@ -81,10 +81,16 @@ class AuthDsImpl implements AuthDs {
         'password': password,
         'c_password': confirmPassword,
       });
+      final updatedBaseUrl = Env.selfServiceBaseUrl.replaceFirst(
+        '/self-service',
+        '',
+      );
+      // pensionAppLogger.e(updatedBaseUrl);
       final res = await apiService.callService(
         requestType: RequestType.post,
         payload: payload,
         endPoint: Env.resetPassword,
+        client: DioClient(baseUrl: updatedBaseUrl),
       );
       return ApiResponse<List<Message>>.fromJson(
         res,

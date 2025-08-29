@@ -41,9 +41,6 @@ class PCreatePasswordPage extends StatelessWidget {
                         PAppSize.s32.verticalSpace,
                         PCustomPasswordTextField(
                           labelText: 'new_password'.tr,
-                          // suffixIcon: Assets.icons.passwordViewIcon.svg(
-                          //   // color: PAppColor.hintTextColor,
-                          // ),
                           validator: PValidator.validatePassword,
                           obscure: ctrl.obscure.value,
                           onObscureChanged: ctrl.onObscureChanged,
@@ -52,10 +49,11 @@ class PCreatePasswordPage extends StatelessWidget {
                         PAppSize.s20.verticalSpace,
                         PCustomPasswordTextField(
                           labelText: 'confirm_new_password'.tr,
-                          // suffixIcon: Assets.icons.passwordViewIcon.svg(
-                          //   // color: PAppColor.hintTextColor,
-                          // ),
-                          validator: PValidator.validatePassword,
+                          validator: (val) =>
+                              PValidator.validateConfirmPassword(
+                                val,
+                                ctrl.passwordTEC.text.trim(),
+                              ),
                           obscure: ctrl.obscure.value,
                           onObscureChanged: ctrl.onObscureChanged,
                           controller: ctrl.confirmPasswordTEC,

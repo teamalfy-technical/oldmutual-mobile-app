@@ -417,7 +417,8 @@ class PAuthVm extends GetxController {
       },
       (res) {
         loading(LoadingState.completed);
-        // PHelperFunction.pop();
+        PSecureStorage().removeData(PSecureStorage().authResKey);
+
         clearFields();
         PHelperFunction.switchScreen(
           destination: Routes.successPage,

@@ -99,7 +99,7 @@ abstract class Env {
   static final String forgotPassword = _Env.forgotPassword;
 
   /// [VerifyForgotPasswordOTP] endpoint
-  @EnviedField(defaultValue: '/verify/reset-password/otp', obfuscate: true)
+  @EnviedField(defaultValue: '/verify-reset-otp', obfuscate: true)
   static final String verifyForgotPasswordOTP = _Env.verifyForgotPasswordOTP;
 
   /// [ResetPassword] endpoint

@@ -41,7 +41,7 @@ class PCustomSuccessPage extends StatelessWidget {
               PAppSize.s12.verticalSpace,
               Text(
                 message,
-                // textAlign: TextAlign.center,
+                textAlign: TextAlign.center,
                 style: Theme.of(context).textTheme.bodySmall?.copyWith(
                   fontWeight: FontWeight.w500,
                   fontSize: PAppSize.s16,

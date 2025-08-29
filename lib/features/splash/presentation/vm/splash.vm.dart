@@ -24,12 +24,12 @@ class PSplashVm extends GetxController {
           replace: true,
         );
       } else {
-        pensionAppLogger.e(
-          PFormatter.calculateDateDiff(
-            PSecureStorage().getAuthResponse()!.lastLoggedIn!,
-          ),
-        );
-        if (PSecureStorage().getAuthResponse() != null) {
+        if (PSecureStorage().getAuthResponse()?.token != null) {
+          // PSecureStorage().removeData(PSecureStorage().authResKey);
+          // PHelperFunction.switchScreen(
+          //   destination: Routes.welcomeBackPage,
+          //   replace: true,
+          // );
           final lastLoggedIn = PFormatter.calculateDateDiff(
             PSecureStorage().getAuthResponse()!.lastLoggedIn!,
           );
@@ -41,7 +41,7 @@ class PSplashVm extends GetxController {
             );
           } else {
             PHelperFunction.switchScreen(
-              destination: Routes.dashboardPage,
+              destination: Routes.welcomeBackPage,
               replace: true,
             );
           }

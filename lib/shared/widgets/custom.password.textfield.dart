@@ -77,15 +77,15 @@ class _PCustomPasswordTextFieldState extends State<PCustomPasswordTextField> {
                 : PAppColor.hintTextColor,
           ),
         ),
-        errorBorder: const OutlineInputBorder().copyWith(
-          borderRadius: BorderRadius.circular(PAppSize.s8),
-          borderSide: BorderSide(width: PAppSize.s1),
-        ),
-        focusedErrorBorder: const OutlineInputBorder().copyWith(
-          borderRadius: BorderRadius.circular(PAppSize.s8),
-          borderSide: BorderSide(width: PAppSize.s1),
-        ),
 
+        // errorBorder: const OutlineInputBorder().copyWith(
+        //   borderRadius: BorderRadius.circular(PAppSize.s8),
+        //   borderSide: BorderSide(width: PAppSize.s1),
+        // ),
+        // focusedErrorBorder: const OutlineInputBorder().copyWith(
+        //   borderRadius: BorderRadius.circular(PAppSize.s8),
+        //   borderSide: BorderSide(width: PAppSize.s1),
+        // ),
         focusColor: widget.focusColor,
         // prefixIcon: prefixIcon
         //     .svg(

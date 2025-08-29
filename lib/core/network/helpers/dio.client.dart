@@ -10,7 +10,7 @@ class DioClient {
   // factory DioClient() => _instance;
 
   factory DioClient({String? baseUrl}) {
-    _instance ??= DioClient._internal(baseUrl: baseUrl ?? Env.baseUrl);
+    _instance = DioClient._internal(baseUrl: baseUrl ?? Env.baseUrl);
     return _instance!;
   }
 
