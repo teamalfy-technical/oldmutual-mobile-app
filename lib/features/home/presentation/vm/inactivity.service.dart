@@ -27,13 +27,13 @@ class PInactivityService extends GetxService {
   void _handleInactivity() {
     // You can show a dialog or directly log out
     if (Get.currentRoute != Routes.loginPage ||
-        Get.currentRoute != Routes.signupPage) {
+        Get.currentRoute != Routes.createAccountPage) {
       logoutUser();
     }
   }
 
   void logoutUser() {
-    Get.put(PSettingsVm()).signout();
+    Get.put(PSettingsVm()).signout(soft: true);
     // Get.offAllNamed('/login');
   }
 

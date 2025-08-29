@@ -59,11 +59,18 @@ abstract class Env {
   @EnviedField(defaultValue: '/resend-otp', obfuscate: true)
   static final String selfServiceResendOtp = _Env.selfServiceResendOtp;
 
+  /// [SelfServiceVerifyResetOtp] user endpoint
+  @EnviedField(defaultValue: '/verify-reset-otp', obfuscate: true)
+  static final String selfServiceVerifyResetOtp =
+      _Env.selfServiceVerifyResetOtp;
+
+  /// [SelfServiceForgotPassword] user endpoint
+  @EnviedField(defaultValue: '/fogot-password', obfuscate: true)
+  static final String selfServiceForgotPassword =
+      _Env.selfServiceForgotPassword;
+
   /// [SelfServiceVerifyGhanaCard] user endpoint
-  @EnviedField(
-    defaultValue: '/self-service/mobile-verify-ghanacard',
-    obfuscate: true,
-  )
+  @EnviedField(defaultValue: '/mobile-verify-ghanacard', obfuscate: true)
   static final String selfServiceVerifyGhanaCard =
       _Env.selfServiceVerifyGhanaCard;
 

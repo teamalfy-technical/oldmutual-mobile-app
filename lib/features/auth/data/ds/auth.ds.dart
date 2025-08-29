@@ -2,15 +2,15 @@ import 'package:oldmutual_pensions_app/core/network/network.dart';
 import 'package:oldmutual_pensions_app/features/auth/auth.dart';
 
 abstract class AuthDs {
-  Future<ApiResponse<List<Message>>> signup({
-    required String terms,
-    required String phone,
-  });
+  // Future<ApiResponse<List<Message>>> signup({
+  //   required String terms,
+  //   required String phone,
+  // });
 
-  Future<ApiResponse<Member>> verifyOTP({
-    required String phone,
-    required String otp,
-  });
+  // Future<ApiResponse<Member>> verifyOTP({
+  //   required String phone,
+  //   required String otp,
+  // });
 
   Future<ApiResponse<List<Message>>> addPassword({
     required String phone,
@@ -26,17 +26,17 @@ abstract class AuthDs {
 
   Future<ApiResponse<List<BioData>>> getBioData();
 
-  Future<ApiResponse<Member>> signIn({
-    required String phone,
-    required String password,
-  });
+  // Future<ApiResponse<Member>> signIn({
+  //   required String phone,
+  //   required String password,
+  // });
 
-  Future<ApiResponse<Member>> signIntoSelfService({
+  Future<ApiResponse<Member>> signIn({
     required String emailOrPhone,
     required String password,
   });
 
-  Future<ApiResponse<Member>> createAccountOnSelfService({
+  Future<ApiResponse<List<Message>>> signUp({
     required String email,
     required String phone,
     required String verificationToken,
@@ -44,24 +44,24 @@ abstract class AuthDs {
     required String confirmPassword,
   });
 
-  Future<ApiResponse<Member>> verifyOtpOnSelfService({
+  Future<ApiResponse<List<Message>>> verifySignupOtp({
     required String phone,
     required String otp,
   });
 
   Future<ApiResponse<List<Message>>> resendOtp({required String phone});
 
-  Future<ApiResponse<List<Message>>> verifyGhanaCard({
-    required String cardNumber,
-  });
+  Future<ApiResponse<String>> verifyGhanaCard({required String cardNumber});
 
   Future<ApiResponse<List<Message>>> updateFcmToken({required String token});
 
-  Future<ApiResponse<List<Message>>> forgotPassword({required String email});
+  Future<ApiResponse<List<Message>>> forgotPassword({
+    required String emailOrPhone,
+  });
 
   Future<ApiResponse<Member>> verifyForgotPasswordOTP({
     required String otp,
-    required String email,
+    required String emailOrPhone,
   });
 
   Future<ApiResponse<List<Message>>> resetPassword({

@@ -12,8 +12,9 @@ class PCustomPasswordTextField extends StatefulWidget {
   final String? Function(String?)? validator;
   final TextInputType? textInputType;
   final Function()? onObscureChanged;
-  final bool isPasswordStrong;
+  // final bool isPasswordStrong;
   final void Function(String)? onChanged;
+  final AutovalidateMode? autovalidateMode;
   const PCustomPasswordTextField({
     super.key,
     // required this.labelText,
@@ -26,8 +27,9 @@ class PCustomPasswordTextField extends StatefulWidget {
     this.textInputType = TextInputType.text,
     this.onObscureChanged,
     this.onChanged,
-    this.isPasswordStrong = false,
+    // this.isPasswordStrong = false,
     this.validator,
+    this.autovalidateMode,
   });
 
   @override
@@ -61,44 +63,29 @@ class _PCustomPasswordTextFieldState extends State<PCustomPasswordTextField> {
       validator: widget.validator,
       //?? PValidator.validatePassword,
       onChanged: widget.onChanged,
+      autovalidateMode: widget.autovalidateMode,
+      style: TextStyle(
+        color: PAppColor.whiteColor,
+        fontWeight: FontWeight.w600,
+      ),
       decoration: InputDecoration(
         label: Text(
           widget.labelText,
           style: TextStyle(
             color: _focusNode.hasFocus
-                ? PAppColor.primary
+                ? PAppColor.primaryBorderColor
                 : PAppColor.hintTextColor,
           ),
         ),
         errorBorder: const OutlineInputBorder().copyWith(
           borderRadius: BorderRadius.circular(PAppSize.s8),
-          borderSide: BorderSide(
-            width: PAppSize.s1,
-            color: widget.isPasswordStrong
-                ? PAppColor.primary
-                : widget.controller.text.isNotEmpty
-                ? PAppColor.warning500
-                : PAppColor.alert500,
-          ),
+          borderSide: BorderSide(width: PAppSize.s1),
         ),
         focusedErrorBorder: const OutlineInputBorder().copyWith(
           borderRadius: BorderRadius.circular(PAppSize.s8),
-          borderSide: BorderSide(
-            width: PAppSize.s1,
-            color: widget.isPasswordStrong
-                ? PAppColor.primary
-                : widget.controller.text.isNotEmpty
-                ? PAppColor.warning500
-                : PAppColor.alert500,
-          ),
+          borderSide: BorderSide(width: PAppSize.s1),
         ),
-        errorStyle: TextStyle(
-          color: widget.isPasswordStrong
-              ? PAppColor.primary
-              : widget.controller.text.isNotEmpty
-              ? PAppColor.warning500
-              : PAppColor.alert500,
-        ),
+
         focusColor: widget.focusColor,
         // prefixIcon: prefixIcon
         //     .svg(

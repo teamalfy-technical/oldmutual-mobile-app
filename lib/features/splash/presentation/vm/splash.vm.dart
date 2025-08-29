@@ -24,29 +24,47 @@ class PSplashVm extends GetxController {
           replace: true,
         );
       } else {
+        pensionAppLogger.e(
+          PFormatter.calculateDateDiff(
+            PSecureStorage().getAuthResponse()!.lastLoggedIn!,
+          ),
+        );
         if (PSecureStorage().getAuthResponse() != null) {
-          PHelperFunction.switchScreen(
-            destination: Routes.dashboardPage,
-            replace: true,
+          final lastLoggedIn = PFormatter.calculateDateDiff(
+            PSecureStorage().getAuthResponse()!.lastLoggedIn!,
           );
-        } else {
-          bool? isRegistered = PSecureStorage().readData<bool>(
-            PSecureStorage().registeredKey,
-          );
-          if (isRegistered != null && isRegistered) {
+          // redirect user to welcome back screen after been logged in for 3 days
+          if (lastLoggedIn >= 3 && PSecureStorage().getUserEmail() != null) {
             PHelperFunction.switchScreen(
               destination: Routes.welcomeBackPage,
               replace: true,
             );
           } else {
             PHelperFunction.switchScreen(
-              // destination: Routes.signupPage,
+              destination: Routes.dashboardPage,
+              replace: true,
+            );
+          }
+        } else {
+          if (PSecureStorage().getUserEmail() != null) {
+            PHelperFunction.switchScreen(
               destination: Routes.welcomeBackPage,
+              replace: true,
+            );
+          } else {
+            PHelperFunction.switchScreen(
+              // destination: Routes.idEntryPage,
+              destination: Routes.loginPage,
               replace: true,
             );
           }
         }
       }
     });
+  }
+
+  completeOnboarding(String route) {
+    PSecureStorage().saveData(PSecureStorage().onboardingKey, true);
+    PHelperFunction.switchScreen(destination: route, replace: true);
   }
 }

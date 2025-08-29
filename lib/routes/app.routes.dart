@@ -10,9 +10,11 @@ abstract class Routes {
   static const loginPage = _Paths.loginPage;
   static const welcomeBackPage = _Paths.welcomeBackPage;
   static const loadingPage = _Paths.loadingPage;
-  static const signupPage = _Paths.signupPage;
+  static const createAccountPage = _Paths.createAccountPage;
   static const verifyOTPPage = _Paths.verifyOTPPage;
-  static const enterEmailPage = _Paths.enterEmailPage;
+  static const idEntryPage = _Paths.idEntryPage;
+  static const livenessInfoPage = _Paths.livenessInfoPage;
+  static const forgotPasswordPage = _Paths.forgotPasswordPage;
   static const createPasswordPage = _Paths.createPasswordPage;
   static const dashboardPage = _Paths.dashboardPage;
   static const homePage = _Paths.homePage;
@@ -30,7 +32,6 @@ abstract class Routes {
   static const supportPage = _Paths.supportPage;
   static const changePasswordPage = _Paths.changePasswordPage;
   static const webviewPage = _Paths.webviewPage;
-
   static const successPage = _Paths.successPage;
 }
 
@@ -41,9 +42,11 @@ abstract class _Paths {
   static const loginPage = '/login-page';
   static const loadingPage = '/loading-page';
   static const welcomeBackPage = '/welcome-back-page';
-  static const signupPage = '/sign-up-page';
+  static const createAccountPage = '/create-account-page';
   static const verifyOTPPage = '/verify-otp-page';
-  static const enterEmailPage = '/enter-email-page';
+  static const idEntryPage = '/id-entry-page';
+  static const livenessInfoPage = '/liveness-info-page';
+  static const forgotPasswordPage = '/forgot-password-page';
   static const createPasswordPage = '/create-password-page';
   static const dashboardPage = '/dashboard-page';
   static const homePage = '/home-page';

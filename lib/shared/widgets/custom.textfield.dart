@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:oldmutual_pensions_app/core/utils/utils.dart';
 
 class PCustomTextField extends StatefulWidget {
@@ -11,13 +12,15 @@ class PCustomTextField extends StatefulWidget {
   final bool enabled;
   final int? minLines;
   final int? maxLines;
+  final int? maxLength;
+  final String? prefixText;
+  final List<TextInputFormatter>? inputFormatters;
   final String? Function(String?)? validator;
   final Function(String)? onChanged;
 
   const PCustomTextField({
     super.key,
     required this.labelText,
-
     this.prefixIcon,
     this.focusColor,
     required this.controller,
@@ -28,6 +31,9 @@ class PCustomTextField extends StatefulWidget {
     this.minLines,
     this.maxLines = 1,
     this.onChanged,
+    this.prefixText,
+    this.inputFormatters,
+    this.maxLength,
   });
 
   @override
@@ -60,15 +66,28 @@ class _PCustomTextFieldState extends State<PCustomTextField> {
       enabled: widget.enabled,
       maxLines: widget.maxLines,
       minLines: widget.minLines,
+      maxLength: widget.maxLength,
+      inputFormatters: widget.inputFormatters,
+      keyboardType: widget.textInputType,
+      style: TextStyle(
+        color: PAppColor.whiteColor,
+        fontWeight: FontWeight.w600,
+      ),
       onChanged: widget.onChanged,
       decoration: InputDecoration(
+        counter: SizedBox.shrink(),
         focusColor: widget.focusColor,
+        prefixText: widget.prefixText,
         prefixIcon: widget.prefixIcon,
+        prefixStyle: TextStyle(
+          color: PAppColor.whiteColor,
+          fontWeight: FontWeight.w600,
+        ),
         label: Text(
           widget.labelText,
           style: TextStyle(
             color: _focusNode.hasFocus
-                ? PAppColor.primary
+                ? PAppColor.primaryBorderColor
                 : PAppColor.hintTextColor,
           ),
         ),

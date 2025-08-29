@@ -74,6 +74,13 @@ class $AssetsIconsGen {
   SvgGenImage get bottomLogoBanner =>
       const SvgGenImage('assets/icons/bottom.logo.banner.svg');
 
+  /// File path: assets/icons/brightness.svg
+  SvgGenImage get brightness =>
+      const SvgGenImage('assets/icons/brightness.svg');
+
+  /// File path: assets/icons/check.icon.svg
+  SvgGenImage get checkIcon => const SvgGenImage('assets/icons/check.icon.svg');
+
   /// File path: assets/icons/edit.icon.svg
   SvgGenImage get editIcon => const SvgGenImage('assets/icons/edit.icon.svg');
 
@@ -82,6 +89,12 @@ class $AssetsIconsGen {
 
   /// File path: assets/icons/eye.icon.svg
   SvgGenImage get eyeIcon => const SvgGenImage('assets/icons/eye.icon.svg');
+
+  /// File path: assets/icons/face.id.svg
+  SvgGenImage get faceId => const SvgGenImage('assets/icons/face.id.svg');
+
+  /// File path: assets/icons/face.svg
+  SvgGenImage get face => const SvgGenImage('assets/icons/face.svg');
 
   /// File path: assets/icons/factsheet.icon.svg
   SvgGenImage get factsheetIcon =>
@@ -138,9 +151,15 @@ class $AssetsIconsGen {
   SvgGenImage get profileIcon =>
       const SvgGenImage('assets/icons/profile.icon.svg');
 
+  /// File path: assets/icons/selfie.svg
+  SvgGenImage get selfie => const SvgGenImage('assets/icons/selfie.svg');
+
   /// File path: assets/icons/settings.icon.svg
   SvgGenImage get settingsIcon =>
       const SvgGenImage('assets/icons/settings.icon.svg');
+
+  /// File path: assets/icons/shield.svg
+  SvgGenImage get shield => const SvgGenImage('assets/icons/shield.svg');
 
   /// File path: assets/icons/success.icon.svg
   SvgGenImage get successIcon =>
@@ -191,9 +210,13 @@ class $AssetsIconsGen {
     arrowIcon,
     benchmarkIcon,
     bottomLogoBanner,
+    brightness,
+    checkIcon,
     editIcon,
     emailIcon,
     eyeIcon,
+    faceId,
+    face,
     factsheetIcon,
     fingerprint,
     ghanaFlag,
@@ -209,7 +232,9 @@ class $AssetsIconsGen {
     notificationIcon,
     phoneIcon,
     profileIcon,
+    selfie,
     settingsIcon,
+    shield,
     successIcon,
     supportIcon,
     topLogoBanner,

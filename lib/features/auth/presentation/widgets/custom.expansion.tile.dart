@@ -29,10 +29,15 @@ class _PCustomExpansionTileState extends State<PCustomExpansionTile> {
       children: [
         TextButton.icon(
           iconAlignment: IconAlignment.end,
+          style: TextButton.styleFrom(
+            padding: EdgeInsets.only(left: PAppSize.s7),
+          ),
           onPressed: () => onExpansionChanged(),
           label: Text(
             widget.title,
-            style: Theme.of(context).textTheme.headlineSmall?.copyWith(),
+            style: Theme.of(
+              context,
+            ).textTheme.headlineSmall?.copyWith(fontSize: PAppSize.s18),
           ),
           icon: expanded
               ? Assets.icons.keyboardArrowDown.svg()

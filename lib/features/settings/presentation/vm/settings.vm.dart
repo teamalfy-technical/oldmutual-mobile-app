@@ -18,8 +18,8 @@ class PSettingsVm extends GetxController {
 
   var notification =
       PSecureStorage().getAuthResponse()?.notificationsEnabled == "True"
-          ? true.obs
-          : false.obs;
+      ? true.obs
+      : false.obs;
 
   var submitting = LoadingState.completed.obs;
 
@@ -79,7 +79,7 @@ class PSettingsVm extends GetxController {
 
   // Clear user data, token, etc.
   // Then navigate to login screen
-  Future<void> signout() async {
+  Future<void> signout({bool soft = false}) async {
     showLoadingDialog(
       context: context,
       barrierDismissible: true,
@@ -93,7 +93,7 @@ class PSettingsVm extends GetxController {
       (err) {
         PHelperFunction.pop();
         if (err.message == 'You are not authenticated.') {
-          clearCache();
+          clearCache(soft);
           PHelperFunction.switchScreen(
             destination: Routes.loginPage,
             replace: true,
@@ -107,7 +107,7 @@ class PSettingsVm extends GetxController {
       },
       (res) {
         PHelperFunction.pop();
-        clearCache();
+        clearCache(soft);
         showSuccessDialog(context: context, title: res.message ?? '');
         Future.delayed(Duration(seconds: 2), () {
           PHelperFunction.pop();
@@ -122,7 +122,13 @@ class PSettingsVm extends GetxController {
   }
 
   // Erase data from login cache
-  void clearCache() {
+  /// soft - defines the level of logout
+  /// false if you logged out manually
+  /// true if user was logged out due to inactivity
+  void clearCache(bool soft) {
+    if (soft) {
+      PSecureStorage().removeData(PSecureStorage().emailKey);
+    }
     PSecureStorage().removeData(PSecureStorage().bioDataKey);
     PSecureStorage().removeData(PSecureStorage().deviceTokenKey);
     PSecureStorage().removeData(PSecureStorage().authResKey);

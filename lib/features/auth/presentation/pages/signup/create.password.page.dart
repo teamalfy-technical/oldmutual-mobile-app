@@ -3,14 +3,12 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:oldmutual_pensions_app/core/utils/utils.dart';
 import 'package:oldmutual_pensions_app/features/auth/presentation/vm/auth.vm.dart';
-import 'package:oldmutual_pensions_app/routes/app.pages.dart';
 import 'package:oldmutual_pensions_app/shared/shared.dart';
 
-import '../../../../../gen/assets.gen.dart';
-
 class PCreatePasswordPage extends StatelessWidget {
-  final bool isSignup;
-  PCreatePasswordPage({super.key, this.isSignup = true});
+  PCreatePasswordPage({super.key});
+
+  final formKey = GlobalKey<FormState>();
 
   final ctrl = Get.find<PAuthVm>();
 
@@ -26,25 +24,10 @@ class PCreatePasswordPage extends StatelessWidget {
               Expanded(
                 child: Obx(
                   () => Form(
-                    key: ctrl.createPasswordFormKey,
+                    key: formKey,
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        if (isSignup)
-                          Column(
-                            children: [
-                              PAppSize.s20.verticalSpace,
-                              PCustomTextField(
-                                labelText: 'phone'.tr,
-
-                                prefixIcon: Assets.icons.phoneIcon.svg(),
-                                controller: ctrl.phoneTEC,
-                                enabled: false,
-                                validator: PValidator.validatePhoneNumber,
-                                // focusColor: PAppColor.primary,
-                              ),
-                            ],
-                          ),
                         PAppSize.s10.verticalSpace,
                         Text(
                           'reset_password_hint'.tr,
@@ -82,26 +65,13 @@ class PCreatePasswordPage extends StatelessWidget {
                         PGradientButton(
                           label: 'continue'.tr,
                           showIcon: false,
+                          loading: ctrl.loading.value,
                           width: PDeviceUtil.getDeviceWidth(context),
                           onTap: () {
-                            PHelperFunction.switchScreen(
-                              destination: Routes.successPage,
-                              args: [
-                                'password_changed_title'.tr,
-                                'password_changed_msg'.tr,
-                                'go_to_dashboard'.tr,
-                                () => PHelperFunction.switchScreen(
-                                  destination: Routes.dashboardPage,
-                                ),
-                              ],
-                            );
-                            // if (ctrl.createPasswordFormKey.currentState!
-                            //     .validate()) {
-                            //   PDeviceUtil.hideKeyboard(context);
-                            //   isSignup
-                            //       ? ctrl.createPassword(isSignup: isSignup)
-                            //       : ctrl.resetPassword();
-                            // }
+                            if (formKey.currentState!.validate()) {
+                              PDeviceUtil.hideKeyboard(context);
+                              ctrl.resetPassword();
+                            }
                           },
                         ),
                       ],

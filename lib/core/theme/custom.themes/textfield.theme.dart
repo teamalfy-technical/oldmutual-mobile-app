@@ -10,7 +10,7 @@ class PTextFormFieldTheme {
     errorMaxLines: 3,
     prefixIconColor: PAppColor.greyColor,
     suffixIconColor: PAppColor.greyColor,
-    focusColor: PAppColor.primary,
+    focusColor: PAppColor.primaryBorderColor,
     contentPadding: const EdgeInsets.symmetric(
       vertical: PAppSize.s16,
       horizontal: PAppSize.s16,
@@ -50,7 +50,7 @@ class PTextFormFieldTheme {
       borderRadius: BorderRadius.circular(PAppSize.s8),
       borderSide: const BorderSide(
         width: PAppSize.s2,
-        color: PAppColor.primary,
+        color: PAppColor.primaryBorderColor,
       ),
     ),
     errorBorder: const OutlineInputBorder().copyWith(
@@ -74,7 +74,7 @@ class PTextFormFieldTheme {
     errorMaxLines: 2,
     prefixIconColor: PAppColor.greyColor,
     suffixIconColor: PAppColor.greyColor,
-    focusColor: PAppColor.primary,
+    focusColor: PAppColor.primaryBorderColor,
     contentPadding: const EdgeInsets.symmetric(
       vertical: PAppSize.s16,
       horizontal: PAppSize.s16,
@@ -111,7 +111,7 @@ class PTextFormFieldTheme {
       borderRadius: BorderRadius.circular(PAppSize.s8),
       borderSide: const BorderSide(
         width: PAppSize.s2,
-        color: PAppColor.primary,
+        color: PAppColor.primaryBorderColor,
       ),
     ),
     errorBorder: const OutlineInputBorder().copyWith(

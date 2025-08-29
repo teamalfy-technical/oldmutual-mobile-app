@@ -4,15 +4,20 @@ import 'package:oldmutual_pensions_app/core/network/network.dart';
 import 'package:oldmutual_pensions_app/features/auth/auth.dart';
 
 abstract class AuthService {
-  Future<Either<PFailure, ApiResponse<List<Message>>>> signup({
-    required String terms,
-    required String phone,
-  });
+  // Future<Either<PFailure, ApiResponse<List<Message>>>> signup({
+  //   required String terms,
+  //   required String phone,
+  // });
 
-  Future<Either<PFailure, ApiResponse<Member>>> verifyOTP({
-    required String phone,
-    required String otp,
-  });
+  // Future<Either<PFailure, ApiResponse<Member>>> verifyOTP({
+  //   required String phone,
+  //   required String otp,
+  // });
+
+  // Future<Either<PFailure, ApiResponse<Member>>> signIn({
+  //   required String phone,
+  //   required String password,
+  // });
 
   Future<Either<PFailure, ApiResponse<List<Message>>>> addPassword({
     required String phone,
@@ -26,11 +31,6 @@ abstract class AuthService {
     required String confirmPassword,
   });
 
-  Future<Either<PFailure, ApiResponse<Member>>> signIn({
-    required String phone,
-    required String password,
-  });
-
   Future<Either<PFailure, ApiResponse<List<BioData>>>> getBioData();
 
   Future<Either<PFailure, ApiResponse<List<Message>>>> updateFcmToken({
@@ -38,11 +38,11 @@ abstract class AuthService {
   });
 
   Future<Either<PFailure, ApiResponse<List<Message>>>> forgotPassword({
-    required String email,
+    required String emailOrPhone,
   });
 
   Future<Either<PFailure, ApiResponse<Member>>> verifyForgotPasswordOTP({
-    required String email,
+    required String emailOrPhone,
     required String otp,
   });
 
@@ -51,12 +51,12 @@ abstract class AuthService {
     required String confirmPassword,
   });
 
-  Future<Either<PFailure, ApiResponse<Member>>> signIntoSelfService({
+  Future<Either<PFailure, ApiResponse<Member>>> signIn({
     required String emailOrPhone,
     required String password,
   });
 
-  Future<Either<PFailure, ApiResponse<Member>>> createAccountOnSelfService({
+  Future<Either<PFailure, ApiResponse<List<Message>>>> signUp({
     required String email,
     required String phone,
     required String verificationToken,
@@ -64,7 +64,7 @@ abstract class AuthService {
     required String confirmPassword,
   });
 
-  Future<Either<PFailure, ApiResponse<Member>>> verifyOtpOnSelfService({
+  Future<Either<PFailure, ApiResponse<List<Message>>>> verifySignupOtp({
     required String phone,
     required String otp,
   });
@@ -73,7 +73,7 @@ abstract class AuthService {
     required String phone,
   });
 
-  Future<Either<PFailure, ApiResponse<List<Message>>>> verifyGhanaCard({
+  Future<Either<PFailure, ApiResponse<String>>> verifyGhanaCard({
     required String cardNumber,
   });
 }

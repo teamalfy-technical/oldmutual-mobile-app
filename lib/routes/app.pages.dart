@@ -1,8 +1,8 @@
 import 'package:get/get.dart';
 import 'package:oldmutual_pensions_app/core/utils/utils.dart';
 import 'package:oldmutual_pensions_app/features/auth/auth.dart';
+import 'package:oldmutual_pensions_app/features/auth/presentation/pages/forgot.password/forgot.password.page.dart';
 import 'package:oldmutual_pensions_app/features/auth/presentation/pages/login/welcome.back.page.dart';
-import 'package:oldmutual_pensions_app/features/auth/presentation/pages/reset.password/enter.email.page.dart';
 import 'package:oldmutual_pensions_app/features/auth/presentation/pages/signup/create.password.page.dart';
 import 'package:oldmutual_pensions_app/features/auth/presentation/pages/verify.otp.page.dart';
 import 'package:oldmutual_pensions_app/features/beneficiary/presentation/pages/add.beneficiary.page.dart';
@@ -75,8 +75,20 @@ class AppPages {
       transitionDuration: const Duration(milliseconds: PAppSize.s700),
     ),
     GetPage(
-      name: _Paths.signupPage,
-      page: () => PPhoneNumberPage(),
+      name: _Paths.createAccountPage,
+      page: () => PCreateAccountPage(),
+      transition: Transition.native,
+      transitionDuration: const Duration(milliseconds: PAppSize.s700),
+    ),
+    GetPage(
+      name: _Paths.idEntryPage,
+      page: () => PIdEntryPage(),
+      transition: Transition.native,
+      transitionDuration: const Duration(milliseconds: PAppSize.s700),
+    ),
+    GetPage(
+      name: _Paths.livenessInfoPage,
+      page: () => PLivenessInfoPage(),
       transition: Transition.native,
       transitionDuration: const Duration(milliseconds: PAppSize.s700),
     ),
@@ -87,14 +99,14 @@ class AppPages {
       transitionDuration: const Duration(milliseconds: PAppSize.s700),
     ),
     GetPage(
-      name: _Paths.enterEmailPage,
-      page: () => PEnterEmailPage(),
+      name: _Paths.forgotPasswordPage,
+      page: () => PForgotPasswordPage(),
       transition: Transition.native,
       transitionDuration: const Duration(milliseconds: PAppSize.s700),
     ),
     GetPage(
       name: _Paths.createPasswordPage,
-      page: () => PCreatePasswordPage(isSignup: Get.arguments),
+      page: () => PCreatePasswordPage(),
       transition: Transition.native,
       transitionDuration: const Duration(milliseconds: PAppSize.s700),
     ),

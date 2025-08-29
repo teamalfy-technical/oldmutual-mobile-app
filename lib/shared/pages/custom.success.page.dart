@@ -25,7 +25,6 @@ class PCustomSuccessPage extends StatelessWidget {
         child: SafeArea(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
-
             children: [
               PAppSize.s80.verticalSpace,
               Assets.icons.successIcon.svg(),
@@ -35,20 +34,21 @@ class PCustomSuccessPage extends StatelessWidget {
                 textAlign: TextAlign.center,
                 style: Theme.of(context).textTheme.headlineLarge?.copyWith(
                   fontWeight: FontWeight.w700,
+                  color: PAppColor.primary950,
                   fontSize: PAppSize.s24,
                 ),
               ),
-              PAppSize.s8.verticalSpace,
+              PAppSize.s12.verticalSpace,
               Text(
                 message,
-                textAlign: TextAlign.center,
+                // textAlign: TextAlign.center,
                 style: Theme.of(context).textTheme.bodySmall?.copyWith(
                   fontWeight: FontWeight.w500,
                   fontSize: PAppSize.s16,
                   color: PAppColor.whiteColor.withOpacityExt(PAppSize.s0_7),
                 ),
               ),
-              PAppSize.s16.verticalSpace,
+              PAppSize.s18.verticalSpace,
               PGradientButton(
                 label: buttonTitle ?? 'continue'.tr,
                 showIcon: false,

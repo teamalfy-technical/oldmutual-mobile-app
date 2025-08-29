@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:oldmutual_pensions_app/core/utils/utils.dart';
-import 'package:oldmutual_pensions_app/features/auth/presentation/vm/auth.vm.dart';
+import 'package:oldmutual_pensions_app/features/splash/presentation/vm/splash.vm.dart';
 import 'package:oldmutual_pensions_app/gen/assets.gen.dart';
 import 'package:oldmutual_pensions_app/routes/app.pages.dart';
 import 'package:oldmutual_pensions_app/shared/shared.dart';
@@ -10,7 +10,7 @@ import 'package:oldmutual_pensions_app/shared/shared.dart';
 class PWelcomePage extends StatelessWidget {
   PWelcomePage({super.key});
 
-  final ctrl = Get.put(PAuthVm());
+  final ctrl = Get.put(PSplashVm());
 
   @override
   Widget build(BuildContext context) {
@@ -44,7 +44,7 @@ class PWelcomePage extends StatelessWidget {
                     //   labelText: 'phone'.tr,
                     // ),
                     Text(
-                      'welcome_label'.tr,
+                      'welcome_label_break'.tr,
                       textAlign: TextAlign.center,
                       style: Theme.of(context).textTheme.headlineLarge
                           ?.copyWith(
@@ -59,29 +59,19 @@ class PWelcomePage extends StatelessWidget {
                       label: 'create_account'.tr,
                       showIcon: false,
                       width: PDeviceUtil.getDeviceWidth(context),
-                      onTap: () {
-                        PHelperFunction.switchScreen(
-                          destination: Routes.signupPage,
-                          replace: true,
-                        );
-                      },
+                      onTap: () => ctrl.completeOnboarding(Routes.idEntryPage),
                     ),
 
                     PAppSize.s5.verticalSpace,
 
                     TextButton(
-                      onPressed: () {
-                        PHelperFunction.switchScreen(
-                          destination: Routes.loginPage,
-                          replace: true,
-                        );
-                      },
+                      onPressed: () =>
+                          ctrl.completeOnboarding(Routes.loginPage),
                       child: Text(
                         '${'login_to_existing_account'.tr}?',
                         style: Theme.of(context).textTheme.headlineSmall
                             ?.copyWith(
                               fontWeight: FontWeight.w600,
-
                               color: PAppColor.primaryLight,
                               fontSize: PAppSize.s16,
                             ),

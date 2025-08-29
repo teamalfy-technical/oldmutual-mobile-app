@@ -41,14 +41,14 @@ class CatchApiErrorWrapperImpl implements CatchApiErrorWrapper {
             //errorMessage = err.response?.data['error'];
           } else if (err.response?.statusCode == 401) {
             if (Get.currentRoute != Routes.loginPage) {
-              Get.put(PSettingsVm()).signout();
+              Get.put(PSettingsVm()).signout(soft: true);
             }
             errorMessage =
                 err.response?.data['error'] ?? 'Unauthorized request';
             pensionAppLogger.e(err.response?.data);
           } else if (err.response?.statusCode == 403) {
             if (Get.currentRoute != Routes.loginPage) {
-              Get.put(PSettingsVm()).signout();
+              Get.put(PSettingsVm()).signout(soft: true);
             } else {
               errorMessage =
                   err.response?.data['message'] ?? 'Forbidden Access';
@@ -65,7 +65,7 @@ class CatchApiErrorWrapperImpl implements CatchApiErrorWrapper {
             errorMessage = err.response?.data['message'] ?? 'Bad request';
           } else if (err.response?.statusCode == 429) {
             if (Get.currentRoute != Routes.loginPage) {
-              Get.put(PSettingsVm()).signout();
+              Get.put(PSettingsVm()).signout(soft: true);
             }
             // ApiErrorResponse error =
             //     ApiErrorResponse.fromJson(err.response?.data);

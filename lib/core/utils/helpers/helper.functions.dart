@@ -77,6 +77,15 @@ class PHelperFunction {
     return '${parts[0]}****';
   }
 
+  static String maskPhoneNumber(String phone) {
+    if (phone.length <= 3) return phone; // if too short, return as is
+
+    final visiblePart = phone.substring(0, 3); // keep first 3
+    final maskedPart = '*' * (phone.length - 3); // mask the rest
+
+    return '$visiblePart$maskedPart';
+  }
+
   static Future<String> getFileSize(File file) async {
     // Get file size in bytes
     int fileSizeInBytes = await file.length();

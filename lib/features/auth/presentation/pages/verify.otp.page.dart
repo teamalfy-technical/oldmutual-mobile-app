@@ -22,48 +22,49 @@ class PVerifyOTPPage extends StatelessWidget {
           child: Column(
             children: [
               PAppSize.s8.verticalSpace,
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    PAppSize.s20.verticalSpace,
-                    Text(
-                      'verify_phone_number_hint'.trParams({
-                        'email': ctrl.maskedEmail.value,
-                      }),
-                      textAlign: TextAlign.start,
-                      style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                        height: 1.3,
-                        color: PAppColor.secondary500,
+              Obx(
+                () => Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      PAppSize.s20.verticalSpace,
+                      Text(
+                        'verify_phone_number_hint'.trParams({
+                          'email': ctrl.maskedValue.value,
+                        }),
+                        textAlign: TextAlign.start,
+                        style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                          height: 1.3,
+                          color: PAppColor.secondary500,
+                        ),
                       ),
-                    ),
-                    PAppSize.s20.verticalSpace,
-                    PCustomPinput(
-                      length: 6,
-                      onCompleted: (pin) {
-                        ctrl.updateOTP(pin);
-                        ctrl.verifyOTP(pin: pin, isSignup: isSignup);
-                      },
-                    ),
-                    PAppSize.s3.verticalSpace,
-                    Text(
-                      'one_time_pin'.trParams({
-                        'email': ctrl.maskedEmail.value,
-                      }),
-                      textAlign: TextAlign.start,
-                      style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                        fontSize: PAppSize.s14,
-                        color: PAppColor.textDisabledColor,
-                        letterSpacing: 0,
-                        fontWeight: FontWeight.w400,
+                      PAppSize.s20.verticalSpace,
+                      PCustomPinput(
+                        length: 6,
+                        onCompleted: (pin) {
+                          ctrl.updateOTP(pin);
+                          ctrl.verifyOTP(pin: pin, isSignup: isSignup);
+                        },
                       ),
-                    ),
-                    PAppSize.s12.verticalSpace,
-                    Obx(() {
+                      PAppSize.s3.verticalSpace,
+                      Text(
+                        'one_time_pin'.trParams({
+                          'email': ctrl.maskedValue.value,
+                        }),
+                        textAlign: TextAlign.start,
+                        style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                          fontSize: PAppSize.s14,
+                          color: PAppColor.textDisabledColor,
+                          letterSpacing: 0,
+                          fontWeight: FontWeight.w400,
+                        ),
+                      ),
+                      PAppSize.s12.verticalSpace,
+
                       // final seconds = timerCtrl.seconds.value;
                       // final formattedTime =
                       //     "00:${seconds.toString().padLeft(2, '0')}";
-                      return Row(
+                      Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text(
@@ -94,7 +95,7 @@ class PVerifyOTPPage extends StatelessWidget {
                           ).onPressed(
                             onTap: timerCtrl.completed.value
                                 ? () {
-                                    ctrl.verifyOTP(
+                                    ctrl.resendOTP(
                                       pin: ctrl.otpcode.value,
                                       isSignup: isSignup,
                                     );
@@ -125,22 +126,23 @@ class PVerifyOTPPage extends StatelessWidget {
                           //       : null,
                           // ),
                         ],
-                      );
-                    }),
-                    PAppSize.s28.verticalSpace,
-                    PGradientButton(
-                      label: 'continue'.tr,
-                      showIcon: false,
-                      width: PDeviceUtil.getDeviceWidth(context),
-                      onTap: () {
-                        ctrl.verifyOTP(
-                          isSignup: isSignup,
-                          pin: ctrl.otpcode.value,
-                        );
-                      },
-                    ),
-                  ],
-                ).scrollable(),
+                      ),
+                      PAppSize.s28.verticalSpace,
+                      PGradientButton(
+                        label: 'continue'.tr,
+                        showIcon: false,
+                        loading: ctrl.loading.value,
+                        width: PDeviceUtil.getDeviceWidth(context),
+                        onTap: () {
+                          ctrl.verifyOTP(
+                            isSignup: isSignup,
+                            pin: ctrl.otpcode.value,
+                          );
+                        },
+                      ),
+                    ],
+                  ).scrollable(),
+                ),
               ),
             ],
           ).horizontal(PAppSize.s24),

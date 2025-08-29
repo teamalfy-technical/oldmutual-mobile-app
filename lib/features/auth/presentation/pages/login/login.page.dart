@@ -2,15 +2,50 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:oldmutual_pensions_app/core/utils/utils.dart';
-import 'package:oldmutual_pensions_app/features/auth/presentation/vm/auth.vm.dart';
+import 'package:oldmutual_pensions_app/features/auth/auth.dart';
 import 'package:oldmutual_pensions_app/gen/assets.gen.dart';
 import 'package:oldmutual_pensions_app/routes/app.pages.dart';
 import 'package:oldmutual_pensions_app/shared/shared.dart';
 
-class PLoginPage extends StatelessWidget {
-  PLoginPage({super.key});
+class PLoginPage extends StatefulWidget {
+  const PLoginPage({super.key});
 
+  @override
+  State<PLoginPage> createState() => _PLoginPageState();
+}
+
+class _PLoginPageState extends State<PLoginPage>
+    with SingleTickerProviderStateMixin {
   final ctrl = Get.put(PAuthVm());
+  late AnimationController _controller;
+
+  final formKey = GlobalKey<FormState>();
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 200),
+      lowerBound: 1.0,
+      upperBound: 1.2,
+    );
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  Future<void> authenticate() async {
+    // Animate the Face ID icon (shrink → expand → shrink back)
+    await _controller.forward();
+    await _controller.reverse();
+
+    final success = await LocalAuthService().authenticateUser();
+    pensionAppLogger.e(success);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -30,7 +65,7 @@ class PLoginPage extends StatelessWidget {
               Expanded(
                 child: Obx(
                   () => Form(
-                    key: ctrl.loginFormKey,
+                    key: formKey,
                     child: Column(
                       children: [
                         PAppSize.s24.verticalSpace,
@@ -71,17 +106,16 @@ class PLoginPage extends StatelessWidget {
                           // labelText: 'password'.tr,
                           controller: ctrl.emailTEC,
                           labelText: 'hint_email'.tr,
-
                           textInputType: TextInputType.emailAddress,
                           validator: PValidator.validateEmail,
                         ),
                         PAppSize.s24.verticalSpace,
                         PCustomPasswordTextField(
+                          controller: ctrl.passwordTEC,
                           labelText: 'hint_password'.tr,
                           // suffixIcon: Assets.icons.visibilityOn.svg(),
                           obscure: ctrl.obscure.value,
                           onObscureChanged: ctrl.onObscureChanged,
-                          controller: ctrl.passwordTEC,
                         ),
                         // PAppSize.s10.verticalSpace,
 
@@ -103,22 +137,41 @@ class PLoginPage extends StatelessWidget {
                         PGradientButton(
                           label: 'sign_in'.tr,
                           showIcon: false,
+                          loading: ctrl.loading.value,
                           width: PDeviceUtil.getDeviceWidth(context),
                           onTap: () {
-                            if (ctrl.loginFormKey.currentState!.validate()) {
+                            if (formKey.currentState!.validate()) {
                               PDeviceUtil.hideKeyboard(context);
                               ctrl.login();
                             }
                           },
                         ),
 
-                        (PDeviceUtil.getDeviceWidth(context) * 0.20)
-                            .verticalSpace,
+                        PAppSize.s16.verticalSpace,
 
+                        if (ctrl.isBiometricAvailable.value &&
+                            PSecureStorage().getAuthResponse() != null) ...[
+                          ScaleTransition(
+                            scale: _controller.drive(
+                              CurveTween(curve: Curves.easeInOut),
+                            ),
+                            child: IconButton(
+                              onPressed: () async => await authenticate(),
+                              icon: PDeviceUtil.isIOS()
+                                  ? Assets.icons.fingerprint.svg()
+                                  : Assets.icons.faceId.svg(),
+                            ),
+                          ),
+
+                          PAppSize.s4.verticalSpace,
+                        ],
+
+                        // (PDeviceUtil.getDeviceWidth(context) * 0.20)
+                        //     .verticalSpace,
                         TextButton(
                           onPressed: () {
                             PHelperFunction.switchScreen(
-                              destination: Routes.enterEmailPage,
+                              destination: Routes.forgotPasswordPage,
                             );
                           },
                           child: Text(
@@ -127,13 +180,13 @@ class PLoginPage extends StatelessWidget {
                                 ?.copyWith(
                                   fontWeight: FontWeight.w600,
                                   decoration: TextDecoration.underline,
-                                  color: PAppColor.primaryLight,
+                                  color: PAppColor.primaryRest,
                                   fontSize: PAppSize.s16,
                                 ),
                           ),
                         ),
 
-                        PAppSize.s20.verticalSpace,
+                        PAppSize.s16.verticalSpace,
 
                         // don't have an account
                         PAuthLinkButton(
@@ -141,8 +194,14 @@ class PLoginPage extends StatelessWidget {
                           subtitle: 'create_new'.tr,
                           subtitleColor: PAppColor.primary,
                           onTap: () => PHelperFunction.switchScreen(
-                            destination: Routes.signupPage,
+                            destination: Routes.idEntryPage,
                           ),
+                        ),
+
+                        PAppSize.s16.verticalSpace,
+                        // Explore other services
+                        PCustomExpansionTile(
+                          title: 'explore_other_services'.tr,
                         ),
                       ],
                     ).scrollable(),

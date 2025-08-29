@@ -95,30 +95,24 @@ class PValidator {
       return 'Password is required.';
     }
 
-    if (!value.contains(RegExp(r'[A-Z]')) &&
-        !value.contains(RegExp(r'[0-9]')) &&
-        !value.contains(RegExp(r'[!@#$%^&*(),.?":{}|<>]'))) {
-      return 'Not strong enough';
-    }
-
     // check for minimum password length
     if (value.length < 8) {
-      return 'Password must be at least 8 characters long.';
+      return 'Must be at least 8 characters long.';
     }
 
     // check of uppercase letters
     if (!value.contains(RegExp(r'[A-Z]'))) {
-      return 'Password must contain at least one uppercase letter.';
+      return 'Must contain at least one uppercase letter.';
     }
 
     // check of number
     if (!value.contains(RegExp(r'[0-9]'))) {
-      return 'Password must contain at least one number.';
+      return 'Must contain at least one number.';
     }
 
     // check of special characters
     if (!value.contains(RegExp(r'[!@#$%^&*(),.?":{}|<>]'))) {
-      return 'Password much contain at least one special character.';
+      return 'Must contain at least one special character.';
     }
 
     return null;
@@ -149,6 +143,21 @@ class PValidator {
     }
 
     return valid;
+  }
+
+  static String? validateIdNumber(String? value) {
+    if (value == null || value.isEmpty) {
+      return "ID number is required";
+    }
+
+    // Pattern: 9 digits, hyphen, 1 digit
+    final regex = RegExp(r'^\d{9}-\d{1}$');
+
+    if (!regex.hasMatch(value)) {
+      return "Enter a valid ID (e.g. 000400500-5)";
+    }
+
+    return null; // valid
   }
 
   static String? validatePhoneNumber(String? value) {

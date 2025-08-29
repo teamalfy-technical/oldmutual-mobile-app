@@ -32,6 +32,13 @@ class PFormatter {
     return dtFormat.format(date);
   }
 
+  /// --- calculate difference between two dates (In Days)
+  static int calculateDateDiff(String date) {
+    final parseDate = DateTime.parse(date);
+    final diff = DateTime.now().difference(parseDate);
+    return diff.inDays;
+  }
+
   /// --- format currency
   static String formatCurrency({
     required double amount,

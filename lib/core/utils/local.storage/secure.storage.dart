@@ -13,7 +13,7 @@ class PSecureStorage {
   final String onboardingKey = 'onboarding';
   final String authResKey = 'auth_res_key';
   final String bioDataKey = 'bio_data_key';
-  final String registeredKey = 'is_registered_key';
+  final String emailKey = 'email_key';
   final String deviceTokenKey = 'device_token_key';
 
   /// Generic function to save data into [GetStorage]
@@ -30,6 +30,9 @@ class PSecureStorage {
   Future<void> saveBioData<T>(T value) async =>
       await _storage.write(bioDataKey, value);
 
+  Future<void> saveUserEmail<T>(T value) async =>
+      await _storage.write(emailKey, value);
+
   /// Generic function to save auth response into [GetStorage]
   // Future<void> saveBusinessProfile<T>(T value) async =>
   //     await _storage.write(businessProfileKey, value);
@@ -43,7 +46,14 @@ class PSecureStorage {
   //       _storage.read(businessProfileKey) as Map<String, dynamic>);
   // }
 
-  // /// Non-generic function to read auth response data from [GetStorage]
+  String? getUserEmail() {
+    if (_storage.read(emailKey) == null) {
+      return null;
+    }
+    return _storage.read(emailKey);
+  }
+
+  /// Non-generic function to read auth response data from [GetStorage]
   Member? getAuthResponse() {
     if (_storage.read(authResKey) == null) {
       return null;

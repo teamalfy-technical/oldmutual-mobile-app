@@ -12,6 +12,8 @@ class PWelcomeBackPage extends StatelessWidget {
 
   final ctrl = Get.put(PAuthVm());
 
+  final formKey = GlobalKey<FormState>();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -29,22 +31,11 @@ class PWelcomeBackPage extends StatelessWidget {
               Expanded(
                 child: Obx(
                   () => Form(
-                    key: ctrl.welcomeBackFormKey,
+                    key: formKey,
                     child: Column(
                       children: [
                         PAppSize.s24.verticalSpace,
-                        // PCustomTextField(
-                        //   labelText: 'phone'.tr,
-                        //   hintText: 'enter_phone_number'.tr,
-                        //   prefixIcon: Assets.icons.phoneIcon.path,
-                        //   controller: ctrl.phoneTEC,
-                        //   validator: PValidator.validatePhoneNumber,
-                        //   // focusColor: PAppColor.primary,
-                        // ),
-                        // PCustomPhoneTextfield(
-                        //   ctrl: ctrl,
-                        //   labelText: 'phone'.tr,
-                        // ),
+
                         Text(
                           '${'hi'.tr},',
                           style: Theme.of(context).textTheme.headlineLarge
@@ -52,7 +43,8 @@ class PWelcomeBackPage extends StatelessWidget {
                         ),
                         PAppSize.s4.verticalSpace,
                         Text(
-                          'Bongani',
+                          PSecureStorage().getAuthResponse()?.name ?? 'Bongani',
+                          textAlign: TextAlign.center,
                           style: Theme.of(context).textTheme.headlineLarge
                               ?.copyWith(fontWeight: FontWeight.w500),
                         ),
@@ -88,17 +80,17 @@ class PWelcomeBackPage extends StatelessWidget {
                         PGradientButton(
                           label: 'sign_in'.tr,
                           showIcon: false,
+                          loading: ctrl.loading.value,
                           width: PDeviceUtil.getDeviceWidth(context),
                           onTap: () {
-                            if (ctrl.welcomeBackFormKey.currentState!
-                                .validate()) {
+                            if (formKey.currentState!.validate()) {
                               PDeviceUtil.hideKeyboard(context);
-                              ctrl.loginUserWithPasskey();
+                              ctrl.login();
                             }
                           },
                         ),
 
-                        PAppSize.s16.verticalSpace,
+                        PAppSize.s20.verticalSpace,
 
                         Assets.icons.fingerprint.svg(),
 
