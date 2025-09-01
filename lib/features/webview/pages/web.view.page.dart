@@ -8,6 +8,7 @@ import 'package:oldmutual_pensions_app/core/utils/utils.dart';
 import 'package:oldmutual_pensions_app/features/auth/auth.dart';
 import 'package:oldmutual_pensions_app/features/webview/webview.dart';
 import 'package:oldmutual_pensions_app/routes/app.pages.dart';
+import 'package:oldmutual_pensions_app/shared/shared.dart';
 import 'package:redacted/redacted.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 // Import for iOS/macOS features.
@@ -86,6 +87,7 @@ class _PWebViewState extends State<PWebView> {
                 updateProgressPercentage(100);
                 log('Page is done loading: $url');
                 checkCallBackResponse();
+                //checkVerificationStatus(context);
               },
               onWebResourceError: (WebResourceError error) {
                 log(
@@ -97,14 +99,6 @@ class _PWebViewState extends State<PWebView> {
                 if (request.url.startsWith('https://www.youtube.com/')) {
                   return NavigationDecision.prevent;
                 }
-                pensionAppLogger.e('Callback URL: ${request.url}');
-                pensionAppLogger.e('Callback: ${request.url}');
-                if (request.url.startsWith('{')) {
-                  // Uri uri = Uri.parse(request.url);
-                  // String? status = uri.queryParameters["status"];
-                  // String? txId = uri.queryParameters["txId"];
-                }
-
                 return NavigationDecision.navigate;
               },
             ),
@@ -119,6 +113,22 @@ class _PWebViewState extends State<PWebView> {
         pensionAppLogger.e("📩 Message from JS: ${message.message}");
       },
     );
+  }
+
+  Future<void> checkVerificationStatus(context) async {
+    // final vm = Get.find<PAuthVm>();
+    // final checker = ApiStatusChecker(
+    //   sessionId: vm.verificationRes.value.sessionId ?? '',
+    // );
+
+    // checker.statusStream.listen((success) {
+    //   if (success) {
+    //     pensionAppLogger.e(success);
+    //   }
+    //   print(success ? "API is UP ✅" : "API is DOWN ❌");
+    // });
+
+    // checker.start(context);
   }
 
   Future<void> checkCallBackResponse() async {
@@ -140,18 +150,19 @@ class _PWebViewState extends State<PWebView> {
         pensionAppLogger.d(
           "✅ Token: ${json['data']['verification_token']}, Ghana Card: ${json['data']['ghana_card']}",
         );
-        navigateToCreateAccount();
+        navigateToCreateAccount(json['data']['message']);
       }
     } catch (e) {
       pensionAppLogger.e("❌ Not valid JSON: $e");
     }
   }
 
-  void navigateToCreateAccount() {
+  void navigateToCreateAccount(String message) {
     PHelperFunction.switchScreen(
       destination: Routes.createAccountPage,
       args: true,
     );
+    PPopupDialog(context).successMessage(title: 'success'.tr, message: message);
   }
 
   @override

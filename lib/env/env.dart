@@ -43,68 +43,79 @@ abstract class Env {
   )
   static final String selfServiceBaseUrl = _Env.selfServiceBaseUrl;
 
-  /// [SelfServiceLogin] user endpoint
-  @EnviedField(defaultValue: '/login', obfuscate: true)
-  static final String selfServiceLogin = _Env.selfServiceLogin;
-
-  /// [SelfServiceCreateAccount] user endpoint
-  @EnviedField(defaultValue: '/create-account', obfuscate: true)
-  static final String selfServiceCreateAccount = _Env.selfServiceCreateAccount;
-
-  /// [SelfServiceVerifyOtp] user endpoint
-  @EnviedField(defaultValue: '/verify-otp', obfuscate: true)
-  static final String selfServiceVerifyOtp = _Env.selfServiceVerifyOtp;
-
-  /// [SelfServiceResendOtp] user endpoint
-  @EnviedField(defaultValue: '/resend-otp', obfuscate: true)
-  static final String selfServiceResendOtp = _Env.selfServiceResendOtp;
-
-  /// [SelfServiceVerifyResetOtp] user endpoint
-  @EnviedField(defaultValue: '/verify-reset-otp', obfuscate: true)
-  static final String selfServiceVerifyResetOtp =
-      _Env.selfServiceVerifyResetOtp;
-
-  /// [SelfServiceForgotPassword] user endpoint
-  @EnviedField(defaultValue: '/fogot-password', obfuscate: true)
-  static final String selfServiceForgotPassword =
-      _Env.selfServiceForgotPassword;
-
-  /// [SelfServiceVerifyGhanaCard] user endpoint
-  @EnviedField(defaultValue: '/mobile-verify-ghanacard', obfuscate: true)
-  static final String selfServiceVerifyGhanaCard =
-      _Env.selfServiceVerifyGhanaCard;
-
   /// -------------------- Self-Service  Endpoints Ends Here ------------------------- ///
 
   /// -------------------- Authentication Endpoints Starts Here ------------------------- ///
 
-  /// [Login] user endpoint
-  @EnviedField(defaultValue: '/login', obfuscate: true)
-  static final String signin = _Env.signin;
+  // /// [Login] user endpoint
+  // @EnviedField(defaultValue: '/login', obfuscate: true)
+  // static final String signin = _Env.signin;
 
-  /// [Signup] endpoint
-  @EnviedField(defaultValue: '/signup', obfuscate: true)
-  static final String signup = _Env.signup;
+  // /// [Signup] endpoint
+  // @EnviedField(defaultValue: '/signup', obfuscate: true)
+  // static final String signup = _Env.signup;
 
-  /// [VerifyOTP] endpoint
-  @EnviedField(defaultValue: '/verify-otp', obfuscate: true)
-  static final String verifyOTP = _Env.verifyOTP;
+  // /// [VerifyOTP] endpoint
+  // @EnviedField(defaultValue: '/verify-otp', obfuscate: true)
+  // static final String verifyOTP = _Env.verifyOTP;
+  /// [SelfServiceLogin] user endpoint
+  @EnviedField(defaultValue: '/self-service/login', obfuscate: true)
+  static final String login = _Env.login;
+
+  /// [CreateAccount] user endpoint
+  @EnviedField(defaultValue: '/self-service/create-account', obfuscate: true)
+  static final String createAccount = _Env.createAccount;
+
+  /// [VerifyOtp] user endpoint
+  @EnviedField(defaultValue: '/self-service/verify-otp', obfuscate: true)
+  static final String verifyOtp = _Env.verifyOtp;
+
+  /// [ResendOtp] user endpoint
+  @EnviedField(defaultValue: '/self-service/resend-otp', obfuscate: true)
+  static final String resendOtp = _Env.resendOtp;
+
+  /// [VerifyResetOtp] user endpoint
+  @EnviedField(defaultValue: '/self-service/verify-reset-otp', obfuscate: true)
+  static final String verifyResetOtp = _Env.verifyResetOtp;
+
+  /// [ForgotPassword] user endpoint
+  @EnviedField(defaultValue: '/self-service/fogot-password', obfuscate: true)
+  static final String forgotPassword = _Env.forgotPassword;
+
+  /// [VerifyGhanaCard] user endpoint
+  @EnviedField(
+    defaultValue: '/self-service/mobile-verify-ghanacard',
+    obfuscate: true,
+  )
+  static final String verifyGhanaCard = _Env.verifyGhanaCard;
+
+  /// [CheckCardVerificationStatus] user endpoint
+  @EnviedField(
+    defaultValue: '/self-service/mobile/check-verification-status',
+    obfuscate: true,
+  )
+  static final String checkGhanaCardVerificationStatus =
+      _Env.checkGhanaCardVerificationStatus;
+
+  /// [ResetPassword] endpoint
+  @EnviedField(defaultValue: '/reset-password', obfuscate: true)
+  static final String resetPassword = _Env.resetPassword;
 
   /// [AddPassword] endpoint
   @EnviedField(defaultValue: '/add-password', obfuscate: true)
   static final String addPassword = _Env.addPassword;
 
-  /// [ForgotPassword] endpoint
-  @EnviedField(defaultValue: '/forgot-password', obfuscate: true)
-  static final String forgotPassword = _Env.forgotPassword;
+  // /// [ForgotPassword] endpoint
+  // @EnviedField(defaultValue: '/forgot-password', obfuscate: true)
+  // static final String forgotPassword = _Env.forgotPassword;
 
-  /// [VerifyForgotPasswordOTP] endpoint
-  @EnviedField(defaultValue: '/verify-reset-otp', obfuscate: true)
-  static final String verifyForgotPasswordOTP = _Env.verifyForgotPasswordOTP;
+  // /// [VerifyForgotPasswordOTP] endpoint
+  // @EnviedField(defaultValue: '/verify-reset-otp', obfuscate: true)
+  // static final String verifyForgotPasswordOTP = _Env.verifyForgotPasswordOTP;
 
-  /// [ResetPassword] endpoint
-  @EnviedField(defaultValue: '/reset-password', obfuscate: true)
-  static final String resetPassword = _Env.resetPassword;
+  // /// [ResetPassword] endpoint
+  // @EnviedField(defaultValue: '/reset-password', obfuscate: true)
+  // static final String resetPassword = _Env.resetPassword;
 
   /// -------------------- Authentication Endpoints Ends Here ------------------------- ///
   ///

@@ -34,7 +34,10 @@ class PCustomSuccessPage extends StatelessWidget {
                 textAlign: TextAlign.center,
                 style: Theme.of(context).textTheme.headlineLarge?.copyWith(
                   fontWeight: FontWeight.w700,
-                  color: PAppColor.primary950,
+
+                  color: PHelperFunction.isDarkMode(context)
+                      ? PAppColor.primary950
+                      : PAppColor.textColorDark,
                   fontSize: PAppSize.s24,
                 ),
               ),
@@ -45,7 +48,9 @@ class PCustomSuccessPage extends StatelessWidget {
                 style: Theme.of(context).textTheme.bodySmall?.copyWith(
                   fontWeight: FontWeight.w500,
                   fontSize: PAppSize.s16,
-                  color: PAppColor.whiteColor.withOpacityExt(PAppSize.s0_7),
+                  color: PHelperFunction.isDarkMode(context)
+                      ? PAppColor.whiteColor.withOpacityExt(PAppSize.s0_7)
+                      : PAppColor.textColorLight,
                 ),
               ),
               PAppSize.s18.verticalSpace,

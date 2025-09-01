@@ -40,7 +40,9 @@ class _PIdEntryPageState extends State<PIdEntryPage> {
                         style: Theme.of(context).textTheme.headlineSmall
                             ?.copyWith(
                               fontWeight: FontWeight.w600,
-                              color: PAppColor.secondary500,
+                              color: PHelperFunction.isDarkMode(context)
+                                  ? PAppColor.secondary500
+                                  : PAppColor.darkAppBarColor2,
                               fontSize: PAppSize.s16,
                             ),
                       ),

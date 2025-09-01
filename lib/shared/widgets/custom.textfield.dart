@@ -70,7 +70,9 @@ class _PCustomTextFieldState extends State<PCustomTextField> {
       inputFormatters: widget.inputFormatters,
       keyboardType: widget.textInputType,
       style: TextStyle(
-        color: PAppColor.whiteColor,
+        color: PHelperFunction.isDarkMode(context)
+            ? PAppColor.whiteColor
+            : PAppColor.text500,
         fontWeight: FontWeight.w600,
       ),
       onChanged: widget.onChanged,
@@ -80,7 +82,9 @@ class _PCustomTextFieldState extends State<PCustomTextField> {
         prefixText: widget.prefixText,
         prefixIcon: widget.prefixIcon,
         prefixStyle: TextStyle(
-          color: PAppColor.whiteColor,
+          color: PHelperFunction.isDarkMode(context)
+              ? PAppColor.whiteColor
+              : PAppColor.text500,
           fontWeight: FontWeight.w600,
         ),
         label: Text(

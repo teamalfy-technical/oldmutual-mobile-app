@@ -88,7 +88,9 @@ class _PLoginPageState extends State<PLoginPage>
                               ?.copyWith(
                                 fontWeight: FontWeight.w500,
                                 fontSize: PAppSize.s16,
-                                color: PAppColor.secondary700,
+                                color: PHelperFunction.isDarkMode(context)
+                                    ? PAppColor.secondary700
+                                    : PAppColor.darkAppBarColor2,
                                 // fontSize: 20,
                               ),
                         ),
@@ -108,6 +110,7 @@ class _PLoginPageState extends State<PLoginPage>
                           obscure: ctrl.obscure.value,
                           onObscureChanged: ctrl.onObscureChanged,
                         ),
+
                         // PAppSize.s10.verticalSpace,
 
                         // Align(
@@ -172,7 +175,13 @@ class _PLoginPageState extends State<PLoginPage>
                                 ?.copyWith(
                                   fontWeight: FontWeight.w600,
                                   decoration: TextDecoration.underline,
-                                  color: PAppColor.primaryRest,
+                                  decorationColor:
+                                      PHelperFunction.isDarkMode(context)
+                                      ? PAppColor.primaryRest
+                                      : PAppColor.primary,
+                                  color: PHelperFunction.isDarkMode(context)
+                                      ? PAppColor.primaryRest
+                                      : PAppColor.primary,
                                   fontSize: PAppSize.s16,
                                 ),
                           ),
@@ -183,6 +192,10 @@ class _PLoginPageState extends State<PLoginPage>
                         // don't have an account
                         PAuthLinkButton(
                           title: '${'dont_have_account'.tr} ',
+                          // titleColor: PAppColor.darkAppBarColor2,
+                          titleColor: PHelperFunction.isDarkMode(context)
+                              ? Color(0xFFCCCCCC)
+                              : PAppColor.textColorDark,
                           subtitle: 'create_new'.tr,
                           subtitleColor: PAppColor.primary,
                           onTap: () => PHelperFunction.switchScreen(

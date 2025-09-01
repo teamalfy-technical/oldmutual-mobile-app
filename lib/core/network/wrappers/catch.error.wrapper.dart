@@ -56,7 +56,7 @@ class CatchApiErrorWrapperImpl implements CatchApiErrorWrapper {
             pensionAppLogger.e(err.response?.data);
           } else if (err.response?.statusCode == 404) {
             errorMessage =
-                err.response?.data['message'] ??
+                err.response?.data['message']['message'] ??
                 'Requested resource is not found';
           } else if (err.response?.statusCode == 422) {
             // ApiErrorResponse error =

@@ -53,6 +53,10 @@ abstract class AuthDs {
 
   Future<ApiResponse<String>> verifyGhanaCard({required String cardNumber});
 
+  Future<ApiResponse<String>> checkCardVerificationStatus({
+    required String sessionId,
+  });
+
   Future<ApiResponse<List<Message>>> updateFcmToken({required String token});
 
   Future<ApiResponse<List<Message>>> forgotPassword({

@@ -41,7 +41,23 @@ class _PCreateAccountPageState extends State<PCreateAccountPage> {
       body: SafeArea(
         child: Column(
           children: [
-            PAppSize.s8.verticalSpace,
+            PAppSize.s16.verticalSpace,
+
+            Align(
+              alignment: Alignment.topLeft,
+              child: Text(
+                'lets_get_started'.tr,
+                style: Theme.of(context).textTheme.headlineSmall?.copyWith(
+                  fontWeight: FontWeight.w600,
+                  color: PHelperFunction.isDarkMode(context)
+                      ? PAppColor.secondary500
+                      : PAppColor.darkAppBarColor2,
+
+                  fontSize: PAppSize.s16,
+                ),
+              ),
+            ),
+
             Expanded(
               child: Obx(
                 () => Form(
@@ -49,20 +65,6 @@ class _PCreateAccountPageState extends State<PCreateAccountPage> {
                   child: Column(
                     // crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      PAppSize.s8.verticalSpace,
-                      Align(
-                        alignment: Alignment.topLeft,
-                        child: Text(
-                          'lets_get_started'.tr,
-                          style: Theme.of(context).textTheme.headlineSmall
-                              ?.copyWith(
-                                fontWeight: FontWeight.w600,
-                                color: PAppColor.secondary500,
-                                fontSize: PAppSize.s16,
-                              ),
-                        ),
-                      ),
-
                       PAppSize.s34.verticalSpace,
                       PCustomTextField(
                         // labelText: 'password'.tr,
@@ -119,13 +121,25 @@ class _PCreateAccountPageState extends State<PCreateAccountPage> {
                       PAppSize.s20.verticalSpace,
 
                       PCustomPasswordTextField(
-                        labelText: 'confirm_password'.tr,
+                        labelText: 'hint_password'.tr,
                         // suffixIcon: Assets.icons.visibilityOn.svg(),
                         obscure: ctrl.obscure.value,
                         // autovalidateMode: AutovalidateMode.onUserInteraction,
                         onObscureChanged: ctrl.onObscureChanged,
                         controller: ctrl.passwordTEC,
                         onChanged: _validatePassword,
+                      ),
+
+                      PAppSize.s24.verticalSpace,
+                      PCustomPasswordTextField(
+                        labelText: 'confirm_password'.tr,
+                        validator: (val) => PValidator.validateConfirmPassword(
+                          val,
+                          ctrl.passwordTEC.text.trim(),
+                        ),
+                        obscure: ctrl.obscure.value,
+                        onObscureChanged: ctrl.onObscureChanged,
+                        controller: ctrl.confirmPasswordTEC,
                       ),
 
                       PAppSize.s20.verticalSpace,
@@ -144,7 +158,9 @@ class _PCreateAccountPageState extends State<PCreateAccountPage> {
                               ?.copyWith(
                                 fontWeight: FontWeight.w600,
                                 decoration: TextDecoration.underline,
-                                color: PAppColor.whiteColor,
+                                color: PHelperFunction.isDarkMode(context)
+                                    ? PAppColor.whiteColor
+                                    : PAppColor.darkAppBarColor2,
                                 fontSize: PAppSize.s16,
                               ),
                         ),
@@ -152,7 +168,11 @@ class _PCreateAccountPageState extends State<PCreateAccountPage> {
 
                       TextButton.icon(
                         iconAlignment: IconAlignment.start,
-                        icon: Assets.icons.lockIcon.svg(),
+                        icon: Assets.icons.lockIcon.svg(
+                          color: PHelperFunction.isDarkMode(context)
+                              ? PAppColor.whiteColor
+                              : PAppColor.blackColor,
+                        ),
 
                         // Icon(
                         //   Icons.lock_outline,
@@ -167,52 +187,14 @@ class _PCreateAccountPageState extends State<PCreateAccountPage> {
                           style: Theme.of(context).textTheme.bodySmall
                               ?.copyWith(
                                 fontSize: PAppSize.s13,
-                                color: PAppColor.fillColor2,
+
+                                color: PHelperFunction.isDarkMode(context)
+                                    ? PAppColor.fillColor2
+                                    : PAppColor.blackColor,
                               ),
                         ),
                       ),
 
-                      // PCustomPhoneTextfield(ctrl: ctrl, labelText: 'phone'.tr),
-                      // PCustomTextField(
-                      //   labelText: 'phone'.tr,
-                      //   hintText: 'enter_phone_number'.tr,
-                      //   prefixIcon: Assets.icons.phoneIcon.path,
-                      //   controller: ctrl.phoneTEC,
-                      //   validator: PValidator.validatePhoneNumber,
-                      //   // focusColor: PAppColor.primary,
-                      // ),
-                      // PAppSize.s20.verticalSpace,
-                      // PCustomCheckbox(
-                      //   value: ctrl.agreeToTerms.value,
-                      //   onChanged: ctrl.onTermsCheckboxChanged,
-                      //   child: RichText(
-                      //     text: TextSpan(
-                      //       text: '${'i_agree_to'.tr} ',
-                      //       style: Theme.of(context).textTheme.bodyMedium
-                      //           ?.copyWith(color: PAppColor.blackColor),
-                      //       children: [
-                      //         TextSpan(
-                      //           text: 'terms_conditions'.tr,
-                      //           style: Theme.of(context).textTheme.bodyMedium
-                      //               ?.copyWith(
-                      //                 color: PAppColor.primary,
-                      //                 decoration: TextDecoration.underline,
-                      //                 decorationColor: PAppColor.primary,
-                      //               ),
-                      //           recognizer: TapGestureRecognizer()
-                      //             ..onTap = () => PHelperFunction.switchScreen(
-                      //               destination: Routes.webviewPage,
-                      //               args: [
-                      //                 'terms_conditions'.tr,
-                      //                 PAppConstant.termsConditionsLink,
-                      //               ],
-                      //             ),
-                      //         ),
-                      //       ],
-                      //     ),
-                      //   ),
-                      //   //Text('agree_to_terms'.tr),
-                      // ),
                       PAppSize.s20.verticalSpace,
 
                       PGradientButton(
@@ -230,6 +212,9 @@ class _PCreateAccountPageState extends State<PCreateAccountPage> {
                       // already have an account
                       PAuthLinkButton(
                         title: '${'already_have_account'.tr} ',
+                        titleColor: PHelperFunction.isDarkMode(context)
+                            ? Color(0xFFCCCCCC)
+                            : PAppColor.blackColor,
                         subtitle: 'sign_in'.tr,
                         subtitleColor: PAppColor.primary,
                         onTap: () => PHelperFunction.switchScreen(

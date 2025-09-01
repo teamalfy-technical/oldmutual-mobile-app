@@ -36,14 +36,14 @@ class PTextFormFieldTheme {
       borderRadius: BorderRadius.circular(PAppSize.s8),
       borderSide: const BorderSide(
         width: PAppSize.s1,
-        color: PAppColor.fillColor,
+        color: PAppColor.fillColor2,
       ),
     ),
     enabledBorder: const OutlineInputBorder().copyWith(
       borderRadius: BorderRadius.circular(PAppSize.s8),
       borderSide: const BorderSide(
         width: PAppSize.s1,
-        color: PAppColor.fillColor,
+        color: PAppColor.fillColor2,
       ),
     ),
     focusedBorder: const OutlineInputBorder().copyWith(

@@ -214,4 +214,18 @@ class AuthRepoImpl implements AuthRepo {
       },
     );
   }
+
+  @override
+  Future<Either<PFailure, ApiResponse<String>>> checkCardVerificationStatus({
+    required String sessionId,
+  }) async {
+    return await customRepositoryWrapper.wrapRepositoryFunction(
+      function: () async {
+        final res = await authDs.checkCardVerificationStatus(
+          sessionId: sessionId,
+        );
+        return res;
+      },
+    );
+  }
 }

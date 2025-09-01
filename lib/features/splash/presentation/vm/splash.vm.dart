@@ -7,8 +7,11 @@ import 'package:oldmutual_pensions_app/routes/app.pages.dart';
 class PSplashVm extends GetxController {
   static PSplashVm get instance => Get.find();
 
+  Timer? _timer;
+
   @override
   void onInit() {
+    pensionAppLogger.i('Splash vm called');
     showSplashPage();
     super.onInit();
   }
@@ -17,8 +20,9 @@ class PSplashVm extends GetxController {
   /// check if user is logged in or not
   /// [showSplashPage]
   void showSplashPage() async {
-    Timer(Duration(seconds: 3), () {
+    _timer = Timer(Duration(seconds: 3), () {
       if (PSecureStorage().readData(PSecureStorage().onboardingKey) == null) {
+        stop();
         PHelperFunction.switchScreen(
           destination: Routes.welcomePage,
           replace: true,
@@ -35,16 +39,18 @@ class PSplashVm extends GetxController {
           );
           // redirect user to welcome back screen after been logged in for 3 days
           if (lastLoggedIn >= 3 && PSecureStorage().getUserEmail() != null) {
+            stop();
             PHelperFunction.switchScreen(
               destination: Routes.welcomeBackPage,
               replace: true,
             );
           } else {
             PHelperFunction.switchScreen(
-              destination: Routes.welcomeBackPage,
+              destination: Routes.dashboardPage,
               replace: true,
             );
           }
+          stop();
         } else {
           if (PSecureStorage().getUserEmail() != null) {
             PHelperFunction.switchScreen(
@@ -54,12 +60,25 @@ class PSplashVm extends GetxController {
           } else {
             PHelperFunction.switchScreen(
               destination: Routes.loginPage,
+              // destination: Routes.createAccountPage,
               replace: true,
             );
           }
+          stop();
         }
       }
     });
+  }
+
+  void stop() {
+    _timer?.cancel();
+    _timer = null;
+  }
+
+  @override
+  void onClose() {
+    stop();
+    super.onClose();
   }
 
   completeOnboarding(String route) {

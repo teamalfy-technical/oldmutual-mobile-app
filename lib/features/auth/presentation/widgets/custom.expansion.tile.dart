@@ -40,8 +40,16 @@ class _PCustomExpansionTileState extends State<PCustomExpansionTile> {
             ).textTheme.headlineSmall?.copyWith(fontSize: PAppSize.s18),
           ),
           icon: expanded
-              ? Assets.icons.keyboardArrowDown.svg()
-              : Assets.icons.keyboardArrowRight.svg(),
+              ? Assets.icons.keyboardArrowDown.svg(
+                  color: PHelperFunction.isDarkMode(context)
+                      ? PAppColor.whiteColor
+                      : PAppColor.darkAppBarColor,
+                )
+              : Assets.icons.keyboardArrowRight.svg(
+                  color: PHelperFunction.isDarkMode(context)
+                      ? PAppColor.whiteColor
+                      : PAppColor.darkAppBarColor,
+                ),
         ),
         PAppSize.s10.verticalSpace,
         Visibility(

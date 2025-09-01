@@ -136,4 +136,9 @@ class AuthServiceImpl implements AuthService {
     required String phone,
     required String otp,
   }) => authRepo.verifySignupOtp(phone: phone, otp: otp);
+
+  @override
+  Future<Either<PFailure, ApiResponse<String>>> checkCardVerificationStatus({
+    required String sessionId,
+  }) => authRepo.checkCardVerificationStatus(sessionId: sessionId);
 }

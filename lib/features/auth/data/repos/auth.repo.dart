@@ -79,4 +79,8 @@ abstract class AuthRepo {
   Future<Either<PFailure, ApiResponse<String>>> verifyGhanaCard({
     required String cardNumber,
   });
+
+  Future<Either<PFailure, ApiResponse<String>>> checkCardVerificationStatus({
+    required String sessionId,
+  });
 }

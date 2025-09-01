@@ -72,7 +72,9 @@ class PWelcomePage extends StatelessWidget {
                         style: Theme.of(context).textTheme.headlineSmall
                             ?.copyWith(
                               fontWeight: FontWeight.w600,
-                              color: PAppColor.primaryLight,
+                              color: PHelperFunction.isDarkMode(context)
+                                  ? PAppColor.primaryLight
+                                  : PAppColor.primary,
                               fontSize: PAppSize.s16,
                             ),
                       ),

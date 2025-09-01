@@ -35,7 +35,10 @@ class PVerifyOTPPage extends StatelessWidget {
                         textAlign: TextAlign.start,
                         style: Theme.of(context).textTheme.bodyLarge?.copyWith(
                           height: 1.3,
-                          color: PAppColor.secondary500,
+                          fontWeight: FontWeight.w500,
+                          color: PHelperFunction.isDarkMode(context)
+                              ? PAppColor.secondary500
+                              : PAppColor.darkAppBarColor2,
                         ),
                       ),
                       PAppSize.s20.verticalSpace,
@@ -54,7 +57,10 @@ class PVerifyOTPPage extends StatelessWidget {
                         textAlign: TextAlign.start,
                         style: Theme.of(context).textTheme.bodyLarge?.copyWith(
                           fontSize: PAppSize.s14,
-                          color: PAppColor.textDisabledColor,
+                          color: PHelperFunction.isDarkMode(context)
+                              ? PAppColor.textDisabledColor
+                              : PAppColor.darkAppBarColor2,
+
                           letterSpacing: 0,
                           fontWeight: FontWeight.w400,
                         ),
@@ -73,7 +79,10 @@ class PVerifyOTPPage extends StatelessWidget {
                             style: Theme.of(context).textTheme.bodyLarge
                                 ?.copyWith(
                                   fontSize: PAppSize.s14,
-                                  color: PAppColor.whiteColor,
+                                  color: PHelperFunction.isDarkMode(context)
+                                      ? PAppColor.whiteColor
+                                      : PAppColor.textColorDark,
+
                                   fontWeight: FontWeight.w500,
                                 ),
                           ),
@@ -89,7 +98,10 @@ class PVerifyOTPPage extends StatelessWidget {
                                   fontSize: PAppSize.s14,
                                   color: timerCtrl.completed.value
                                       ? PAppColor.primary
-                                      : PAppColor.secondary900,
+                                      : PHelperFunction.isDarkMode(context)
+                                      ? PAppColor.secondary900
+                                      : PAppColor.darkAppBarColor2,
+
                                   fontWeight: FontWeight.w700,
                                 ),
                           ).onPressed(

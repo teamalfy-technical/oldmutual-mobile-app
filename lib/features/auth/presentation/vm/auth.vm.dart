@@ -199,7 +199,7 @@ class PAuthVm extends GetxController {
       phone: phoneTEC.text.trim(),
       email: emailTEC.text.trim(),
       password: passwordTEC.text.trim(),
-      confirmPassword: passwordTEC.text.trim(),
+      confirmPassword: confirmPasswordTEC.text.trim(),
       verificationToken: verificationToken.value,
     );
     result.fold(

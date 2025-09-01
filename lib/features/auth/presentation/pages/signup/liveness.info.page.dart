@@ -34,7 +34,9 @@ class _PLivenessInfoPageState extends State<PLivenessInfoPage> {
                     textAlign: TextAlign.center,
                     style: Theme.of(context).textTheme.headlineSmall?.copyWith(
                       fontWeight: FontWeight.w600,
-                      color: PAppColor.whiteColor,
+                      color: PHelperFunction.isDarkMode(context)
+                          ? PAppColor.whiteColor
+                          : PAppColor.textColorDark,
                       fontSize: PAppSize.s20,
                     ),
                   ),
@@ -45,7 +47,9 @@ class _PLivenessInfoPageState extends State<PLivenessInfoPage> {
                     text: TextSpan(
                       text: '${'liveness_info_title'.tr}\n',
                       style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                        color: PAppColor.fillColor2,
+                        color: PHelperFunction.isDarkMode(context)
+                            ? PAppColor.fillColor2
+                            : PAppColor.textColorDark,
                         fontSize: PAppSize.s14,
                       ),
                       children: [
@@ -54,7 +58,10 @@ class _PLivenessInfoPageState extends State<PLivenessInfoPage> {
                           style: Theme.of(context).textTheme.bodyLarge
                               ?.copyWith(
                                 fontSize: PAppSize.s14,
-                                color: Color(0xFFD5D5D5),
+                                color: PHelperFunction.isDarkMode(context)
+                                    ? Color(0xFFD5D5D5)
+                                    : PAppColor.textColorDark,
+
                                 fontWeight: FontWeight.w700,
                               ),
                         ),
@@ -96,7 +103,11 @@ class _PLivenessInfoPageState extends State<PLivenessInfoPage> {
 
                   TextButton.icon(
                     iconAlignment: IconAlignment.start,
-                    icon: Assets.icons.shield.svg(),
+                    icon: Assets.icons.shield.svg(
+                      color: PHelperFunction.isDarkMode(context)
+                          ? PAppColor.whiteColor
+                          : PAppColor.textColorDark,
+                    ),
                     style: TextButton.styleFrom(
                       padding: EdgeInsets.only(left: PAppSize.s7),
                     ),
@@ -106,7 +117,9 @@ class _PLivenessInfoPageState extends State<PLivenessInfoPage> {
                         text: '${'id_secure_msg'.tr} ',
                         style: Theme.of(context).textTheme.bodySmall?.copyWith(
                           fontSize: PAppSize.s13,
-                          color: PAppColor.fillColor2,
+                          color: PHelperFunction.isDarkMode(context)
+                              ? PAppColor.fillColor2
+                              : PAppColor.textColorDark,
                         ),
                         children: [
                           TextSpan(
@@ -115,7 +128,9 @@ class _PLivenessInfoPageState extends State<PLivenessInfoPage> {
                                 ?.copyWith(
                                   fontSize: PAppSize.s13,
                                   fontWeight: FontWeight.w600,
-                                  color: PAppColor.fillColor2,
+                                  color: PHelperFunction.isDarkMode(context)
+                                      ? PAppColor.fillColor2
+                                      : PAppColor.textColorDark,
                                 ),
                           ),
                           TextSpan(
@@ -123,7 +138,9 @@ class _PLivenessInfoPageState extends State<PLivenessInfoPage> {
                             style: Theme.of(context).textTheme.bodySmall
                                 ?.copyWith(
                                   fontSize: PAppSize.s13,
-                                  color: PAppColor.fillColor2,
+                                  color: PHelperFunction.isDarkMode(context)
+                                      ? PAppColor.fillColor2
+                                      : PAppColor.textColorDark,
                                 ),
                           ),
                           TextSpan(
@@ -132,7 +149,9 @@ class _PLivenessInfoPageState extends State<PLivenessInfoPage> {
                                 ?.copyWith(
                                   fontSize: PAppSize.s13,
                                   fontWeight: FontWeight.w600,
-                                  color: PAppColor.fillColor2,
+                                  color: PHelperFunction.isDarkMode(context)
+                                      ? PAppColor.fillColor2
+                                      : PAppColor.textColorDark,
                                 ),
                           ),
                         ],

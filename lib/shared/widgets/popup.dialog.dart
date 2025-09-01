@@ -34,10 +34,9 @@ class PPopupDialog {
     Flushbar(
       flushbarPosition: FlushbarPosition.TOP,
       flushbarStyle: FlushbarStyle.GROUNDED,
-      backgroundColor:
-          PHelperFunction.isDarkMode(context)
-              ? PAppColor.lightBlackColor
-              : PAppColor.whiteColor,
+      backgroundColor: PHelperFunction.isDarkMode(context)
+          ? PAppColor.lightBlackColor
+          : PAppColor.whiteColor,
       icon: Assets.icons.successIcon.svg(
         height: PAppSize.s24,
         width: PAppSize.s24,
@@ -46,16 +45,14 @@ class PPopupDialog {
       title: title,
       padding: EdgeInsets.all(PAppSize.s20),
       titleSize: PAppSize.s16,
-      titleColor:
-          PHelperFunction.isDarkMode(context)
-              ? PAppColor.whiteColor
-              : PAppColor.primary,
-      messageColor:
-          PHelperFunction.isDarkMode(context)
-              ? PAppColor.whiteColor
-              : PAppColor.primary,
+      titleColor: PHelperFunction.isDarkMode(context)
+          ? PAppColor.whiteColor
+          : PAppColor.primary,
+      messageColor: PHelperFunction.isDarkMode(context)
+          ? PAppColor.whiteColor
+          : PAppColor.primary,
       message: message,
-      duration: Duration(milliseconds: PAppSize.s2500),
+      duration: Duration(milliseconds: PAppSize.s4000),
     ).show(context);
   }
 
@@ -63,23 +60,20 @@ class PPopupDialog {
     Flushbar(
       flushbarPosition: FlushbarPosition.TOP,
       flushbarStyle: FlushbarStyle.GROUNDED,
-      backgroundColor:
-          PHelperFunction.isDarkMode(context)
-              ? PAppColor.lightBlackColor
-              : PAppColor.whiteColor,
+      backgroundColor: PHelperFunction.isDarkMode(context)
+          ? PAppColor.lightBlackColor
+          : PAppColor.whiteColor,
       icon: Assets.icons.warningIcon.svg(color: PAppColor.redColor),
       // leftBarIndicatorColor: PAppColor.errorColor,
       title: title,
       padding: EdgeInsets.all(PAppSize.s20),
       titleSize: PAppSize.s16,
-      titleColor:
-          PHelperFunction.isDarkMode(context)
-              ? PAppColor.whiteColor
-              : PAppColor.redColor,
-      messageColor:
-          PHelperFunction.isDarkMode(context)
-              ? PAppColor.whiteColor
-              : PAppColor.redColor,
+      titleColor: PHelperFunction.isDarkMode(context)
+          ? PAppColor.whiteColor
+          : PAppColor.redColor,
+      messageColor: PHelperFunction.isDarkMode(context)
+          ? PAppColor.whiteColor
+          : PAppColor.redColor,
       message: message,
       duration: const Duration(milliseconds: PAppSize.s4000),
     ).show(context);
@@ -89,23 +83,20 @@ class PPopupDialog {
     Flushbar(
       flushbarPosition: FlushbarPosition.TOP,
       flushbarStyle: FlushbarStyle.GROUNDED,
-      backgroundColor:
-          PHelperFunction.isDarkMode(context)
-              ? PAppColor.lightBlackColor
-              : PAppColor.whiteColor,
+      backgroundColor: PHelperFunction.isDarkMode(context)
+          ? PAppColor.lightBlackColor
+          : PAppColor.whiteColor,
       icon: Assets.icons.warningIcon.svg(color: PAppColor.warning700),
       // leftBarIndicatorColor: PAppColor.errorColor,
       title: title,
       padding: EdgeInsets.all(PAppSize.s20),
       titleSize: PAppSize.s16,
-      titleColor:
-          PHelperFunction.isDarkMode(context)
-              ? PAppColor.whiteColor
-              : PAppColor.warning700,
-      messageColor:
-          PHelperFunction.isDarkMode(context)
-              ? PAppColor.whiteColor
-              : PAppColor.warning700,
+      titleColor: PHelperFunction.isDarkMode(context)
+          ? PAppColor.whiteColor
+          : PAppColor.warning700,
+      messageColor: PHelperFunction.isDarkMode(context)
+          ? PAppColor.whiteColor
+          : PAppColor.warning700,
       message: message,
       duration: const Duration(milliseconds: PAppSize.s4000),
     ).show(context);
@@ -115,23 +106,20 @@ class PPopupDialog {
     Flushbar(
       flushbarPosition: FlushbarPosition.TOP,
       flushbarStyle: FlushbarStyle.GROUNDED,
-      backgroundColor:
-          PHelperFunction.isDarkMode(context)
-              ? PAppColor.lightBlackColor
-              : PAppColor.whiteColor,
+      backgroundColor: PHelperFunction.isDarkMode(context)
+          ? PAppColor.lightBlackColor
+          : PAppColor.whiteColor,
       icon: Assets.icons.warningIcon.svg(color: PAppColor.info700),
       // leftBarIndicatorColor: PAppColor.errorColor,
       title: title,
       padding: EdgeInsets.all(PAppSize.s20),
       titleSize: PAppSize.s16,
-      titleColor:
-          PHelperFunction.isDarkMode(context)
-              ? PAppColor.whiteColor
-              : PAppColor.info700,
-      messageColor:
-          PHelperFunction.isDarkMode(context)
-              ? PAppColor.whiteColor
-              : PAppColor.info700,
+      titleColor: PHelperFunction.isDarkMode(context)
+          ? PAppColor.whiteColor
+          : PAppColor.info700,
+      messageColor: PHelperFunction.isDarkMode(context)
+          ? PAppColor.whiteColor
+          : PAppColor.info700,
       message: message,
       duration: const Duration(milliseconds: PAppSize.s4000),
     ).show(context);

@@ -26,7 +26,9 @@ class PPasswordCheckerWidget extends StatelessWidget {
           label,
           style: Theme.of(context).textTheme.bodyLarge?.copyWith(
             fontWeight: FontWeight.w600,
-            color: PAppColor.text200,
+            color: PHelperFunction.isDarkMode(context)
+                ? PAppColor.text200
+                : PAppColor.text300,
             fontSize: PAppSize.s12,
           ),
         ),

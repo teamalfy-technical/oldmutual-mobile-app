@@ -65,7 +65,9 @@ class _PCustomPasswordTextFieldState extends State<PCustomPasswordTextField> {
       onChanged: widget.onChanged,
       autovalidateMode: widget.autovalidateMode,
       style: TextStyle(
-        color: PAppColor.whiteColor,
+        color: PHelperFunction.isDarkMode(context)
+            ? PAppColor.whiteColor
+            : PAppColor.text500,
         fontWeight: FontWeight.w600,
       ),
       decoration: InputDecoration(
@@ -99,8 +101,16 @@ class _PCustomPasswordTextFieldState extends State<PCustomPasswordTextField> {
             IconButton(
               onPressed: widget.onObscureChanged,
               icon: widget.obscure
-                  ? Assets.icons.visibilityOff.svg()
-                  : Assets.icons.visibilityOn.svg(),
+                  ? Assets.icons.visibilityOff.svg(
+                      color: PHelperFunction.isDarkMode(context)
+                          ? PAppColor.whiteColor
+                          : PAppColor.text300,
+                    )
+                  : Assets.icons.visibilityOn.svg(
+                      color: PHelperFunction.isDarkMode(context)
+                          ? PAppColor.whiteColor
+                          : PAppColor.text300,
+                    ),
             ),
         // hintText: hintText,
       ),

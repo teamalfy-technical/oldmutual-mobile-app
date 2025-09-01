@@ -41,8 +41,8 @@ class AuthDsImpl implements AuthDs {
       final res = await apiService.callService(
         requestType: RequestType.post,
         payload: payload,
-        endPoint: Env.selfServiceForgotPassword,
-        client: DioClient(baseUrl: Env.selfServiceBaseUrl),
+        endPoint: Env.forgotPassword,
+        // client: DioClient(baseUrl: Env.selfServiceBaseUrl),
       );
       return ApiResponse<List<Message>>.fromJson(
         res,
@@ -64,8 +64,8 @@ class AuthDsImpl implements AuthDs {
       final res = await apiService.callService(
         requestType: RequestType.post,
         payload: payload,
-        endPoint: Env.verifyForgotPasswordOTP,
-        client: DioClient(baseUrl: Env.selfServiceBaseUrl),
+        endPoint: Env.verifyResetOtp,
+        // client: DioClient(baseUrl: Env.selfServiceBaseUrl),
       );
       return ApiResponse<Member>.fromJson(res, (data) => Member.fromJson(data));
     });
@@ -81,16 +81,13 @@ class AuthDsImpl implements AuthDs {
         'password': password,
         'c_password': confirmPassword,
       });
-      final updatedBaseUrl = Env.selfServiceBaseUrl.replaceFirst(
-        '/self-service',
-        '',
-      );
+
       // pensionAppLogger.e(updatedBaseUrl);
       final res = await apiService.callService(
         requestType: RequestType.post,
         payload: payload,
         endPoint: Env.resetPassword,
-        client: DioClient(baseUrl: updatedBaseUrl),
+        // client: DioClient(baseUrl: updatedBaseUrl),
       );
       return ApiResponse<List<Message>>.fromJson(
         res,
@@ -232,8 +229,8 @@ class AuthDsImpl implements AuthDs {
       final res = await apiService.callService(
         requestType: RequestType.post,
         payload: payload,
-        endPoint: Env.selfServiceCreateAccount,
-        client: DioClient(baseUrl: Env.selfServiceBaseUrl),
+        endPoint: Env.createAccount,
+        // client: DioClient(baseUrl: Env.selfServiceBaseUrl),
       );
       return ApiResponse<List<Message>>.fromJson(
         res,
@@ -247,8 +244,8 @@ class AuthDsImpl implements AuthDs {
     return await asyncFunctionWrapper.handleAsyncNetworkCall(() async {
       final res = await apiService.callService(
         requestType: RequestType.post,
-        endPoint: '${Env.selfServiceResendOtp}/$phone',
-        client: DioClient(baseUrl: Env.selfServiceBaseUrl),
+        endPoint: '${Env.resendOtp}/$phone',
+        // client: DioClient(baseUrl: Env.selfServiceBaseUrl),
       );
       return ApiResponse<List<Message>>.fromJson(
         res,
@@ -270,8 +267,8 @@ class AuthDsImpl implements AuthDs {
       final res = await apiService.callService(
         requestType: RequestType.post,
         payload: payload,
-        endPoint: Env.selfServiceLogin,
-        client: DioClient(baseUrl: Env.selfServiceBaseUrl),
+        endPoint: Env.login,
+        // client: DioClient(baseUrl: Env.selfServiceBaseUrl),
       );
       return ApiResponse<Member>.fromJson(res, (data) => Member.fromJson(data));
     });
@@ -286,9 +283,13 @@ class AuthDsImpl implements AuthDs {
       final res = await apiService.callService(
         requestType: RequestType.post,
         payload: payload,
-        endPoint: Env.selfServiceVerifyGhanaCard,
-        client: DioClient(baseUrl: Env.selfServiceBaseUrl),
+        endPoint: Env.verifyGhanaCard,
+        // client: DioClient(baseUrl: Env.selfServiceBaseUrl),
       );
+      // return ApiResponse<VerificationResponse>.fromJson(
+      //   res,
+      //   (data) => VerificationResponse.fromJson(data),
+      // );
       return ApiResponse<String>.fromJson(res, (data) => data);
     });
   }
@@ -303,13 +304,29 @@ class AuthDsImpl implements AuthDs {
       final res = await apiService.callService(
         requestType: RequestType.post,
         payload: payload,
-        endPoint: Env.selfServiceVerifyOtp,
-        client: DioClient(baseUrl: Env.selfServiceBaseUrl),
+        endPoint: Env.verifyOtp,
+        // client: DioClient(baseUrl: Env.selfServiceBaseUrl),
       );
       return ApiResponse<List<Message>>.fromJson(
         res,
         (data) => (data as List).map((e) => Message.fromJson(e)).toList(),
       );
+    });
+  }
+
+  @override
+  Future<ApiResponse<String>> checkCardVerificationStatus({
+    required String sessionId,
+  }) async {
+    return await asyncFunctionWrapper.handleAsyncNetworkCall(() async {
+      final payload = dio.FormData.fromMap({'session_id': sessionId});
+      final res = await apiService.callService(
+        requestType: RequestType.post,
+        payload: payload,
+        endPoint: Env.checkGhanaCardVerificationStatus,
+        // client: DioClient(baseUrl: Env.selfServiceBaseUrl),
+      );
+      return ApiResponse<String>.fromJson(res, (data) => data['status']);
     });
   }
 }

@@ -30,7 +30,10 @@ class LivenessInstructionWidget extends StatelessWidget {
           desc,
           softWrap: true,
           style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-            color: Color(0xFFE2E2E2),
+            color: PHelperFunction.isDarkMode(context)
+                ? Color(0xFFE2E2E2)
+                : PAppColor.textColorDark,
+
             fontSize: PAppSize.s12,
           ),
         ),

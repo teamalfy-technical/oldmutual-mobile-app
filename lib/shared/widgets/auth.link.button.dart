@@ -6,6 +6,7 @@ class PAuthLinkButton extends StatelessWidget {
   final String title;
   final String subtitle;
   final double fontSize;
+  final Color? titleColor;
   final Color? subtitleColor;
   final Function()? onTap;
   const PAuthLinkButton({
@@ -15,6 +16,7 @@ class PAuthLinkButton extends StatelessWidget {
     this.subtitleColor,
     this.fontSize = PAppSize.s14,
     this.onTap,
+    this.titleColor,
   });
 
   @override
@@ -25,7 +27,8 @@ class PAuthLinkButton extends StatelessWidget {
         text: title,
         style: Theme.of(context).textTheme.bodyMedium?.copyWith(
           fontWeight: FontWeight.w600,
-          color: Color(0xFFCCCCCC),
+          color: titleColor ?? Color(0xFFCCCCCC),
+
           fontSize: fontSize,
         ),
         children: [
