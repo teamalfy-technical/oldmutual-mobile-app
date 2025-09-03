@@ -27,8 +27,11 @@ class Environment {
       case "com.oldmutual.pensions.app.dev":
         _current = EnvironmentType.dev;
         break;
-      default:
+      case "com.oldmutual.pensions.app":
         _current = EnvironmentType.prod;
+        break;
+      default:
+        _current = EnvironmentType.dev;
     }
     return _current!;
   }

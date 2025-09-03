@@ -42,7 +42,6 @@ class PVerifyOTPPage extends StatelessWidget {
                           'contact': isPhone(ctrl.maskedValue.value)
                               ? 'phone_number'.tr.toLowerCase()
                               : 'email_address'.tr.toLowerCase(),
-
                           'value': ctrl.maskedValue.value,
                         }),
                         textAlign: TextAlign.start,
@@ -64,9 +63,7 @@ class PVerifyOTPPage extends StatelessWidget {
                       ),
                       PAppSize.s3.verticalSpace,
                       Text(
-                        'one_time_pin'.trParams({
-                          'email': ctrl.maskedValue.value,
-                        }),
+                        'one_time_pin'.tr,
                         textAlign: TextAlign.start,
                         style: Theme.of(context).textTheme.bodyLarge?.copyWith(
                           fontSize: PAppSize.s14,

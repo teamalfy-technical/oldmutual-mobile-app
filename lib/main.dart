@@ -38,6 +38,7 @@ Future<void> initDependencies() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Env.init();
   final currentEnv = await Environment.current();
+  pensionAppLogger.e("Connecting to ${currentEnv.name}");
   pensionAppLogger.e("Connecting to ${currentEnv.apiBaseUrl}");
   await GetStorage.init();
   //🔐 Initialize Firebase first
