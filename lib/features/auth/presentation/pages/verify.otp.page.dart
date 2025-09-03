@@ -12,6 +12,15 @@ class PVerifyOTPPage extends StatelessWidget {
   final ctrl = Get.find<PAuthVm>();
   final timerCtrl = Get.put(PTimerVm());
 
+  bool isEmail(String value) {
+    return value.contains('@') && value.contains('.');
+  }
+
+  bool isPhone(String value) {
+    final phoneRegExp = RegExp(r'^\d[\d*]+$');
+    return phoneRegExp.hasMatch(value);
+  }
+
   @override
   Widget build(BuildContext context) {
     timerCtrl.startCountdown();
@@ -30,7 +39,11 @@ class PVerifyOTPPage extends StatelessWidget {
                       PAppSize.s20.verticalSpace,
                       Text(
                         'verify_phone_number_hint'.trParams({
-                          'email': ctrl.maskedValue.value,
+                          'contact': isPhone(ctrl.maskedValue.value)
+                              ? 'phone_number'.tr.toLowerCase()
+                              : 'email_address'.tr.toLowerCase(),
+
+                          'value': ctrl.maskedValue.value,
                         }),
                         textAlign: TextAlign.start,
                         style: Theme.of(context).textTheme.bodyLarge?.copyWith(

@@ -33,7 +33,7 @@ class AppTranslations extends Translations {
       'login_with_different_account': 'Login with a different account',
       'verify_phone_number': 'Enter your One Time Pin',
       'verify_phone_number_hint':
-          'We\'ll send a One-time Pin(OTP) to the email @email.',
+          'We\'ll send a One-time Pin(OTP) to the @contact @value.',
       'one_time_pin': 'One-Time Pin',
       'resend_in': 'Resend in @time',
       'did_not_receive_code': 'Didn\'t receive the OTP?',

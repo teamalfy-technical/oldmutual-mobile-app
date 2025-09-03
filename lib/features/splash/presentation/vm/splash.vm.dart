@@ -11,7 +11,7 @@ class PSplashVm extends GetxController {
 
   @override
   void onInit() {
-    // showSplashPage();
+    showSplashPage();
     super.onInit();
   }
 
