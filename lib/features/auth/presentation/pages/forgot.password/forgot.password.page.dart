@@ -43,9 +43,9 @@ class PForgotPasswordPage extends StatelessWidget {
                         ),
                         PAppSize.s32.verticalSpace,
                         PCustomTextField(
-                          labelText: 'email'.tr,
-                          controller: ctrl.emailTEC,
-                          // validator: PValidator.validateEmail,
+                          labelText: 'email_or_phone'.tr,
+                          controller: ctrl.emailOrPhoneTEC,
+                          validator: PValidator.validateEmailOrPhone,
                         ),
 
                         PAppSize.s25.verticalSpace,

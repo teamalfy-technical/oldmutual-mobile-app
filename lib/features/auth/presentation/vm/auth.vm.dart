@@ -11,7 +11,7 @@ class PAuthVm extends GetxController {
   static PAuthVm get instance => Get.find();
 
   // final memberIDTEC = TextEditingController();
-  final emailTEC = TextEditingController();
+  final emailOrPhoneTEC = TextEditingController();
   final phoneTEC = TextEditingController();
   final ghanaCardNumberTEC = TextEditingController();
   final passwordTEC = TextEditingController();
@@ -150,7 +150,8 @@ class PAuthVm extends GetxController {
     // pensionAppLogger.e(deviceToken);
     loading(LoadingState.loading);
 
-    final email = PSecureStorage().getUserEmail() ?? emailTEC.text.trim();
+    final email =
+        PSecureStorage().getUserEmail() ?? emailOrPhoneTEC.text.trim();
     final password = passwordTEC.text.trim();
 
     final result = await authService.signIn(
@@ -197,7 +198,7 @@ class PAuthVm extends GetxController {
 
     final result = await authService.signUp(
       phone: phoneTEC.text.trim(),
-      email: emailTEC.text.trim(),
+      email: emailOrPhoneTEC.text.trim(),
       password: passwordTEC.text.trim(),
       confirmPassword: confirmPasswordTEC.text.trim(),
       verificationToken: verificationToken.value,
@@ -226,7 +227,7 @@ class PAuthVm extends GetxController {
   /// @params => isSignup
   Future<void> verifyOTP({required String pin, required bool isSignup}) async {
     String phone = phoneTEC.text.trim();
-    String email = emailTEC.text.trim();
+    String email = emailOrPhoneTEC.text.trim();
 
     if (otpcode.isEmpty) {
       PPopupDialog(context).errorMessage(
@@ -369,7 +370,7 @@ class PAuthVm extends GetxController {
 
   /// [Function] Forgot password to send password reset link
   Future<void> forgotPassword() async {
-    String emailOrPhone = emailTEC.text.trim();
+    String emailOrPhone = emailOrPhoneTEC.text.trim();
     maskedValue.value = emailOrPhone.isNumericOnly
         ? PHelperFunction.maskPhoneNumber(emailOrPhone)
         : PHelperFunction.maskEmailDomain(emailOrPhone);
@@ -440,7 +441,7 @@ class PAuthVm extends GetxController {
 
   clearFields() {
     phoneTEC.clear();
-    emailTEC.clear();
+    emailOrPhoneTEC.clear();
     passwordTEC.clear();
     confirmPasswordTEC.clear();
   }

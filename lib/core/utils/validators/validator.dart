@@ -69,11 +69,12 @@ class PValidator {
     if (value == null || value.isEmpty) {
       return 'Email or phone cannot be empty.';
     }
-    final emailRegExp = RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$');
-    final phoneRegExp = RegExp(r'^\d{10}$');
-    if (!emailRegExp.hasMatch(value) && !phoneRegExp.hasMatch(value)) {
-      return 'Invalid email or phone number';
+    final emailRegex = RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$');
+    final phoneRegex = RegExp(r'^\d{10}$');
+    if (!emailRegex.hasMatch(value) && !phoneRegex.hasMatch(value)) {
+      return 'Enter a valid email or phone number';
     }
+
     return null;
   }
 

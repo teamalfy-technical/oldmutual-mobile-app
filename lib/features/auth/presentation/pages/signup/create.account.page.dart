@@ -68,7 +68,7 @@ class _PCreateAccountPageState extends State<PCreateAccountPage> {
                       PAppSize.s34.verticalSpace,
                       PCustomTextField(
                         // labelText: 'password'.tr,
-                        controller: ctrl.emailTEC,
+                        controller: ctrl.emailOrPhoneTEC,
                         labelText: 'hint_email'.tr,
                         textInputType: TextInputType.emailAddress,
                         validator: PValidator.validateEmail,

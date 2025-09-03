@@ -186,6 +186,7 @@ class AppTranslations extends Translations {
       'phone': 'Phone',
       'success': 'Success',
       'error': 'Error',
+      'email_or_phone': 'Email or Phone',
       'action_required': 'Action Required',
       'create_new': 'Create New',
       'password_changed_title': 'Password Changed Successfully',

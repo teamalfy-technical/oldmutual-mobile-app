@@ -11,8 +11,7 @@ class PSplashVm extends GetxController {
 
   @override
   void onInit() {
-    pensionAppLogger.i('Splash vm called');
-    showSplashPage();
+    // showSplashPage();
     super.onInit();
   }
 

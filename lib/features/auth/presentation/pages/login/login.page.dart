@@ -97,10 +97,10 @@ class _PLoginPageState extends State<PLoginPage>
                         PAppSize.s34.verticalSpace,
                         PCustomTextField(
                           // labelText: 'password'.tr,
-                          controller: ctrl.emailTEC,
-                          labelText: 'hint_email'.tr,
-                          textInputType: TextInputType.emailAddress,
-                          validator: PValidator.validateEmail,
+                          controller: ctrl.emailOrPhoneTEC,
+                          labelText: 'email_or_phone'.tr,
+                          textInputType: TextInputType.text,
+                          validator: PValidator.validateEmailOrPhone,
                         ),
                         PAppSize.s24.verticalSpace,
                         PCustomPasswordTextField(
