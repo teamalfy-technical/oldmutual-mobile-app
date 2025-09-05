@@ -48,6 +48,9 @@ class $AssetsFontsGen {
 class $AssetsIconsGen {
   const $AssetsIconsGen();
 
+  /// File path: assets/icons/Insure.svg
+  SvgGenImage get insure => const SvgGenImage('assets/icons/Insure.svg');
+
   /// File path: assets/icons/add.icon.svg
   SvgGenImage get addIcon => const SvgGenImage('assets/icons/add.icon.svg');
 
@@ -65,6 +68,10 @@ class $AssetsIconsGen {
 
   /// File path: assets/icons/arrow.icon.svg
   SvgGenImage get arrowIcon => const SvgGenImage('assets/icons/arrow.icon.svg');
+
+  /// File path: assets/icons/arrow.right.black.svg
+  SvgGenImage get arrowRightBlack =>
+      const SvgGenImage('assets/icons/arrow.right.black.svg');
 
   /// File path: assets/icons/benchmark.icon.svg
   SvgGenImage get benchmarkIcon =>
@@ -110,6 +117,9 @@ class $AssetsIconsGen {
   /// File path: assets/icons/home.icon.svg
   SvgGenImage get homeIcon => const SvgGenImage('assets/icons/home.icon.svg');
 
+  /// File path: assets/icons/invest.svg
+  SvgGenImage get invest => const SvgGenImage('assets/icons/invest.svg');
+
   /// File path: assets/icons/keyboard.arrow.down.svg
   SvgGenImage get keyboardArrowDown =>
       const SvgGenImage('assets/icons/keyboard.arrow.down.svg');
@@ -125,16 +135,16 @@ class $AssetsIconsGen {
   /// File path: assets/icons/lock.icon.svg
   SvgGenImage get lockIcon => const SvgGenImage('assets/icons/lock.icon.svg');
 
+  /// File path: assets/icons/manage.icon.svg
+  SvgGenImage get manageIcon =>
+      const SvgGenImage('assets/icons/manage.icon.svg');
+
   /// File path: assets/icons/member.icon.svg
   SvgGenImage get memberIcon =>
       const SvgGenImage('assets/icons/member.icon.svg');
 
   /// File path: assets/icons/more.icon.svg
   SvgGenImage get moreIcon => const SvgGenImage('assets/icons/more.icon.svg');
-
-  /// File path: assets/icons/notification.count.icon.svg
-  SvgGenImage get notificationCountIcon =>
-      const SvgGenImage('assets/icons/notification.count.icon.svg');
 
   /// File path: assets/icons/notification.green.icon.svg
   SvgGenImage get notificationGreenIcon =>
@@ -147,9 +157,8 @@ class $AssetsIconsGen {
   /// File path: assets/icons/phone.icon.svg
   SvgGenImage get phoneIcon => const SvgGenImage('assets/icons/phone.icon.svg');
 
-  /// File path: assets/icons/profile.icon.svg
-  SvgGenImage get profileIcon =>
-      const SvgGenImage('assets/icons/profile.icon.svg');
+  /// File path: assets/icons/pictogram.svg
+  SvgGenImage get pictogram => const SvgGenImage('assets/icons/pictogram.svg');
 
   /// File path: assets/icons/selfie.svg
   SvgGenImage get selfie => const SvgGenImage('assets/icons/selfie.svg');
@@ -189,6 +198,9 @@ class $AssetsIconsGen {
   SvgGenImage get visibilityOn =>
       const SvgGenImage('assets/icons/visibility.on.svg');
 
+  /// File path: assets/icons/wallet.svg
+  SvgGenImage get wallet => const SvgGenImage('assets/icons/wallet.svg');
+
   /// File path: assets/icons/warning.green.icon.svg
   SvgGenImage get warningGreenIcon =>
       const SvgGenImage('assets/icons/warning.green.icon.svg');
@@ -203,11 +215,13 @@ class $AssetsIconsGen {
 
   /// List of all assets
   List<SvgGenImage> get values => [
+    insure,
     addIcon,
     anchorIcon,
     arrowDownIos,
     arrowForwardIos,
     arrowIcon,
+    arrowRightBlack,
     benchmarkIcon,
     bottomLogoBanner,
     brightness,
@@ -221,17 +235,18 @@ class $AssetsIconsGen {
     fingerprint,
     ghanaFlag,
     homeIcon,
+    invest,
     keyboardArrowDown,
     keyboardArrowRight,
     linkBtnIcon,
     lockIcon,
+    manageIcon,
     memberIcon,
     moreIcon,
-    notificationCountIcon,
     notificationGreenIcon,
     notificationIcon,
     phoneIcon,
-    profileIcon,
+    pictogram,
     selfie,
     settingsIcon,
     shield,
@@ -242,6 +257,7 @@ class $AssetsIconsGen {
     userProfileIcon,
     visibilityOff,
     visibilityOn,
+    wallet,
     warningGreenIcon,
     warningIcon,
     warningRedIcon,
@@ -259,6 +275,18 @@ class $AssetsImagesGen {
   AssetGenImage get dashboardBg =>
       const AssetGenImage('assets/images/dashboard.bg.png');
 
+  /// File path: assets/images/education.plan.img.png
+  AssetGenImage get educationPlanImg =>
+      const AssetGenImage('assets/images/education.plan.img.png');
+
+  /// File path: assets/images/features.img.png
+  AssetGenImage get featuresImg =>
+      const AssetGenImage('assets/images/features.img.png');
+
+  /// File path: assets/images/forgot.details.img.png
+  AssetGenImage get forgotDetailsImg =>
+      const AssetGenImage('assets/images/forgot.details.img.png');
+
   /// File path: assets/images/light.blur.bg.png
   AssetGenImage get lightBlurBg =>
       const AssetGenImage('assets/images/light.blur.bg.png');
@@ -266,6 +294,10 @@ class $AssetsImagesGen {
   /// File path: assets/images/placeholder.img.png
   AssetGenImage get placeholderImg =>
       const AssetGenImage('assets/images/placeholder.img.png');
+
+  /// File path: assets/images/retirement.img.png
+  AssetGenImage get retirementImg =>
+      const AssetGenImage('assets/images/retirement.img.png');
 
   /// File path: assets/images/slide.four.png
   AssetGenImage get slideFour =>
@@ -283,6 +315,10 @@ class $AssetsImagesGen {
   AssetGenImage get slideTwo =>
       const AssetGenImage('assets/images/slide.two.png');
 
+  /// File path: assets/images/special.investment.img.png
+  AssetGenImage get specialInvestmentImg =>
+      const AssetGenImage('assets/images/special.investment.img.png');
+
   /// File path: assets/images/splash.img.png
   AssetGenImage get splashImg =>
       const AssetGenImage('assets/images/splash.img.png');
@@ -291,18 +327,33 @@ class $AssetsImagesGen {
   AssetGenImage get splashOverlayImg =>
       const AssetGenImage('assets/images/splash.overlay.img.png');
 
+  /// File path: assets/images/transition.plus.img.png
+  AssetGenImage get transitionPlusImg =>
+      const AssetGenImage('assets/images/transition.plus.img.png');
+
+  /// File path: assets/images/travel.insurance.img.png
+  AssetGenImage get travelInsuranceImg =>
+      const AssetGenImage('assets/images/travel.insurance.img.png');
+
   /// List of all assets
   List<AssetGenImage> get values => [
     darkBlurBg,
     dashboardBg,
+    educationPlanImg,
+    featuresImg,
+    forgotDetailsImg,
     lightBlurBg,
     placeholderImg,
+    retirementImg,
     slideFour,
     slideOne,
     slideThree,
     slideTwo,
+    specialInvestmentImg,
     splashImg,
     splashOverlayImg,
+    transitionPlusImg,
+    travelInsuranceImg,
   ];
 }
 

@@ -8,9 +8,8 @@ import 'package:oldmutual_pensions_app/features/auth/presentation/pages/verify.o
 import 'package:oldmutual_pensions_app/features/beneficiary/presentation/pages/add.beneficiary.page.dart';
 import 'package:oldmutual_pensions_app/features/beneficiary/presentation/pages/beneficiary.page.dart';
 import 'package:oldmutual_pensions_app/features/contribution.history/presentation/pages/contribution.history.page.dart';
-import 'package:oldmutual_pensions_app/features/dashboard/presentation/pages/dashboard.page.dart';
 import 'package:oldmutual_pensions_app/features/future.value.calculator/future.value.calculator.dart';
-import 'package:oldmutual_pensions_app/features/home/presentation/pages/home.page.dart';
+import 'package:oldmutual_pensions_app/features/home/home.dart';
 import 'package:oldmutual_pensions_app/features/notification/notification.dart';
 import 'package:oldmutual_pensions_app/features/redemptions/presentation/pages/porting.page.dart';
 import 'package:oldmutual_pensions_app/features/redemptions/redemption.dart';
@@ -122,7 +121,7 @@ class AppPages {
     ),
     GetPage(
       name: _Paths.homePage,
-      page: () => PHomePage(),
+      page: () => PHomePageOld(),
       transition: Transition.circularReveal,
       transitionDuration: const Duration(milliseconds: PAppSize.s700),
     ),

@@ -6,8 +6,8 @@ import 'package:oldmutual_pensions_app/features/dashboard/dashboard.dart';
 import 'package:oldmutual_pensions_app/gen/assets.gen.dart';
 import 'package:oldmutual_pensions_app/shared/shared.dart';
 
-class PDashboardPage extends StatelessWidget {
-  PDashboardPage({super.key});
+class PDashboardPage1 extends StatelessWidget {
+  PDashboardPage1({super.key});
 
   final ctrl = Get.put(PDashboardVm());
 
@@ -64,9 +64,9 @@ class PDashboardPage extends StatelessWidget {
               () => Positioned(
                 top:
                     (ctrl.schemes.isEmpty &&
-                            ctrl.loading.value == LoadingState.completed)
-                        ? PDeviceUtil.getDeviceHeight(context) * 0.45
-                        : PDeviceUtil.getDeviceHeight(context) * 0.22,
+                        ctrl.loading.value == LoadingState.completed)
+                    ? PDeviceUtil.getDeviceHeight(context) * 0.45
+                    : PDeviceUtil.getDeviceHeight(context) * 0.22,
                 // bottom: PDeviceUtil.getDeviceHeight(context) * 0.02,
                 left: PAppSize.s16,
                 right: PAppSize.s16,
@@ -74,51 +74,50 @@ class PDashboardPage extends StatelessWidget {
                 child: RefreshIndicator(
                   onRefresh: ctrl.getMemberSchemes,
                   color: PAppColor.primary,
-                  child:
-                      ctrl.loading.value == LoadingState.loading
-                          ? ListView.builder(
-                            shrinkWrap: true,
-                            itemCount: 5,
-                            itemBuilder: (context, index) {
-                              return PensionTierRedactWidget(
-                                loading: ctrl.loading.value,
-                              );
-                            },
-                          )
-                          : ctrl.schemes.isEmpty
-                          ? PEmptyStateWidget(message: 'no_results_found'.tr)
-                          : ListView.builder(
-                            itemCount: ctrl.schemes.length,
-                            shrinkWrap: true,
-                            itemBuilder: (context, index) {
-                              final scheme = ctrl.schemes[index];
-                              return PensionTierWidget(
-                                scheme: scheme,
-                                onTap: () {
-                                  // pensionAppLogger.e(scheme.toJson());
-                                  ctrl.getMemberSelectedScheme(
-                                    employerName: scheme.employerName ?? '',
-                                    employerNumber: scheme.employerNumber ?? '',
-                                    memberName: scheme.memberName ?? '',
-                                    memberNumber: scheme.memberNumber ?? '',
-                                    ssnitNumber: scheme.ssnitNumber ?? '',
-                                    masterScheme:
-                                        scheme.masterSchemeDescription ?? '',
-                                    schemeType: scheme.penTypeDescription ?? '',
-                                    email: scheme.email ?? '',
-                                    dob: scheme.dob ?? '',
-                                    dateJoined: scheme.dateJoined ?? '',
-                                    sex: scheme.sex ?? '',
-                                    nationality: scheme.nationality ?? '',
-                                  );
-                                  // PHelperFunction.switchScreen(
-                                  //   destination: Routes.homePage,
-                                  //   replace: false,
-                                  // );
-                                },
-                              );
-                            },
-                          ),
+                  child: ctrl.loading.value == LoadingState.loading
+                      ? ListView.builder(
+                          shrinkWrap: true,
+                          itemCount: 5,
+                          itemBuilder: (context, index) {
+                            return PensionTierRedactWidget(
+                              loading: ctrl.loading.value,
+                            );
+                          },
+                        )
+                      : ctrl.schemes.isEmpty
+                      ? PEmptyStateWidget(message: 'no_results_found'.tr)
+                      : ListView.builder(
+                          itemCount: ctrl.schemes.length,
+                          shrinkWrap: true,
+                          itemBuilder: (context, index) {
+                            final scheme = ctrl.schemes[index];
+                            return PensionTierWidget(
+                              scheme: scheme,
+                              onTap: () {
+                                // pensionAppLogger.e(scheme.toJson());
+                                ctrl.getMemberSelectedScheme(
+                                  employerName: scheme.employerName ?? '',
+                                  employerNumber: scheme.employerNumber ?? '',
+                                  memberName: scheme.memberName ?? '',
+                                  memberNumber: scheme.memberNumber ?? '',
+                                  ssnitNumber: scheme.ssnitNumber ?? '',
+                                  masterScheme:
+                                      scheme.masterSchemeDescription ?? '',
+                                  schemeType: scheme.penTypeDescription ?? '',
+                                  email: scheme.email ?? '',
+                                  dob: scheme.dob ?? '',
+                                  dateJoined: scheme.dateJoined ?? '',
+                                  sex: scheme.sex ?? '',
+                                  nationality: scheme.nationality ?? '',
+                                );
+                                // PHelperFunction.switchScreen(
+                                //   destination: Routes.homePage,
+                                //   replace: false,
+                                // );
+                              },
+                            );
+                          },
+                        ),
                 ),
               ),
             ),

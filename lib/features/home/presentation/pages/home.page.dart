@@ -1,96 +1,298 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:oldmutual_pensions_app/core/utils/utils.dart';
-import 'package:oldmutual_pensions_app/features/factsheet/factsheet.dart';
-import 'package:oldmutual_pensions_app/features/home/presentation/pages/home.view.dart';
-import 'package:oldmutual_pensions_app/features/home/presentation/vm/home.vm.dart';
-import 'package:oldmutual_pensions_app/features/more.services/presentation/pages/more.services.page.dart';
-import 'package:oldmutual_pensions_app/features/notification/notification.dart';
-import 'package:oldmutual_pensions_app/features/profile/profile.dart';
+import 'package:oldmutual_pensions_app/features/home/home.dart';
 import 'package:oldmutual_pensions_app/gen/assets.gen.dart';
-import 'package:oldmutual_pensions_app/shared/widgets/annotated.region.dart';
 
 class PHomePage extends StatelessWidget {
   PHomePage({super.key});
 
-  final ctrl = Get.put(PHomeVm());
-
-  final List<Widget> _pages = [
-    PHomeView(),
-    PFactSheetPage(),
-    PNotificationPage(),
-    PProfilePage(),
-    PMoreServicesPage(),
-  ];
+  final vm = Get.put(PHomeVm());
 
   @override
   Widget build(BuildContext context) {
-    return Obx(
-      () => Scaffold(
-        backgroundColor: PAppColor.fillColor,
-        bottomNavigationBar: BottomNavigationBar(
-          currentIndex: ctrl.currentIndex.value,
-          onTap: ctrl.onPageChanged,
-          elevation: PAppSize.s2,
-          backgroundColor:
-              PHelperFunction.isDarkMode(context)
-                  ? PAppColor.blackColor
-                  : PAppColor.whiteColor,
-          showSelectedLabels: true,
-          showUnselectedLabels: true,
-          selectedItemColor: PAppColor.blackColor,
-          selectedIconTheme: IconThemeData(color: PAppColor.primary),
-          selectedFontSize: PAppSize.s10,
-          unselectedItemColor: PAppColor.blackColor,
-          unselectedIconTheme: IconThemeData(color: PAppColor.blackColor),
-          unselectedFontSize: PAppSize.s10,
-          type: BottomNavigationBarType.fixed,
-          items: [
-            BottomNavigationBarItem(
-              icon: Assets.icons.homeIcon.svg(
-                color: ctrl.currentIndex.value == 0 ? PAppColor.primary : null,
-              ),
-              label: 'home'.tr,
+    return Scaffold(
+      backgroundColor: PHelperFunction.isDarkMode(context)
+          ? PAppColor.darkBgColor
+          : PAppColor.fillColor,
+      appBar: AppBar(
+        // title: Text('Hi ${PSecureStorage().getAuthResponse()?.name}'),
+        title: Text('Hi Bongani'),
+        actions: [
+          IconButton(
+            onPressed: () {},
+            icon: Assets.icons.notificationIcon.svg(
+              height: PAppSize.s28,
+              color: PHelperFunction.isDarkMode(context)
+                  ? PAppColor.whiteColor
+                  : PAppColor.cardDarkColor,
             ),
-            BottomNavigationBarItem(
-              icon: Assets.icons.factsheetIcon.svg(
-                color: ctrl.currentIndex.value == 1 ? PAppColor.primary : null,
-              ),
-              label: 'factsheet'.tr,
-            ),
-            BottomNavigationBarItem(
-              icon:
-                  Get.find<PNotificationVM>().unreadCount.value > 0
-                      ? Assets.icons.notificationCountIcon.svg(
-                        color:
-                            ctrl.currentIndex.value == 2
-                                ? PAppColor.primary
-                                : null,
-                      )
-                      : Assets.icons.notificationIcon.svg(
-                        color:
-                            ctrl.currentIndex.value == 2
-                                ? PAppColor.primary
-                                : null,
-                      ),
-              label: 'notification'.tr,
-            ),
-            BottomNavigationBarItem(
-              icon: Assets.icons.profileIcon.svg(
-                color: ctrl.currentIndex.value == 3 ? PAppColor.primary : null,
-              ),
-              label: 'profile'.tr,
-            ),
-            BottomNavigationBarItem(
-              icon: Assets.icons.moreIcon.svg(
-                color: ctrl.currentIndex.value == 4 ? PAppColor.primary : null,
-              ),
-              label: 'more'.tr,
-            ),
-          ],
-        ),
-        body: PAnnotatedRegion(child: _pages[ctrl.currentIndex.value]),
+          ),
+        ],
       ),
+      body: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          // Highlight options
+          Container(
+            padding: EdgeInsets.symmetric(vertical: PAppSize.s12),
+            decoration: BoxDecoration(
+              color: PHelperFunction.isDarkMode(context)
+                  ? PAppColor.cardDarkColor
+                  : PAppColor.whiteColor,
+            ),
+            child:
+                Row(
+                      children: List.generate(vm.highlights.length, (index) {
+                        return HighlightWidget(highlight: vm.highlights[index])
+                            .symmetric(horizontal: PAppSize.s16)
+                            .onPressed(onTap: vm.highlights[index].onTap);
+                      }),
+                    )
+                    .symmetric(horizontal: PAppSize.s16)
+                    .scrollable(scrollDirection: Axis.horizontal),
+          ),
+
+          //body
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                PAppSize.s8.verticalSpace,
+                // Available Balance
+                Text(
+                  'available_balance'.tr,
+                  textAlign: TextAlign.center,
+                  softWrap: true,
+                  style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                    fontSize: PAppSize.s13,
+                    fontWeight: FontWeight.w400,
+                  ),
+                ),
+                Text(
+                  '₵10 000.00',
+                  textAlign: TextAlign.center,
+                  softWrap: true,
+                  style: Theme.of(context).textTheme.headlineMedium?.copyWith(
+                    // fontSize: PAppSize.s12,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+
+                PAppSize.s2.verticalSpace,
+
+                Divider(
+                  color: PHelperFunction.isDarkMode(context)
+                      ? PAppColor.successLight
+                      : PAppColor.successDark,
+                  thickness: PAppSize.s4,
+                ),
+
+                PAppSize.s2.verticalSpace,
+
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    InvestmentWidget(
+                      title: 'total_investments'.tr,
+                      value: '₵20 839.13',
+                    ),
+                    InvestmentWidget(
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      title: 'total_cover'.tr,
+                      value: '₵112 460.61',
+                    ),
+                  ],
+                ),
+
+                PAppSize.s24.verticalSpace,
+
+                /// Products
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      'products'.tr,
+                      textAlign: TextAlign.center,
+                      softWrap: true,
+                      style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                        fontSize: PAppSize.s16,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                    Text(
+                      'see_all'.tr,
+                      textAlign: TextAlign.center,
+                      softWrap: true,
+                      style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                        fontSize: PAppSize.s16,
+                        color: PAppColor.primary,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                  ],
+                ),
+
+                PAppSize.s16.verticalSpace,
+
+                Expanded(
+                  child: ListView.builder(
+                    shrinkWrap: true,
+                    itemCount: 4,
+                    scrollDirection: Axis.horizontal,
+                    itemBuilder: (context, index) {
+                      return Container(
+                        padding: EdgeInsets.all(PAppSize.s22),
+                        margin: EdgeInsets.only(right: PAppSize.s20),
+                        width: PDeviceUtil.getDeviceWidth(context) * 0.65,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(PAppSize.s20),
+                          color: PHelperFunction.isDarkMode(context)
+                              ? PAppColor.darkAppBarColor
+                              : PAppColor.whiteColor,
+                        ),
+                        child: Column(
+                          children: [
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Expanded(
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        'Retail'.tr,
+                                        textAlign: TextAlign.center,
+                                        softWrap: true,
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .titleMedium
+                                            ?.copyWith(
+                                              fontSize: PAppSize.s16,
+                                              fontWeight: FontWeight.w600,
+                                            ),
+                                      ),
+                                      PAppSize.s2.verticalSpace,
+                                      Text(
+                                        'You have \n2 accounts',
+
+                                        softWrap: true,
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .titleMedium
+                                            ?.copyWith(
+                                              fontSize: PAppSize.s16,
+                                              fontWeight: FontWeight.w600,
+                                            ),
+                                      ),
+
+                                      PAppSize.s8.verticalSpace,
+
+                                      Assets.icons.wallet.svg(
+                                        color:
+                                            PHelperFunction.isDarkMode(context)
+                                            ? PAppColor.whiteColor
+                                            : PAppColor.blackColor,
+                                      ),
+
+                                      PAppSize.s8.verticalSpace,
+
+                                      Text(
+                                        'available_balance'.tr,
+                                        textAlign: TextAlign.center,
+                                        softWrap: true,
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .bodyLarge
+                                            ?.copyWith(
+                                              fontSize: PAppSize.s14,
+                                              fontWeight: FontWeight.w500,
+                                            ),
+                                      ),
+                                      Text(
+                                        '₵10 000.00',
+                                        textAlign: TextAlign.center,
+                                        softWrap: true,
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .headlineMedium
+                                            ?.copyWith(
+                                              // fontSize: PAppSize.s12,
+                                              fontWeight: FontWeight.w600,
+                                            ),
+                                      ),
+                                      PAppSize.s8.verticalSpace,
+                                    ],
+                                  ).scrollable(),
+                                ),
+                                Assets.icons.arrowRightBlack.svg(),
+                              ],
+                            ),
+                            SizedBox(
+                              width: double.infinity,
+                              child: Divider(
+                                color: PHelperFunction.isDarkMode(context)
+                                    ? PAppColor.successLight
+                                    : PAppColor.successDark,
+                                thickness: PAppSize.s4,
+                              ),
+                            ),
+                          ],
+                        ),
+                      );
+                    },
+                  ),
+                ),
+
+                (PDeviceUtil.getDeviceHeight(context) * 0.07).verticalSpace,
+              ],
+            ).symmetric(horizontal: PAppSize.s20, vertical: PAppSize.s20),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class InvestmentWidget extends StatelessWidget {
+  const InvestmentWidget({
+    super.key,
+    required this.title,
+    required this.value,
+    this.crossAxisAlignment = CrossAxisAlignment.start,
+  });
+
+  final String title;
+  final String value;
+  final CrossAxisAlignment crossAxisAlignment;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: crossAxisAlignment,
+      children: [
+        Text(
+          title,
+          textAlign: TextAlign.center,
+          softWrap: true,
+          style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+            fontSize: PAppSize.s13,
+            fontWeight: FontWeight.w400,
+          ),
+        ),
+        Text(
+          value,
+          textAlign: TextAlign.center,
+          softWrap: true,
+          style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+            fontSize: PAppSize.s15,
+            fontWeight: FontWeight.w400,
+          ),
+        ),
+      ],
     );
   }
 }

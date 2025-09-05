@@ -24,9 +24,9 @@ class ServiceLinkWidget extends StatelessWidget {
               context,
             ).textTheme.bodyLarge?.copyWith(color: PAppColor.textGrayColor),
           ),
-          Assets.icons.linkBtnIcon.svg().onPressed(onTap: onLinkTap),
+          Assets.icons.linkBtnIcon.svg(),
         ],
       ),
-    );
+    ).onPressed(onTap: onLinkTap, radius: BorderRadius.circular(PAppSize.s20));
   }
 }

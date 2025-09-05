@@ -115,21 +115,21 @@ class _PWebViewState extends State<PWebView> {
     );
   }
 
-  Future<void> checkVerificationStatus(context) async {
-    // final vm = Get.find<PAuthVm>();
-    // final checker = ApiStatusChecker(
-    //   sessionId: vm.verificationRes.value.sessionId ?? '',
-    // );
+  // Future<void> checkVerificationStatus(context) async {
+  // final vm = Get.find<PAuthVm>();
+  // final checker = ApiStatusChecker(
+  //   sessionId: vm.verificationRes.value.sessionId ?? '',
+  // );
 
-    // checker.statusStream.listen((success) {
-    //   if (success) {
-    //     pensionAppLogger.e(success);
-    //   }
-    //   print(success ? "API is UP ✅" : "API is DOWN ❌");
-    // });
+  // checker.statusStream.listen((success) {
+  //   if (success) {
+  //     pensionAppLogger.e(success);
+  //   }
+  //   print(success ? "API is UP ✅" : "API is DOWN ❌");
+  // });
 
-    // checker.start(context);
-  }
+  // checker.start(context);
+  // }
 
   Future<void> checkCallBackResponse() async {
     // Get the page content

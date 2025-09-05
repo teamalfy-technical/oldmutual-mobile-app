@@ -1,10 +1,10 @@
-# Pensions Mobile App
+# Old Mutual GH App
 
 ---
 
 ## Getting Started 🚀
 
-Pensions App is a digital platform that allows users to manage their retirement savings efficiently. It provides a secure and user-friendly interface for individuals to track their pension contributions, monitor investment growth, and plan for their future financial security.
+Old Mutual GH is a digital platform that allows users to manage their retirement savings efficiently. It provides a secure and user-friendly interface for individuals to track their pension contributions, monitor investment growth, and plan for their future financial security.
 
 ## Update generated files
 
@@ -51,7 +51,7 @@ lib/
 
 ## Commons Directory
 
-- Consist of all resusable animation, constant and other widgets used acrossed the app
+- Consist of all reusable animation, constant and other widgets used acrossed the app
 
 ## Env Directory
 
@@ -307,8 +307,8 @@ This document outlines the professional build process and deployment steps for d
 
 ### **2. Submit Build for Review**
 
-1. Archive `Pensions App` app using `Product > Archive`.
-2. Distribute `Pensions App` app:
+1. Archive `Old Mutual GH` app using `Product > Archive`.
+2. Distribute `Old Mutual GH` app:
    - Select **App Store Connect** > **Submit for Review**.
 3. Assign the uploaded build to the desired version in App Store Connect.
 4. Fill in necessary metadata and compliance information (e.g., age rating, export compliance).

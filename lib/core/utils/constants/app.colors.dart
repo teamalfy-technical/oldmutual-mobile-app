@@ -16,7 +16,7 @@ class PAppColor {
   static const Color greyColorShade100 = Color(0xFFf5f5f5);
 
   static const Color fillColor2 = Color(0xFFCCCCCC);
-  static const Color fillColor = Color(0xFFE9E9E9);
+  static const Color fillColor = Color(0xFFF2F2F2);
   static const Color orangeColor = Color(0xFFFF8C08);
   static const Color yellowColor = Color(0xFFFFDD1A);
 
@@ -27,6 +27,8 @@ class PAppColor {
   static const Color darkBgColor = Color(0xFF16141F);
   static const Color darkBorderColor = Color(0xFFB4B4B4);
   static const Color secondary500 = Color(0xFFC5C1D7);
+  static const Color cardDarkColor = Color(0xFF252133);
+
   static const Color secondary700 = Color(0xFFA8A2C3);
   static const Color secondary900 = Color(0xFFE2E0EB);
   static const Color textDisabledColor = Color(0xFFA7A7AC);
@@ -83,7 +85,7 @@ class PAppColor {
   static const Color hintTextColor = Color(0xFF747474);
 
   static const Color textColorLight = Color(0xFF1E1E1E);
-  static const Color textColorDark = Color(0xFF151515);
+  static const Color textColorDark = Color(0xFF000000);
 
   // Alert Colors
   static const Color alert50 = Color(0xFFFCEDF0);
@@ -107,6 +109,9 @@ class PAppColor {
   static const Color success300 = Color(0xFF62c288);
   static const Color success500 = Color(0xFF14a44d);
   static const Color success700 = Color(0xFF0e7437);
+
+  static const Color successDark = Color(0xFF306E2B);
+  static const Color successLight = Color(0xFF96D491);
 
   // Info Colors
   static const Color info50 = Color(0xFFefeafc);

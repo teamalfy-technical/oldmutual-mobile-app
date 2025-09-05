@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:oldmutual_pensions_app/core/utils/utils.dart';
 import 'package:oldmutual_pensions_app/features/auth/auth.dart';
 import 'package:oldmutual_pensions_app/gen/assets.gen.dart';
+import 'package:oldmutual_pensions_app/routes/app.pages.dart';
 
 class PCustomExpansionTile extends StatefulWidget {
   final String title;
@@ -60,29 +61,65 @@ class _PCustomExpansionTileState extends State<PCustomExpansionTile> {
                 [
                   ServiceLinkWidget(
                     label: 'special_investments_plan'.tr,
-                    onLinkTap: () {},
+                    onLinkTap: () => PHelperFunction.switchScreen(
+                      destination: Routes.webviewPage,
+                      args: [
+                        'special_investments_plan'.tr,
+                        PAppConstant.specialInvestmentPlanUrl,
+                      ],
+                    ),
                   ),
                   PAppSize.s10.verticalSpace,
                   ServiceLinkWidget(
                     label: 'travel_insurance'.tr,
-                    onLinkTap: () {},
+                    onLinkTap: () => PHelperFunction.switchScreen(
+                      destination: Routes.webviewPage,
+                      args: [
+                        'travel_insurance'.tr,
+                        PAppConstant.travelInsuranceUrl,
+                      ],
+                    ),
                   ),
                   PAppSize.s10.verticalSpace,
                   ServiceLinkWidget(
                     label: 'personal_accident'.tr,
-                    onLinkTap: () {},
+                    onLinkTap: () => PHelperFunction.switchScreen(
+                      destination: Routes.webviewPage,
+                      args: [
+                        'personal_accident'.tr,
+                        PAppConstant.personalAccidentUrl,
+                      ],
+                    ),
                   ),
                   PAppSize.s10.verticalSpace,
-                  ServiceLinkWidget(label: 'ekyire_asem'.tr, onLinkTap: () {}),
+                  ServiceLinkWidget(
+                    label: 'ekyire_asem'.tr,
+                    onLinkTap: () => PHelperFunction.switchScreen(
+                      destination: Routes.webviewPage,
+                      args: ['ekyire_asem'.tr, PAppConstant.ekyireAsemUrl],
+                    ),
+                  ),
                   PAppSize.s10.verticalSpace,
                   ServiceLinkWidget(
                     label: 'mvest_pensions'.tr,
-                    onLinkTap: () {},
+                    onLinkTap: () => PHelperFunction.switchScreen(
+                      destination: Routes.webviewPage,
+                      args: [
+                        'mvest_pensions'.tr,
+                        PAppConstant.mvestPensionsUrl,
+                      ],
+                    ),
                   ),
                   PAppSize.s10.verticalSpace,
                   ServiceLinkWidget(
                     label: 'transitions_plus_plan'.tr,
-                    onLinkTap: () {},
+                    onLinkTap: () => PHelperFunction.switchScreen(
+                      destination: Routes.webviewPage,
+                      args: [
+                        'transitions_plus_plan'.tr,
+                        PAppConstant.transitionPlusPlanUrl,
+                      ],
+                    ),
                   ),
                 ],
           ),

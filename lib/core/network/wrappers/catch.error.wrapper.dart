@@ -41,7 +41,7 @@ class CatchApiErrorWrapperImpl implements CatchApiErrorWrapper {
             //errorMessage = err.response?.data['error'];
           } else if (err.response?.statusCode == 401) {
             if (Get.currentRoute != Routes.loginPage) {
-              Get.put(PSettingsVm()).signout(soft: true);
+              // Get.put(PSettingsVm()).signout(soft: true);
             }
             errorMessage =
                 err.response?.data['error'] ?? 'Unauthorized request';

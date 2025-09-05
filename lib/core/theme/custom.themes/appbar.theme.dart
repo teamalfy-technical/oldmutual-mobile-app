@@ -9,7 +9,7 @@ class PAppBarTheme {
     elevation: PAppSize.s0,
     centerTitle: true,
     scrolledUnderElevation: PAppSize.s0,
-    backgroundColor: PAppColor.transparentColor,
+    backgroundColor: PAppColor.whiteColor,
     surfaceTintColor: PAppColor.transparentColor,
     systemOverlayStyle: SystemUiOverlayStyle.dark,
     // systemOverlayStyle: SystemUiOverlayStyle(
