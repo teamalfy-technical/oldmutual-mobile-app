@@ -10,6 +10,7 @@ class PGradientButton extends StatelessWidget {
   final double? height;
   final double radius;
   final double fontSize;
+  final Color textColor;
   final Function()? onTap;
   final bool showIcon;
   final LoadingState loading;
@@ -23,6 +24,7 @@ class PGradientButton extends StatelessWidget {
     this.radius = PAppSize.s24,
     this.loading = LoadingState.completed,
     this.fontSize = PAppSize.s16,
+    this.textColor = PAppColor.blackColor,
   });
 
   @override
@@ -50,10 +52,7 @@ class PGradientButton extends StatelessWidget {
           ),
         ),
         child: loading == LoadingState.loading
-            ? PCustomLoadingIndicator(
-                size: PAppSize.s10,
-                color: PAppColor.blackColor,
-              )
+            ? PCustomLoadingIndicator(size: PAppSize.s10, color: textColor)
             : showIcon
             ? Row(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -62,7 +61,8 @@ class PGradientButton extends StatelessWidget {
                     label,
                     style: TextStyle(
                       fontWeight: FontWeight.w600,
-                      color: PAppColor.blackColor,
+                      color: textColor,
+                      fontSize: fontSize,
                     ),
                   ),
                   PAppSize.s8.horizontalSpace,

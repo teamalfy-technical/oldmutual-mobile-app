@@ -81,7 +81,7 @@ class PAppSize {
   static const double s400 = 400.0;
 
   static const double buttonHeight = 50.0;
-  static const double buttonHeightMid = 40.0;
+  static const double buttonHeightMid = 45.0;
   static const double buttonHeightMin = 28.0;
 
   static const double iconsXs = 12.0;

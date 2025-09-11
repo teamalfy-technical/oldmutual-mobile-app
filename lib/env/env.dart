@@ -315,7 +315,7 @@ abstract class Env {
   /// -------------------- Fund-Composition Endpoints Ends Here ------------------------- ///
   ///
   ///
-  /// -------------------- Redemptions & Tranfers Endpoints Starts Here ------------------------- ///
+  /// -------------------- Redemptions & Transfers Endpoints Starts Here ------------------------- ///
 
   /// [CreateRedemptionRequest] endpoint
   @EnviedField(defaultValue: '/redemption/request', obfuscate: true)
@@ -329,5 +329,34 @@ abstract class Env {
   @EnviedField(defaultValue: '/porting/requests', obfuscate: true)
   static final String createPortingRequest = _Env.createPortingRequest;
 
-  /// -------------------- Redemptions & Tranfers Endpoints Ends Here ------------------------- ///
+  /// -------------------- Redemptions & Transfers Endpoints Ends Here ------------------------- ///
+  ///
+  ///
+  /// -------------------- Policies Endpoints Starts Here ------------------------- ///
+
+  /// [GetPolicies] endpoint
+  @EnviedField(defaultValue: '/policies', obfuscate: true)
+  static final String getPolicies = _Env.getPolicies;
+
+  /// [GetPolicySummary] endpoint
+  @EnviedField(defaultValue: '/policy-summary', obfuscate: true)
+  static final String getPolicySummary = _Env.getPolicySummary;
+
+  /// [GetPolicy] endpoint
+  @EnviedField(defaultValue: '/policy', obfuscate: true)
+  static final String getPolicy = _Env.getPolicy;
+
+  /// [GetPolicyBeneficiaries] endpoint
+  @EnviedField(defaultValue: '/policy-beneficiaries', obfuscate: true)
+  static final String getPolicyBeneficiaries = _Env.getPolicyBeneficiaries;
+
+  /// [GetPolicyTransaction] endpoint
+  @EnviedField(defaultValue: '/policy-transaction', obfuscate: true)
+  static final String getPolicyTransaction = _Env.getPolicyTransaction;
+
+  /// [GetPolicyReport] endpoint
+  @EnviedField(defaultValue: '/policy-reports', obfuscate: true)
+  static final String getPolicyReport = _Env.getPolicyReport;
+
+  /// -------------------- Policies Endpoints Ends Here ------------------------- ///
 }

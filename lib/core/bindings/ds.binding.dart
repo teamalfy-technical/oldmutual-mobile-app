@@ -36,6 +36,8 @@ class DataSourceBinding implements Bindings {
       tag: (DashboardDs).toString(),
     );
 
+    Get.lazyPut<PolicyDs>(() => PolicyDsImpl(), tag: (PolicyDs).toString());
+
     Get.lazyPut<FactsheetDs>(
       () => FactsheetDsImpl(),
       tag: (FactsheetDs).toString(),

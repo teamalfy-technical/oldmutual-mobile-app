@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:oldmutual_pensions_app/core/utils/utils.dart';
 import 'package:oldmutual_pensions_app/features/home/home.dart';
 import 'package:oldmutual_pensions_app/gen/assets.gen.dart';
+import 'package:oldmutual_pensions_app/routes/app.pages.dart';
 
 class PHomePage extends StatelessWidget {
   PHomePage({super.key});
@@ -17,8 +18,8 @@ class PHomePage extends StatelessWidget {
           ? PAppColor.darkBgColor
           : PAppColor.fillColor,
       appBar: AppBar(
-        // title: Text('Hi ${PSecureStorage().getAuthResponse()?.name}'),
-        title: Text('Hi Bongani'),
+        title: Text('Hi ${PSecureStorage().getAuthResponse()?.name}'),
+        // title: Text('Hi Bongani'),
         actions: [
           IconButton(
             onPressed: () {},
@@ -45,9 +46,19 @@ class PHomePage extends StatelessWidget {
             child:
                 Row(
                       children: List.generate(vm.highlights.length, (index) {
-                        return HighlightWidget(highlight: vm.highlights[index])
-                            .symmetric(horizontal: PAppSize.s16)
-                            .onPressed(onTap: vm.highlights[index].onTap);
+                        return HighlightWidget(
+                          index: index,
+                          vm: vm,
+                          highlight: vm.highlights[index],
+                          onTap: () {
+                            if (index != vm.highlights.length - 1) {
+                              PHelperFunction.switchScreen(
+                                destination: Routes.dashboardHighlightPage,
+                                args: vm.highlights[index],
+                              );
+                            }
+                          },
+                        ).symmetric(horizontal: PAppSize.s16);
                       }),
                     )
                     .symmetric(horizontal: PAppSize.s16)
@@ -137,15 +148,18 @@ class PHomePage extends StatelessWidget {
                 PAppSize.s16.verticalSpace,
 
                 Expanded(
+                  // height: PDeviceUtil.getDeviceHeight(context) * 0.33,
                   child: ListView.builder(
                     shrinkWrap: true,
                     itemCount: 4,
+
                     scrollDirection: Axis.horizontal,
                     itemBuilder: (context, index) {
                       return Container(
                         padding: EdgeInsets.all(PAppSize.s22),
                         margin: EdgeInsets.only(right: PAppSize.s20),
                         width: PDeviceUtil.getDeviceWidth(context) * 0.65,
+
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(PAppSize.s20),
                           color: PHelperFunction.isDarkMode(context)
@@ -178,7 +192,6 @@ class PHomePage extends StatelessWidget {
                                       PAppSize.s2.verticalSpace,
                                       Text(
                                         'You have \n2 accounts',
-
                                         softWrap: true,
                                         style: Theme.of(context)
                                             .textTheme
@@ -228,7 +241,11 @@ class PHomePage extends StatelessWidget {
                                     ],
                                   ).scrollable(),
                                 ),
-                                Assets.icons.arrowRightBlack.svg(),
+                                Assets.icons.arrowRightBlack.svg(
+                                  color: PHelperFunction.isDarkMode(context)
+                                      ? PAppColor.whiteColor
+                                      : PAppColor.blackColor,
+                                ),
                               ],
                             ),
                             SizedBox(
@@ -241,13 +258,16 @@ class PHomePage extends StatelessWidget {
                               ),
                             ),
                           ],
-                        ),
+                        ).scrollable(),
                       );
                     },
                   ),
                 ),
-
-                (PDeviceUtil.getDeviceHeight(context) * 0.07).verticalSpace,
+                PDeviceUtil.isAndroid()
+                    ? (PDeviceUtil.getDeviceHeight(context) * 0.035)
+                          .verticalSpace
+                    : (PDeviceUtil.getDeviceHeight(context) * 0.065)
+                          .verticalSpace,
               ],
             ).symmetric(horizontal: PAppSize.s20, vertical: PAppSize.s20),
           ),

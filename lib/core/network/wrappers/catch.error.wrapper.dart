@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:oldmutual_pensions_app/core/errors/errors.dart';
 import 'package:oldmutual_pensions_app/core/utils/utils.dart';
-import 'package:oldmutual_pensions_app/features/settings/presentation/vm/settings.vm.dart';
 import 'package:oldmutual_pensions_app/routes/app.pages.dart';
 
 final CatchApiErrorWrapper catchApiErrorWrapper = Get.put(
@@ -48,7 +47,7 @@ class CatchApiErrorWrapperImpl implements CatchApiErrorWrapper {
             pensionAppLogger.e(err.response?.data);
           } else if (err.response?.statusCode == 403) {
             if (Get.currentRoute != Routes.loginPage) {
-              Get.put(PSettingsVm()).signout(soft: true);
+              // Get.put(PSettingsVm()).signout(soft: true);
             } else {
               errorMessage =
                   err.response?.data['message'] ?? 'Forbidden Access';
@@ -65,7 +64,7 @@ class CatchApiErrorWrapperImpl implements CatchApiErrorWrapper {
             errorMessage = err.response?.data['message'] ?? 'Bad request';
           } else if (err.response?.statusCode == 429) {
             if (Get.currentRoute != Routes.loginPage) {
-              Get.put(PSettingsVm()).signout(soft: true);
+              // Get.put(PSettingsVm()).signout(soft: true);
             }
             // ApiErrorResponse error =
             //     ApiErrorResponse.fromJson(err.response?.data);

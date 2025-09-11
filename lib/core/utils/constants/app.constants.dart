@@ -14,6 +14,14 @@ class PAppConstant {
   static String notificationChannelDescription =
       "Notification channel to receive notifications on Old Mutual Pensions";
 
+  /// Quote Now URLs
+  static const String travelInsuranceQuoteUrl =
+      'https://www.oldmutual.com.gh/travel-insurance/';
+
+  /// Learn More URLs
+  // static const String travelInsuranceUrl =
+  //     'https://www.oldmutual.com.gh/travel-insurance/';
+
   static const String travelInsuranceUrl =
       'https://www.oldmutual.com.gh/personal/international-travel-insurance/';
   static const String ekyireAsemUrl =
@@ -28,4 +36,7 @@ class PAppConstant {
       'https://www.oldmutual.com.gh/personal/transition-plus-plan/';
   static const String educatorPlanUrl =
       'https://www.oldmutual.com.gh/personal/education-plan/';
+
+  static const String retirementSalaryUrl =
+      'https://www.oldmutual.com.gh/personal/old-mutual-retirement-salary/';
 }

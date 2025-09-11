@@ -1,6 +1,8 @@
 import 'package:get/get.dart';
+import 'package:oldmutual_pensions_app/core/utils/utils.dart';
 import 'package:oldmutual_pensions_app/features/home/domain/highlight.model.dart';
 import 'package:oldmutual_pensions_app/gen/assets.gen.dart';
+import 'package:oldmutual_pensions_app/routes/app.pages.dart';
 
 class PHomeVm extends GetxController {
   static PHomeVm get instance => Get.find();
@@ -14,38 +16,118 @@ class PHomeVm extends GetxController {
   List<Highlight> highlights = [
     Highlight(
       title: 'new_feature_in_store'.tr,
-      image: Assets.images.featuresImg.path,
-      onTap: () {},
+      title2: 'new_feature'.tr,
+      thumbnail: Assets.images.newFeatureImg.path,
+      image: Assets.images.newFeatureBg.path,
+      heading: 'Thrilled to \nannounce our \nhighlight feature!',
+      description:
+          'What’s new? With this feature, you’ll have quick access to offers, products, documents, and more.',
+      onLearnMoreTap: null,
+      onQuoteTap: null,
     ),
     Highlight(
       title: 'travel_insurance_text'.tr,
-      image: Assets.images.travelInsuranceImg.path,
-      onTap: () {},
+      title2: 'international_travel'.tr,
+      heading: 'Travel Insurance from \nas low as GH¢60',
+      description:
+          'This is an insurance product that covers unforeseen losses that might occur to the insured when travelling internationally.',
+      thumbnail: Assets.images.internationalTravelImg.path,
+      image: Assets.images.internationalTravelBg.path,
+      onLearnMoreTap: () => PHelperFunction.switchScreen(
+        destination: Routes.webviewPage,
+        args: ['international_travel'.tr, PAppConstant.travelInsuranceUrl],
+      ),
+      onQuoteTap: () => PHelperFunction.switchScreen(
+        destination: Routes.webviewPage,
+        args: ['international_travel'.tr, PAppConstant.travelInsuranceQuoteUrl],
+      ),
     ),
     Highlight(
       title: 'retirement_savings'.tr,
-      image: Assets.images.retirementImg.path,
-      onTap: () {},
+      title2: 'retirement_salary'.tr,
+      thumbnail: Assets.images.retirementSalaryImg.path,
+      image: Assets.images.retirementSalaryBg.path,
+      heading: 'Life at retirement',
+      description:
+          'Start investing in your future so you can earn a regular income when you retire.',
+      onLearnMoreTap: () => PHelperFunction.switchScreen(
+        destination: Routes.webviewPage,
+        args: ['retirement_salary'.tr, PAppConstant.retirementSalaryUrl],
+      ),
+      onQuoteTap: () => PHelperFunction.switchScreen(
+        destination: Routes.webviewPage,
+        args: ['retirement_salary'.tr, PAppConstant.retirementSalaryUrl],
+      ),
     ),
     Highlight(
       title: 'education_plan'.tr,
-      image: Assets.images.educationPlanImg.path,
-      onTap: () {},
+      title2: 'educator_plan'.tr,
+      heading: 'Education Plan',
+      description:
+          'An insurance policy structured to enable parents to save for their children\'s education.',
+      thumbnail: Assets.images.educatorPlanImg.path,
+      image: Assets.images.educatorPlanBg.path,
+
+      onLearnMoreTap: () => PHelperFunction.switchScreen(
+        destination: Routes.webviewPage,
+        args: ['educator_plan'.tr, PAppConstant.educatorPlanUrl],
+      ),
+      onQuoteTap: () => PHelperFunction.switchScreen(
+        destination: Routes.webviewPage,
+        args: ['educator_plan'.tr, PAppConstant.educatorPlanUrl],
+      ),
     ),
     Highlight(
       title: 'investment_plan'.tr,
-      image: Assets.images.specialInvestmentImg.path,
-      onTap: () {},
+      title2: 'special_investments_plan'.tr,
+      heading: 'Z',
+      description:
+          'This is an insurance product designed to provide mass-market retail clients with a long term savings medium that allows them to save for retirement and other needs.',
+      thumbnail: Assets.images.specialInvestmentImg.path,
+      image: Assets.images.specialInvestmentBg.path,
+      onLearnMoreTap: () => PHelperFunction.switchScreen(
+        destination: Routes.webviewPage,
+        args: [
+          'special_investments_plan'.tr,
+          PAppConstant.specialInvestmentPlanUrl,
+        ],
+      ),
+      onQuoteTap: () => PHelperFunction.switchScreen(
+        destination: Routes.webviewPage,
+        args: [
+          'special_investments_plan'.tr,
+          PAppConstant.specialInvestmentPlanUrl,
+        ],
+      ),
     ),
     Highlight(
       title: 'transition_plus_plan'.tr,
-      image: Assets.images.transitionPlusImg.path,
-      onTap: () {},
+      thumbnail: Assets.images.transitionPlusImg.path,
+      image: Assets.images.transitionPlusBg.path,
+      heading: 'Cover the cost of funeral expenses',
+      description:
+          'Give your loved ones a proper send-off without having to worry about funeral expenses',
+      onLearnMoreTap: () => PHelperFunction.switchScreen(
+        destination: Routes.webviewPage,
+        args: [
+          'transition_plus_plan'.tr.replaceAll('\n', ''),
+          PAppConstant.transitionPlusPlanUrl,
+        ],
+      ),
+      onQuoteTap: () => PHelperFunction.switchScreen(
+        destination: Routes.webviewPage,
+        args: [
+          'transition_plus_plan'.tr.replaceAll('\n', ''),
+          PAppConstant.transitionPlusPlanUrl,
+        ],
+      ),
     ),
     Highlight(
       title: 'forgot_login_details'.tr,
+      thumbnail: Assets.images.forgotDetailsImg.path,
       image: Assets.images.forgotDetailsImg.path,
-      onTap: () {},
+      onLearnMoreTap: null,
+      onQuoteTap: null,
     ),
   ];
 }

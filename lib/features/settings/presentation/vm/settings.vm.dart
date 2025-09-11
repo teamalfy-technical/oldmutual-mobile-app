@@ -80,14 +80,17 @@ class PSettingsVm extends GetxController {
   // Clear user data, token, etc.
   // Then navigate to login screen
   Future<void> signout({bool soft = false}) async {
-    showLoadingDialog(
-      context: context,
-      barrierDismissible: true,
-      content: Text(
-        'signing_out'.tr,
-        style: Theme.of(context).textTheme.bodyMedium,
-      ),
-    );
+    if (!soft) {
+      showLoadingDialog(
+        context: context,
+        barrierDismissible: true,
+        content: Text(
+          'signing_out'.tr,
+          style: Theme.of(context).textTheme.bodyMedium,
+        ),
+      );
+    }
+
     final result = await profileService.logout();
     result.fold(
       (err) {
@@ -108,15 +111,25 @@ class PSettingsVm extends GetxController {
       (res) {
         PHelperFunction.pop();
         clearCache(soft);
-        showSuccessDialog(context: context, title: res.message ?? '');
-        Future.delayed(Duration(seconds: 2), () {
-          PHelperFunction.pop();
-          // navigate to next screen
-          PHelperFunction.switchScreen(
-            destination: Routes.loginPage,
-            replace: true,
-          );
-        });
+        if (soft) {
+          Future.delayed(Duration(seconds: 2), () {
+            // navigate to next screen
+            PHelperFunction.switchScreen(
+              destination: Routes.welcomeBackPage,
+              replace: true,
+            );
+          });
+        } else {
+          showSuccessDialog(context: context, title: res.message ?? '');
+          Future.delayed(Duration(seconds: 2), () {
+            PHelperFunction.pop();
+            // navigate to next screen
+            PHelperFunction.switchScreen(
+              destination: Routes.loginPage,
+              replace: true,
+            );
+          });
+        }
       },
     );
   }
@@ -126,7 +139,7 @@ class PSettingsVm extends GetxController {
   /// false if you logged out manually
   /// true if user was logged out due to inactivity
   void clearCache(bool soft) {
-    if (soft) {
+    if (soft == false) {
       PSecureStorage().removeData(PSecureStorage().emailKey);
     }
     PSecureStorage().removeData(PSecureStorage().bioDataKey);

@@ -120,6 +120,12 @@ class AppPages {
       transitionDuration: const Duration(milliseconds: PAppSize.s700),
     ),
     GetPage(
+      name: _Paths.dashboardHighlightPage,
+      page: () => PDashboardHighlightPage(highlight: Get.arguments),
+      // transition: Transition.circularReveal,
+      transitionDuration: const Duration(milliseconds: PAppSize.s350),
+    ),
+    GetPage(
       name: _Paths.homePage,
       page: () => PHomePageOld(),
       transition: Transition.circularReveal,

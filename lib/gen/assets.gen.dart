@@ -88,6 +88,9 @@ class $AssetsIconsGen {
   /// File path: assets/icons/check.icon.svg
   SvgGenImage get checkIcon => const SvgGenImage('assets/icons/check.icon.svg');
 
+  /// File path: assets/icons/close.icon.svg
+  SvgGenImage get closeIcon => const SvgGenImage('assets/icons/close.icon.svg');
+
   /// File path: assets/icons/edit.icon.svg
   SvgGenImage get editIcon => const SvgGenImage('assets/icons/edit.icon.svg');
 
@@ -226,6 +229,7 @@ class $AssetsIconsGen {
     bottomLogoBanner,
     brightness,
     checkIcon,
+    closeIcon,
     editIcon,
     emailIcon,
     eyeIcon,
@@ -275,29 +279,52 @@ class $AssetsImagesGen {
   AssetGenImage get dashboardBg =>
       const AssetGenImage('assets/images/dashboard.bg.png');
 
-  /// File path: assets/images/education.plan.img.png
-  AssetGenImage get educationPlanImg =>
-      const AssetGenImage('assets/images/education.plan.img.png');
+  /// File path: assets/images/educator.plan.bg.png
+  AssetGenImage get educatorPlanBg =>
+      const AssetGenImage('assets/images/educator.plan.bg.png');
 
-  /// File path: assets/images/features.img.png
-  AssetGenImage get featuresImg =>
-      const AssetGenImage('assets/images/features.img.png');
+  /// File path: assets/images/educator.plan.img.png
+  AssetGenImage get educatorPlanImg =>
+      const AssetGenImage('assets/images/educator.plan.img.png');
 
   /// File path: assets/images/forgot.details.img.png
   AssetGenImage get forgotDetailsImg =>
       const AssetGenImage('assets/images/forgot.details.img.png');
 
+  /// File path: assets/images/international.travel.bg.png
+  AssetGenImage get internationalTravelBg =>
+      const AssetGenImage('assets/images/international.travel.bg.png');
+
+  /// File path: assets/images/international.travel.img.png
+  AssetGenImage get internationalTravelImg =>
+      const AssetGenImage('assets/images/international.travel.img.png');
+
   /// File path: assets/images/light.blur.bg.png
   AssetGenImage get lightBlurBg =>
       const AssetGenImage('assets/images/light.blur.bg.png');
+
+  /// File path: assets/images/mask.bg.png
+  AssetGenImage get maskBg => const AssetGenImage('assets/images/mask.bg.png');
+
+  /// File path: assets/images/new.feature.bg.png
+  AssetGenImage get newFeatureBg =>
+      const AssetGenImage('assets/images/new.feature.bg.png');
+
+  /// File path: assets/images/new.feature.img.png
+  AssetGenImage get newFeatureImg =>
+      const AssetGenImage('assets/images/new.feature.img.png');
 
   /// File path: assets/images/placeholder.img.png
   AssetGenImage get placeholderImg =>
       const AssetGenImage('assets/images/placeholder.img.png');
 
-  /// File path: assets/images/retirement.img.png
-  AssetGenImage get retirementImg =>
-      const AssetGenImage('assets/images/retirement.img.png');
+  /// File path: assets/images/retirement.salary.bg.png
+  AssetGenImage get retirementSalaryBg =>
+      const AssetGenImage('assets/images/retirement.salary.bg.png');
+
+  /// File path: assets/images/retirement.salary.img.png
+  AssetGenImage get retirementSalaryImg =>
+      const AssetGenImage('assets/images/retirement.salary.img.png');
 
   /// File path: assets/images/slide.four.png
   AssetGenImage get slideFour =>
@@ -315,6 +342,10 @@ class $AssetsImagesGen {
   AssetGenImage get slideTwo =>
       const AssetGenImage('assets/images/slide.two.png');
 
+  /// File path: assets/images/special.investment.bg.png
+  AssetGenImage get specialInvestmentBg =>
+      const AssetGenImage('assets/images/special.investment.bg.png');
+
   /// File path: assets/images/special.investment.img.png
   AssetGenImage get specialInvestmentImg =>
       const AssetGenImage('assets/images/special.investment.img.png');
@@ -327,33 +358,40 @@ class $AssetsImagesGen {
   AssetGenImage get splashOverlayImg =>
       const AssetGenImage('assets/images/splash.overlay.img.png');
 
+  /// File path: assets/images/transition.plus.bg.png
+  AssetGenImage get transitionPlusBg =>
+      const AssetGenImage('assets/images/transition.plus.bg.png');
+
   /// File path: assets/images/transition.plus.img.png
   AssetGenImage get transitionPlusImg =>
       const AssetGenImage('assets/images/transition.plus.img.png');
-
-  /// File path: assets/images/travel.insurance.img.png
-  AssetGenImage get travelInsuranceImg =>
-      const AssetGenImage('assets/images/travel.insurance.img.png');
 
   /// List of all assets
   List<AssetGenImage> get values => [
     darkBlurBg,
     dashboardBg,
-    educationPlanImg,
-    featuresImg,
+    educatorPlanBg,
+    educatorPlanImg,
     forgotDetailsImg,
+    internationalTravelBg,
+    internationalTravelImg,
     lightBlurBg,
+    maskBg,
+    newFeatureBg,
+    newFeatureImg,
     placeholderImg,
-    retirementImg,
+    retirementSalaryBg,
+    retirementSalaryImg,
     slideFour,
     slideOne,
     slideThree,
     slideTwo,
+    specialInvestmentBg,
     specialInvestmentImg,
     splashImg,
     splashOverlayImg,
+    transitionPlusBg,
     transitionPlusImg,
-    travelInsuranceImg,
   ];
 }
 

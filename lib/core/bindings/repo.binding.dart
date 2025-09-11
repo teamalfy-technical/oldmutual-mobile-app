@@ -2,8 +2,8 @@ import 'package:get/get.dart';
 import 'package:oldmutual_pensions_app/features/auth/auth.dart';
 import 'package:oldmutual_pensions_app/features/beneficiary/beneficiary.dart';
 import 'package:oldmutual_pensions_app/features/contribution.history/contribution.history.dart';
-import 'package:oldmutual_pensions_app/features/dashboard/dashboard.dart';
 import 'package:oldmutual_pensions_app/features/factsheet/factsheet.dart';
+import 'package:oldmutual_pensions_app/features/home/home.dart';
 import 'package:oldmutual_pensions_app/features/notification/notification.dart';
 import 'package:oldmutual_pensions_app/features/profile/profile.dart';
 import 'package:oldmutual_pensions_app/features/redemptions/redemption.dart';
@@ -37,6 +37,11 @@ class RepoBinding implements Bindings {
     Get.lazyPut<DashboardRepo>(
       () => DashboardRepoImpl(),
       tag: (DashboardRepo).toString(),
+    );
+
+       Get.lazyPut<PolicyRepo>(
+      () => PolicyRepoImpl(),
+      tag: (PolicyRepo).toString(),
     );
 
     Get.lazyPut<FactsheetRepo>(
