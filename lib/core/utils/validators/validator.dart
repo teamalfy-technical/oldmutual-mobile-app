@@ -36,6 +36,28 @@ class PValidator {
     return null;
   }
 
+  String? normalizeAndValidatePhoneNumber(String input) {
+    // Remove spaces and any non-digit characters
+    String cleaned = input.replaceAll(RegExp(r'\D'), '');
+
+    // If number starts with "0", replace with "233"
+    if (cleaned.startsWith('0')) {
+      cleaned = '233${cleaned.substring(1)}';
+    }
+    // If already starts with "233", keep as is
+    else if (!cleaned.startsWith('233')) {
+      // If it doesn’t start with 0 or 233, assume Ghana and prefix "233"
+      cleaned = '233$cleaned';
+    }
+
+    // ✅ Validate length (must be exactly 12 digits: 233 + 9 digits)
+    if (cleaned.length != 12) {
+      return null; // invalid number
+    }
+
+    return cleaned;
+  }
+
   static String? validatePercentage(String? value) {
     if (value == null || value.isEmpty) {
       return 'Field cannot be empty.';

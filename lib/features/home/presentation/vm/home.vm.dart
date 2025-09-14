@@ -28,7 +28,7 @@ class PHomeVm extends GetxController {
     Highlight(
       title: 'travel_insurance_text'.tr,
       title2: 'international_travel'.tr,
-      heading: 'Travel Insurance from \nas low as GH¢60',
+      heading: 'Travel Insurance from \nas low as GH¢120',
       description:
           'This is an insurance product that covers unforeseen losses that might occur to the insured when travelling internationally.',
       thumbnail: Assets.images.internationalTravelImg.path,
@@ -42,21 +42,28 @@ class PHomeVm extends GetxController {
         args: ['international_travel'.tr, PAppConstant.travelInsuranceQuoteUrl],
       ),
     ),
+
     Highlight(
-      title: 'retirement_savings'.tr,
-      title2: 'retirement_salary'.tr,
-      thumbnail: Assets.images.retirementSalaryImg.path,
-      image: Assets.images.retirementSalaryBg.path,
-      heading: 'Life at retirement',
+      title: 'investment_plan'.tr,
+      title2: 'special_investments_plan'.tr,
+      heading: 'Save for retirement',
       description:
-          'Start investing in your future so you can earn a regular income when you retire.',
+          'Become self-sufficient and have more control over your life even in retirement.',
+      thumbnail: Assets.images.specialInvestmentImg.path,
+      image: Assets.images.specialInvestmentBg.path,
       onLearnMoreTap: () => PHelperFunction.switchScreen(
         destination: Routes.webviewPage,
-        args: ['retirement_salary'.tr, PAppConstant.retirementSalaryUrl],
+        args: [
+          'special_investments_plan'.tr,
+          PAppConstant.specialInvestmentPlanUrl,
+        ],
       ),
       onQuoteTap: () => PHelperFunction.switchScreen(
         destination: Routes.webviewPage,
-        args: ['retirement_salary'.tr, PAppConstant.retirementSalaryUrl],
+        args: [
+          'special_investments_plan'.tr,
+          PAppConstant.specialInvestmentPlanUrl,
+        ],
       ),
     ),
     Highlight(
@@ -77,29 +84,25 @@ class PHomeVm extends GetxController {
         args: ['educator_plan'.tr, PAppConstant.educatorPlanUrl],
       ),
     ),
+
     Highlight(
-      title: 'investment_plan'.tr,
-      title2: 'special_investments_plan'.tr,
-      heading: 'Z',
+      title: 'retirement_savings'.tr,
+      title2: 'retirement_salary'.tr,
+      thumbnail: Assets.images.retirementSalaryImg.path,
+      image: Assets.images.retirementSalaryBg.path,
+      heading: 'Life at retirement',
       description:
-          'This is an insurance product designed to provide mass-market retail clients with a long term savings medium that allows them to save for retirement and other needs.',
-      thumbnail: Assets.images.specialInvestmentImg.path,
-      image: Assets.images.specialInvestmentBg.path,
+          'Start investing in your future so you can earn a regular income when you retire.',
       onLearnMoreTap: () => PHelperFunction.switchScreen(
         destination: Routes.webviewPage,
-        args: [
-          'special_investments_plan'.tr,
-          PAppConstant.specialInvestmentPlanUrl,
-        ],
+        args: ['retirement_salary'.tr, PAppConstant.retirementSalaryUrl],
       ),
       onQuoteTap: () => PHelperFunction.switchScreen(
         destination: Routes.webviewPage,
-        args: [
-          'special_investments_plan'.tr,
-          PAppConstant.specialInvestmentPlanUrl,
-        ],
+        args: ['retirement_salary'.tr, PAppConstant.retirementSalaryUrl],
       ),
     ),
+
     Highlight(
       title: 'transition_plus_plan'.tr,
       thumbnail: Assets.images.transitionPlusImg.path,
@@ -120,6 +123,23 @@ class PHomeVm extends GetxController {
           'transition_plus_plan'.tr.replaceAll('\n', ''),
           PAppConstant.transitionPlusPlanUrl,
         ],
+      ),
+    ),
+    Highlight(
+      title: 'mvest_personal_pension'.tr,
+      title2: 'mvest'.tr,
+      thumbnail: Assets.images.mvestBg.path,
+      image: Assets.images.mvestBg.path,
+      heading: 'Accumulate funds for future projects',
+      description:
+          'Benefit from the expertise of the best minds in fund management with our Mvest Personal Pension plan',
+      onLearnMoreTap: () => PHelperFunction.switchScreen(
+        destination: Routes.webviewPage,
+        args: ['mvest'.tr, PAppConstant.mvestPensionsUrl],
+      ),
+      onQuoteTap: () => PHelperFunction.switchScreen(
+        destination: Routes.webviewPage,
+        args: ['mvest'.tr, PAppConstant.mvestPensionsUrl],
       ),
     ),
     Highlight(

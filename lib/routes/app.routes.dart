@@ -18,6 +18,7 @@ abstract class Routes {
   static const createPasswordPage = _Paths.createPasswordPage;
   static const dashboardPage = _Paths.dashboardPage;
   static const dashboardHighlightPage = _Paths.dashboardHighlightPage;
+  static const productsPage = _Paths.productsPage;
   static const homePage = _Paths.homePage;
   static const notificationPage = _Paths.notificationPage;
   static const factsheetPage = _Paths.factsheetPage;
@@ -51,6 +52,7 @@ abstract class _Paths {
   static const createPasswordPage = '/create-password-page';
   static const dashboardPage = '/dashboard-page';
   static const dashboardHighlightPage = '/dashboard-highlight-page';
+  static const productsPage = '/products-page';
   static const homePage = '/home-page';
   static const notificationPage = '/notification-page';
   static const factsheetPage = '/factsheet-page';

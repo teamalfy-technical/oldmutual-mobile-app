@@ -62,6 +62,33 @@ class PHelperFunction {
     };
   }
 
+  static bool isEmail(String value) {
+    return value.contains('@') && value.contains('.');
+  }
+
+  static bool isPhone(String value) {
+    final phoneRegExp = RegExp(r'^\d[\d*]+$');
+    return phoneRegExp.hasMatch(value);
+  }
+
+  static String formatPhoneNumber(String phone) {
+    // Remove any spaces or dashes the user might enter
+    phone = phone.trim().replaceAll(RegExp(r'\s+|-'), '');
+
+    // If phone starts with "0" (e.g. 054xxxxxxx)
+    if (phone.startsWith('0')) {
+      return '233${phone.substring(1)}';
+    }
+
+    // If phone already starts with "233"
+    if (phone.startsWith('233')) {
+      return phone;
+    }
+
+    // If it's not valid, just return original (or throw an error)
+    return phone;
+  }
+
   static Future<File> compressFile(File file) async {
     final compressedFile = await FlutterImageCompress.compressAndGetFile(
       file.absolute.path,

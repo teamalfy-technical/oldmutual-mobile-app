@@ -1,6 +1,8 @@
 class PAppSize {
   PAppSize._();
 
+  static const double kTabHeight = 48.0;
+
   static const double s0 = 0.0;
   static const double s0_0_5 = 0.05;
   static const double s0_1 = 0.1;

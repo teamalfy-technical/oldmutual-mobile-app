@@ -150,12 +150,14 @@ class PAuthVm extends GetxController {
     // pensionAppLogger.e(deviceToken);
     loading(LoadingState.loading);
 
-    final email =
+    final emailOrPhone =
         PSecureStorage().getUserEmail() ?? emailOrPhoneTEC.text.trim();
     final password = passwordTEC.text.trim();
 
     final result = await authService.signIn(
-      emailOrPhone: email,
+      emailOrPhone: PHelperFunction.isPhone(emailOrPhone)
+          ? PHelperFunction.formatPhoneNumber(emailOrPhone)
+          : emailOrPhone,
       password: password,
     );
     result.fold(
@@ -171,7 +173,7 @@ class PAuthVm extends GetxController {
       },
       (res) async {
         loading(LoadingState.completed);
-        PSecureStorage().saveUserEmail<String>(email);
+        PSecureStorage().saveUserEmail<String>(emailOrPhone);
         // if (PDeviceUtil.isAndroid()) {
         // await PNotificationService().saveToken();
         // }
@@ -197,7 +199,7 @@ class PAuthVm extends GetxController {
     loading(LoadingState.loading);
 
     final result = await authService.signUp(
-      phone: phoneTEC.text.trim(),
+      phone: PHelperFunction.formatPhoneNumber(phoneTEC.text.trim()),
       email: emailOrPhoneTEC.text.trim(),
       password: passwordTEC.text.trim(),
       confirmPassword: confirmPasswordTEC.text.trim(),
@@ -226,7 +228,7 @@ class PAuthVm extends GetxController {
   /// @params => pin
   /// @params => isSignup
   Future<void> verifyOTP({required String pin, required bool isSignup}) async {
-    String phone = phoneTEC.text.trim();
+    String phone = PHelperFunction.formatPhoneNumber(phoneTEC.text.trim());
     String email = emailOrPhoneTEC.text.trim();
 
     if (otpcode.isEmpty) {
@@ -287,7 +289,7 @@ class PAuthVm extends GetxController {
   /// @params => pin
   /// @params => isSignup
   Future<void> resendOTP({required String pin, required bool isSignup}) async {
-    String phone = phoneTEC.text.trim();
+    String phone = PHelperFunction.formatPhoneNumber(phoneTEC.text.trim());
 
     loading(LoadingState.loading);
     final result = await authService.resendOtp(phone: phone);

@@ -306,6 +306,10 @@ class $AssetsImagesGen {
   /// File path: assets/images/mask.bg.png
   AssetGenImage get maskBg => const AssetGenImage('assets/images/mask.bg.png');
 
+  /// File path: assets/images/mvest.bg.png
+  AssetGenImage get mvestBg =>
+      const AssetGenImage('assets/images/mvest.bg.png');
+
   /// File path: assets/images/new.feature.bg.png
   AssetGenImage get newFeatureBg =>
       const AssetGenImage('assets/images/new.feature.bg.png');
@@ -377,6 +381,7 @@ class $AssetsImagesGen {
     internationalTravelImg,
     lightBlurBg,
     maskBg,
+    mvestBg,
     newFeatureBg,
     newFeatureImg,
     placeholderImg,

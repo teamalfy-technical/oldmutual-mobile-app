@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:oldmutual_pensions_app/core/utils/utils.dart';
 import 'package:oldmutual_pensions_app/features/home/home.dart';
+import 'package:oldmutual_pensions_app/features/products/products.dart';
 import 'package:oldmutual_pensions_app/gen/assets.gen.dart';
 import 'package:oldmutual_pensions_app/routes/app.pages.dart';
 
@@ -10,6 +11,7 @@ class PHomePage extends StatelessWidget {
   PHomePage({super.key});
 
   final vm = Get.put(PHomeVm());
+  final productVm = Get.put(PProductVm());
 
   @override
   Widget build(BuildContext context) {
@@ -141,6 +143,10 @@ class PHomePage extends StatelessWidget {
                         color: PAppColor.primary,
                         fontWeight: FontWeight.w600,
                       ),
+                    ).onPressed(
+                      onTap: () => PHelperFunction.switchScreen(
+                        destination: Routes.productsPage,
+                      ),
                     ),
                   ],
                 ),
@@ -151,115 +157,10 @@ class PHomePage extends StatelessWidget {
                   // height: PDeviceUtil.getDeviceHeight(context) * 0.33,
                   child: ListView.builder(
                     shrinkWrap: true,
-                    itemCount: 4,
-
+                    itemCount: productVm.products.length,
                     scrollDirection: Axis.horizontal,
                     itemBuilder: (context, index) {
-                      return Container(
-                        padding: EdgeInsets.all(PAppSize.s22),
-                        margin: EdgeInsets.only(right: PAppSize.s20),
-                        width: PDeviceUtil.getDeviceWidth(context) * 0.65,
-
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(PAppSize.s20),
-                          color: PHelperFunction.isDarkMode(context)
-                              ? PAppColor.darkAppBarColor
-                              : PAppColor.whiteColor,
-                        ),
-                        child: Column(
-                          children: [
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Expanded(
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Text(
-                                        'Retail'.tr,
-                                        textAlign: TextAlign.center,
-                                        softWrap: true,
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .titleMedium
-                                            ?.copyWith(
-                                              fontSize: PAppSize.s16,
-                                              fontWeight: FontWeight.w600,
-                                            ),
-                                      ),
-                                      PAppSize.s2.verticalSpace,
-                                      Text(
-                                        'You have \n2 accounts',
-                                        softWrap: true,
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .titleMedium
-                                            ?.copyWith(
-                                              fontSize: PAppSize.s16,
-                                              fontWeight: FontWeight.w600,
-                                            ),
-                                      ),
-
-                                      PAppSize.s8.verticalSpace,
-
-                                      Assets.icons.wallet.svg(
-                                        color:
-                                            PHelperFunction.isDarkMode(context)
-                                            ? PAppColor.whiteColor
-                                            : PAppColor.blackColor,
-                                      ),
-
-                                      PAppSize.s8.verticalSpace,
-
-                                      Text(
-                                        'available_balance'.tr,
-                                        textAlign: TextAlign.center,
-                                        softWrap: true,
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .bodyLarge
-                                            ?.copyWith(
-                                              fontSize: PAppSize.s14,
-                                              fontWeight: FontWeight.w500,
-                                            ),
-                                      ),
-                                      Text(
-                                        '₵10 000.00',
-                                        textAlign: TextAlign.center,
-                                        softWrap: true,
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .headlineMedium
-                                            ?.copyWith(
-                                              // fontSize: PAppSize.s12,
-                                              fontWeight: FontWeight.w600,
-                                            ),
-                                      ),
-                                      PAppSize.s8.verticalSpace,
-                                    ],
-                                  ).scrollable(),
-                                ),
-                                Assets.icons.arrowRightBlack.svg(
-                                  color: PHelperFunction.isDarkMode(context)
-                                      ? PAppColor.whiteColor
-                                      : PAppColor.blackColor,
-                                ),
-                              ],
-                            ),
-                            SizedBox(
-                              width: double.infinity,
-                              child: Divider(
-                                color: PHelperFunction.isDarkMode(context)
-                                    ? PAppColor.successLight
-                                    : PAppColor.successDark,
-                                thickness: PAppSize.s4,
-                              ),
-                            ),
-                          ],
-                        ).scrollable(),
-                      );
+                      return ProductWidget(product: productVm.products[index]);
                     },
                   ),
                 ),

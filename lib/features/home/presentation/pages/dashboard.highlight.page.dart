@@ -151,7 +151,7 @@ class PDashboardHighlightPage extends StatelessWidget {
 
                 PAppSize.s24.verticalSpace,
 
-                if (highlight.title != 'new_feature'.tr) ...[
+                if (highlight.title2 != 'new_feature'.tr) ...[
                   PGradientButton(
                     label: 'quote_now'.tr.toUpperCase(),
                     textColor: PAppColor.whiteColor,
