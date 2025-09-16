@@ -2,10 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:oldmutual_pensions_app/core/utils/utils.dart';
+import 'package:oldmutual_pensions_app/features/dashboard/dashboard.dart';
 import 'package:oldmutual_pensions_app/features/home/home.dart';
 import 'package:oldmutual_pensions_app/features/products/products.dart';
 import 'package:oldmutual_pensions_app/gen/assets.gen.dart';
 import 'package:oldmutual_pensions_app/routes/app.pages.dart';
+import 'package:oldmutual_pensions_app/shared/shared.dart';
 
 class PHomePage extends StatelessWidget {
   PHomePage({super.key});
@@ -69,108 +71,131 @@ class PHomePage extends StatelessWidget {
 
           //body
           Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                PAppSize.s8.verticalSpace,
-                // Available Balance
-                Text(
-                  'available_balance'.tr,
-                  textAlign: TextAlign.center,
-                  softWrap: true,
-                  style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                    fontSize: PAppSize.s13,
-                    fontWeight: FontWeight.w400,
+            child: Obx(
+              () => Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  PAppSize.s8.verticalSpace,
+                  // Available Balance
+                  Text(
+                    'available_balance'.tr,
+                    textAlign: TextAlign.center,
+                    softWrap: true,
+                    style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                      fontSize: PAppSize.s13,
+                      fontWeight: FontWeight.w400,
+                    ),
                   ),
-                ),
-                Text(
-                  '₵10 000.00',
-                  textAlign: TextAlign.center,
-                  softWrap: true,
-                  style: Theme.of(context).textTheme.headlineMedium?.copyWith(
-                    // fontSize: PAppSize.s12,
-                    fontWeight: FontWeight.w600,
+                  Text(
+                    '₵10 000.00',
+                    textAlign: TextAlign.center,
+                    softWrap: true,
+                    style: Theme.of(context).textTheme.headlineMedium?.copyWith(
+                      // fontSize: PAppSize.s12,
+                      fontWeight: FontWeight.w600,
+                    ),
                   ),
-                ),
 
-                PAppSize.s2.verticalSpace,
+                  PAppSize.s2.verticalSpace,
 
-                Divider(
-                  color: PHelperFunction.isDarkMode(context)
-                      ? PAppColor.successLight
-                      : PAppColor.successDark,
-                  thickness: PAppSize.s4,
-                ),
-
-                PAppSize.s2.verticalSpace,
-
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    InvestmentWidget(
-                      title: 'total_investments'.tr,
-                      value: '₵20 839.13',
-                    ),
-                    InvestmentWidget(
-                      crossAxisAlignment: CrossAxisAlignment.end,
-                      title: 'total_cover'.tr,
-                      value: '₵112 460.61',
-                    ),
-                  ],
-                ),
-
-                PAppSize.s24.verticalSpace,
-
-                /// Products
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      'products'.tr,
-                      textAlign: TextAlign.center,
-                      softWrap: true,
-                      style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                        fontSize: PAppSize.s16,
-                        fontWeight: FontWeight.w600,
-                      ),
-                    ),
-                    Text(
-                      'see_all'.tr,
-                      textAlign: TextAlign.center,
-                      softWrap: true,
-                      style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                        fontSize: PAppSize.s16,
-                        color: PAppColor.primary,
-                        fontWeight: FontWeight.w600,
-                      ),
-                    ).onPressed(
-                      onTap: () => PHelperFunction.switchScreen(
-                        destination: Routes.productsPage,
-                      ),
-                    ),
-                  ],
-                ),
-
-                PAppSize.s16.verticalSpace,
-
-                Expanded(
-                  // height: PDeviceUtil.getDeviceHeight(context) * 0.33,
-                  child: ListView.builder(
-                    shrinkWrap: true,
-                    itemCount: productVm.products.length,
-                    scrollDirection: Axis.horizontal,
-                    itemBuilder: (context, index) {
-                      return ProductWidget(product: productVm.products[index]);
-                    },
+                  Divider(
+                    color: PHelperFunction.isDarkMode(context)
+                        ? PAppColor.successLight
+                        : PAppColor.successDark,
+                    thickness: PAppSize.s4,
                   ),
-                ),
-                PDeviceUtil.isAndroid()
-                    ? (PDeviceUtil.getDeviceHeight(context) * 0.035)
-                          .verticalSpace
-                    : (PDeviceUtil.getDeviceHeight(context) * 0.065)
-                          .verticalSpace,
-              ],
-            ).symmetric(horizontal: PAppSize.s20, vertical: PAppSize.s20),
+
+                  PAppSize.s2.verticalSpace,
+
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      InvestmentWidget(
+                        title: 'total_investments'.tr,
+                        value: '₵20 839.13',
+                      ),
+                      InvestmentWidget(
+                        crossAxisAlignment: CrossAxisAlignment.end,
+                        title: 'total_cover'.tr,
+                        value: '₵112 460.61',
+                      ),
+                    ],
+                  ),
+
+                  PAppSize.s24.verticalSpace,
+
+                  /// Products
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        'products'.tr,
+                        textAlign: TextAlign.center,
+                        softWrap: true,
+                        style: Theme.of(context).textTheme.titleMedium
+                            ?.copyWith(
+                              fontSize: PAppSize.s16,
+                              fontWeight: FontWeight.w600,
+                            ),
+                      ),
+                      Text(
+                        'see_all'.tr,
+                        textAlign: TextAlign.center,
+                        softWrap: true,
+                        style: Theme.of(context).textTheme.titleMedium
+                            ?.copyWith(
+                              fontSize: PAppSize.s16,
+                              color: PAppColor.primary,
+                              fontWeight: FontWeight.w600,
+                            ),
+                      ).onPressed(
+                        onTap: () => PHelperFunction.switchScreen(
+                          destination: Routes.productsPage,
+                        ),
+                      ),
+                    ],
+                  ),
+
+                  PAppSize.s16.verticalSpace,
+
+                  Expanded(
+                    child: productVm.loading.value == LoadingState.loading
+                        ? ListView.builder(
+                            shrinkWrap: true,
+                            itemCount: 5,
+                            itemBuilder: (context, index) {
+                              return PensionTierRedactWidget(
+                                loading: productVm.loading.value,
+                              );
+                            },
+                          )
+                        : (productVm.policies.isEmpty &&
+                              productVm.schemes.isEmpty)
+                        ? PEmptyStateWidget(message: 'no_results_found'.tr)
+                        : ListView.builder(
+                            shrinkWrap: true,
+                            itemCount: productVm.products.length,
+                            scrollDirection: Axis.horizontal,
+                            itemBuilder: (context, index) {
+                              final product = productVm.products[index];
+                              return ProductWidget(
+                                product: product,
+                                onTap: () => PHelperFunction.switchScreen(
+                                  destination: Routes.productDetailPage,
+                                  args: product,
+                                ),
+                              );
+                            },
+                          ),
+                  ),
+                  PDeviceUtil.isAndroid()
+                      ? (PDeviceUtil.getDeviceHeight(context) * 0.035)
+                            .verticalSpace
+                      : (PDeviceUtil.getDeviceHeight(context) * 0.065)
+                            .verticalSpace,
+                ],
+              ).symmetric(horizontal: PAppSize.s20, vertical: PAppSize.s20),
+            ),
           ),
         ],
       ),
@@ -210,7 +235,7 @@ class InvestmentWidget extends StatelessWidget {
           softWrap: true,
           style: Theme.of(context).textTheme.bodyLarge?.copyWith(
             fontSize: PAppSize.s15,
-            fontWeight: FontWeight.w400,
+            fontWeight: FontWeight.w500,
           ),
         ),
       ],

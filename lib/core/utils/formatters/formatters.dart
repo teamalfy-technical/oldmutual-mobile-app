@@ -40,10 +40,7 @@ class PFormatter {
   }
 
   /// --- format currency
-  static String formatCurrency({
-    required double amount,
-    String symbol = 'GHS',
-  }) {
+  static String formatCurrency({required double amount, String symbol = '₵'}) {
     return NumberFormat.currency(
       locale: 'en_GH',
       symbol: symbol,

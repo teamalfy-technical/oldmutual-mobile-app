@@ -5,6 +5,7 @@ import 'package:oldmutual_pensions_app/features/contribution.history/contributio
 import 'package:oldmutual_pensions_app/features/factsheet/factsheet.dart';
 import 'package:oldmutual_pensions_app/features/home/home.dart';
 import 'package:oldmutual_pensions_app/features/notification/notification.dart';
+import 'package:oldmutual_pensions_app/features/products/products.dart';
 import 'package:oldmutual_pensions_app/features/profile/profile.dart';
 import 'package:oldmutual_pensions_app/features/redemptions/redemption.dart';
 import 'package:oldmutual_pensions_app/features/statements/statements.dart';
@@ -39,7 +40,7 @@ class RepoBinding implements Bindings {
       tag: (DashboardRepo).toString(),
     );
 
-       Get.lazyPut<PolicyRepo>(
+    Get.lazyPut<PolicyRepo>(
       () => PolicyRepoImpl(),
       tag: (PolicyRepo).toString(),
     );

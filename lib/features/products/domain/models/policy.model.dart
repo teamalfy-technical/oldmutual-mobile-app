@@ -73,7 +73,7 @@ class Policy {
     termOfPolicy = json['term_of_policy'];
     clientAge = json['client_age'];
     clientNumber = json['client_number'];
-    modalPrem = json['modal_prem'];
+    modalPrem = json['modal_prem']?.toDouble();
     paymentFrequency = json['payment_frequency'];
     paymentModeDescription = json['payment_mode_description'];
     maturityDate = json['maturity_date'];
@@ -87,7 +87,7 @@ class Policy {
     agentNo = json['agent_no'];
     agentBranchName = json['agent_branch_name'];
     proposalDate = json['proposal_date'];
-    premiumPaid = json['premium_paid'];
+    premiumPaid = json['premium_paid']?.toDouble();
     status = json['status'];
     if (json['dependants'] != null) {
       dependants = <Dependant>[];
@@ -166,7 +166,7 @@ class Dependant {
     birthdate = json['birthdate'];
     age = json['age'];
     gender = json['gender'];
-    premium = json['premium'];
+    premium = json['premium']?.toDouble();
     relationship = json['relationship'];
     sumAssured = json['sum_assured'];
   }

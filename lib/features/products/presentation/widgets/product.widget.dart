@@ -2,18 +2,22 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:oldmutual_pensions_app/core/utils/utils.dart';
+import 'package:oldmutual_pensions_app/features/products/products.dart';
 import 'package:oldmutual_pensions_app/gen/assets.gen.dart';
 
 class ProductWidget extends StatelessWidget {
   final Map<String, dynamic> product;
   final double? width;
   final EdgeInsets? margin;
-  const ProductWidget({
+  final Function()? onTap;
+  ProductWidget({
     super.key,
     required this.product,
     this.width,
     this.margin,
+    this.onTap,
   });
+  final vm = Get.put(PProductVm());
 
   @override
   Widget build(BuildContext context) {
@@ -47,9 +51,7 @@ class ProductWidget extends StatelessWidget {
                   ),
                   PAppSize.s2.verticalSpace,
                   Text(
-                    product['num_of_account'] > 1
-                        ? 'You have \n${product['num_of_account']} accounts'
-                        : '${product['num_of_account']} accounts',
+                    'You have \n${product['num_of_account']} accounts',
                     softWrap: true,
                     style: Theme.of(context).textTheme.titleMedium?.copyWith(
                       fontSize: PAppSize.s16,
@@ -59,13 +61,21 @@ class ProductWidget extends StatelessWidget {
 
                   PAppSize.s8.verticalSpace,
 
-                  product['type'] == 'retail'
-                      ? Assets.icons.wallet.svg(
+                  product['type'] == ProductType.retail
+                      ? Assets.icons.wallet
+                            .svg(
+                              color: PHelperFunction.isDarkMode(context)
+                                  ? PAppColor.whiteColor
+                                  : PAppColor.blackColor,
+                            )
+                            .onPressed(onTap: onTap)
+                      : product['type'] == ProductType.pension
+                      ? Assets.icons.insure.svg(
                           color: PHelperFunction.isDarkMode(context)
                               ? PAppColor.whiteColor
                               : PAppColor.blackColor,
                         )
-                      : Assets.icons.insure.svg(
+                      : Assets.icons.invest.svg(
                           color: PHelperFunction.isDarkMode(context)
                               ? PAppColor.whiteColor
                               : PAppColor.blackColor,
@@ -74,7 +84,7 @@ class ProductWidget extends StatelessWidget {
                   PAppSize.s8.verticalSpace,
 
                   Text(
-                    product['type'] == 'retail'
+                    product['type'] == ProductType.retail
                         ? 'available_balance'.tr
                         : 'your_total_contribution'.tr,
                     textAlign: TextAlign.center,
@@ -85,22 +95,23 @@ class ProductWidget extends StatelessWidget {
                     ),
                   ),
                   Text(
-                    '₵10 000.00',
+                    PFormatter.formatCurrency(amount: product['contribution']),
                     textAlign: TextAlign.center,
                     softWrap: true,
                     style: Theme.of(context).textTheme.headlineMedium?.copyWith(
-                      // fontSize: PAppSize.s12,
                       fontWeight: FontWeight.w600,
                     ),
                   ),
                   PAppSize.s8.verticalSpace,
                 ],
               ),
-              Assets.icons.arrowRightBlack.svg(
-                color: PHelperFunction.isDarkMode(context)
-                    ? PAppColor.whiteColor
-                    : PAppColor.blackColor,
-              ),
+              Assets.icons.arrowRightBlack
+                  .svg(
+                    color: PHelperFunction.isDarkMode(context)
+                        ? PAppColor.whiteColor
+                        : PAppColor.blackColor,
+                  )
+                  .onPressed(onTap: onTap),
             ],
           ),
           SizedBox(

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:oldmutual_pensions_app/core/utils/utils.dart';
 import 'package:oldmutual_pensions_app/features/products/products.dart';
+import 'package:oldmutual_pensions_app/routes/app.pages.dart';
 
 class PAllProductTab extends StatelessWidget {
   PAllProductTab({super.key});
@@ -19,6 +20,14 @@ class PAllProductTab extends StatelessWidget {
           product: product,
           width: PDeviceUtil.getDeviceWidth(context),
           margin: EdgeInsets.only(bottom: PAppSize.s20),
+          onTap: () {
+            if (product['type'] == 'retail') {
+              PHelperFunction.switchScreen(
+                destination: Routes.productDetailPage,
+                args: product,
+              );
+            }
+          },
         );
       },
     );

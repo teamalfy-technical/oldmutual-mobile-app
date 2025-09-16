@@ -36,6 +36,7 @@ Future<void> main() async {
 
 Future<void> initDependencies() async {
   WidgetsFlutterBinding.ensureInitialized();
+
   await Env.init();
   final currentEnv = await Environment.current();
   pensionAppLogger.e("Connecting to ${currentEnv.name}");

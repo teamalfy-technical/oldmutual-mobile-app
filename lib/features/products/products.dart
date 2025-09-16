@@ -1,4 +1,16 @@
+export 'application/services/policy.service.dart';
+export 'application/services/policy.service.impl.dart';
+export 'data/ds/policy.ds.dart';
+export 'data/ds/policy.ds.impl.dart';
+export 'data/repos/policy.repo.dart';
+export 'data/repos/policy.repo.impl.dart';
+export 'domain/models/policy.model.dart';
+export 'domain/models/policy.report.model.dart';
+export 'domain/models/policy.summary.model.dart';
+export 'domain/models/policy.transaction.model.dart';
+export 'presentation/pages/product.detail.page.dart';
 export 'presentation/pages/product.page.dart';
+export 'presentation/pages/short.term.savings.page.dart';
 export 'presentation/pages/tabs/all.product.page.dart';
 export 'presentation/vm/product.vm.dart';
 export 'presentation/widgets/product.widget.dart';

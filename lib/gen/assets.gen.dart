@@ -120,6 +120,9 @@ class $AssetsIconsGen {
   /// File path: assets/icons/home.icon.svg
   SvgGenImage get homeIcon => const SvgGenImage('assets/icons/home.icon.svg');
 
+  /// File path: assets/icons/info.icon.svg
+  SvgGenImage get infoIcon => const SvgGenImage('assets/icons/info.icon.svg');
+
   /// File path: assets/icons/invest.svg
   SvgGenImage get invest => const SvgGenImage('assets/icons/invest.svg');
 
@@ -239,6 +242,7 @@ class $AssetsIconsGen {
     fingerprint,
     ghanaFlag,
     homeIcon,
+    infoIcon,
     invest,
     keyboardArrowDown,
     keyboardArrowRight,

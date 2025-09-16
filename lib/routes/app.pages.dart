@@ -11,7 +11,7 @@ import 'package:oldmutual_pensions_app/features/contribution.history/presentatio
 import 'package:oldmutual_pensions_app/features/future.value.calculator/future.value.calculator.dart';
 import 'package:oldmutual_pensions_app/features/home/home.dart';
 import 'package:oldmutual_pensions_app/features/notification/notification.dart';
-import 'package:oldmutual_pensions_app/features/products/presentation/pages/product.page.dart';
+import 'package:oldmutual_pensions_app/features/products/products.dart';
 import 'package:oldmutual_pensions_app/features/redemptions/presentation/pages/porting.page.dart';
 import 'package:oldmutual_pensions_app/features/redemptions/redemption.dart';
 import 'package:oldmutual_pensions_app/features/settings/presentation/pages/change.password.page.dart';
@@ -129,6 +129,18 @@ class AppPages {
     GetPage(
       name: _Paths.productsPage,
       page: () => PProductsPage(),
+      transition: Transition.circularReveal,
+      transitionDuration: const Duration(milliseconds: PAppSize.s450),
+    ),
+    GetPage(
+      name: _Paths.productDetailPage,
+      page: () => PProductDetailPage(product: Get.arguments),
+      transition: Transition.circularReveal,
+      transitionDuration: const Duration(milliseconds: PAppSize.s450),
+    ),
+    GetPage(
+      name: _Paths.shortTermSavingsPage,
+      page: () => PShortTermSavingsPage(title: Get.arguments),
       transition: Transition.circularReveal,
       transitionDuration: const Duration(milliseconds: PAppSize.s450),
     ),

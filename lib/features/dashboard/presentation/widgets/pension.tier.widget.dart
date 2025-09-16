@@ -18,10 +18,9 @@ class PensionTierWidget extends StatelessWidget {
       padding: EdgeInsets.all(PAppSize.s12),
       margin: EdgeInsets.only(bottom: PAppSize.s20),
       decoration: BoxDecoration(
-        color:
-            PHelperFunction.isDarkMode(context)
-                ? PAppColor.blackColor
-                : PAppColor.whiteColor,
+        color: PHelperFunction.isDarkMode(context)
+            ? PAppColor.blackColor
+            : PAppColor.whiteColor,
         borderRadius: BorderRadius.circular(PAppSize.s10),
         boxShadow: [
           BoxShadow(
@@ -53,9 +52,10 @@ class PensionTierWidget extends StatelessWidget {
           Text(
             PFormatter.formatCurrency(
               amount:
-                  scheme.schemeCurrentValue.runtimeType == double
-                      ? scheme.schemeCurrentValue
-                      : 0,
+                  // scheme.schemeCurrentValue.runtimeType == double
+                  // ?
+                  scheme.schemeCurrentValue ?? 0,
+              // : 0,
             ),
             style: Theme.of(
               context,

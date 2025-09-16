@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:oldmutual_pensions_app/core/errors/failure.dart';
 import 'package:oldmutual_pensions_app/core/network/network.dart';
 import 'package:oldmutual_pensions_app/features/home/home.dart';
+import 'package:oldmutual_pensions_app/features/products/products.dart';
 
 final PolicyRepo policyRepo = Get.put(PolicyRepoImpl());
 

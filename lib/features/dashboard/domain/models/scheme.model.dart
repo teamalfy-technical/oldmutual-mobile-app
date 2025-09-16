@@ -9,7 +9,7 @@ class Scheme {
   String? ssnitNumber;
   String? employerNumber;
   // double?
-  dynamic schemeCurrentValue;
+  double? schemeCurrentValue;
   String? employerName;
   String? email;
   String? dob;
@@ -46,7 +46,7 @@ class Scheme {
     monthlyContribution = json['MonthlyContribution']?.toDouble();
     ssnitNumber = json['ssnitNumber'];
     employerNumber = json['EmployerNumber'];
-    schemeCurrentValue = json['SchemeCurrentValue'];
+    schemeCurrentValue = json['SchemeCurrentValue']?.toDouble();
     employerName = json['EmployerName'];
     email = json['Email'];
     dob = json['Dob'];

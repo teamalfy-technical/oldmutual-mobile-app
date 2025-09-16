@@ -19,6 +19,8 @@ enum FileType { video, image, unknown }
 
 enum Direction { left, right }
 
+enum ProductType { pension, retail, corporate }
+
 // enum Environment { dev, prod }
 enum SchemeType { anchor, prestige, aspire }
 
