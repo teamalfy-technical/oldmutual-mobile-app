@@ -14,3 +14,4 @@ export 'presentation/pages/short.term.savings.page.dart';
 export 'presentation/pages/tabs/all.product.page.dart';
 export 'presentation/vm/product.vm.dart';
 export 'presentation/widgets/product.widget.dart';
+export 'presentation/widgets/quick.action.widget.dart';

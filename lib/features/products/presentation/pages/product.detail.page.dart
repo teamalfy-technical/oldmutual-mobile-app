@@ -70,7 +70,7 @@ class PProductDetailPage extends StatelessWidget {
                   subTitle: PFormatter.formatCurrency(amount: 5000.00),
                   onTap: () => PHelperFunction.switchScreen(
                     destination: Routes.shortTermSavingsPage,
-                    args: 'short_term_savings'.tr,
+                    args: 'investments'.tr,
                   ),
                 ),
 
@@ -111,7 +111,6 @@ class PProductDetailPage extends StatelessWidget {
         contentPadding: EdgeInsets.zero,
         title: Text(
           title,
-
           style: Theme.of(context).textTheme.bodyLarge?.copyWith(
             fontSize: PAppSize.s13,
             fontWeight: FontWeight.w400,

@@ -91,6 +91,10 @@ class $AssetsIconsGen {
   /// File path: assets/icons/close.icon.svg
   SvgGenImage get closeIcon => const SvgGenImage('assets/icons/close.icon.svg');
 
+  /// File path: assets/icons/delete.icon.svg
+  SvgGenImage get deleteIcon =>
+      const SvgGenImage('assets/icons/delete.icon.svg');
+
   /// File path: assets/icons/edit.icon.svg
   SvgGenImage get editIcon => const SvgGenImage('assets/icons/edit.icon.svg');
 
@@ -149,6 +153,9 @@ class $AssetsIconsGen {
   SvgGenImage get memberIcon =>
       const SvgGenImage('assets/icons/member.icon.svg');
 
+  /// File path: assets/icons/money.icon.svg
+  SvgGenImage get moneyIcon => const SvgGenImage('assets/icons/money.icon.svg');
+
   /// File path: assets/icons/more.icon.svg
   SvgGenImage get moreIcon => const SvgGenImage('assets/icons/more.icon.svg');
 
@@ -159,6 +166,13 @@ class $AssetsIconsGen {
   /// File path: assets/icons/notification.icon.svg
   SvgGenImage get notificationIcon =>
       const SvgGenImage('assets/icons/notification.icon.svg');
+
+  /// File path: assets/icons/pay.icon.svg
+  SvgGenImage get payIcon => const SvgGenImage('assets/icons/pay.icon.svg');
+
+  /// File path: assets/icons/person.add.icon.svg
+  SvgGenImage get personAddIcon =>
+      const SvgGenImage('assets/icons/person.add.icon.svg');
 
   /// File path: assets/icons/phone.icon.svg
   SvgGenImage get phoneIcon => const SvgGenImage('assets/icons/phone.icon.svg');
@@ -219,6 +233,10 @@ class $AssetsIconsGen {
   SvgGenImage get warningRedIcon =>
       const SvgGenImage('assets/icons/warning.red.icon.svg');
 
+  /// File path: assets/icons/withdraw.icon.svg
+  SvgGenImage get withdrawIcon =>
+      const SvgGenImage('assets/icons/withdraw.icon.svg');
+
   /// List of all assets
   List<SvgGenImage> get values => [
     insure,
@@ -233,6 +251,7 @@ class $AssetsIconsGen {
     brightness,
     checkIcon,
     closeIcon,
+    deleteIcon,
     editIcon,
     emailIcon,
     eyeIcon,
@@ -250,9 +269,12 @@ class $AssetsIconsGen {
     lockIcon,
     manageIcon,
     memberIcon,
+    moneyIcon,
     moreIcon,
     notificationGreenIcon,
     notificationIcon,
+    payIcon,
+    personAddIcon,
     phoneIcon,
     pictogram,
     selfie,
@@ -269,6 +291,7 @@ class $AssetsIconsGen {
     warningGreenIcon,
     warningIcon,
     warningRedIcon,
+    withdrawIcon,
   ];
 }
 
