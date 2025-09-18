@@ -180,10 +180,14 @@ class PHomePage extends StatelessWidget {
                               final product = productVm.products[index];
                               return ProductWidget(
                                 product: product,
-                                onTap: () => PHelperFunction.switchScreen(
-                                  destination: Routes.productDetailPage,
-                                  args: product,
-                                ),
+                                onTap: () {
+                                  if (product['type'] == ProductType.retail) {
+                                    PHelperFunction.switchScreen(
+                                      destination: Routes.productDetailPage,
+                                      args: product,
+                                    );
+                                  }
+                                },
                               );
                             },
                           ),

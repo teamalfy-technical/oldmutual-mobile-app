@@ -1,5 +1,6 @@
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
+import 'package:oldmutual_pensions_app/core/utils/utils.dart';
 
 class PFormatter {
   PFormatter._();
@@ -33,11 +34,38 @@ class PFormatter {
   }
 
   /// --- calculate difference between two dates (In Days)
-  static int calculateDateDiff(String date) {
+  static int calculateDateDiff(String date, DateDiffUnit unit) {
     final parseDate = DateTime.parse(date);
-    final diff = DateTime.now().difference(parseDate);
-    return diff.inDays;
+    final now = DateTime.now();
+
+    switch (unit) {
+      case DateDiffUnit.days:
+        return now.difference(parseDate).inDays.abs();
+
+      case DateDiffUnit.months:
+        int months =
+            (now.year - parseDate.year) * 12 + (now.month - parseDate.month);
+        if (now.day < parseDate.day) {
+          months--; // adjust if day not reached yet
+        }
+        return months.abs();
+
+      case DateDiffUnit.years:
+        int years = now.year - parseDate.year;
+        if (now.month < parseDate.month ||
+            (now.month == parseDate.month && now.day < parseDate.day)) {
+          years--; // adjust if birthday/anniversary not reached yet
+        }
+        return years.abs();
+    }
   }
+
+  /// --- calculate difference between two dates (In Years)
+  // static int calculateDateDiff(String date) {
+  //   final parseDate = DateTime.parse(date);
+  //   final diff = DateTime.now().difference(parseDate);
+  //   return diff.inDays;
+  // }
 
   /// --- format currency
   static String formatCurrency({required double amount, String symbol = '₵'}) {

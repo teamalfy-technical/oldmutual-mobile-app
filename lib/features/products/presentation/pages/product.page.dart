@@ -81,9 +81,15 @@ class PProductsPage extends StatelessWidget {
         body: TabBarView(
           children: [
             PAllProductTab(),
-            Center(child: Text("Search")),
-            Center(child: Text("Profile")),
-            Center(child: Text("Profile")),
+            PRetailTab(
+              policies: vm.inforcePolicies,
+              type: PolicyStatus.inforce,
+            ),
+            PRetailTab(
+              policies: vm.expiredPolicies,
+              type: PolicyStatus.expired,
+            ),
+            PRetailTab(policies: vm.lapsedPolicies, type: PolicyStatus.lapsed),
           ],
         ).symmetric(horizontal: PAppSize.s20, vertical: PAppSize.s10),
       ),

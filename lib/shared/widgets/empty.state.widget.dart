@@ -26,6 +26,7 @@ class PEmptyStateWidget extends StatelessWidget {
           PAppSize.s8.verticalSpace,
           Text(
             message,
+            textAlign: TextAlign.center,
             style: Theme.of(context).textTheme.titleMedium,
           ).symmetric(horizontal: PAppSize.s30),
         ],

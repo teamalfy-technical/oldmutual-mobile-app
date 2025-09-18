@@ -323,6 +323,7 @@ class AppTranslations extends Translations {
       'available_balance': 'Available balance',
       'total_investments': 'Total investments',
       'your_total_contribution': 'Your total contributions',
+      'no_policy_found': 'You\'ve no @name policies available',
       'total_cover': 'Your total cover',
       'see_all': 'see all',
       'products': 'Products',

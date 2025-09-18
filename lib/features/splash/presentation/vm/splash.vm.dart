@@ -35,6 +35,7 @@ class PSplashVm extends GetxController {
           // );
           final lastLoggedIn = PFormatter.calculateDateDiff(
             PSecureStorage().getAuthResponse()!.lastLoggedIn!,
+            DateDiffUnit.days,
           );
           // redirect user to welcome back screen after been logged in for 3 days
           if (lastLoggedIn >= 3 && PSecureStorage().getUserEmail() != null) {

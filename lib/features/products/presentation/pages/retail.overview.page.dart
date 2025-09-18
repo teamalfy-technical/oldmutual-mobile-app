@@ -6,10 +6,11 @@ import 'package:oldmutual_pensions_app/features/home/home.dart';
 import 'package:oldmutual_pensions_app/features/products/products.dart';
 import 'package:oldmutual_pensions_app/gen/assets.gen.dart';
 import 'package:oldmutual_pensions_app/routes/app.pages.dart';
+import 'package:oldmutual_pensions_app/shared/shared.dart';
 
-class PProductDetailPage extends StatelessWidget {
+class PRetailOverviewPage extends StatelessWidget {
   final Map<String, dynamic> product;
-  PProductDetailPage({super.key, required this.product});
+  PRetailOverviewPage({super.key, required this.product});
 
   final vm = Get.put(PProductVm());
 
@@ -64,71 +65,51 @@ class PProductDetailPage extends StatelessWidget {
 
                 PAppSize.s12.verticalSpace,
 
-                _buildCustomListTile(
-                  context: context,
-                  title: 'education_savings'.tr,
-                  subTitle: PFormatter.formatCurrency(amount: 5000.00),
-                  onTap: () => PHelperFunction.switchScreen(
-                    destination: Routes.shortTermSavingsPage,
-                    args: 'investments'.tr,
+                if (product['type'] == ProductType.pensions) ...[
+                  RefreshIndicator.adaptive(
+                    onRefresh: vm.getAllPolices,
+                    color: PAppColor.primary,
+                    child: vm.schemes.isEmpty
+                        ? PEmptyStateWidget(message: 'no_results_found'.tr)
+                        : ListView.builder(
+                            shrinkWrap: true,
+                            itemCount: vm.schemes.length,
+                            itemBuilder: (context, index) {
+                              return PPensionWidget(
+                                scheme: vm.schemes[index],
+                                onTap: () {},
+                              );
+                            },
+                          ),
                   ),
-                ),
-
-                PAppSize.s16.verticalSpace,
-
-                _buildCustomListTile(
-                  context: context,
-                  title: 'short_term_savings'.tr,
-                  subTitle: PFormatter.formatCurrency(amount: 4000.00),
-                  onTap: () => PHelperFunction.switchScreen(
-                    destination: Routes.shortTermSavingsPage,
-                    args: 'short_term_savings'.tr,
+                ] else ...[
+                  RefreshIndicator.adaptive(
+                    onRefresh: vm.getMemberSchemes,
+                    color: PAppColor.primary,
+                    child: vm.policies.isEmpty
+                        ? PEmptyStateWidget(message: 'no_results_found'.tr)
+                        : ListView.builder(
+                            shrinkWrap: true,
+                            itemCount: vm.policies.length,
+                            itemBuilder: (context, index) {
+                              final policy = vm.policies[index];
+                              return PPolicyWidget(
+                                policy: policy,
+                                onTap: () => PHelperFunction.switchScreen(
+                                  destination: Routes.shortTermSavingsPage,
+                                  args: policy,
+                                  // args: 'investments'.tr,
+                                ),
+                              );
+                            },
+                          ),
                   ),
-                ),
+                ],
               ],
             ).symmetric(horizontal: PAppSize.s20, vertical: PAppSize.s10),
           ),
         ],
       ),
     );
-  }
-
-  Widget _buildCustomListTile({
-    required BuildContext context,
-    Function()? onTap,
-    required String title,
-    required String subTitle,
-  }) {
-    return Container(
-      padding: EdgeInsets.symmetric(horizontal: PAppSize.s16),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(PAppSize.s20),
-        color: PHelperFunction.isDarkMode(context)
-            ? PAppColor.darkAppBarColor
-            : PAppColor.whiteColor,
-      ),
-      child: ListTile(
-        contentPadding: EdgeInsets.zero,
-        title: Text(
-          title,
-          style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-            fontSize: PAppSize.s13,
-            fontWeight: FontWeight.w400,
-          ),
-        ),
-        subtitle: Text(
-          subTitle,
-          style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-            fontSize: PAppSize.s18,
-            fontWeight: FontWeight.w600,
-          ),
-        ),
-        trailing: Assets.icons.arrowRightBlack.svg(
-          color: PHelperFunction.isDarkMode(context)
-              ? PAppColor.whiteColor
-              : PAppColor.blackColor,
-        ),
-      ),
-    ).onPressed(onTap: onTap);
   }
 }

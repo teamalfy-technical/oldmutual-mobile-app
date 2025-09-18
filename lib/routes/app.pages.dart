@@ -134,13 +134,13 @@ class AppPages {
     ),
     GetPage(
       name: _Paths.productDetailPage,
-      page: () => PProductDetailPage(product: Get.arguments),
+      page: () => PRetailOverviewPage(product: Get.arguments),
       transition: Transition.circularReveal,
       transitionDuration: const Duration(milliseconds: PAppSize.s450),
     ),
     GetPage(
       name: _Paths.shortTermSavingsPage,
-      page: () => PShortTermSavingsPage(title: Get.arguments),
+      page: () => PRetailDetailPage(policy: Get.arguments),
       transition: Transition.circularReveal,
       transitionDuration: const Duration(milliseconds: PAppSize.s450),
     ),

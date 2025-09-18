@@ -7,9 +7,9 @@ import 'package:oldmutual_pensions_app/features/home/home.dart';
 import 'package:oldmutual_pensions_app/features/products/products.dart';
 import 'package:oldmutual_pensions_app/gen/assets.gen.dart';
 
-class PShortTermSavingsPage extends StatelessWidget {
-  final String title;
-  PShortTermSavingsPage({super.key, required this.title});
+class PRetailDetailPage extends StatelessWidget {
+  final Policy policy;
+  PRetailDetailPage({super.key, required this.policy});
 
   final vm = Get.put(PProductVm());
 
@@ -19,7 +19,7 @@ class PShortTermSavingsPage extends StatelessWidget {
       backgroundColor: PHelperFunction.isDarkMode(context)
           ? PAppColor.darkBgColor
           : PAppColor.fillColor,
-      appBar: AppBar(title: Text(title)),
+      appBar: AppBar(title: Text(policy.planDescription ?? '')),
       body: SafeArea(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -36,7 +36,9 @@ class PShortTermSavingsPage extends StatelessWidget {
               ),
             ),
             Text(
-              PFormatter.formatCurrency(amount: 20000),
+              PFormatter.formatCurrency(
+                amount: policy.sumAssured?.toDouble() ?? 0,
+              ),
               textAlign: TextAlign.center,
               softWrap: true,
               style: Theme.of(context).textTheme.headlineMedium?.copyWith(
@@ -58,7 +60,12 @@ class PShortTermSavingsPage extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                InvestmentWidget(title: 'monthly_premium'.tr, value: '₵500'),
+                InvestmentWidget(
+                  title: 'monthly_premium'.tr,
+                  value: PFormatter.formatCurrency(
+                    amount: policy.modalPrem?.toDouble() ?? 0,
+                  ),
+                ),
                 InvestmentWidget(
                   crossAxisAlignment: CrossAxisAlignment.end,
                   title: 'status'.tr,
@@ -142,13 +149,13 @@ class PShortTermSavingsPage extends StatelessWidget {
                         _buildListTile(
                           context,
                           'policy_number'.tr,
-                          'R0000000/0000000',
+                          '${policy.policyNo}',
                         ),
                         Divider(height: PAppSize.s1),
                         _buildListTile(
                           context,
                           'investment_term'.tr,
-                          '10 years',
+                          '${PFormatter.calculateDateDiff(policy.maturityDate!, DateDiffUnit.years)} years',
                         ),
                       ],
                     ),
@@ -186,13 +193,15 @@ class PShortTermSavingsPage extends StatelessWidget {
                         _buildListTile(
                           context,
                           'product_description'.tr,
-                          'Short Term Pocket Of The 2-In-One Savings Plan',
+                          '${policy.planDescription}',
                         ),
                         Divider(height: PAppSize.s1),
                         _buildListTile(
                           context,
                           'amount_savings_value'.tr,
-                          PFormatter.formatCurrency(amount: 890.70),
+                          PFormatter.formatCurrency(
+                            amount: policy.premiumPaid ?? 0,
+                          ),
                         ),
                         Divider(height: PAppSize.s1),
                         _buildListTile(
@@ -200,7 +209,11 @@ class PShortTermSavingsPage extends StatelessWidget {
                           'start_date'.tr,
                           PFormatter.formatDate(
                             dateFormat: DateFormat('d MMMM y'),
-                            date: DateTime.now().subtract(Duration(days: 3150)),
+                            date: DateTime.parse(
+                              policy.commencementDate ??
+                                  policy.issuedDate ??
+                                  '',
+                            ),
                           ),
                         ),
                         Divider(height: PAppSize.s1),
@@ -209,26 +222,33 @@ class PShortTermSavingsPage extends StatelessWidget {
                           'end_date'.tr,
                           PFormatter.formatDate(
                             dateFormat: DateFormat('d MMMM y'),
-                            date: DateTime.now().add(Duration(days: 850)),
+                            date: DateTime.parse(
+                              policy.maturityDate ?? policy.issuedDate ?? '',
+                            ),
                           ),
                         ),
                         Divider(height: PAppSize.s1),
                         _buildListTile(
                           context,
                           'monthly_premium'.tr,
-                          'Frequency',
+                          '${policy.paymentFrequency}',
                         ),
                         Divider(height: PAppSize.s1),
                         _buildListTile(
                           context,
                           'premium_amount'.tr,
-                          PFormatter.formatCurrency(amount: 20.70),
+                          PFormatter.formatCurrency(
+                            amount: policy.modalPrem ?? 00,
+                          ),
                         ),
                         Divider(height: PAppSize.s1),
                         _buildListTile(
                           context,
                           'total_redemption'.tr,
-                          PFormatter.formatCurrency(amount: 890.70),
+                          PFormatter.formatCurrency(
+                            amount: policy.premiumPaid ?? 0,
+                          ),
+                          // PFormatter.formatCurrency(amount: 890.70),
                         ),
                       ],
                     ),
@@ -236,83 +256,150 @@ class PShortTermSavingsPage extends StatelessWidget {
 
                   PAppSize.s16.verticalSpace,
 
-                  if (title == 'investments'.tr) ...[
-                    /// Products
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          'bank_details'.tr,
-                          textAlign: TextAlign.center,
-                          softWrap: true,
-                          style: Theme.of(context).textTheme.titleMedium
-                              ?.copyWith(
-                                fontSize: PAppSize.s16,
-                                fontWeight: FontWeight.w600,
-                              ),
-                        ),
-                        Text(
-                          'edit'.tr,
-                          textAlign: TextAlign.center,
-                          softWrap: true,
-                          style: Theme.of(context).textTheme.titleMedium
-                              ?.copyWith(
-                                fontSize: PAppSize.s14,
-                                color: PAppColor.successDark,
-                                fontWeight: FontWeight.w600,
-                              ),
-                        ).onPressed(onTap: () {}),
-                      ],
-                    ),
+                  // if (title == 'investments'.tr) ...[
+                  //   /// Products
+                  //   Row(
+                  //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  //     children: [
+                  //       Text(
+                  //         'bank_details'.tr,
+                  //         textAlign: TextAlign.center,
+                  //         softWrap: true,
+                  //         style: Theme.of(context).textTheme.titleMedium
+                  //             ?.copyWith(
+                  //               fontSize: PAppSize.s16,
+                  //               fontWeight: FontWeight.w600,
+                  //             ),
+                  //       ),
+                  //       Text(
+                  //         'edit'.tr,
+                  //         textAlign: TextAlign.center,
+                  //         softWrap: true,
+                  //         style: Theme.of(context).textTheme.titleMedium
+                  //             ?.copyWith(
+                  //               fontSize: PAppSize.s14,
+                  //               color: PAppColor.successDark,
+                  //               fontWeight: FontWeight.w600,
+                  //             ),
+                  //       ).onPressed(onTap: () {}),
+                  //     ],
+                  //   ),
 
-                    PAppSize.s16.verticalSpace,
+                  //   PAppSize.s16.verticalSpace,
 
-                    Container(
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(PAppSize.s20),
-                        color: PHelperFunction.isDarkMode(context)
-                            ? PAppColor.darkAppBarColor
-                            : PAppColor.whiteColor,
-                      ),
-                      child: _buildListTile(
-                        context,
-                        '00678940900',
-                        'Standard bank',
-                      ),
-                    ),
-                    PAppSize.s16.verticalSpace,
+                  //   Container(
+                  //     decoration: BoxDecoration(
+                  //       borderRadius: BorderRadius.circular(PAppSize.s20),
+                  //       color: PHelperFunction.isDarkMode(context)
+                  //           ? PAppColor.darkAppBarColor
+                  //           : PAppColor.whiteColor,
+                  //     ),
+                  //     child: _buildListTile(
+                  //       context,
+                  //       '00678940900',
+                  //       'Standard bank',
+                  //     ),
+                  //   ),
+                  //   PAppSize.s16.verticalSpace,
 
-                    /// Products
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          'beneficiaries'.tr,
-                          textAlign: TextAlign.center,
-                          softWrap: true,
-                          style: Theme.of(context).textTheme.titleMedium
-                              ?.copyWith(
-                                fontSize: PAppSize.s16,
-                                fontWeight: FontWeight.w600,
-                              ),
-                        ),
-                        Text(
-                          'add_new'.tr,
-                          textAlign: TextAlign.center,
-                          softWrap: true,
-                          style: Theme.of(context).textTheme.titleMedium
-                              ?.copyWith(
-                                fontSize: PAppSize.s14,
-                                color: PAppColor.successDark,
-                                fontWeight: FontWeight.w600,
-                              ),
-                        ).onPressed(onTap: () {}),
-                      ],
-                    ),
+                  //   /// Products
+                  //   Row(
+                  //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  //     children: [
+                  //       Text(
+                  //         'beneficiaries'.tr,
+                  //         textAlign: TextAlign.center,
+                  //         softWrap: true,
+                  //         style: Theme.of(context).textTheme.titleMedium
+                  //             ?.copyWith(
+                  //               fontSize: PAppSize.s16,
+                  //               fontWeight: FontWeight.w600,
+                  //             ),
+                  //       ),
+                  //       Text(
+                  //         'add_new'.tr,
+                  //         textAlign: TextAlign.center,
+                  //         softWrap: true,
+                  //         style: Theme.of(context).textTheme.titleMedium
+                  //             ?.copyWith(
+                  //               fontSize: PAppSize.s14,
+                  //               color: PAppColor.successDark,
+                  //               fontWeight: FontWeight.w600,
+                  //             ),
+                  //       ).onPressed(onTap: () {}),
+                  //     ],
+                  //   ),
 
-                    PAppSize.s16.verticalSpace,
+                  //   PAppSize.s16.verticalSpace,
 
-                    // Beneficiaries section
+                  //   // Beneficiaries section
+                  //   Container(
+                  //     decoration: BoxDecoration(
+                  //       border: Border.all(
+                  //         width: PAppSize.s1,
+                  //         color: PAppColor.fillColor2,
+                  //       ),
+                  //       borderRadius: BorderRadius.circular(PAppSize.s20),
+                  //       color: PHelperFunction.isDarkMode(context)
+                  //           ? PAppColor.darkAppBarColor
+                  //           : PAppColor.whiteColor,
+                  //     ),
+                  //     child: ListView.separated(
+                  //       shrinkWrap: true,
+                  //       itemCount: 2,
+                  //       itemBuilder: (context, index) {
+                  //         return ListTile(
+                  //           leading: CircleAvatar(
+                  //             radius: PAppSize.s24,
+                  //             backgroundImage: AssetImage(
+                  //               Assets.images.placeholderImg.path,
+                  //             ),
+                  //           ),
+                  //           title: Text(
+                  //             'Obiajulu Anayo',
+                  //             style: Theme.of(context).textTheme.bodyLarge
+                  //                 ?.copyWith(
+                  //                   fontSize: PAppSize.s15,
+                  //                   fontWeight: FontWeight.w500,
+                  //                 ),
+                  //           ),
+                  //           subtitle: Column(
+                  //             crossAxisAlignment: CrossAxisAlignment.start,
+                  //             children: [
+                  //               Text(
+                  //                 '50% Split',
+                  //                 style: Theme.of(context).textTheme.bodyLarge
+                  //                     ?.copyWith(
+                  //                       fontSize: PAppSize.s14,
+                  //                       fontWeight: FontWeight.w500,
+                  //                     ),
+                  //               ),
+
+                  //               Text(
+                  //                 'Brother - ${PFormatter.formatDate(dateFormat: DateFormat('d MMMM y'), date: DateTime.now().subtract(Duration(days: 5150)))}',
+                  //                 style: Theme.of(context).textTheme.bodyLarge
+                  //                     ?.copyWith(
+                  //                       fontSize: PAppSize.s13,
+                  //                       fontWeight: FontWeight.w400,
+                  //                     ),
+                  //               ),
+                  //             ],
+                  //           ),
+                  //           trailing: Assets.icons.arrowRightBlack.svg(
+                  //             color: PHelperFunction.isDarkMode(context)
+                  //                 ? PAppColor.whiteColor
+                  //                 : PAppColor.blackColor,
+                  //           ),
+                  //         );
+                  //       },
+                  //       separatorBuilder: (context, index) =>
+                  //           Divider().symmetric(horizontal: PAppSize.s20),
+                  //     ),
+                  //   ),
+                  // ],
+
+                  // Beneficiaries section
+                  if (policy.beneficiaries!.isNotEmpty) ...[
                     Container(
                       decoration: BoxDecoration(
                         border: Border.all(
@@ -326,8 +413,9 @@ class PShortTermSavingsPage extends StatelessWidget {
                       ),
                       child: ListView.separated(
                         shrinkWrap: true,
-                        itemCount: 2,
+                        itemCount: policy.beneficiaries!.length,
                         itemBuilder: (context, index) {
+                          final beneficiary = policy.beneficiaries![index];
                           return ListTile(
                             leading: CircleAvatar(
                               radius: PAppSize.s24,
@@ -336,7 +424,7 @@ class PShortTermSavingsPage extends StatelessWidget {
                               ),
                             ),
                             title: Text(
-                              'Obiajulu Anayo',
+                              beneficiary.name ?? '',
                               style: Theme.of(context).textTheme.bodyLarge
                                   ?.copyWith(
                                     fontSize: PAppSize.s15,
@@ -347,7 +435,9 @@ class PShortTermSavingsPage extends StatelessWidget {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  '50% Split',
+                                  beneficiary.percentageAllocation == 100
+                                      ? '${beneficiary.percentageAllocation}%'
+                                      : '${beneficiary.percentageAllocation}% Split',
                                   style: Theme.of(context).textTheme.bodyLarge
                                       ?.copyWith(
                                         fontSize: PAppSize.s14,
@@ -356,7 +446,8 @@ class PShortTermSavingsPage extends StatelessWidget {
                                 ),
 
                                 Text(
-                                  'Brother - ${PFormatter.formatDate(dateFormat: DateFormat('d MMMM y'), date: DateTime.now().subtract(Duration(days: 5150)))}',
+                                  '${beneficiary.relationship}',
+                                  // '${beneficiary.relationship} - ${PFormatter.formatDate(dateFormat: DateFormat('d MMMM y'), date: DateTime.now().subtract(Duration(days: 5150)))}',
                                   style: Theme.of(context).textTheme.bodyLarge
                                       ?.copyWith(
                                         fontSize: PAppSize.s13,

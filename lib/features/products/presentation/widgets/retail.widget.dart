@@ -5,14 +5,14 @@ import 'package:oldmutual_pensions_app/core/utils/utils.dart';
 import 'package:oldmutual_pensions_app/features/products/products.dart';
 import 'package:oldmutual_pensions_app/gen/assets.gen.dart';
 
-class ProductWidget extends StatelessWidget {
-  final Map<String, dynamic> product;
+class RetailWidget extends StatelessWidget {
+  final Policy policy;
   final double? width;
   final EdgeInsets? margin;
   final Function()? onTap;
-  ProductWidget({
+  RetailWidget({
     super.key,
-    required this.product,
+    required this.policy,
     this.width,
     this.margin,
     this.onTap,
@@ -42,8 +42,8 @@ class ProductWidget extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      product['name'],
-                      textAlign: TextAlign.center,
+                      '${policy.planDescription}',
+                      textAlign: TextAlign.start,
                       softWrap: true,
                       style: Theme.of(context).textTheme.titleMedium?.copyWith(
                         fontSize: PAppSize.s16,
@@ -52,7 +52,7 @@ class ProductWidget extends StatelessWidget {
                     ),
                     PAppSize.s2.verticalSpace,
                     Text(
-                      'You have \n${product['num_of_account']} accounts',
+                      'You have \n${policy.dependants?.length} accounts',
                       softWrap: true,
                       style: Theme.of(context).textTheme.titleMedium?.copyWith(
                         fontSize: PAppSize.s16,
@@ -62,32 +62,18 @@ class ProductWidget extends StatelessWidget {
 
                     PAppSize.s8.verticalSpace,
 
-                    product['type'] == ProductType.retail
-                        ? Assets.icons.wallet
-                              .svg(
-                                color: PHelperFunction.isDarkMode(context)
-                                    ? PAppColor.whiteColor
-                                    : PAppColor.blackColor,
-                              )
-                              .onPressed(onTap: onTap)
-                        : product['type'] == ProductType.pensions
-                        ? Assets.icons.insure.svg(
-                            color: PHelperFunction.isDarkMode(context)
-                                ? PAppColor.whiteColor
-                                : PAppColor.blackColor,
-                          )
-                        : Assets.icons.invest.svg(
-                            color: PHelperFunction.isDarkMode(context)
-                                ? PAppColor.whiteColor
-                                : PAppColor.blackColor,
-                          ),
+                    Assets.icons.wallet
+                        .svg(
+                          color: PHelperFunction.isDarkMode(context)
+                              ? PAppColor.whiteColor
+                              : PAppColor.blackColor,
+                        )
+                        .onPressed(onTap: onTap),
 
                     PAppSize.s8.verticalSpace,
 
                     Text(
-                      product['type'] == ProductType.retail
-                          ? 'available_balance'.tr
-                          : 'your_total_contribution'.tr,
+                      'available_balance'.tr,
                       textAlign: TextAlign.center,
                       softWrap: true,
                       style: Theme.of(context).textTheme.bodyLarge?.copyWith(
@@ -97,7 +83,7 @@ class ProductWidget extends StatelessWidget {
                     ),
                     Text(
                       PFormatter.formatCurrency(
-                        amount: product['contribution'],
+                        amount: policy.premiumPaid?.toDouble() ?? 0,
                       ),
                       textAlign: TextAlign.center,
                       softWrap: true,

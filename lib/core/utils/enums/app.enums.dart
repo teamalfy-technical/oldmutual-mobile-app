@@ -19,7 +19,11 @@ enum FileType { video, image, unknown }
 
 enum Direction { left, right }
 
-enum ProductType { pension, retail, corporate }
+enum ProductType { pensions, retail, corporate }
+
+enum DateDiffUnit { days, months, years }
+
+enum PolicyStatus { inforce, expired, lapsed, paidup }
 
 // enum Environment { dev, prod }
 enum SchemeType { anchor, prestige, aspire }

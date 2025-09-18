@@ -8,6 +8,9 @@ class PProductVm extends GetxController {
   static PProductVm get instance => Get.find();
 
   var policies = <Policy>[].obs;
+  var inforcePolicies = <Policy>[].obs;
+  var expiredPolicies = <Policy>[].obs;
+  var lapsedPolicies = <Policy>[].obs;
 
   var schemes = <Scheme>[].obs;
   var products = <Map<String, dynamic>>[].obs;
@@ -46,6 +49,20 @@ class PProductVm extends GetxController {
       (res) async {
         updateLoadingState(LoadingState.completed);
         policies.value = res.data?.policyDetails ?? [];
+        inforcePolicies.value = policies
+            .where(
+              (p) =>
+                  p.status!.contains(PolicyStatus.inforce.name.toUpperCase()),
+            )
+            .toList();
+        expiredPolicies.value = policies
+            .where((p) => p.status == PolicyStatus.expired.name.toUpperCase())
+            .toList();
+        lapsedPolicies.value = policies
+            .where(
+              (p) => p.status!.contains(PolicyStatus.lapsed.name.toUpperCase()),
+            )
+            .toList();
         await getMemberSchemes();
         pensionAppLogger.i(policies);
       },
@@ -91,16 +108,16 @@ class PProductVm extends GetxController {
       },
       {
         'name': 'Pension',
-        'type': ProductType.pension,
+        'type': ProductType.pensions,
         'num_of_account': schemes.length,
         'contribution': totalSchemeValue,
       },
-      {
-        'name': 'Corporate',
-        'type': ProductType.corporate,
-        'num_of_account': 0,
-        'contribution': 0.00,
-      },
+      // {
+      //   'name': 'Corporate',
+      //   'type': ProductType.corporate,
+      //   'num_of_account': 0,
+      //   'contribution': 0.00,
+      // },
       // {
       //   'name': 'Solutions for you',
       //   'type': 'Corporate',
