@@ -73,7 +73,7 @@ class AppTranslations extends Translations {
           'Project your future Pension Savings Outcome',
       'contribution_progress': 'Contribution progress',
       'none': 'None',
-      'settings': 'Settings',
+      'settings': 'Profile & Settings',
       'beneficiaries_tag': 'Contact @phone for any detail changes',
       'email': 'Email',
       'email_address': 'Email Address',
@@ -125,7 +125,7 @@ class AppTranslations extends Translations {
       'your_results': 'Your Results',
       'reset_calculator': 'Reset Calculator',
       'download_as_pdf': 'Download results as PDF',
-      'enable_notifications': 'Enable notifications',
+      'enable_face_id': 'Enable Face ID',
       'crop_photo': 'Crop Photo',
       'support_title': 'How may we help you ?',
       'support_desc':

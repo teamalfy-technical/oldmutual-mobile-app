@@ -14,7 +14,13 @@ class PChangePasswordPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('change_password'.tr)),
+      appBar: AppBar(
+        title: Text('change_password'.tr),
+        leading: SizedBox.shrink(),
+        actions: [
+          IconButton(onPressed: PHelperFunction.pop, icon: Icon(Icons.clear)),
+        ],
+      ),
       body: Obx(
         () => Form(
           key: ctrl.changePasswordFormKey,

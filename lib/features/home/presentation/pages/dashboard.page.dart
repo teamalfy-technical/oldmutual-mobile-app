@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:oldmutual_pensions_app/core/utils/utils.dart';
 import 'package:oldmutual_pensions_app/features/home/home.dart';
+import 'package:oldmutual_pensions_app/features/settings/presentation/pages/profile.settings.page.dart';
 import 'package:oldmutual_pensions_app/gen/assets.gen.dart';
 import 'package:oldmutual_pensions_app/shared/widgets/annotated.region.dart';
 
@@ -17,11 +18,12 @@ class PDashboardPage extends StatelessWidget {
       color: PAppColor.darkAppBarColor2,
       child: Text('manage'.tr),
     ),
-    Container(
-      alignment: Alignment.center,
-      color: PAppColor.darkAppBarColor2,
-      child: Text('more'.tr),
-    ),
+    PProfileSettingsPage(),
+    // Container(
+    //   alignment: Alignment.center,
+    //   color: PAppColor.darkAppBarColor2,
+    //   child: Text('more'.tr),
+    // ),
     // PFactSheetPage(),
     // PNotificationPage(),
     // PProfilePage(),
