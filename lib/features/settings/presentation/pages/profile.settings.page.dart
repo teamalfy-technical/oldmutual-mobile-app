@@ -90,7 +90,12 @@ class PProfileSettingsPage extends StatelessWidget {
                         : PAppColor.darkAppBarColor,
                   ),
                 ),
-                Divider(color: PAppColor.fillColor, height: 0),
+                Divider(
+                  color: PHelperFunction.isDarkMode(context)
+                      ? PAppColor.fillColor2
+                      : PAppColor.fillColor,
+                  height: PAppSize.s0,
+                ),
                 SettingsListTile(
                   leading: Assets.icons.faceId24.svg(
                     height: PAppSize.s24,

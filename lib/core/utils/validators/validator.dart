@@ -210,4 +210,50 @@ class PValidator {
   }
 
   // Add more here as need for your requirements
+
+  static bool validatePasswordLength(String? value) {
+    if (value == null || value.isEmpty) {
+      return false;
+    }
+
+    if (value.length < 8 || value.length > 16) {
+      return false;
+    }
+
+    if (value.contains(' ')) {
+      return false;
+    }
+
+    return true; // ✅ valid
+  }
+
+  static bool validatePasswordCapital(String? value) {
+    if (value == null || value.isEmpty) {
+      return false;
+    }
+
+    if (!RegExp(r'[A-Z]').hasMatch(value)) {
+      return false;
+    }
+
+    return true; // ✅ valid
+  }
+
+  static bool validatePasswordSpecialAndNumber(String? value) {
+    if (value == null || value.isEmpty) {
+      return false;
+    }
+
+    // At least one number
+    if (!RegExp(r'[0-9]').hasMatch(value)) {
+      return false;
+    }
+
+    // At least one special character (!@#$&*~)
+    if (!RegExp(r'[!@#\$&*~]').hasMatch(value)) {
+      return false;
+    }
+
+    return true; // ✅ valid
+  }
 }

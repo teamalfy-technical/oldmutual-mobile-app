@@ -15,6 +15,7 @@ import 'package:oldmutual_pensions_app/features/products/products.dart';
 import 'package:oldmutual_pensions_app/features/redemptions/presentation/pages/porting.page.dart';
 import 'package:oldmutual_pensions_app/features/redemptions/redemption.dart';
 import 'package:oldmutual_pensions_app/features/settings/presentation/pages/change.password.page.dart';
+import 'package:oldmutual_pensions_app/features/settings/presentation/pages/settings.success.page.dart';
 import 'package:oldmutual_pensions_app/features/settings/settings.dart';
 import 'package:oldmutual_pensions_app/features/splash/splash.dart';
 import 'package:oldmutual_pensions_app/features/statements/presentation/pages/statement.page.dart';
@@ -66,6 +67,17 @@ class AppPages {
     GetPage(
       name: _Paths.successPage,
       page: () => PCustomSuccessPage(
+        title: Get.arguments[0],
+        message: Get.arguments[1],
+        buttonTitle: Get.arguments[2],
+        onTap: Get.arguments[3],
+      ),
+      transition: Transition.native,
+      transitionDuration: const Duration(milliseconds: PAppSize.s700),
+    ),
+    GetPage(
+      name: _Paths.settingsSuccessPage,
+      page: () => PSettingsSuccessPage(
         title: Get.arguments[0],
         message: Get.arguments[1],
         buttonTitle: Get.arguments[2],

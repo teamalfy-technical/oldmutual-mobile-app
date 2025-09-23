@@ -37,6 +37,7 @@ abstract class Routes {
   static const changePasswordPage = _Paths.changePasswordPage;
   static const webviewPage = _Paths.webviewPage;
   static const successPage = _Paths.successPage;
+  static const settingsSuccessPage = _Paths.settingsSuccessPage;
 }
 
 abstract class _Paths {
@@ -73,4 +74,5 @@ abstract class _Paths {
   static const changePasswordPage = '/change-password-page';
   static const webviewPage = '/webview-page';
   static const successPage = '/success-page';
+  static const settingsSuccessPage = '/settings-success-page';
 }

@@ -12,6 +12,7 @@ class PSecureStorage {
 
   final String onboardingKey = 'onboarding';
   final String authResKey = 'auth_res_key';
+  final String tokenResKey = 'token_res_key';
   final String bioDataKey = 'bio_data_key';
   final String emailKey = 'email_key';
   final String deviceTokenKey = 'device_token_key';

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:oldmutual_pensions_app/core/utils/utils.dart';
-import 'package:oldmutual_pensions_app/features/auth/auth.dart';
 import 'package:oldmutual_pensions_app/features/notification/presentation/vm/notification.vm.dart';
 import 'package:oldmutual_pensions_app/features/profile/profile.dart';
 import 'package:oldmutual_pensions_app/routes/app.pages.dart';
@@ -11,6 +10,8 @@ class PSettingsVm extends GetxController {
   static PSettingsVm get instance => Get.find();
 
   final changePasswordFormKey = GlobalKey<FormState>();
+
+  var loading = LoadingState.completed.obs;
 
   final oldPasswordTEC = TextEditingController();
   final newPasswordTEC = TextEditingController();
@@ -48,33 +49,50 @@ class PSettingsVm extends GetxController {
 
   /// Function to change user password
   Future<void> changePassword() async {
-    showLoadingDialog(
-      context: context,
-      content: Text(
-        'change_password_msg'.tr,
-        style: Theme.of(context).textTheme.bodyMedium,
-      ),
+    PHelperFunction.switchScreen(
+      destination: Routes.settingsSuccessPage,
+      args: [
+        'password_changed_msg'.tr,
+        'success'.tr,
+        'done'.tr,
+        () {
+          PHelperFunction.pop();
+          PHelperFunction.pop();
+        },
+      ],
     );
-    final result = await authService.changePassword(
-      oldPassword: oldPasswordTEC.text.trim(),
-      newPassword: newPasswordTEC.text.trim(),
-      confirmPassword: confirmPasswordTEC.text.trim(),
-    );
-    result.fold(
-      (err) {
-        PHelperFunction.pop();
-        PPopupDialog(
-          context,
-        ).errorMessage(title: 'error'.tr, message: err.message);
-      },
-      (res) {
-        PHelperFunction.pop();
-        PHelperFunction.pop();
-        PPopupDialog(
-          context,
-        ).successMessage(title: 'success'.tr, message: res.message ?? '');
-      },
-    );
+
+    // loading(LoadingState.loading);
+    // final result = await authService.changePassword(
+    //   oldPassword: oldPasswordTEC.text.trim(),
+    //   newPassword: newPasswordTEC.text.trim(),
+    //   confirmPassword: confirmPasswordTEC.text.trim(),
+    // );
+    // result.fold(
+    //   (err) {
+    //     loading(LoadingState.error);
+    //     // PHelperFunction.pop();
+    //     PPopupDialog(
+    //       context,
+    //     ).errorMessage(title: 'error'.tr, message: err.message);
+    //   },
+    //   (res) {
+    //     loading(LoadingState.completed);
+    //     PHelperFunction.switchScreen(
+    //       destination: Routes.settingsSuccessPage,
+    //       args: [
+    //         'password_changed_msg'.tr,
+    //         'success'.tr,
+    //         'done'.tr,
+    //         () {
+    //           PHelperFunction.pop();
+    //           PHelperFunction.pop();
+    //         },
+    //       ],
+    //     );
+
+    //   },
+    // );
   }
 
   // Clear user data, token, etc.
@@ -141,10 +159,11 @@ class PSettingsVm extends GetxController {
   void clearCache(bool soft) {
     if (soft == false) {
       PSecureStorage().removeData(PSecureStorage().emailKey);
+      PSecureStorage().removeData(PSecureStorage().authResKey);
+      PSecureStorage().removeData(PSecureStorage().deviceTokenKey);
     }
     PSecureStorage().removeData(PSecureStorage().bioDataKey);
-    PSecureStorage().removeData(PSecureStorage().deviceTokenKey);
-    PSecureStorage().removeData(PSecureStorage().authResKey);
+    // PSecureStorage().removeData(PSecureStorage().tokenResKey);
   }
 
   Future<void> deleteAccount() async {

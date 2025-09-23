@@ -184,6 +184,10 @@ class AuthRepoImpl implements AuthRepo {
           emailOrPhone: emailOrPhone,
           password: password,
         );
+        // PSecureStorage().saveData<String?>(
+        //   PSecureStorage().tokenResKey,
+        //   res.data?.token,
+        // );
         PSecureStorage().saveAuthResponse(res.data?.toJson());
         return res;
       },
