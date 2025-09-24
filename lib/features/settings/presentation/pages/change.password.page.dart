@@ -83,9 +83,36 @@ class _PChangePasswordPageState extends State<PChangePasswordPage> {
                       ).symmetric(horizontal: PAppSize.s16),
                       PAppSize.s6.verticalSpace,
                       PCustomPasswordTextField(
+                        titleText: 'old_password'.tr,
+                        hintText: 'old_password'.tr,
+                        labelText: null,
+                        // contentPadding: EdgeInsets.zero,
+                        contentPadding: const EdgeInsets.symmetric(
+                          vertical: PAppSize.s10,
+                          horizontal: PAppSize.s0,
+                        ),
+                        border: inputBorder(),
+                        enabledBorder: inputBorder(),
+                        focusedBorder: inputBorder(),
+                        errorBorder: inputBorder(color: PAppColor.errorColor),
+                        focusedErrorBorder: inputBorder(
+                          color: PAppColor.errorColor,
+                        ),
+                        obscure: vm.obscureOldPassword.value,
+                        onObscureChanged: vm.onObscureOldPasswordChanged,
+                        controller: vm.oldPasswordTEC,
+                        onChanged: _validatePassword,
+                      ).symmetric(horizontal: PAppSize.s32),
+                      PAppSize.s10.verticalSpace,
+                      Divider(
+                        color: PAppColor.fillColor2,
+                        thickness: PAppSize.s0_8,
+                        // height: PAppSize.s0,
+                      ).symmetric(horizontal: PAppSize.s16),
+                      PAppSize.s6.verticalSpace,
+                      PCustomPasswordTextField(
                         titleText: 'password'.tr,
                         hintText: 'enter_password'.tr,
-
                         labelText: null,
                         // contentPadding: EdgeInsets.zero,
                         contentPadding: const EdgeInsets.symmetric(
