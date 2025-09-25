@@ -142,12 +142,12 @@ class PHomeVm extends GetxController {
         args: ['mvest'.tr, PAppConstant.mvestPensionsUrl],
       ),
     ),
-    Highlight(
-      title: 'forgot_login_details'.tr,
-      thumbnail: Assets.images.forgotDetailsImg.path,
-      image: Assets.images.forgotDetailsImg.path,
-      onLearnMoreTap: null,
-      onQuoteTap: null,
-    ),
+    // Highlight(
+    //   title: 'forgot_login_details'.tr,
+    //   thumbnail: Assets.images.forgotDetailsImg.path,
+    //   image: Assets.images.forgotDetailsImg.path,
+    //   onLearnMoreTap: null,
+    //   onQuoteTap: null,
+    // ),
   ];
 }

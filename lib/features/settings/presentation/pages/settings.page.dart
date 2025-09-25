@@ -37,10 +37,10 @@ class PSettingsPage extends StatelessWidget {
             trailing: Obx(
               () => CupertinoSwitch(
                 activeTrackColor: PAppColor.primary,
-                thumbColor: ctrl.notification.value
+                thumbColor: ctrl.faceId.value
                     ? PAppColor.whiteColor
                     : PAppColor.text100,
-                value: ctrl.notification.value,
+                value: ctrl.faceId.value,
                 onChanged: ctrl.onNotificationChanged,
               ),
             ),

@@ -48,6 +48,10 @@ class CatchApiErrorWrapperImpl implements CatchApiErrorWrapper {
           } else if (err.response?.statusCode == 403) {
             if (Get.currentRoute != Routes.loginPage) {
               // Get.put(PSettingsVm()).signout(soft: true);
+              errorMessage =
+                  err.response?.data['data']['error'] ??
+                  err.response?.data['message'] ??
+                  'Forbidden Access';
             } else {
               errorMessage =
                   err.response?.data['message'] ?? 'Forbidden Access';

@@ -5,7 +5,7 @@ import 'package:oldmutual_pensions_app/core/utils/utils.dart';
 class SettingsListTile extends StatelessWidget {
   const SettingsListTile({
     super.key,
-    required this.leading,
+    this.leading,
     required this.trailing,
     required this.title,
     required this.padding,
@@ -13,7 +13,7 @@ class SettingsListTile extends StatelessWidget {
   });
 
   final Function()? onTap;
-  final Widget leading;
+  final Widget? leading;
   final Widget trailing;
   final Widget title;
   final EdgeInsetsGeometry padding;
@@ -25,7 +25,12 @@ class SettingsListTile extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Row(children: [leading, PAppSize.s10.horizontalSpace, title]),
+          Row(
+            children: [
+              if (leading != null) ...[leading!, PAppSize.s10.horizontalSpace],
+              title,
+            ],
+          ),
           trailing,
         ],
       ),

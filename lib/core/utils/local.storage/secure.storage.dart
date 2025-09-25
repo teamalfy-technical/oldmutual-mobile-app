@@ -16,6 +16,7 @@ class PSecureStorage {
   final String bioDataKey = 'bio_data_key';
   final String emailKey = 'email_key';
   final String deviceTokenKey = 'device_token_key';
+  final String faceIDKey = 'enabled_face_id_key';
 
   /// Generic function to save data into [GetStorage]
   Future<void> saveData<T>(String key, T value) async =>
@@ -33,6 +34,9 @@ class PSecureStorage {
 
   Future<void> saveUserEmail<T>(T value) async =>
       await _storage.write(emailKey, value);
+
+  Future<void> saveFaceID<T>(T value) async =>
+      await _storage.write(faceIDKey, value);
 
   /// Generic function to save auth response into [GetStorage]
   // Future<void> saveBusinessProfile<T>(T value) async =>
@@ -52,6 +56,13 @@ class PSecureStorage {
       return null;
     }
     return _storage.read(emailKey);
+  }
+
+  bool get isFaceIdEnabled {
+    if (_storage.read(faceIDKey) == null) {
+      return false;
+    }
+    return _storage.read(faceIDKey);
   }
 
   /// Non-generic function to read auth response data from [GetStorage]

@@ -30,9 +30,11 @@ class HighlightWidget extends StatelessWidget {
                   decoration: BoxDecoration(
                     shape: BoxShape.circle,
                     gradient: LinearGradient(
-                      colors: index == vm.highlights.length - 1
-                          ? [Color(0xFFA7A9AC), Color(0xFFA7A9AC)]
-                          : [PAppColor.primaryDark, PAppColor.primary],
+                      colors:
+                          // index == vm.highlights.length - 1
+                          //     ? [Color(0xFFA7A9AC), Color(0xFFA7A9AC)]
+                          //     :
+                          [PAppColor.primaryDark, PAppColor.primary],
                     ), //
                   ),
                   child: Container(

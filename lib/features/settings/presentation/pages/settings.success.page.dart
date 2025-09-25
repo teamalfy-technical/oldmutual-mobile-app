@@ -24,6 +24,7 @@ class PSettingsSuccessPage extends StatelessWidget {
       backgroundColor: PHelperFunction.isDarkMode(context)
           ? PAppColor.darkBgColor
           : PAppColor.fillColor,
+      appBar: AppBar(title: null, leading: SizedBox.shrink()),
       body: PAnnotatedRegion(
         child: SafeArea(
           child: Column(
@@ -33,11 +34,12 @@ class PSettingsSuccessPage extends StatelessWidget {
                 color: PHelperFunction.isDarkMode(context)
                     ? PAppColor.darkAppBarColor
                     : PAppColor.whiteColor,
+                width: double.infinity,
                 child: Column(
                   children: [
-                    PAppSize.s80.verticalSpace,
+                    PAppSize.s30.verticalSpace,
                     Assets.icons.successIcon.svg(),
-                    PAppSize.s16.verticalSpace,
+                    PAppSize.s30.verticalSpace,
                     Text(
                       message,
                       textAlign: TextAlign.center,
@@ -56,7 +58,7 @@ class PSettingsSuccessPage extends StatelessWidget {
                       title,
                       textAlign: TextAlign.center,
                       style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                        fontWeight: FontWeight.w500,
+                        fontWeight: FontWeight.w400,
                         fontSize: PAppSize.s16,
                         color: PHelperFunction.isDarkMode(context)
                             ? PAppColor.whiteColor.withOpacityExt(PAppSize.s0_7)
@@ -82,6 +84,7 @@ class PSettingsSuccessPage extends StatelessWidget {
                 ),
                 child: PGradientButton(
                   label: buttonTitle ?? 'done'.tr,
+                  textColor: PAppColor.whiteColor,
                   showIcon: false,
                   width: PDeviceUtil.getDeviceWidth(context),
                   onTap: onTap,

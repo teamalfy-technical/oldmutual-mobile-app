@@ -4,7 +4,7 @@ import 'package:oldmutual_pensions_app/core/utils/utils.dart';
 import 'package:oldmutual_pensions_app/features/factsheet/factsheet.dart';
 import 'package:oldmutual_pensions_app/features/home/presentation/pages/home.view.old.dart';
 import 'package:oldmutual_pensions_app/features/home/presentation/vm/home.vm.dart';
-import 'package:oldmutual_pensions_app/features/more.services/presentation/pages/more.services.page.dart';
+import 'package:oldmutual_pensions_app/features/more/presentation/pages/more.page.dart';
 import 'package:oldmutual_pensions_app/gen/assets.gen.dart';
 import 'package:oldmutual_pensions_app/shared/widgets/annotated.region.dart';
 
@@ -18,7 +18,7 @@ class PHomePageOld extends StatelessWidget {
     PFactSheetPage(),
     // PNotificationPage(),
     // PProfilePage(),
-    PMoreServicesPage(),
+    PMorePage(),
   ];
 
   @override

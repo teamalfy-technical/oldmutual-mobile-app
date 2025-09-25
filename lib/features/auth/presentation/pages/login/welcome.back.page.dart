@@ -117,7 +117,8 @@ class _PWelcomeBackPageState extends State<PWelcomeBackPage>
 
                         PAppSize.s20.verticalSpace,
 
-                        if (ctrl.isBiometricAvailable.value &&
+                        if (PSecureStorage().isFaceIdEnabled &&
+                            ctrl.isBiometricAvailable.value &&
                             PSecureStorage().getAuthResponse() != null) ...[
                           ScaleTransition(
                             scale: _controller.drive(

@@ -33,6 +33,7 @@ abstract class Routes {
   static const futureValueCalcPage = _Paths.futureValueCalcPage;
   static const statementPage = _Paths.statementPage;
   static const settingsPage = _Paths.settingsPage;
+  static const profileSettingsPage = _Paths.profileSettingsPage;
   static const supportPage = _Paths.supportPage;
   static const changePasswordPage = _Paths.changePasswordPage;
   static const webviewPage = _Paths.webviewPage;
@@ -70,6 +71,7 @@ abstract class _Paths {
   static const futureValueCalcPage = '/future-value-calc-page';
   static const statementPage = '/statement-page';
   static const settingsPage = '/settings-page';
+  static const profileSettingsPage = '/profile-settings-page';
   static const supportPage = '/support-page';
   static const changePasswordPage = '/change-password-page';
   static const webviewPage = '/webview-page';

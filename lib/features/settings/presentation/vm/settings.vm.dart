@@ -23,6 +23,8 @@ class PSettingsVm extends GetxController {
       ? true.obs
       : false.obs;
 
+  var faceId = PSecureStorage().isFaceIdEnabled.obs;
+
   var submitting = LoadingState.completed.obs;
 
   var obscureOldPassword = true.obs;
@@ -37,6 +39,17 @@ class PSettingsVm extends GetxController {
       submitting.value = loadingState;
 
   final context = Get.context!;
+
+  onFaceIdToggled(bool? value) async {
+    if (faceId.value) {
+      await PSecureStorage().saveFaceID(false);
+      faceId.value = value ?? false;
+    } else {
+      await PSecureStorage().saveFaceID(true);
+      faceId.value = value ?? false;
+    }
+    pensionAppLogger.e(PSecureStorage().isFaceIdEnabled);
+  }
 
   onNotificationChanged(bool? value) async {
     if (notification.value) {
@@ -79,6 +92,7 @@ class PSettingsVm extends GetxController {
       },
       (res) {
         loading(LoadingState.completed);
+        clearFields();
         PHelperFunction.switchScreen(
           destination: Routes.settingsSuccessPage,
           args: [
@@ -93,6 +107,12 @@ class PSettingsVm extends GetxController {
         );
       },
     );
+  }
+
+  clearFields() {
+    oldPasswordTEC.clear();
+    newPasswordTEC.clear();
+    confirmPasswordTEC.clear();
   }
 
   // Clear user data, token, etc.

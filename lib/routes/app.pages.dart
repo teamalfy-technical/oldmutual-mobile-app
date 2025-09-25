@@ -15,6 +15,7 @@ import 'package:oldmutual_pensions_app/features/products/products.dart';
 import 'package:oldmutual_pensions_app/features/redemptions/presentation/pages/porting.page.dart';
 import 'package:oldmutual_pensions_app/features/redemptions/redemption.dart';
 import 'package:oldmutual_pensions_app/features/settings/presentation/pages/change.password.page.dart';
+import 'package:oldmutual_pensions_app/features/settings/presentation/pages/profile.settings.page.dart';
 import 'package:oldmutual_pensions_app/features/settings/presentation/pages/settings.success.page.dart';
 import 'package:oldmutual_pensions_app/features/settings/settings.dart';
 import 'package:oldmutual_pensions_app/features/splash/splash.dart';
@@ -159,6 +160,12 @@ class AppPages {
     GetPage(
       name: _Paths.homePage,
       page: () => PHomePageOld(),
+      transition: Transition.circularReveal,
+      transitionDuration: const Duration(milliseconds: PAppSize.s700),
+    ),
+    GetPage(
+      name: _Paths.profileSettingsPage,
+      page: () => PProfileSettingsPage(),
       transition: Transition.circularReveal,
       transitionDuration: const Duration(milliseconds: PAppSize.s700),
     ),

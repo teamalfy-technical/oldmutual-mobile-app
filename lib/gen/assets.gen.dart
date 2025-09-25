@@ -119,12 +119,18 @@ class $AssetsIconsGen {
   SvgGenImage get factsheetIcon =>
       const SvgGenImage('assets/icons/factsheet.icon.svg');
 
+  /// File path: assets/icons/faq.icon.svg
+  SvgGenImage get faqIcon => const SvgGenImage('assets/icons/faq.icon.svg');
+
   /// File path: assets/icons/fingerprint.svg
   SvgGenImage get fingerprint =>
       const SvgGenImage('assets/icons/fingerprint.svg');
 
   /// File path: assets/icons/ghana.flag.svg
   SvgGenImage get ghanaFlag => const SvgGenImage('assets/icons/ghana.flag.svg');
+
+  /// File path: assets/icons/help.icon.svg
+  SvgGenImage get helpIcon => const SvgGenImage('assets/icons/help.icon.svg');
 
   /// File path: assets/icons/home.icon.svg
   SvgGenImage get homeIcon => const SvgGenImage('assets/icons/home.icon.svg');
@@ -153,6 +159,10 @@ class $AssetsIconsGen {
   /// File path: assets/icons/lock.outline.svg
   SvgGenImage get lockOutline =>
       const SvgGenImage('assets/icons/lock.outline.svg');
+
+  /// File path: assets/icons/logout.icon.svg
+  SvgGenImage get logoutIcon =>
+      const SvgGenImage('assets/icons/logout.icon.svg');
 
   /// File path: assets/icons/manage.icon.svg
   SvgGenImage get manageIcon =>
@@ -206,6 +216,9 @@ class $AssetsIconsGen {
   /// File path: assets/icons/support.icon.svg
   SvgGenImage get supportIcon =>
       const SvgGenImage('assets/icons/support.icon.svg');
+
+  /// File path: assets/icons/terms.icon.svg
+  SvgGenImage get termsIcon => const SvgGenImage('assets/icons/terms.icon.svg');
 
   /// File path: assets/icons/top.logo.banner.svg
   SvgGenImage get topLogoBanner =>
@@ -268,8 +281,10 @@ class $AssetsIconsGen {
     faceId,
     face,
     factsheetIcon,
+    faqIcon,
     fingerprint,
     ghanaFlag,
+    helpIcon,
     homeIcon,
     infoIcon,
     invest,
@@ -278,6 +293,7 @@ class $AssetsIconsGen {
     linkBtnIcon,
     lockIcon,
     lockOutline,
+    logoutIcon,
     manageIcon,
     memberIcon,
     moneyIcon,
@@ -293,6 +309,7 @@ class $AssetsIconsGen {
     shield,
     successIcon,
     supportIcon,
+    termsIcon,
     topLogoBanner,
     trashRedIcon,
     userProfileIcon,

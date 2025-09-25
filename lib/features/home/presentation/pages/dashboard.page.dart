@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:oldmutual_pensions_app/core/utils/utils.dart';
 import 'package:oldmutual_pensions_app/features/home/home.dart';
-import 'package:oldmutual_pensions_app/features/settings/presentation/pages/profile.settings.page.dart';
+import 'package:oldmutual_pensions_app/features/more/more.services.dart';
 import 'package:oldmutual_pensions_app/gen/assets.gen.dart';
 import 'package:oldmutual_pensions_app/shared/widgets/annotated.region.dart';
 
@@ -18,7 +18,8 @@ class PDashboardPage extends StatelessWidget {
       color: PAppColor.darkAppBarColor2,
       child: Text('manage'.tr),
     ),
-    PProfileSettingsPage(),
+    PMorePage(),
+    // PProfileSettingsPage(),
     // Container(
     //   alignment: Alignment.center,
     //   color: PAppColor.darkAppBarColor2,
@@ -34,7 +35,30 @@ class PDashboardPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Obx(
       () => Scaffold(
-        backgroundColor: PAppColor.fillColor,
+        backgroundColor: PHelperFunction.isDarkMode(context)
+            ? PAppColor.darkBgColor
+            : PAppColor.fillColor,
+        appBar: AppBar(
+          title: Text(
+            ctrl.currentIndex.value == 1
+                ? 'manage'.tr
+                : ctrl.currentIndex.value == 2
+                ? 'more'.tr
+                : 'Hi ${PSecureStorage().getAuthResponse()?.name}',
+          ),
+          // title: Text('Hi Bongani'),
+          actions: [
+            IconButton(
+              onPressed: () {},
+              icon: Assets.icons.notificationIcon.svg(
+                height: PAppSize.s28,
+                color: PHelperFunction.isDarkMode(context)
+                    ? PAppColor.whiteColor
+                    : PAppColor.cardDarkColor,
+              ),
+            ),
+          ],
+        ),
         bottomNavigationBar: BottomNavigationBar(
           currentIndex: ctrl.currentIndex.value,
           onTap: ctrl.onPageChanged,

@@ -5,7 +5,6 @@ import 'package:oldmutual_pensions_app/core/utils/utils.dart';
 import 'package:oldmutual_pensions_app/features/dashboard/dashboard.dart';
 import 'package:oldmutual_pensions_app/features/home/home.dart';
 import 'package:oldmutual_pensions_app/features/products/products.dart';
-import 'package:oldmutual_pensions_app/gen/assets.gen.dart';
 import 'package:oldmutual_pensions_app/routes/app.pages.dart';
 import 'package:oldmutual_pensions_app/shared/shared.dart';
 
@@ -18,24 +17,6 @@ class PHomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: PHelperFunction.isDarkMode(context)
-          ? PAppColor.darkBgColor
-          : PAppColor.fillColor,
-      appBar: AppBar(
-        title: Text('Hi ${PSecureStorage().getAuthResponse()?.name}'),
-        // title: Text('Hi Bongani'),
-        actions: [
-          IconButton(
-            onPressed: () {},
-            icon: Assets.icons.notificationIcon.svg(
-              height: PAppSize.s28,
-              color: PHelperFunction.isDarkMode(context)
-                  ? PAppColor.whiteColor
-                  : PAppColor.cardDarkColor,
-            ),
-          ),
-        ],
-      ),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
