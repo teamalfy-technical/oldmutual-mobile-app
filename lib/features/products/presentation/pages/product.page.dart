@@ -30,7 +30,7 @@ class PProductsPage extends StatelessWidget {
               child: TabBar(
                 indicatorColor: PAppColor.transparentColor,
                 padding: EdgeInsets.only(top: PAppSize.s4),
-                indicatorPadding: EdgeInsetsGeometry.all(PAppSize.s10),
+                indicatorPadding: EdgeInsetsGeometry.all(PAppSize.s9),
                 indicatorWeight: 1,
                 dividerColor: PAppColor.transparentColor,
                 indicatorSize: TabBarIndicatorSize.tab,

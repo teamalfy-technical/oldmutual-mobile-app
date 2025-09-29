@@ -87,7 +87,9 @@ class PMorePage extends StatelessWidget {
                               ? PAppColor.whiteColor
                               : PAppColor.darkAppBarColor,
                         ),
-                        onTap: () {},
+                        onTap: () => PHelperFunction.switchScreen(
+                          destination: Routes.supportPage,
+                        ),
                         padding: EdgeInsets.only(
                           left: PAppSize.s14,
                           right: PAppSize.s24,

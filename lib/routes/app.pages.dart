@@ -11,7 +11,7 @@ import 'package:oldmutual_pensions_app/features/contribution.history/presentatio
 import 'package:oldmutual_pensions_app/features/future.value.calculator/future.value.calculator.dart';
 import 'package:oldmutual_pensions_app/features/home/home.dart';
 import 'package:oldmutual_pensions_app/features/more/more.services.dart';
-import 'package:oldmutual_pensions_app/features/more/presentation/pages/terms.conditions.page.dart';
+import 'package:oldmutual_pensions_app/features/more/presentation/pages/support.page.dart';
 import 'package:oldmutual_pensions_app/features/notification/notification.dart';
 import 'package:oldmutual_pensions_app/features/products/products.dart';
 import 'package:oldmutual_pensions_app/features/redemptions/presentation/pages/porting.page.dart';

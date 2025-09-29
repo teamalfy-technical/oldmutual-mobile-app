@@ -87,6 +87,9 @@ class $AssetsIconsGen {
   SvgGenImage get brightness =>
       const SvgGenImage('assets/icons/brightness.svg');
 
+  /// File path: assets/icons/call.icon.svg
+  SvgGenImage get callIcon => const SvgGenImage('assets/icons/call.icon.svg');
+
   /// File path: assets/icons/check.icon.svg
   SvgGenImage get checkIcon => const SvgGenImage('assets/icons/check.icon.svg');
 
@@ -271,6 +274,7 @@ class $AssetsIconsGen {
     benchmarkIcon,
     bottomLogoBanner,
     brightness,
+    callIcon,
     checkIcon,
     closeIcon,
     deleteIcon,
