@@ -142,9 +142,17 @@ class _PWelcomeBackPageState extends State<PWelcomeBackPage>
                         // (PDeviceUtil.getDeviceWidth(context) * 0.25)
                         //     .verticalSpace,
                         TextButton(
-                          onPressed: () => PHelperFunction.switchScreen(
-                            destination: Routes.loginPage,
-                          ),
+                          onPressed: () {
+                            if (PSecureStorage().getUserEmail() != null) {
+                              // clear cached user when user decides to login with different account
+                              PSecureStorage().removeData(
+                                PSecureStorage().emailKey,
+                              );
+                            }
+                            PHelperFunction.switchScreen(
+                              destination: Routes.loginPage,
+                            );
+                          },
                           child: Text(
                             'login_with_different_account'.tr,
                             style: Theme.of(context).textTheme.headlineSmall

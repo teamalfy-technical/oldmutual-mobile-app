@@ -39,6 +39,8 @@ abstract class Routes {
   static const webviewPage = _Paths.webviewPage;
   static const successPage = _Paths.successPage;
   static const settingsSuccessPage = _Paths.settingsSuccessPage;
+  static const userDetailsPage = _Paths.userDetailsPage;
+  static const termsAndConditionsPage = _Paths.termsAndConditionsPage;
 }
 
 abstract class _Paths {
@@ -77,4 +79,6 @@ abstract class _Paths {
   static const webviewPage = '/webview-page';
   static const successPage = '/success-page';
   static const settingsSuccessPage = '/settings-success-page';
+  static const userDetailsPage = '/user-details-page';
+  static const termsAndConditionsPage = '/terms-conditions-page';
 }

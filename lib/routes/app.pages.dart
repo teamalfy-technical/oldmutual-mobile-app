@@ -10,6 +10,8 @@ import 'package:oldmutual_pensions_app/features/beneficiary/presentation/pages/b
 import 'package:oldmutual_pensions_app/features/contribution.history/presentation/pages/contribution.history.page.dart';
 import 'package:oldmutual_pensions_app/features/future.value.calculator/future.value.calculator.dart';
 import 'package:oldmutual_pensions_app/features/home/home.dart';
+import 'package:oldmutual_pensions_app/features/more/more.services.dart';
+import 'package:oldmutual_pensions_app/features/more/presentation/pages/terms.conditions.page.dart';
 import 'package:oldmutual_pensions_app/features/notification/notification.dart';
 import 'package:oldmutual_pensions_app/features/products/products.dart';
 import 'package:oldmutual_pensions_app/features/redemptions/presentation/pages/porting.page.dart';
@@ -166,6 +168,18 @@ class AppPages {
     GetPage(
       name: _Paths.profileSettingsPage,
       page: () => PProfileSettingsPage(),
+      transition: Transition.circularReveal,
+      transitionDuration: const Duration(milliseconds: PAppSize.s700),
+    ),
+    GetPage(
+      name: _Paths.userDetailsPage,
+      page: () => PUserDetailPage(),
+      transition: Transition.circularReveal,
+      transitionDuration: const Duration(milliseconds: PAppSize.s700),
+    ),
+    GetPage(
+      name: _Paths.termsAndConditionsPage,
+      page: () => PTermsAndConditionsPage(),
       transition: Transition.circularReveal,
       transitionDuration: const Duration(milliseconds: PAppSize.s700),
     ),

@@ -45,10 +45,9 @@ class PMorePage extends StatelessWidget {
                         : PAppColor.whiteColor,
                   ),
                   child: SettingsListTile(
-                    onTap: () {},
-                    // => PHelperFunction.switchScreen(
-                    //   destination: Routes.changePasswordPage,
-                    // ),
+                    onTap: () => PHelperFunction.switchScreen(
+                      destination: Routes.userDetailsPage,
+                    ),
                     padding: EdgeInsets.only(
                       left: PAppSize.s14,
                       right: PAppSize.s24,
@@ -140,7 +139,9 @@ class PMorePage extends StatelessWidget {
                               ? PAppColor.whiteColor
                               : PAppColor.darkAppBarColor,
                         ),
-                        onTap: () {},
+                        onTap: () => PHelperFunction.switchScreen(
+                          destination: Routes.termsAndConditionsPage,
+                        ),
                         padding: EdgeInsets.only(
                           left: PAppSize.s14,
                           right: PAppSize.s24,
