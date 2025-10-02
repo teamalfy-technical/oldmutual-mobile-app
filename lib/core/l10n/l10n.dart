@@ -201,6 +201,7 @@ class AppTranslations extends Translations {
       'logout': 'Logout',
       'logout_msg': 'Are you sure you want to logout?',
       'no': 'No',
+      'finish': 'Finish',
       'yes_logout': 'Yes, Logout',
       'proceed': 'Proceed',
       'enter_reason': 'Enter reason',
@@ -209,6 +210,8 @@ class AppTranslations extends Translations {
       'go_back': 'Go Back',
       'confirm_delete': 'Confirm Delete',
       'confirm_delete_msg': 'Type “DELETE” to confirm delete of your \naccount',
+      'account_deleted_msg':
+          'Your account has been temporary deleted. You cant reactivate the account within 30 dys after which it is permanently deleted',
       'no_cancel': 'No, Cancel',
       'delete': 'Delete',
       'delete_acc_positive': 'I understand the risks, continue',

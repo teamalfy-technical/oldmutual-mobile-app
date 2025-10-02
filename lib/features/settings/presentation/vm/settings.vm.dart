@@ -142,21 +142,12 @@ class PSettingsVm extends GetxController {
   // Clear user data, token, etc.
   // Then navigate to login screen
   Future<void> signout({bool soft = false}) async {
-    if (!soft) {
-      showLoadingDialog(
-        context: context,
-        barrierDismissible: true,
-        content: Text(
-          'signing_out'.tr,
-          style: Theme.of(context).textTheme.bodyMedium,
-        ),
-      );
-    }
-
+    loading(LoadingState.loading);
     final result = await profileService.logout();
     result.fold(
       (err) {
-        PHelperFunction.pop();
+        loading(LoadingState.error);
+        // PHelperFunction.pop();
         if (err.message == 'You are not authenticated.') {
           clearCache(soft);
           PHelperFunction.switchScreen(
@@ -171,26 +162,22 @@ class PSettingsVm extends GetxController {
         // }
       },
       (res) {
-        PHelperFunction.pop();
+        loading(LoadingState.completed);
         clearCache(soft);
         if (soft) {
-          Future.delayed(Duration(seconds: 2), () {
-            // navigate to next screen
-            PHelperFunction.switchScreen(
-              destination: Routes.welcomeBackPage,
-              replace: true,
-            );
-          });
+          // navigate to next screen
+          PHelperFunction.switchScreen(
+            destination: Routes.welcomeBackPage,
+            replace: true,
+          );
         } else {
-          showSuccessDialog(context: context, title: res.message ?? '');
-          Future.delayed(Duration(seconds: 2), () {
-            PHelperFunction.pop();
-            // navigate to next screen
-            PHelperFunction.switchScreen(
-              destination: Routes.loginPage,
-              replace: true,
-            );
-          });
+          PHelperFunction.switchScreen(
+            destination: Routes.loginPage,
+            replace: true,
+          );
+          PPopupDialog(
+            context,
+          ).successMessage(title: 'success'.tr, message: res.message ?? '');
         }
       },
     );
@@ -211,6 +198,7 @@ class PSettingsVm extends GetxController {
   }
 
   Future<void> deleteAccount() async {
+    loading(LoadingState.loading);
     showLoadingDialog(
       context: context,
       barrierDismissible: true,
@@ -222,22 +210,29 @@ class PSettingsVm extends GetxController {
     final result = await profileService.deleteAccount();
     result.fold(
       (err) {
-        PHelperFunction.pop();
+        loading(LoadingState.error);
         PPopupDialog(
           context,
         ).errorMessage(title: 'error'.tr, message: err.message);
       },
       (res) {
+        loading(LoadingState.completed);
+        clearCache(false);
         PHelperFunction.pop();
-        showSuccessDialog(context: context, title: res.message ?? '');
-        Future.delayed(Duration(seconds: 2), () {
-          PHelperFunction.pop();
-          // navigate to next screen
-          PHelperFunction.switchScreen(
-            destination: Routes.loginPage,
-            replace: true,
-          );
-        });
+        PHelperFunction.switchScreen(
+          destination: Routes.settingsSuccessPage,
+          args: [
+            'account_deleted_msg'.tr,
+            'success'.tr,
+            'finish'.tr,
+            () {
+              PHelperFunction.switchScreen(
+                destination: Routes.loginPage,
+                replace: true,
+              );
+            },
+          ],
+        );
       },
     );
   }

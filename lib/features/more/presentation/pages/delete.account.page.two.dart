@@ -219,37 +219,41 @@ class PDeleteAccountPageTwo extends StatelessWidget {
 
                 PAppSize.s20.verticalSpace,
                 // Action buttons
-                Row(
-                  children: [
-                    Expanded(
-                      child: PGradientButton(
-                        label: 'confirm_delete'.tr,
-                        showIcon: false,
-                        textColor: PAppColor.whiteColor,
-                        width: PDeviceUtil.getDeviceWidth(context),
+                Obx(
+                  () => Row(
+                    children: [
+                      Expanded(
+                        child: PGradientButton(
+                          label: 'confirm_delete'.tr,
+                          showIcon: false,
+                          loading: vm.loading.value,
+                          textColor: PAppColor.whiteColor,
+                          width: PDeviceUtil.getDeviceWidth(context),
 
-                        onTap: () {
-                          if (formKey.currentState!.validate()) {
-                            vm.deleteAccount();
-                          }
-                        },
-                      ),
-                    ),
-                    PAppSize.s8.horizontalSpace,
-                    Expanded(
-                      child: OutlinedButton(
-                        onPressed: PHelperFunction.pop,
-                        style: OutlinedButton.styleFrom(
-                          foregroundColor: PAppColor.successDark,
-                          side: BorderSide(color: PAppColor.successDark),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(PAppSize.s20),
-                          ),
+                          onTap: () {
+                            if (formKey.currentState!.validate()) {
+                              vm.deleteAccount();
+                            }
+                          },
                         ),
-                        child: Text('no_cancel'.tr),
                       ),
-                    ),
-                  ],
+                      PAppSize.s8.horizontalSpace,
+                      Expanded(
+                        child: OutlinedButton(
+                          onPressed: PHelperFunction.pop,
+                          style: OutlinedButton.styleFrom(
+                            foregroundColor: PAppColor.successDark,
+                            side: BorderSide(color: PAppColor.successDark),
+                            minimumSize: Size.fromHeight(PAppSize.buttonHeight),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(PAppSize.s24),
+                            ),
+                          ),
+                          child: Text('no_cancel'.tr),
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               ],
             ),

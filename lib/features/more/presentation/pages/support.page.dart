@@ -31,7 +31,9 @@ class PSupportPage extends StatelessWidget {
                     : PAppColor.whiteColor,
                 border: Border.all(
                   width: PAppSize.s1,
-                  color: PAppColor.fillColor2,
+                  color: PHelperFunction.isDarkMode(context)
+                      ? PAppColor.transparentColor
+                      : PAppColor.fillColor2,
                 ),
               ),
               child: Theme(

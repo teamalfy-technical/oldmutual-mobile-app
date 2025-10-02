@@ -302,33 +302,37 @@ class PMorePage extends StatelessWidget {
 
                 PAppSize.s20.verticalSpace,
                 // Action buttons
-                Row(
-                  children: [
-                    Expanded(
-                      child: PGradientButton(
-                        label: 'yes_logout'.tr,
-                        showIcon: false,
-                        textColor: PAppColor.whiteColor,
-                        width: PDeviceUtil.getDeviceWidth(context),
-                        onTap: () => vm.signout(soft: true),
-                      ),
-                    ),
-                    PAppSize.s8.horizontalSpace,
-                    Expanded(
-                      child: OutlinedButton(
-                        onPressed: PHelperFunction.pop,
-
-                        style: OutlinedButton.styleFrom(
-                          foregroundColor: PAppColor.successDark,
-                          side: BorderSide(color: PAppColor.successDark),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(PAppSize.s20),
-                          ),
+                Obx(
+                  () => Row(
+                    children: [
+                      Expanded(
+                        child: PGradientButton(
+                          label: 'yes_logout'.tr,
+                          showIcon: false,
+                          loading: vm.loading.value,
+                          textColor: PAppColor.whiteColor,
+                          width: PDeviceUtil.getDeviceWidth(context),
+                          onTap: () => vm.signout(soft: false),
                         ),
-                        child: Text('no'.tr),
                       ),
-                    ),
-                  ],
+                      PAppSize.s8.horizontalSpace,
+                      Expanded(
+                        child: OutlinedButton(
+                          onPressed: PHelperFunction.pop,
+
+                          style: OutlinedButton.styleFrom(
+                            foregroundColor: PAppColor.successDark,
+                            side: BorderSide(color: PAppColor.successDark),
+                            minimumSize: Size.fromHeight(PAppSize.buttonHeight),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(PAppSize.s24),
+                            ),
+                          ),
+                          child: Text('no'.tr),
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               ],
             ),
