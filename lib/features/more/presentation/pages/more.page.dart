@@ -5,15 +5,18 @@ import 'package:oldmutual_pensions_app/core/utils/utils.dart';
 import 'package:oldmutual_pensions_app/features/settings/settings.dart';
 import 'package:oldmutual_pensions_app/gen/assets.gen.dart';
 import 'package:oldmutual_pensions_app/routes/app.pages.dart';
+import 'package:oldmutual_pensions_app/shared/shared.dart';
 
 class PMorePage extends StatelessWidget {
-  const PMorePage({super.key});
+  PMorePage({super.key});
 
   Widget divider() => Divider(
     color: PAppColor.fillColor2.withOpacityExt(PAppSize.s0_6),
     height: PAppSize.s0,
     thickness: PAppSize.s2,
   );
+
+  final vm = Get.put(PSettingsVm());
 
   @override
   Widget build(BuildContext context) {
@@ -206,7 +209,7 @@ class PMorePage extends StatelessWidget {
                           ? PAppColor.whiteColor
                           : PAppColor.darkAppBarColor,
                     ),
-                    onTap: () {},
+                    onTap: () => showLogoutModal(context),
                     padding: EdgeInsets.only(
                       left: PAppSize.s14,
                       right: PAppSize.s24,
@@ -232,6 +235,106 @@ class PMorePage extends StatelessWidget {
               vertical: PAppSize.s20,
             ),
       ),
+    );
+  }
+
+  /// Shows modal to logout user from app
+  /// params ;- context
+  Future<dynamic> showLogoutModal(BuildContext context) {
+    return showModalBottomSheet(
+      context: context,
+      backgroundColor: PHelperFunction.isDarkMode(context)
+          ? PAppColor.darkAppBarColor
+          : PAppColor.whiteColor,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(PAppSize.s24),
+      ),
+      builder: (context) {
+        return SafeArea(
+          child: Container(
+            padding: EdgeInsets.symmetric(
+              horizontal: PAppSize.s16,
+              vertical: PAppSize.s4,
+            ),
+            height: PDeviceUtil.getDeviceHeight(context) * 0.17,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                // Title section
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            '${'logout'.tr}?',
+                            style: Theme.of(context).textTheme.titleLarge
+                                ?.copyWith(
+                                  fontSize: PAppSize.s15.sp,
+                                  fontWeight: FontWeight.w600,
+                                ),
+                          ),
+                          Assets.icons.closeIcon
+                              .svg(
+                                color: PHelperFunction.isDarkMode(context)
+                                    ? PAppColor.whiteColor
+                                    : PAppColor.darkAppBarColor,
+                              )
+                              .onPressed(
+                                onTap: PHelperFunction.pop,
+                                radius: BorderRadius.circular(PAppSize.s20),
+                              ),
+                        ],
+                      ),
+                      PAppSize.s14.verticalSpace,
+                      Text(
+                        'logout_msg'.tr,
+                        style: Theme.of(context).textTheme.titleSmall?.copyWith(
+                          fontSize: PAppSize.s13.sp,
+                          fontWeight: FontWeight.w400,
+                        ),
+                      ),
+                    ],
+                  ).scrollable(),
+                ),
+
+                PAppSize.s20.verticalSpace,
+                // Action buttons
+                Row(
+                  children: [
+                    Expanded(
+                      child: PGradientButton(
+                        label: 'yes_logout'.tr,
+                        showIcon: false,
+                        textColor: PAppColor.whiteColor,
+                        width: PDeviceUtil.getDeviceWidth(context),
+                        onTap: () => vm.signout(soft: true),
+                      ),
+                    ),
+                    PAppSize.s8.horizontalSpace,
+                    Expanded(
+                      child: OutlinedButton(
+                        onPressed: PHelperFunction.pop,
+
+                        style: OutlinedButton.styleFrom(
+                          foregroundColor: PAppColor.successDark,
+                          side: BorderSide(color: PAppColor.successDark),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(PAppSize.s20),
+                          ),
+                        ),
+                        child: Text('no'.tr),
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ),
+        );
+      },
     );
   }
 }

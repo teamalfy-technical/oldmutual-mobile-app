@@ -75,6 +75,16 @@ class PValidator {
     return null;
   }
 
+  static String? validateDelete(value) {
+    if (value == null || value.isEmpty) {
+      return "Please type DELETE to proceed";
+    }
+    if (value.trim() != "DELETE") {
+      return "You must type DELETE to proceed";
+    }
+    return null; // valid input
+  }
+
   static String? validateDate(String? value) {
     if (value == null || value.isEmpty) {
       return 'Please enter a date';

@@ -217,6 +217,14 @@ class AppPages {
     GetPage(name: _Paths.changePasswordPage, page: () => PChangePasswordPage()),
     GetPage(name: _Paths.supportPage, page: () => PSupportPage()),
     GetPage(
+      name: _Paths.deleteAccountPageOne,
+      page: () => PDeleteAccountPageOne(),
+    ),
+    GetPage(
+      name: _Paths.deleteAccountPageTwo,
+      page: () => PDeleteAccountPageTwo(),
+    ),
+    GetPage(
       name: _Paths.webviewPage,
       page: () => PWebView(title: Get.arguments[0], url: Get.arguments[1]),
     ),

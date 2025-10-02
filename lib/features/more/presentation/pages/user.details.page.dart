@@ -1,0 +1,190 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
+import 'package:intl/intl.dart';
+import 'package:oldmutual_pensions_app/core/utils/utils.dart';
+import 'package:oldmutual_pensions_app/features/more/more.services.dart';
+import 'package:oldmutual_pensions_app/gen/assets.gen.dart';
+import 'package:oldmutual_pensions_app/routes/app.pages.dart';
+
+class PUserDetailPage extends StatelessWidget {
+  const PUserDetailPage({super.key});
+
+  Widget _buildListTile(BuildContext context, String title, String subTitle) {
+    return ListTile(
+      contentPadding: EdgeInsets.symmetric(horizontal: PAppSize.s0),
+      title: Text(
+        title,
+        style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+          fontSize: PAppSize.s14.sp,
+          fontWeight: FontWeight.w500,
+        ),
+      ),
+      subtitle: Text(
+        subTitle,
+        style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+          fontSize: PAppSize.s14.sp,
+          fontWeight: FontWeight.w400,
+        ),
+      ),
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: PHelperFunction.isDarkMode(context)
+          ? PAppColor.darkBgColor
+          : PAppColor.fillColor,
+      appBar: AppBar(title: Text('manage_personal_details'.tr)),
+      body: SafeArea(
+        child: Column(
+          children: [
+            // Personal Details
+            Container(
+              padding: EdgeInsets.all(PAppSize.s16),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(PAppSize.s20),
+                color: PHelperFunction.isDarkMode(context)
+                    ? PAppColor.darkAppBarColor
+                    : PAppColor.whiteColor,
+                border: Border.all(
+                  width: PAppSize.s1,
+                  color: PHelperFunction.isDarkMode(context)
+                      ? PAppColor.transparentColor
+                      : PAppColor.fillColor2,
+                ),
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    '${PSecureStorage().getAuthResponse()?.name}',
+                    style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                  PAppSize.s8.verticalSpace,
+                  PMoreListTitle(
+                    title: 'email'.tr,
+                    subTitle:
+                        PSecureStorage().getAuthResponse()?.email ??
+                        'not_applicable'.tr,
+                  ),
+                  Divider(height: PAppSize.s1),
+                  PMoreListTitle(
+                    title: 'phone_number'.tr,
+                    subTitle:
+                        PSecureStorage().getAuthResponse()?.phone ??
+                        'not_applicable'.tr,
+                  ),
+                  Divider(height: PAppSize.s1),
+                  PMoreListTitle(
+                    title: 'ghana_card_id'.tr,
+                    // PSecureStorage().getAuthResponse()?.ghanaCard ??
+                    subTitle: 'not_applicable'.tr,
+                  ),
+                  Divider(height: PAppSize.s1),
+                  PMoreListTitle(
+                    title: 'ssnit_number'.tr,
+                    subTitle:
+                        PSecureStorage().getAuthResponse()?.ssnitNumber ??
+                        'not_applicable'.tr,
+                  ),
+                  Divider(height: PAppSize.s1),
+                  PMoreListTitle(
+                    title: 'date_of_birth'.tr,
+                    subTitle: PFormatter.formatDate(
+                      dateFormat: DateFormat('MMMM d, y'),
+                      date: DateTime.parse(
+                        PSecureStorage().getAuthResponse()?.dob ??
+                            DateTime.now().toIso8601String(),
+                      ),
+                    ),
+                  ),
+                  Divider(height: PAppSize.s1),
+                  PMoreListTitle(
+                    title: 'tin'.tr.toUpperCase(),
+                    // PSecureStorage().getAuthResponse()?.tin ??
+                    subTitle: 'not_applicable'.tr,
+                  ),
+                  Divider(height: PAppSize.s1),
+                ],
+              ),
+            ),
+
+            PAppSize.s16.verticalSpace,
+
+            Align(
+              alignment: Alignment.bottomLeft,
+              child: Text(
+                'danger_zone'.tr,
+                style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                  fontSize: PAppSize.s14.sp,
+                  fontWeight: FontWeight.w400,
+                ),
+              ),
+            ),
+            PAppSize.s12.verticalSpace,
+
+            // Danger zone / Logout section
+            Container(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(PAppSize.s20),
+                color: PHelperFunction.isDarkMode(context)
+                    ? PAppColor.darkAppBarColor
+                    : PAppColor.whiteColor,
+                border: Border.all(
+                  width: PAppSize.s1,
+                  color: PHelperFunction.isDarkMode(context)
+                      ? PAppColor.transparentColor
+                      : PAppColor.fillColor2,
+                ),
+              ),
+              child:
+                  ListTile(
+                        contentPadding: EdgeInsets.symmetric(
+                          horizontal: PAppSize.s0,
+                          vertical: 0,
+                        ),
+                        leading: CircleAvatar(
+                          radius: PAppSize.s22,
+                          backgroundColor: PAppColor.redColor.withOpacityExt(
+                            PAppSize.s0_1,
+                          ),
+                          child: Assets.icons.trashRedIcon.svg(),
+                        ),
+                        title: Text(
+                          'delete_account'.tr,
+                          style: Theme.of(context).textTheme.bodyLarge
+                              ?.copyWith(
+                                fontSize: PAppSize.s14.sp,
+                                fontWeight: FontWeight.w600,
+                              ),
+                        ),
+                        // onTap: () => PHelperFunction.switchScreen(
+                        //   destination: Routes.deleteAccountPageOne,
+                        // ),
+                        trailing: Assets.icons.arrowForwardIos.svg(
+                          color: PHelperFunction.isDarkMode(context)
+                              ? PAppColor.whiteColor
+                              : PAppColor.darkAppBarColor,
+                        ),
+                      )
+                      .symmetric(
+                        horizontal: PAppSize.s16,
+                        vertical: PAppSize.s8,
+                      )
+                      .onPressed(
+                        onTap: () => PHelperFunction.switchScreen(
+                          destination: Routes.deleteAccountPageOne,
+                        ),
+                        radius: BorderRadius.circular(PAppSize.s20),
+                      ),
+            ),
+          ],
+        ).all(PAppSize.s20),
+      ),
+    );
+  }
+}

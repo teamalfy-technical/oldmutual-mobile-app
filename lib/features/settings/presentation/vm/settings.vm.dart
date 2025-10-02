@@ -14,6 +14,8 @@ class PSettingsVm extends GetxController {
 
   var loading = LoadingState.completed.obs;
 
+  final reasonTEC = TextEditingController();
+  final deleteAccountTEC = TextEditingController();
   final oldPasswordTEC = TextEditingController();
   final newPasswordTEC = TextEditingController();
   final confirmPasswordTEC = TextEditingController();
@@ -29,6 +31,28 @@ class PSettingsVm extends GetxController {
 
   var obscureOldPassword = true.obs;
   var obscureNewPassword = true.obs;
+
+  // List of available options
+  final List<String> options = [
+    "Found a better alternative",
+    "Poor customer service",
+    "Didn’t have the features I wanted",
+    "I’m leaving the country",
+    "Other",
+  ];
+
+  // Selected options
+  var selectedDeleteOptions = <String>{}.obs;
+
+  onDeleteOptionChanged(bool isSelected, String option) {
+    if (isSelected) {
+      selectedDeleteOptions.add(option);
+    } else {
+      selectedDeleteOptions.remove(option);
+    }
+
+    pensionAppLogger.e(selectedDeleteOptions);
+  }
 
   onObscureOldPasswordChanged() =>
       obscureOldPassword.value = !obscureOldPassword.value;

@@ -37,7 +37,9 @@ class PGradientButton extends StatelessWidget {
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(radius),
         gradient: LinearGradient(
-          colors: [PAppColor.primaryDark, PAppColor.primary],
+          colors: onTap == null
+              ? [PAppColor.greyColor, PAppColor.greyColor]
+              : [PAppColor.primaryDark, PAppColor.primary],
         ), // Match button shape
       ),
       child: ElevatedButton(

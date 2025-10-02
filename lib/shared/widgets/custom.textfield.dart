@@ -14,6 +14,7 @@ class PCustomTextField extends StatefulWidget {
   final int? maxLines;
   final int? maxLength;
   final String? prefixText;
+  final bool? alignLabelWithHint;
   final List<TextInputFormatter>? inputFormatters;
   final String? Function(String?)? validator;
   final Function(String)? onChanged;
@@ -34,6 +35,7 @@ class PCustomTextField extends StatefulWidget {
     this.prefixText,
     this.inputFormatters,
     this.maxLength,
+    this.alignLabelWithHint,
   });
 
   @override
@@ -77,6 +79,7 @@ class _PCustomTextFieldState extends State<PCustomTextField> {
       ),
       onChanged: widget.onChanged,
       decoration: InputDecoration(
+        alignLabelWithHint: widget.alignLabelWithHint,
         counter: SizedBox.shrink(),
         focusColor: widget.focusColor,
         prefixText: widget.prefixText,

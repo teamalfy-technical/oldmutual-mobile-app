@@ -41,6 +41,8 @@ abstract class Routes {
   static const settingsSuccessPage = _Paths.settingsSuccessPage;
   static const userDetailsPage = _Paths.userDetailsPage;
   static const termsAndConditionsPage = _Paths.termsAndConditionsPage;
+  static const deleteAccountPageOne = _Paths.deleteAccountPageOne;
+  static const deleteAccountPageTwo = _Paths.deleteAccountPageTwo;
 }
 
 abstract class _Paths {
@@ -81,4 +83,6 @@ abstract class _Paths {
   static const settingsSuccessPage = '/settings-success-page';
   static const userDetailsPage = '/user-details-page';
   static const termsAndConditionsPage = '/terms-conditions-page';
+  static const deleteAccountPageOne = '/delete-account-page-one';
+  static const deleteAccountPageTwo = '/delete-account-page-two';
 }
