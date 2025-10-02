@@ -262,7 +262,7 @@ class PMorePage extends StatelessWidget {
               horizontal: PAppSize.s16,
               vertical: PAppSize.s4,
             ),
-            height: PDeviceUtil.getDeviceHeight(context) * 0.17,
+            height: PDeviceUtil.getDeviceHeight(context) * 0.18,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -340,6 +340,7 @@ class PMorePage extends StatelessWidget {
                     ],
                   ),
                 ),
+                PAppSize.s4.verticalSpace,
               ],
             ),
           ),

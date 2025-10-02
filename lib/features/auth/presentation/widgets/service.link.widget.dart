@@ -12,7 +12,9 @@ class ServiceLinkWidget extends StatelessWidget {
     return Container(
       padding: EdgeInsets.all(PAppSize.s20),
       decoration: BoxDecoration(
-        color: PAppColor.darkAppBarColor,
+        color: PHelperFunction.isDarkMode(context)
+            ? PAppColor.darkAppBarColor
+            : PAppColor.fillColor,
         borderRadius: BorderRadius.circular(PAppSize.s20),
       ),
       child: Row(
@@ -20,11 +22,17 @@ class ServiceLinkWidget extends StatelessWidget {
         children: [
           Text(
             label,
-            style: Theme.of(
-              context,
-            ).textTheme.bodyLarge?.copyWith(color: PAppColor.textGrayColor),
+            style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+              color: PHelperFunction.isDarkMode(context)
+                  ? PAppColor.textGrayColor
+                  : PAppColor.darkAppBarColor,
+            ),
           ),
-          Assets.icons.linkBtnIcon.svg(),
+          Assets.icons.linkBtnIcon.svg(
+            color: PHelperFunction.isDarkMode(context)
+                ? PAppColor.whiteColor
+                : PAppColor.darkAppBarColor,
+          ),
         ],
       ),
     ).onPressed(onTap: onLinkTap, radius: BorderRadius.circular(PAppSize.s20));
