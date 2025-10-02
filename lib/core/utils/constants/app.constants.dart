@@ -36,7 +36,7 @@ class PAppConstant {
       'https://www.oldmutual.com.gh/personal/transition-plus-plan/';
   static const String educatorPlanUrl =
       'https://www.oldmutual.com.gh/personal/education-plan/';
-
   static const String retirementSalaryUrl =
       'https://www.oldmutual.com.gh/personal/old-mutual-retirement-salary/';
+  static const String faqUrl = 'https://www.oldmutual.com.gh/get-help/';
 }
