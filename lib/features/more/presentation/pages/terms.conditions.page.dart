@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:oldmutual_pensions_app/core/utils/utils.dart';
 import 'package:oldmutual_pensions_app/features/more/more.services.dart';
-import 'package:oldmutual_pensions_app/features/products/products.dart';
+import 'package:oldmutual_pensions_app/features/policy/policy.dart';
 
 class PTermsAndConditionsPage extends StatelessWidget {
   PTermsAndConditionsPage({super.key});
 
-  final vm = Get.put(PProductVm());
+  final vm = Get.put(PPolicyVm());
 
   @override
   Widget build(BuildContext context) {

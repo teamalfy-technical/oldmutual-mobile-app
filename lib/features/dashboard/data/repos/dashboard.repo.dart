@@ -4,8 +4,8 @@ import 'package:oldmutual_pensions_app/core/network/network.dart';
 import 'package:oldmutual_pensions_app/features/home/home.dart';
 
 abstract class DashboardRepo {
-  Future<Either<PFailure, ApiResponse<List<Scheme>>>> getMemberSchemes();
-  Future<Either<PFailure, ApiResponse<SelectedScheme>>>
+  Future<Either<PFailure, ApiResponse<List<SchemeModel>>>> getMemberSchemes();
+  Future<Either<PFailure, ApiResponse<SelectedSchemeModel>>>
   getSelectedMemberScheme({
     required String employerName,
     required String employerNumber,

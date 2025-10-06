@@ -6,6 +6,7 @@ import 'package:oldmutual_pensions_app/features/dashboard/dashboard.dart';
 import 'package:oldmutual_pensions_app/features/factsheet/factsheet.dart';
 import 'package:oldmutual_pensions_app/features/home/home.dart';
 import 'package:oldmutual_pensions_app/features/notification/notification.dart';
+import 'package:oldmutual_pensions_app/features/pension/pension.dart';
 import 'package:oldmutual_pensions_app/features/profile/profile.dart';
 import 'package:oldmutual_pensions_app/features/redemptions/redemption.dart';
 import 'package:oldmutual_pensions_app/features/statements/statements.dart';
@@ -41,6 +42,11 @@ class ServiceBinding implements Bindings {
     Get.lazyPut<DashboardService>(
       () => DashboardServiceImpl(),
       tag: (DashboardService).toString(),
+    );
+
+    Get.lazyPut<PensionService>(
+      () => PensionServiceImpl(),
+      tag: (PensionService).toString(),
     );
 
     Get.lazyPut<PolicyService>(

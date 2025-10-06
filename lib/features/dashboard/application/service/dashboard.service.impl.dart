@@ -8,12 +8,12 @@ final DashboardService dashboardService = Get.put(DashboardServiceImpl());
 
 class DashboardServiceImpl implements DashboardService {
   @override
-  Future<Either<PFailure, ApiResponse<List<Scheme>>>> getMemberSchemes() {
+  Future<Either<PFailure, ApiResponse<List<SchemeModel>>>> getMemberSchemes() {
     return homeRepo.getMemberSchemes();
   }
 
   @override
-  Future<Either<PFailure, ApiResponse<SelectedScheme>>>
+  Future<Either<PFailure, ApiResponse<SelectedSchemeModel>>>
   getSelectedMemberScheme({
     required String employerName,
     required String employerNumber,

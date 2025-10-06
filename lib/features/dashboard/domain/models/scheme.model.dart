@@ -1,4 +1,4 @@
-class Scheme {
+class SchemeModel {
   String? memberName;
   String? masterSchemeDescription;
   String? penTypeDescription;
@@ -17,7 +17,7 @@ class Scheme {
   String? sex;
   String? nationality;
 
-  Scheme({
+  SchemeModel({
     this.memberName,
     this.masterSchemeDescription,
     this.penTypeDescription,
@@ -36,7 +36,7 @@ class Scheme {
     this.nationality,
   });
 
-  Scheme.fromJson(Map<String, dynamic> json) {
+  SchemeModel.fromJson(Map<String, dynamic> json) {
     memberName = json['MemberName'];
     masterSchemeDescription = json['MasterSchemeDescription'];
     penTypeDescription = json['PenTypeDescription'];

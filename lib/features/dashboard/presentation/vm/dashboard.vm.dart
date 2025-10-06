@@ -9,9 +9,9 @@ import 'package:oldmutual_pensions_app/shared/shared.dart';
 class PDashboardVm extends GetxController {
   static PDashboardVm get instance => Get.find();
 
-  var schemes = <Scheme>[].obs;
+  var schemes = <SchemeModel>[].obs;
 
-  var selectedScheme = SelectedScheme().obs;
+  var selectedScheme = SelectedSchemeModel().obs;
 
   var loading = LoadingState.completed.obs;
   var selecting = LoadingState.completed.obs;
@@ -96,7 +96,7 @@ class PDashboardVm extends GetxController {
         ).errorMessage(title: 'error'.tr, message: err.message);
       },
       (res) async {
-        selectedScheme.value = res.data ?? SelectedScheme();
+        selectedScheme.value = res.data ?? SelectedSchemeModel();
         final updatedMember = PSecureStorage().getAuthResponse()?.copyWith(
           masterScheme: res.data?.masterScheme ?? '',
           schemeType: res.data?.schemeType ?? '',

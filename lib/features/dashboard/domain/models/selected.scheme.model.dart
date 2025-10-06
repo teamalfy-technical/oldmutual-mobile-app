@@ -1,4 +1,4 @@
-class SelectedScheme {
+class SelectedSchemeModel {
   int? id;
   String? name;
   String? memberNumber;
@@ -24,7 +24,7 @@ class SelectedScheme {
   String? masterScheme;
   String? schemeType;
 
-  SelectedScheme({
+  SelectedSchemeModel({
     this.id,
     this.name,
     this.memberNumber,
@@ -51,7 +51,7 @@ class SelectedScheme {
     this.schemeType,
   });
 
-  SelectedScheme.fromJson(Map<String, dynamic> json) {
+  SelectedSchemeModel.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     name = json['name'];
     memberNumber = json['member_number'];

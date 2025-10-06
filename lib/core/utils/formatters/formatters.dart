@@ -68,11 +68,41 @@ class PFormatter {
   // }
 
   /// --- format currency
-  static String formatCurrency({required double amount, String symbol = '₵'}) {
-    return NumberFormat.currency(
-      locale: 'en_GH',
-      symbol: symbol,
-    ).format(amount);
+  // static String formatCurrency({required double amount, String symbol = '₵'}) {
+  //   return NumberFormat.currency(
+  //     locale: 'en_GH',
+  //     symbol: symbol,
+  //   ).format(amount);
+  // }
+
+  static String formatCurrency({
+    required double amount,
+    String? symbol = '₵',
+    bool useSpaceSeparator = true,
+  }) {
+    // double value;
+    // if (amount == null) {
+    //   value = 0.0;
+    // } else if (amount is num) {
+    //   value = amount.toDouble();
+    // } else {
+    //   value = double.tryParse(amount.toString()) ?? 0.0;
+    // }
+
+    // Format with comma grouping and two decimals
+    String formatted = NumberFormat("#,##0.00", "en_US").format(amount);
+
+    // Replace commas with spaces if required
+    if (useSpaceSeparator) {
+      formatted = formatted.replaceAll(',', ' ');
+    }
+
+    // Add symbol if provided
+    if (symbol != null && symbol.isNotEmpty) {
+      return "$symbol$formatted";
+    }
+
+    return formatted;
   }
 
   static String formatMoneyValue(double value) {

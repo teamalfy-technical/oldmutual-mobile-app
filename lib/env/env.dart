@@ -35,6 +35,13 @@ abstract class Env {
   ///
   ///
 
+  /// [PensionBaseUrl] user endpoint
+  @EnviedField(
+    defaultValue: 'https://app.oldmutual.com.gh/api',
+    obfuscate: true,
+  )
+  static final String pensionsBaseUrl = _Env.pensionsBaseUrl;
+
   /// [SelfServiceBaseUrl] user endpoint
   @EnviedField(
     defaultValue:
@@ -256,7 +263,11 @@ abstract class Env {
   /// -------------------- Notifications Endpoints Ends Here ------------------------- ///
   ///
   ///
-  /// -------------------- Scheme Endpoints Starts Here ------------------------- ///
+  /// -------------------- Pension Endpoints Starts Here ------------------------- ///
+  ///
+
+  @EnviedField(defaultValue: '/pensions-summary', obfuscate: true)
+  static final String getPensionSummary = _Env.getPensionSummary;
 
   /// [GetMemberSchemes] endpoint
   @EnviedField(defaultValue: '/member/schemes', obfuscate: true)
@@ -266,7 +277,7 @@ abstract class Env {
   @EnviedField(defaultValue: '/member/select-scheme', obfuscate: true)
   static final String getSelectedMemberScheme = _Env.getSelectedMemberScheme;
 
-  /// -------------------- Scheme Endpoints Ends Here ------------------------- ///
+  /// -------------------- Pension Endpoints Ends Here ------------------------- ///
   ///
   ///
   /// -------------------- Performance Endpoints Starts Here ------------------------- ///

@@ -7,13 +7,14 @@ import 'package:oldmutual_pensions_app/features/auth/presentation/pages/signup/c
 import 'package:oldmutual_pensions_app/features/auth/presentation/pages/verify.otp.page.dart';
 import 'package:oldmutual_pensions_app/features/beneficiary/presentation/pages/add.beneficiary.page.dart';
 import 'package:oldmutual_pensions_app/features/beneficiary/presentation/pages/beneficiary.page.dart';
-import 'package:oldmutual_pensions_app/features/contribution.history/presentation/pages/contribution.history.page.dart';
+import 'package:oldmutual_pensions_app/features/contribution.history/contribution.history.dart';
 import 'package:oldmutual_pensions_app/features/future.value.calculator/future.value.calculator.dart';
 import 'package:oldmutual_pensions_app/features/home/home.dart';
 import 'package:oldmutual_pensions_app/features/more/more.services.dart';
 import 'package:oldmutual_pensions_app/features/more/presentation/pages/support.page.dart';
 import 'package:oldmutual_pensions_app/features/notification/notification.dart';
-import 'package:oldmutual_pensions_app/features/products/products.dart';
+import 'package:oldmutual_pensions_app/features/pension/pension.dart';
+import 'package:oldmutual_pensions_app/features/policy/policy.dart';
 import 'package:oldmutual_pensions_app/features/redemptions/presentation/pages/porting.page.dart';
 import 'package:oldmutual_pensions_app/features/redemptions/redemption.dart';
 import 'package:oldmutual_pensions_app/features/settings/presentation/pages/change.password.page.dart';
@@ -141,24 +142,49 @@ class AppPages {
       // transition: Transition.circularReveal,
       transitionDuration: const Duration(milliseconds: PAppSize.s450),
     ),
+
+    /// Policy Pages
     GetPage(
       name: _Paths.productsPage,
-      page: () => PProductsPage(),
+      page: () => PPolicyPage(),
       transition: Transition.circularReveal,
       transitionDuration: const Duration(milliseconds: PAppSize.s450),
     ),
     GetPage(
-      name: _Paths.productDetailPage,
-      page: () => PRetailOverviewPage(product: Get.arguments),
+      name: _Paths.policyOverviewPage,
+      page: () => PPolicyOverviewPage(product: Get.arguments),
       transition: Transition.circularReveal,
       transitionDuration: const Duration(milliseconds: PAppSize.s450),
     ),
     GetPage(
-      name: _Paths.shortTermSavingsPage,
-      page: () => PRetailDetailPage(policy: Get.arguments),
+      name: _Paths.policyDetailPage,
+      page: () => PPolicyDetailPage(policy: Get.arguments),
       transition: Transition.circularReveal,
       transitionDuration: const Duration(milliseconds: PAppSize.s450),
     ),
+
+    /// Pensions Pages
+    GetPage(
+      name: _Paths.pensionOverviewPage,
+      page: () => PPensionOverviewPage(product: Get.arguments),
+      transition: Transition.circularReveal,
+      transitionDuration: const Duration(milliseconds: PAppSize.s450),
+    ),
+
+    GetPage(
+      name: _Paths.pensionDetailPage,
+      page: () => PPensionDetailPage(scheme: Get.arguments),
+      transition: Transition.circularReveal,
+      transitionDuration: const Duration(milliseconds: PAppSize.s450),
+    ),
+
+    GetPage(
+      name: _Paths.contributionsPage,
+      page: () => PContributionsPage(),
+      transition: Transition.circularReveal,
+      transitionDuration: const Duration(milliseconds: PAppSize.s450),
+    ),
+
     GetPage(
       name: _Paths.homePage,
       page: () => PHomePageOld(),

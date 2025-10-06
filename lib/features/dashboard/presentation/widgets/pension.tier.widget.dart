@@ -9,7 +9,7 @@ class PensionTierWidget extends StatelessWidget {
   final Function()? onTap;
   const PensionTierWidget({super.key, required this.scheme, this.onTap});
 
-  final Scheme scheme;
+  final SchemeModel scheme;
 
   @override
   Widget build(BuildContext context) {

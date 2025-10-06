@@ -51,7 +51,6 @@ class ContributionHistoryDsImpl implements ContributionHistoryDs {
     return await asyncFunctionWrapper.handleAsyncNetworkCall(() async {
       final res = await apiService.callService(
         requestType: RequestType.get,
-
         endPoint: Env.getContributionsSummary,
       );
       return ApiResponse<ContributionSummary>.fromJson(

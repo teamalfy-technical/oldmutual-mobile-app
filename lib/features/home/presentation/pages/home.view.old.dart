@@ -294,7 +294,7 @@ class PHomeViewOld extends StatelessWidget {
                       Text(
                         // ctrl.summmary.value.totalContributions.toString(),
                         PFormatter.formatCurrency(
-                          amount: ctrl.summmary.value.totalContributions ?? 0,
+                          amount: ctrl.summary.value.totalContributions ?? 0,
                         ),
                         style: Theme.of(context).textTheme.titleMedium
                             ?.copyWith(
@@ -308,9 +308,9 @@ class PHomeViewOld extends StatelessWidget {
                             : false,
                       ),
                       PAppSize.s4.verticalSpace,
-                      if (ctrl.summmary.value.lastContributionDate != null)
+                      if (ctrl.summary.value.lastContributionDate != null)
                         Text(
-                          'Last contribution date ${PFormatter.formatDate(dateFormat: DateFormat('dd/MM/yyyy'), date: DateTime.parse(ctrl.summmary.value.lastContributionDate ?? DateTime.now().toIso8601String()))}',
+                          'Last contribution date ${PFormatter.formatDate(dateFormat: DateFormat('dd/MM/yyyy'), date: DateTime.parse(ctrl.summary.value.lastContributionDate ?? DateTime.now().toIso8601String()))}',
                           style: Theme.of(context).textTheme.bodySmall
                               ?.copyWith(
                                 fontSize: PAppSize.s14,
@@ -332,7 +332,7 @@ class PHomeViewOld extends StatelessWidget {
                         title: 'accrued_interest'.tr,
                         loading: ctrl.loading.value,
                         subTitle: PFormatter.formatCurrency(
-                          amount: ctrl.summmary.value.totalInterest ?? 0,
+                          amount: ctrl.summary.value.totalInterest ?? 0,
                         ),
                         onTap: () {},
                       ),
@@ -343,7 +343,7 @@ class PHomeViewOld extends StatelessWidget {
                         title: 'total_redemptions'.tr,
                         loading: ctrl.loading.value,
                         subTitle: PFormatter.formatCurrency(
-                          amount: ctrl.summmary.value.totalRedemption ?? 0,
+                          amount: ctrl.summary.value.totalRedemption ?? 0,
                         ),
                         onTap: () {},
                       ),

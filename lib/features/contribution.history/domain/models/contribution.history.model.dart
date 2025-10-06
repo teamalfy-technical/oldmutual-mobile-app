@@ -5,10 +5,9 @@ class ContributionHistory {
   ContributionHistory({this.transactionHistory, this.memberClaims});
 
   ContributionHistory.fromJson(Map<String, dynamic> json) {
-    transactionHistory =
-        json['transaction_history'] != null
-            ? TransactionHistory.fromJson(json['transaction_history'])
-            : null;
+    transactionHistory = json['transaction_history'] != null
+        ? TransactionHistory.fromJson(json['transaction_history'])
+        : null;
     if (json['member_claims'] != null) {
       memberClaims = <Null>[];
       json['member_claims'].forEach((v) {
@@ -32,7 +31,7 @@ class ContributionHistory {
 
 class TransactionHistory {
   String? status;
-  int? accountValue;
+  double? accountValue;
   double? totalContributionTally;
   double? employerContribution;
   double? transferReceived;
@@ -61,7 +60,7 @@ class TransactionHistory {
 
   TransactionHistory.fromJson(Map<String, dynamic> json) {
     status = json['status'];
-    accountValue = json['account_value'];
+    accountValue = json['account_value']?.toDouble();
     totalContributionTally = json['total_contribution_tally']?.toDouble();
     employerContribution = json['employer_contribution']?.toDouble();
     transferReceived = json['transfer_received']?.toDouble();

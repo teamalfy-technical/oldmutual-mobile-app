@@ -27,7 +27,7 @@ class PValidator {
     }
 
     final totalAmount =
-        Get.put(PContributionHistoryVm()).summmary.value.currentValue ?? 0;
+        Get.put(PContributionHistoryVm()).summary.value.currentValue ?? 0;
     if (number > totalAmount) {
       // Replace 100 with your desired max value
       return 'Amount cannot be greater than ${PFormatter.formatCurrency(amount: totalAmount)}';

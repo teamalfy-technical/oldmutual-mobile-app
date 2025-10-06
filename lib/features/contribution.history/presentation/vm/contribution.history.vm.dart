@@ -10,26 +10,25 @@ class PContributionHistoryVm extends GetxController {
 
   onAllChanged(bool? value) => all.value = value ?? false;
 
-  var summmary = ContributionSummary().obs;
+  var summary = ContributionSummary().obs;
   var history = ContributionHistory().obs;
   var contributions = <Contribution>[].obs;
   var contributionYears = <ContributedYear>[].obs;
-  var contributionMonths =
-      [
-        'none'.tr,
-        '1',
-        '2',
-        '3',
-        '4',
-        '5',
-        '6',
-        '7',
-        '8',
-        '9',
-        '10',
-        '11',
-        '12',
-      ].obs;
+  var contributionMonths = [
+    'none'.tr,
+    '1',
+    '2',
+    '3',
+    '4',
+    '5',
+    '6',
+    '7',
+    '8',
+    '9',
+    '10',
+    '11',
+    '12',
+  ].obs;
   ContributedYear? selectedYear;
   String? selectedMonth;
 
@@ -62,12 +61,12 @@ class PContributionHistoryVm extends GetxController {
         ).errorMessage(title: 'error'.tr, message: err.message);
       },
       (res) async {
-        updateLoadingState(LoadingState.completed);
-        summmary.value = res.data ?? ContributionSummary();
+        // updateLoadingState(LoadingState.completed);
+        summary.value = res.data ?? ContributionSummary();
+        await getContributedYears();
       },
     );
-    // }
-    await getAllMonthlyContributions();
+    // await getAllMonthlyContributions();
   }
 
   /// Function to get all contribution years
@@ -81,7 +80,7 @@ class PContributionHistoryVm extends GetxController {
           context,
         ).errorMessage(title: 'error'.tr, message: err.message);
       },
-      (res) {
+      (res) async {
         // updateLoadingState(LoadingState.completed);
 
         res.data?.insert(
@@ -96,6 +95,8 @@ class PContributionHistoryVm extends GetxController {
         selectedYear = res.data?.first;
         selectedMonth = contributionMonths.first;
         contributionYears.value = res.data ?? [];
+
+        await getAllContributions();
       },
     );
   }
@@ -108,15 +109,15 @@ class PContributionHistoryVm extends GetxController {
 
   @override
   void onInit() {
-    if (summmary.value.isEmpty) {
-      updateLoadingState(LoadingState.loading);
-    }
+    // if (summary.value.isEmpty) {
+    //   updateLoadingState(LoadingState.loading);
+    // }
     super.onInit();
   }
 
   @override
   onClose() {
-    summmary.value = ContributionSummary();
+    summary.value = ContributionSummary();
     history.value = ContributionHistory();
     resetFilters();
     super.onClose();
@@ -137,7 +138,7 @@ class PContributionHistoryVm extends GetxController {
         updateLoadingState(LoadingState.completed);
 
         history.value = res.data ?? ContributionHistory();
-        await getContributedYears();
+        await getAllMonthlyContributions();
       },
     );
   }
@@ -156,7 +157,6 @@ class PContributionHistoryVm extends GetxController {
       (res) async {
         updateLoadingState(LoadingState.completed);
         contributions.value = res.data ?? [];
-        await getAllContributions();
       },
     );
   }
@@ -172,8 +172,11 @@ class PContributionHistoryVm extends GetxController {
     }
     updateLoadingState(LoadingState.loading);
     final result = await contributionHistoryService.filterContributions(
-      year: selectedYear?.fundYear.toString() ?? DateTime.now().year.toString(),
-      month: selectedMonth ?? DateTime.now().month.toString(),
+      year: selectedYear?.fundYear == 'none'.tr
+          ? ''
+          : selectedYear?.fundYear ?? DateTime.now().year.toString(),
+      month: '',
+      // month: selectedMonth ?? DateTime.now().month.toString(),
     );
     result.fold(
       (err) {

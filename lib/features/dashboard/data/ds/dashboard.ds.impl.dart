@@ -9,21 +9,21 @@ final DashboardDs homeDs = Get.put(DashboardDsImpl());
 
 class DashboardDsImpl implements DashboardDs {
   @override
-  Future<ApiResponse<List<Scheme>>> getMemberSchemes() async {
+  Future<ApiResponse<List<SchemeModel>>> getMemberSchemes() async {
     return await asyncFunctionWrapper.handleAsyncNetworkCall(() async {
       final res = await apiService.callService(
         requestType: RequestType.get,
         endPoint: Env.getMemberSchemes,
       );
-      return ApiResponse<List<Scheme>>.fromJson(
+      return ApiResponse<List<SchemeModel>>.fromJson(
         res,
-        (data) => (data as List).map((e) => Scheme.fromJson(e)).toList(),
+        (data) => (data as List).map((e) => SchemeModel.fromJson(e)).toList(),
       );
     });
   }
 
   @override
-  Future<ApiResponse<SelectedScheme>> getSelectedMemberScheme({
+  Future<ApiResponse<SelectedSchemeModel>> getSelectedMemberScheme({
     required String employerName,
     required String employerNumber,
     required String ssnitNumber,
@@ -57,9 +57,9 @@ class DashboardDsImpl implements DashboardDs {
         endPoint: Env.getSelectedMemberScheme,
         payload: payload,
       );
-      return ApiResponse<SelectedScheme>.fromJson(
+      return ApiResponse<SelectedSchemeModel>.fromJson(
         res,
-        (data) => SelectedScheme.fromJson(data),
+        (data) => SelectedSchemeModel.fromJson(data),
       );
     });
   }
