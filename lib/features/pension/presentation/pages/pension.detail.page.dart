@@ -194,17 +194,21 @@ class _PPensionDetailPageState extends State<PPensionDetailPage> {
                                   ? PAppColor.successLight
                                   : PAppColor.successDark,
                             ),
-                            onTap: () {},
+                            onTap: () => PHelperFunction.switchScreen(
+                              destination: Routes.redemptionPage,
+                            ),
                           ),
                           PAppSize.s8.horizontalSpace,
                           QuickActionWidget(
-                            label: 'beneificiaries'.tr,
+                            label: 'beneficiaries'.tr,
                             icon: Assets.icons.person.svg(
                               color: PHelperFunction.isDarkMode(context)
                                   ? PAppColor.successLight
                                   : PAppColor.successDark,
                             ),
-                            onTap: () {},
+                            onTap: () => PHelperFunction.switchScreen(
+                              destination: Routes.beneficiariesPage,
+                            ),
                           ),
                         ],
                       ).scrollable(scrollDirection: Axis.horizontal),

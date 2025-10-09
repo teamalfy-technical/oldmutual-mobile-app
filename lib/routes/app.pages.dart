@@ -5,8 +5,8 @@ import 'package:oldmutual_pensions_app/features/auth/presentation/pages/forgot.p
 import 'package:oldmutual_pensions_app/features/auth/presentation/pages/login/welcome.back.page.dart';
 import 'package:oldmutual_pensions_app/features/auth/presentation/pages/signup/create.password.page.dart';
 import 'package:oldmutual_pensions_app/features/auth/presentation/pages/verify.otp.page.dart';
+import 'package:oldmutual_pensions_app/features/beneficiary/beneficiary.dart';
 import 'package:oldmutual_pensions_app/features/beneficiary/presentation/pages/add.beneficiary.page.dart';
-import 'package:oldmutual_pensions_app/features/beneficiary/presentation/pages/beneficiary.page.dart';
 import 'package:oldmutual_pensions_app/features/contribution.history/contribution.history.dart';
 import 'package:oldmutual_pensions_app/features/future.value.calculator/future.value.calculator.dart';
 import 'package:oldmutual_pensions_app/features/home/home.dart';
@@ -217,7 +217,7 @@ class AppPages {
     ),
     GetPage(name: _Paths.redemptionPage, page: () => PRedemptionPage()),
     GetPage(name: _Paths.portingPage, page: () => PPortingPage()),
-    GetPage(name: _Paths.beneficiariesPage, page: () => PBeneficiaryPage()),
+    GetPage(name: _Paths.beneficiariesPage, page: () => PBeneficiaryListPage()),
     GetPage(
       name: _Paths.manageBeneficiaryPage,
       page: () => PManageBeneficiaryPage(
@@ -236,7 +236,7 @@ class AppPages {
 
     GetPage(
       name: _Paths.futureValueCalcPage,
-      page: () => PFutureValueCalculatorPage(),
+      page: () => PFutureValueCalcPage(),
       // page: () => PFutureValueCalcPage(),
     ),
     GetPage(name: _Paths.statementPage, page: () => PStatementPage()),
