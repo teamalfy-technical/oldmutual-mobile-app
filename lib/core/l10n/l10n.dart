@@ -422,6 +422,8 @@ class AppTranslations extends Translations {
       'address': 'Address',
       'percentage_split': 'Percentage split',
       'beneficiary_name': 'Beneficiary name',
+      'no_data_found': 'No data found',
+      'performance_factsheet': 'Performance Factsheet',
       'see_parameter_explanation': 'See explanation of parameters',
     },
     'hi_IN': {'app_name': 'Pensions App'},

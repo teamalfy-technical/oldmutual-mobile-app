@@ -39,163 +39,256 @@ class _PFactSheetPageState extends State<PFactSheetPage> {
             )
         ? SchemeType.aspire.name.toUpperCase()
         : isNotEmpty &&
-            ctrl.performances[0].scheme!.contains(
-              SchemeType.prestige.name.toUpperCase(),
-            )
+              ctrl.performances[0].scheme!.contains(
+                SchemeType.prestige.name.toUpperCase(),
+              )
         ? SchemeType.prestige.name.toUpperCase()
         : SchemeType.anchor.name.toLowerCase();
   }
 
   @override
   Widget build(BuildContext context) {
-    int lowestYear =
-        ctrl.performances.isEmpty
-            ? DateTime.now().year - 5
-            : ctrl.performances
-                .map((e) => e.year ?? 0)
-                .reduce((a, b) => a < b ? a : b);
+    int lowestYear = ctrl.performances.isEmpty
+        ? DateTime.now().year - 5
+        : ctrl.performances
+              .map((e) => e.year ?? 0)
+              .reduce((a, b) => a < b ? a : b);
 
     return Scaffold(
+      backgroundColor: PHelperFunction.isDarkMode(context)
+          ? PAppColor.darkBgColor
+          : PAppColor.fillColor,
       appBar: AppBar(
-        leading: SizedBox.shrink(),
-        title: Text('factsheet_title'.tr),
+        title: Text('performance_factsheet'.tr),
+        actions: [
+          IconButton(
+            onPressed: () {},
+            icon: Assets.icons.downloadIcon.svg(
+              color: PHelperFunction.isDarkMode(context)
+                  ? PAppColor.whiteColor
+                  : PAppColor.blackColor,
+            ),
+          ),
+        ],
       ),
       body: Obx(
         () => SafeArea(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              PPageTagWidget(
-                tag: 'factsheet_hint'.tr,
-                textAlign: TextAlign.start,
-                horizontalPadding: PAppSize.s32,
-              ),
               Expanded(
                 child: RefreshIndicator(
                   onRefresh: ctrl.getPerformances,
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      PAppSize.s22.verticalSpace,
-                      Text(
-                            '${'performance_since'.tr} $lowestYear',
-                            textAlign: TextAlign.start,
-                            style: Theme.of(context).textTheme.bodyLarge
-                                ?.copyWith(fontWeight: FontWeight.w600),
-                          )
-                          .symmetric(horizontal: PAppSize.s10)
-                          .redacted(
-                            context: context,
-                            redact:
-                                ctrl.loading.value == LoadingState.loading
-                                    ? true
-                                    : false,
-                          ),
-                      PAppSize.s14.verticalSpace,
-
-                      // bar chart
-                      Expanded(
-                        child:
-                            ctrl.loading.value == LoadingState.loading
-                                ? PChartRedactWidget(
-                                  loadingState: ctrl.loading.value,
-                                )
-                                : Stack(
-                                  children: [
-                                    PCustomLineChartNew(
-                                      data: ctrl.performances,
-                                    ),
-                                    Positioned(
-                                      left:
-                                          PDeviceUtil.getDeviceWidth(context) *
-                                          0.1,
-                                      right: PAppSize.s0,
-                                      bottom:
-                                          PDeviceUtil.getDeviceHeight(context) *
-                                          0.045,
-                                      child: Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        children: [
-                                          Row(
-                                            children: [
-                                              Assets.icons.anchorIcon.svg(),
-                                              PAppSize.s3.horizontalSpace,
-                                              Text(
-                                                getSchemeType.toUpperCase(),
-                                                textAlign: TextAlign.start,
-                                                style: Theme.of(
-                                                  context,
-                                                ).textTheme.bodySmall?.copyWith(
-                                                  fontWeight: FontWeight.w500,
-                                                  fontSize: PAppSize.s10,
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                          PAppSize.s20.horizontalSpace,
-                                          Row(
-                                            children: [
-                                              Assets.icons.benchmarkIcon.svg(),
-                                              PAppSize.s3.horizontalSpace,
-                                              Text(
-                                                'benchmark'.tr.toUpperCase(),
-                                                textAlign: TextAlign.start,
-                                                style: Theme.of(
-                                                  context,
-                                                ).textTheme.bodySmall?.copyWith(
-                                                  fontWeight: FontWeight.w500,
-                                                  fontSize: PAppSize.s10,
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                      ),
-                      PAppSize.s10.verticalSpace,
-                      Text(
-                        'fund_composition'.tr,
-                        textAlign: TextAlign.start,
-                        style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                          fontWeight: FontWeight.w600,
-                        ),
-                      ).symmetric(horizontal: PAppSize.s10),
-                      PAppSize.s8.verticalSpace,
-                      Text(
-                        'asset_allocation'.tr,
-                        textAlign: TextAlign.start,
-                        style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                          fontWeight: FontWeight.w600,
-                          color: PAppColor.primaryTextColor,
-                        ),
-                      ).symmetric(horizontal: PAppSize.s10),
                       PAppSize.s16.verticalSpace,
                       // bar chart
                       Expanded(
-                        child:
-                            ctrl.loading.value == LoadingState.loading
-                                ? PChartRedactWidget(
-                                  loadingState: ctrl.loading.value,
-                                )
-                                : PCustomBarChart(data: ctrl.compositions),
+                        child: ctrl.loading.value == LoadingState.loading
+                            ? PChartRedactWidget(
+                                loadingState: ctrl.loading.value,
+                              )
+                            : Container(
+                                padding: EdgeInsets.all(PAppSize.s16),
+                                decoration: BoxDecoration(
+                                  border: PHelperFunction.isDarkMode(context)
+                                      ? null
+                                      : Border.all(
+                                          width: PAppSize.s1,
+                                          color: PAppColor.fillColor2,
+                                        ),
+                                  borderRadius: BorderRadius.circular(
+                                    PAppSize.s20,
+                                  ),
+                                  color: PHelperFunction.isDarkMode(context)
+                                      ? PAppColor.darkAppBarColor
+                                      : PAppColor.whiteColor,
+                                ),
+                                child: ctrl.performances.isEmpty
+                                    ? PEmptyStateWidget(
+                                        message: 'no_data_found'.tr,
+                                      )
+                                    : Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          // PAppSize.s22.verticalSpace,
+                                          Text(
+                                                '${'performance_since'.tr} $lowestYear',
+                                                textAlign: TextAlign.start,
+                                                style: Theme.of(context)
+                                                    .textTheme
+                                                    .bodyLarge
+                                                    ?.copyWith(
+                                                      fontWeight:
+                                                          FontWeight.w600,
+                                                    ),
+                                              )
+                                              .symmetric(
+                                                horizontal: PAppSize.s10,
+                                              )
+                                              .redacted(
+                                                context: context,
+                                                redact:
+                                                    ctrl.loading.value ==
+                                                        LoadingState.loading
+                                                    ? true
+                                                    : false,
+                                              ),
+                                          PAppSize.s8.verticalSpace,
+                                          Expanded(
+                                            child: Stack(
+                                              children: [
+                                                PCustomLineChartNew(
+                                                  data: ctrl.performances,
+                                                ),
+                                                Positioned(
+                                                  left:
+                                                      PDeviceUtil.getDeviceWidth(
+                                                        context,
+                                                      ) *
+                                                      0.1,
+                                                  right: PAppSize.s0,
+                                                  bottom:
+                                                      PDeviceUtil.getDeviceHeight(
+                                                        context,
+                                                      ) *
+                                                      0.045,
+                                                  child: Row(
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .center,
+                                                    children: [
+                                                      Row(
+                                                        children: [
+                                                          Assets
+                                                              .icons
+                                                              .anchorIcon
+                                                              .svg(),
+                                                          PAppSize
+                                                              .s3
+                                                              .horizontalSpace,
+                                                          Text(
+                                                            getSchemeType
+                                                                .toUpperCase(),
+                                                            textAlign:
+                                                                TextAlign.start,
+                                                            style: Theme.of(context)
+                                                                .textTheme
+                                                                .bodySmall
+                                                                ?.copyWith(
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .w500,
+                                                                  fontSize:
+                                                                      PAppSize
+                                                                          .s10,
+                                                                ),
+                                                          ),
+                                                        ],
+                                                      ),
+                                                      PAppSize
+                                                          .s20
+                                                          .horizontalSpace,
+                                                      Row(
+                                                        children: [
+                                                          Assets
+                                                              .icons
+                                                              .benchmarkIcon
+                                                              .svg(),
+                                                          PAppSize
+                                                              .s3
+                                                              .horizontalSpace,
+                                                          Text(
+                                                            'benchmark'.tr
+                                                                .toUpperCase(),
+                                                            textAlign:
+                                                                TextAlign.start,
+                                                            style: Theme.of(context)
+                                                                .textTheme
+                                                                .bodySmall
+                                                                ?.copyWith(
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .w500,
+                                                                  fontSize:
+                                                                      PAppSize
+                                                                          .s10,
+                                                                ),
+                                                          ),
+                                                        ],
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                              ),
                       ),
-                      PAppSize.s18.verticalSpace,
-                      Align(
-                        alignment: Alignment.center,
-                        child: PGradientButton(
-                          label: 'download_pdf'.tr.toUpperCase(),
-                          // showIcon: false,
-                          width: PDeviceUtil.getDeviceWidth(context) * 0.65,
-                          height: PAppSize.s40,
-                          loading: ctrl.generating.value,
-                          onTap: () => ctrl.generateFactsheet(),
-                        ),
+                      PAppSize.s16.verticalSpace,
+                      // Text(
+                      //   'fund_composition'.tr,
+                      //   textAlign: TextAlign.start,
+                      //   style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                      //     fontWeight: FontWeight.w600,
+                      //   ),
+                      // ).symmetric(horizontal: PAppSize.s10),
+                      // PAppSize.s8.verticalSpace,
+                      // Text(
+                      //   'asset_allocation'.tr,
+                      //   textAlign: TextAlign.start,
+                      //   style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                      //     fontWeight: FontWeight.w600,
+                      //     color: PAppColor.primaryTextColor,
+                      //   ),
+                      // ).symmetric(horizontal: PAppSize.s10),
+                      // PAppSize.s16.verticalSpace,
+                      // bar chart
+                      Expanded(
+                        child: ctrl.loading.value == LoadingState.loading
+                            ? PChartRedactWidget(
+                                loadingState: ctrl.loading.value,
+                              )
+                            : Container(
+                                padding: EdgeInsets.all(PAppSize.s16),
+                                decoration: BoxDecoration(
+                                  border: PHelperFunction.isDarkMode(context)
+                                      ? null
+                                      : Border.all(
+                                          width: PAppSize.s1,
+                                          color: PAppColor.fillColor2,
+                                        ),
+                                  borderRadius: BorderRadius.circular(
+                                    PAppSize.s20,
+                                  ),
+                                  color: PHelperFunction.isDarkMode(context)
+                                      ? PAppColor.darkAppBarColor
+                                      : PAppColor.whiteColor,
+                                ),
+                                child: ctrl.compositions.isEmpty
+                                    ? PEmptyStateWidget(
+                                        message: 'no_data_found'.tr,
+                                      )
+                                    : PCustomBarChart(data: ctrl.compositions),
+                              ),
                       ),
-                      PAppSize.s18.verticalSpace,
+                      // PAppSize.s18.verticalSpace,
+                      // Align(
+                      //   alignment: Alignment.center,
+                      //   child: PGradientButton(
+                      //     label: 'download_pdf'.tr.toUpperCase(),
+                      //     // showIcon: false,
+                      //     width: PDeviceUtil.getDeviceWidth(context) * 0.65,
+                      //     height: PAppSize.s40,
+                      //     loading: ctrl.generating.value,
+                      //     onTap: () => ctrl.generateFactsheet(),
+                      //   ),
+                      // ),
+                      // PAppSize.s18.verticalSpace,
                     ],
                   ).symmetric(horizontal: PAppSize.s20),
                 ),

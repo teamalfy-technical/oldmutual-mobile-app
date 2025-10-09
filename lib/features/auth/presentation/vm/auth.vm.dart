@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:oldmutual_pensions_app/core/utils/utils.dart';
 import 'package:oldmutual_pensions_app/features/auth/auth.dart';
+import 'package:oldmutual_pensions_app/features/notification/notification.dart';
 import 'package:oldmutual_pensions_app/routes/app.pages.dart';
 import 'package:oldmutual_pensions_app/shared/widgets/popup.dialog.dart';
 import 'package:permission_handler/permission_handler.dart';
@@ -172,14 +173,30 @@ class PAuthVm extends GetxController {
         );
       },
       (res) async {
-        loading(LoadingState.completed);
+        // loading(LoadingState.completed);
         PSecureStorage().saveUserEmail<String>(emailOrPhone);
-        // if (PDeviceUtil.isAndroid()) {
-        // await PNotificationService().saveToken();
-        // }
-        // await getBioData();
+        if (PDeviceUtil.isAndroid()) {
+          await PNotificationService().saveToken();
+        }
+        await getBioData();
         clearFields();
+      },
+    );
+  }
 
+  /// Function to sign up user by sending OTP code
+  Future<void> getBioData() async {
+    final result = await authService.getBioData();
+    result.fold(
+      (err) {
+        loading(LoadingState.error);
+        PPopupDialog(
+          context,
+        ).errorMessage(title: 'error'.tr, message: err.message);
+      },
+      (res) {
+        loading(LoadingState.completed);
+        PSecureStorage().saveBioData(res.data?.first.toJson() ?? BioData());
         PHelperFunction.switchScreen(
           destination: Routes.dashboardPage,
           replace: true,

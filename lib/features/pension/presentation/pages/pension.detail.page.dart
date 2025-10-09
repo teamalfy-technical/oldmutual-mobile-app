@@ -174,7 +174,9 @@ class _PPensionDetailPageState extends State<PPensionDetailPage> {
                                   ? PAppColor.successLight
                                   : PAppColor.successDark,
                             ),
-                            onTap: () {},
+                            onTap: () => PHelperFunction.switchScreen(
+                              destination: Routes.factsheetPage,
+                            ),
                           ),
                           PAppSize.s8.horizontalSpace,
                           QuickActionWidget(
@@ -184,7 +186,9 @@ class _PPensionDetailPageState extends State<PPensionDetailPage> {
                                   ? PAppColor.successLight
                                   : PAppColor.successDark,
                             ),
-                            onTap: () {},
+                            onTap: () => PHelperFunction.switchScreen(
+                              destination: Routes.statementPage,
+                            ),
                           ),
                           PAppSize.s8.horizontalSpace,
                           QuickActionWidget(

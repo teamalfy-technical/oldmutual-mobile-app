@@ -25,26 +25,24 @@ class _PCustomLineChartNewState extends State<PCustomLineChartNew> {
   initData() {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       setState(() {
-        sortedData =
-            widget.data..sort((a, b) => a.year!.compareTo(b.year ?? 0));
-        anchorSpots =
-            sortedData
-                .map(
-                  (e) => FlSpot(
-                    e.year!.toDouble(),
-                    double.parse(e.performance.toString().replaceAll('%', '')),
-                  ),
-                )
-                .toList();
-        benchmarkSpots =
-            sortedData
-                .map(
-                  (e) => FlSpot(
-                    e.year!.toDouble(),
-                    double.parse(e.benchmark.toString().replaceAll('%', '')),
-                  ),
-                )
-                .toList();
+        sortedData = widget.data
+          ..sort((a, b) => a.year!.compareTo(b.year ?? 0));
+        anchorSpots = sortedData
+            .map(
+              (e) => FlSpot(
+                e.year!.toDouble(),
+                double.parse(e.performance.toString().replaceAll('%', '')),
+              ),
+            )
+            .toList();
+        benchmarkSpots = sortedData
+            .map(
+              (e) => FlSpot(
+                e.year!.toDouble(),
+                double.parse(e.benchmark.toString().replaceAll('%', '')),
+              ),
+            )
+            .toList();
       });
     });
   }
@@ -137,8 +135,9 @@ class _PCustomLineChartNewState extends State<PCustomLineChartNew> {
           showTitles: true,
           getTitlesWidget: (value, _) {
             // Show only actual years from your data
-            final actualYears =
-                widget.data.map((e) => e.year?.toDouble()).toList();
+            final actualYears = widget.data
+                .map((e) => e.year?.toDouble())
+                .toList();
             if (actualYears.contains(value)) {
               return Text(
                 value.toInt().toString(),
@@ -158,15 +157,14 @@ class _PCustomLineChartNewState extends State<PCustomLineChartNew> {
           showTitles: true,
           interval: benchmarkInterval,
           reservedSize: PAppSize.s50,
-          getTitlesWidget:
-              (value, _) => Text(
-                '${value.toStringAsFixed(2)}%',
-                style: TextStyle(
-                  fontSize: PAppSize.s10,
-                  fontWeight: FontWeight.w500,
-                  color: PAppColor.text700,
-                ),
-              ),
+          getTitlesWidget: (value, _) => Text(
+            '${value.toStringAsFixed(2)}%',
+            style: TextStyle(
+              fontSize: PAppSize.s10,
+              fontWeight: FontWeight.w500,
+              color: PAppColor.text700,
+            ),
+          ),
         ),
       ),
       topTitles: AxisTitles(sideTitles: SideTitles(showTitles: false)),
@@ -194,10 +192,9 @@ class _PCustomLineChartNewState extends State<PCustomLineChartNew> {
 
   double get benchmarkInterval {
     // final benchmarkStrings = ["14.08%", "14.69%", "35.4%", "29.36", "28.04%"];
-    final benchmarks =
-        widget.data.map((s) {
-          return double.tryParse(s.benchmark!.replaceAll('%', '')) ?? 0;
-        }).toList();
+    final benchmarks = widget.data.map((s) {
+      return double.tryParse(s.benchmark!.replaceAll('%', '')) ?? 0;
+    }).toList();
     double maxValue = benchmarks.reduce((a, b) => a > b ? a : b);
 
     // Determine a nice dynamic interval

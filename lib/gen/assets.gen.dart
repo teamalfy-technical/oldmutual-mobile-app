@@ -113,6 +113,10 @@ class $AssetsIconsGen {
   SvgGenImage get deleteIcon =>
       const SvgGenImage('assets/icons/delete.icon.svg');
 
+  /// File path: assets/icons/download.icon.svg
+  SvgGenImage get downloadIcon =>
+      const SvgGenImage('assets/icons/download.icon.svg');
+
   /// File path: assets/icons/edit.icon.svg
   SvgGenImage get editIcon => const SvgGenImage('assets/icons/edit.icon.svg');
 
@@ -301,6 +305,7 @@ class $AssetsIconsGen {
     checkIcon,
     closeIcon,
     deleteIcon,
+    downloadIcon,
     editIcon,
     emailIcon,
     eyeIcon,
