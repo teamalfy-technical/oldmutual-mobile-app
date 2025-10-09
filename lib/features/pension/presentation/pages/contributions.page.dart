@@ -39,7 +39,16 @@ class PContributionsPage extends StatelessWidget {
                 PSeeAllWidget(
                   leadingText: 'filter'.tr,
                   leadingFontSize: PAppSize.s20,
-                  trailingText: 'done'.tr,
+                  trailing: Text(
+                    'done'.tr,
+                    textAlign: TextAlign.center,
+                    softWrap: true,
+                    style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                      fontSize: PAppSize.s16,
+                      color: PAppColor.successMedium,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
                   onTap: () => PHelperFunction.pop(),
                 ),
                 PAppSize.s8.verticalSpace,
@@ -193,7 +202,7 @@ class PContributionsPage extends StatelessWidget {
                               ),
                               style: Theme.of(context).textTheme.bodyMedium
                                   ?.copyWith(
-                                    fontSize: PAppSize.s14,
+                                    fontSize: PAppSize.s13,
                                     fontWeight: FontWeight.w400,
                                   ),
                             ),
@@ -204,8 +213,7 @@ class PContributionsPage extends StatelessWidget {
                               style: Theme.of(context).textTheme.bodyLarge
                                   ?.copyWith(
                                     fontSize: PAppSize.s14,
-
-                                    color: PAppColor.primary,
+                                    color: PAppColor.successMedium,
                                     fontWeight: FontWeight.w600,
                                   ),
                             ),

@@ -22,7 +22,7 @@ class PPensionOverviewPage extends StatelessWidget {
       backgroundColor: PHelperFunction.isDarkMode(context)
           ? PAppColor.darkBgColor
           : PAppColor.fillColor,
-      appBar: AppBar(title: Text(product['name'])),
+      appBar: AppBar(title: Text('${product['name']}s')),
       body: Stack(
         children: [
           Positioned(top: -16, right: -0, child: Assets.icons.pictogram.svg()),

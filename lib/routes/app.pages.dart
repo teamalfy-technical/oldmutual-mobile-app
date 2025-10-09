@@ -236,7 +236,8 @@ class AppPages {
 
     GetPage(
       name: _Paths.futureValueCalcPage,
-      page: () => PFutureValueCalcPage(),
+      page: () => PFutureValueCalculatorPage(),
+      // page: () => PFutureValueCalcPage(),
     ),
     GetPage(name: _Paths.statementPage, page: () => PStatementPage()),
     GetPage(name: _Paths.settingsPage, page: () => PSettingsPage()),

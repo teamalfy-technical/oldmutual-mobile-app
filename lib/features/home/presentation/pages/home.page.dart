@@ -124,7 +124,17 @@ class PHomePage extends StatelessWidget {
                     /// Products
                     PSeeAllWidget(
                       leadingText: 'products'.tr,
-                      trailingText: 'see_all'.tr,
+                      trailing: Text(
+                        'see_all'.tr,
+                        textAlign: TextAlign.center,
+                        softWrap: true,
+                        style: Theme.of(context).textTheme.titleMedium
+                            ?.copyWith(
+                              fontSize: PAppSize.s16,
+                              color: PAppColor.successMedium,
+                              fontWeight: FontWeight.w600,
+                            ),
+                      ),
                       onTap: () => PHelperFunction.switchScreen(
                         destination: Routes.productsPage,
                       ),

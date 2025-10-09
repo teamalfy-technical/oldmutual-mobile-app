@@ -8,6 +8,7 @@ export 'domain/models/pension.summary.dart';
 export 'domain/models/scheme.model.dart';
 export 'domain/models/selected.scheme.model.dart';
 export 'presentation/pages/contributions.page.dart';
+export 'presentation/pages/future.value.calculator.dart';
 export 'presentation/pages/pension.detail.page.dart';
 export 'presentation/pages/pension.overview.page.dart';
 export 'presentation/pages/pension.page.dart';

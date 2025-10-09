@@ -111,6 +111,7 @@ class PAppColor {
   static const Color success700 = Color(0xFF0e7437);
 
   static const Color successDark = Color(0xFF306E2B);
+  static const Color successMedium = Color(0xFF3F9339);
   static const Color successLight = Color(0xFF96D491);
 
   // Info Colors

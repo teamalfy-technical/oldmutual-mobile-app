@@ -162,7 +162,9 @@ class _PPensionDetailPageState extends State<PPensionDetailPage> {
                                   ? PAppColor.successLight
                                   : PAppColor.successDark,
                             ),
-                            onTap: () {},
+                            onTap: () => PHelperFunction.switchScreen(
+                              destination: Routes.futureValueCalcPage,
+                            ),
                           ),
                           PAppSize.s8.horizontalSpace,
                           QuickActionWidget(
@@ -319,7 +321,17 @@ class _PPensionDetailPageState extends State<PPensionDetailPage> {
                           /// Contributions
                           PSeeAllWidget(
                             leadingText: 'contributions'.tr,
-                            trailingText: 'see_all'.tr,
+                            trailing: Text(
+                              'see_all'.tr,
+                              textAlign: TextAlign.center,
+                              softWrap: true,
+                              style: Theme.of(context).textTheme.titleMedium
+                                  ?.copyWith(
+                                    fontSize: PAppSize.s16,
+                                    color: PAppColor.successMedium,
+                                    fontWeight: FontWeight.w600,
+                                  ),
+                            ),
                             onTap: () => PHelperFunction.switchScreen(
                               destination: Routes.contributionsPage,
                             ),
@@ -408,7 +420,7 @@ class _PPensionDetailPageState extends State<PPensionDetailPage> {
                                                 .textTheme
                                                 .bodyMedium
                                                 ?.copyWith(
-                                                  fontSize: PAppSize.s14,
+                                                  fontSize: PAppSize.s13,
                                                   fontWeight: FontWeight.w400,
                                                 ),
                                           ),
@@ -422,7 +434,8 @@ class _PPensionDetailPageState extends State<PPensionDetailPage> {
                                                 .bodyLarge
                                                 ?.copyWith(
                                                   fontSize: PAppSize.s14,
-                                                  color: PAppColor.primary,
+                                                  color:
+                                                      PAppColor.successMedium,
                                                   fontWeight: FontWeight.w600,
                                                 ),
                                           ),

@@ -73,7 +73,7 @@ class PFutureValueCalcPage extends StatelessWidget {
                         textInputType: TextInputType.numberWithOptions(
                           decimal: true,
                         ),
-                        controller: ctrl.numOfYearstRateTEC,
+                        controller: ctrl.numOfYearsRateTEC,
                       ),
                     ),
                   ],
@@ -86,8 +86,9 @@ class PFutureValueCalcPage extends StatelessWidget {
                   child: Text(
                     PFormatter.formatCurrency(amount: ctrl.total.value),
                     textAlign: TextAlign.start,
-                    style:
-                        Theme.of(context).textTheme.headlineMedium?.copyWith(),
+                    style: Theme.of(
+                      context,
+                    ).textTheme.headlineMedium?.copyWith(),
                   ),
                 ),
 
