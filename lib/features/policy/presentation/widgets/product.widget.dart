@@ -70,7 +70,7 @@ class ProductWidget extends StatelessWidget {
 
                         PAppSize.s8.verticalSpace,
 
-                        product['type'] == ProductType.retail
+                        product['type'] == ProductType.insurance
                             ? Assets.icons.wallet
                                   .svg(
                                     color: PHelperFunction.isDarkMode(context)
@@ -95,7 +95,7 @@ class ProductWidget extends StatelessWidget {
                     ),
 
                     Text(
-                      product['type'] == ProductType.retail
+                      product['type'] == ProductType.insurance
                           ? 'available_balance'.tr
                           : 'your_total_contribution'.tr,
                       textAlign: TextAlign.center,

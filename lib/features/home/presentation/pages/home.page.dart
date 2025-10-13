@@ -168,7 +168,8 @@ class PHomePage extends StatelessWidget {
                                 return ProductWidget(
                                   product: product,
                                   onTap: () {
-                                    if (product['type'] == ProductType.retail) {
+                                    if (product['type'] ==
+                                        ProductType.insurance) {
                                       PHelperFunction.switchScreen(
                                         destination: Routes.policyOverviewPage,
                                         args: product,

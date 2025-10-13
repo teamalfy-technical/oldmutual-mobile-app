@@ -19,7 +19,7 @@ enum FileType { video, image, unknown }
 
 enum Direction { left, right }
 
-enum ProductType { pensions, retail, corporate }
+enum ProductType { pensions, insurance, corporate }
 
 enum DateDiffUnit { days, months, years }
 

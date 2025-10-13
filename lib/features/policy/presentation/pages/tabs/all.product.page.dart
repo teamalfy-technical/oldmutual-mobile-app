@@ -21,7 +21,7 @@ class PAllProductTab extends StatelessWidget {
           width: PDeviceUtil.getDeviceWidth(context),
           margin: EdgeInsets.only(bottom: PAppSize.s20),
           onTap: () {
-            if (product['type'] == ProductType.retail) {
+            if (product['type'] == ProductType.insurance) {
               PHelperFunction.switchScreen(
                 destination: Routes.policyOverviewPage,
                 args: product,
