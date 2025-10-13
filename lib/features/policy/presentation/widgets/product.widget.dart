@@ -137,7 +137,7 @@ class ProductWidget extends StatelessWidget {
             ),
           ),
         ],
-      ),
+      ).scrollable(),
     ).onPressed(onTap: onTap);
   }
 }

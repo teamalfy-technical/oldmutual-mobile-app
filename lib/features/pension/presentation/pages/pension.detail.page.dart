@@ -363,26 +363,12 @@ class _PPensionDetailPageState extends State<PPensionDetailPage> {
                                 ? PEmptyStateWidget(
                                     message: 'no_results_found'.tr,
                                   )
-                                : Container(
+                                : PCustomCardWidget(
                                     padding: EdgeInsets.symmetric(
                                       vertical: PAppSize.s16,
                                       horizontal: PAppSize.s4,
                                     ),
-                                    decoration: BoxDecoration(
-                                      border:
-                                          PHelperFunction.isDarkMode(context)
-                                          ? null
-                                          : Border.all(
-                                              width: PAppSize.s1,
-                                              color: PAppColor.fillColor2,
-                                            ),
-                                      borderRadius: BorderRadius.circular(
-                                        PAppSize.s20,
-                                      ),
-                                      color: PHelperFunction.isDarkMode(context)
-                                          ? PAppColor.darkAppBarColor
-                                          : PAppColor.whiteColor,
-                                    ),
+                                   
                                     child: ListView.separated(
                                       shrinkWrap: true,
                                       physics: NeverScrollableScrollPhysics(),

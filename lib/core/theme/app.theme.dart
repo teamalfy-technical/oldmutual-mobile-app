@@ -24,6 +24,7 @@ class PAppTheme {
     inputDecorationTheme: PTextFormFieldTheme.lightInputDecorationTheme,
     iconTheme: PIconTheme.lightIconThemeData,
     dropdownMenuTheme: PDropdownButtonTheme.lightDropdownMenuTheme,
+
     radioTheme: PRadioTheme.lightRadioThemeData,
     textSelectionTheme: TextSelectionThemeData(cursorColor: PAppColor.primary),
   );

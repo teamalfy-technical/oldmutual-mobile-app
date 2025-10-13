@@ -41,11 +41,13 @@ class PStatementVm extends GetxController {
   onYearChanged(value) {
     selectedYear = value;
     generatedReport.value = GenerateReport();
+    print(selectedYear?.fundYear);
     update();
   }
 
   @override
   void onInit() {
+    getContributedYears();
     getAllGeneratedReports();
     super.onInit();
   }
@@ -96,14 +98,13 @@ class PStatementVm extends GetxController {
   }
 
   resetFilters() {
-    selectedYear =
-        contributionYears.isEmpty
-            ? defaultContributionYear
-            : contributionYears.first;
+    selectedYear = contributionYears.isEmpty
+        ? defaultContributionYear
+        : contributionYears.first;
   }
 
   ContributedYear get defaultContributionYear => ContributedYear(
-    fundYear: 'none'.tr,
+    fundYear: 'all'.tr,
     employeeContribution: 0.0,
     totalContribution: 0.0,
   );
@@ -128,12 +129,9 @@ class PStatementVm extends GetxController {
     updateGeneratingState(LoadingState.loading);
     final result = await statementService.generateReportV2(
       all: all.value,
-      year:
-          selectedYear?.fundYear == 'none'.tr
-              ? DateTime.now().year
-              : int.parse(
-                selectedYear?.fundYear ?? DateTime.now().year.toString(),
-              ),
+      year: selectedYear?.fundYear == 'none'.tr
+          ? DateTime.now().year
+          : int.parse(selectedYear?.fundYear ?? DateTime.now().year.toString()),
     );
     result.fold(
       (err) {
@@ -167,12 +165,9 @@ class PStatementVm extends GetxController {
     updateGeneratingState(LoadingState.loading);
     final result = await statementService.generateReport(
       all: all.value,
-      year:
-          selectedYear?.fundYear == 'none'.tr
-              ? DateTime.now().year
-              : int.parse(
-                selectedYear?.fundYear ?? DateTime.now().year.toString(),
-              ),
+      year: selectedYear?.fundYear == 'none'.tr
+          ? DateTime.now().year
+          : int.parse(selectedYear?.fundYear ?? DateTime.now().year.toString()),
     );
     result.fold(
       (err) {

@@ -6,6 +6,7 @@ export 'widgets/annotated.region.dart';
 export 'widgets/auth.link.button.dart';
 export 'widgets/custom.bar.chart.dart';
 export 'widgets/custom.bar.chart.old.dart';
+export 'widgets/custom.card.widget.dart';
 export 'widgets/custom.checkbox.dart';
 export 'widgets/custom.dropdown.dart';
 export 'widgets/custom.line.chart.dart';

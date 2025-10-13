@@ -133,23 +133,12 @@ class PContributionsPage extends StatelessWidget {
         () => Column(
           children: [
             Expanded(
-              child: Container(
+              child: PCustomCardWidget(
                 padding: EdgeInsets.symmetric(
                   vertical: PAppSize.s16,
                   horizontal: PAppSize.s4,
                 ),
-                decoration: BoxDecoration(
-                  border: PHelperFunction.isDarkMode(context)
-                      ? null
-                      : Border.all(
-                          width: PAppSize.s1,
-                          color: PAppColor.fillColor2,
-                        ),
-                  borderRadius: BorderRadius.circular(PAppSize.s20),
-                  color: PHelperFunction.isDarkMode(context)
-                      ? PAppColor.darkAppBarColor
-                      : PAppColor.whiteColor,
-                ),
+
                 child: contributionVm.loading.value == LoadingState.loading
                     ? ListView.builder(
                         shrinkWrap: true,

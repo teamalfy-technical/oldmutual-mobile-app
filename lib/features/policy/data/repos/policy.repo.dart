@@ -1,6 +1,7 @@
 import 'package:fpdart/fpdart.dart';
 import 'package:oldmutual_pensions_app/core/errors/errors.dart';
 import 'package:oldmutual_pensions_app/core/network/network.dart';
+import 'package:oldmutual_pensions_app/features/beneficiary/beneficiary.dart';
 import 'package:oldmutual_pensions_app/features/home/home.dart';
 
 abstract class PolicyRepo {
@@ -14,7 +15,7 @@ abstract class PolicyRepo {
     required String policyNumber,
   });
 
-  Future<Either<PFailure, ApiResponse<List<Beneficiaries>>>>
+  Future<Either<PFailure, ApiResponse<List<Beneficiary>>>>
   getPolicyBeneficiaries({required String policyNumber});
   Future<Either<PFailure, ApiResponse<PolicyTransaction>>>
   getPolicyTransaction({

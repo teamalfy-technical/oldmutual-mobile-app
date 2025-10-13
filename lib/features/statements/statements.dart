@@ -5,3 +5,6 @@ export 'data/ds/statement.ds.impl.dart';
 export 'data/repos/statement.repo.dart';
 export 'data/repos/statement.repo.impl.dart';
 export 'domain/models/statement.model.dart';
+export 'presentation/pages/statement.page.dart';
+export 'presentation/vm/statement.vm.dart';
+export 'presentation/widgets/statement.widget.redact.dart';

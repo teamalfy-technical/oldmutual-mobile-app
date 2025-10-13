@@ -3,9 +3,11 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:oldmutual_pensions_app/core/utils/utils.dart';
+import 'package:oldmutual_pensions_app/features/beneficiary/beneficiary.dart';
 import 'package:oldmutual_pensions_app/features/home/home.dart';
 import 'package:oldmutual_pensions_app/features/policy/policy.dart';
 import 'package:oldmutual_pensions_app/gen/assets.gen.dart';
+import 'package:oldmutual_pensions_app/shared/shared.dart';
 
 class PPolicyDetailPage extends StatelessWidget {
   final Policy policy;
@@ -79,16 +81,16 @@ class PPolicyDetailPage extends StatelessWidget {
             /// Quick Actions
             Row(
               children: [
-                QuickActionWidget(
-                  label: 'withdraw'.tr,
-                  icon: Assets.icons.withdrawIcon.svg(
-                    color: PHelperFunction.isDarkMode(context)
-                        ? PAppColor.successLight
-                        : PAppColor.successDark,
-                  ),
-                  onTap: () {},
-                ),
-                PAppSize.s8.horizontalSpace,
+                // QuickActionWidget(
+                //   label: 'withdraw'.tr,
+                //   icon: Assets.icons.withdrawIcon.svg(
+                //     color: PHelperFunction.isDarkMode(context)
+                //         ? PAppColor.successLight
+                //         : PAppColor.successDark,
+                //   ),
+                //   onTap: () {},
+                // ),
+                // PAppSize.s8.horizontalSpace,
                 QuickActionWidget(
                   label: 'pay'.tr,
                   icon: Assets.icons.payIcon.svg(
@@ -98,16 +100,16 @@ class PPolicyDetailPage extends StatelessWidget {
                   ),
                   onTap: () {},
                 ),
-                PAppSize.s8.horizontalSpace,
-                QuickActionWidget(
-                  label: 'claim'.tr,
-                  icon: Assets.icons.moneyIcon.svg(
-                    color: PHelperFunction.isDarkMode(context)
-                        ? PAppColor.successLight
-                        : PAppColor.successDark,
-                  ),
-                  onTap: () {},
-                ),
+                // PAppSize.s8.horizontalSpace,
+                // QuickActionWidget(
+                //   label: 'claim'.tr,
+                //   icon: Assets.icons.moneyIcon.svg(
+                //     color: PHelperFunction.isDarkMode(context)
+                //         ? PAppColor.successLight
+                //         : PAppColor.successDark,
+                //   ),
+                //   onTap: () {},
+                // ),
                 PAppSize.s8.horizontalSpace,
                 QuickActionWidget(
                   label: 'add_beneficiary'.tr,
@@ -137,13 +139,8 @@ class PPolicyDetailPage extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   // Policy
-                  Container(
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(PAppSize.s20),
-                      color: PHelperFunction.isDarkMode(context)
-                          ? PAppColor.darkAppBarColor
-                          : PAppColor.whiteColor,
-                    ),
+                  PCustomCardWidget(
+                    useBorder: false,
                     child: Column(
                       children: [
                         _buildListTile(
@@ -175,13 +172,8 @@ class PPolicyDetailPage extends StatelessWidget {
                   ),
 
                   PAppSize.s14.verticalSpace,
-                  Container(
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(PAppSize.s20),
-                      color: PHelperFunction.isDarkMode(context)
-                          ? PAppColor.darkAppBarColor
-                          : PAppColor.whiteColor,
-                    ),
+                  PCustomCardWidget(
+                    useBorder: false,
                     child: Column(
                       children: [
                         _buildListTile(
@@ -400,17 +392,7 @@ class PPolicyDetailPage extends StatelessWidget {
 
                   // Beneficiaries section
                   if (policy.beneficiaries!.isNotEmpty) ...[
-                    Container(
-                      decoration: BoxDecoration(
-                        border: Border.all(
-                          width: PAppSize.s1,
-                          color: PAppColor.fillColor2,
-                        ),
-                        borderRadius: BorderRadius.circular(PAppSize.s20),
-                        color: PHelperFunction.isDarkMode(context)
-                            ? PAppColor.darkAppBarColor
-                            : PAppColor.whiteColor,
-                      ),
+                    PCustomCardWidget(
                       child: ListView.separated(
                         shrinkWrap: true,
                         itemCount: policy.beneficiaries!.length,
@@ -423,8 +405,12 @@ class PPolicyDetailPage extends StatelessWidget {
                                 Assets.images.placeholderImg.path,
                               ),
                             ),
+                            onTap: () => showBeneficiaryDetailModal(
+                              context,
+                              beneficiary,
+                            ),
                             title: Text(
-                              beneficiary.name ?? '',
+                              beneficiary.fullName ?? '',
                               style: Theme.of(context).textTheme.bodyLarge
                                   ?.copyWith(
                                     fontSize: PAppSize.s15,
@@ -435,9 +421,9 @@ class PPolicyDetailPage extends StatelessWidget {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  beneficiary.percentageAllocation == 100
-                                      ? '${beneficiary.percentageAllocation}%'
-                                      : '${beneficiary.percentageAllocation}% Split',
+                                  beneficiary.percAlloc == 100
+                                      ? '${beneficiary.percAlloc}%'
+                                      : '${beneficiary.percAlloc}% Split',
                                   style: Theme.of(context).textTheme.bodyLarge
                                       ?.copyWith(
                                         fontSize: PAppSize.s14,
@@ -474,6 +460,26 @@ class PPolicyDetailPage extends StatelessWidget {
           ],
         ).symmetric(horizontal: PAppSize.s20, vertical: PAppSize.s10),
       ),
+    );
+  }
+
+  Future showBeneficiaryDetailModal(
+    BuildContext context,
+    Beneficiary beneficiary,
+  ) {
+    return showModalBottomSheet(
+      context: context,
+      showDragHandle: false,
+      isScrollControlled: true,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadiusGeometry.only(
+          topLeft: Radius.circular(PAppSize.s24),
+          topRight: Radius.circular(PAppSize.s24),
+        ),
+      ),
+      builder: (context) {
+        return PBeneficiaryDetailWidget(beneficiary: beneficiary);
+      },
     );
   }
 

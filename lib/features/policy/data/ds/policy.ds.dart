@@ -1,11 +1,12 @@
 import 'package:oldmutual_pensions_app/core/network/network.dart';
+import 'package:oldmutual_pensions_app/features/beneficiary/beneficiary.dart';
 import 'package:oldmutual_pensions_app/features/home/home.dart';
 
 abstract class PolicyDs {
   Future<ApiResponse<PolicyResponse>> getPolicies({required String status});
   Future<ApiResponse<PolicySummary>> getPolicySummary();
   Future<ApiResponse<Policy>> getPolicy({required String policyNumber});
-  Future<ApiResponse<List<Beneficiaries>>> getPolicyBeneficiaries({
+  Future<ApiResponse<List<Beneficiary>>> getPolicyBeneficiaries({
     required String policyNumber,
   });
   Future<ApiResponse<PolicyTransaction>> getPolicyTransaction({

@@ -16,50 +16,64 @@ class PDropdownButtonTheme {
     ),
     inputDecorationTheme: InputDecorationTheme(
       errorMaxLines: 3,
-      fillColor: PAppColor.fillColor2,
-      filled: true,
       prefixIconColor: PAppColor.greyColor,
       suffixIconColor: PAppColor.greyColor,
-      // focusColor: PAppColor.primary,
+      focusColor: PAppColor.primaryBorderColor,
       contentPadding: const EdgeInsets.symmetric(
-        vertical: PAppSize.s0,
-        horizontal: PAppSize.s10,
+        vertical: PAppSize.s16,
+        horizontal: PAppSize.s16,
       ),
+
       labelStyle: const TextStyle().copyWith(
         fontSize: PAppSize.s16,
         color: PAppColor.text300,
       ),
       hintStyle: const TextStyle().copyWith(
         fontSize: PAppSize.s16,
-        fontWeight: FontWeight.w400,
-        color: PAppColor.text300,
+        fontWeight: FontWeight.w500,
+        color: PAppColor.hintTextColor,
       ),
       errorStyle: const TextStyle().copyWith(
         fontStyle: FontStyle.normal,
-        color: PAppColor.alert500,
+        color: PAppColor.errorColor,
       ),
       floatingLabelStyle: const TextStyle().copyWith(
         color: PAppColor.blackColor.withOpacityExt(PAppSize.s0_8),
       ),
       border: const OutlineInputBorder().copyWith(
-        borderRadius: BorderRadius.circular(PAppSize.s5),
-        borderSide: BorderSide.none,
+        borderRadius: BorderRadius.circular(PAppSize.s8),
+        borderSide: const BorderSide(
+          width: PAppSize.s1,
+          color: PAppColor.fillColor2,
+        ),
       ),
       enabledBorder: const OutlineInputBorder().copyWith(
-        borderRadius: BorderRadius.circular(PAppSize.s5),
-        borderSide: BorderSide.none,
+        borderRadius: BorderRadius.circular(PAppSize.s8),
+        borderSide: const BorderSide(
+          width: PAppSize.s1,
+          color: PAppColor.fillColor2,
+        ),
       ),
       focusedBorder: const OutlineInputBorder().copyWith(
-        borderRadius: BorderRadius.circular(PAppSize.s5),
-        borderSide: BorderSide.none,
+        borderRadius: BorderRadius.circular(PAppSize.s8),
+        borderSide: const BorderSide(
+          width: PAppSize.s2,
+          color: PAppColor.primaryBorderColor,
+        ),
       ),
       errorBorder: const OutlineInputBorder().copyWith(
-        borderRadius: BorderRadius.circular(PAppSize.s5),
-        borderSide: BorderSide.none,
+        borderRadius: BorderRadius.circular(PAppSize.s8),
+        borderSide: const BorderSide(
+          width: PAppSize.s2,
+          color: PAppColor.errorColor,
+        ),
       ),
       focusedErrorBorder: const OutlineInputBorder().copyWith(
-        borderRadius: BorderRadius.circular(PAppSize.s5),
-        borderSide: BorderSide.none,
+        borderRadius: BorderRadius.circular(PAppSize.s8),
+        borderSide: const BorderSide(
+          width: PAppSize.s2,
+          color: PAppColor.errorColor,
+        ),
       ),
     ),
   );
@@ -78,12 +92,10 @@ class PDropdownButtonTheme {
       errorMaxLines: 2,
       prefixIconColor: PAppColor.greyColor,
       suffixIconColor: PAppColor.greyColor,
-      fillColor: PAppColor.lightBlackColor,
-      filled: true,
-      // focusColor: PAppColor.primary,
+      focusColor: PAppColor.primaryBorderColor,
       contentPadding: const EdgeInsets.symmetric(
-        vertical: PAppSize.s17,
-        horizontal: PAppSize.s10,
+        vertical: PAppSize.s16,
+        horizontal: PAppSize.s16,
       ),
       labelStyle: const TextStyle().copyWith(
         fontSize: PAppSize.s16,
@@ -91,33 +103,48 @@ class PDropdownButtonTheme {
       ),
       hintStyle: const TextStyle().copyWith(
         fontSize: PAppSize.s16,
-        fontWeight: FontWeight.w400,
-        color: PAppColor.text300,
+        fontWeight: FontWeight.w500,
+        color: PAppColor.hintTextColor,
       ),
       errorStyle: const TextStyle().copyWith(
         fontStyle: FontStyle.normal,
-        color: PAppColor.alert500,
+        color: PAppColor.errorColor,
       ),
       floatingLabelStyle: const TextStyle().copyWith(color: PAppColor.text300),
       border: const OutlineInputBorder().copyWith(
-        borderRadius: BorderRadius.circular(PAppSize.s5),
-        borderSide: BorderSide.none,
+        borderRadius: BorderRadius.circular(PAppSize.s8),
+        borderSide: const BorderSide(
+          width: PAppSize.s1,
+          color: PAppColor.darkBorderColor,
+        ),
       ),
       enabledBorder: const OutlineInputBorder().copyWith(
-        borderRadius: BorderRadius.circular(PAppSize.s5),
-        borderSide: BorderSide.none,
+        borderRadius: BorderRadius.circular(PAppSize.s8),
+        borderSide: const BorderSide(
+          width: PAppSize.s1,
+          color: PAppColor.darkBorderColor,
+        ),
       ),
       focusedBorder: const OutlineInputBorder().copyWith(
-        borderRadius: BorderRadius.circular(PAppSize.s5),
-        borderSide: BorderSide.none,
+        borderRadius: BorderRadius.circular(PAppSize.s8),
+        borderSide: const BorderSide(
+          width: PAppSize.s2,
+          color: PAppColor.primaryBorderColor,
+        ),
       ),
       errorBorder: const OutlineInputBorder().copyWith(
-        borderRadius: BorderRadius.circular(PAppSize.s5),
-        borderSide: BorderSide.none,
+        borderRadius: BorderRadius.circular(PAppSize.s8),
+        borderSide: const BorderSide(
+          width: PAppSize.s2,
+          color: PAppColor.errorColor,
+        ),
       ),
       focusedErrorBorder: const OutlineInputBorder().copyWith(
-        borderRadius: BorderRadius.circular(PAppSize.s5),
-        borderSide: BorderSide.none,
+        borderRadius: BorderRadius.circular(PAppSize.s8),
+        borderSide: const BorderSide(
+          width: PAppSize.s2,
+          color: PAppColor.errorColor,
+        ),
       ),
     ),
   );

@@ -143,7 +143,9 @@ class PHomePage extends StatelessWidget {
                     PAppSize.s16.verticalSpace,
 
                     SizedBox(
-                      height: PDeviceUtil.getDeviceHeight(context) * 0.30,
+                      height: PDeviceUtil.isIOS()
+                          ? PDeviceUtil.getDeviceHeight(context) * 0.30
+                          : PDeviceUtil.getDeviceHeight(context) * 0.33,
                       child: policyVm.loading.value == LoadingState.loading
                           ? ListView.builder(
                               shrinkWrap: true,

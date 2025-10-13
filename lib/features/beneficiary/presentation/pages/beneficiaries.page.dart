@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:oldmutual_pensions_app/core/utils/utils.dart';
@@ -25,148 +24,8 @@ class PBeneficiaryListPage extends StatelessWidget {
         ),
       ),
       builder: (context) {
-        return Container(
-          padding: EdgeInsets.all(PAppSize.s20),
-          height: PDeviceUtil.getDeviceHeight(context) * 0.85,
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(PAppSize.s20),
-            color: PHelperFunction.isDarkMode(context)
-                ? PAppColor.darkBgColor
-                : PAppColor.fillColor,
-          ),
-          child: SafeArea(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                PAppSize.s8.verticalSpace,
-                PSeeAllWidget(
-                  leadingText: 'beneficiaries'.tr,
-                  leadingFontSize: PAppSize.s20,
-                  trailing: Assets.icons.closeIcon.svg(
-                    color: PHelperFunction.isDarkMode(context)
-                        ? PAppColor.whiteColor
-                        : PAppColor.blackColor,
-                  ),
-                  onTap: () => PHelperFunction.pop(),
-                ),
-                PAppSize.s14.verticalSpace,
-                Divider(),
-
-                // PAppSize.s6.verticalSpace,
-                Expanded(
-                  child: Column(
-                    children: [
-                      _customListTile(
-                        context: context,
-                        title: beneficiary.fullName ?? 'not_applicable'.tr,
-                        subtitle: 'full_name'.tr,
-                      ),
-                      Divider(),
-
-                      _customListTile(
-                        context: context,
-                        title: beneficiary.relationship ?? 'not_applicable'.tr,
-                        subtitle: 'relationship'.tr,
-                      ),
-                      Divider(),
-
-                      _customListTile(
-                        context: context,
-                        title: 'not_applicable'.tr,
-                        subtitle: 'id_number'.tr,
-                      ),
-                      Divider(),
-
-                      _customListTile(
-                        context: context,
-                        title: 'not_applicable'.tr,
-                        subtitle: 'phone_number'.tr,
-                      ),
-                      Divider(),
-                      _customListTile(
-                        context: context,
-                        title: 'not_applicable'.tr,
-                        subtitle: 'email_address'.tr,
-                      ),
-                      Divider(),
-
-                      _customListTile(
-                        context: context,
-                        title: beneficiary.address ?? 'not_applicable'.tr,
-                        subtitle: 'address'.tr,
-                      ),
-                      Divider(),
-
-                      _customListTile(
-                        context: context,
-                        title: beneficiary.birthDate == null
-                            ? 'not_applicable'.tr
-                            : beneficiary.birthDate == null
-                            ? 'not_applicable'.tr
-                            : PFormatter.formatDate(
-                                dateFormat: DateFormat('d MMMM y'),
-                                date: DateTime.parse(
-                                  beneficiary.birthDate ??
-                                      DateTime.now().toIso8601String(),
-                                ),
-                              ),
-                        subtitle: 'date_of_birth'.tr,
-                      ),
-                      Divider(),
-
-                      _customListTile(
-                        context: context,
-                        title: 'percentage_split'.tr,
-                      ),
-                      Divider(),
-
-                      _customListTile(
-                        context: context,
-                        title: beneficiary.fullName ?? 'not_applicable'.tr,
-                        subtitle: 'beneficiary_name'.tr,
-                      ),
-                      Divider(),
-
-                      _customListTile(
-                        context: context,
-                        title: '${beneficiary.percAlloc}%',
-                        subtitle: 'percentage_split'.tr,
-                      ),
-                    ],
-                  ).scrollable(),
-                ),
-              ],
-            ),
-          ),
-        );
+        return PBeneficiaryDetailWidget(beneficiary: beneficiary);
       },
-    );
-  }
-
-  Widget _customListTile({
-    required BuildContext context,
-    required String title,
-
-    String? subtitle,
-  }) {
-    return ListTile(
-      contentPadding: EdgeInsets.zero,
-      title: Text(
-        title,
-        style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-          fontSize: PAppSize.s16,
-          fontWeight: subtitle != null ? FontWeight.w500 : FontWeight.w600,
-        ),
-      ),
-      subtitle: subtitle != null
-          ? Text(
-              subtitle,
-              style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                fontSize: PAppSize.s14,
-                fontWeight: FontWeight.w400,
-              ),
-            )
-          : null,
     );
   }
 
@@ -178,16 +37,10 @@ class PBeneficiaryListPage extends StatelessWidget {
           : PAppColor.fillColor,
       appBar: AppBar(title: Text('beneficiaries'.tr)),
       body: Obx(
-        () => Container(
+        () => PCustomCardWidget(
           margin: EdgeInsets.only(top: PAppSize.s20),
           padding: EdgeInsets.symmetric(vertical: PAppSize.s6),
-          decoration: BoxDecoration(
-            border: Border.all(width: PAppSize.s1, color: PAppColor.fillColor2),
-            borderRadius: BorderRadius.circular(PAppSize.s20),
-            color: PHelperFunction.isDarkMode(context)
-                ? PAppColor.darkAppBarColor
-                : PAppColor.whiteColor,
-          ),
+
           child: RefreshIndicator.adaptive(
             onRefresh: () => vm.getBeneficiaries(),
             child: vm.loading.value == LoadingState.loading

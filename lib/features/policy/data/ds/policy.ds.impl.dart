@@ -2,6 +2,7 @@ import 'package:get/get.dart';
 import 'package:oldmutual_pensions_app/core/network/network.dart';
 import 'package:oldmutual_pensions_app/core/utils/utils.dart';
 import 'package:oldmutual_pensions_app/env/env.dart';
+import 'package:oldmutual_pensions_app/features/beneficiary/beneficiary.dart';
 import 'package:oldmutual_pensions_app/features/policy/policy.dart';
 
 final PolicyDs policyDs = Get.put(PolicyDsImpl());
@@ -68,7 +69,7 @@ class PolicyDsImpl implements PolicyDs {
   }
 
   @override
-  Future<ApiResponse<List<Beneficiaries>>> getPolicyBeneficiaries({
+  Future<ApiResponse<List<Beneficiary>>> getPolicyBeneficiaries({
     required String policyNumber,
   }) async {
     return await asyncFunctionWrapper.handleAsyncNetworkCall(() async {
@@ -76,9 +77,9 @@ class PolicyDsImpl implements PolicyDs {
         requestType: RequestType.get,
         endPoint: '${Env.getPolicyBeneficiaries}/$policyNumber',
       );
-      return ApiResponse<List<Beneficiaries>>.fromJson(
+      return ApiResponse<List<Beneficiary>>.fromJson(
         res,
-        (data) => (data as List).map((e) => Beneficiaries.fromJson(e)).toList(),
+        (data) => (data as List).map((e) => Beneficiary.fromJson(e)).toList(),
       );
     });
   }

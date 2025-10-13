@@ -1,3 +1,5 @@
+import 'package:oldmutual_pensions_app/features/beneficiary/beneficiary.dart';
+
 class Policy {
   String? policyNo;
   int? planCode;
@@ -27,7 +29,7 @@ class Policy {
   double? premiumPaid;
   String? status;
   List<Dependant>? dependants;
-  List<Beneficiaries>? beneficiaries;
+  List<Beneficiary>? beneficiaries;
 
   Policy({
     this.policyNo,
@@ -96,9 +98,9 @@ class Policy {
       });
     }
     if (json['beneficiaries'] != null) {
-      beneficiaries = <Beneficiaries>[];
+      beneficiaries = <Beneficiary>[];
       json['beneficiaries'].forEach((v) {
-        beneficiaries!.add(Beneficiaries.fromJson(v));
+        beneficiaries!.add(Beneficiary.fromJson(v));
       });
     }
   }
@@ -184,24 +186,24 @@ class Dependant {
   }
 }
 
-class Beneficiaries {
-  String? name;
-  String? relationship;
-  int? percentageAllocation;
+// class Beneficiaries {
+//   String? name;
+//   String? relationship;
+//   int? percentageAllocation;
 
-  Beneficiaries({this.name, this.relationship, this.percentageAllocation});
+//   Beneficiaries({this.name, this.relationship, this.percentageAllocation});
 
-  Beneficiaries.fromJson(Map<String, dynamic> json) {
-    name = json['name'];
-    relationship = json['relationship'];
-    percentageAllocation = json['percentage_allocation'];
-  }
+//   Beneficiaries.fromJson(Map<String, dynamic> json) {
+//     name = json['name'];
+//     relationship = json['relationship'];
+//     percentageAllocation = json['percentage_allocation'];
+//   }
 
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = <String, dynamic>{};
-    data['name'] = name;
-    data['relationship'] = relationship;
-    data['percentage_allocation'] = percentageAllocation;
-    return data;
-  }
-}
+//   Map<String, dynamic> toJson() {
+//     final Map<String, dynamic> data = <String, dynamic>{};
+//     data['name'] = name;
+//     data['relationship'] = relationship;
+//     data['percentage_allocation'] = percentageAllocation;
+//     return data;
+//   }
+// }

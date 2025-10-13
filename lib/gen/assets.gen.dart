@@ -235,6 +235,13 @@ class $AssetsIconsGen {
   /// File path: assets/icons/shield.svg
   SvgGenImage get shield => const SvgGenImage('assets/icons/shield.svg');
 
+  /// File path: assets/icons/stack.svg
+  SvgGenImage get stack => const SvgGenImage('assets/icons/stack.svg');
+
+  /// File path: assets/icons/stacked.line.chart.svg
+  SvgGenImage get stackedLineChart =>
+      const SvgGenImage('assets/icons/stacked.line.chart.svg');
+
   /// File path: assets/icons/success.icon.svg
   SvgGenImage get successIcon =>
       const SvgGenImage('assets/icons/success.icon.svg');
@@ -341,6 +348,8 @@ class $AssetsIconsGen {
     selfie,
     settingsIcon,
     shield,
+    stack,
+    stackedLineChart,
     successIcon,
     supportIcon,
     termsIcon,

@@ -27,14 +27,15 @@ class Beneficiary {
 
   Beneficiary.fromJson(Map<String, dynamic> json) {
     beneficiaryId = json['beneficiary_id'];
-    fullName = json['FullName'];
-    percAlloc =
-        json['perc_alloc'] is String
-            ? double.parse(json['perc_alloc'])
-            : json['perc_alloc']?.toDouble();
+    fullName = json['FullName'] ?? json['name'];
+    percAlloc = json['perc_alloc'] is String
+        ? double.tryParse(json['perc_alloc']) ??
+              json['percentage_allocation']?.toDouble()
+        : json['perc_alloc']?.toDouble() ??
+              json['percentage_allocation']?.toDouble();
     birthDate = json['birth_date'];
     address = json['address'];
-    relationship = json['Relationship'];
+    relationship = json['Relationship'] ?? json['relationship'];
     pensionTypeId = json['pension_type_id'];
     pensionTypeName = json['pension_type_name'];
     schemeId = json['scheme_id'];
