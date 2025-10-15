@@ -1,3 +1,16 @@
+export '../statements/domain/models/generate.report.dart';
+export '../statements/domain/models/report.status.dart';
+export 'application/service/contribution.history.service.dart';
+export 'application/service/contribution.history.service.impl.dart';
+export 'data/ds/contribution.history.ds.dart';
+export 'data/ds/contribution.history.ds.impl.dart';
+export 'data/repos/contribution.history.repo.dart';
+export 'data/repos/contribution.history.repo.impl.dart';
+export 'domain/models/contributed.year.model.dart';
+export 'domain/models/contribution.history.model.dart';
+export 'domain/models/contribution.model.dart';
+export 'domain/models/contribution.summary.model.dart';
 export 'presentation/pages/contribution.history.page.dart';
 export 'presentation/vm/contribution.history.vm.dart';
 export 'presentation/widgets/contribution.history.widget.dart';
+export 'presentation/widgets/contribution.history.widget.redact.dart';

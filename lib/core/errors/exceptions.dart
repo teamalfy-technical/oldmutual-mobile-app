@@ -12,16 +12,12 @@ class TimeoutException implements Exception {
 }
 
 class BadRequestException implements Exception {
-  const BadRequestException({
-    required this.message,
-  });
+  const BadRequestException({required this.message});
   final String message;
 }
 
 class UnauthorisedException implements Exception {
-  const UnauthorisedException({
-    required this.message,
-  });
+  const UnauthorisedException({required this.message});
   final String message;
 }
 
@@ -51,6 +47,6 @@ class ServerException implements Exception {
     } else if (e.type == DioExceptionType.cancel) {
       message = 'Request Cancelled';
     }
-    return message!;
+    return message ?? 'Connection reset by peer';
   }
 }

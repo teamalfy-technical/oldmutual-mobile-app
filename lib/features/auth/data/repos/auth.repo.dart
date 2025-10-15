@@ -4,41 +4,83 @@ import 'package:oldmutual_pensions_app/core/network/network.dart';
 import 'package:oldmutual_pensions_app/features/auth/auth.dart';
 
 abstract class AuthRepo {
-  Future<Either<PFailure, ApiResponse<List<Member>>>> signup({
-    required String terms,
+  // Future<Either<PFailure, ApiResponse<List<Message>>>> signup({
+  //   required String terms,
+  //   required String phone,
+  // });
+
+  // Future<Either<PFailure, ApiResponse<Member>>> verifyOTP({
+  //   required String phone,
+  //   required String otp,
+  // });
+
+  Future<Either<PFailure, ApiResponse<List<Message>>>> addPassword({
     required String phone,
+    required String password,
+    required String confirmPassword,
   });
 
-  Future<Either<PFailure, ApiResponse<List<Member>>>> verifyOTP({
-    required String phone,
+  Future<Either<PFailure, ApiResponse<List<Message>>>> changePassword({
+    required String oldPassword,
+    required String newPassword,
+    required String confirmPassword,
+  });
+
+  // Future<Either<PFailure, ApiResponse<Member>>> signIn({
+  //   required String phone,
+  //   required String password,
+  // });
+
+  Future<Either<PFailure, ApiResponse<List<BioData>>>> getBioData({
+    String? employerNumber,
+    String? staffNumber,
+  });
+
+  Future<Either<PFailure, ApiResponse<List<Message>>>> updateFcmToken({
+    required String token,
+  });
+
+  Future<Either<PFailure, ApiResponse<List<Message>>>> forgotPassword({
+    required String emailOrPhone,
+  });
+
+  Future<Either<PFailure, ApiResponse<Member>>> verifyForgotPasswordOTP({
+    required String emailOrPhone,
     required String otp,
   });
 
-  Future<Either<PFailure, ApiResponse<List<Member>>>> addPassword({
-    required String phone,
+  Future<Either<PFailure, ApiResponse<List<Message>>>> resetPassword({
     required String password,
     required String confirmPassword,
   });
 
   Future<Either<PFailure, ApiResponse<Member>>> signIn({
-    required String phone,
+    required String emailOrPhone,
     required String password,
-    required String deviceToken,
   });
 
-  Future<Either<PFailure, ApiResponse<List<BioData>>>> getBioData({
-    required String employerNumber,
-    required String staffNumber,
-  });
-
-  Future<Either<PFailure, ApiResponse<List<Member>>>> forgotPassword({
+  Future<Either<PFailure, ApiResponse<List<Message>>>> signUp({
     required String email,
-  });
-
-  Future<Either<PFailure, ApiResponse<List<Member>>>> resetPassword({
-    required String otp,
-    required String email,
+    required String phone,
+    required String verificationToken,
     required String password,
     required String confirmPassword,
+  });
+
+  Future<Either<PFailure, ApiResponse<List<Message>>>> verifySignupOtp({
+    required String phone,
+    required String otp,
+  });
+
+  Future<Either<PFailure, ApiResponse<List<Message>>>> resendOtp({
+    required String phone,
+  });
+
+  Future<Either<PFailure, ApiResponse<String>>> verifyGhanaCard({
+    required String cardNumber,
+  });
+
+  Future<Either<PFailure, ApiResponse<String>>> checkCardVerificationStatus({
+    required String sessionId,
   });
 }

@@ -1,6 +1,15 @@
 import 'package:get/get.dart';
 import 'package:oldmutual_pensions_app/features/auth/auth.dart';
 import 'package:oldmutual_pensions_app/features/beneficiary/beneficiary.dart';
+import 'package:oldmutual_pensions_app/features/contribution.history/contribution.history.dart';
+import 'package:oldmutual_pensions_app/features/dashboard/dashboard.dart';
+import 'package:oldmutual_pensions_app/features/factsheet/factsheet.dart';
+import 'package:oldmutual_pensions_app/features/home/home.dart';
+import 'package:oldmutual_pensions_app/features/notification/notification.dart';
+import 'package:oldmutual_pensions_app/features/pension/pension.dart';
+import 'package:oldmutual_pensions_app/features/profile/profile.dart';
+import 'package:oldmutual_pensions_app/features/redemptions/redemption.dart';
+import 'package:oldmutual_pensions_app/features/statements/statements.dart';
 
 class ServiceBinding implements Bindings {
   @override
@@ -15,25 +24,50 @@ class ServiceBinding implements Bindings {
       tag: (BeneficiaryService).toString(),
     );
 
-    // Get.lazyPut<PostService>(
-    //   () => PostServiceImpl(),
-    //   tag: (PostService).toString(),
-    // );
+    Get.lazyPut<ContributionHistoryService>(
+      () => ContributionHistoryServiceImpl(),
+      tag: (ContributionHistoryService).toString(),
+    );
 
-    // Get.lazyPut<SearchService>(
-    //   () => SearchServiceImpl(),
-    //   tag: (SearchService).toString(),
-    // );
+    Get.lazyPut<ProfileService>(
+      () => ProfileServiceImpl(),
+      tag: (ProfileService).toString(),
+    );
 
-    // Get.lazyPut<NotificationService>(
-    //   () => NotificationServiceImpl(),
-    //   tag: (NotificationService).toString(),
-    // );
+    Get.lazyPut<NotificationService>(
+      () => NotificationServiceImpl(),
+      tag: (NotificationService).toString(),
+    );
 
-    // Get.lazyPut<ChatService>(
-    //   () => ChatServiceImpl(),
-    //   tag: (ChatService).toString(),
-    // );
+    Get.lazyPut<DashboardService>(
+      () => DashboardServiceImpl(),
+      tag: (DashboardService).toString(),
+    );
+
+    Get.lazyPut<PensionService>(
+      () => PensionServiceImpl(),
+      tag: (PensionService).toString(),
+    );
+
+    Get.lazyPut<PolicyService>(
+      () => PolicyServiceImpl(),
+      tag: (PolicyService).toString(),
+    );
+
+    Get.lazyPut<FactsheetService>(
+      () => FactsheetServiceImpl(),
+      tag: (FactsheetService).toString(),
+    );
+
+    Get.lazyPut<StatementService>(
+      () => StatementServiceImpl(),
+      tag: (StatementService).toString(),
+    );
+
+    Get.lazyPut<RedemptionService>(
+      () => RedemptionServiceImpl(),
+      tag: (RedemptionService).toString(),
+    );
 
     /// [Data Source] injection
     //TDataSourceBindings().dependencies();

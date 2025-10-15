@@ -4,7 +4,9 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:oldmutual_pensions_app/core/utils/utils.dart';
 import 'package:oldmutual_pensions_app/features/beneficiary/beneficiary.dart';
+import 'package:oldmutual_pensions_app/features/beneficiary/presentation/vm/beneficiary.vm.dart';
 import 'package:oldmutual_pensions_app/gen/assets.gen.dart';
+import 'package:oldmutual_pensions_app/routes/app.pages.dart';
 
 class PBeneficiaryWidget extends StatelessWidget {
   final Beneficiary beneficiary;
@@ -26,16 +28,19 @@ class PBeneficiaryWidget extends StatelessWidget {
       children: [
         ExpansionTile(
           title: Text(
-            beneficiary.fullName ?? '',
+            beneficiary.fullName ?? 'not_applicable'.tr,
             style: Theme.of(context).textTheme.bodyLarge,
           ),
-          tilePadding: EdgeInsets.symmetric(horizontal: PAppSize.s22),
+          tilePadding: EdgeInsets.symmetric(
+            horizontal: PAppSize.s22,
+            vertical: PAppSize.s12,
+          ),
           initiallyExpanded: beneficiary.show ?? false,
           expandedAlignment: Alignment.centerLeft,
           expandedCrossAxisAlignment: CrossAxisAlignment.start,
           childrenPadding: EdgeInsets.symmetric(
             horizontal: PAppSize.s22,
-            vertical: PAppSize.s10,
+            // vertical: PAppSize.s10,
           ),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.zero,
@@ -68,17 +73,110 @@ class PBeneficiaryWidget extends StatelessWidget {
                       ],
                     ),
                   )
-                  : Assets.icons.arrowDownIos.svg(),
+                  : SizedBox(
+                    width:
+                        beneficiary.schemeName == null
+                            ? PDeviceUtil.getDeviceWidth(context) * 0.50
+                            : null,
+                    child:
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.end,
+                          children: [
+                            beneficiary.schemeName == null
+                                ? Row(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  mainAxisAlignment: MainAxisAlignment.end,
+                                  children: [
+                                    Text(
+                                      'pending_review'.tr,
+                                      style: Theme.of(
+                                        context,
+                                      ).textTheme.bodyLarge?.copyWith(
+                                        color: PAppColor.primary,
+                                        fontSize: PAppSize.s14,
+                                      ),
+                                    ),
+                                    PAppSize.s3.horizontalSpace,
+                                    Assets.icons.arrowDownIos.svg(),
+                                  ],
+                                )
+                                : Assets.icons.arrowDownIos.svg(),
+
+                            // PAppSize.s1.verticalSpace,
+                            Assets.icons.editIcon.svg().onPressed(
+                              onTap:
+                                  () => PHelperFunction.switchScreen(
+                                    destination: Routes.manageBeneficiaryPage,
+                                    args: [beneficiary, true],
+                                  ),
+                            ),
+                            PAppSize.s1.verticalSpace,
+                            Assets.icons.trashRedIcon.svg().onPressed(
+                              onTap: () {
+                                showConfirmDialog(
+                                  context: context,
+                                  content: RichText(
+                                    textAlign: TextAlign.center,
+                                    text: TextSpan(
+                                      text: 'Are you sure you want to',
+                                      style: Theme.of(
+                                        context,
+                                      ).textTheme.bodyLarge?.copyWith(
+                                        color: PAppColor.blackColor,
+                                      ),
+                                      children: [
+                                        TextSpan(
+                                          text: ' delete',
+                                          style: Theme.of(
+                                            context,
+                                          ).textTheme.bodyLarge?.copyWith(
+                                            color: PAppColor.redColor,
+                                          ),
+                                        ),
+                                        TextSpan(
+                                          text: ' this beneficiary?\n',
+                                          style: Theme.of(
+                                            context,
+                                          ).textTheme.bodyLarge?.copyWith(
+                                            color: PAppColor.blackColor,
+                                          ),
+                                        ),
+                                        TextSpan(
+                                          text: 'This action cannot be undone.',
+                                          style: Theme.of(
+                                            context,
+                                          ).textTheme.bodyLarge?.copyWith(
+                                            color: PAppColor.blackColor,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                  positiveText: 'delete'.tr.toUpperCase(),
+                                  onPositiveTap: () {
+                                    PHelperFunction.pop();
+                                    Get.find<PBeneficiaryVm>()
+                                        .deleteBeneficiary(beneficiary);
+                                  },
+                                );
+                              },
+                            ),
+                          ],
+                        ).scrollable(),
+                  ),
           children: [
+            PAppSize.s2.verticalSpace,
             detailWidget(
               context,
               'dob'.tr,
-              PFormatter.formatDate(
-                dateFormat: DateFormat('dd-MM-yyyy'),
-                date: DateTime.parse(
-                  beneficiary.birthDate ?? DateTime.now().toIso8601String(),
-                ),
-              ),
+              beneficiary.birthDate == null
+                  ? 'not_applicable'.tr
+                  : PFormatter.formatDate(
+                    dateFormat: DateFormat('dd-MM-yyyy'),
+                    date: DateTime.parse(
+                      beneficiary.birthDate ?? DateTime.now().toIso8601String(),
+                    ),
+                  ),
             ),
             detailWidget(
               context,
@@ -88,7 +186,7 @@ class PBeneficiaryWidget extends StatelessWidget {
             detailWidget(
               context,
               'relation'.tr,
-              beneficiary.relationship ?? '',
+              beneficiary.relationship ?? 'not_applicable'.tr,
             ),
           ],
         ),

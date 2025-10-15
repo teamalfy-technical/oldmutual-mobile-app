@@ -9,99 +9,227 @@ final AuthRepo authRepo = Get.put(AuthRepoImpl());
 
 class AuthRepoImpl implements AuthRepo {
   @override
-  Future<Either<PFailure, ApiResponse<List<Member>>>> addPassword({
+  Future<Either<PFailure, ApiResponse<List<Message>>>> addPassword({
     required String phone,
     required String password,
     required String confirmPassword,
   }) async {
     return await customRepositoryWrapper.wrapRepositoryFunction(
-      function:
-          () async => await authDs.addPassword(
-            phone: phone,
-            password: password,
-            confirmPassword: confirmPassword,
-          ),
+      function: () async => await authDs.addPassword(
+        phone: phone,
+        password: password,
+        confirmPassword: confirmPassword,
+      ),
     );
   }
 
   @override
-  Future<Either<PFailure, ApiResponse<List<Member>>>> forgotPassword({
-    required String email,
+  Future<Either<PFailure, ApiResponse<List<Message>>>> forgotPassword({
+    required String emailOrPhone,
   }) async {
     return await customRepositoryWrapper.wrapRepositoryFunction(
-      function: () async => await authDs.forgotPassword(email: email),
+      function: () async =>
+          await authDs.forgotPassword(emailOrPhone: emailOrPhone),
     );
   }
 
   @override
-  Future<Either<PFailure, ApiResponse<List<Member>>>> resetPassword({
+  Future<Either<PFailure, ApiResponse<List<Message>>>> resetPassword({
+    required String password,
+    required String confirmPassword,
+  }) async {
+    return await customRepositoryWrapper.wrapRepositoryFunction(
+      function: () async => await authDs.resetPassword(
+        password: password,
+        confirmPassword: confirmPassword,
+      ),
+    );
+  }
+
+  // @override
+  // Future<Either<PFailure, ApiResponse<Member>>> signIn({
+  //   required String phone,
+  //   required String password,
+  // }) async {
+  //   return await customRepositoryWrapper.wrapRepositoryFunction(
+  //     function: () async {
+  //       final res = await authDs.signIn(phone: phone, password: password);
+  //       PSecureStorage().saveAuthResponse(res.data?.toJson());
+  //       return res;
+  //     },
+  //   );
+  // }
+
+  // @override
+  // Future<Either<PFailure, ApiResponse<List<Message>>>> signup({
+  //   required String terms,
+  //   required String phone,
+  // }) async {
+  //   return await customRepositoryWrapper.wrapRepositoryFunction(
+  //     function: () async => await authDs.signup(terms: terms, phone: phone),
+  //   );
+  // }
+
+  // @override
+  // Future<Either<PFailure, ApiResponse<Member>>> verifyOTP({
+  //   required String phone,
+  //   required String otp,
+  // }) async {
+  //   return await customRepositoryWrapper.wrapRepositoryFunction(
+  //     function: () async {
+  //       final res = await authDs.verifyOTP(phone: phone, otp: otp);
+  //       PSecureStorage().saveAuthResponse(res.data?.toJson());
+  //       return res;
+  //     },
+  //   );
+  // }
+
+  @override
+  Future<Either<PFailure, ApiResponse<List<Message>>>> updateFcmToken({
+    required String token,
+  }) async {
+    return await customRepositoryWrapper.wrapRepositoryFunction(
+      function: () async => await authDs.updateFcmToken(token: token),
+    );
+  }
+
+  @override
+  Future<Either<PFailure, ApiResponse<List<BioData>>>> getBioData({
+    String? employerNumber,
+    String? staffNumber,
+  }) async {
+    return await customRepositoryWrapper.wrapRepositoryFunction(
+      function: () async => await authDs.getBioData(),
+    );
+  }
+
+  @override
+  Future<Either<PFailure, ApiResponse<Member>>> verifyForgotPasswordOTP({
+    required String emailOrPhone,
     required String otp,
-    required String email,
-    required String password,
-    required String confirmPassword,
-  }) async {
-    return await customRepositoryWrapper.wrapRepositoryFunction(
-      function:
-          () async => await authDs.resetPassword(
-            otp: otp,
-            email: email,
-            password: password,
-            confirmPassword: confirmPassword,
-          ),
-    );
-  }
-
-  @override
-  Future<Either<PFailure, ApiResponse<Member>>> signIn({
-    required String phone,
-    required String password,
-    required String deviceToken,
   }) async {
     return await customRepositoryWrapper.wrapRepositoryFunction(
       function: () async {
-        final res = await authDs.signIn(
-          phone: phone,
-          password: password,
-          deviceToken: deviceToken,
+        final res = await authDs.verifyForgotPasswordOTP(
+          emailOrPhone: emailOrPhone,
+          otp: otp,
         );
-        pensionAppLogger.d(res);
-        PSecureStorage().saveAuthResponse(res.data);
+        PSecureStorage().saveAuthResponse(res.data?.toJson());
         return res;
       },
     );
   }
 
   @override
-  Future<Either<PFailure, ApiResponse<List<Member>>>> signup({
-    required String terms,
-    required String phone,
+  Future<Either<PFailure, ApiResponse<List<Message>>>> changePassword({
+    required String oldPassword,
+    required String newPassword,
+    required String confirmPassword,
   }) async {
     return await customRepositoryWrapper.wrapRepositoryFunction(
-      function: () async => await authDs.signup(terms: terms, phone: phone),
+      function: () async {
+        final res = await authDs.changePassword(
+          oldPassword: oldPassword,
+          newPassword: newPassword,
+          confirmPassword: confirmPassword,
+        );
+
+        return res;
+      },
     );
   }
 
   @override
-  Future<Either<PFailure, ApiResponse<List<Member>>>> verifyOTP({
+  Future<Either<PFailure, ApiResponse<List<Message>>>> signUp({
+    required String email,
+    required String phone,
+    required String verificationToken,
+    required String password,
+    required String confirmPassword,
+  }) async {
+    return await customRepositoryWrapper.wrapRepositoryFunction(
+      function: () async {
+        final res = await authDs.signUp(
+          email: email,
+          phone: phone,
+          verificationToken: verificationToken,
+          password: password,
+          confirmPassword: confirmPassword,
+        );
+        return res;
+      },
+    );
+  }
+
+  @override
+  Future<Either<PFailure, ApiResponse<List<Message>>>> resendOtp({
+    required String phone,
+  }) async {
+    return await customRepositoryWrapper.wrapRepositoryFunction(
+      function: () async {
+        final res = await authDs.resendOtp(phone: phone);
+        return res;
+      },
+    );
+  }
+
+  @override
+  Future<Either<PFailure, ApiResponse<Member>>> signIn({
+    required String emailOrPhone,
+    required String password,
+  }) async {
+    return await customRepositoryWrapper.wrapRepositoryFunction(
+      function: () async {
+        final res = await authDs.signIn(
+          emailOrPhone: emailOrPhone,
+          password: password,
+        );
+        // PSecureStorage().saveData<String?>(
+        //   PSecureStorage().tokenResKey,
+        //   res.data?.token,
+        // );
+        PSecureStorage().saveAuthResponse(res.data?.toJson());
+        return res;
+      },
+    );
+  }
+
+  @override
+  Future<Either<PFailure, ApiResponse<String>>> verifyGhanaCard({
+    required String cardNumber,
+  }) async {
+    return await customRepositoryWrapper.wrapRepositoryFunction(
+      function: () async {
+        final res = await authDs.verifyGhanaCard(cardNumber: cardNumber);
+        return res;
+      },
+    );
+  }
+
+  @override
+  Future<Either<PFailure, ApiResponse<List<Message>>>> verifySignupOtp({
     required String phone,
     required String otp,
   }) async {
     return await customRepositoryWrapper.wrapRepositoryFunction(
-      function: () async => await authDs.verifyOTP(phone: phone, otp: otp),
+      function: () async {
+        final res = await authDs.verifySignupOtp(phone: phone, otp: otp);
+        return res;
+      },
     );
   }
 
   @override
-  Future<Either<PFailure, ApiResponse<List<BioData>>>> getBioData({
-    required String employerNumber,
-    required String staffNumber,
+  Future<Either<PFailure, ApiResponse<String>>> checkCardVerificationStatus({
+    required String sessionId,
   }) async {
     return await customRepositoryWrapper.wrapRepositoryFunction(
-      function:
-          () async => await authDs.getBioData(
-            employerNumber: employerNumber,
-            staffNumber: staffNumber,
-          ),
+      function: () async {
+        final res = await authDs.checkCardVerificationStatus(
+          sessionId: sessionId,
+        );
+        return res;
+      },
     );
   }
 }

@@ -5,20 +5,17 @@ import 'package:oldmutual_pensions_app/core/utils/utils.dart';
 import 'package:oldmutual_pensions_app/features/auth/presentation/vm/auth.vm.dart';
 import 'package:oldmutual_pensions_app/shared/shared.dart';
 
-import '../../../../../gen/assets.gen.dart';
-
 class PCreatePasswordPage extends StatelessWidget {
-  final bool isSignup;
-  PCreatePasswordPage({super.key, this.isSignup = true});
+  PCreatePasswordPage({super.key});
 
-  final ctrl = Get.put(PAuthVm());
+  final formKey = GlobalKey<FormState>();
+
+  final ctrl = Get.find<PAuthVm>();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(isSignup ? 'welcome'.tr : 'reset_password'.tr),
-      ),
+      appBar: AppBar(title: Text('enter_new_password'.tr)),
       body: PAnnotatedRegion(
         child: SafeArea(
           child: Column(
@@ -27,64 +24,59 @@ class PCreatePasswordPage extends StatelessWidget {
               Expanded(
                 child: Obx(
                   () => Form(
-                    key: ctrl.createPasswordFormKey,
-                    child:
-                        Column(
-                          children: [
-                            if (isSignup)
-                              Column(
-                                children: [
-                                  PAppSize.s20.verticalSpace,
-                                  PCustomTextField(
-                                    labelText: 'phone'.tr,
-                                    hintText: '',
-                                    prefixIcon: Assets.icons.phoneIcon.path,
-                                    controller: ctrl.phoneTEC,
-                                    enabled: false,
-                                    validator: PValidator.validatePhoneNumber,
-                                    // focusColor: PAppColor.primary,
-                                  ),
-                                ],
-                              ),
-                            PAppSize.s20.verticalSpace,
-                            PCustomPasswordTextField(
-                              labelText: 'create_password'.tr,
-                              hintText: 'hint_password'.tr,
-                              prefixIcon: Assets.icons.lockIcon.path,
-                              suffixIcon: Assets.icons.eyeIcon.path,
-                              obscure: ctrl.obscure.value,
-                              onObscureChanged: ctrl.onObscureChanged,
-                              controller: ctrl.passwordTEC,
-                            ),
-                            PAppSize.s20.verticalSpace,
-                            PCustomPasswordTextField(
-                              labelText:
-                                  isSignup
-                                      ? 'confirm_password'.tr
-                                      : 're_enter_password'.tr,
-                              hintText: 'hint_password'.tr,
-                              prefixIcon: Assets.icons.lockIcon.path,
-                              suffixIcon: Assets.icons.eyeIcon.path,
-                              obscure: ctrl.obscure.value,
-                              onObscureChanged: ctrl.onObscureChanged,
-                              controller: ctrl.confirmPasswordTEC,
-                            ),
+                    key: formKey,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        PAppSize.s10.verticalSpace,
+                        Text(
+                          'reset_password_hint'.tr,
+                          style: Theme.of(context).textTheme.headlineSmall
+                              ?.copyWith(
+                                fontWeight: FontWeight.w500,
 
-                            (PDeviceUtil.getDeviceWidth(context) / 5)
-                                .verticalSpace,
-                            PGradientButton(
-                              label: 'next'.tr,
-                              width: PDeviceUtil.getDeviceWidth(context) * 0.55,
-                              onTap:
-                                  () =>
-                                      isSignup
-                                          ? ctrl.createPassword(
-                                            isSignup: isSignup,
-                                          )
-                                          : ctrl.resetPassword(),
-                            ),
-                          ],
-                        ).scrollable(),
+                                color: PHelperFunction.isDarkMode(context)
+                                    ? PAppColor.secondary500
+                                    : PAppColor.darkAppBarColor2,
+                                fontSize: PAppSize.s16,
+                              ),
+                        ),
+                        PAppSize.s32.verticalSpace,
+                        PCustomPasswordTextField(
+                          labelText: 'new_password'.tr,
+                          validator: PValidator.validatePassword,
+                          obscure: ctrl.obscure.value,
+                          onObscureChanged: ctrl.onObscureChanged,
+                          controller: ctrl.passwordTEC,
+                        ),
+                        PAppSize.s20.verticalSpace,
+                        PCustomPasswordTextField(
+                          labelText: 'confirm_new_password'.tr,
+                          validator: (val) =>
+                              PValidator.validateConfirmPassword(
+                                val,
+                                ctrl.passwordTEC.text.trim(),
+                              ),
+                          obscure: ctrl.obscure.value,
+                          onObscureChanged: ctrl.onObscureChanged,
+                          controller: ctrl.confirmPasswordTEC,
+                        ),
+
+                        PAppSize.s28.verticalSpace,
+                        PGradientButton(
+                          label: 'continue'.tr,
+                          showIcon: false,
+                          loading: ctrl.loading.value,
+                          width: PDeviceUtil.getDeviceWidth(context),
+                          onTap: () {
+                            if (formKey.currentState!.validate()) {
+                              PDeviceUtil.hideKeyboard(context);
+                              ctrl.resetPassword();
+                            }
+                          },
+                        ),
+                      ],
+                    ).scrollable(),
                   ),
                 ),
               ),
@@ -98,7 +90,7 @@ class PCreatePasswordPage extends StatelessWidget {
               //       ),
               // ),
             ],
-          ).horizontal(PAppSize.s28),
+          ).horizontal(PAppSize.s24),
         ),
       ),
     );

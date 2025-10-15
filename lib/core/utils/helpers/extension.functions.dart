@@ -61,14 +61,17 @@ extension AppWidgetExtension on Widget {
     Color? overlayColor,
     Color? color,
     InteractiveInkFeatureFactory? splashFactory,
-  }) => InkWell(
-    onTap: onTap,
-    onDoubleTap: onDoubleTap,
-    onLongPress: onLongTap,
-    borderRadius: radius,
-    splashFactory: splashFactory ?? InkSplash.splashFactory,
-    splashColor: color,
-    child: this,
+  }) => Material(
+    color: PAppColor.transparentColor,
+    child: InkWell(
+      onTap: onTap,
+      onDoubleTap: onDoubleTap,
+      onLongPress: onLongTap,
+      borderRadius: radius,
+      splashFactory: splashFactory ?? InkSplash.splashFactory,
+      splashColor: color,
+      child: this,
+    ),
   );
 
   Widget hero({required Object tag}) => Hero(

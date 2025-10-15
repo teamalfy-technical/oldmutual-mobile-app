@@ -1,24 +1,28 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:oldmutual_pensions_app/core/utils/utils.dart';
+import 'package:oldmutual_pensions_app/gen/assets.gen.dart';
 
-class PCustomPasswordTextField extends StatelessWidget {
+class PCustomPasswordTextField extends StatefulWidget {
   final String labelText;
-  final String hintText;
-  final String prefixIcon;
-  final String? suffixIcon;
+  // final String? titleText;
+  final Widget? prefixIcon;
+  final Widget? suffixIcon;
   final Color? focusColor;
   final TextEditingController controller;
   final bool obscure;
+  final String? Function(String?)? validator;
   final TextInputType? textInputType;
   final Function()? onObscureChanged;
-  final bool isPasswordStrong;
+  // final bool isPasswordStrong;
+  // final EdgeInsetsGeometry? contentPadding;
+  // final String? hintText;
   final void Function(String)? onChanged;
+  final AutovalidateMode? autovalidateMode;
   const PCustomPasswordTextField({
     super.key,
+    // required this.labelText,
     required this.labelText,
-    required this.hintText,
-    required this.prefixIcon,
+    this.prefixIcon,
     this.suffixIcon,
     this.focusColor,
     required this.controller,
@@ -26,81 +30,125 @@ class PCustomPasswordTextField extends StatelessWidget {
     this.textInputType = TextInputType.text,
     this.onObscureChanged,
     this.onChanged,
-    this.isPasswordStrong = false,
+    // this.isPasswordStrong = false,
+    this.validator,
+    this.autovalidateMode,
+    // this.titleText,
+    // this.border,
+    // this.enabledBorder,
+    // this.focusedBorder,
+    // this.contentPadding,
+    // this.hintText,
+    // this.errorBorder,
+    // this.focusedErrorBorder,
   });
+
+  @override
+  State<PCustomPasswordTextField> createState() =>
+      _PCustomPasswordTextFieldState();
+}
+
+class _PCustomPasswordTextFieldState extends State<PCustomPasswordTextField> {
+  final FocusNode _focusNode = FocusNode();
+
+  @override
+  void initState() {
+    super.initState();
+    _focusNode.addListener(() {
+      setState(() {}); // rebuild when focus changes
+    });
+  }
+
+  @override
+  void dispose() {
+    _focusNode.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
-          labelText,
-          textAlign: TextAlign.start,
-          style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-            fontSize: PAppSize.s14,
+        // if (widget.titleText != null) ...[
+        //   Text(
+        //     widget.titleText ?? '',
+        //     textAlign: TextAlign.start,
+        //     style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+        //       fontSize: PAppSize.s13,
+        //       fontWeight: FontWeight.w400,
+        //     ),
+        //   ),
+        //   // PAppSize.s4.verticalSpace,
+        // ],
+        TextFormField(
+          focusNode: _focusNode,
+          controller: widget.controller,
+          obscureText: widget.obscure,
+          validator: widget.validator,
+
+          //?? PValidator.validatePassword,
+          onChanged: widget.onChanged,
+          autovalidateMode: widget.autovalidateMode,
+          style: TextStyle(
+            color: PHelperFunction.isDarkMode(context)
+                ? PAppColor.whiteColor
+                : PAppColor.text500,
             fontWeight: FontWeight.w600,
           ),
-        ),
-        PAppSize.s6.verticalSpace,
-        TextFormField(
-          controller: controller,
-          obscureText: obscure,
-          validator: PValidator.validatePassword,
-          onChanged: onChanged,
           decoration: InputDecoration(
-            errorBorder: const OutlineInputBorder().copyWith(
-              borderRadius: BorderRadius.circular(PAppSize.s8),
-              borderSide: BorderSide(
-                width: PAppSize.s1,
-                color:
-                    isPasswordStrong
-                        ? PAppColor.primary
-                        : controller.text.isNotEmpty
-                        ? PAppColor.warning500
-                        : PAppColor.alert500,
-              ),
-            ),
-            focusedErrorBorder: const OutlineInputBorder().copyWith(
-              borderRadius: BorderRadius.circular(PAppSize.s8),
-              borderSide: BorderSide(
-                width: PAppSize.s1,
-                color:
-                    isPasswordStrong
-                        ? PAppColor.primary
-                        : controller.text.isNotEmpty
-                        ? PAppColor.warning500
-                        : PAppColor.alert500,
-              ),
-            ),
-            errorStyle: TextStyle(
-              color:
-                  isPasswordStrong
-                      ? PAppColor.primary
-                      : controller.text.isNotEmpty
-                      ? PAppColor.warning500
-                      : PAppColor.alert500,
-            ),
-            focusColor: focusColor,
-            prefixIcon: prefixIcon
-                .svg(
-                  color:
-                      PHelperFunction.isDarkMode(context)
-                          ? PAppColor.whiteColor
-                          : PAppColor.blackColor,
-                )
-                .symmetric(horizontal: PAppSize.s16),
+            // contentPadding: widget.contentPadding,
+            label:
+                // widget.labelText == null
+                //     ? null
+                //     :
+                Text(
+                  widget.labelText,
+                  style: TextStyle(
+                    color: _focusNode.hasFocus
+                        ? PAppColor.primaryBorderColor
+                        : PAppColor.hintTextColor,
+                  ),
+                ),
+            // border: widget.border,
+            // enabledBorder: widget.enabledBorder,
+            // focusedBorder: widget.focusedBorder,
+            // errorBorder: widget.errorBorder,
+            // focusedErrorBorder: widget.focusedErrorBorder,
+
+            // errorBorder: const OutlineInputBorder().copyWith(
+            //   borderRadius: BorderRadius.circular(PAppSize.s8),
+            //   borderSide: BorderSide(width: PAppSize.s1),
+            // ),
+            // focusedErrorBorder: const OutlineInputBorder().copyWith(
+            //   borderRadius: BorderRadius.circular(PAppSize.s8),
+            //   borderSide: BorderSide(width: PAppSize.s1),
+            // ),
+            focusColor: widget.focusColor,
+            // prefixIcon: prefixIcon
+            //     .svg(
+            //       color: PHelperFunction.isDarkMode(context)
+            //           ? PAppColor.whiteColor
+            //           : PAppColor.blackColor,
+            //     )
+            //     .symmetric(horizontal: PAppSize.s16),
             suffixIcon:
-                suffixIcon == null
-                    ? null
-                    : IconButton(
-                      onPressed: onObscureChanged,
-                      icon: suffixIcon!.svg(
-                        color:
-                            obscure ? PAppColor.blackColor : PAppColor.primary,
-                      ),
-                    ),
-            hintText: hintText,
+                widget.suffixIcon ??
+                IconButton(
+                  onPressed: widget.onObscureChanged,
+                  icon: widget.obscure
+                      ? Assets.icons.visibilityOff.svg(
+                          color: PHelperFunction.isDarkMode(context)
+                              ? PAppColor.whiteColor
+                              : PAppColor.text300,
+                        )
+                      : Assets.icons.visibilityOn.svg(
+                          color: PHelperFunction.isDarkMode(context)
+                              ? PAppColor.whiteColor
+                              : PAppColor.text300,
+                        ),
+                ),
+            // hintText: widget.hintText,
           ),
         ),
       ],

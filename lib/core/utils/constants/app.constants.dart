@@ -1,42 +1,42 @@
 class PAppConstant {
   PAppConstant._();
 
-  static const String privacyPolicyLink =
-      'https://matchesy.com/privacy-policy.html';
+  static const String termsConditionsLink =
+      'https://www.oldmutual.com.gh/personal/mvest-personal-pension-scheme/terms-and-conditions/';
 
-  static const String termsOfServiceLink =
-      'https://matchesy.com/terms-of-service.html';
-
-  // static const String unifiedAppLink = 'https://www.onelink.to/matchesy/';
-  static const String unifiedAppLink = 'https://matchesy.com';
-  static const String inviteFriendsMsg =
-      'Hello friend, I found this useful which can help us connect better. Download it here ${PAppConstant.unifiedAppLink} and join me have a chat.';
-  static const String placeHolderUrl =
-      'https://surgassociates.com/wp-content/uploads/610-6104451_image-placeholder-png-user-profile-placeholder-image-png.jpg';
-
-  static const String video = 'video';
-  static const String image = 'image';
-
-  static const int media = 1;
-  static const int text = 2;
-  static const int pageNumber = 1;
-  static const int pageSize = 10;
-  static const String chatType = 'chat';
-  static const String postType = 'post';
-  // static const goldTitle = 'Gold';
-  // static const silverTitle = 'Silver';
-  // static const bronzeTitle = 'Bronze';
+  static const String emailSupport = 'DigitalSupport@oldmutual.com.gh';
+  static const String phoneSupport = '+233 (0) 303 968 667';
+  static const String beneficiaryPhoneSupport = '0303968667 / 0501519374';
 
   static int notificationChannelId = 001;
-  static String notificationChannelKey = "Hubchat";
-  static String notificationChannelName = "Hubchat notifications";
+  static String notificationChannelKey = "Old Mutual Pensions";
+  static String notificationChannelName = "Old Mutual Pensions notifications";
   static String notificationChannelDescription =
-      "Notification channel to receive notifications on Hubchat app";
+      "Notification channel to receive notifications on Old Mutual Pensions";
 
-  // Go router state keys
-  static const String fromNumber = 'from_number';
-  static const String toNumber = 'to_number';
-  static const String message = 'message';
-  static const String messages = 'messages';
-  static const String chats = 'chat_messages';
+  /// Quote Now URLs
+  static const String travelInsuranceQuoteUrl =
+      'https://www.oldmutual.com.gh/travel-insurance/';
+
+  /// Learn More URLs
+  // static const String travelInsuranceUrl =
+  //     'https://www.oldmutual.com.gh/travel-insurance/';
+
+  static const String travelInsuranceUrl =
+      'https://www.oldmutual.com.gh/personal/international-travel-insurance/';
+  static const String ekyireAsemUrl =
+      'https://www.oldmutual.com.gh/personal/ekyire-asem-plan/';
+  static const String mvestPensionsUrl =
+      'https://www.oldmutual.com.gh/personal/mvest-personal-pension-scheme/';
+  static const String personalAccidentUrl =
+      'https://www.oldmutual.com.gh/personal/personal-accident-policy/';
+  static const String specialInvestmentPlanUrl =
+      'https://www.oldmutual.com.gh/personal/special-investment-plan/';
+  static const String transitionPlusPlanUrl =
+      'https://www.oldmutual.com.gh/personal/transition-plus-plan/';
+  static const String educatorPlanUrl =
+      'https://www.oldmutual.com.gh/personal/education-plan/';
+  static const String retirementSalaryUrl =
+      'https://www.oldmutual.com.gh/personal/old-mutual-retirement-salary/';
+  static const String faqUrl = 'https://www.oldmutual.com.gh/get-help/';
 }

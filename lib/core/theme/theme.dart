@@ -6,6 +6,7 @@ export 'custom.themes/chip.theme.dart';
 export 'custom.themes/elevated.button.theme.dart';
 export 'custom.themes/icon.theme.dart';
 export 'custom.themes/outlined.button.theme.dart';
+export 'custom.themes/radio.theme.dart';
 export 'custom.themes/slider.theme.dart';
 export 'custom.themes/text.theme.dart';
 export 'custom.themes/textfield.theme.dart';

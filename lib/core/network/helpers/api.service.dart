@@ -65,7 +65,13 @@ class ApiServiceImpl implements ApiService {
         );
         break;
       case RequestType.patch:
-        // TODO: Handle this case.
+        response = await dioClient.patch(
+          endPoint,
+          data: payload,
+          queryParameters: queryParams,
+          options: dio.Options(headers: PHelperFunction.appTokenHeader()),
+          // cancelToken: cancelRequestToken,
+        );
         break;
       case RequestType.delete:
         response = await dioClient.delete(

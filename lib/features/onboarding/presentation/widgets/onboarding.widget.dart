@@ -13,7 +13,11 @@ class POnboardingWidget extends StatelessWidget {
         Container(
           height: PDeviceUtil.getDeviceHeight(context) - 190,
           width: double.infinity,
-          margin: EdgeInsets.symmetric(horizontal: PAppSize.s7),
+          margin: EdgeInsets.only(
+            top: PAppSize.s8,
+            left: PAppSize.s10,
+            right: PAppSize.s10,
+          ),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.only(
               topLeft: Radius.circular(PAppSize.s10),

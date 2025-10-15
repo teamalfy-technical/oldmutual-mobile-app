@@ -1,6 +1,8 @@
 class PAppSize {
   PAppSize._();
 
+  static const double kTabHeight = 48.0;
+
   static const double s0 = 0.0;
   static const double s0_0_5 = 0.05;
   static const double s0_1 = 0.1;
@@ -13,6 +15,7 @@ class PAppSize {
   static const double s0_8 = 0.8;
   static const double s0_9 = 0.9;
   static const double s1 = 1.0;
+  static const double s1_2 = 1.2;
   static const double s1_3 = 1.3;
   static const double s1_5 = 1.5;
   static const double s2 = 2.0;
@@ -41,23 +44,32 @@ class PAppSize {
   static const double s28 = 28.0;
   static const double s30 = 30.0;
   static const double s32 = 32.0;
+  static const double s33 = 33.0;
   static const double s34 = 34.0;
   static const double s35 = 35.0;
   static const double s36 = 36.0;
   static const double s38 = 38.0;
   static const double s40 = 40.0;
+  static const double s44 = 44.0;
   static const double s45 = 45.0;
   static const double s50 = 50.0;
   static const double s52 = 52.0;
   static const double s55 = 55.0;
   static const double s56 = 56.0;
   static const double s60 = 60.0;
+  static const double s65 = 65.0;
+  static const double s70 = 70.0;
+  static const double s72 = 72.0;
   static const double s80 = 80.0;
+  static const double s82 = 82.0;
+  static const double s85 = 85.0;
+  static const double s90 = 90.0;
   static const double s92 = 92.0;
   static const double s100 = 100.0;
   static const double s120 = 120.0;
   static const double s130 = 130.0;
   static const double s136 = 136.0;
+  static const double s150 = 150.0;
   static const double s156 = 156.0;
   static const double s160 = 160.0;
   static const double s165 = 165.0;
@@ -72,6 +84,7 @@ class PAppSize {
   static const double s400 = 400.0;
 
   static const double buttonHeight = 50.0;
+  static const double buttonHeightMid = 45.0;
   static const double buttonHeightMin = 28.0;
 
   static const double iconsXs = 12.0;

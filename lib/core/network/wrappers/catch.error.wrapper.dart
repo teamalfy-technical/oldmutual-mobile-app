@@ -1,8 +1,10 @@
 import 'package:dio/dio.dart';
+import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:oldmutual_pensions_app/core/errors/errors.dart';
 import 'package:oldmutual_pensions_app/core/utils/utils.dart';
+import 'package:oldmutual_pensions_app/routes/app.pages.dart';
 
 final CatchApiErrorWrapper catchApiErrorWrapper = Get.put(
   CatchApiErrorWrapperImpl(),
@@ -25,36 +27,57 @@ class CatchApiErrorWrapperImpl implements CatchApiErrorWrapper {
     if (err is DioException) {
       debugPrint('DioException caught-----------');
       if (err.response != null) {
+        FirebaseCrashlytics.instance.recordError(
+          err.response?.data,
+          StackTrace.current,
+        );
         if (err.response!.statusCode != 500) {
           if (err.response?.data['status'] == 'error' &&
               err.response?.statusCode == 200) {
             errorMessage = err.response!.data['data'];
           } else if (err.response?.statusCode == 400) {
-            final data = err.response?.data['data'];
-            pensionAppLogger.e(data);
-
-            errorMessage = extractError(err.response?.data['data']);
+            errorMessage = extractError(err.response?.data);
             //errorMessage = err.response?.data['error'];
           } else if (err.response?.statusCode == 401) {
+            if (Get.currentRoute != Routes.loginPage) {
+              // Get.put(PSettingsVm()).signout(soft: true);
+            }
             errorMessage =
-                err.response?.data['message'] ?? 'Unauthorized request';
+                err.response?.data['error'] ?? 'Unauthorized request';
             pensionAppLogger.e(err.response?.data);
           } else if (err.response?.statusCode == 403) {
-            errorMessage = err.response?.data['message'] ?? 'Forbidden Access';
+            if (Get.currentRoute != Routes.loginPage) {
+              // Get.put(PSettingsVm()).signout(soft: true);
+              errorMessage =
+                  err.response?.data['data']['error'] ??
+                  err.response?.data['message'] ??
+                  'Forbidden Access';
+            } else {
+              errorMessage =
+                  err.response?.data['message'] ?? 'Forbidden Access';
+            }
             pensionAppLogger.e(err.response?.data);
           } else if (err.response?.statusCode == 404) {
-            errorMessage = err.message ?? 'Requested resource is not found';
+            errorMessage =
+                err.response?.data['error'] ??
+                err.response?.data['message'] ??
+                'Requested resource is not found';
           } else if (err.response?.statusCode == 422) {
             // ApiErrorResponse error =
             //     ApiErrorResponse.fromJson(err.response?.data);
-
             pensionAppLogger.e(err.response?.data);
-
             errorMessage = err.response?.data['message'] ?? 'Bad request';
+          } else if (err.response?.statusCode == 429) {
+            if (Get.currentRoute != Routes.loginPage) {
+              // Get.put(PSettingsVm()).signout(soft: true);
+            }
+            // ApiErrorResponse error =
+            //     ApiErrorResponse.fromJson(err.response?.data);
+            pensionAppLogger.e(err.response?.data);
+            // errorMessage = err.response?.data['message'] ?? 'Bad request';
           } else if (err.response?.data is Map &&
               err.response!.data.containsKey('data')) {
             final error = err.response!.data['data'];
-
             // final error = errorMessageFromJson(e.response!.data.toString()).message;
             // Check the type of message and handle accordingly
             if (error is List) {
@@ -73,8 +96,7 @@ class CatchApiErrorWrapperImpl implements CatchApiErrorWrapper {
             errorMessage = err.message;
           }
         } else {
-          errorMessage = err.response?.data['message'];
-          //errorMessage = ServerException.getErrorMessage(err);
+          errorMessage = err.response?.data['error'];
         }
       } else {
         errorMessage = ServerException.getErrorMessage(err);
@@ -86,8 +108,18 @@ class CatchApiErrorWrapperImpl implements CatchApiErrorWrapper {
   }
 
   String extractError(Map<String, dynamic> response) {
+    pensionAppLogger.e(response);
     if (response.containsKey("data")) {
       for (var entry in response["data"].entries) {
+        if (entry.value is List && entry.value.isNotEmpty) {
+          return entry.value.first; // Return the first error message found
+        }
+        if (entry.value is String && entry.value.isNotEmpty) {
+          return entry.value; // Return the error message found
+        }
+      }
+    } else {
+      for (var entry in response.entries) {
         if (entry.value is List && entry.value.isNotEmpty) {
           return entry.value.first; // Return the first error message found
         }

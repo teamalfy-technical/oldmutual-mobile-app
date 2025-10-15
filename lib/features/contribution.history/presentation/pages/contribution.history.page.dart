@@ -4,7 +4,6 @@ import 'package:get/get.dart';
 import 'package:oldmutual_pensions_app/core/utils/utils.dart';
 import 'package:oldmutual_pensions_app/features/contribution.history/contribution.history.dart';
 import 'package:oldmutual_pensions_app/shared/shared.dart';
-import 'package:oldmutual_pensions_app/shared/widgets/custom.filled.textfield.dart';
 
 class PContributionHistoryPage extends StatelessWidget {
   PContributionHistoryPage({super.key});
@@ -27,48 +26,113 @@ class PContributionHistoryPage extends StatelessWidget {
             Expanded(
               child: Column(
                 children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    crossAxisAlignment: CrossAxisAlignment.end,
-                    children: [
-                      Expanded(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            PCustomFilledTextfield(
+                  GetBuilder<PContributionHistoryVm>(
+                    builder: (ctrl) {
+                      return Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        crossAxisAlignment: CrossAxisAlignment.end,
+                        children: [
+                          Expanded(
+                            child: PCustomDropdown<ContributedYear>(
                               label: 'filter_by_year'.tr,
-                              hint: 'enter_year'.tr,
-                              controller: ctrl.yearTEC,
+                              value: ctrl.selectedYear,
+                              onChanged: ctrl.onYearChanged,
+                              items: ctrl.contributionYears,
                             ),
-                          ],
-                        ),
-                      ),
+                          ),
 
-                      PAppSize.s50.horizontalSpace,
+                          PAppSize.s20.horizontalSpace,
 
-                      PCustomCheckbox(
-                        value: ctrl.all.value,
-                        scale: PAppSize.s1_3,
-                        onChanged: ctrl.onAllChanged,
-                        checkboxDirection: Direction.right,
-                        child: Text(
-                          'all'.tr,
-                          style: Theme.of(context).textTheme.headlineSmall
-                              ?.copyWith(fontWeight: FontWeight.w400),
-                        ),
-                      ),
-                    ],
+                          Expanded(
+                            child: PCustomDropdown<String>(
+                              label: 'filter_by_month'.tr,
+                              value: ctrl.selectedMonth,
+                              onChanged: ctrl.onMonthChanged,
+                              items: ctrl.contributionMonths,
+                            ),
+                          ),
+
+                          PAppSize.s18.horizontalSpace,
+
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.end,
+                            children: [
+                              Text(
+                                'clear_filters'.tr,
+                                style: Theme.of(context).textTheme.bodySmall
+                                    ?.copyWith(
+                                      color: PAppColor.primary,
+                                      fontWeight: FontWeight.w600,
+                                      decoration: TextDecoration.underline,
+                                      decorationColor: PAppColor.primary,
+                                      //  fontSize: PAppSize.s13,
+                                    ),
+                              ).onPressed(onTap: () => ctrl.resetFilters()),
+                              PAppSize.s4.verticalSpace,
+                              PGradientButton(
+                                label: 'apply'.tr,
+                                showIcon: false,
+                                radius: PAppSize.s5,
+                                width:
+                                    PDeviceUtil.getDeviceWidth(context) * 0.28,
+                                onTap: () => ctrl.filterContributions(),
+                              ),
+                            ],
+                          ),
+
+                          // PCustomCheckbox(
+                          //   value: ctrl.all.value,
+                          //   scale: PAppSize.s1_3,
+                          //   onChanged: ctrl.onAllChanged,
+                          //   checkboxDirection: Direction.right,
+                          //   child: Text(
+                          //     'all'.tr,
+                          //     style: Theme.of(context).textTheme.headlineSmall
+                          //         ?.copyWith(fontWeight: FontWeight.w400),
+                          //   ),
+                          // ),
+                        ],
+                      );
+                    },
                   ),
 
                   PAppSize.s25.verticalSpace,
 
-                  ListView.builder(
-                    shrinkWrap: true,
-                    itemCount: ctrl.histories.length,
-                    itemBuilder: (context, index) {
-                      final history = ctrl.histories[index];
-                      return ContributionHistoryWidget(history: history);
-                    },
+                  Expanded(
+                    child: ctrl.loading.value == LoadingState.loading
+                        ? ListView.builder(
+                            shrinkWrap: true,
+                            itemCount: 10,
+                            itemBuilder: (context, index) {
+                              return ContributionHistoryWidgetRedact(
+                                loadingState: ctrl.loading.value,
+                              );
+                            },
+                          )
+                        : ctrl.history.value.transactionHistory!.transactions!
+                              .where((e) => e.paymentFlag != 'B')
+                              .toList()
+                              .isEmpty
+                        ? PEmptyStateWidget(message: 'no_results_found'.tr)
+                        : ListView.builder(
+                            shrinkWrap: true,
+                            itemCount: ctrl
+                                .history
+                                .value
+                                .transactionHistory
+                                ?.transactions
+                                ?.length,
+                            itemBuilder: (context, index) {
+                              final transaction = ctrl
+                                  .history
+                                  .value
+                                  .transactionHistory!
+                                  .transactions![index];
+                              return ContributionHistoryWidget(
+                                transaction: transaction,
+                              );
+                            },
+                          ),
                   ),
                 ],
               ).all(PAppSize.s20),

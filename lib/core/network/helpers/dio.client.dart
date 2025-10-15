@@ -3,20 +3,26 @@ import 'package:oldmutual_pensions_app/core/utils/utils.dart';
 import 'package:oldmutual_pensions_app/env/env.dart';
 
 class DioClient {
-  static final DioClient _instance = DioClient._internal();
+  // static final DioClient _instance = DioClient._internal();
+  static DioClient? _instance;
   late final Dio _dio;
 
-  factory DioClient() => _instance;
+  // factory DioClient() => _instance;
 
-  DioClient._internal() {
-    _dio = initWithBaseUrl(baseUrl: Env.baseUrl);
+  factory DioClient({String? baseUrl}) {
+    _instance = DioClient._internal(baseUrl: baseUrl ?? Env.baseUrl);
+    return _instance!;
+  }
+
+  DioClient._internal({required String baseUrl}) {
+    _dio = initWithBaseUrl(baseUrl: baseUrl);
   }
 
   static Dio initWithBaseUrl({
     required String baseUrl,
-    int connectionTimeout = 20,
-    int receiveTimeout = 20,
-    int sendTimeout = 45,
+    int connectionTimeout = 30,
+    int receiveTimeout = 60,
+    int sendTimeout = 60,
     ResponseType responseType = ResponseType.json,
   }) {
     final dio = Dio(
@@ -39,7 +45,16 @@ class DioClient {
         onRequest: (options, handler) {
           pensionAppLogger.i("📤 Request: ${options.method} ${options.uri}");
           pensionAppLogger.i("📝 Headers: ${options.headers}");
-          pensionAppLogger.i("📦 Payload: ${options.data}");
+          if (options.data is FormData) {
+            FormData formData = options.data as FormData;
+            for (var field in formData.fields) {
+              pensionAppLogger.i("📦 Payload: ${field.key} = ${field.value}");
+            }
+          } else {
+            pensionAppLogger.i(
+              "📦 Payload: ${options.data is FormData ? options.data : options.data}",
+            );
+          }
           pensionAppLogger.i("📦 QueryParams: ${options.queryParameters}");
           return handler.next(options);
         },

@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:oldmutual_pensions_app/core/theme/theme.dart';
 import 'package:oldmutual_pensions_app/core/utils/utils.dart';
 
+import 'custom.themes/dropdown.button.theme.dart';
+
 class PAppTheme {
   PAppTheme._();
 
@@ -21,6 +23,9 @@ class PAppTheme {
     bottomSheetTheme: PBottomSheetTheme.lightBottomSheetThemeData,
     inputDecorationTheme: PTextFormFieldTheme.lightInputDecorationTheme,
     iconTheme: PIconTheme.lightIconThemeData,
+    dropdownMenuTheme: PDropdownButtonTheme.lightDropdownMenuTheme,
+
+    radioTheme: PRadioTheme.lightRadioThemeData,
     textSelectionTheme: TextSelectionThemeData(cursorColor: PAppColor.primary),
   );
   static ThemeData darkTheme = ThemeData(
@@ -28,7 +33,7 @@ class PAppTheme {
     fontFamily: 'Montserrat',
     brightness: Brightness.dark,
     primaryColor: PAppColor.primary,
-    scaffoldBackgroundColor: PAppColor.blackColor,
+    scaffoldBackgroundColor: PAppColor.darkBgColor,
     appBarTheme: PAppBarTheme.darkAppBarTheme,
     textTheme: PTextTheme.darkTextTheme,
     elevatedButtonTheme: PElevatedButtonTheme.darkElevatedButtonTheme,
@@ -39,6 +44,8 @@ class PAppTheme {
     bottomSheetTheme: PBottomSheetTheme.darkBottomSheetThemeData,
     inputDecorationTheme: PTextFormFieldTheme.darkInputDecorationTheme,
     iconTheme: PIconTheme.darkIconThemeData,
+    dropdownMenuTheme: PDropdownButtonTheme.darkDropdownMenuTheme,
+    radioTheme: PRadioTheme.darkRadioThemeData,
     textSelectionTheme: TextSelectionThemeData(cursorColor: PAppColor.primary),
   );
 }

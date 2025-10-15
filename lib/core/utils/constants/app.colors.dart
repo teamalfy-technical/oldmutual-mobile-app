@@ -5,17 +5,37 @@ class PAppColor {
   PAppColor._();
 
   // App Basic Colors
-  static const Color primary = Color(0xFF60B848);
-  static const Color primaryDark = Color(0xFF009677);
+  static const Color primary = Color(0xFF50B848);
+  static const Color primaryLight = Color(0xFFDCF1DA);
+  static const Color primaryDark = Color(0xFF009979);
+  static const Color primaryRest = Color(0xFFB9E2B6);
+  static const Color primaryBorderColor = Color(0xFF96D491);
+  static const Color primary950 = Color(0xFFD9E7E3);
 
   static const Color greyColorShade300 = Color(0xFFE0E0E0);
   static const Color greyColorShade100 = Color(0xFFf5f5f5);
-  static const Color fillColor2 = Color(0xADF1F1F1);
-  static const Color fillColor = Color(0xFFE9E9E9);
-  static const Color pinkColor = Color(0xFFfc4b6c);
+
+  static const Color fillColor2 = Color(0xFFCCCCCC);
+  static const Color fillColor = Color(0xFFF2F2F2);
+  static const Color orangeColor = Color(0xFFF5823D);
+  static const Color yellowColor = Color(0xFFFFDD1A);
+
+  // Dark theme colors
+
+  static const Color darkAppBarColor2 = Color(0xFF58507C);
+  static const Color darkAppBarColor = Color(0xFF2D293D);
+  static const Color darkBgColor = Color(0xFF16141F);
+  static const Color darkBorderColor = Color(0xFFB4B4B4);
+  static const Color secondary500 = Color(0xFFC5C1D7);
+  static const Color cardDarkColor = Color(0xFF252133);
+
+  static const Color secondary700 = Color(0xFFA8A2C3);
+  static const Color secondary900 = Color(0xFFE2E0EB);
+  static const Color textDisabledColor = Color(0xFFA7A7AC);
+  static const Color textGrayColor = Color(0xFFCCCCCC);
 
   // for dark theme colors
-  static const Color blackColor = Color(0xFF252133);
+  static const Color blackColor = Color(0xFF1A1A1A);
   static const Color lightBlackColor = Color(0xFF1f1f1f);
 
   static const Color shadowColor = Color(0xFF151313);
@@ -58,13 +78,14 @@ class PAppColor {
   static const Color primaryTextColor = Color(0xFF245920);
   static const Color text50 = Color(0xFFF5F5F5);
   static const Color text100 = Color(0xFFC0BEBE);
+  static const Color text200 = Color(0xFFA8A8A8);
   static const Color text300 = Color(0xFF767272);
   static const Color text500 = Color(0xFF585757);
   static const Color text700 = Color(0xFF151313);
-  static const Color hintTextColor = Color(0xFF98A2B3);
+  static const Color hintTextColor = Color(0xFF747474);
 
   static const Color textColorLight = Color(0xFF1E1E1E);
-  static const Color textColorDark = Color(0xFF151515);
+  static const Color textColorDark = Color(0xFF000000);
 
   // Alert Colors
   static const Color alert50 = Color(0xFFFCEDF0);
@@ -88,6 +109,10 @@ class PAppColor {
   static const Color success300 = Color(0xFF62c288);
   static const Color success500 = Color(0xFF14a44d);
   static const Color success700 = Color(0xFF0e7437);
+
+  static const Color successDark = Color(0xFF306E2B);
+  static const Color successMedium = Color(0xFF3F9339);
+  static const Color successLight = Color(0xFF96D491);
 
   // Info Colors
   static const Color info50 = Color(0xFFefeafc);
