@@ -7,35 +7,61 @@ class PCustomBarChart extends StatelessWidget {
   final List<FundCompositionModel> data;
   const PCustomBarChart({super.key, required this.data});
 
+  String getAssetName(String name) {
+    switch (name) {
+      case 'CORP DEBT':
+        return 'CD';
+      case 'EQUITIES':
+        return 'EQ';
+      case 'LOCAL GOV':
+        return 'LG';
+      default:
+        return name;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final maxY = data
         .map((e) => double.tryParse(e.percentage ?? "0") ?? 0)
         .reduce((a, b) => a > b ? a : b);
 
+    final minY = data
+        .map((e) => double.tryParse(e.percentage ?? "0") ?? 0)
+        .reduce((a, b) => a < b ? a : b);
+
     final colors = [
+      Color(0xFF1A43E5),
       PAppColor.primary,
-      PAppColor.yellowColor,
+      Color(0xFF005466),
+      Color(0xFF306E2B),
+      Color(0xFF33001C),
       PAppColor.orangeColor,
-      Color(0xFFD9D9D9),
-      PAppColor.primaryTextColor,
-      PAppColor.primary,
+      PAppColor.yellowColor,
     ];
 
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: PAppSize.s24),
+      padding: const EdgeInsets.symmetric(horizontal: PAppSize.s16),
       child: RotatedBox(
         quarterTurns: 1,
         child: BarChart(
           BarChartData(
             alignment: BarChartAlignment.spaceBetween,
             maxY: maxY + 10,
-            minY: -6,
+            minY: -0.05, //minY,
             borderData: FlBorderData(
               show: true,
               border: Border(
                 bottom: BorderSide(
-                  color: PAppColor.blackColor,
+                  color: PHelperFunction.isDarkMode(context)
+                      ? PAppColor.whiteColor
+                      : PAppColor.blackColor,
+                  width: PAppSize.s1,
+                ),
+                right: BorderSide(
+                  color: PHelperFunction.isDarkMode(context)
+                      ? PAppColor.whiteColor
+                      : PAppColor.blackColor,
                   width: PAppSize.s1,
                 ),
               ),
@@ -108,17 +134,18 @@ class PCustomBarChart extends StatelessWidget {
               bottomTitles: AxisTitles(
                 sideTitles: SideTitles(
                   showTitles: true,
-                  reservedSize: PAppSize.s50,
+                  // reservedSize: PAppSize.s20,
                   getTitlesWidget: (value, meta) {
                     final index = value.toInt();
                     if (index < data.length) {
                       return Transform.translate(
-                        offset: Offset(18, 16), //
+                        offset: Offset(4, 16), //
+                        // offset: Offset(18, 16), //
                         child: Transform.rotate(
                           alignment: Alignment.center,
                           angle: -1.5708, // -90 degrees in radians
                           child: Text(
-                            data[index].asset ?? '',
+                            getAssetName(data[index].asset ?? ''),
                             style: TextStyle(
                               fontSize: PAppSize.s10,
                               fontWeight: FontWeight.w500,
@@ -133,27 +160,25 @@ class PCustomBarChart extends StatelessWidget {
                 ),
               ),
             ),
-            barGroups:
-                data.asMap().entries.map((entry) {
-                  final index = entry.key;
-                  final data = entry.value;
-                  final percentage =
-                      double.tryParse(data.percentage ?? "0") ?? 0.0;
+            barGroups: data.asMap().entries.map((entry) {
+              final index = entry.key;
+              final data = entry.value;
+              final percentage = double.tryParse(data.percentage ?? "0") ?? 0.0;
 
-                  final color = colors[index % colors.length];
+              final color = colors[index % colors.length];
 
-                  return BarChartGroupData(
-                    x: index,
-                    barRods: [
-                      BarChartRodData(
-                        toY: percentage,
-                        color: color,
-                        width: PAppSize.s18,
-                        borderRadius: BorderRadius.zero,
-                      ),
-                    ],
-                  );
-                }).toList(),
+              return BarChartGroupData(
+                x: index,
+                barRods: [
+                  BarChartRodData(
+                    toY: percentage,
+                    color: color,
+                    width: PAppSize.s34,
+                    borderRadius: BorderRadius.zero,
+                  ),
+                ],
+              );
+            }).toList(),
           ),
         ),
       ),

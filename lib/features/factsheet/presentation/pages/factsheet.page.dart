@@ -49,11 +49,22 @@ class _PFactSheetPageState extends State<PFactSheetPage> {
 
   @override
   Widget build(BuildContext context) {
-    int lowestYear = ctrl.performances.isEmpty
-        ? DateTime.now().year - 5
-        : ctrl.performances
-              .map((e) => e.year ?? 0)
-              .reduce((a, b) => a < b ? a : b);
+    // int lowestYear = ctrl.performances.isEmpty
+    //     ? DateTime.now().year - 5
+    //     : ctrl.performances
+    //           .map((e) => e.year ?? 0)
+    //           .reduce((a, b) => a < b ? a : b);
+
+    int lowestYear = 2020;
+    int highestYear = 2024;
+    if (ctrl.performances.isNotEmpty) {
+      lowestYear = ctrl.performances
+          .map((e) => e.year ?? 0)
+          .reduce((a, b) => a < b ? a : b);
+      highestYear = ctrl.performances
+          .map((e) => e.year ?? 0)
+          .reduce((a, b) => a > b ? a : b);
+    }
 
     return Scaffold(
       backgroundColor: PHelperFunction.isDarkMode(context)
@@ -96,7 +107,7 @@ class _PFactSheetPageState extends State<PFactSheetPage> {
                                     children: [
                                       // PAppSize.s22.verticalSpace,
                                       Text(
-                                            '${'performance_since'.tr} $lowestYear',
+                                            '${'performance_since'.tr} ($lowestYear - $highestYear)',
                                             textAlign: TextAlign.start,
                                             style: Theme.of(context)
                                                 .textTheme
@@ -132,7 +143,7 @@ class _PFactSheetPageState extends State<PFactSheetPage> {
                                                   PDeviceUtil.getDeviceHeight(
                                                     context,
                                                   ) *
-                                                  0.045,
+                                                  0.001,
                                               child: Row(
                                                 mainAxisAlignment:
                                                     MainAxisAlignment.center,
@@ -217,18 +228,18 @@ class _PFactSheetPageState extends State<PFactSheetPage> {
                           PAppSize.s10.verticalSpace,
                           _buildSummaryWidget(
                             title: 'best_performing_month'.tr,
-                            trailing: 'July (+4.2%)',
+                            trailing: '${ctrl.bestPerformingYear}',
                           ),
                           PAppSize.s8.verticalSpace,
                           _buildSummaryWidget(
                             title: 'ag_monthly_growth'.tr,
-                            trailing: 'GH₵478',
+                            trailing: '${ctrl.averageGrowth}',
                             color: PAppColor.successMedium,
                           ),
                           PAppSize.s8.verticalSpace,
                           _buildSummaryWidget(
                             title: 'year_to_date_return'.tr,
-                            trailing: '+12.6%',
+                            trailing: '${ctrl.yearToDateReturn}',
                             color: PAppColor.successMedium,
                           ),
                         ],

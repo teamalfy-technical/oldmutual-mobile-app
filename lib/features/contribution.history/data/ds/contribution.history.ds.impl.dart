@@ -97,8 +97,9 @@ class ContributionHistoryDsImpl implements ContributionHistoryDs {
         requestType: RequestType.get,
         endPoint: Env.getMonthlyContributions,
       );
+
       return ApiResponse<List<Contribution>>.fromJson(
-        res['data'],
+        res,
         (data) => (data as List).map((e) => Contribution.fromJson(e)).toList(),
       );
     });

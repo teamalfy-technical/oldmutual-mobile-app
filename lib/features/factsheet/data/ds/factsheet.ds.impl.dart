@@ -63,10 +63,9 @@ class FactsheetDsImpl implements FactsheetDs {
       );
       return ApiResponse<List<FundCompositionModel>>.fromJson(
         res,
-        (data) =>
-            (data as List)
-                .map((e) => FundCompositionModel.fromJson(e))
-                .toList(),
+        (data) => (data as List)
+            .map((e) => FundCompositionModel.fromJson(e))
+            .toList(),
       );
     });
   }
@@ -97,10 +96,9 @@ class FactsheetDsImpl implements FactsheetDs {
       );
       return ApiResponse<List<FundCompositionModel>>.fromJson(
         res,
-        (data) =>
-            (data as List)
-                .map((e) => FundCompositionModel.fromJson(e))
-                .toList(),
+        (data) => (data as List)
+            .map((e) => FundCompositionModel.fromJson(e))
+            .toList(),
       );
     });
   }
@@ -175,7 +173,7 @@ class FactsheetDsImpl implements FactsheetDs {
       );
       return ApiResponse<Factsheet>.fromJson(
         res,
-        (data) => Factsheet.fromJson(data),
+        (data) => Factsheet.fromJson((data as List).last),
       );
     });
   }

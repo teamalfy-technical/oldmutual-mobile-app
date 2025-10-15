@@ -1,10 +1,10 @@
 import 'package:package_info_plus/package_info_plus.dart';
 
-const apiBaseUrlProd = "https://omself-service-dev-api.up.railway.app/api";
+const apiBaseUrlProd = "https://test-app.oldmutual.com.gh/api";
 // const apiBaseUrlProd = "https://app.oldmutual.com.gh/api";
 // const apiBaseUrlProd = "https://old-mutual-api-production.up.railway.app/api";
 // const apiBaseUrlDev = "https://old-mutual-api-production.up.railway.app/api";
-const apiBaseUrlDev = "https://omself-service-dev-api.up.railway.app/api";
+const apiBaseUrlDev = "https://test-app.oldmutual.com.gh/api";
 
 enum EnvironmentType {
   dev(apiBaseUrlDev),

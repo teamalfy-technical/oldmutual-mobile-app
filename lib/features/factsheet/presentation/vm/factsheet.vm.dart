@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:dio/dio.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 import 'package:oldmutual_pensions_app/core/utils/utils.dart';
 import 'package:oldmutual_pensions_app/features/factsheet/factsheet.dart';
 import 'package:oldmutual_pensions_app/shared/shared.dart';
@@ -16,6 +17,10 @@ class PFactsheetVm extends GetxController {
 
   var performances = <PerformanceModel>[].obs;
   var compositions = <FundCompositionModel>[].obs;
+
+  var bestPerformingYear = ''.obs;
+  var averageGrowth = ''.obs;
+  var yearToDateReturn = ''.obs;
 
   final context = Get.context!;
 
@@ -64,8 +69,51 @@ class PFactsheetVm extends GetxController {
       (res) {
         updateLoadingState(LoadingState.completed);
         compositions.value = res.data ?? [];
+        summarizePerformance();
       },
     );
+  }
+
+  void summarizePerformance() {
+    final data = performances;
+    // Sort by year descending
+    data.sort((a, b) => (b.year ?? 2022).compareTo(a.year ?? 2020));
+
+    // Convert to numeric list
+    final yPerformances = data.map((e) {
+      return {
+        "year": e.year,
+        "performance": double.tryParse(e.performance ?? "0") ?? 0.0,
+        "created_at": e.createdAt,
+      };
+    }).toList();
+
+    // Find best performing year
+    yPerformances.sort(
+      (a, b) =>
+          (b["performance"] as double).compareTo(a["performance"] as double),
+    );
+    final best = yPerformances.first;
+
+    // Calculate average annual growth
+    final avgGrowth =
+        yPerformances
+            .map((e) => e["performance"] as double)
+            .reduce((a, b) => a + b) /
+        yPerformances.length;
+
+    // Simulate Year-to-Date return (assuming partial year progress)
+    final ytdReturn =
+        (best["performance"] as double) * 0.5; // e.g. mid-year est.
+
+    // Format final values
+    bestPerformingYear.value =
+        '${DateFormat('MMMM').format(DateTime.parse(best["created_at"].toString()))} (+${best["performance"]}%)';
+    averageGrowth.value = PFormatter.formatCurrency(amount: avgGrowth);
+    yearToDateReturn.value = '+${ytdReturn.toStringAsFixed(1)}%';
+    // print("Best performing year: ${best["year"]} (+${best["performance"]}%)");
+    // print("Avg. Annual Growth: GHS${avgGrowth.toStringAsFixed(2)}");
+    // print("Year-to-Date Return: +${ytdReturn.toStringAsFixed(1)}%");
   }
 
   /// Function to get all generated reports
@@ -90,7 +138,6 @@ class PFactsheetVm extends GetxController {
   }
 
   Future<void> openFile({required String url, required String fileName}) async {
-    pensionAppLogger.e(url);
     final file = await downloadFile(url, fileName);
     if (file == null) return;
     OpenFile.open(file.path);
@@ -105,9 +152,12 @@ class PFactsheetVm extends GetxController {
     //         : await getApplicationDocumentsDirectory();
     final file = File("${appStorage.path}/$fileName");
     String? token = PSecureStorage().getAuthResponse()?.token;
+    String secureUrl = url.replaceFirst('http://', 'https://');
+    pensionAppLogger.e(url);
+
     try {
       final response = await Dio().get(
-        url,
+        secureUrl,
         options: Options(
           responseType: ResponseType.bytes,
           followRedirects: false,

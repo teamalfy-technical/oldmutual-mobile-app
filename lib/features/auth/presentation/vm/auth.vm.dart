@@ -180,6 +180,9 @@ class PAuthVm extends GetxController {
         }
         await getBioData();
         clearFields();
+        PPopupDialog(
+          context,
+        ).successMessage(title: 'success'.tr, message: res.message ?? '');
       },
     );
   }
@@ -201,9 +204,6 @@ class PAuthVm extends GetxController {
           destination: Routes.dashboardPage,
           replace: true,
         );
-        PPopupDialog(
-          context,
-        ).successMessage(title: 'success'.tr, message: res.message ?? '');
       },
     );
   }

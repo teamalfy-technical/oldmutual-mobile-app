@@ -13,11 +13,10 @@ class ContributionHistoryRepoImpl implements ContributionHistoryRepo {
   Future<Either<PFailure, ApiResponse<ContributionHistory>>>
   filterContributions({required String month, required String year}) async {
     return await customRepositoryWrapper.wrapRepositoryFunction(
-      function:
-          () async => await contributionHistoryDs.filterContributions(
-            month: month,
-            year: year,
-          ),
+      function: () async => await contributionHistoryDs.filterContributions(
+        month: month,
+        year: year,
+      ),
     );
   }
 
@@ -33,8 +32,8 @@ class ContributionHistoryRepoImpl implements ContributionHistoryRepo {
   Future<Either<PFailure, ApiResponse<ContributionSummary>>>
   getContributionSummary() async {
     return await customRepositoryWrapper.wrapRepositoryFunction(
-      function:
-          () async => await contributionHistoryDs.getContributionSummary(),
+      function: () async =>
+          await contributionHistoryDs.getContributionSummary(),
     );
   }
 
@@ -58,8 +57,8 @@ class ContributionHistoryRepoImpl implements ContributionHistoryRepo {
   Future<Either<PFailure, ApiResponse<List<Contribution>>>>
   getMonthlyContributions() async {
     return await customRepositoryWrapper.wrapRepositoryFunction(
-      function:
-          () async => await contributionHistoryDs.getMonthlyContributions(),
+      function: () async =>
+          await contributionHistoryDs.getMonthlyContributions(),
     );
   }
 }
