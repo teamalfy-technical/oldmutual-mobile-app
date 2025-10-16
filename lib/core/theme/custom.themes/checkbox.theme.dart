@@ -8,9 +8,10 @@ class PCheckboxTheme {
   /// -- Light Theme
   static CheckboxThemeData lightCheckboxThemeData = CheckboxThemeData(
     shape: RoundedRectangleBorder(
-      borderRadius: BorderRadius.circular(PAppSize.s2),
+      borderRadius: BorderRadius.circular(PAppSize.s4),
     ),
-    side: BorderSide.none,
+
+    side: BorderSide(width: PAppSize.s2, color: PAppColor.blackColor),
     checkColor: WidgetStateProperty.resolveWith((states) {
       if (states.contains(WidgetState.selected)) {
         return PAppColor.whiteColor;
@@ -22,7 +23,7 @@ class PCheckboxTheme {
       if (states.contains(WidgetState.selected)) {
         return PAppColor.primary;
       } else {
-        return PAppColor.fillColor2;
+        return PAppColor.transparentColor;
       }
     }),
   );
@@ -30,9 +31,9 @@ class PCheckboxTheme {
   /// -- Dark Theme
   static CheckboxThemeData darkCheckboxThemeData = CheckboxThemeData(
     shape: RoundedRectangleBorder(
-      borderRadius: BorderRadius.circular(PAppSize.s2),
+      borderRadius: BorderRadius.circular(PAppSize.s4),
     ),
-    side: BorderSide.none,
+    side: BorderSide(width: PAppSize.s2, color: PAppColor.whiteColor),
     checkColor: WidgetStateProperty.resolveWith((states) {
       if (states.contains(WidgetState.selected)) {
         return PAppColor.whiteColor;
@@ -44,7 +45,7 @@ class PCheckboxTheme {
       if (states.contains(WidgetState.selected)) {
         return PAppColor.primary;
       } else {
-        return PAppColor.fillColor2;
+        return PAppColor.transparentColor;
       }
     }),
   );

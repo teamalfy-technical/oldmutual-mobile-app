@@ -242,6 +242,10 @@ class $AssetsIconsGen {
   SvgGenImage get stackedLineChart =>
       const SvgGenImage('assets/icons/stacked.line.chart.svg');
 
+  /// File path: assets/icons/success.icon.2.svg
+  SvgGenImage get successIcon2 =>
+      const SvgGenImage('assets/icons/success.icon.2.svg');
+
   /// File path: assets/icons/success.icon.svg
   SvgGenImage get successIcon =>
       const SvgGenImage('assets/icons/success.icon.svg');
@@ -350,6 +354,7 @@ class $AssetsIconsGen {
     shield,
     stack,
     stackedLineChart,
+    successIcon2,
     successIcon,
     supportIcon,
     termsIcon,

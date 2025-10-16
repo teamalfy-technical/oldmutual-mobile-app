@@ -84,7 +84,9 @@ class PCustomBarChart extends StatelessWidget {
                         style: TextStyle(
                           fontSize: PAppSize.s10,
                           fontWeight: FontWeight.w500,
-                          color: PAppColor.text700,
+                          color: PHelperFunction.isDarkMode(context)
+                              ? PAppColor.whiteColor
+                              : PAppColor.blackColor,
                         ),
                       ),
                     );
@@ -107,7 +109,7 @@ class PCustomBarChart extends StatelessWidget {
                       // Ensure the title is placed above the bar
                       final yOffset =
                           (1 - (barHeight / maxY)) *
-                          (PDeviceUtil.getDeviceWidth(context) * 0.5);
+                          (PDeviceUtil.getDeviceWidth(context) * 0.6);
 
                       return Transform.translate(
                         offset: Offset(
@@ -121,7 +123,9 @@ class PCustomBarChart extends StatelessWidget {
                             style: TextStyle(
                               fontSize: PAppSize.s10,
                               fontWeight: FontWeight.w500,
-                              color: PAppColor.text700,
+                              color: PHelperFunction.isDarkMode(context)
+                                  ? PAppColor.whiteColor
+                                  : PAppColor.blackColor,
                             ),
                           ),
                         ),
@@ -149,7 +153,9 @@ class PCustomBarChart extends StatelessWidget {
                             style: TextStyle(
                               fontSize: PAppSize.s10,
                               fontWeight: FontWeight.w500,
-                              color: PAppColor.text700,
+                              color: PHelperFunction.isDarkMode(context)
+                                  ? PAppColor.whiteColor
+                                  : PAppColor.blackColor,
                             ),
                           ),
                         ),

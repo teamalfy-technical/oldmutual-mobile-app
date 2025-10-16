@@ -38,7 +38,7 @@ class PSettingsSuccessPage extends StatelessWidget {
                 child: Column(
                   children: [
                     PAppSize.s30.verticalSpace,
-                    Assets.icons.successIcon.svg(),
+                    Assets.icons.successIcon2.svg(),
                     PAppSize.s30.verticalSpace,
                     Text(
                       message,

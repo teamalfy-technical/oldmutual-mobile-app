@@ -4,6 +4,7 @@ import 'package:oldmutual_pensions_app/core/utils/utils.dart';
 
 class PCustomTextField extends StatefulWidget {
   final String labelText;
+  final String? hintText;
   final Widget? prefixIcon;
   final Widget? suffixIcon;
   final Color? focusColor;
@@ -36,6 +37,7 @@ class PCustomTextField extends StatefulWidget {
     this.inputFormatters,
     this.maxLength,
     this.alignLabelWithHint,
+    this.hintText,
   });
 
   @override
@@ -90,6 +92,7 @@ class _PCustomTextFieldState extends State<PCustomTextField> {
               : PAppColor.text500,
           fontWeight: FontWeight.w600,
         ),
+        hintText: widget.hintText,
         label: Text(
           widget.labelText,
           style: TextStyle(
