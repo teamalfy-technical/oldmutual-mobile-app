@@ -7,6 +7,7 @@ import 'package:get/get.dart';
 import 'package:oldmutual_pensions_app/core/utils/utils.dart';
 import 'package:oldmutual_pensions_app/features/contribution.history/contribution.history.dart';
 import 'package:oldmutual_pensions_app/features/statements/statements.dart';
+import 'package:oldmutual_pensions_app/routes/app.pages.dart';
 import 'package:oldmutual_pensions_app/shared/shared.dart';
 import 'package:open_file/open_file.dart';
 import 'package:path_provider/path_provider.dart';
@@ -68,7 +69,7 @@ class PStatementVm extends GetxController {
         // if(res.data)
         res.data?.sort((a, b) => b.createdAt!.compareTo(a.createdAt ?? ''));
         statements.value = res.data ?? [];
-        pensionAppLogger.i('DownloadUrl: ${statements.first.downloadUrl}');
+        // pensionAppLogger.i('DownloadUrl: ${statements.first.downloadUrl}');
       },
     );
   }
@@ -117,19 +118,18 @@ class PStatementVm extends GetxController {
 
   /// Function to generate report (V2)
   Future<void> generateReportV2() async {
-    if (all.value == false) {
-      if (selectedYear == null || selectedYear?.fundYear == 'none'.tr) {
-        PPopupDialog(context).informationMessage(
-          title: 'action_required'.tr,
-          message: 'Select a year to proceed',
-        );
-        return;
-      }
+    if (selectedYear == null || selectedYear?.fundYear == 'none'.tr) {
+      PPopupDialog(context).informationMessage(
+        title: 'action_required'.tr,
+        message: 'Select a year to proceed',
+      );
+      return;
     }
+
     updateGeneratingState(LoadingState.loading);
     final result = await statementService.generateReportV2(
-      all: all.value,
-      year: selectedYear?.fundYear == 'none'.tr
+      all: selectedYear?.fundYear == 'all'.tr ? all.value : false,
+      year: selectedYear?.fundYear == 'all'.tr
           ? DateTime.now().year
           : int.parse(selectedYear?.fundYear ?? DateTime.now().year.toString()),
     );
@@ -146,8 +146,24 @@ class PStatementVm extends GetxController {
           context,
         ).successMessage(title: 'success'.tr, message: res.message ?? '');
         // statements.insert(0, res.data ?? Statement());
+        navigateToSuccessPage();
         Future.delayed(Duration(seconds: 6), () => getAllGeneratedReports());
       },
+    );
+  }
+
+  /// Function to navigate user to success screen after report has been generated
+  navigateToSuccessPage() {
+    PHelperFunction.switchScreen(
+      destination: Routes.settingsSuccessPage,
+      args: [
+        'statement_generated_msg'.tr,
+        'success'.tr,
+        'view_statement'.tr,
+        () {
+          PHelperFunction.pop();
+        },
+      ],
     );
   }
 

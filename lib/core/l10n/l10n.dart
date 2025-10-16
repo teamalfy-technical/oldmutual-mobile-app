@@ -124,6 +124,8 @@ class AppTranslations extends Translations {
       'i_agree_to': 'I agree to the',
       'phone_exist_msg': 'Invalid phone number or password. Please try again.',
       'unauthorised': 'Unauthorised',
+      'statement_generated_msg': 'Statement generated successfully',
+      'view_statement': 'View Statement',
       'call_us_on': 'Call Us On',
       'or': 'or',
       'continue': 'Continue',
@@ -290,8 +292,8 @@ class AppTranslations extends Translations {
       'redemption_confirm_msg':
           'I confirm that I am the account holder and that all information provided is correct',
       'submit_request': 'Submit Request',
-      'redeem_pension_msg':
-          'Your redemption request has been received. Funds will be processed in 24 hours',
+      'redeem_pension_msg': 'Redemption request submitted successfully',
+      // 'Your redemption request has been received. Funds will be processed in 24 hours',
       'porting': 'Porting',
       'porting_hint_tag': 'Port to Another Scheme',
       'porting_confirm_msg':
@@ -313,7 +315,8 @@ class AppTranslations extends Translations {
       'check_status': 'Check Status',
       'download': 'Download',
       'submitting_request_msg': 'We\'re processing your request...',
-      'national_id': 'National Id',
+      'national_id': 'National ID',
+      'redemption_by': 'Redemption By',
       'redemption_type': 'Redemption Type',
       'state_reason': 'State your reason (If Other)',
       'account_holder_name': 'Account Holder Name',

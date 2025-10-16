@@ -44,14 +44,15 @@ class PIdCardWidget extends StatelessWidget {
           width: PDeviceUtil.getDeviceWidth(context),
           height: PAppSize.s220,
           decoration: BoxDecoration(
-            color: PAppColor.fillColor2,
+            color: PHelperFunction.isDarkMode(context)
+                ? PAppColor.darkAppBarColor2
+                : PAppColor.fillColor,
             borderRadius: BorderRadius.circular(PAppSize.s5),
             image: DecorationImage(
               fit: file.path.isEmpty ? BoxFit.none : BoxFit.cover,
-              image:
-                  file.path.isEmpty
-                      ? AssetImage(Assets.images.placeholderImg.path)
-                      : FileImage(file),
+              image: file.path.isEmpty
+                  ? AssetImage(Assets.images.placeholderImg.path)
+                  : FileImage(file),
             ),
           ),
         ),

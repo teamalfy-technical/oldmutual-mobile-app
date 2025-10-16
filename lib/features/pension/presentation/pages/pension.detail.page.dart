@@ -311,7 +311,9 @@ class _PPensionDetailPageState extends State<PPensionDetailPage> {
                                       0.3,
                                   padding: EdgeInsets.all(PAppSize.s16),
                                   decoration: BoxDecoration(
-                                    color: PAppColor.whiteColor,
+                                    color: PHelperFunction.isDarkMode(context)
+                                        ? PAppColor.darkAppBarColor
+                                        : PAppColor.whiteColor,
                                     borderRadius: BorderRadius.circular(
                                       PAppSize.s12,
                                     ),
@@ -368,7 +370,7 @@ class _PPensionDetailPageState extends State<PPensionDetailPage> {
                                       vertical: PAppSize.s16,
                                       horizontal: PAppSize.s4,
                                     ),
-                                   
+
                                     child: ListView.separated(
                                       shrinkWrap: true,
                                       physics: NeverScrollableScrollPhysics(),
