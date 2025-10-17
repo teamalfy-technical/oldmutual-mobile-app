@@ -4,43 +4,57 @@ import 'package:redacted/redacted.dart';
 
 class PChartRedactWidget extends StatelessWidget {
   final LoadingState loadingState;
-  const PChartRedactWidget({super.key, required this.loadingState});
+  final double? height;
+  const PChartRedactWidget({
+    super.key,
+    required this.loadingState,
+    this.height,
+  });
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: PDeviceUtil.getDeviceWidth(context),
-      height: PDeviceUtil.getDeviceHeight(context) * 0.3,
-      padding: EdgeInsets.all(PAppSize.s20),
-      color: PAppColor.whiteColor,
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        children: [
+    return Expanded(
+      flex: height == null ? 1 : 0,
+      child:
           Container(
             width: PDeviceUtil.getDeviceWidth(context),
-            height: PAppSize.s20,
+            height: height,
+            padding: EdgeInsets.all(PAppSize.s20),
             color: PAppColor.whiteColor,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                Container(
+                  width: PDeviceUtil.getDeviceWidth(context),
+                  height: PAppSize.s20,
+                  color: PAppColor.whiteColor,
+                ),
+                Container(
+                  width: PDeviceUtil.getDeviceWidth(context),
+                  height: PAppSize.s20,
+                  color: PAppColor.whiteColor,
+                ),
+                Container(
+                  width: PDeviceUtil.getDeviceWidth(context),
+                  height: PAppSize.s20,
+                  color: PAppColor.whiteColor,
+                ),
+                Container(
+                  width: PDeviceUtil.getDeviceWidth(context),
+                  height: PAppSize.s20,
+                  color: PAppColor.whiteColor,
+                ),
+                Container(
+                  width: PDeviceUtil.getDeviceWidth(context),
+                  height: PAppSize.s20,
+                  color: PAppColor.whiteColor,
+                ),
+              ],
+            ),
+          ).redacted(
+            context: context,
+            redact: loadingState == LoadingState.loading ? true : false,
           ),
-          Container(
-            width: PDeviceUtil.getDeviceWidth(context),
-            height: PAppSize.s20,
-            color: PAppColor.whiteColor,
-          ),
-          Container(
-            width: PDeviceUtil.getDeviceWidth(context),
-            height: PAppSize.s20,
-            color: PAppColor.whiteColor,
-          ),
-          Container(
-            width: PDeviceUtil.getDeviceWidth(context),
-            height: PAppSize.s20,
-            color: PAppColor.whiteColor,
-          ),
-        ],
-      ),
-    ).redacted(
-      context: context,
-      redact: loadingState == LoadingState.loading ? true : false,
     );
   }
 }

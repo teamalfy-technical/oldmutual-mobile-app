@@ -83,10 +83,10 @@ class PContributionsPage extends StatelessWidget {
                         final contributedYear =
                             contributionVm.contributionYears[index];
                         return ListTile(
-                          onTap: () {
+                          onTap: () async {
                             PHelperFunction.pop();
                             contributionVm.onYearChanged(contributedYear);
-                            contributionVm.filterContributions();
+                            await contributionVm.filterContributions();
                           },
                           title: Text(
                             contributedYear.fundYear ?? '2020',
