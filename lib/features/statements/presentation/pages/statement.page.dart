@@ -47,8 +47,8 @@ class PStatementPage extends StatelessWidget {
                 ),
                 child: Column(
                   children: [
-                    DropdownButtonFormField<ContributedYear>(
-                      decoration: InputDecoration(labelText: 'select_year'.tr),
+                    PCustomDropdownField<ContributedYear>(
+                      labelText: 'select_year'.tr,
                       initialValue: ctrl.selectedYear,
                       items: ctrl.contributionYears
                           .map(
@@ -60,6 +60,7 @@ class PStatementPage extends StatelessWidget {
                           .toList(),
                       onChanged: ctrl.onYearChanged,
                     ),
+
                     // PAppSize.s16.verticalSpace,
                     // DropdownButtonFormField<String>(
                     //   decoration: InputDecoration(labelText: 'select_scheme'.tr),

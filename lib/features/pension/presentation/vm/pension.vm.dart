@@ -125,7 +125,7 @@ class PPensionVm extends GetxController {
     required String sex,
     required String nationality,
   }) async {
-    updateLoadingState(LoadingState.error);
+    updateLoadingState(LoadingState.loading);
     final result = await pensionService.getSelectedMemberScheme(
       employerName: employerName,
       employerNumber: employerNumber,

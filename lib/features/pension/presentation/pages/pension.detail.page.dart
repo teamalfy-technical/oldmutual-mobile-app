@@ -34,7 +34,7 @@ class _PPensionDetailPageState extends State<PPensionDetailPage> {
       await fetchSelectScheme();
       setState(() {});
     });
-    fetchSelectScheme();
+    // fetchSelectScheme();
     super.initState();
   }
 
@@ -218,236 +218,234 @@ class _PPensionDetailPageState extends State<PPensionDetailPage> {
                       ).scrollable(scrollDirection: Axis.horizontal),
 
                       PAppSize.s14.verticalSpace,
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          // Pension
-                          Container(
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(PAppSize.s20),
-                              color: PHelperFunction.isDarkMode(context)
-                                  ? PAppColor.darkAppBarColor
-                                  : PAppColor.whiteColor,
+                      // Column(
+                      //   crossAxisAlignment: CrossAxisAlignment.start,
+                      //   children: [
+                      // Pension
+                      Container(
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(PAppSize.s20),
+                          color: PHelperFunction.isDarkMode(context)
+                              ? PAppColor.darkAppBarColor
+                              : PAppColor.whiteColor,
+                        ),
+                        child: Column(
+                          children: [
+                            _buildListTile(
+                              context,
+                              'total_contributions'.tr,
+                              PFormatter.formatCurrency(
+                                amount:
+                                    contributionVm
+                                        .summary
+                                        .value
+                                        .totalContributions ??
+                                    0,
+                              ),
                             ),
-                            child: Column(
-                              children: [
-                                _buildListTile(
-                                  context,
-                                  'total_contributions'.tr,
-                                  PFormatter.formatCurrency(
-                                    amount:
-                                        contributionVm
-                                            .summary
-                                            .value
-                                            .totalContributions ??
-                                        0,
-                                  ),
-                                ),
-                                Divider(height: PAppSize.s1),
-                                _buildListTile(
-                                  context,
-                                  'total_redemptions'.tr,
-                                  PFormatter.formatCurrency(
-                                    amount:
-                                        contributionVm
-                                            .summary
-                                            .value
-                                            .totalRedemption ??
-                                        0,
-                                  ),
-                                ),
-                                Divider(height: PAppSize.s1),
-                                _buildListTile(
-                                  context,
-                                  'accrued_interest'.tr,
-                                  PFormatter.formatCurrency(
-                                    amount:
-                                        contributionVm
-                                            .summary
-                                            .value
-                                            .totalInterest ??
-                                        0,
-                                  ),
-                                ),
-                                Divider(height: PAppSize.s1),
-                                _buildListTile(
-                                  context,
-                                  'start_date'.tr,
-                                  PFormatter.formatDate(
-                                    dateFormat: DateFormat('yMMMMd'),
-                                    date: DateTime.parse(
-                                      widget.scheme.effectiveDate ??
-                                          DateTime.now().toIso8601String(),
-                                    ),
-                                  ),
-                                ),
-                              ],
+                            Divider(height: PAppSize.s1),
+                            _buildListTile(
+                              context,
+                              'total_redemptions'.tr,
+                              PFormatter.formatCurrency(
+                                amount:
+                                    contributionVm
+                                        .summary
+                                        .value
+                                        .totalRedemption ??
+                                    0,
+                              ),
                             ),
-                          ),
-
-                          PAppSize.s16.verticalSpace,
-
-                          /// COntribution Progress
-                          Text(
-                            'contribution_progress'.tr,
-                            textAlign: TextAlign.center,
-                            softWrap: true,
-                            style: Theme.of(context).textTheme.titleMedium
-                                ?.copyWith(
-                                  fontSize: PAppSize.s16,
-                                  fontWeight: FontWeight.w600,
-                                ),
-                          ),
-
-                          PAppSize.s16.verticalSpace,
-
-                          contributionVm.loading.value == LoadingState.loading
-                              ? PChartRedactWidget(
-                                  loadingState: contributionVm.loading.value,
-                                )
-                              : Container(
-                                  height:
-                                      PDeviceUtil.getDeviceHeight(context) *
-                                      0.3,
-                                  padding: EdgeInsets.all(PAppSize.s16),
-                                  decoration: BoxDecoration(
-                                    color: PHelperFunction.isDarkMode(context)
-                                        ? PAppColor.darkAppBarColor
-                                        : PAppColor.whiteColor,
-                                    borderRadius: BorderRadius.circular(
-                                      PAppSize.s12,
-                                    ),
-                                  ),
-                                  child: PCustomLineChart(
-                                    data: convertToSpots(),
-                                    data2: contributionVm.contributions,
-                                    xLabels: xLabels,
-                                    interval: interval,
-                                  ),
-                                ),
-
-                          PAppSize.s16.verticalSpace,
-
-                          /// Contributions
-                          PSeeAllWidget(
-                            leadingText: 'contributions'.tr,
-                            trailing: Text(
-                              'see_all'.tr,
-                              textAlign: TextAlign.center,
-                              softWrap: true,
-                              style: Theme.of(context).textTheme.titleMedium
-                                  ?.copyWith(
-                                    fontSize: PAppSize.s16,
-                                    color: PAppColor.successMedium,
-                                    fontWeight: FontWeight.w600,
-                                  ),
+                            Divider(height: PAppSize.s1),
+                            _buildListTile(
+                              context,
+                              'accrued_interest'.tr,
+                              PFormatter.formatCurrency(
+                                amount:
+                                    contributionVm
+                                        .summary
+                                        .value
+                                        .totalInterest ??
+                                    0,
+                              ),
                             ),
-                            onTap: () => PHelperFunction.switchScreen(
-                              destination: Routes.contributionsPage,
+                            Divider(height: PAppSize.s1),
+                            _buildListTile(
+                              context,
+                              'start_date'.tr,
+                              PFormatter.formatDate(
+                                dateFormat: DateFormat('yMMMMd'),
+                                date: DateTime.parse(
+                                  widget.scheme.effectiveDate ??
+                                      DateTime.now().toIso8601String(),
+                                ),
+                              ),
                             ),
-                          ),
+                          ],
+                        ),
+                      ),
 
-                          PAppSize.s16.verticalSpace,
+                      PAppSize.s16.verticalSpace,
 
-                          if (contributionVm.loading.value ==
-                              LoadingState.loading) ...[
-                            PChartRedactWidget(
+                      /// Contribution Progress
+                      Text(
+                        'contribution_progress'.tr,
+                        textAlign: TextAlign.center,
+                        softWrap: true,
+                        style: Theme.of(context).textTheme.titleMedium
+                            ?.copyWith(
+                              fontSize: PAppSize.s16,
+                              fontWeight: FontWeight.w600,
+                            ),
+                      ),
+
+                      PAppSize.s16.verticalSpace,
+
+                      (vm.loading.value == LoadingState.loading ||
+                              contributionVm.loading.value ==
+                                  LoadingState.loading)
+                          ? PChartRedactWidget(
+                              height:
+                                  PDeviceUtil.getDeviceHeight(context) * 0.4,
                               loadingState: contributionVm.loading.value,
+                            )
+                          : Container(
+                              height:
+                                  PDeviceUtil.getDeviceHeight(context) * 0.4,
+                              padding: EdgeInsets.all(PAppSize.s16),
+                              decoration: BoxDecoration(
+                                color: PHelperFunction.isDarkMode(context)
+                                    ? PAppColor.darkAppBarColor
+                                    : PAppColor.whiteColor,
+                                borderRadius: BorderRadius.circular(
+                                  PAppSize.s12,
+                                ),
+                              ),
+                              child: PCustomLineChart(
+                                data: convertToSpots(),
+                                data2: contributionVm.contributions,
+                                xLabels: xLabels,
+                                interval: interval,
+                              ),
                             ),
-                          ] else ...[
-                            (contributionVm
+
+                      PAppSize.s16.verticalSpace,
+
+                      /// Contributions
+                      PSeeAllWidget(
+                        leadingText: 'contributions'.tr,
+                        trailing: Text(
+                          'see_all'.tr,
+                          textAlign: TextAlign.center,
+                          softWrap: true,
+                          style: Theme.of(context).textTheme.titleMedium
+                              ?.copyWith(
+                                fontSize: PAppSize.s16,
+                                color: PAppColor.successMedium,
+                                fontWeight: FontWeight.w600,
+                              ),
+                        ),
+                        onTap: () => PHelperFunction.switchScreen(
+                          destination: Routes.contributionsPage,
+                        ),
+                      ),
+
+                      PAppSize.s16.verticalSpace,
+
+                      if (vm.loading.value == LoadingState.loading ||
+                          contributionVm.loading.value ==
+                              LoadingState.loading) ...[
+                        PChartRedactWidget(
+                          height: PDeviceUtil.getDeviceHeight(context) * 0.4,
+                          loadingState: contributionVm.loading.value,
+                        ),
+                      ] else ...[
+                        (contributionVm
+                                    .history
+                                    .value
+                                    .transactionHistory
+                                    ?.transactions
+                                    ?.isEmpty ??
+                                true)
+                            ? PEmptyStateWidget(message: 'no_results_found'.tr)
+                            : PCustomCardWidget(
+                                padding: EdgeInsets.symmetric(
+                                  vertical: PAppSize.s16,
+                                  horizontal: PAppSize.s4,
+                                ),
+
+                                child: ListView.separated(
+                                  shrinkWrap: true,
+                                  physics: NeverScrollableScrollPhysics(),
+                                  itemCount:
+                                      (contributionVm
+                                                  .history
+                                                  .value
+                                                  .transactionHistory
+                                                  ?.transactions
+                                                  ?.length ??
+                                              0)
+                                          .clamp(0, 4), // limits to 4 safely
+                                  itemBuilder: (context, index) {
+                                    final contribution = contributionVm
                                         .history
                                         .value
                                         .transactionHistory
-                                        ?.transactions
-                                        ?.isEmpty ??
-                                    true)
-                                ? PEmptyStateWidget(
-                                    message: 'no_results_found'.tr,
-                                  )
-                                : PCustomCardWidget(
-                                    padding: EdgeInsets.symmetric(
-                                      vertical: PAppSize.s16,
-                                      horizontal: PAppSize.s4,
-                                    ),
-
-                                    child: ListView.separated(
-                                      shrinkWrap: true,
-                                      physics: NeverScrollableScrollPhysics(),
-                                      itemCount:
-                                          (contributionVm
-                                                      .history
-                                                      .value
-                                                      .transactionHistory
-                                                      ?.transactions
-                                                      ?.length ??
-                                                  0)
-                                              .clamp(
-                                                0,
-                                                4,
-                                              ), // limits to 4 safely
-                                      itemBuilder: (context, index) {
-                                        final contribution = contributionVm
-                                            .history
-                                            .value
-                                            .transactionHistory
-                                            ?.transactions![index];
-                                        return ListTile(
-                                          title: Text(
-                                            contribution?.schemeName ?? '',
-                                            style: Theme.of(context)
-                                                .textTheme
-                                                .bodyLarge
-                                                ?.copyWith(
-                                                  fontSize: PAppSize.s14,
-                                                  fontWeight: FontWeight.w600,
-                                                ),
-                                          ),
-                                          subtitle: Text(
-                                            PFormatter.formatDate(
-                                              dateFormat: DateFormat('yMMMMd'),
-                                              date: DateTime.parse(
-                                                contribution?.paymentDate ??
-                                                    DateTime.now()
-                                                        .toIso8601String(),
-                                              ),
+                                        ?.transactions![index];
+                                    return ListTile(
+                                      title: Text(
+                                        contribution?.schemeName ?? '',
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .bodyLarge
+                                            ?.copyWith(
+                                              fontSize: PAppSize.s14,
+                                              fontWeight: FontWeight.w600,
                                             ),
-                                            style: Theme.of(context)
-                                                .textTheme
-                                                .bodyMedium
-                                                ?.copyWith(
-                                                  fontSize: PAppSize.s13,
-                                                  fontWeight: FontWeight.w400,
-                                                ),
+                                      ),
+                                      subtitle: Text(
+                                        PFormatter.formatDate(
+                                          dateFormat: DateFormat('yMMMMd'),
+                                          date: DateTime.parse(
+                                            contribution?.paymentDate ??
+                                                DateTime.now()
+                                                    .toIso8601String(),
                                           ),
-                                          trailing: Text(
-                                            PFormatter.formatCurrency(
-                                              amount:
-                                                  contribution?.received ?? 0,
+                                        ),
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .bodyMedium
+                                            ?.copyWith(
+                                              fontSize: PAppSize.s13,
+                                              fontWeight: FontWeight.w400,
                                             ),
-                                            style: Theme.of(context)
-                                                .textTheme
-                                                .bodyLarge
-                                                ?.copyWith(
-                                                  fontSize: PAppSize.s14,
-                                                  color:
-                                                      PAppColor.successMedium,
-                                                  fontWeight: FontWeight.w600,
-                                                ),
-                                          ),
-                                        );
-                                      },
-                                      separatorBuilder: (context, index) =>
-                                          Divider().symmetric(
-                                            horizontal: PAppSize.s20,
-                                          ),
-                                    ),
-                                  ),
-                          ],
+                                      ),
+                                      trailing: Text(
+                                        PFormatter.formatCurrency(
+                                          amount: contribution?.received ?? 0,
+                                        ),
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .bodyLarge
+                                            ?.copyWith(
+                                              fontSize: PAppSize.s14,
+                                              color: PAppColor.successMedium,
+                                              fontWeight: FontWeight.w600,
+                                            ),
+                                      ),
+                                    );
+                                  },
+                                  separatorBuilder: (context, index) =>
+                                      Divider().symmetric(
+                                        horizontal: PAppSize.s20,
+                                      ),
+                                ),
+                              ),
+                      ],
 
-                          PAppSize.s16.verticalSpace,
-                        ],
-                      ),
+                      PAppSize.s16.verticalSpace,
+                      //   ],
+                      // ),
                     ],
                   )
                   .symmetric(horizontal: PAppSize.s20, vertical: PAppSize.s10)
@@ -469,7 +467,9 @@ class _PPensionDetailPageState extends State<PPensionDetailPage> {
             ),
           ).redacted(
             context: context,
-            redact: contributionVm.loading == LoadingState.loading
+            redact:
+                vm.loading.value == LoadingState.loading ||
+                    contributionVm.loading.value == LoadingState.loading
                 ? true
                 : false,
           ),
@@ -482,7 +482,9 @@ class _PPensionDetailPageState extends State<PPensionDetailPage> {
             ),
           ).redacted(
             context: context,
-            redact: contributionVm.loading == LoadingState.loading
+            redact:
+                vm.loading.value == LoadingState.loading ||
+                    contributionVm.loading.value == LoadingState.loading
                 ? true
                 : false,
           ),

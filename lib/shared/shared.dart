@@ -9,6 +9,7 @@ export 'widgets/custom.bar.chart.old.dart';
 export 'widgets/custom.card.widget.dart';
 export 'widgets/custom.checkbox.dart';
 export 'widgets/custom.dropdown.dart';
+export 'widgets/custom.dropdown.field.dart';
 export 'widgets/custom.line.chart.dart';
 export 'widgets/custom.line.chart.new.dart';
 export 'widgets/custom.loading.indicator.dart';

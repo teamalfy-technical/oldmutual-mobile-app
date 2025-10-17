@@ -69,7 +69,7 @@ class PFactsheetVm extends GetxController {
       (res) {
         updateLoadingState(LoadingState.completed);
         compositions.value = res.data ?? [];
-        summarizePerformance();
+        // summarizePerformance();
       },
     );
   }

@@ -12,7 +12,8 @@ class PDropdownButtonTheme {
       color: PAppColor.text700,
     ),
     menuStyle: MenuStyle(
-      backgroundColor: WidgetStatePropertyAll(PAppColor.transparentColor),
+      backgroundColor: WidgetStatePropertyAll(PAppColor.whiteColor),
+      elevation: const WidgetStatePropertyAll(PAppSize.s2),
     ),
     inputDecorationTheme: InputDecorationTheme(
       errorMaxLines: 3,
@@ -86,7 +87,8 @@ class PDropdownButtonTheme {
       color: PAppColor.fillColor,
     ),
     menuStyle: MenuStyle(
-      backgroundColor: WidgetStatePropertyAll(PAppColor.lightBlackColor),
+      backgroundColor: WidgetStatePropertyAll(PAppColor.cardDarkColor),
+      elevation: const WidgetStatePropertyAll(PAppSize.s2),
     ),
     inputDecorationTheme: InputDecorationTheme(
       errorMaxLines: 2,

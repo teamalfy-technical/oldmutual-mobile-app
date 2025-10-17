@@ -41,10 +41,8 @@ class PRedemptionPage extends StatelessWidget {
                             validator: PValidator.validateEmailOrPhone,
                           ),
                           PAppSize.s20.verticalSpace,
-                          DropdownButtonFormField<String>(
-                            decoration: InputDecoration(
-                              labelText: 'redemption_type'.tr,
-                            ),
+                          PCustomDropdownField<String>(
+                            labelText: 'redemption_type'.tr,
                             initialValue: ctrl.selectedRedemptionType,
                             onChanged: ctrl.onRedemptionChanged,
                             items: ctrl.redemptionTypes
@@ -58,10 +56,8 @@ class PRedemptionPage extends StatelessWidget {
                           ),
 
                           PAppSize.s20.verticalSpace,
-                          DropdownButtonFormField<String>(
-                            decoration: InputDecoration(
-                              labelText: 'redemption_reason'.tr,
-                            ),
+                          PCustomDropdownField<String>(
+                            labelText: 'redemption_reason'.tr,
                             initialValue: ctrl.selectedRedemptionReason,
                             onChanged: ctrl.onRedemptionReasonChanged,
                             items: ctrl.redemptionReasons
@@ -86,13 +82,9 @@ class PRedemptionPage extends StatelessWidget {
                                   ],
                                 )
                               : SizedBox.shrink(),
-
                           PAppSize.s16.verticalSpace,
-
-                          DropdownButtonFormField<String>(
-                            decoration: InputDecoration(
-                              labelText: 'redemption_by'.tr,
-                            ),
+                          PCustomDropdownField<String>(
+                            labelText: 'redemption_by'.tr,
                             initialValue: ctrl.selectedRedemptionValue,
                             onChanged: ctrl.onRedemptionValueChanged,
                             items: ctrl.redemptionValues

@@ -1,0 +1,29 @@
+import 'package:flutter/material.dart';
+import 'package:oldmutual_pensions_app/core/utils/utils.dart';
+
+class PCustomDropdownField<T> extends StatelessWidget {
+  const PCustomDropdownField({
+    super.key,
+    required this.labelText,
+    this.initialValue,
+    this.onChanged,
+    this.items,
+  });
+  final String labelText;
+  final T? initialValue;
+  final Function(T?)? onChanged;
+  final List<DropdownMenuItem<T>>? items;
+
+  @override
+  Widget build(BuildContext context) {
+    return DropdownButtonFormField<T>(
+      dropdownColor: PHelperFunction.isDarkMode(context)
+          ? PAppColor.cardDarkColor
+          : PAppColor.whiteColor,
+      decoration: InputDecoration(labelText: labelText),
+      initialValue: initialValue,
+      onChanged: onChanged,
+      items: items,
+    );
+  }
+}
