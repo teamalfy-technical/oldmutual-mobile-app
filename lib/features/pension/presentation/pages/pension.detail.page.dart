@@ -309,6 +309,8 @@ class _PPensionDetailPageState extends State<PPensionDetailPage> {
                                   PDeviceUtil.getDeviceHeight(context) * 0.4,
                               loadingState: contributionVm.loading.value,
                             )
+                          : contributionVm.contributions.isEmpty
+                          ? PEmptyStateWidget(message: 'no_results_found'.tr)
                           : Container(
                               height:
                                   PDeviceUtil.getDeviceHeight(context) * 0.4,
