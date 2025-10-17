@@ -38,12 +38,10 @@ class PHomePage extends StatelessWidget {
                           vm: vm,
                           highlight: vm.highlights[index],
                           onTap: () {
-                            if (index != vm.highlights.length - 1) {
-                              PHelperFunction.switchScreen(
-                                destination: Routes.dashboardHighlightPage,
-                                args: vm.highlights[index],
-                              );
-                            }
+                            PHelperFunction.switchScreen(
+                              destination: Routes.dashboardHighlightPage,
+                              args: vm.highlights[index],
+                            );
                           },
                         ).symmetric(horizontal: PAppSize.s16);
                       }),

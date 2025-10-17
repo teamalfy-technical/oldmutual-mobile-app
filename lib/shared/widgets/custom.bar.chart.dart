@@ -109,7 +109,7 @@ class PCustomBarChart extends StatelessWidget {
                       // Ensure the title is placed above the bar
                       final yOffset =
                           (1 - (barHeight / maxY)) *
-                          (PDeviceUtil.getDeviceWidth(context) * 0.6);
+                          (PDeviceUtil.getDeviceWidth(context) * 0.55);
 
                       return Transform.translate(
                         offset: Offset(
