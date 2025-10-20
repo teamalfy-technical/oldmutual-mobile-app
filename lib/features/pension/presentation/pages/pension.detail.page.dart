@@ -39,20 +39,7 @@ class _PPensionDetailPageState extends State<PPensionDetailPage> {
   }
 
   Future<void> fetchSelectScheme() async {
-    await vm.getMemberSelectedScheme(
-      employerName: widget.scheme.employerName ?? '',
-      employerNumber: widget.scheme.employerNumber ?? '',
-      memberName: widget.scheme.memberName ?? '',
-      memberNumber: widget.scheme.memberNumber ?? '',
-      ssnitNumber: widget.scheme.ssnitNumber ?? '',
-      masterScheme: widget.scheme.masterSchemeDescription ?? '',
-      schemeType: widget.scheme.penTypeDescription ?? '',
-      email: widget.scheme.email ?? '',
-      dob: widget.scheme.dob ?? '',
-      dateJoined: widget.scheme.dateJoined ?? '',
-      sex: widget.scheme.sex ?? '',
-      nationality: widget.scheme.nationality ?? '',
-    );
+    await vm.getMemberSelectedScheme(scheme: widget.scheme);
   }
 
   List<String> xLabels = [];
@@ -108,7 +95,10 @@ class _PPensionDetailPageState extends State<PPensionDetailPage> {
                       ),
                       Text(
                         PFormatter.formatCurrency(
-                          amount: widget.scheme.balanceBroughtForward ?? 0,
+                          amount:
+                              // vm.summary.value.totalInvestment?.toDouble() ??
+                              // 0.00,
+                              widget.scheme.schemeCurrentValue ?? 0,
                         ),
                         textAlign: TextAlign.center,
                         softWrap: true,
@@ -309,24 +299,21 @@ class _PPensionDetailPageState extends State<PPensionDetailPage> {
                                   PDeviceUtil.getDeviceHeight(context) * 0.4,
                               loadingState: contributionVm.loading.value,
                             )
-                          : Container(
-                              height:
-                                  PDeviceUtil.getDeviceHeight(context) * 0.4,
+                          : PCustomCardWidget(
+                              height: contributionVm.contributions.isEmpty
+                                  ? null
+                                  : PDeviceUtil.getDeviceHeight(context) * 0.4,
                               padding: EdgeInsets.all(PAppSize.s16),
-                              decoration: BoxDecoration(
-                                color: PHelperFunction.isDarkMode(context)
-                                    ? PAppColor.darkAppBarColor
-                                    : PAppColor.whiteColor,
-                                borderRadius: BorderRadius.circular(
-                                  PAppSize.s12,
-                                ),
-                              ),
-                              child: PCustomLineChart(
-                                data: convertToSpots(),
-                                data2: contributionVm.contributions,
-                                xLabels: xLabels,
-                                interval: interval,
-                              ),
+                              child: contributionVm.contributions.isEmpty
+                                  ? PEmptyStateWidget(
+                                      message: 'no_data_found'.tr,
+                                    )
+                                  : PCustomLineChart(
+                                      data: convertToSpots(),
+                                      data2: contributionVm.contributions,
+                                      xLabels: xLabels,
+                                      interval: interval,
+                                    ),
                             ),
 
                       PAppSize.s16.verticalSpace,
@@ -360,21 +347,25 @@ class _PPensionDetailPageState extends State<PPensionDetailPage> {
                           loadingState: contributionVm.loading.value,
                         ),
                       ] else ...[
-                        (contributionVm
-                                    .history
-                                    .value
-                                    .transactionHistory
-                                    ?.transactions
-                                    ?.isEmpty ??
-                                true)
-                            ? PEmptyStateWidget(message: 'no_results_found'.tr)
-                            : PCustomCardWidget(
-                                padding: EdgeInsets.symmetric(
-                                  vertical: PAppSize.s16,
-                                  horizontal: PAppSize.s4,
-                                ),
+                        PCustomCardWidget(
+                          padding: EdgeInsets.symmetric(
+                            vertical: PAppSize.s16,
+                            horizontal: PAppSize.s4,
+                          ),
 
-                                child: ListView.separated(
+                          child:
+                              (contributionVm
+                                          .history
+                                          .value
+                                          .transactionHistory
+                                          ?.transactions
+                                          ?.toList() ??
+                                      [])
+                                  .isEmpty
+                              ? PEmptyStateWidget(
+                                  message: 'no_results_found'.tr,
+                                )
+                              : ListView.separated(
                                   shrinkWrap: true,
                                   physics: NeverScrollableScrollPhysics(),
                                   itemCount:
@@ -440,7 +431,7 @@ class _PPensionDetailPageState extends State<PPensionDetailPage> {
                                         horizontal: PAppSize.s20,
                                       ),
                                 ),
-                              ),
+                        ),
                       ],
 
                       PAppSize.s16.verticalSpace,

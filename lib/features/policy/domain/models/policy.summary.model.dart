@@ -5,7 +5,7 @@ class PolicySummary {
   double? totalClaimAmount;
   int? pendingClaims;
   double? totalCover;
-  String? availableBalance;
+  double? availableBalance;
   String? lastUpdated;
 
   PolicySummary({
@@ -26,7 +26,7 @@ class PolicySummary {
     totalClaimAmount = json['total_claim_amount']?.toDouble();
     pendingClaims = json['pending_claims'];
     totalCover = json['total_cover']?.toDouble();
-    availableBalance = json['available_balance'];
+    availableBalance = json['total_available_balance']?.toDouble();
     lastUpdated = json['last_updated'];
   }
 

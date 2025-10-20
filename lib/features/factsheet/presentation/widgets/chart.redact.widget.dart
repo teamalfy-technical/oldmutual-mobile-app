@@ -13,48 +13,44 @@ class PChartRedactWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Expanded(
-      flex: height == null ? 1 : 0,
-      child:
+    return Container(
+      width: PDeviceUtil.getDeviceWidth(context),
+      height: height ?? PDeviceUtil.getDeviceHeight(context) * 0.40,
+      padding: EdgeInsets.all(PAppSize.s20),
+      color: PAppColor.whiteColor,
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: [
           Container(
             width: PDeviceUtil.getDeviceWidth(context),
-            height: height,
-            padding: EdgeInsets.all(PAppSize.s20),
+            height: PAppSize.s20,
             color: PAppColor.whiteColor,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                Container(
-                  width: PDeviceUtil.getDeviceWidth(context),
-                  height: PAppSize.s20,
-                  color: PAppColor.whiteColor,
-                ),
-                Container(
-                  width: PDeviceUtil.getDeviceWidth(context),
-                  height: PAppSize.s20,
-                  color: PAppColor.whiteColor,
-                ),
-                Container(
-                  width: PDeviceUtil.getDeviceWidth(context),
-                  height: PAppSize.s20,
-                  color: PAppColor.whiteColor,
-                ),
-                Container(
-                  width: PDeviceUtil.getDeviceWidth(context),
-                  height: PAppSize.s20,
-                  color: PAppColor.whiteColor,
-                ),
-                Container(
-                  width: PDeviceUtil.getDeviceWidth(context),
-                  height: PAppSize.s20,
-                  color: PAppColor.whiteColor,
-                ),
-              ],
-            ),
-          ).redacted(
-            context: context,
-            redact: loadingState == LoadingState.loading ? true : false,
           ),
+          Container(
+            width: PDeviceUtil.getDeviceWidth(context),
+            height: PAppSize.s20,
+            color: PAppColor.whiteColor,
+          ),
+          Container(
+            width: PDeviceUtil.getDeviceWidth(context),
+            height: PAppSize.s20,
+            color: PAppColor.whiteColor,
+          ),
+          Container(
+            width: PDeviceUtil.getDeviceWidth(context),
+            height: PAppSize.s20,
+            color: PAppColor.whiteColor,
+          ),
+          Container(
+            width: PDeviceUtil.getDeviceWidth(context),
+            height: PAppSize.s20,
+            color: PAppColor.whiteColor,
+          ),
+        ],
+      ),
+    ).redacted(
+      context: context,
+      redact: loadingState == LoadingState.loading ? true : false,
     );
   }
 }

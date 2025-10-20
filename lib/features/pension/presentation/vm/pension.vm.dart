@@ -15,7 +15,8 @@ class PPensionVm extends GetxController {
 
   var schemes = <Scheme>[].obs;
   var summary = PensionSummary().obs;
-  var selectedScheme = SelectedScheme().obs;
+  var selectedScheme = Scheme().obs;
+  // var selectedScheme = SelectedScheme().obs;
   var products = <Map<String, dynamic>>[].obs;
 
   var loading = LoadingState.completed.obs;
@@ -111,79 +112,62 @@ class PPensionVm extends GetxController {
   }
 
   /// Function to get all selected scheme
-  Future<void> getMemberSelectedScheme({
-    required String employerName,
-    required String employerNumber,
-    required String ssnitNumber,
-    required String memberName,
-    required String memberNumber,
-    required String masterScheme,
-    required String schemeType,
-    required String email,
-    required String dob,
-    required String dateJoined,
-    required String sex,
-    required String nationality,
-  }) async {
-    updateLoadingState(LoadingState.loading);
-    final result = await pensionService.getSelectedMemberScheme(
-      employerName: employerName,
-      employerNumber: employerNumber,
-      memberName: memberName,
-      memberNumber: memberNumber,
-      ssnitNumber: ssnitNumber,
-      masterScheme: masterScheme,
-      schemeType: schemeType,
-      email: email,
-      dob: dob,
-      dateJoined: dateJoined,
-      sex: sex,
-      nationality: nationality,
-    );
-    result.fold(
-      (err) {
-        updateLoadingState(LoadingState.error);
-        // updateSelectingState(LoadingState.error);
-        PPopupDialog(
-          context,
-        ).errorMessage(title: 'error'.tr, message: err.message);
-      },
-      (res) async {
-        selectedScheme.value = res.data ?? SelectedScheme();
-        final updatedMember = PSecureStorage().getAuthResponse()?.copyWith(
-          masterScheme: res.data?.masterScheme ?? '',
-          schemeType: res.data?.schemeType ?? '',
-          name: res.data?.name ?? '',
-          emailVerifiedAt: res.data?.emailVerifiedAt ?? '',
-          avatar: res.data?.avatar ?? '',
-          phone: res.data?.phone ?? '',
-          email: res.data?.email ?? '',
-          sex: res.data?.sex ?? '',
-          ssnitNumber: res.data?.ssnitNumber ?? '',
-          memberNumber: res.data?.memberNumber ?? '',
-          dob: res.data?.dob ?? '',
-          role: res.data?.role ?? '',
-          nationality: res.data?.nationality ?? '',
-          dateJoined: res.data?.dateJoined ?? '',
-          employerName: res.data?.employerName ?? '',
-          employerNumber: res.data?.employerNumber ?? '',
-          updatedAt: res.data?.updatedAt ?? '',
-        );
-        pensionAppLogger.e(res.data?.toJson());
-        PSecureStorage().saveAuthResponse(updatedMember?.toJson());
-        pensionAppLogger.e(PSecureStorage().getAuthResponse()?.toJson());
-        await Get.put(PContributionHistoryVm()).getContributionsSummary();
-
-        // await Get.put(PContributionHistoryVm()).getAllContributions();
-        updateLoadingState(LoadingState.completed);
-        // updateSelectingState(LoadingState.completed);
-        // PHelperFunction.pop();
-        // PHelperFunction.switchScreen(
-        //   destination: Routes.homePage,
-
-        // );
-        // await Get.put(PAuthVm()).getBioData();
-      },
-    );
+  Future<void> getMemberSelectedScheme({required Scheme scheme}) async {
+    if (selectedScheme.value != scheme) {
+      updateLoadingState(LoadingState.loading);
+      final result = await pensionService.getSelectedMemberScheme(
+        employerName: scheme.employerName ?? '',
+        employerNumber: scheme.employerNumber ?? '',
+        memberName: scheme.memberName ?? '',
+        memberNumber: scheme.memberNumber ?? '',
+        ssnitNumber: scheme.ssnitNumber ?? '',
+        masterScheme: scheme.masterSchemeDescription ?? '',
+        schemeType: scheme.penTypeDescription ?? '',
+        email: scheme.email ?? '',
+        dob: scheme.dob ?? '',
+        dateJoined: scheme.dateJoined ?? '',
+        sex: scheme.sex ?? '',
+        nationality: scheme.nationality ?? '',
+      );
+      result.fold(
+        (err) {
+          updateLoadingState(LoadingState.error);
+          // updateSelectingState(LoadingState.error);
+          PPopupDialog(
+            context,
+          ).errorMessage(title: 'error'.tr, message: err.message);
+        },
+        (res) async {
+          selectedScheme(scheme);
+          // selectedScheme.value = res.data ?? SelectedScheme();
+          final updatedMember = PSecureStorage().getAuthResponse()?.copyWith(
+            masterScheme: res.data?.masterScheme ?? '',
+            schemeType: res.data?.schemeType ?? '',
+            name: res.data?.name ?? '',
+            emailVerifiedAt: res.data?.emailVerifiedAt ?? '',
+            avatar: res.data?.avatar ?? '',
+            phone: res.data?.phone ?? '',
+            email: res.data?.email ?? '',
+            sex: res.data?.sex ?? '',
+            ssnitNumber: res.data?.ssnitNumber ?? '',
+            memberNumber: res.data?.memberNumber ?? '',
+            dob: res.data?.dob ?? '',
+            role: res.data?.role ?? '',
+            nationality: res.data?.nationality ?? '',
+            dateJoined: res.data?.dateJoined ?? '',
+            employerName: res.data?.employerName ?? '',
+            employerNumber: res.data?.employerNumber ?? '',
+            updatedAt: res.data?.updatedAt ?? '',
+          );
+          pensionAppLogger.e(res.data?.toJson());
+          PSecureStorage().saveAuthResponse(updatedMember?.toJson());
+          pensionAppLogger.e(PSecureStorage().getAuthResponse()?.toJson());
+          await Get.put(PContributionHistoryVm()).getContributionsSummary();
+          updateLoadingState(LoadingState.completed);
+        },
+      );
+    } else {
+      await Get.put(PContributionHistoryVm()).getContributionsSummary();
+    }
   }
 }

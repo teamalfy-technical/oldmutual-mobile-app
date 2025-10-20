@@ -38,12 +38,10 @@ class PHomePage extends StatelessWidget {
                           vm: vm,
                           highlight: vm.highlights[index],
                           onTap: () {
-                            if (index != vm.highlights.length - 1) {
-                              PHelperFunction.switchScreen(
-                                destination: Routes.dashboardHighlightPage,
-                                args: vm.highlights[index],
-                              );
-                            }
+                            PHelperFunction.switchScreen(
+                              destination: Routes.dashboardHighlightPage,
+                              args: vm.highlights[index],
+                            );
                           },
                         ).symmetric(horizontal: PAppSize.s16);
                       }),
@@ -77,9 +75,7 @@ class PHomePage extends StatelessWidget {
                       PFormatter.formatCurrency(
                         amount: policyVm.summary.value.availableBalance == ''
                             ? 0.0
-                            : double.parse(
-                                policyVm.summary.value.availableBalance ?? '0',
-                              ),
+                            : policyVm.summary.value.availableBalance ?? 0.0,
                       ),
                       textAlign: TextAlign.center,
                       softWrap: true,

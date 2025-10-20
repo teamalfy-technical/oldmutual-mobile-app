@@ -36,95 +36,95 @@ class PBeneficiaryListPage extends StatelessWidget {
           ? PAppColor.darkBgColor
           : PAppColor.fillColor,
       appBar: AppBar(title: Text('beneficiaries'.tr)),
-      body: Obx(
-        () => PCustomCardWidget(
-          margin: EdgeInsets.only(top: PAppSize.s20),
-          padding: EdgeInsets.symmetric(vertical: PAppSize.s6),
-
-          child: RefreshIndicator.adaptive(
-            onRefresh: () => vm.getBeneficiaries(),
-            child: vm.loading.value == LoadingState.loading
-                ? ListView.builder(
-                    shrinkWrap: true,
-                    itemCount: 5,
-                    itemBuilder: (context, index) {
-                      return PBeneficiaryWidgetRedact(
-                        loading: vm.loading.value,
-                      );
-                    },
-                  )
-                : vm.beneficiaries.isEmpty
-                ? PEmptyStateWidget(message: 'no_results_found'.tr)
-                : ListView.separated(
-                    shrinkWrap: true,
-                    padding: EdgeInsets.zero,
-                    itemCount: vm.beneficiaries.length,
-                    itemBuilder: (context, index) {
-                      final beneficiary = vm.beneficiaries[index];
-                      return ListTile(
-                        onTap: () => showDetailModal(context, beneficiary),
-                        leading: CircleAvatar(
-                          radius: PAppSize.s24,
-                          backgroundColor: PAppColor.darkAppBarColor2,
-                          child: Text(
-                            beneficiary.fullName
-                                    ?.split(' ')
-                                    .first
-                                    .substring(0, 1) ??
-                                'not_applicable'.tr,
+      body: SafeArea(
+        child: Obx(
+          () => PCustomCardWidget(
+            padding: EdgeInsets.symmetric(vertical: PAppSize.s6),
+            child: RefreshIndicator.adaptive(
+              onRefresh: () => vm.getBeneficiaries(),
+              child: vm.loading.value == LoadingState.loading
+                  ? ListView.builder(
+                      shrinkWrap: true,
+                      itemCount: 5,
+                      itemBuilder: (context, index) {
+                        return PBeneficiaryWidgetRedact(
+                          loading: vm.loading.value,
+                        );
+                      },
+                    )
+                  : vm.beneficiaries.isEmpty
+                  ? PEmptyStateWidget(message: 'no_results_found'.tr)
+                  : ListView.separated(
+                      shrinkWrap: true,
+                      padding: EdgeInsets.zero,
+                      itemCount: vm.beneficiaries.length,
+                      itemBuilder: (context, index) {
+                        final beneficiary = vm.beneficiaries[index];
+                        return ListTile(
+                          onTap: () => showDetailModal(context, beneficiary),
+                          leading: CircleAvatar(
+                            radius: PAppSize.s24,
+                            backgroundColor: PAppColor.darkAppBarColor2,
+                            child: Text(
+                              beneficiary.fullName
+                                      ?.split(' ')
+                                      .first
+                                      .substring(0, 1) ??
+                                  'not_applicable'.tr,
+                              style: Theme.of(context).textTheme.bodyLarge
+                                  ?.copyWith(
+                                    fontSize: PAppSize.s15,
+                                    color: PAppColor.whiteColor,
+                                    fontWeight: FontWeight.w600,
+                                  ),
+                            ),
+                          ),
+                          title: Text(
+                            beneficiary.fullName ?? '',
                             style: Theme.of(context).textTheme.bodyLarge
                                 ?.copyWith(
                                   fontSize: PAppSize.s15,
-                                  color: PAppColor.whiteColor,
-                                  fontWeight: FontWeight.w600,
+                                  fontWeight: FontWeight.w500,
                                 ),
                           ),
-                        ),
-                        title: Text(
-                          beneficiary.fullName ?? '',
-                          style: Theme.of(context).textTheme.bodyLarge
-                              ?.copyWith(
-                                fontSize: PAppSize.s15,
-                                fontWeight: FontWeight.w500,
+                          subtitle: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                beneficiary.percAlloc == 100
+                                    ? '${beneficiary.percAlloc}%'
+                                    : '${beneficiary.percAlloc}% Split',
+                                style: Theme.of(context).textTheme.bodyLarge
+                                    ?.copyWith(
+                                      fontSize: PAppSize.s14,
+                                      fontWeight: FontWeight.w500,
+                                    ),
                               ),
-                        ),
-                        subtitle: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              beneficiary.percAlloc == 100
-                                  ? '${beneficiary.percAlloc}%'
-                                  : '${beneficiary.percAlloc}% Split',
-                              style: Theme.of(context).textTheme.bodyLarge
-                                  ?.copyWith(
-                                    fontSize: PAppSize.s14,
-                                    fontWeight: FontWeight.w500,
-                                  ),
-                            ),
 
-                            Text(
-                              // '${beneficiary.relationship}',
-                              '${beneficiary.relationship} - ${beneficiary.birthDate == null ? 'not_applicable'.tr : PFormatter.formatDate(dateFormat: DateFormat('d MMMM y'), date: DateTime.parse(beneficiary.birthDate ?? DateTime.now().toIso8601String()))}',
-                              style: Theme.of(context).textTheme.bodyLarge
-                                  ?.copyWith(
-                                    fontSize: PAppSize.s13,
-                                    fontWeight: FontWeight.w400,
-                                  ),
-                            ),
-                          ],
-                        ),
-                        trailing: Assets.icons.arrowRightBlack.svg(
-                          color: PHelperFunction.isDarkMode(context)
-                              ? PAppColor.whiteColor
-                              : PAppColor.blackColor,
-                        ),
-                      );
-                    },
-                    separatorBuilder: (context, index) =>
-                        Divider().symmetric(horizontal: PAppSize.s20),
-                  ),
-          ),
-        ).all(PAppSize.s20),
+                              Text(
+                                // '${beneficiary.relationship}',
+                                '${beneficiary.relationship} - ${beneficiary.birthDate == null ? 'not_applicable'.tr : PFormatter.formatDate(dateFormat: DateFormat('d MMMM y'), date: DateTime.parse(beneficiary.birthDate ?? DateTime.now().toIso8601String()))}',
+                                style: Theme.of(context).textTheme.bodyLarge
+                                    ?.copyWith(
+                                      fontSize: PAppSize.s13,
+                                      fontWeight: FontWeight.w400,
+                                    ),
+                              ),
+                            ],
+                          ),
+                          trailing: Assets.icons.arrowRightBlack.svg(
+                            color: PHelperFunction.isDarkMode(context)
+                                ? PAppColor.whiteColor
+                                : PAppColor.blackColor,
+                          ),
+                        );
+                      },
+                      separatorBuilder: (context, index) =>
+                          Divider().symmetric(horizontal: PAppSize.s20),
+                    ),
+            ),
+          ).all(PAppSize.s20),
+        ),
       ),
     );
   }

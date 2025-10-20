@@ -80,7 +80,7 @@ class _PWelcomeBackPageState extends State<PWelcomeBackPage>
                           // suffixIcon: Assets.icons.passwordViewIcon.svg(
                           //   // color: PAppColor.hintTextColor,
                           // ),
-                          validator: PValidator.validatePassword,
+                          // validator: PValidator.validatePassword,
                           obscure: ctrl.obscure.value,
                           onObscureChanged: ctrl.onObscureChanged,
                           controller: ctrl.passwordTEC,
