@@ -112,6 +112,7 @@ class AppTranslations extends Translations {
       'delete_account': 'Delete account',
       'signout_desc': 'Sign out from your account safely',
       'no_results_found': 'No results found',
+      'no_data_found': 'No data found',
       'performance_since': 'Pensions Performance',
       'fund_composition': 'Fund Composition',
       'asset_allocation': 'Asset & percentage allocation',

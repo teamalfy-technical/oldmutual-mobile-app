@@ -75,9 +75,7 @@ class PHomePage extends StatelessWidget {
                       PFormatter.formatCurrency(
                         amount: policyVm.summary.value.availableBalance == ''
                             ? 0.0
-                            : double.parse(
-                                policyVm.summary.value.availableBalance ?? '0',
-                              ),
+                            : policyVm.summary.value.availableBalance ?? 0.0,
                       ),
                       textAlign: TextAlign.center,
                       softWrap: true,

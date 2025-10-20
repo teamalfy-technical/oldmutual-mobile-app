@@ -149,13 +149,14 @@ class PContributionsPage extends StatelessWidget {
                           );
                         },
                       )
-                    : contributionVm
-                          .history
-                          .value
-                          .transactionHistory!
-                          .transactions!
-                          .where((e) => e.paymentFlag != 'B')
-                          .toList()
+                    : (contributionVm
+                                  .history
+                                  .value
+                                  .transactionHistory
+                                  ?.transactions
+                                  ?.where((e) => e.paymentFlag != 'B')
+                                  .toList() ??
+                              [])
                           .isEmpty
                     ? PEmptyStateWidget(message: 'no_results_found'.tr)
                     : ListView.separated(

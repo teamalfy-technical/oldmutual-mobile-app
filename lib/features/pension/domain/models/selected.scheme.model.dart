@@ -1,4 +1,6 @@
-class SelectedScheme {
+import 'package:equatable/equatable.dart';
+
+class SelectedScheme extends Equatable {
   int? id;
   String? name;
   String? memberNumber;
@@ -106,4 +108,32 @@ class SelectedScheme {
     data['scheme_type'] = schemeType;
     return data;
   }
+
+  @override
+  List<Object?> get props => [
+    id,
+    name,
+    memberNumber,
+    phone,
+    email,
+    employerName,
+    employerNumber,
+    ssnitNumber,
+    emailVerifiedAt,
+    avatar,
+    lastLoggedIn,
+    lastLoggedInIp,
+    lastLoggedInAgent,
+    terms,
+    createdAt,
+    updatedAt,
+    notificationsEnabled,
+    dob,
+    dateJoined,
+    sex,
+    nationality,
+    role,
+    masterScheme,
+    schemeType,
+  ];
 }

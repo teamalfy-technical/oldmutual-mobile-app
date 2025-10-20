@@ -57,7 +57,7 @@ class PPolicyVm extends GetxController {
               totalPolicies: 0,
               expiredPolicies: 0,
               pendingClaims: 0,
-              availableBalance: '0',
+              availableBalance: 0.0,
               lastUpdated: '',
             );
         await getAllPolices();
@@ -166,15 +166,16 @@ class PPolicyVm extends GetxController {
       {
         'name': 'Life Insurance',
         'type': ProductType.insurance,
-        'num_of_account': policies.length,
-        'contribution': summary.value.availableBalance == ''
+        'num_of_account': summary.value.totalPolicies ?? 0, // policies.length,
+        'contribution': summary.value.availableBalance == null
             ? 0.00
-            : double.parse(summary.value.availableBalance ?? '0'),
+            : summary.value.availableBalance ?? 0.0,
       },
       {
-        'name': 'Pension',
+        'name': 'Pensions',
         'type': ProductType.pensions,
-        'num_of_account': vm.schemes.length,
+        'num_of_account':
+            vm.summary.value.totalPensions ?? 0, //vm.schemes.length,
         'contribution': vm.summary.value.totalInvestment?.toDouble() ?? 0.00,
       },
       // {
