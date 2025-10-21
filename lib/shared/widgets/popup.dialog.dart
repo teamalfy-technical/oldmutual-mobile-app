@@ -63,7 +63,7 @@ class PPopupDialog {
       backgroundColor: PHelperFunction.isDarkMode(context)
           ? PAppColor.lightBlackColor
           : PAppColor.whiteColor,
-      icon: Assets.icons.warning.svg(color: PAppColor.redColor),
+      icon: Assets.icons.warningIcon.svg(color: PAppColor.redColor),
       // leftBarIndicatorColor: PAppColor.errorColor,
       title: title,
       padding: EdgeInsets.all(PAppSize.s20),
@@ -86,7 +86,7 @@ class PPopupDialog {
       backgroundColor: PHelperFunction.isDarkMode(context)
           ? PAppColor.lightBlackColor
           : PAppColor.whiteColor,
-      icon: Assets.icons.warning.svg(color: PAppColor.warning700),
+      icon: Assets.icons.warningIcon.svg(color: PAppColor.warning700),
       // leftBarIndicatorColor: PAppColor.errorColor,
       title: title,
       padding: EdgeInsets.all(PAppSize.s20),
@@ -109,7 +109,7 @@ class PPopupDialog {
       backgroundColor: PHelperFunction.isDarkMode(context)
           ? PAppColor.lightBlackColor
           : PAppColor.whiteColor,
-      icon: Assets.icons.warning.svg(color: PAppColor.info700),
+      icon: Assets.icons.warningIcon.svg(color: PAppColor.info700),
       // leftBarIndicatorColor: PAppColor.errorColor,
       title: title,
       padding: EdgeInsets.all(PAppSize.s20),

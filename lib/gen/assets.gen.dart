@@ -292,6 +292,18 @@ class $AssetsIconsGen {
   /// File path: assets/icons/wallet.svg
   SvgGenImage get wallet => const SvgGenImage('assets/icons/wallet.svg');
 
+  /// File path: assets/icons/warning.green.icon.svg
+  SvgGenImage get warningGreenIcon =>
+      const SvgGenImage('assets/icons/warning.green.icon.svg');
+
+  /// File path: assets/icons/warning.icon.svg
+  SvgGenImage get warningIcon =>
+      const SvgGenImage('assets/icons/warning.icon.svg');
+
+  /// File path: assets/icons/warning.red.icon.svg
+  SvgGenImage get warningRedIcon =>
+      const SvgGenImage('assets/icons/warning.red.icon.svg');
+
   /// File path: assets/icons/warning.svg
   SvgGenImage get warning => const SvgGenImage('assets/icons/warning.svg');
 
@@ -370,6 +382,9 @@ class $AssetsIconsGen {
     visibilityOff,
     visibilityOn,
     wallet,
+    warningGreenIcon,
+    warningIcon,
+    warningRedIcon,
     warning,
     withdrawIcon,
   ];
