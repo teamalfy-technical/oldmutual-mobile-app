@@ -187,6 +187,10 @@ class $AssetsIconsGen {
   SvgGenImage get logoutIcon =>
       const SvgGenImage('assets/icons/logout.icon.svg');
 
+  /// File path: assets/icons/maintenance.svg
+  SvgGenImage get maintenance =>
+      const SvgGenImage('assets/icons/maintenance.svg');
+
   /// File path: assets/icons/manage.icon.svg
   SvgGenImage get manageIcon =>
       const SvgGenImage('assets/icons/manage.icon.svg');
@@ -200,6 +204,10 @@ class $AssetsIconsGen {
 
   /// File path: assets/icons/more.icon.svg
   SvgGenImage get moreIcon => const SvgGenImage('assets/icons/more.icon.svg');
+
+  /// File path: assets/icons/notification.empty.svg
+  SvgGenImage get notificationEmpty =>
+      const SvgGenImage('assets/icons/notification.empty.svg');
 
   /// File path: assets/icons/notification.green.icon.svg
   SvgGenImage get notificationGreenIcon =>
@@ -215,6 +223,10 @@ class $AssetsIconsGen {
   /// File path: assets/icons/person.add.icon.svg
   SvgGenImage get personAddIcon =>
       const SvgGenImage('assets/icons/person.add.icon.svg');
+
+  /// File path: assets/icons/person.black.svg
+  SvgGenImage get personBlack =>
+      const SvgGenImage('assets/icons/person.black.svg');
 
   /// File path: assets/icons/person.svg
   SvgGenImage get person => const SvgGenImage('assets/icons/person.svg');
@@ -280,17 +292,8 @@ class $AssetsIconsGen {
   /// File path: assets/icons/wallet.svg
   SvgGenImage get wallet => const SvgGenImage('assets/icons/wallet.svg');
 
-  /// File path: assets/icons/warning.green.icon.svg
-  SvgGenImage get warningGreenIcon =>
-      const SvgGenImage('assets/icons/warning.green.icon.svg');
-
-  /// File path: assets/icons/warning.icon.svg
-  SvgGenImage get warningIcon =>
-      const SvgGenImage('assets/icons/warning.icon.svg');
-
-  /// File path: assets/icons/warning.red.icon.svg
-  SvgGenImage get warningRedIcon =>
-      const SvgGenImage('assets/icons/warning.red.icon.svg');
+  /// File path: assets/icons/warning.svg
+  SvgGenImage get warning => const SvgGenImage('assets/icons/warning.svg');
 
   /// File path: assets/icons/withdraw.icon.svg
   SvgGenImage get withdrawIcon =>
@@ -338,14 +341,17 @@ class $AssetsIconsGen {
     lockIcon,
     lockOutline,
     logoutIcon,
+    maintenance,
     manageIcon,
     memberIcon,
     moneyIcon,
     moreIcon,
+    notificationEmpty,
     notificationGreenIcon,
     notificationIcon,
     payIcon,
     personAddIcon,
+    personBlack,
     person,
     phoneIcon,
     pictogram,
@@ -364,9 +370,7 @@ class $AssetsIconsGen {
     visibilityOff,
     visibilityOn,
     wallet,
-    warningGreenIcon,
-    warningIcon,
-    warningRedIcon,
+    warning,
     withdrawIcon,
   ];
 }
@@ -420,6 +424,10 @@ class $AssetsImagesGen {
   /// File path: assets/images/new.feature.img.png
   AssetGenImage get newFeatureImg =>
       const AssetGenImage('assets/images/new.feature.img.png');
+
+  /// File path: assets/images/notification.btm.bg.png
+  AssetGenImage get notificationBtmBg =>
+      const AssetGenImage('assets/images/notification.btm.bg.png');
 
   /// File path: assets/images/placeholder.img.png
   AssetGenImage get placeholderImg =>
@@ -487,6 +495,7 @@ class $AssetsImagesGen {
     mvestBg,
     newFeatureBg,
     newFeatureImg,
+    notificationBtmBg,
     placeholderImg,
     retirementSalaryBg,
     retirementSalaryImg,

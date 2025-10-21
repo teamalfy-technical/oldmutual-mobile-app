@@ -59,7 +59,7 @@ class ProductWidget extends StatelessWidget {
                         ),
                         PAppSize.s2.verticalSpace,
                         Text(
-                          'You have \n${product['num_of_account']} accounts',
+                          'You have \n${product['num_of_account']} ${product['type'] == ProductType.insurance ? 'policies' : 'schemes'}',
                           softWrap: true,
                           style: Theme.of(context).textTheme.titleMedium
                               ?.copyWith(
