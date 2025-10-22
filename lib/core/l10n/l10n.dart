@@ -115,7 +115,7 @@ class AppTranslations extends Translations {
       'no_data_found': 'No data found',
       'noti_empty_title': 'You’re all caught up',
       'noti_empty_subtitle':
-          'There are currently no new features, \nbut stay tuned for more.',
+          'There are currently no new notifications, \nbut stay tuned for more.',
       'performance_since': 'Pensions Performance',
       'fund_composition': 'Fund Composition',
       'asset_allocation': 'Asset & percentage allocation',

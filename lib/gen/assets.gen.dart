@@ -109,9 +109,16 @@ class $AssetsIconsGen {
   /// File path: assets/icons/close.icon.svg
   SvgGenImage get closeIcon => const SvgGenImage('assets/icons/close.icon.svg');
 
+  /// File path: assets/icons/contribution.alert.svg
+  SvgGenImage get contributionAlert =>
+      const SvgGenImage('assets/icons/contribution.alert.svg');
+
   /// File path: assets/icons/delete.icon.svg
   SvgGenImage get deleteIcon =>
       const SvgGenImage('assets/icons/delete.icon.svg');
+
+  /// File path: assets/icons/document.svg
+  SvgGenImage get document => const SvgGenImage('assets/icons/document.svg');
 
   /// File path: assets/icons/download.icon.svg
   SvgGenImage get downloadIcon =>
@@ -330,7 +337,9 @@ class $AssetsIconsGen {
     chartData,
     checkIcon,
     closeIcon,
+    contributionAlert,
     deleteIcon,
+    document,
     downloadIcon,
     editIcon,
     emailIcon,

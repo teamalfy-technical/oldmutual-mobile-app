@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -15,7 +14,7 @@ class PNotificationPage extends StatelessWidget {
     return Scaffold(
       backgroundColor: PHelperFunction.isDarkMode(context)
           ? PAppColor.darkBgColor
-          : PAppColor.fillColor,
+          : PAppColor.fillColor3,
       appBar: AppBar(title: Text('notifications'.tr)),
       body: Obx(
         () => Stack(
@@ -24,6 +23,7 @@ class PNotificationPage extends StatelessWidget {
               bottom: PAppSize.s0,
               right: PAppSize.s0,
               left: PAppSize.s0,
+
               child: Image.asset(
                 Assets.images.notificationBtmBg.path,
                 fit: BoxFit.fitWidth,
@@ -31,12 +31,11 @@ class PNotificationPage extends StatelessWidget {
               ),
             ),
             Positioned.fill(
-              child: RefreshIndicator(
+              child: RefreshIndicator.adaptive(
                 onRefresh: ctrl.getNotifications,
                 color: PAppColor.primary,
                 child: ctrl.loading.value == LoadingState.loading
                     ? ListView.builder(
-                        itemCount: 10,
                         itemBuilder: (context, index) {
                           return PNotificationRedactWidget(
                             loading: ctrl.loading.value,
@@ -45,78 +44,52 @@ class PNotificationPage extends StatelessWidget {
                       )
                     : ctrl.notifications.isEmpty
                     ? _buildEmptyState(context)
-                    : ListView.separated(
-                        separatorBuilder: (context, index) =>
-                            Divider(color: PAppColor.fillColor2),
-                        itemCount: ctrl.notifications.length,
-                        itemBuilder: (context, index) {
-                          final notification = ctrl.notifications[index];
-                          return Row(
+                    : ListView.builder(
+                        itemCount: ctrl.groupedNotifications.keys
+                            .toList()
+                            .length,
+                        shrinkWrap: true,
+                        itemBuilder: (context, sectionIndex) {
+                          final sectionTitle = ctrl.groupedNotifications.keys
+                              .toList()[sectionIndex];
+                          final sectionItems =
+                              ctrl.groupedNotifications[sectionTitle]!;
+                          return Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Icon(CupertinoIcons.person_fill),
-                              PAppSize.s16.horizontalSpace,
-                              Expanded(
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      '${notification.data?.title} ',
-                                      style: Theme.of(
-                                        context,
-                                      ).textTheme.titleMedium?.copyWith(),
-                                    ),
+                              PAppSize.s25.verticalSpace,
+                              // 🏷 Section Header
+                              Text(
+                                sectionTitle,
+                                style: Theme.of(context).textTheme.titleSmall
+                                    ?.copyWith(fontWeight: FontWeight.w500),
+                              ),
+                              PAppSize.s6.verticalSpace,
 
-                                    Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Text(
-                                          '${notification.data?.message} ',
-                                          style: Theme.of(context)
-                                              .textTheme
-                                              .titleSmall
-                                              ?.copyWith(
-                                                fontWeight: FontWeight.w500,
-                                              ),
-                                        ),
-                                        Text(
-                                          PFormatter.formatAlertDateTime(
-                                            DateTime.parse(
-                                              notification.data?.paymentDate ??
-                                                  notification.createdAt ??
-                                                  DateTime.now()
-                                                      .toIso8601String(),
-                                            ),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                    // ListTile(
-                                    //   leading: Icon(CupertinoIcons.person_fill),
-
-                                    //   //  Assets.icons.personBlack.svg(
-                                    //   //   color: PAppColor.darkBgColor,
-                                    //   // ),
-                                    //   title:
-                                    //   subtitle:
-                                    // ),
-                                  ],
-                                ),
+                              Divider(),
+                              PAppSize.s6.verticalSpace,
+                              // 📜 Section Items
+                              ListView.separated(
+                                separatorBuilder: (context, index) => Divider(),
+                                physics: NeverScrollableScrollPhysics(),
+                                shrinkWrap: true,
+                                itemCount: sectionItems.length,
+                                itemBuilder: (context, index) {
+                                  final notification = sectionItems[index];
+                                  return PNotificationWidget(
+                                    onTap: () {
+                                      if (notification.readAt == null) {
+                                        ctrl.markNotificationAsRead(
+                                          notificationModel: notification,
+                                        );
+                                      }
+                                    },
+                                    notification: notification,
+                                  );
+                                },
                               ),
                             ],
                           );
-
-                          // PNotificationWidget(
-                          //   onTap: () {
-                          //     if (notification.readAt == null) {
-                          //       ctrl.markNotificationAsRead(
-                          //         notificationModel: notification,
-                          //       );
-                          //     }
-                          //   },
-                          //   notification: notification,
-                          // );
                         },
                       ),
               ),
