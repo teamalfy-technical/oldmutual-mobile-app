@@ -25,6 +25,8 @@ enum DateDiffUnit { days, months, years }
 
 enum PolicyStatus { inforce, expired, lapsed, paidup }
 
+enum BadgeType { report, beneficiary, contribution, maintenance }
+
 // enum Environment { dev, prod }
 enum SchemeType { anchor, prestige, aspire }
 

@@ -16,7 +16,7 @@ class AppTranslations extends Translations {
       'sign_in': 'Login',
       'sign_in_hint': 'Sign in into your account',
       'sign_up': 'Sign up',
-      'notification': 'Notification',
+      'notifications': 'Notifications',
       'hi': 'Hi',
       'login_with_different_account': 'Login with a different account',
       'verify_phone_number': 'Enter your One Time Pin',
@@ -113,6 +113,9 @@ class AppTranslations extends Translations {
       'signout_desc': 'Sign out from your account safely',
       'no_results_found': 'No results found',
       'no_data_found': 'No data found',
+      'noti_empty_title': 'You’re all caught up',
+      'noti_empty_subtitle':
+          'There are currently no new notifications, \nbut stay tuned for more.',
       'performance_since': 'Pensions Performance',
       'fund_composition': 'Fund Composition',
       'asset_allocation': 'Asset & percentage allocation',

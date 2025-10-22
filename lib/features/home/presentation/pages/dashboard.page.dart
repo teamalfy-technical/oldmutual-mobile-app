@@ -4,6 +4,7 @@ import 'package:oldmutual_pensions_app/core/utils/utils.dart';
 import 'package:oldmutual_pensions_app/features/home/home.dart';
 import 'package:oldmutual_pensions_app/features/more/more.services.dart';
 import 'package:oldmutual_pensions_app/gen/assets.gen.dart';
+import 'package:oldmutual_pensions_app/routes/app.pages.dart';
 import 'package:oldmutual_pensions_app/shared/widgets/annotated.region.dart';
 
 class PDashboardPage extends StatelessWidget {
@@ -49,7 +50,9 @@ class PDashboardPage extends StatelessWidget {
           // title: Text('Hi Bongani'),
           actions: [
             IconButton(
-              onPressed: () {},
+              onPressed: () => PHelperFunction.switchScreen(
+                destination: Routes.notificationPage,
+              ),
               icon: Assets.icons.notificationIcon.svg(
                 height: PAppSize.s28,
                 color: PHelperFunction.isDarkMode(context)

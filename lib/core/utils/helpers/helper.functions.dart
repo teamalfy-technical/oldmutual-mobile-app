@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_image_compress/flutter_image_compress.dart';
 import 'package:get/get.dart';
 import 'package:oldmutual_pensions_app/core/utils/utils.dart';
+import 'package:oldmutual_pensions_app/gen/assets.gen.dart';
 
 class PHelperFunction {
   //HHelperFunction._();
@@ -171,6 +172,55 @@ class PHelperFunction {
     ];
     return months[month - 1];
   }
+
+  static Widget getBadgeIcon(String status) {
+    if (status.toLowerCase().contains(BadgeType.beneficiary.name)) {
+      return Assets.icons.personBlack.svg(
+        color: isDarkMode(Get.context!)
+            ? PAppColor.whiteColor
+            : PAppColor.darkBgColor,
+      );
+    }
+    if (status.toLowerCase().contains(BadgeType.report.name)) {
+      return Assets.icons.document.svg(
+        color: isDarkMode(Get.context!)
+            ? PAppColor.whiteColor
+            : PAppColor.darkBgColor,
+      );
+    }
+    if (status.toLowerCase().contains(BadgeType.contribution.name)) {
+      return Assets.icons.contributionAlert.svg(
+        color: isDarkMode(Get.context!)
+            ? PAppColor.whiteColor
+            : PAppColor.darkBgColor,
+      );
+    }
+    if (status.toLowerCase().contains(BadgeType.maintenance.name)) {
+      return Assets.icons.maintenance.svg(
+        color: isDarkMode(Get.context!)
+            ? PAppColor.whiteColor
+            : PAppColor.darkBgColor,
+      );
+    }
+    return Assets.icons.contributionAlert.svg(
+      color: isDarkMode(Get.context!)
+          ? PAppColor.whiteColor
+          : PAppColor.darkBgColor,
+    );
+  }
+
+  // static BadgeType getBadgeType(String status) {
+  //   if (status.toLowerCase().contains(BadgeType.beneficiary.name)) {
+  //     return BadgeType.beneficiary;
+  //   }
+  //   if (status.toLowerCase().contains(BadgeType.report.name)) {
+  //     return BadgeType.report;
+  //   }
+  //   if (status.toLowerCase().contains(BadgeType.contribution.name)) {
+  //     return BadgeType.contribution;
+  //   }
+  //   return BadgeType.contribution;
+  // }
 
   // static Future<void> setStatusBarColorForIOS(BuildContext context,
   //     [Color statusBarColor = PAppColor.primaryDark]) async {

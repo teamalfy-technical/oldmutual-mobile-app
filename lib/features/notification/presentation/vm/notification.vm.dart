@@ -9,6 +9,8 @@ class PNotificationVM extends GetxController {
   final context = Get.context!;
 
   var notifications = <NotificationModel>[].obs;
+
+  var groupedNotifications = <String, List<NotificationModel>>{}.obs;
   var unreadCount = 0.obs;
 
   final token = PSecureStorage().readData(PSecureStorage().deviceTokenKey);
@@ -76,6 +78,7 @@ class PNotificationVM extends GetxController {
       (res) {
         updateLoadingState(LoadingState.completed);
         notifications.value = res.data ?? [];
+        groupNotificationsByDate();
         getUnreadNotificationCount();
         // markNotificationsAsRead(
         //   ids: notifications.map((e) => e.id ?? '').toList(),
@@ -99,6 +102,42 @@ class PNotificationVM extends GetxController {
         unreadCount.value = res.data ?? 0;
       },
     );
+  }
+
+  Map<String, List<NotificationModel>> groupNotificationsByDate() {
+    final now = DateTime.now().toUtc();
+    final today = DateTime(now.year, now.month, now.day);
+    final yesterday = today.subtract(const Duration(days: 1));
+    final lastWeekStart = today.subtract(const Duration(days: 7));
+
+    Map<String, List<NotificationModel>> grouped = {
+      'Today': [],
+      'Yesterday': [],
+      'Last Week': [],
+      'Older': [],
+    };
+
+    for (var n in notifications) {
+      final createdAt = DateTime.parse(
+        n.createdAt ?? DateTime.now().toIso8601String(),
+      ).toUtc();
+      final dateOnly = DateTime(createdAt.year, createdAt.month, createdAt.day);
+
+      if (dateOnly.isAtSameMomentAs(today)) {
+        grouped['Today']!.add(n);
+      } else if (dateOnly.isAtSameMomentAs(yesterday)) {
+        grouped['Yesterday']!.add(n);
+      } else if (dateOnly.isAfter(lastWeekStart) && dateOnly.isBefore(today)) {
+        grouped['Last Week']!.add(n);
+      } else {
+        grouped['Older']!.add(n);
+      }
+    }
+
+    grouped.removeWhere((_, list) => list.isEmpty);
+    groupedNotifications.value = grouped;
+    pensionAppLogger.i(groupedNotifications);
+    return grouped;
   }
 
   /// Function to mark notifications as read

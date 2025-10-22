@@ -29,44 +29,40 @@ class PNotificationRedactWidget extends StatelessWidget {
               PAppSize.s8.horizontalSpace,
               // title & subtitle
               Expanded(
-                child: Text(
-                  '******************************************',
-                  style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                    color:
-                        PHelperFunction.isDarkMode(context)
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      '****************************',
+                      style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                        color: PHelperFunction.isDarkMode(context)
                             ? PAppColor.text50
                             : PAppColor.text500,
-                    fontSize: PAppSize.s14,
-                    fontWeight: FontWeight.w500,
-                  ),
+                        fontSize: PAppSize.s14,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                    Text(
+                      '***************************************************',
+                      style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                        fontSize: PAppSize.s13,
+                        fontWeight: FontWeight.w300,
+                      ),
+                    ),
+                    Text(
+                      '**************************',
+                      style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                        fontSize: PAppSize.s13,
+                        fontWeight: FontWeight.w300,
+                      ),
+                    ),
+                  ],
                 ),
-              ),
-              PAppSize.s8.horizontalSpace,
-              Column(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                crossAxisAlignment: CrossAxisAlignment.end,
-                children: [
-                  Text(
-                    '***************',
-                    style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                      fontSize: PAppSize.s13,
-                      fontWeight: FontWeight.w300,
-                    ),
-                  ),
-                  PAppSize.s8.verticalSpace,
-                  Text(
-                    '***************',
-                    style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                      fontSize: PAppSize.s13,
-                      fontWeight: FontWeight.w300,
-                    ),
-                  ),
-                ],
               ),
             ],
           ),
         )
-        .symmetric(horizontal: PAppSize.s12, vertical: PAppSize.s6)
+        .symmetric(vertical: PAppSize.s6)
         .redacted(
           context: context,
           redact: loading == LoadingState.loading ? true : false,

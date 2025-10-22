@@ -21,6 +21,12 @@ class PFormatter {
     return DateFormat('yyyy-MM-dd HH:mm:ss').format(parsedDate);
   }
 
+  static String formatAlertDateTime(DateTime date) {
+    final datePart = DateFormat('d MMM yyyy').format(date); // e.g., 24 Feb 2023
+    final timePart = DateFormat('HH:mm').format(date); // e.g., 13:56
+    return '$datePart • $timePart';
+  }
+
   static String formatPhone({required String code, required String phone}) {
     var formatted = phone.startsWith('0') ? phone.substring(1) : phone;
     return '$code$formatted';

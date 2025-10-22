@@ -17,6 +17,8 @@ class PAppColor {
 
   static const Color fillColor2 = Color(0xFFCCCCCC);
   static const Color fillColor = Color(0xFFF2F2F2);
+  static const Color fillColor3 = Color(0xFFF9F9F9);
+
   static const Color orangeColor = Color(0xFFF5823D);
   static const Color yellowColor = Color(0xFFFFDD1A);
 
@@ -95,6 +97,7 @@ class PAppColor {
   static const Color alert700 = Color(0xFF9c3647);
 
   static const Color redColor = Color(0xFFFF0000);
+  static const Color badgeColor = Color(0xFFE70C36);
 
   // Warning Colors
   static const Color warning50 = Color(0xFFfcf6e8);

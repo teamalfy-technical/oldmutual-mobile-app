@@ -3,13 +3,14 @@ description: "A new Flutter project."
 
 publish_to: "none" # Remove this line if you wish to publish to pub.dev
 
-version: 2.0.0+31
+version: 2.0.0+32
 
 environment:
   sdk: ^3.8.1
 
 dependencies:
   another_flushbar: ^1.12.30
+  badges: ^3.1.2
   cached_network_image: ^3.4.1
   country_picker: ^2.0.27
   cupertino_icons: ^1.0.8
@@ -47,9 +48,9 @@ dependencies:
 
 dev_dependencies:
   build_runner: ^2.8.0 # build generated files
-  flutter_gen_runner: ^5.12.0
   envied_generator: ^1.1.1 # obfuscate credentials
- 
+  flutter_gen_runner: ^5.12.0
+
   flutter_lints: ^5.0.0
   flutter_test:
     sdk: flutter

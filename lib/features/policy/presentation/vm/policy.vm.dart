@@ -166,7 +166,9 @@ class PPolicyVm extends GetxController {
       {
         'name': 'Life Insurance',
         'type': ProductType.insurance,
-        'num_of_account': summary.value.totalPolicies ?? 0, // policies.length,
+        'num_of_account':
+            //summary.value.totalPolicies ?? 0,
+            policies.length,
         'contribution': summary.value.availableBalance == null
             ? 0.00
             : summary.value.availableBalance ?? 0.0,
