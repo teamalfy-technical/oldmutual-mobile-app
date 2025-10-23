@@ -146,15 +146,31 @@ class _PPensionDetailPageState extends State<PPensionDetailPage> {
                       Row(
                         children: [
                           QuickActionWidget(
-                            label: 'future_val_cal'.tr,
-                            icon: Assets.icons.calculate.svg(
+                            label: 'generate_statement'.tr,
+                            icon: Assets.icons.factsheetIcon.svg(
                               color: PHelperFunction.isDarkMode(context)
                                   ? PAppColor.successLight
                                   : PAppColor.successDark,
                             ),
                             onTap: () => PHelperFunction.switchScreen(
-                              destination: Routes.futureValueCalcPage,
+                              destination: Routes.statementPage,
                             ),
+                          ),
+                          PAppSize.s8.horizontalSpace,
+                          QuickActionWidget(
+                            label: 'certificate'.tr,
+                            icon: Assets.icons.document.svg(
+                              color: PHelperFunction.isDarkMode(context)
+                                  ? PAppColor.successLight
+                                  : PAppColor.successDark,
+                            ),
+                            onTap: () {
+                              PPopupDialog(context).warningMessage(
+                                title: 'Under Development',
+                                message:
+                                    'This feature is still under development',
+                              );
+                            },
                           ),
                           PAppSize.s8.horizontalSpace,
                           QuickActionWidget(
@@ -168,21 +184,23 @@ class _PPensionDetailPageState extends State<PPensionDetailPage> {
                               destination: Routes.factsheetPage,
                             ),
                           ),
+
                           PAppSize.s8.horizontalSpace,
                           QuickActionWidget(
-                            label: 'generate_statement'.tr,
-                            icon: Assets.icons.article.svg(
+                            label: 'future_value_calculator'.tr,
+                            icon: Assets.icons.calculate.svg(
                               color: PHelperFunction.isDarkMode(context)
                                   ? PAppColor.successLight
                                   : PAppColor.successDark,
                             ),
                             onTap: () => PHelperFunction.switchScreen(
-                              destination: Routes.statementPage,
+                              destination: Routes.futureValueCalcPage,
                             ),
                           ),
                           PAppSize.s8.horizontalSpace,
+
                           QuickActionWidget(
-                            label: 'redemptions'.tr,
+                            label: 'withdrawal'.tr,
                             icon: Assets.icons.accountBalanceWallet.svg(
                               color: PHelperFunction.isDarkMode(context)
                                   ? PAppColor.successLight

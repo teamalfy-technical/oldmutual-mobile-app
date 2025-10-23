@@ -81,16 +81,6 @@ class PPolicyDetailPage extends StatelessWidget {
             /// Quick Actions
             Row(
               children: [
-                // QuickActionWidget(
-                //   label: 'withdraw'.tr,
-                //   icon: Assets.icons.withdrawIcon.svg(
-                //     color: PHelperFunction.isDarkMode(context)
-                //         ? PAppColor.successLight
-                //         : PAppColor.successDark,
-                //   ),
-                //   onTap: () {},
-                // ),
-                // PAppSize.s8.horizontalSpace,
                 QuickActionWidget(
                   label: 'pay'.tr,
                   icon: Assets.icons.payIcon.svg(
@@ -100,20 +90,10 @@ class PPolicyDetailPage extends StatelessWidget {
                   ),
                   onTap: () {},
                 ),
-                // PAppSize.s8.horizontalSpace,
-                // QuickActionWidget(
-                //   label: 'claim'.tr,
-                //   icon: Assets.icons.moneyIcon.svg(
-                //     color: PHelperFunction.isDarkMode(context)
-                //         ? PAppColor.successLight
-                //         : PAppColor.successDark,
-                //   ),
-                //   onTap: () {},
-                // ),
                 PAppSize.s8.horizontalSpace,
                 QuickActionWidget(
-                  label: 'add_beneficiary'.tr,
-                  icon: Assets.icons.personAddIcon.svg(
+                  label: 'policy_document'.tr,
+                  icon: Assets.icons.factsheetIcon.svg(
                     color: PHelperFunction.isDarkMode(context)
                         ? PAppColor.successLight
                         : PAppColor.successDark,
@@ -122,8 +102,28 @@ class PPolicyDetailPage extends StatelessWidget {
                 ),
                 PAppSize.s8.horizontalSpace,
                 QuickActionWidget(
-                  label: 'cancel'.tr,
-                  icon: Assets.icons.deleteIcon.svg(
+                  label: 'premium_statement'.tr,
+                  icon: Assets.icons.article.svg(
+                    color: PHelperFunction.isDarkMode(context)
+                        ? PAppColor.successLight
+                        : PAppColor.successDark,
+                  ),
+                  onTap: () {},
+                ),
+                PAppSize.s8.horizontalSpace,
+                QuickActionWidget(
+                  label: 'investment_statement'.tr,
+                  icon: Assets.icons.calculate.svg(
+                    color: PHelperFunction.isDarkMode(context)
+                        ? PAppColor.successLight
+                        : PAppColor.successDark,
+                  ),
+                  onTap: () {},
+                ),
+                PAppSize.s8.horizontalSpace,
+                QuickActionWidget(
+                  label: 'claim'.tr,
+                  icon: Assets.icons.withdrawIcon.svg(
                     color: PHelperFunction.isDarkMode(context)
                         ? PAppColor.successLight
                         : PAppColor.successDark,
