@@ -416,6 +416,10 @@ class AppTranslations extends Translations {
       'edit': 'Edit',
       'add_new': 'Add New',
       'future_val_cal': 'Future Val Cal',
+      'documents': 'Documents',
+      'manage_docs_here': 'Manage your documents here',
+      'manage_hint':
+          'Manage your Old Mutual portfolio simply and easily with these available options.',
       'policy_document': 'Policy Document',
       'premium_statement': 'Premium Statement',
       'investment_statement': 'Investment Statement',

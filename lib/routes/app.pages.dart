@@ -10,6 +10,7 @@ import 'package:oldmutual_pensions_app/features/beneficiary/presentation/pages/a
 import 'package:oldmutual_pensions_app/features/contribution.history/contribution.history.dart';
 import 'package:oldmutual_pensions_app/features/future.value.calculator/future.value.calculator.dart';
 import 'package:oldmutual_pensions_app/features/home/home.dart';
+import 'package:oldmutual_pensions_app/features/manage/manage.dart';
 import 'package:oldmutual_pensions_app/features/more/more.services.dart';
 import 'package:oldmutual_pensions_app/features/more/presentation/pages/support.page.dart';
 import 'package:oldmutual_pensions_app/features/notification/notification.dart';
@@ -255,6 +256,9 @@ class AppPages {
       name: _Paths.webviewPage,
       page: () => PWebView(title: Get.arguments[0], url: Get.arguments[1]),
     ),
-    // GetPage(name: _Paths.factsheetPage, page: () => PFactSheetPage()),
+
+    /// --- Manage Feature Pages
+    GetPage(name: _Paths.managePage, page: () => PManagePage()),
+    GetPage(name: _Paths.documentsPage, page: () => PDocumentsPage()),
   ];
 }

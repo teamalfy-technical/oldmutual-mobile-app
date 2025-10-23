@@ -46,6 +46,10 @@ abstract class Routes {
   static const termsAndConditionsPage = _Paths.termsAndConditionsPage;
   static const deleteAccountPageOne = _Paths.deleteAccountPageOne;
   static const deleteAccountPageTwo = _Paths.deleteAccountPageTwo;
+
+  /// ---- Manage Feature Routes
+  static const managePage = _Paths.managePage;
+  static const documentsPage = _Paths.documentsPage;
 }
 
 abstract class _Paths {
@@ -91,4 +95,8 @@ abstract class _Paths {
   static const termsAndConditionsPage = '/terms-conditions-page';
   static const deleteAccountPageOne = '/delete-account-page-one';
   static const deleteAccountPageTwo = '/delete-account-page-two';
+
+  /// --- Manage Feature Paths
+  static const managePage = '/manage-page';
+  static const documentsPage = '/documents-page';
 }

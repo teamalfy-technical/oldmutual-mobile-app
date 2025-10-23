@@ -124,6 +124,9 @@ class $AssetsIconsGen {
   SvgGenImage get downloadIcon =>
       const SvgGenImage('assets/icons/download.icon.svg');
 
+  /// File path: assets/icons/draft.svg
+  SvgGenImage get draft => const SvgGenImage('assets/icons/draft.svg');
+
   /// File path: assets/icons/edit.icon.svg
   SvgGenImage get editIcon => const SvgGenImage('assets/icons/edit.icon.svg');
 
@@ -148,6 +151,10 @@ class $AssetsIconsGen {
 
   /// File path: assets/icons/faq.icon.svg
   SvgGenImage get faqIcon => const SvgGenImage('assets/icons/faq.icon.svg');
+
+  /// File path: assets/icons/file.download.svg
+  SvgGenImage get fileDownload =>
+      const SvgGenImage('assets/icons/file.download.svg');
 
   /// File path: assets/icons/filter.svg
   SvgGenImage get filter => const SvgGenImage('assets/icons/filter.svg');
@@ -341,6 +348,7 @@ class $AssetsIconsGen {
     deleteIcon,
     document,
     downloadIcon,
+    draft,
     editIcon,
     emailIcon,
     eyeIcon,
@@ -349,6 +357,7 @@ class $AssetsIconsGen {
     face,
     factsheetIcon,
     faqIcon,
+    fileDownload,
     filter,
     fingerprint,
     ghanaFlag,
