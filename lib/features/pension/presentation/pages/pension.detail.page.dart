@@ -187,7 +187,7 @@ class _PPensionDetailPageState extends State<PPensionDetailPage> {
 
                           PAppSize.s8.horizontalSpace,
                           QuickActionWidget(
-                            label: 'future_value_calculator'.tr,
+                            label: 'future_val_cal'.tr,
                             icon: Assets.icons.calculate.svg(
                               color: PHelperFunction.isDarkMode(context)
                                   ? PAppColor.successLight

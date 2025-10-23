@@ -16,7 +16,7 @@ class QuickActionWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: PDeviceUtil.getDeviceWidth(context) * 0.32,
-      height: PDeviceUtil.getDeviceHeight(context) * 0.12,
+      height: PDeviceUtil.getDeviceHeight(context) * 0.11,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(PAppSize.s20),
         color: PHelperFunction.isDarkMode(context)
@@ -36,7 +36,7 @@ class QuickActionWidget extends StatelessWidget {
                         textAlign: TextAlign.center,
                         softWrap: true,
                         style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                          fontSize: PAppSize.s12,
+                          fontSize: PAppSize.s11,
                           fontWeight: FontWeight.w500,
                           color: PHelperFunction.isDarkMode(context)
                               ? PAppColor.successLight

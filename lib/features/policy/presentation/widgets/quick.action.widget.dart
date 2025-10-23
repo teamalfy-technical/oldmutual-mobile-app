@@ -16,7 +16,7 @@ class QuickActionWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: PDeviceUtil.getDeviceWidth(context) * 0.32,
-      height: PDeviceUtil.getDeviceHeight(context) * 0.11,
+      height: PDeviceUtil.getDeviceHeight(context) * 0.12,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(PAppSize.s20),
         color: PHelperFunction.isDarkMode(context)

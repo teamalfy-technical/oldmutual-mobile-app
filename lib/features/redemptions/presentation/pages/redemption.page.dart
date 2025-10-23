@@ -16,7 +16,7 @@ class PRedemptionPage extends StatelessWidget {
       backgroundColor: PHelperFunction.isDarkMode(context)
           ? PAppColor.darkBgColor
           : PAppColor.fillColor,
-      appBar: AppBar(title: Text('redemptions'.tr)),
+      appBar: AppBar(title: Text('withdrawal'.tr)),
       body: SafeArea(
         child: Column(
           children: [

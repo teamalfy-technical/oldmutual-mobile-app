@@ -415,7 +415,7 @@ class AppTranslations extends Translations {
       'bank_details': 'Bank Details',
       'edit': 'Edit',
       'add_new': 'Add New',
-      // 'future_val_cal': 'Future Val Cal',
+      'future_val_cal': 'Future Val Cal',
       'policy_document': 'Policy Document',
       'premium_statement': 'Premium Statement',
       'investment_statement': 'Investment Statement',
