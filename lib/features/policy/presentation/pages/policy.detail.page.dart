@@ -39,7 +39,7 @@ class PPolicyDetailPage extends StatelessWidget {
             ),
             Text(
               PFormatter.formatCurrency(
-                amount: vm.summary.value.totalCover ?? 0,
+                amount: vm.summary.value.totalLifeInvestment ?? 0,
               ),
               textAlign: TextAlign.center,
               softWrap: true,
