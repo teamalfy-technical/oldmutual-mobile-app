@@ -53,7 +53,7 @@ class PPolicyVm extends GetxController {
             res.data ??
             PolicySummary(
               totalClaimAmount: 0,
-              totalCover: 0,
+              totalLifeInvestment: 0,
               totalPolicies: 0,
               expiredPolicies: 0,
               pendingClaims: 0,
@@ -169,9 +169,9 @@ class PPolicyVm extends GetxController {
         'num_of_account':
             //summary.value.totalPolicies ?? 0,
             policies.length,
-        'contribution': summary.value.availableBalance == null
+        'contribution': summary.value.totalLifeInvestment == null
             ? 0.00
-            : summary.value.availableBalance ?? 0.0,
+            : summary.value.totalLifeInvestment ?? 0.0,
       },
       {
         'name': 'Pensions',

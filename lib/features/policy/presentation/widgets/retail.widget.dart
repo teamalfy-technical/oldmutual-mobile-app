@@ -114,6 +114,6 @@ class RetailWidget extends StatelessWidget {
           ),
         ],
       ),
-    );
+    ).onPressed(onTap: onTap);
   }
 }
