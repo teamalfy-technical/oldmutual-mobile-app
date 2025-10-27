@@ -164,6 +164,13 @@ class AppPages {
       transitionDuration: const Duration(milliseconds: PAppSize.s450),
     ),
 
+    GetPage(
+      name: _Paths.policyDocumentPage,
+      page: () => PPolicyDocumentPage(),
+      transition: Transition.circularReveal,
+      transitionDuration: const Duration(milliseconds: PAppSize.s450),
+    ),
+
     /// Pensions Pages
     GetPage(
       name: _Paths.pensionOverviewPage,

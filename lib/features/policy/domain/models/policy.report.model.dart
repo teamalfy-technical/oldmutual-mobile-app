@@ -24,8 +24,12 @@ class PolicyReport {
     type = json['type'];
     status = json['status'];
     filePath = json['file_path'];
-    filters = json['filters'] != null
+    filters = (json['filters'] != null && json['filters'] is Map)
         ? Filters.fromJson(json['filters'])
+        : (json['filters'] != null &&
+              json['filters'] is List &&
+              json['filters'].isNotEmpty)
+        ? Filters.fromJson(json['filters'].first)
         : null;
     downloadUrl = json['download_url'];
     createdAt = json['created_at'];

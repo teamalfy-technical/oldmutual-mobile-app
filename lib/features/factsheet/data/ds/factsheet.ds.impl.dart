@@ -173,7 +173,7 @@ class FactsheetDsImpl implements FactsheetDs {
       );
       return ApiResponse<Factsheet>.fromJson(
         res,
-        (data) => Factsheet.fromJson((data as List).last),
+        (data) => Factsheet.fromJson((data)),
       );
     });
   }

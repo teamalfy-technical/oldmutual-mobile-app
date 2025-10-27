@@ -365,9 +365,13 @@ abstract class Env {
   @EnviedField(defaultValue: '/policy-transaction', obfuscate: true)
   static final String getPolicyTransaction = _Env.getPolicyTransaction;
 
-  /// [GetPolicyReport] endpoint
+  /// [GeneratePolicyReport] endpoint
   @EnviedField(defaultValue: '/policy-reports', obfuscate: true)
-  static final String getPolicyReport = _Env.getPolicyReport;
+  static final String generatePolicyReport = _Env.generatePolicyReport;
+
+  /// [GetPolicyReports] endpoint
+  @EnviedField(defaultValue: '/generated-policy-reports', obfuscate: true)
+  static final String getPolicyReports = _Env.getPolicyReports;
 
   /// -------------------- Policies Endpoints Ends Here ------------------------- ///
 }

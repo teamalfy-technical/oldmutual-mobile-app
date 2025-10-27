@@ -11,17 +11,17 @@ abstract class PolicyDs {
   });
   Future<ApiResponse<PolicyTransaction>> getPolicyTransaction({
     required String policyNumber,
-
     String year = '',
     String month = '',
     String amount = '',
     String reference = '',
   });
-  Future<ApiResponse<PolicyReport>> getPolicyReport({
+  Future<ApiResponse<PolicyReport>> generatePolicyReports({
     required String policyNumber,
-    required String year,
-    String month = '',
-    String amount = '',
-    String reference = '',
+    required int year,
   });
+  Future<ApiResponse<PolicyReport>> checkPolicyReportDownloadStatus({
+    required String reportId,
+  });
+  Future<ApiResponse<List<PolicyReport>>> getPolicyReports();
 }

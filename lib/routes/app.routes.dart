@@ -18,9 +18,14 @@ abstract class Routes {
   static const createPasswordPage = _Paths.createPasswordPage;
   static const dashboardPage = _Paths.dashboardPage;
   static const dashboardHighlightPage = _Paths.dashboardHighlightPage;
+
+  /// --- Policy Feature Routes
   static const productsPage = _Paths.productsPage;
   static const policyOverviewPage = _Paths.policyOverviewPage;
   static const policyDetailPage = _Paths.policyDetailPage;
+  static const policyDocumentPage = _Paths.policyDocumentPage;
+
+  /// --- Pensions Feature Routes
   static const pensionOverviewPage = _Paths.pensionOverviewPage;
   static const pensionDetailPage = _Paths.pensionDetailPage;
   static const contributionsPage = _Paths.contributionsPage;
@@ -67,9 +72,14 @@ abstract class _Paths {
   static const createPasswordPage = '/create-password-page';
   static const dashboardPage = '/dashboard-page';
   static const dashboardHighlightPage = '/dashboard-highlight-page';
+
+  /// --- Policy Feature Paths
   static const productsPage = '/products-page';
   static const policyOverviewPage = '/policy-overview-page';
   static const policyDetailPage = '/policy-detail-page';
+  static const policyDocumentPage = '/policy-document-page';
+
+  /// --- Pensions Feature Paths
   static const pensionOverviewPage = '/pension-overview-page';
   static const pensionDetailPage = '/pension-detail-page';
   static const contributionsPage = '/contributions-page';
