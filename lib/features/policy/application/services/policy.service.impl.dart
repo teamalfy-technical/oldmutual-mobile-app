@@ -72,4 +72,16 @@ class PolicyServiceImpl implements PolicyService {
       year: year,
     );
   }
+
+  @override
+  Future<Either<PFailure, ApiResponse<Map<String, dynamic>>>>
+  downloadInvestmentStatement({required String policyNumber}) {
+    return policyRepo.downloadInvestmentStatement(policyNumber: policyNumber);
+  }
+
+  @override
+  Future<Either<PFailure, ApiResponse<Map<String, dynamic>>>>
+  downloadPremiumStatement({required String policyNumber}) {
+    return policyRepo.downloadInvestmentStatement(policyNumber: policyNumber);
+  }
 }

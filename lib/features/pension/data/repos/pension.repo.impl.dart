@@ -55,4 +55,18 @@ class PensionRepoImpl implements PensionRepo {
       function: () async => await pensionDs.getPensionSummary(),
     );
   }
+
+  @override
+  Future<Either<PFailure, ApiResponse<Map<String, dynamic>>>>
+  downloadPensionCertificate({
+    required String employerNumber,
+    required String staffNumber,
+  }) async {
+    return await customRepositoryWrapper.wrapRepositoryFunction(
+      function: () async => await pensionDs.downloadPensionCertificate(
+        employerNumber: employerNumber,
+        staffNumber: staffNumber,
+      ),
+    );
+  }
 }

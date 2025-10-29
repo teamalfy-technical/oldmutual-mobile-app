@@ -6,6 +6,8 @@ import 'package:flutter_image_compress/flutter_image_compress.dart';
 import 'package:get/get.dart';
 import 'package:oldmutual_pensions_app/core/utils/utils.dart';
 import 'package:oldmutual_pensions_app/gen/assets.gen.dart';
+import 'package:open_file/open_file.dart';
+import 'package:path_provider/path_provider.dart';
 
 class PHelperFunction {
   //HHelperFunction._();
@@ -207,6 +209,28 @@ class PHelperFunction {
           ? PAppColor.whiteColor
           : PAppColor.darkBgColor,
     );
+  }
+
+  static Future<void> openFile({required Map<String, dynamic> pdfData}) async {
+    // pensionAppLogger.e(url);
+
+    final String fileName = pdfData['fileName'];
+    final String base64String = pdfData['data'];
+    final bytes = base64Decode(base64String);
+
+    // Get a writable directory on the device
+    final dir = await getApplicationDocumentsDirectory();
+    final file = File('${dir.path}/$fileName');
+
+    // Write the file
+    await file.writeAsBytes(bytes);
+
+    pensionAppLogger.d('PDF saved at: ${file.path}');
+
+    // Open the file
+    //   await OpenFilex.open(file.path);
+    // if (file == null) return;
+    OpenFile.open(file.path);
   }
 
   // static BadgeType getBadgeType(String status) {

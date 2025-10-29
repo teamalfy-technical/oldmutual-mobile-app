@@ -27,6 +27,7 @@ class Policy {
   String? agentBranchName;
   String? proposalDate;
   double? premiumPaid;
+  double? availableBalance;
   String? status;
   List<Dependant>? dependants;
   List<Beneficiary>? beneficiaries;
@@ -61,6 +62,7 @@ class Policy {
     this.status,
     this.dependants,
     this.beneficiaries,
+    this.availableBalance,
   });
 
   Policy.fromJson(Map<String, dynamic> json) {
@@ -90,6 +92,7 @@ class Policy {
     agentBranchName = json['agent_branch_name'];
     proposalDate = json['proposal_date'];
     premiumPaid = json['premium_paid']?.toDouble();
+    availableBalance = json['available_balance']?.toDouble();
     status = json['status'];
     if (json['dependants'] != null) {
       dependants = <Dependant>[];
@@ -133,6 +136,7 @@ class Policy {
     data['agent_branch_name'] = agentBranchName;
     data['proposal_date'] = proposalDate;
     data['premium_paid'] = premiumPaid;
+    data['available_balance'] = availableBalance;
     data['status'] = status;
     if (dependants != null) {
       data['dependants'] = dependants!.map((v) => v.toJson()).toList();

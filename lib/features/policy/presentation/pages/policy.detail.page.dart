@@ -15,6 +15,7 @@ class PPolicyDetailPage extends StatelessWidget {
   PPolicyDetailPage({super.key, required this.policy});
 
   final vm = Get.put(PPolicyVm());
+  final policyStatementVm = Get.find<PPolicyStatementVm>();
 
   @override
   Widget build(BuildContext context) {
@@ -106,32 +107,40 @@ class PPolicyDetailPage extends StatelessWidget {
                 PAppSize.s8.horizontalSpace,
                 QuickActionWidget(
                   label: 'policy_document'.tr,
-                  icon: Assets.icons.factsheetIcon.svg(
+                  icon: Assets.icons.downloadIcon.svg(
                     color: PHelperFunction.isDarkMode(context)
                         ? PAppColor.successLight
                         : PAppColor.successDark,
                   ),
-                  onTap: () {},
+                  onTap: () {
+                    // download policy document
+                  },
                 ),
                 PAppSize.s8.horizontalSpace,
                 QuickActionWidget(
                   label: 'premium_statement'.tr,
-                  icon: Assets.icons.article.svg(
+                  icon: Assets.icons.downloadIcon.svg(
                     color: PHelperFunction.isDarkMode(context)
                         ? PAppColor.successLight
                         : PAppColor.successDark,
                   ),
-                  onTap: () {},
+                  onTap: () {
+                    // download premium statement
+                    policyStatementVm.downloadPremiumStatement();
+                  },
                 ),
                 PAppSize.s8.horizontalSpace,
                 QuickActionWidget(
                   label: 'investment_statement'.tr,
-                  icon: Assets.icons.calculate.svg(
+                  icon: Assets.icons.downloadIcon.svg(
                     color: PHelperFunction.isDarkMode(context)
                         ? PAppColor.successLight
                         : PAppColor.successDark,
                   ),
-                  onTap: () {},
+                  onTap: () {
+                    // download investment statement
+                    policyStatementVm.downloadInvestmentStatement();
+                  },
                 ),
                 PAppSize.s8.horizontalSpace,
                 QuickActionWidget(

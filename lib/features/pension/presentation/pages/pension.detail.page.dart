@@ -164,13 +164,7 @@ class _PPensionDetailPageState extends State<PPensionDetailPage> {
                                   ? PAppColor.successLight
                                   : PAppColor.successDark,
                             ),
-                            onTap: () {
-                              PPopupDialog(context).warningMessage(
-                                title: 'Under Development',
-                                message:
-                                    'This feature is still under development',
-                              );
-                            },
+                            onTap: () => vm.downloadPensionCertificate(),
                           ),
                           PAppSize.s8.horizontalSpace,
                           QuickActionWidget(

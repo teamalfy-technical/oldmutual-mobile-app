@@ -93,4 +93,23 @@ class PolicyRepoImpl implements PolicyRepo {
       function: () async => await policyDs.getPolicyReports(),
     );
   }
+
+  @override
+  Future<Either<PFailure, ApiResponse<Map<String, dynamic>>>>
+  downloadInvestmentStatement({required String policyNumber}) async {
+    return await customRepositoryWrapper.wrapRepositoryFunction(
+      function: () async => await policyDs.downloadInvestmentStatement(
+        policyNumber: policyNumber,
+      ),
+    );
+  }
+
+  @override
+  Future<Either<PFailure, ApiResponse<Map<String, dynamic>>>>
+  downloadPremiumStatement({required String policyNumber}) async {
+    return await customRepositoryWrapper.wrapRepositoryFunction(
+      function: () async =>
+          await policyDs.downloadPremiumStatement(policyNumber: policyNumber),
+    );
+  }
 }

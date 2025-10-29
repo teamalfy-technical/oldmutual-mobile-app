@@ -277,6 +277,11 @@ abstract class Env {
   @EnviedField(defaultValue: '/member/select-scheme', obfuscate: true)
   static final String getSelectedMemberScheme = _Env.getSelectedMemberScheme;
 
+  /// [DownloadPensionCertificate] endpoint
+  @EnviedField(defaultValue: '/pensions/get-certificate', obfuscate: true)
+  static final String downloadPensionCertificate =
+      _Env.downloadPensionCertificate;
+
   /// -------------------- Pension Endpoints Ends Here ------------------------- ///
   ///
   ///
@@ -372,6 +377,15 @@ abstract class Env {
   /// [GetPolicyReports] endpoint
   @EnviedField(defaultValue: '/generated-policy-reports', obfuscate: true)
   static final String getPolicyReports = _Env.getPolicyReports;
+
+  /// [InvestmentStatementDownload] endpoint
+  @EnviedField(defaultValue: '/life/investment-report', obfuscate: true)
+  static final String downloadInvestmentStatement =
+      _Env.downloadInvestmentStatement;
+
+  /// [PremiumStatementDownload] endpoint
+  @EnviedField(defaultValue: '/life/premium-statement', obfuscate: true)
+  static final String downloadPremiumStatement = _Env.downloadPremiumStatement;
 
   /// -------------------- Policies Endpoints Ends Here ------------------------- ///
 }

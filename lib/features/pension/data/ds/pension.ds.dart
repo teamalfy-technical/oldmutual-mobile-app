@@ -18,4 +18,8 @@ abstract class PensionDs {
     required String nationality,
   });
   Future<ApiResponse<PensionSummary>> getPensionSummary();
+  Future<ApiResponse<Map<String, dynamic>>> downloadPensionCertificate({
+    required String employerNumber,
+    required String staffNumber,
+  });
 }

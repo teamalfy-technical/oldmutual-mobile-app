@@ -200,4 +200,28 @@ class PolicyDsImpl implements PolicyDs {
       );
     });
   }
+
+  @override
+  Future<ApiResponse<Map<String, dynamic>>> downloadInvestmentStatement({
+    required String policyNumber,
+  }) async {
+    final res = await apiService.callService(
+      requestType: RequestType.get,
+      queryParams: {'policy_number': policyNumber},
+      endPoint: Env.downloadInvestmentStatement,
+    );
+    return ApiResponse<Map<String, dynamic>>.fromJson(res, (data) => data);
+  }
+
+  @override
+  Future<ApiResponse<Map<String, dynamic>>> downloadPremiumStatement({
+    required String policyNumber,
+  }) async {
+    final res = await apiService.callService(
+      requestType: RequestType.get,
+      queryParams: {'policy_number': policyNumber},
+      endPoint: Env.downloadPremiumStatement,
+    );
+    return ApiResponse<Map<String, dynamic>>.fromJson(res, (data) => data);
+  }
 }

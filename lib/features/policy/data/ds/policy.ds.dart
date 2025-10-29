@@ -24,4 +24,10 @@ abstract class PolicyDs {
     required String reportId,
   });
   Future<ApiResponse<List<PolicyReport>>> getPolicyReports();
+  Future<ApiResponse<Map<String, dynamic>>> downloadInvestmentStatement({
+    required String policyNumber,
+  });
+  Future<ApiResponse<Map<String, dynamic>>> downloadPremiumStatement({
+    required String policyNumber,
+  });
 }

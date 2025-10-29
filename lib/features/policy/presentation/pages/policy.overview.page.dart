@@ -13,6 +13,7 @@ class PPolicyOverviewPage extends StatelessWidget {
   PPolicyOverviewPage({super.key, required this.product});
 
   final vm = Get.find<PPolicyVm>();
+  final policyStatementVm = Get.put(PPolicyStatementVm());
 
   @override
   Widget build(BuildContext context) {
@@ -75,11 +76,16 @@ class PPolicyOverviewPage extends StatelessWidget {
                             final policy = vm.policies[index];
                             return PPolicyWidget(
                               policy: policy,
-                              onTap: () => PHelperFunction.switchScreen(
-                                destination: Routes.policyDetailPage,
-                                args: policy,
-                                // args: 'investments'.tr,
-                              ),
+                              onTap: () {
+                                policyStatementVm.onSelectedPolicyReport(
+                                  policy,
+                                );
+                                PHelperFunction.switchScreen(
+                                  destination: Routes.policyDetailPage,
+                                  args: policy,
+                                  // args: 'investments'.tr,
+                                );
+                              },
                             );
                           },
                         ),

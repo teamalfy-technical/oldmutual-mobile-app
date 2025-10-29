@@ -36,9 +36,8 @@ class PPolicyStatementVm extends GetxController {
     update();
   }
 
-  onSelectedPolicyReport(value) {
+  onSelectedPolicyReport(Policy? value) {
     selectedPolicy = value;
-    print(selectedPolicy?.policyNo);
     update();
   }
 
@@ -90,6 +89,52 @@ class PPolicyStatementVm extends GetxController {
         selectedYear = res.data?.first;
         contributionYears.value = res.data ?? [];
         update();
+      },
+    );
+  }
+
+  /// Function to download policy investment statement
+  Future<void> downloadInvestmentStatement() async {
+    updateLoadingState(LoadingState.loading);
+    final result = await policyService.downloadInvestmentStatement(
+      policyNumber: selectedPolicy?.policyNo ?? '',
+    );
+    result.fold(
+      (err) {
+        updateLoadingState(LoadingState.error);
+        PPopupDialog(
+          context,
+        ).errorMessage(title: 'error'.tr, message: err.message);
+      },
+      (res) async {
+        updateLoadingState(LoadingState.completed);
+        pensionAppLogger.e(res.data);
+        await PHelperFunction.openFile(
+          pdfData: res.data ?? Map<String, dynamic>.from({}),
+        );
+      },
+    );
+  }
+
+  /// Function to download policy premium statement
+  Future<void> downloadPremiumStatement() async {
+    updateLoadingState(LoadingState.loading);
+    final result = await policyService.downloadPremiumStatement(
+      policyNumber: selectedPolicy?.policyNo ?? '',
+    );
+    result.fold(
+      (err) {
+        updateLoadingState(LoadingState.error);
+        PPopupDialog(
+          context,
+        ).errorMessage(title: 'error'.tr, message: err.message);
+      },
+      (res) async {
+        updateLoadingState(LoadingState.completed);
+        pensionAppLogger.e(res.data);
+        await PHelperFunction.openFile(
+          pdfData: res.data ?? Map<String, dynamic>.from({}),
+        );
       },
     );
   }
