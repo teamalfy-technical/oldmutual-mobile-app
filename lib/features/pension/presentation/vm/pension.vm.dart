@@ -116,7 +116,7 @@ class PPensionVm extends GetxController {
     updateLoadingState(LoadingState.loading);
     final result = await pensionService.downloadPensionCertificate(
       employerNumber: selectedScheme.value.employerNumber ?? '',
-      staffNumber: selectedScheme.value.memberNumber ?? '',
+      staffNumber: PSecureStorage().getBioData()?.staffNumber ?? '',
     );
     result.fold(
       (err) {
