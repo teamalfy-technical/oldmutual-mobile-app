@@ -32,6 +32,12 @@ class PUserDetailPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final fullName =
+        (PSecureStorage().getAuthResponse()?.name == null ||
+            (PSecureStorage().getAuthResponse()?.name != null &&
+                PSecureStorage().getAuthResponse()!.name!.isEmpty))
+        ? PSecureStorage().getBioData()?.fullName
+        : PSecureStorage().getAuthResponse()?.name;
     return Scaffold(
       backgroundColor: PHelperFunction.isDarkMode(context)
           ? PAppColor.darkBgColor
@@ -59,7 +65,7 @@ class PUserDetailPage extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    '${PSecureStorage().getAuthResponse()?.name}',
+                    fullName ?? '',
                     style: Theme.of(context).textTheme.titleMedium?.copyWith(
                       fontWeight: FontWeight.w600,
                     ),
@@ -81,14 +87,15 @@ class PUserDetailPage extends StatelessWidget {
                   Divider(height: PAppSize.s1),
                   PMoreListTitle(
                     title: 'ghana_card_id'.tr,
-                    // PSecureStorage().getAuthResponse()?.ghanaCard ??
-                    subTitle: 'not_applicable'.tr,
+                    subTitle:
+                        PSecureStorage().getBioData()?.ghanaCardNumber ??
+                        'not_applicable'.tr,
                   ),
                   Divider(height: PAppSize.s1),
                   PMoreListTitle(
                     title: 'ssnit_number'.tr,
                     subTitle:
-                        PSecureStorage().getAuthResponse()?.ssnitNumber ??
+                        PSecureStorage().getBioData()?.ssnitNumber ??
                         'not_applicable'.tr,
                   ),
                   Divider(height: PAppSize.s1),
@@ -105,8 +112,9 @@ class PUserDetailPage extends StatelessWidget {
                   Divider(height: PAppSize.s1),
                   PMoreListTitle(
                     title: 'tin'.tr.toUpperCase(),
-                    // PSecureStorage().getAuthResponse()?.tin ??
-                    subTitle: 'not_applicable'.tr,
+                    subTitle:
+                        PSecureStorage().getBioData()?.tin ??
+                        'not_applicable'.tr,
                   ),
                   Divider(height: PAppSize.s1),
                 ],
