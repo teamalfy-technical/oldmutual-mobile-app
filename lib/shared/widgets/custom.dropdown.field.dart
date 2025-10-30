@@ -17,6 +17,7 @@ class PCustomDropdownField<T> extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DropdownButtonFormField<T>(
+      isExpanded: true,
       dropdownColor: PHelperFunction.isDarkMode(context)
           ? PAppColor.cardDarkColor
           : PAppColor.whiteColor,

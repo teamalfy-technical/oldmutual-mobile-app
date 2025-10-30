@@ -111,6 +111,7 @@ class PPolicyStatementVm extends GetxController {
         pensionAppLogger.e(res.data);
         await PHelperFunction.openFile(
           pdfData: res.data ?? Map<String, dynamic>.from({}),
+          name: selectedPolicy?.planDescription ?? '',
         );
       },
     );
@@ -134,6 +135,7 @@ class PPolicyStatementVm extends GetxController {
         pensionAppLogger.e(res.data);
         await PHelperFunction.openFile(
           pdfData: res.data ?? Map<String, dynamic>.from({}),
+          name: selectedPolicy?.planDescription ?? '',
         );
       },
     );

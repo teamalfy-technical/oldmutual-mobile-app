@@ -211,10 +211,14 @@ class PHelperFunction {
     );
   }
 
-  static Future<void> openFile({required Map<String, dynamic> pdfData}) async {
+  static Future<void> openFile({
+    required Map<String, dynamic> pdfData,
+    required String name,
+  }) async {
     // pensionAppLogger.e(url);
 
-    final String fileName = pdfData['fileName'];
+    final String fileName = '${name.toLowerCase().split(' ').join('-')}.pdf';
+    //pdfData['fileName'];
     final String base64String = pdfData['data'];
     final bytes = base64Decode(base64String);
 

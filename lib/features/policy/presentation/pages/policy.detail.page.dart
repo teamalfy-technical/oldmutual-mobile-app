@@ -7,7 +7,6 @@ import 'package:oldmutual_pensions_app/features/beneficiary/beneficiary.dart';
 import 'package:oldmutual_pensions_app/features/home/home.dart';
 import 'package:oldmutual_pensions_app/features/policy/policy.dart';
 import 'package:oldmutual_pensions_app/gen/assets.gen.dart';
-import 'package:oldmutual_pensions_app/routes/app.pages.dart';
 import 'package:oldmutual_pensions_app/shared/shared.dart';
 
 class PPolicyDetailPage extends StatelessWidget {
@@ -92,18 +91,18 @@ class PPolicyDetailPage extends StatelessWidget {
                   ),
                   onTap: () {},
                 ),
-                PAppSize.s8.horizontalSpace,
-                QuickActionWidget(
-                  label: 'generate_report'.tr,
-                  icon: Assets.icons.document.svg(
-                    color: PHelperFunction.isDarkMode(context)
-                        ? PAppColor.successLight
-                        : PAppColor.successDark,
-                  ),
-                  onTap: () => PHelperFunction.switchScreen(
-                    destination: Routes.policyDocumentPage,
-                  ),
-                ),
+                // PAppSize.s8.horizontalSpace,
+                // QuickActionWidget(
+                //   label: 'generate_report'.tr,
+                //   icon: Assets.icons.document.svg(
+                //     color: PHelperFunction.isDarkMode(context)
+                //         ? PAppColor.successLight
+                //         : PAppColor.successDark,
+                //   ),
+                //   onTap: () => PHelperFunction.switchScreen(
+                //     destination: Routes.policyDocumentPage,
+                //   ),
+                // ),
                 PAppSize.s8.horizontalSpace,
                 QuickActionWidget(
                   label: 'policy_document'.tr,
@@ -114,6 +113,10 @@ class PPolicyDetailPage extends StatelessWidget {
                   ),
                   onTap: () {
                     // download policy document
+                    PPopupDialog(context).warningMessage(
+                      title: 'Coming Soon',
+                      message: 'This feature will be available soon',
+                    );
                   },
                 ),
                 PAppSize.s8.horizontalSpace,

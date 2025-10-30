@@ -82,6 +82,6 @@ class PolicyServiceImpl implements PolicyService {
   @override
   Future<Either<PFailure, ApiResponse<Map<String, dynamic>>>>
   downloadPremiumStatement({required String policyNumber}) {
-    return policyRepo.downloadInvestmentStatement(policyNumber: policyNumber);
+    return policyRepo.downloadPremiumStatement(policyNumber: policyNumber);
   }
 }

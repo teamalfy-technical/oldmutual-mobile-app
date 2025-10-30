@@ -130,6 +130,7 @@ class PPensionVm extends GetxController {
 
         await PHelperFunction.openFile(
           pdfData: res.data ?? Map<String, dynamic>.from({}),
+          name: selectedScheme.value.penTypeDescription ?? '',
         );
 
         // getProducts();
