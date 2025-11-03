@@ -8,8 +8,8 @@ import 'package:oldmutual_pensions_app/features/policy/policy.dart';
 import 'package:oldmutual_pensions_app/features/statements/statements.dart';
 import 'package:oldmutual_pensions_app/shared/shared.dart';
 
-class PPolicyDocumentPage extends StatelessWidget {
-  PPolicyDocumentPage({super.key});
+class PPremiumStatementPage extends StatelessWidget {
+  PPremiumStatementPage({super.key});
 
   final vm = Get.put(PPolicyStatementVm());
   // final statementVm = Get.find<PStatementVm>();
@@ -21,7 +21,7 @@ class PPolicyDocumentPage extends StatelessWidget {
       backgroundColor: PHelperFunction.isDarkMode(context)
           ? PAppColor.darkBgColor
           : PAppColor.fillColor,
-      appBar: AppBar(title: Text('policy_report'.tr)),
+      appBar: AppBar(title: Text('premium_statement'.tr)),
       body: SafeArea(
         child: Obx(
           () => Column(
@@ -32,7 +32,7 @@ class PPolicyDocumentPage extends StatelessWidget {
               //   textAlign: TextAlign.center,
               // ),
               Text(
-                'generate_policy_hint'.tr,
+                'generate_premium_hint'.tr,
                 textAlign: TextAlign.start,
                 style: Theme.of(context).textTheme.bodyLarge?.copyWith(
                   fontWeight: FontWeight.w400,
@@ -91,7 +91,7 @@ class PPolicyDocumentPage extends StatelessWidget {
                     // ),
                     PAppSize.s16.verticalSpace,
                     PGradientButton(
-                      label: 'generate_report'.tr,
+                      label: 'generate_statement'.tr,
                       showIcon: false,
                       textColor: PAppColor.whiteColor,
                       radius: PAppSize.s20,
@@ -99,7 +99,7 @@ class PPolicyDocumentPage extends StatelessWidget {
                       width: double.infinity,
                       height: PAppSize.s44,
                       onTap: () {
-                        vm.generatePolicyReport();
+                        vm.generatePremiumStatement();
                       },
                     ),
                   ],
@@ -109,7 +109,7 @@ class PPolicyDocumentPage extends StatelessWidget {
               PAppSize.s10.verticalSpace,
 
               Text(
-                'policy_generated_hint'.tr,
+                'premium_generated_hint'.tr,
                 textAlign: TextAlign.start,
                 style: Theme.of(context).textTheme.bodyLarge?.copyWith(
                   fontWeight: FontWeight.w600,

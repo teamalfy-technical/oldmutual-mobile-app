@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -35,15 +37,13 @@ void showOptionsMenu(
 ) {
   showMenu<String>(
     context: context,
-    color:
-        PHelperFunction.isDarkMode(context)
-            ? PAppColor.lightBlackColor
-            : PAppColor.whiteColor,
+    color: PHelperFunction.isDarkMode(context)
+        ? PAppColor.lightBlackColor
+        : PAppColor.whiteColor,
     shadowColor: PAppColor.shadowColor,
-    surfaceTintColor:
-        PHelperFunction.isDarkMode(context)
-            ? PAppColor.lightBlackColor
-            : PAppColor.whiteColor,
+    surfaceTintColor: PHelperFunction.isDarkMode(context)
+        ? PAppColor.lightBlackColor
+        : PAppColor.whiteColor,
     elevation: PAppSize.s3,
     shape: RoundedRectangleBorder(
       borderRadius: BorderRadius.circular(PAppSize.s8),
@@ -56,6 +56,139 @@ void showOptionsMenu(
     ), //position where you want to show the menu on screen
     items: items,
   ).then<void>(onItemSelected);
+}
+
+Future showFeedbackDialog({
+  required BuildContext context,
+  Function()? onPositiveTap,
+  Function()? onNegativeTap,
+}) {
+  return showAdaptiveDialog(
+    context: context,
+    barrierDismissible: false, // prevent dismiss while loading
+    builder: (context) {
+      return AlertDialog(
+        backgroundColor: PHelperFunction.isDarkMode(context)
+            ? PAppColor.darkAppBarColor
+            : PAppColor.whiteColor,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(PAppSize.s16),
+        ),
+        insetPadding: EdgeInsets.zero,
+        content: Container(
+          padding: const EdgeInsets.all(PAppSize.s0),
+          width: PDeviceUtil.getDeviceWidth(context) * 0.30,
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(PAppSize.s8),
+          ),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Align(
+                alignment: Alignment.topRight,
+                child: Assets.icons.closeIcon
+                    .svg(
+                      color: PHelperFunction.isDarkMode(context)
+                          ? PAppColor.whiteColor
+                          : PAppColor.darkBgColor,
+                      width: PAppSize.s20,
+                    )
+                    .onPressed(onTap: PHelperFunction.pop),
+              ),
+              PAppSize.s8.verticalSpace,
+              Text(
+                'Would you like to leave a feedback?'.tr,
+                textAlign: TextAlign.center,
+                style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                  // fontSize: PAppSize.s12,
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
+              // PCustomLoadingIndicator(color: PAppColor.whiteColor),
+              PAppSize.s8.verticalSpace,
+              Text(
+                'Your feedback helps us improve our services and provide you with a better experience.'
+                    .tr,
+                textAlign: TextAlign.center,
+                style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                  fontSize: PAppSize.s12,
+                  // fontWeight: FontWeight.w600,
+                ),
+              ),
+              PAppSize.s16.verticalSpace,
+              PGradientButton(
+                label: 'Yes, Share Feedback'.tr,
+                showIcon: false,
+                height: PAppSize.buttonHeightMid - 8,
+                textColor: PAppColor.whiteColor,
+                width: PDeviceUtil.getDeviceWidth(context),
+                onTap: () {},
+              ),
+              PAppSize.s4.verticalSpace,
+              TextButton(
+                onPressed: () => PHelperFunction.pop(),
+                style: TextButton.styleFrom(foregroundColor: PAppColor.primary),
+                child: Text(
+                  'Maybe Later',
+                  style: TextStyle(
+                    fontWeight: FontWeight.w600,
+                    // color: textColor,
+                    // fontSize: fontSize,
+                  ),
+                ),
+              ),
+              PAppSize.s6.verticalSpace,
+            ],
+          ),
+        ),
+      );
+    },
+  );
+}
+
+Future showDownloadLoader(BuildContext context) {
+  return showDialog(
+    context: context,
+    barrierDismissible: false, // prevent dismiss while loading
+    builder: (context) {
+      return Dialog(
+        shadowColor: PAppColor.transparentColor,
+        backgroundColor: PAppColor.transparentColor,
+        surfaceTintColor: PAppColor.transparentColor,
+        elevation: 0,
+        insetPadding: EdgeInsets.zero,
+        child: BackdropFilter(
+          filter: ImageFilter.blur(sigmaX: PAppSize.s16, sigmaY: PAppSize.s16),
+          child: Container(
+            padding: const EdgeInsets.all(PAppSize.s16),
+            width: PDeviceUtil.getDeviceWidth(context) * 0.30,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(PAppSize.s12),
+              gradient: LinearGradient(
+                colors: [PAppColor.primaryDark, PAppColor.primary],
+              ), //
+            ),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                PCustomLoadingIndicator(color: PAppColor.whiteColor),
+                PAppSize.s14.verticalSpace,
+                Text(
+                  'downloading_msg'.tr,
+                  textAlign: TextAlign.center,
+                  style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                    fontSize: PAppSize.s12,
+                    fontWeight: FontWeight.w600,
+                    color: PAppColor.whiteColor,
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+      );
+    },
+  );
 }
 
 Future showConfirmDialog({
@@ -132,10 +265,9 @@ Future showLoadingDialog({
     barrierDismissible: barrierDismissible,
     builder: (context) {
       return AlertDialog.adaptive(
-        backgroundColor:
-            PHelperFunction.isDarkMode(context)
-                ? PAppColor.lightBlackColor
-                : PAppColor.whiteColor,
+        backgroundColor: PHelperFunction.isDarkMode(context)
+            ? PAppColor.lightBlackColor
+            : PAppColor.whiteColor,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(PAppSize.s10),
         ),
@@ -161,10 +293,9 @@ Future showSuccessDialog({
     barrierDismissible: barrierDismissible,
     builder: (context) {
       return AlertDialog.adaptive(
-        backgroundColor:
-            PHelperFunction.isDarkMode(context)
-                ? PAppColor.lightBlackColor
-                : PAppColor.whiteColor,
+        backgroundColor: PHelperFunction.isDarkMode(context)
+            ? PAppColor.lightBlackColor
+            : PAppColor.whiteColor,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(PAppSize.s10),
         ),
@@ -213,68 +344,68 @@ Future<DateTime?> showDatePickerModal(
   DateTime? dateTime;
   PDeviceUtil.isIOS()
       ? await showCupertinoModalPopup<void>(
-        context: context,
-        builder: (_) {
-          return Container(
-            decoration: BoxDecoration(
-              color:
-                  PHelperFunction.isDarkMode(context)
-                      ? PAppColor.text500
-                      : PAppColor.whiteColor,
-              borderRadius: const BorderRadius.only(
-                topLeft: Radius.circular(PAppSize.s12),
-                topRight: Radius.circular(PAppSize.s12),
-              ),
-            ),
-            height: PDeviceUtil.getDeviceHeight(context) * 0.27,
-            child: Stack(
-              children: [
-                CupertinoDatePicker(
-                  mode: CupertinoDatePickerMode.date,
-                  initialDateTime:
-                      initialDateTime ??
-                      DateTime.now().subtract(const Duration(days: 4751)),
-                  minimumDate: minimumDate ?? DateTime(1950),
-                  maximumDate:
-                      maximumDate ??
-                      DateTime.now().subtract(const Duration(days: 4751)),
-                  onDateTimeChanged: (value) {
-                    dateTime = value;
-                  },
+          context: context,
+          builder: (_) {
+            return Container(
+              decoration: BoxDecoration(
+                color: PHelperFunction.isDarkMode(context)
+                    ? PAppColor.text500
+                    : PAppColor.whiteColor,
+                borderRadius: const BorderRadius.only(
+                  topLeft: Radius.circular(PAppSize.s12),
+                  topRight: Radius.circular(PAppSize.s12),
                 ),
-                Positioned(
-                  right: 0,
-                  child: TextButton(
-                    onPressed: () => PHelperFunction.pop(),
-                    child: Text(
-                      'ok'.tr,
-                      textAlign: TextAlign.start,
-                      style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                        fontSize: PAppSize.s16,
-                        color: PAppColor.primary,
+              ),
+              height: PDeviceUtil.getDeviceHeight(context) * 0.27,
+              child: Stack(
+                children: [
+                  CupertinoDatePicker(
+                    mode: CupertinoDatePickerMode.date,
+                    initialDateTime:
+                        initialDateTime ??
+                        DateTime.now().subtract(const Duration(days: 4751)),
+                    minimumDate: minimumDate ?? DateTime(1950),
+                    maximumDate:
+                        maximumDate ??
+                        DateTime.now().subtract(const Duration(days: 4751)),
+                    onDateTimeChanged: (value) {
+                      dateTime = value;
+                    },
+                  ),
+                  Positioned(
+                    right: 0,
+                    child: TextButton(
+                      onPressed: () => PHelperFunction.pop(),
+                      child: Text(
+                        'ok'.tr,
+                        textAlign: TextAlign.start,
+                        style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                          fontSize: PAppSize.s16,
+                          color: PAppColor.primary,
+                        ),
                       ),
                     ),
                   ),
-                ),
-              ],
-            ),
-          );
-        },
-      )
+                ],
+              ),
+            );
+          },
+        )
       : dateTime = await showDatePicker(
-        context: context,
-        initialDate:
-            initialDateTime ??
-            DateTime.now().subtract(const Duration(days: 4751)),
-        firstDate: minimumDate ?? DateTime(1950),
-        lastDate:
-            maximumDate ?? DateTime.now().subtract(const Duration(days: 4751)),
-        //helpText: 'Select Date of birth',
-        cancelText: 'Close',
-        confirmText: 'Confirm',
-        errorFormatText: 'Enter valid date',
-        errorInvalidText: 'Enter valid date range',
-      );
+          context: context,
+          initialDate:
+              initialDateTime ??
+              DateTime.now().subtract(const Duration(days: 4751)),
+          firstDate: minimumDate ?? DateTime(1950),
+          lastDate:
+              maximumDate ??
+              DateTime.now().subtract(const Duration(days: 4751)),
+          //helpText: 'Select Date of birth',
+          cancelText: 'Close',
+          confirmText: 'Confirm',
+          errorFormatText: 'Enter valid date',
+          errorInvalidText: 'Enter valid date range',
+        );
   return dateTime;
 }
 

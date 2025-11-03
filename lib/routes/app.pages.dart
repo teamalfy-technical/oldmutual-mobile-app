@@ -165,8 +165,8 @@ class AppPages {
     ),
 
     GetPage(
-      name: _Paths.policyDocumentPage,
-      page: () => PPolicyDocumentPage(),
+      name: _Paths.premiumStatementPage,
+      page: () => PPremiumStatementPage(),
       transition: Transition.circularReveal,
       transitionDuration: const Duration(milliseconds: PAppSize.s450),
     ),

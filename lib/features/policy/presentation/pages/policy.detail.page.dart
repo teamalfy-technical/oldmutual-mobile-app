@@ -7,6 +7,7 @@ import 'package:oldmutual_pensions_app/features/beneficiary/beneficiary.dart';
 import 'package:oldmutual_pensions_app/features/home/home.dart';
 import 'package:oldmutual_pensions_app/features/policy/policy.dart';
 import 'package:oldmutual_pensions_app/gen/assets.gen.dart';
+import 'package:oldmutual_pensions_app/routes/app.pages.dart';
 import 'package:oldmutual_pensions_app/shared/shared.dart';
 
 class PPolicyDetailPage extends StatelessWidget {
@@ -39,9 +40,7 @@ class PPolicyDetailPage extends StatelessWidget {
               ),
             ),
             Text(
-              PFormatter.formatCurrency(
-                amount: vm.summary.value.totalLifeInvestment ?? 0,
-              ),
+              PFormatter.formatCurrency(amount: policy.availableBalance ?? 0),
               textAlign: TextAlign.center,
               softWrap: true,
               style: Theme.of(context).textTheme.headlineMedium?.copyWith(
@@ -127,10 +126,14 @@ class PPolicyDetailPage extends StatelessWidget {
                         ? PAppColor.successLight
                         : PAppColor.successDark,
                   ),
-                  onTap: () {
-                    // download premium statement
-                    policyStatementVm.downloadPremiumStatement();
-                  },
+                  onTap: () => PHelperFunction.switchScreen(
+                    destination: Routes.premiumStatementPage,
+                  ),
+                  // onTap: () {
+                  //   // download premium statement
+                  //   policyStatementVm.downloadPremiumStatement();
+
+                  // },
                 ),
                 PAppSize.s8.horizontalSpace,
                 QuickActionWidget(

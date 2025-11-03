@@ -95,19 +95,23 @@ class PPolicyStatementVm extends GetxController {
 
   /// Function to download policy investment statement
   Future<void> downloadInvestmentStatement() async {
-    updateLoadingState(LoadingState.loading);
+    showDownloadLoader(context);
     final result = await policyService.downloadInvestmentStatement(
       policyNumber: selectedPolicy?.policyNo ?? '',
     );
     result.fold(
       (err) {
-        updateLoadingState(LoadingState.error);
+        PHelperFunction.pop();
         PPopupDialog(
           context,
-        ).errorMessage(title: 'error'.tr, message: err.message);
+        ).errorMessage(title: 'error'.tr, message: 'error_occurred_msg'.tr);
       },
       (res) async {
-        updateLoadingState(LoadingState.completed);
+        PHelperFunction.pop();
+        PPopupDialog(
+          context,
+        ).successMessage(title: 'success'.tr, message: 'download_complete'.tr);
+        await Future.delayed(Duration(milliseconds: 3000));
         pensionAppLogger.e(res.data);
         await PHelperFunction.openFile(
           pdfData: res.data ?? Map<String, dynamic>.from({}),
@@ -119,19 +123,22 @@ class PPolicyStatementVm extends GetxController {
 
   /// Function to download policy premium statement
   Future<void> downloadPremiumStatement() async {
-    updateLoadingState(LoadingState.loading);
+    showDownloadLoader(context);
     final result = await policyService.downloadPremiumStatement(
       policyNumber: selectedPolicy?.policyNo ?? '',
     );
     result.fold(
       (err) {
-        updateLoadingState(LoadingState.error);
+        PHelperFunction.pop();
         PPopupDialog(
           context,
-        ).errorMessage(title: 'error'.tr, message: err.message);
+        ).errorMessage(title: 'error'.tr, message: 'error_occurred_msg'.tr);
       },
       (res) async {
-        updateLoadingState(LoadingState.completed);
+        PHelperFunction.pop();
+        PPopupDialog(
+          context,
+        ).successMessage(title: 'success'.tr, message: 'download_complete'.tr);
         pensionAppLogger.e(res.data);
         await PHelperFunction.openFile(
           pdfData: res.data ?? Map<String, dynamic>.from({}),
@@ -148,7 +155,7 @@ class PPolicyStatementVm extends GetxController {
   );
 
   /// Function to generate policy report
-  Future<void> generatePolicyReport() async {
+  Future<void> generatePremiumStatement() async {
     if (selectedPolicy == null) {
       PPopupDialog(context).informationMessage(
         title: 'action_required'.tr,
