@@ -106,6 +106,10 @@ class $AssetsIconsGen {
   /// File path: assets/icons/check.icon.svg
   SvgGenImage get checkIcon => const SvgGenImage('assets/icons/check.icon.svg');
 
+  /// File path: assets/icons/check.white.svg
+  SvgGenImage get checkWhite =>
+      const SvgGenImage('assets/icons/check.white.svg');
+
   /// File path: assets/icons/close.icon.svg
   SvgGenImage get closeIcon => const SvgGenImage('assets/icons/close.icon.svg');
 
@@ -291,6 +295,10 @@ class $AssetsIconsGen {
   SvgGenImage get trashRedIcon =>
       const SvgGenImage('assets/icons/trash.red.icon.svg');
 
+  /// File path: assets/icons/upgrade.icon.svg
+  SvgGenImage get upgradeIcon =>
+      const SvgGenImage('assets/icons/upgrade.icon.svg');
+
   /// File path: assets/icons/user.profile.icon.svg
   SvgGenImage get userProfileIcon =>
       const SvgGenImage('assets/icons/user.profile.icon.svg');
@@ -343,6 +351,7 @@ class $AssetsIconsGen {
     callIcon,
     chartData,
     checkIcon,
+    checkWhite,
     closeIcon,
     contributionAlert,
     deleteIcon,
@@ -396,6 +405,7 @@ class $AssetsIconsGen {
     termsIcon,
     topLogoBanner,
     trashRedIcon,
+    upgradeIcon,
     userProfileIcon,
     visibilityOff,
     visibilityOn,

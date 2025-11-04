@@ -202,11 +202,15 @@ class InvestmentWidget extends StatelessWidget {
     super.key,
     required this.title,
     required this.value,
+    this.titleStyle,
+    this.subTitleStyle,
     this.crossAxisAlignment = CrossAxisAlignment.start,
   });
 
   final String title;
   final String value;
+  final TextStyle? titleStyle;
+  final TextStyle? subTitleStyle;
   final CrossAxisAlignment crossAxisAlignment;
 
   @override
@@ -218,19 +222,23 @@ class InvestmentWidget extends StatelessWidget {
           title,
           textAlign: TextAlign.center,
           softWrap: true,
-          style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-            fontSize: PAppSize.s13,
-            fontWeight: FontWeight.w400,
-          ),
+          style:
+              titleStyle ??
+              Theme.of(context).textTheme.bodyLarge?.copyWith(
+                fontSize: PAppSize.s13,
+                fontWeight: FontWeight.w400,
+              ),
         ),
         Text(
           value,
           textAlign: TextAlign.center,
           softWrap: true,
-          style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-            fontSize: PAppSize.s15,
-            fontWeight: FontWeight.w500,
-          ),
+          style:
+              subTitleStyle ??
+              Theme.of(context).textTheme.bodyLarge?.copyWith(
+                fontSize: PAppSize.s15,
+                fontWeight: FontWeight.w500,
+              ),
         ),
       ],
     );

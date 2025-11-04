@@ -13,6 +13,7 @@ class PGradientButton extends StatelessWidget {
   final Color textColor;
   final Function()? onTap;
   final bool showIcon;
+  final Widget? icon;
   final LoadingState loading;
   const PGradientButton({
     super.key,
@@ -25,6 +26,7 @@ class PGradientButton extends StatelessWidget {
     this.loading = LoadingState.completed,
     this.fontSize = PAppSize.s16,
     this.textColor = PAppColor.blackColor,
+    this.icon,
   });
 
   @override
@@ -59,6 +61,8 @@ class PGradientButton extends StatelessWidget {
             ? Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
+                  icon ?? Assets.icons.arrowIcon.svg(),
+                  PAppSize.s8.horizontalSpace,
                   Text(
                     label,
                     style: TextStyle(
@@ -67,8 +71,6 @@ class PGradientButton extends StatelessWidget {
                       fontSize: fontSize,
                     ),
                   ),
-                  PAppSize.s8.horizontalSpace,
-                  Assets.icons.arrowIcon.svg(),
                 ],
               )
             : Text(
