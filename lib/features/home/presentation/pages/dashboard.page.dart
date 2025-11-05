@@ -36,6 +36,11 @@ class PDashboardPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final name =
+        (PSecureStorage().getAuthResponse()?.name != null &&
+            PSecureStorage().getAuthResponse()!.name!.isNotEmpty)
+        ? PSecureStorage().getAuthResponse()?.name
+        : PSecureStorage().getBioData()?.firstName ?? '';
     return Obx(
       () => Scaffold(
         backgroundColor: PHelperFunction.isDarkMode(context)
@@ -47,7 +52,7 @@ class PDashboardPage extends StatelessWidget {
                 ? 'manage'.tr
                 : ctrl.currentIndex.value == 2
                 ? 'more'.tr
-                : 'Hi ${PSecureStorage().getAuthResponse()?.name}',
+                : 'Hi $name',
           ),
           // title: Text('Hi Bongani'),
           actions: [
