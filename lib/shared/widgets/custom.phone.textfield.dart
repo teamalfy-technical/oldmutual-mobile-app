@@ -51,23 +51,24 @@ class _PCustomPhoneTextfieldState extends State<PCustomPhoneTextfield> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
-          widget.labelText,
-          textAlign: TextAlign.start,
-          style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-            fontSize: PAppSize.s14,
-            fontWeight: FontWeight.w600,
-          ),
-        ),
-        PAppSize.s6.verticalSpace,
+        // Text(
+        //   widget.labelText,
+        //   textAlign: TextAlign.start,
+        //   style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+        //     fontSize: PAppSize.s14,
+        //     fontWeight: FontWeight.w600,
+        //   ),
+        // ),
+        // PAppSize.s6.verticalSpace,
         Container(
           alignment: Alignment.center,
+          padding: EdgeInsets.all(PAppSize.s4),
           decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(PAppSize.s5),
+            borderRadius: BorderRadius.circular(PAppSize.s8),
             color: PAppColor.whiteColor,
             border: Border.all(
               width: PAppSize.s1,
-              color: focused ? PAppColor.primary : PAppColor.fillColor,
+              color: focused ? PAppColor.primary : PAppColor.fillColor2,
             ),
           ),
           child: Obx(
@@ -90,43 +91,42 @@ class _PCustomPhoneTextfieldState extends State<PCustomPhoneTextfield> {
                       Text('+${widget.ctrl.selectedCountry.value.phoneCode}'),
                       PAppSize.s2.horizontalSpace,
                       const Icon(Icons.keyboard_arrow_down),
-                      const VerticalDivider(
-                        color: PAppColor.text500,
-                      ).symmetric(vertical: PAppSize.s6),
+                      // const VerticalDivider(
+                      //   color: PAppColor.text500,
+                      // ).symmetric(vertical: PAppSize.s6),
                     ],
                   ),
                 ).only(left: PAppSize.s16),
+                PAppSize.s2.horizontalSpace,
                 Expanded(
-                  child:
-                      TextFormField(
-                        enabled: widget.enabled,
-                        textAlignVertical: TextAlignVertical.center,
-                        controller: widget.ctrl!.phoneTEC,
-                        keyboardType: TextInputType.phone,
-                        maxLength: 10,
-                        focusNode: focusNode,
-                        onFieldSubmitted: (val) {
-                          focusNode.unfocus();
-                          if (focused) {
-                            setState(() {
-                              focused = false;
-                            });
-                          }
-                        },
-                        decoration: InputDecoration(
-                          counter: SizedBox.shrink(),
-                          // counterText: '',
-                          hintText: 'enter_phone_number'.tr,
-                          enabledBorder: InputBorder.none,
-                          focusedBorder: InputBorder.none,
-                          contentPadding: EdgeInsets.symmetric(vertical: 12),
-                          focusColor:
-                              PDeviceUtil.isKeyboardVisible(context)
-                                  ? PAppColor.primary
-                                  : PAppColor.text100,
-                        ),
-                        // validator: PValidator.validatePhoneNumber,
-                      ).centered(),
+                  child: TextFormField(
+                    enabled: widget.enabled,
+                    textAlignVertical: TextAlignVertical.center,
+                    controller: widget.ctrl!.phoneTEC,
+                    keyboardType: TextInputType.phone,
+                    maxLength: 10,
+                    focusNode: focusNode,
+                    onFieldSubmitted: (val) {
+                      focusNode.unfocus();
+                      if (focused) {
+                        setState(() {
+                          focused = false;
+                        });
+                      }
+                    },
+                    decoration: InputDecoration(
+                      counter: SizedBox.shrink(),
+                      // counterText: '',
+                      hintText: widget.labelText,
+                      enabledBorder: InputBorder.none,
+                      focusedBorder: InputBorder.none,
+                      contentPadding: EdgeInsets.symmetric(vertical: 12),
+                      focusColor: PDeviceUtil.isKeyboardVisible(context)
+                          ? PAppColor.primary
+                          : PAppColor.text100,
+                    ),
+                    // validator: PValidator.validatePhoneNumber,
+                  ).centered(),
                 ),
               ],
             ),
