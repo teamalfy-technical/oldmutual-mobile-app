@@ -127,7 +127,7 @@ class PMorePage extends StatelessWidget {
                           bottom: PAppSize.s18,
                         ),
                         title: Text(
-                          'profile_and_settings'.tr,
+                          'settings'.tr,
                           style: Theme.of(context).textTheme.titleMedium
                               ?.copyWith(fontWeight: FontWeight.w500),
                         ),

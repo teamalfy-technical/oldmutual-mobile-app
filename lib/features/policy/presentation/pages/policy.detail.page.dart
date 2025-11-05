@@ -171,13 +171,13 @@ class PPolicyDetailPage extends StatelessWidget {
                     useBorder: false,
                     child: Column(
                       children: [
-                        _buildListTile(
+                        buildListTile(
                           context,
                           'policy_number'.tr,
                           '${policy.policyNo}',
                         ),
                         Divider(height: PAppSize.s1),
-                        _buildListTile(
+                        buildListTile(
                           context,
                           'investment_term'.tr,
                           '${PFormatter.calculateDateDiff(policy.maturityDate!, DateDiffUnit.years)} years',
@@ -189,178 +189,7 @@ class PPolicyDetailPage extends StatelessWidget {
                   PAppSize.s18.verticalSpace,
 
                   /// Premium upgrade
-                  InvestmentWidget(
-                    title: 'premium_upgrade_title'.tr,
-                    value: 'premium_upgrade_subtitle'.tr,
-                    titleStyle: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                      fontSize: PAppSize.s16,
-                      fontWeight: FontWeight.w600,
-                    ),
-                    subTitleStyle: Theme.of(context).textTheme.bodyLarge
-                        ?.copyWith(
-                          fontSize: PAppSize.s15,
-                          fontWeight: FontWeight.w400,
-                        ),
-                  ),
-                  PAppSize.s12.verticalSpace,
-                  PCustomCardWidget(
-                    useBorder: false,
-                    child: Column(
-                      children: [
-                        _buildListTile(
-                          context,
-                          'current_premium'.tr,
-                          PFormatter.formatCurrency(
-                            amount: policy.modalPrem?.toDouble() ?? 0,
-                          ),
-                        ),
-                        Divider(height: PAppSize.s1).horizontal(PAppSize.s14),
-                        _buildListTile(
-                          context,
-                          'suggested_premium'.tr,
-                          PFormatter.formatCurrency(
-                            amount: policy.premiumPaid?.toDouble() ?? 0,
-                          ),
-                        ),
-                        // Card
-                        Container(
-                          width: PDeviceUtil.getDeviceWidth(context),
-                          padding: EdgeInsets.all(PAppSize.s14),
-                          decoration: BoxDecoration(
-                            gradient: LinearGradient(
-                              colors: [
-                                PAppColor.primaryDark,
-                                PAppColor.primary,
-                              ],
-                            ),
-                            borderRadius: BorderRadius.circular(PAppSize.s16),
-                          ),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                'new_coverage'.tr,
-                                style: Theme.of(context).textTheme.bodyLarge
-                                    ?.copyWith(
-                                      fontSize: PAppSize.s16,
-                                      color: PAppColor.whiteColor,
-                                      fontWeight: FontWeight.w700,
-                                    ),
-                              ),
-                              // PAppSize.s16.verticalSpace,
-                              PAppSize.s4.verticalSpace,
-                              // Cost
-                              RichText(
-                                text: TextSpan(
-                                  style: Theme.of(context).textTheme.bodyLarge
-                                      ?.copyWith(
-                                        fontSize: PAppSize.s18,
-                                        color: PAppColor.whiteColor,
-                                        fontWeight: FontWeight.w700,
-                                      ),
-                                  text:
-                                      '${PFormatter.formatCurrency(amount: 1090.70)} ',
-                                  children: [
-                                    TextSpan(
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .bodyLarge
-                                          ?.copyWith(
-                                            fontSize: PAppSize.s13,
-                                            color: PAppColor.whiteColor,
-                                            fontWeight: FontWeight.w500,
-                                            decorationColor:
-                                                PAppColor.whiteColor,
-                                            decoration:
-                                                TextDecoration.lineThrough,
-                                          ),
-                                      text: PFormatter.formatCurrency(
-                                        amount: 1090.70,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              PAppSize.s3.verticalSpace,
-                              Row(
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
-                                  Assets.icons.checkIcon.svg(
-                                    color: PAppColor.whiteColor,
-                                    width: PAppSize.s28,
-                                  ),
-                                  RichText(
-                                    text: TextSpan(
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .bodyLarge
-                                          ?.copyWith(
-                                            fontSize: PAppSize.s13,
-                                            color: PAppColor.whiteColor,
-                                            fontWeight: FontWeight.w500,
-                                          ),
-                                      text:
-                                          '${PFormatter.formatCurrency(amount: 10)} ',
-                                      children: [
-                                        TextSpan(
-                                          style: Theme.of(context)
-                                              .textTheme
-                                              .bodyLarge
-                                              ?.copyWith(
-                                                fontSize: PAppSize.s13,
-                                                color: PAppColor.whiteColor,
-                                                fontWeight: FontWeight.w500,
-                                              ),
-                                          text: 'additional_advantage'.tr,
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ],
-                          ),
-                        ).horizontal(PAppSize.s16),
-
-                        PAppSize.s20.verticalSpace,
-
-                        PGradientButton(
-                          label: 'upgrade_now'.tr,
-                          showIcon: true,
-                          icon: Assets.icons.upgradeIcon.svg(),
-                          textColor: PAppColor.whiteColor,
-                          loading: LoadingState.completed,
-                          width: PDeviceUtil.getDeviceWidth(context),
-                          onTap: () {},
-                        ).horizontal(PAppSize.s16),
-
-                        PAppSize.s8.verticalSpace,
-
-                        OutlinedButton(
-                          onPressed: () {},
-                          child: Text('learn_more'.tr),
-                        ).horizontal(PAppSize.s16),
-
-                        // PAppSize.s8.verticalSpace,
-
-                        // learn more
-                        TextButton(
-                          onPressed: () {},
-                          child: Text(
-                            'not_interested'.tr,
-                            style: Theme.of(context).textTheme.bodyLarge
-                                ?.copyWith(
-                                  fontSize: PAppSize.s16,
-                                  color: PAppColor.darkBgColor,
-                                  fontWeight: FontWeight.w500,
-                                ),
-                          ),
-                        ),
-                        PAppSize.s16.verticalSpace,
-                      ],
-                    ),
-                  ),
-
+                  PPremiumUpgradeWidget(policy: policy),
                   PAppSize.s16.verticalSpace,
 
                   /// Policy Details
@@ -379,19 +208,19 @@ class PPolicyDetailPage extends StatelessWidget {
                     useBorder: false,
                     child: Column(
                       children: [
-                        _buildListTile(
+                        buildListTile(
                           context,
                           'contract_number'.tr,
                           'OMG60338PO461',
                         ),
                         Divider(height: PAppSize.s1),
-                        _buildListTile(
+                        buildListTile(
                           context,
                           'product_description'.tr,
                           '${policy.planDescription}',
                         ),
                         Divider(height: PAppSize.s1),
-                        _buildListTile(
+                        buildListTile(
                           context,
                           'amount_savings_value'.tr,
                           PFormatter.formatCurrency(
@@ -399,7 +228,7 @@ class PPolicyDetailPage extends StatelessWidget {
                           ),
                         ),
                         Divider(height: PAppSize.s1),
-                        _buildListTile(
+                        buildListTile(
                           context,
                           'start_date'.tr,
                           PFormatter.formatDate(
@@ -412,7 +241,7 @@ class PPolicyDetailPage extends StatelessWidget {
                           ),
                         ),
                         Divider(height: PAppSize.s1),
-                        _buildListTile(
+                        buildListTile(
                           context,
                           'end_date'.tr,
                           PFormatter.formatDate(
@@ -423,13 +252,13 @@ class PPolicyDetailPage extends StatelessWidget {
                           ),
                         ),
                         Divider(height: PAppSize.s1),
-                        _buildListTile(
+                        buildListTile(
                           context,
                           'monthly_premium'.tr,
                           '${policy.paymentFrequency}',
                         ),
                         Divider(height: PAppSize.s1),
-                        _buildListTile(
+                        buildListTile(
                           context,
                           'premium_amount'.tr,
                           PFormatter.formatCurrency(
@@ -437,7 +266,7 @@ class PPolicyDetailPage extends StatelessWidget {
                           ),
                         ),
                         Divider(height: PAppSize.s1),
-                        _buildListTile(
+                        buildListTile(
                           context,
                           'total_redemption'.tr,
                           PFormatter.formatCurrency(
@@ -685,24 +514,24 @@ class PPolicyDetailPage extends StatelessWidget {
       },
     );
   }
+}
 
-  Widget _buildListTile(BuildContext context, String title, String subTitle) {
-    return ListTile(
-      contentPadding: EdgeInsets.symmetric(horizontal: PAppSize.s16),
-      title: Text(
-        title,
-        style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-          fontSize: PAppSize.s14,
-          fontWeight: FontWeight.w400,
-        ),
+Widget buildListTile(BuildContext context, String title, String subTitle) {
+  return ListTile(
+    contentPadding: EdgeInsets.symmetric(horizontal: PAppSize.s16),
+    title: Text(
+      title,
+      style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+        fontSize: PAppSize.s14,
+        fontWeight: FontWeight.w400,
       ),
-      subtitle: Text(
-        subTitle,
-        style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-          fontSize: PAppSize.s18,
-          fontWeight: FontWeight.w500,
-        ),
+    ),
+    subtitle: Text(
+      subTitle,
+      style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+        fontSize: PAppSize.s18,
+        fontWeight: FontWeight.w500,
       ),
-    );
-  }
+    ),
+  );
 }

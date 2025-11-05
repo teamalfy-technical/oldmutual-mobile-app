@@ -80,7 +80,7 @@ class AppTranslations extends Translations {
       'success': 'Success',
       'settings': 'Settings',
       'profile_n_settings': 'Profile & Settings',
-      'profile_and_settings': 'Profile and settings',
+      'upgrade_benefits': 'Upgrade Benefits',
       'password_length_msg': '8-16 characters long without spaces',
       'password_capital_msg': '1 capital letter',
       'supportive_text': 'Supportive text',
