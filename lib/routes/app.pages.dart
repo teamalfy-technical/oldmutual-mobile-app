@@ -34,7 +34,7 @@ part 'app.routes.dart';
 class AppPages {
   AppPages._();
 
-  static const initial = Routes.createAccountPage;
+  static const initial = Routes.splashPage;
 
   static final routes = [
     GetPage(name: _Paths.splashPage, page: () => PSplashPage()),
