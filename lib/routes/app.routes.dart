@@ -24,6 +24,7 @@ abstract class Routes {
   static const policyOverviewPage = _Paths.policyOverviewPage;
   static const policyDetailPage = _Paths.policyDetailPage;
   static const premiumStatementPage = _Paths.premiumStatementPage;
+  static const policyClaimPage = _Paths.policyClaimPage;
 
   /// --- Pensions Feature Routes
   static const pensionOverviewPage = _Paths.pensionOverviewPage;
@@ -78,6 +79,7 @@ abstract class _Paths {
   static const policyOverviewPage = '/policy-overview-page';
   static const policyDetailPage = '/policy-detail-page';
   static const premiumStatementPage = '/premium-statement-page';
+  static const policyClaimPage = '/policy-claim-page';
 
   /// --- Pensions Feature Paths
   static const pensionOverviewPage = '/pension-overview-page';

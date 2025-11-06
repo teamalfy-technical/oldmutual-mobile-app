@@ -156,7 +156,9 @@ class PPolicyDetailPage extends StatelessWidget {
                         ? PAppColor.successLight
                         : PAppColor.successDark,
                   ),
-                  onTap: () {},
+                  onTap: () => PHelperFunction.switchScreen(
+                    destination: Routes.policyClaimPage,
+                  ),
                 ),
               ],
             ).scrollable(scrollDirection: Axis.horizontal),

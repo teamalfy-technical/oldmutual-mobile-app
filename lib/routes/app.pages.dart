@@ -16,6 +16,7 @@ import 'package:oldmutual_pensions_app/features/more/presentation/pages/support.
 import 'package:oldmutual_pensions_app/features/notification/notification.dart';
 import 'package:oldmutual_pensions_app/features/pension/pension.dart';
 import 'package:oldmutual_pensions_app/features/policy/policy.dart';
+import 'package:oldmutual_pensions_app/features/policy/presentation/pages/claim.page.dart';
 import 'package:oldmutual_pensions_app/features/redemptions/presentation/pages/porting.page.dart';
 import 'package:oldmutual_pensions_app/features/redemptions/redemption.dart';
 import 'package:oldmutual_pensions_app/features/settings/presentation/pages/change.password.page.dart';
@@ -167,6 +168,13 @@ class AppPages {
     GetPage(
       name: _Paths.premiumStatementPage,
       page: () => PPremiumStatementPage(),
+      transition: Transition.circularReveal,
+      transitionDuration: const Duration(milliseconds: PAppSize.s450),
+    ),
+
+    GetPage(
+      name: _Paths.policyClaimPage,
+      page: () => PClaimPage(),
       transition: Transition.circularReveal,
       transitionDuration: const Duration(milliseconds: PAppSize.s450),
     ),

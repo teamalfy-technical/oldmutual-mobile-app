@@ -81,16 +81,17 @@ class AppTranslations extends Translations {
       'settings': 'Settings',
       'profile_n_settings': 'Profile & Settings',
       'upgrade_benefits': 'Upgrade Benefits',
+      'claim_hint': 'Please enter your withdrawal amount',
+      'amount': 'Amount',
+      'claim_req_success_title': 'Your claim has been processed successfully',
+      'claim_req_success_subtitle': 'We’ll reach out with an update shortly',
       'password_length_msg': '8-16 characters long without spaces',
       'password_capital_msg': '1 capital letter',
       'supportive_text': 'Supportive text',
-
       'password_special_char_msg': '1 special character & 1 number',
       'beneficiaries_tag': 'Contact @phone for any detail changes',
       'email': 'Email',
-      'pho'
-              'email_address':
-          'Email Address',
+      'email_address': 'Email Address',
       'enter_password': 'Enter Password',
       'mobile_number': 'Mobile Number',
       'scheme_name': 'Scheme Name',
