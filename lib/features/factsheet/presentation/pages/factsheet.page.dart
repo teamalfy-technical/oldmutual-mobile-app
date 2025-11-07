@@ -33,16 +33,27 @@ class _PFactSheetPageState extends State<PFactSheetPage> {
   }
 
   String get getSchemeType {
+    final containsAspire = ctrl.performances.any(
+      (item) => item.scheme.toString().toUpperCase().contains(
+        SchemeType.aspire.name.toUpperCase(),
+      ),
+    );
+    final containsPrestige = ctrl.performances.any(
+      (item) => item.scheme.toString().toUpperCase().contains(
+        SchemeType.prestige.name.toUpperCase(),
+      ),
+    );
+
     final isNotEmpty = ctrl.performances.isNotEmpty;
-    return isNotEmpty &&
-            ctrl.performances[0].scheme!.contains(
-              SchemeType.aspire.name.toUpperCase(),
-            )
+    return isNotEmpty && containsAspire
+        // ctrl.performances[0].scheme!.contains(
+        //   SchemeType.aspire.name.toUpperCase(),
+        // )
         ? SchemeType.aspire.name.toUpperCase()
-        : isNotEmpty &&
-              ctrl.performances[0].scheme!.contains(
-                SchemeType.prestige.name.toUpperCase(),
-              )
+        : isNotEmpty && containsPrestige
+        // ctrl.performances[0].scheme!.contains(
+        //   SchemeType.prestige.name.toUpperCase(),
+        // )
         ? SchemeType.prestige.name.toUpperCase()
         : SchemeType.anchor.name.toLowerCase();
   }

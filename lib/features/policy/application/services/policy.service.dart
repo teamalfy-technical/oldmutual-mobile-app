@@ -25,11 +25,15 @@ abstract class PolicyService {
     String amount = '',
     String reference = '',
   });
-  Future<Either<PFailure, ApiResponse<PolicyReport>>> getPolicyReport({
+  Future<Either<PFailure, ApiResponse<PolicyReport>>> generatePolicyReports({
     required String policyNumber,
-    required String year,
-    String month = '',
-    String amount = '',
-    String reference = '',
+    required int year,
   });
+  Future<Either<PFailure, ApiResponse<PolicyReport>>>
+  checkPolicyReportDownloadStatus({required String reportId});
+  Future<Either<PFailure, ApiResponse<List<PolicyReport>>>> getPolicyReports();
+  Future<Either<PFailure, ApiResponse<Map<String, dynamic>>>>
+  downloadInvestmentStatement({required String policyNumber});
+  Future<Either<PFailure, ApiResponse<Map<String, dynamic>>>>
+  downloadPremiumStatement({required String policyNumber});
 }

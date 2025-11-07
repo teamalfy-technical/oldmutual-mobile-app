@@ -41,6 +41,11 @@ class _PWelcomeBackPageState extends State<PWelcomeBackPage>
 
   @override
   Widget build(BuildContext context) {
+    final name =
+        (PSecureStorage().getAuthResponse()?.name != null &&
+            PSecureStorage().getAuthResponse()!.name!.isNotEmpty)
+        ? PSecureStorage().getAuthResponse()?.name
+        : PSecureStorage().getBioData()?.firstName;
     return Scaffold(
       appBar: AppBar(
         title: null,
@@ -68,7 +73,7 @@ class _PWelcomeBackPageState extends State<PWelcomeBackPage>
                         ),
                         PAppSize.s4.verticalSpace,
                         Text(
-                          PSecureStorage().getAuthResponse()?.name ?? 'User',
+                          name ?? 'User',
                           textAlign: TextAlign.center,
                           style: Theme.of(context).textTheme.headlineLarge
                               ?.copyWith(fontWeight: FontWeight.w500),

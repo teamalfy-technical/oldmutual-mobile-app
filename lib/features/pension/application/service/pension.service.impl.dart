@@ -45,8 +45,17 @@ class PensionServiceImpl implements PensionService {
   }
 
   @override
-  Future<Either<PFailure, ApiResponse<PensionSummary>>>
-  getPensionSummary() async {
+  Future<Either<PFailure, ApiResponse<PensionSummary>>> getPensionSummary() {
     return pensionRepo.getPensionSummary();
   }
+
+  @override
+  Future<Either<PFailure, ApiResponse<Map<String, dynamic>>>>
+  downloadPensionCertificate({
+    required String employerNumber,
+    required String staffNumber,
+  }) => pensionRepo.downloadPensionCertificate(
+    employerNumber: employerNumber,
+    staffNumber: staffNumber,
+  );
 }

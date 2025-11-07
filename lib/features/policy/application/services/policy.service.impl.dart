@@ -11,56 +11,31 @@ class PolicyServiceImpl implements PolicyService {
   @override
   Future<Either<PFailure, ApiResponse<PolicyResponse>>> getPolicies({
     required String status,
-  }) async {
-    return await customRepositoryWrapper.wrapRepositoryFunction(
-      function: () async => await policyDs.getPolicies(status: status),
-    );
+  }) {
+    return policyRepo.getPolicies(status: status);
   }
 
   @override
   Future<Either<PFailure, ApiResponse<Policy>>> getPolicy({
     required String policyNumber,
-  }) async {
-    return await customRepositoryWrapper.wrapRepositoryFunction(
-      function: () async =>
-          await policyDs.getPolicy(policyNumber: policyNumber),
-    );
+  }) {
+    return policyRepo.getPolicy(policyNumber: policyNumber);
   }
 
   @override
   Future<Either<PFailure, ApiResponse<List<Beneficiary>>>>
-  getPolicyBeneficiaries({required String policyNumber}) async {
-    return await customRepositoryWrapper.wrapRepositoryFunction(
-      function: () async =>
-          await policyDs.getPolicyBeneficiaries(policyNumber: policyNumber),
-    );
+  getPolicyBeneficiaries({required String policyNumber}) {
+    return policyRepo.getPolicyBeneficiaries(policyNumber: policyNumber);
   }
 
   @override
-  Future<Either<PFailure, ApiResponse<PolicyReport>>> getPolicyReport({
-    required String policyNumber,
-    required String year,
-    String month = '',
-    String amount = '',
-    String reference = '',
-  }) async {
-    return await customRepositoryWrapper.wrapRepositoryFunction(
-      function: () async => await policyDs.getPolicyReport(
-        policyNumber: policyNumber,
-        year: year,
-        month: month,
-        amount: amount,
-        reference: reference,
-      ),
-    );
+  Future<Either<PFailure, ApiResponse<List<PolicyReport>>>> getPolicyReports() {
+    return policyRepo.getPolicyReports();
   }
 
   @override
-  Future<Either<PFailure, ApiResponse<PolicySummary>>>
-  getPolicySummary() async {
-    return await customRepositoryWrapper.wrapRepositoryFunction(
-      function: () async => await policyDs.getPolicySummary(),
-    );
+  Future<Either<PFailure, ApiResponse<PolicySummary>>> getPolicySummary() {
+    return policyRepo.getPolicySummary();
   }
 
   @override
@@ -71,10 +46,42 @@ class PolicyServiceImpl implements PolicyService {
     String month = '',
     String amount = '',
     String reference = '',
-  }) async {
-    return await customRepositoryWrapper.wrapRepositoryFunction(
-      function: () async =>
-          await policyDs.getPolicyTransaction(policyNumber: policyNumber),
+  }) {
+    return policyRepo.getPolicyTransaction(
+      policyNumber: policyNumber,
+      year: year,
+      month: month,
+      amount: amount,
+      reference: reference,
     );
+  }
+
+  @override
+  Future<Either<PFailure, ApiResponse<PolicyReport>>>
+  checkPolicyReportDownloadStatus({required String reportId}) {
+    return policyRepo.checkPolicyReportDownloadStatus(reportId: reportId);
+  }
+
+  @override
+  Future<Either<PFailure, ApiResponse<PolicyReport>>> generatePolicyReports({
+    required String policyNumber,
+    required int year,
+  }) {
+    return policyRepo.generatePolicyReports(
+      policyNumber: policyNumber,
+      year: year,
+    );
+  }
+
+  @override
+  Future<Either<PFailure, ApiResponse<Map<String, dynamic>>>>
+  downloadInvestmentStatement({required String policyNumber}) {
+    return policyRepo.downloadInvestmentStatement(policyNumber: policyNumber);
+  }
+
+  @override
+  Future<Either<PFailure, ApiResponse<Map<String, dynamic>>>>
+  downloadPremiumStatement({required String policyNumber}) {
+    return policyRepo.downloadPremiumStatement(policyNumber: policyNumber);
   }
 }

@@ -13,7 +13,9 @@ class PGradientButton extends StatelessWidget {
   final Color textColor;
   final Function()? onTap;
   final bool showIcon;
+  final Widget? icon;
   final LoadingState loading;
+  final IconDirection iconDirection;
   const PGradientButton({
     super.key,
     required this.label,
@@ -25,6 +27,8 @@ class PGradientButton extends StatelessWidget {
     this.loading = LoadingState.completed,
     this.fontSize = PAppSize.s16,
     this.textColor = PAppColor.blackColor,
+    this.icon,
+    this.iconDirection = IconDirection.left,
   });
 
   @override
@@ -56,21 +60,37 @@ class PGradientButton extends StatelessWidget {
         child: loading == LoadingState.loading
             ? PCustomLoadingIndicator(size: PAppSize.s10, color: textColor)
             : showIcon
-            ? Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    label,
-                    style: TextStyle(
-                      fontWeight: FontWeight.w600,
-                      color: textColor,
-                      fontSize: fontSize,
-                    ),
-                  ),
-                  PAppSize.s8.horizontalSpace,
-                  Assets.icons.arrowIcon.svg(),
-                ],
-              )
+            ? iconDirection == IconDirection.left
+                  ? Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        icon ?? Assets.icons.arrowIcon.svg(),
+                        PAppSize.s8.horizontalSpace,
+                        Text(
+                          label,
+                          style: TextStyle(
+                            fontWeight: FontWeight.w600,
+                            color: textColor,
+                            fontSize: fontSize,
+                          ),
+                        ),
+                      ],
+                    )
+                  : Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          label,
+                          style: TextStyle(
+                            fontWeight: FontWeight.w600,
+                            color: textColor,
+                            fontSize: fontSize,
+                          ),
+                        ),
+                        PAppSize.s8.horizontalSpace,
+                        icon ?? Assets.icons.arrowIcon.svg(),
+                      ],
+                    )
             : Text(
                 label,
                 style: TextStyle(

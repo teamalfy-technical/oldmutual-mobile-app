@@ -254,10 +254,10 @@ class PStatementVm extends GetxController {
   }
 
   /// Function to check report status
-  Future<void> checkReportStatus() async {
+  Future<void> checkReportStatus(int? reportId) async {
     // updateGeneratingState(LoadingState.loading);
     final result = await statementService.checkReportStatus(
-      reportId: generatedReport.value.message?.reportId ?? 0,
+      reportId: reportId ?? generatedReport.value.message?.reportId ?? 0,
     );
     result.fold(
       (err) {

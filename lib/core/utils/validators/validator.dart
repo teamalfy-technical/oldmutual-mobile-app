@@ -102,7 +102,7 @@ class PValidator {
       return 'Email or phone cannot be empty.';
     }
     final emailRegex = RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$');
-    final phoneRegex = RegExp(r'^\d{10}$');
+    final phoneRegex = RegExp(r'^\d{9,10}$');
     if (!emailRegex.hasMatch(value) && !phoneRegex.hasMatch(value)) {
       return 'Enter a valid email or phone number';
     }

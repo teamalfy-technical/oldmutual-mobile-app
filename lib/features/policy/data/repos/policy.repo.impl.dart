@@ -37,25 +37,6 @@ class PolicyRepoImpl implements PolicyRepo {
   }
 
   @override
-  Future<Either<PFailure, ApiResponse<PolicyReport>>> getPolicyReport({
-    required String policyNumber,
-    String year = '',
-    String month = '',
-    String amount = '',
-    String reference = '',
-  }) async {
-    return await customRepositoryWrapper.wrapRepositoryFunction(
-      function: () async => await policyDs.getPolicyReport(
-        policyNumber: policyNumber,
-        year: year,
-        month: month,
-        amount: amount,
-        reference: reference,
-      ),
-    );
-  }
-
-  @override
   Future<Either<PFailure, ApiResponse<PolicySummary>>>
   getPolicySummary() async {
     return await customRepositoryWrapper.wrapRepositoryFunction(
@@ -80,6 +61,55 @@ class PolicyRepoImpl implements PolicyRepo {
         amount: amount,
         reference: reference,
       ),
+    );
+  }
+
+  @override
+  Future<Either<PFailure, ApiResponse<PolicyReport>>>
+  checkPolicyReportDownloadStatus({required String reportId}) async {
+    return await customRepositoryWrapper.wrapRepositoryFunction(
+      function: () async =>
+          await policyDs.checkPolicyReportDownloadStatus(reportId: reportId),
+    );
+  }
+
+  @override
+  Future<Either<PFailure, ApiResponse<PolicyReport>>> generatePolicyReports({
+    required String policyNumber,
+    required int year,
+  }) async {
+    return await customRepositoryWrapper.wrapRepositoryFunction(
+      function: () async => await policyDs.generatePolicyReports(
+        policyNumber: policyNumber,
+        year: year,
+      ),
+    );
+  }
+
+  @override
+  Future<Either<PFailure, ApiResponse<List<PolicyReport>>>>
+  getPolicyReports() async {
+    return await customRepositoryWrapper.wrapRepositoryFunction(
+      function: () async => await policyDs.getPolicyReports(),
+    );
+  }
+
+  @override
+  Future<Either<PFailure, ApiResponse<Map<String, dynamic>>>>
+  downloadInvestmentStatement({required String policyNumber}) async {
+    return await customRepositoryWrapper.wrapRepositoryFunction(
+      function: () async => await policyDs.downloadInvestmentStatement(
+        policyNumber: policyNumber,
+      ),
+    );
+  }
+
+  @override
+  Future<Either<PFailure, ApiResponse<Map<String, dynamic>>>>
+  downloadPremiumStatement({required String policyNumber}) async {
+    return await customRepositoryWrapper.wrapRepositoryFunction(
+      function: () async =>
+          await policyDs.downloadPremiumStatement(policyNumber: policyNumber),
     );
   }
 }

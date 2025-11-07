@@ -24,6 +24,8 @@ class _PCreateAccountPageState extends State<PCreateAccountPage> {
   bool hasNumber = false;
   bool hasSpecialChar = false;
 
+  int _maxLength = 10;
+
   void _validatePassword(String password) {
     setState(() {
       hasMinLength = password.length >= 8;
@@ -74,12 +76,44 @@ class _PCreateAccountPageState extends State<PCreateAccountPage> {
                         validator: PValidator.validateEmail,
                       ),
                       PAppSize.s24.verticalSpace,
+                      // PCustomPhoneTextfield(
+                      //   ctrl: ctrl,
+                      //   labelText: 'phone_number'.tr,
+                      // ),
                       PCustomTextField(
                         // labelText: 'password'.tr,
+                        prefixText: '233',
                         controller: ctrl.phoneTEC,
                         labelText: 'phone_number'.tr,
                         textInputType: TextInputType.phone,
+                        maxLength: _maxLength,
                         validator: PValidator.validatePhoneNumber,
+                        onChanged: (value) {
+                          // Dynamically switch max length
+                          if (value.isNotEmpty) {
+                            if (value.startsWith('0')) {
+                              if (_maxLength != 10) {
+                                setState(() => _maxLength = 10);
+                              }
+                            } else {
+                              if (_maxLength != 9) {
+                                setState(() => _maxLength = 9);
+                              }
+                            }
+                          }
+
+                          // if (value.length == 10 && value.startsWith('0')) {
+                          //   // Delay slightly to allow UI to update safely
+                          //   Future.microtask(() {
+                          //     ctrl.phoneTEC.text = value.substring(1);
+                          //     ctrl
+                          //         .phoneTEC
+                          //         .selection = TextSelection.fromPosition(
+                          //       TextPosition(offset: ctrl.phoneTEC.text.length),
+                          //     );
+                          //   });
+                          // }
+                        },
                       ),
                       PAppSize.s20.verticalSpace,
 

@@ -18,9 +18,15 @@ abstract class Routes {
   static const createPasswordPage = _Paths.createPasswordPage;
   static const dashboardPage = _Paths.dashboardPage;
   static const dashboardHighlightPage = _Paths.dashboardHighlightPage;
+
+  /// --- Policy Feature Routes
   static const productsPage = _Paths.productsPage;
   static const policyOverviewPage = _Paths.policyOverviewPage;
   static const policyDetailPage = _Paths.policyDetailPage;
+  static const premiumStatementPage = _Paths.premiumStatementPage;
+  static const policyClaimPage = _Paths.policyClaimPage;
+
+  /// --- Pensions Feature Routes
   static const pensionOverviewPage = _Paths.pensionOverviewPage;
   static const pensionDetailPage = _Paths.pensionDetailPage;
   static const contributionsPage = _Paths.contributionsPage;
@@ -46,6 +52,10 @@ abstract class Routes {
   static const termsAndConditionsPage = _Paths.termsAndConditionsPage;
   static const deleteAccountPageOne = _Paths.deleteAccountPageOne;
   static const deleteAccountPageTwo = _Paths.deleteAccountPageTwo;
+
+  /// ---- Manage Feature Routes
+  static const managePage = _Paths.managePage;
+  static const documentsPage = _Paths.documentsPage;
 }
 
 abstract class _Paths {
@@ -63,9 +73,15 @@ abstract class _Paths {
   static const createPasswordPage = '/create-password-page';
   static const dashboardPage = '/dashboard-page';
   static const dashboardHighlightPage = '/dashboard-highlight-page';
+
+  /// --- Policy Feature Paths
   static const productsPage = '/products-page';
   static const policyOverviewPage = '/policy-overview-page';
   static const policyDetailPage = '/policy-detail-page';
+  static const premiumStatementPage = '/premium-statement-page';
+  static const policyClaimPage = '/policy-claim-page';
+
+  /// --- Pensions Feature Paths
   static const pensionOverviewPage = '/pension-overview-page';
   static const pensionDetailPage = '/pension-detail-page';
   static const contributionsPage = '/contributions-page';
@@ -91,4 +107,8 @@ abstract class _Paths {
   static const termsAndConditionsPage = '/terms-conditions-page';
   static const deleteAccountPageOne = '/delete-account-page-one';
   static const deleteAccountPageTwo = '/delete-account-page-two';
+
+  /// --- Manage Feature Paths
+  static const managePage = '/manage-page';
+  static const documentsPage = '/documents-page';
 }

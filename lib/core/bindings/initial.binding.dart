@@ -33,6 +33,7 @@ class InitialBinding implements Bindings {
     Get.lazyPut(() => PProfileVm());
     Get.lazyPut(() => PNotificationVM());
     Get.lazyPut(() => PStatementVm());
+    Get.lazyPut(() => PPolicyStatementVm());
     Get.lazyPut(() => PRedemptionVm());
     Get.putAsync(() async => PInactivityService());
     // Get.lazyPut(() => TLoginVm());

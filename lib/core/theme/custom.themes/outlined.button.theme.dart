@@ -10,7 +10,7 @@ class POutlinedButtonTheme {
       OutlinedButtonThemeData(
         style: OutlinedButton.styleFrom(
           elevation: PAppSize.s0,
-          foregroundColor: PAppColor.blackColor,
+          foregroundColor: PAppColor.primary,
           side: const BorderSide(color: PAppColor.primary),
           minimumSize: const Size.fromHeight(PAppSize.buttonHeightMid),
           // padding: const EdgeInsets.symmetric(
@@ -24,7 +24,7 @@ class POutlinedButtonTheme {
             fontWeight: FontWeight.w600,
           ),
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(PAppSize.s8),
+            borderRadius: BorderRadius.circular(PAppSize.s24),
           ),
         ),
       );
@@ -34,7 +34,7 @@ class POutlinedButtonTheme {
       OutlinedButtonThemeData(
         style: OutlinedButton.styleFrom(
           elevation: PAppSize.s0,
-          foregroundColor: PAppColor.whiteColor,
+          foregroundColor: PAppColor.primary,
           side: const BorderSide(color: PAppColor.primary),
           minimumSize: const Size.fromHeight(PAppSize.buttonHeightMid),
           // padding: const EdgeInsets.symmetric(
@@ -48,7 +48,7 @@ class POutlinedButtonTheme {
             fontWeight: FontWeight.w600,
           ),
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(PAppSize.s8),
+            borderRadius: BorderRadius.circular(PAppSize.s24),
           ),
         ),
       );

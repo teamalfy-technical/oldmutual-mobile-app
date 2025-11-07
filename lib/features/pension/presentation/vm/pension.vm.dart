@@ -111,6 +111,33 @@ class PPensionVm extends GetxController {
     );
   }
 
+  /// Function to get pension certificate
+  Future<void> downloadPensionCertificate() async {
+    updateLoadingState(LoadingState.loading);
+    final result = await pensionService.downloadPensionCertificate(
+      employerNumber: selectedScheme.value.employerNumber ?? '',
+      staffNumber: PSecureStorage().getBioData()?.staffNumber ?? '',
+    );
+    result.fold(
+      (err) {
+        updateLoadingState(LoadingState.error);
+        PPopupDialog(
+          context,
+        ).errorMessage(title: 'error'.tr, message: err.message);
+      },
+      (res) async {
+        updateLoadingState(LoadingState.completed);
+
+        await PHelperFunction.openFile(
+          pdfData: res.data ?? Map<String, dynamic>.from({}),
+          name: selectedScheme.value.penTypeDescription ?? '',
+        );
+
+        // getProducts();
+      },
+    );
+  }
+
   /// Function to get all selected scheme
   Future<void> getMemberSelectedScheme({required Scheme scheme}) async {
     if (selectedScheme.value != scheme) {

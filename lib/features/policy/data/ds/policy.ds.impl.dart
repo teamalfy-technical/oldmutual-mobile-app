@@ -84,31 +84,31 @@ class PolicyDsImpl implements PolicyDs {
     });
   }
 
-  @override
-  Future<ApiResponse<PolicyReport>> getPolicyReport({
-    required String policyNumber,
-    required String year,
-    String month = '',
-    String amount = '',
-    String reference = '',
-  }) async {
-    return await asyncFunctionWrapper.handleAsyncNetworkCall(() async {
-      final res = await apiService.callService(
-        requestType: RequestType.get,
-        queryParams: {
-          'month': month,
-          'year': year,
-          'amount': amount,
-          'reference': reference,
-        },
-        endPoint: '${Env.getPolicyReport}/$policyNumber',
-      );
-      return ApiResponse<PolicyReport>.fromJson(
-        res,
-        (data) => PolicyReport.fromJson(data),
-      );
-    });
-  }
+  // @override
+  // Future<ApiResponse<PolicyReport>> getPolicyReport({
+  //   required String policyNumber,
+  //   required String year,
+  //   String month = '',
+  //   String amount = '',
+  //   String reference = '',
+  // }) async {
+  //   return await asyncFunctionWrapper.handleAsyncNetworkCall(() async {
+  //     final res = await apiService.callService(
+  //       requestType: RequestType.get,
+  //       queryParams: {
+  //         'month': month,
+  //         'year': year,
+  //         'amount': amount,
+  //         'reference': reference,
+  //       },
+  //       endPoint: '${Env.getPolicyReport}/$policyNumber',
+  //     );
+  //     return ApiResponse<PolicyReport>.fromJson(
+  //       res,
+  //       (data) => PolicyReport.fromJson(data),
+  //     );
+  //   });
+  // }
 
   @override
   Future<ApiResponse<PolicySummary>> getPolicySummary() async {
@@ -151,5 +151,77 @@ class PolicyDsImpl implements PolicyDs {
         (data) => PolicyTransaction.fromJson(data),
       );
     });
+  }
+
+  @override
+  Future<ApiResponse<PolicyReport>> checkPolicyReportDownloadStatus({
+    required String reportId,
+  }) async {
+    return await asyncFunctionWrapper.handleAsyncNetworkCall(() async {
+      final res = await apiService.callService(
+        requestType: RequestType.get,
+        endPoint: '${Env.checkReportStatus}/$reportId',
+      );
+      return ApiResponse<PolicyReport>.fromJson(
+        res,
+        (data) => PolicyReport.fromJson(data),
+      );
+    });
+  }
+
+  @override
+  Future<ApiResponse<PolicyReport>> generatePolicyReports({
+    required String policyNumber,
+    required int year,
+  }) async {
+    return await asyncFunctionWrapper.handleAsyncNetworkCall(() async {
+      final res = await apiService.callService(
+        requestType: RequestType.post,
+        queryParams: {'policy_number': policyNumber, 'year': year},
+        endPoint: Env.generatePolicyReport,
+      );
+      return ApiResponse<PolicyReport>.fromJson(
+        res,
+        (data) => PolicyReport.fromJson(data),
+      );
+    });
+  }
+
+  @override
+  Future<ApiResponse<List<PolicyReport>>> getPolicyReports() async {
+    return await asyncFunctionWrapper.handleAsyncNetworkCall(() async {
+      final res = await apiService.callService(
+        requestType: RequestType.get,
+        endPoint: Env.getPolicyReports,
+      );
+      return ApiResponse<List<PolicyReport>>.fromJson(
+        res,
+        (data) => (data as List).map((e) => PolicyReport.fromJson(e)).toList(),
+      );
+    });
+  }
+
+  @override
+  Future<ApiResponse<Map<String, dynamic>>> downloadInvestmentStatement({
+    required String policyNumber,
+  }) async {
+    final res = await apiService.callService(
+      requestType: RequestType.get,
+      queryParams: {'policy_number': policyNumber},
+      endPoint: Env.downloadInvestmentStatement,
+    );
+    return ApiResponse<Map<String, dynamic>>.fromJson(res, (data) => data);
+  }
+
+  @override
+  Future<ApiResponse<Map<String, dynamic>>> downloadPremiumStatement({
+    required String policyNumber,
+  }) async {
+    final res = await apiService.callService(
+      requestType: RequestType.get,
+      queryParams: {'policy_number': policyNumber},
+      endPoint: Env.downloadPremiumStatement,
+    );
+    return ApiResponse<Map<String, dynamic>>.fromJson(res, (data) => data);
   }
 }

@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_linkify/flutter_linkify.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:oldmutual_pensions_app/core/utils/utils.dart';
+import 'package:oldmutual_pensions_app/features/more/more.services.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class PTermsTab extends StatelessWidget {
   const PTermsTab({super.key});
@@ -25,14 +28,74 @@ Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deseru
               ? PAppColor.darkAppBarColor
               : PAppColor.whiteColor,
         ),
-        child: Text(
-          text,
-          style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-            fontSize: PAppSize.s14.sp,
-            fontWeight: FontWeight.w400,
-          ),
+        child: ListView.builder(
+          itemCount: terms.length,
+          itemBuilder: (context, index) {
+            final term = terms[index];
+            return _buildTermsWidget(
+              context: context,
+              title: term.title,
+              subTitle: term.subTitle,
+              fontWeight: term.fontWeight,
+              titleColor: term.textColor,
+            );
+          },
         ),
       ),
     );
+  }
+
+  Widget _buildTermsWidget({
+    required BuildContext context,
+    required String title,
+    Color? titleColor,
+    FontWeight? fontWeight,
+    required String subTitle,
+  }) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          title,
+          style: Theme.of(context).textTheme.titleLarge?.copyWith(
+            color: titleColor,
+            fontWeight: fontWeight,
+          ),
+        ),
+        PAppSize.s8.verticalSpace,
+        Linkify(
+          onOpen: (link) async {
+            final Uri uri;
+
+            if (link.url.contains('@') && !link.url.startsWith('http')) {
+              // Email link
+              uri = Uri(scheme: 'mailto', path: link.url);
+            } else if (RegExp(r'^\+?[0-9]+$').hasMatch(link.url)) {
+              // phone call
+              uri = Uri(scheme: 'tel', path: link.url);
+            } else {
+              // Normal link
+              uri = Uri.parse(link.url);
+            }
+
+            if (await canLaunchUrl(uri)) {
+              await launchUrl(uri, mode: LaunchMode.externalApplication);
+            } else {
+              pensionAppLogger.e("Could not launch $uri");
+            }
+          },
+          text: subTitle,
+          style: Theme.of(context).textTheme.bodyLarge?.copyWith(),
+          linkStyle: TextStyle(
+            color: Colors.blue,
+            decoration: TextDecoration.none,
+          ),
+        ),
+        // Text(
+        //   subTitle,
+        //   style: Theme.of(context).textTheme.bodyLarge?.copyWith(),
+        // ),
+      ],
+    ).bottom(PAppSize.s20);
   }
 }

@@ -2,6 +2,8 @@ enum AnimateType { slideLeft, slideUp, slideDown, slideRight }
 
 enum SlideDirection { leftToRight, rightToLeft }
 
+enum IconDirection { left, right }
+
 enum LoadingState { loading, completed, error, empty }
 
 //to add remaining

@@ -249,7 +249,7 @@ class PRedemptionVm extends GetxController {
 
     loading(LoadingState.loading);
     final result = await redemptionService.createRedemptionRequest(
-      nationId: nationIdTEC.text.trim(),
+      nationId: 'GHA-${nationIdTEC.text.trim()}',
       redemptionType: selectedRedemptionType ?? '',
       percentage: selectedRedemptionValue == 'Percentage'
           ? percentageTEC.text.trim()

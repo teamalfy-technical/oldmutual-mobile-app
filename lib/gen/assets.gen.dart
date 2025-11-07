@@ -103,8 +103,15 @@ class $AssetsIconsGen {
   /// File path: assets/icons/chart_data.svg
   SvgGenImage get chartData => const SvgGenImage('assets/icons/chart_data.svg');
 
+  /// File path: assets/icons/check.dark.svg
+  SvgGenImage get checkDark => const SvgGenImage('assets/icons/check.dark.svg');
+
   /// File path: assets/icons/check.icon.svg
   SvgGenImage get checkIcon => const SvgGenImage('assets/icons/check.icon.svg');
+
+  /// File path: assets/icons/check.white.svg
+  SvgGenImage get checkWhite =>
+      const SvgGenImage('assets/icons/check.white.svg');
 
   /// File path: assets/icons/close.icon.svg
   SvgGenImage get closeIcon => const SvgGenImage('assets/icons/close.icon.svg');
@@ -123,6 +130,9 @@ class $AssetsIconsGen {
   /// File path: assets/icons/download.icon.svg
   SvgGenImage get downloadIcon =>
       const SvgGenImage('assets/icons/download.icon.svg');
+
+  /// File path: assets/icons/draft.svg
+  SvgGenImage get draft => const SvgGenImage('assets/icons/draft.svg');
 
   /// File path: assets/icons/edit.icon.svg
   SvgGenImage get editIcon => const SvgGenImage('assets/icons/edit.icon.svg');
@@ -148,6 +158,10 @@ class $AssetsIconsGen {
 
   /// File path: assets/icons/faq.icon.svg
   SvgGenImage get faqIcon => const SvgGenImage('assets/icons/faq.icon.svg');
+
+  /// File path: assets/icons/file.download.svg
+  SvgGenImage get fileDownload =>
+      const SvgGenImage('assets/icons/file.download.svg');
 
   /// File path: assets/icons/filter.svg
   SvgGenImage get filter => const SvgGenImage('assets/icons/filter.svg');
@@ -251,6 +265,10 @@ class $AssetsIconsGen {
   SvgGenImage get settingsIcon =>
       const SvgGenImage('assets/icons/settings.icon.svg');
 
+  /// File path: assets/icons/shield.dark.svg
+  SvgGenImage get shieldDark =>
+      const SvgGenImage('assets/icons/shield.dark.svg');
+
   /// File path: assets/icons/shield.svg
   SvgGenImage get shield => const SvgGenImage('assets/icons/shield.svg');
 
@@ -283,6 +301,14 @@ class $AssetsIconsGen {
   /// File path: assets/icons/trash.red.icon.svg
   SvgGenImage get trashRedIcon =>
       const SvgGenImage('assets/icons/trash.red.icon.svg');
+
+  /// File path: assets/icons/upgrade.dark.svg
+  SvgGenImage get upgradeDark =>
+      const SvgGenImage('assets/icons/upgrade.dark.svg');
+
+  /// File path: assets/icons/upgrade.icon.svg
+  SvgGenImage get upgradeIcon =>
+      const SvgGenImage('assets/icons/upgrade.icon.svg');
 
   /// File path: assets/icons/user.profile.icon.svg
   SvgGenImage get userProfileIcon =>
@@ -335,12 +361,15 @@ class $AssetsIconsGen {
     calculate,
     callIcon,
     chartData,
+    checkDark,
     checkIcon,
+    checkWhite,
     closeIcon,
     contributionAlert,
     deleteIcon,
     document,
     downloadIcon,
+    draft,
     editIcon,
     emailIcon,
     eyeIcon,
@@ -349,6 +378,7 @@ class $AssetsIconsGen {
     face,
     factsheetIcon,
     faqIcon,
+    fileDownload,
     filter,
     fingerprint,
     ghanaFlag,
@@ -378,6 +408,7 @@ class $AssetsIconsGen {
     pictogram,
     selfie,
     settingsIcon,
+    shieldDark,
     shield,
     stack,
     stackedLineChart,
@@ -387,6 +418,8 @@ class $AssetsIconsGen {
     termsIcon,
     topLogoBanner,
     trashRedIcon,
+    upgradeDark,
+    upgradeIcon,
     userProfileIcon,
     visibilityOff,
     visibilityOn,

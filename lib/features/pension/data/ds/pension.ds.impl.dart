@@ -75,4 +75,20 @@ class PensionDsImpl implements PensionDs {
       (data) => PensionSummary.fromJson(data),
     );
   }
+
+  @override
+  Future<ApiResponse<Map<String, dynamic>>> downloadPensionCertificate({
+    required String employerNumber,
+    required String staffNumber,
+  }) async {
+    final res = await apiService.callService(
+      requestType: RequestType.get,
+      queryParams: {
+        'employer_number': employerNumber,
+        'staff_number': staffNumber,
+      },
+      endPoint: Env.downloadPensionCertificate,
+    );
+    return ApiResponse<Map<String, dynamic>>.fromJson(res, (data) => data);
+  }
 }

@@ -83,7 +83,7 @@ class RetailWidget extends StatelessWidget {
                     ),
                     Text(
                       PFormatter.formatCurrency(
-                        amount: policy.premiumPaid?.toDouble() ?? 0,
+                        amount: policy.availableBalance ?? 0,
                       ),
                       textAlign: TextAlign.center,
                       softWrap: true,

@@ -1,7 +1,9 @@
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:oldmutual_pensions_app/core/utils/utils.dart';
 import 'package:oldmutual_pensions_app/features/pension/pension.dart';
 import 'package:oldmutual_pensions_app/features/policy/policy.dart';
+import 'package:oldmutual_pensions_app/routes/app.pages.dart';
 import 'package:oldmutual_pensions_app/shared/shared.dart';
 
 class PPolicyVm extends GetxController {
@@ -11,6 +13,10 @@ class PPolicyVm extends GetxController {
   var inforcePolicies = <Policy>[].obs;
   var expiredPolicies = <Policy>[].obs;
   var lapsedPolicies = <Policy>[].obs;
+
+  final claimFormKey = GlobalKey<FormState>();
+
+  final amountTEC = TextEditingController();
 
   // var schemes = <Scheme>[].obs;
   var products = <Map<String, dynamic>>[].obs;
@@ -196,5 +202,26 @@ class PPolicyVm extends GetxController {
 
     products.value = items;
     return products;
+  }
+
+  Future<void> submitWithdrawalRequest() async {
+    amountTEC.clear();
+    navigateToSuccessPage();
+  }
+
+  /// Function to navigate user to success screen after report has been generated
+  navigateToSuccessPage() {
+    PHelperFunction.switchScreen(
+      destination: Routes.settingsSuccessPage,
+      args: [
+        'claim_req_success_subtitle'.tr,
+        'claim_req_success_title'.tr,
+        'done'.tr.toUpperCase(),
+        () {
+          PHelperFunction.pop();
+          PHelperFunction.pop();
+        },
+      ],
+    );
   }
 }

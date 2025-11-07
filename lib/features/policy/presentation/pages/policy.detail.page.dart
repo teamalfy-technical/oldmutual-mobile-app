@@ -7,6 +7,7 @@ import 'package:oldmutual_pensions_app/features/beneficiary/beneficiary.dart';
 import 'package:oldmutual_pensions_app/features/home/home.dart';
 import 'package:oldmutual_pensions_app/features/policy/policy.dart';
 import 'package:oldmutual_pensions_app/gen/assets.gen.dart';
+import 'package:oldmutual_pensions_app/routes/app.pages.dart';
 import 'package:oldmutual_pensions_app/shared/shared.dart';
 
 class PPolicyDetailPage extends StatelessWidget {
@@ -14,6 +15,7 @@ class PPolicyDetailPage extends StatelessWidget {
   PPolicyDetailPage({super.key, required this.policy});
 
   final vm = Get.put(PPolicyVm());
+  final policyStatementVm = Get.find<PPolicyStatementVm>();
 
   @override
   Widget build(BuildContext context) {
@@ -38,9 +40,7 @@ class PPolicyDetailPage extends StatelessWidget {
               ),
             ),
             Text(
-              PFormatter.formatCurrency(
-                amount: vm.summary.value.totalLifeInvestment ?? 0,
-              ),
+              PFormatter.formatCurrency(amount: policy.availableBalance ?? 0),
               textAlign: TextAlign.center,
               softWrap: true,
               style: Theme.of(context).textTheme.headlineMedium?.copyWith(
@@ -90,35 +90,63 @@ class PPolicyDetailPage extends StatelessWidget {
                   ),
                   onTap: () {},
                 ),
+                // PAppSize.s8.horizontalSpace,
+                // QuickActionWidget(
+                //   label: 'generate_report'.tr,
+                //   icon: Assets.icons.document.svg(
+                //     color: PHelperFunction.isDarkMode(context)
+                //         ? PAppColor.successLight
+                //         : PAppColor.successDark,
+                //   ),
+                //   onTap: () => PHelperFunction.switchScreen(
+                //     destination: Routes.policyDocumentPage,
+                //   ),
+                // ),
                 PAppSize.s8.horizontalSpace,
                 QuickActionWidget(
                   label: 'policy_document'.tr,
-                  icon: Assets.icons.factsheetIcon.svg(
+                  icon: Assets.icons.downloadIcon.svg(
                     color: PHelperFunction.isDarkMode(context)
                         ? PAppColor.successLight
                         : PAppColor.successDark,
                   ),
-                  onTap: () {},
+                  onTap: () {
+                    // download policy document
+                    PPopupDialog(context).warningMessage(
+                      title: 'Coming Soon',
+                      message: 'This feature will be available soon',
+                    );
+                  },
                 ),
                 PAppSize.s8.horizontalSpace,
                 QuickActionWidget(
                   label: 'premium_statement'.tr,
-                  icon: Assets.icons.article.svg(
+                  icon: Assets.icons.downloadIcon.svg(
                     color: PHelperFunction.isDarkMode(context)
                         ? PAppColor.successLight
                         : PAppColor.successDark,
                   ),
-                  onTap: () {},
+                  onTap: () => PHelperFunction.switchScreen(
+                    destination: Routes.premiumStatementPage,
+                  ),
+                  // onTap: () {
+                  //   // download premium statement
+                  //   policyStatementVm.downloadPremiumStatement();
+
+                  // },
                 ),
                 PAppSize.s8.horizontalSpace,
                 QuickActionWidget(
                   label: 'investment_statement'.tr,
-                  icon: Assets.icons.calculate.svg(
+                  icon: Assets.icons.downloadIcon.svg(
                     color: PHelperFunction.isDarkMode(context)
                         ? PAppColor.successLight
                         : PAppColor.successDark,
                   ),
-                  onTap: () {},
+                  onTap: () {
+                    // download investment statement
+                    policyStatementVm.downloadInvestmentStatement();
+                  },
                 ),
                 PAppSize.s8.horizontalSpace,
                 QuickActionWidget(
@@ -128,7 +156,9 @@ class PPolicyDetailPage extends StatelessWidget {
                         ? PAppColor.successLight
                         : PAppColor.successDark,
                   ),
-                  onTap: () {},
+                  onTap: () => PHelperFunction.switchScreen(
+                    destination: Routes.policyClaimPage,
+                  ),
                 ),
               ],
             ).scrollable(scrollDirection: Axis.horizontal),
@@ -143,13 +173,13 @@ class PPolicyDetailPage extends StatelessWidget {
                     useBorder: false,
                     child: Column(
                       children: [
-                        _buildListTile(
+                        buildListTile(
                           context,
                           'policy_number'.tr,
                           '${policy.policyNo}',
                         ),
                         Divider(height: PAppSize.s1),
-                        _buildListTile(
+                        buildListTile(
                           context,
                           'investment_term'.tr,
                           '${PFormatter.calculateDateDiff(policy.maturityDate!, DateDiffUnit.years)} years',
@@ -158,6 +188,10 @@ class PPolicyDetailPage extends StatelessWidget {
                     ),
                   ),
 
+                  PAppSize.s18.verticalSpace,
+
+                  /// Premium upgrade
+                  PPremiumUpgradeWidget(policy: policy),
                   PAppSize.s16.verticalSpace,
 
                   /// Policy Details
@@ -176,19 +210,19 @@ class PPolicyDetailPage extends StatelessWidget {
                     useBorder: false,
                     child: Column(
                       children: [
-                        _buildListTile(
+                        buildListTile(
                           context,
                           'contract_number'.tr,
                           'OMG60338PO461',
                         ),
                         Divider(height: PAppSize.s1),
-                        _buildListTile(
+                        buildListTile(
                           context,
                           'product_description'.tr,
                           '${policy.planDescription}',
                         ),
                         Divider(height: PAppSize.s1),
-                        _buildListTile(
+                        buildListTile(
                           context,
                           'amount_savings_value'.tr,
                           PFormatter.formatCurrency(
@@ -196,7 +230,7 @@ class PPolicyDetailPage extends StatelessWidget {
                           ),
                         ),
                         Divider(height: PAppSize.s1),
-                        _buildListTile(
+                        buildListTile(
                           context,
                           'start_date'.tr,
                           PFormatter.formatDate(
@@ -209,7 +243,7 @@ class PPolicyDetailPage extends StatelessWidget {
                           ),
                         ),
                         Divider(height: PAppSize.s1),
-                        _buildListTile(
+                        buildListTile(
                           context,
                           'end_date'.tr,
                           PFormatter.formatDate(
@@ -220,13 +254,13 @@ class PPolicyDetailPage extends StatelessWidget {
                           ),
                         ),
                         Divider(height: PAppSize.s1),
-                        _buildListTile(
+                        buildListTile(
                           context,
                           'monthly_premium'.tr,
                           '${policy.paymentFrequency}',
                         ),
                         Divider(height: PAppSize.s1),
-                        _buildListTile(
+                        buildListTile(
                           context,
                           'premium_amount'.tr,
                           PFormatter.formatCurrency(
@@ -234,7 +268,7 @@ class PPolicyDetailPage extends StatelessWidget {
                           ),
                         ),
                         Divider(height: PAppSize.s1),
-                        _buildListTile(
+                        buildListTile(
                           context,
                           'total_redemption'.tr,
                           PFormatter.formatCurrency(
@@ -482,24 +516,24 @@ class PPolicyDetailPage extends StatelessWidget {
       },
     );
   }
+}
 
-  Widget _buildListTile(BuildContext context, String title, String subTitle) {
-    return ListTile(
-      contentPadding: EdgeInsets.symmetric(horizontal: PAppSize.s16),
-      title: Text(
-        title,
-        style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-          fontSize: PAppSize.s14,
-          fontWeight: FontWeight.w400,
-        ),
+Widget buildListTile(BuildContext context, String title, String subTitle) {
+  return ListTile(
+    contentPadding: EdgeInsets.symmetric(horizontal: PAppSize.s16),
+    title: Text(
+      title,
+      style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+        fontSize: PAppSize.s14,
+        fontWeight: FontWeight.w400,
       ),
-      subtitle: Text(
-        subTitle,
-        style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-          fontSize: PAppSize.s18,
-          fontWeight: FontWeight.w500,
-        ),
+    ),
+    subtitle: Text(
+      subTitle,
+      style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+        fontSize: PAppSize.s18,
+        fontWeight: FontWeight.w500,
       ),
-    );
-  }
+    ),
+  );
 }

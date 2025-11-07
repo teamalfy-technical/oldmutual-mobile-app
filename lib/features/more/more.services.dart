@@ -1,3 +1,4 @@
+export 'domain/terms.model.dart';
 export 'presentation/pages/delete.account.page.one.dart';
 export 'presentation/pages/delete.account.page.two.dart';
 export 'presentation/pages/more.page.dart';

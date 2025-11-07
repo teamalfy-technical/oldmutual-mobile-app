@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:oldmutual_pensions_app/core/utils/utils.dart';
 import 'package:oldmutual_pensions_app/features/home/home.dart';
+import 'package:oldmutual_pensions_app/features/manage/manage.dart';
 import 'package:oldmutual_pensions_app/features/more/more.services.dart';
 import 'package:oldmutual_pensions_app/gen/assets.gen.dart';
 import 'package:oldmutual_pensions_app/routes/app.pages.dart';
@@ -14,11 +15,12 @@ class PDashboardPage extends StatelessWidget {
 
   final List<Widget> _pages = [
     PHomePage(),
-    Container(
-      alignment: Alignment.center,
-      color: PAppColor.darkAppBarColor2,
-      child: Text('manage'.tr),
-    ),
+    PManagePage(),
+    // Container(
+    //   alignment: Alignment.center,
+    //   color: PAppColor.darkAppBarColor2,
+    //   child: Text('manage'.tr),
+    // ),
     PMorePage(),
     // PProfileSettingsPage(),
     // Container(
@@ -34,6 +36,11 @@ class PDashboardPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final name =
+        (PSecureStorage().getAuthResponse()?.name != null &&
+            PSecureStorage().getAuthResponse()!.name!.isNotEmpty)
+        ? PSecureStorage().getAuthResponse()?.name
+        : PSecureStorage().getBioData()?.firstName ?? '';
     return Obx(
       () => Scaffold(
         backgroundColor: PHelperFunction.isDarkMode(context)
@@ -45,11 +52,16 @@ class PDashboardPage extends StatelessWidget {
                 ? 'manage'.tr
                 : ctrl.currentIndex.value == 2
                 ? 'more'.tr
-                : 'Hi ${PSecureStorage().getAuthResponse()?.name}',
+                : 'Hi $name',
           ),
           // title: Text('Hi Bongani'),
           actions: [
             IconButton(
+              // onPressed: () => showFeedbackDialog(
+              //   context: context,
+              //   onPositiveTap: () {},
+              //   onNegativeTap: () {},
+              // ),
               onPressed: () => PHelperFunction.switchScreen(
                 destination: Routes.notificationPage,
               ),

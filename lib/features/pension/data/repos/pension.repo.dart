@@ -21,4 +21,9 @@ abstract class PensionRepo {
     required String nationality,
   });
   Future<Either<PFailure, ApiResponse<PensionSummary>>> getPensionSummary();
+  Future<Either<PFailure, ApiResponse<Map<String, dynamic>>>>
+  downloadPensionCertificate({
+    required String employerNumber,
+    required String staffNumber,
+  });
 }

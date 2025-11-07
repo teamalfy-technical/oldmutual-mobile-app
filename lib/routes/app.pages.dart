@@ -10,11 +10,13 @@ import 'package:oldmutual_pensions_app/features/beneficiary/presentation/pages/a
 import 'package:oldmutual_pensions_app/features/contribution.history/contribution.history.dart';
 import 'package:oldmutual_pensions_app/features/future.value.calculator/future.value.calculator.dart';
 import 'package:oldmutual_pensions_app/features/home/home.dart';
+import 'package:oldmutual_pensions_app/features/manage/manage.dart';
 import 'package:oldmutual_pensions_app/features/more/more.services.dart';
 import 'package:oldmutual_pensions_app/features/more/presentation/pages/support.page.dart';
 import 'package:oldmutual_pensions_app/features/notification/notification.dart';
 import 'package:oldmutual_pensions_app/features/pension/pension.dart';
 import 'package:oldmutual_pensions_app/features/policy/policy.dart';
+import 'package:oldmutual_pensions_app/features/policy/presentation/pages/claim.page.dart';
 import 'package:oldmutual_pensions_app/features/redemptions/presentation/pages/porting.page.dart';
 import 'package:oldmutual_pensions_app/features/redemptions/redemption.dart';
 import 'package:oldmutual_pensions_app/features/settings/presentation/pages/change.password.page.dart';
@@ -163,6 +165,20 @@ class AppPages {
       transitionDuration: const Duration(milliseconds: PAppSize.s450),
     ),
 
+    GetPage(
+      name: _Paths.premiumStatementPage,
+      page: () => PPremiumStatementPage(),
+      transition: Transition.circularReveal,
+      transitionDuration: const Duration(milliseconds: PAppSize.s450),
+    ),
+
+    GetPage(
+      name: _Paths.policyClaimPage,
+      page: () => PClaimPage(),
+      transition: Transition.circularReveal,
+      transitionDuration: const Duration(milliseconds: PAppSize.s450),
+    ),
+
     /// Pensions Pages
     GetPage(
       name: _Paths.pensionOverviewPage,
@@ -255,6 +271,9 @@ class AppPages {
       name: _Paths.webviewPage,
       page: () => PWebView(title: Get.arguments[0], url: Get.arguments[1]),
     ),
-    // GetPage(name: _Paths.factsheetPage, page: () => PFactSheetPage()),
+
+    /// --- Manage Feature Pages
+    GetPage(name: _Paths.managePage, page: () => PManagePage()),
+    GetPage(name: _Paths.documentsPage, page: () => PDocumentsPage()),
   ];
 }

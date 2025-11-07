@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:oldmutual_pensions_app/core/utils/utils.dart';
@@ -35,10 +36,16 @@ class PRedemptionPage extends StatelessWidget {
                         children: [
                           PCustomTextField(
                             labelText: 'national_id'.tr,
-                            hintText: 'GHA-XXXXXXXXX-X',
+                            hintText: 'XXXXXXXXX-X',
+                            prefixText: 'GHA-',
                             controller: ctrl.nationIdTEC,
-                            textInputType: TextInputType.text,
-                            validator: PValidator.validateEmailOrPhone,
+                            textInputType: TextInputType.number,
+                            validator: PValidator.validateIdNumber,
+                            maxLength: 11,
+                            inputFormatters: [
+                              FilteringTextInputFormatter.digitsOnly,
+                              IdNumberFormatter(),
+                            ],
                           ),
                           PAppSize.s20.verticalSpace,
                           PCustomDropdownField<String>(
@@ -159,21 +166,25 @@ class PRedemptionPage extends StatelessWidget {
                           PAppSize.s20.verticalSpace,
 
                           // front ID upload
-                          PIdCardWidget(
-                            label: 'upload_front_of_id_card'.tr,
-                            file: ctrl.idFront.value,
-                            onCameraTap: () => ctrl.chooseFromCamera(true),
-                            onGalleryTap: () => ctrl.chooseFromGallery(true),
+                          Obx(
+                            () => PIdCardWidget(
+                              label: 'upload_front_of_id_card'.tr,
+                              file: ctrl.idFront.value,
+                              onCameraTap: () => ctrl.chooseFromCamera(true),
+                              onGalleryTap: () => ctrl.chooseFromGallery(true),
+                            ),
                           ),
 
                           PAppSize.s28.verticalSpace,
 
                           // Back ID upload
-                          PIdCardWidget(
-                            label: 'upload_back_of_id_card'.tr,
-                            file: ctrl.idBack.value,
-                            onCameraTap: () => ctrl.chooseFromCamera(false),
-                            onGalleryTap: () => ctrl.chooseFromGallery(false),
+                          Obx(
+                            () => PIdCardWidget(
+                              label: 'upload_back_of_id_card'.tr,
+                              file: ctrl.idBack.value,
+                              onCameraTap: () => ctrl.chooseFromCamera(false),
+                              onGalleryTap: () => ctrl.chooseFromGallery(false),
+                            ),
                           ),
 
                           PAppSize.s16.verticalSpace,
