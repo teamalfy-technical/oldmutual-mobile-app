@@ -164,37 +164,37 @@ class PMorePage extends StatelessWidget {
                               : PAppColor.darkAppBarColor,
                         ),
                       ),
-                      divider(),
-                      SettingsListTile(
-                        leading: Assets.icons.faqIcon.svg(
-                          color: PHelperFunction.isDarkMode(context)
-                              ? PAppColor.whiteColor
-                              : PAppColor.darkAppBarColor,
-                        ),
-                        onTap: () => PHelperFunction.switchScreen(
-                          destination: Routes.webviewPage,
-                          args: [
-                            '${'faq'.tr.toUpperCase()}s',
-                            PAppConstant.faqUrl,
-                          ],
-                        ),
-                        padding: EdgeInsets.only(
-                          left: PAppSize.s14,
-                          right: PAppSize.s24,
-                          top: PAppSize.s18,
-                          bottom: PAppSize.s18,
-                        ),
-                        title: Text(
-                          'faq'.tr.toUpperCase(),
-                          style: Theme.of(context).textTheme.titleMedium
-                              ?.copyWith(fontWeight: FontWeight.w500),
-                        ),
-                        trailing: Assets.icons.arrowForwardIos.svg(
-                          color: PHelperFunction.isDarkMode(context)
-                              ? PAppColor.whiteColor
-                              : PAppColor.darkAppBarColor,
-                        ),
-                      ),
+                      // divider(),
+                      // SettingsListTile(
+                      //   leading: Assets.icons.faqIcon.svg(
+                      //     color: PHelperFunction.isDarkMode(context)
+                      //         ? PAppColor.whiteColor
+                      //         : PAppColor.darkAppBarColor,
+                      //   ),
+                      //   onTap: () => PHelperFunction.switchScreen(
+                      //     destination: Routes.webviewPage,
+                      //     args: [
+                      //       '${'faq'.tr.toUpperCase()}s',
+                      //       PAppConstant.faqUrl,
+                      //     ],
+                      //   ),
+                      //   padding: EdgeInsets.only(
+                      //     left: PAppSize.s14,
+                      //     right: PAppSize.s24,
+                      //     top: PAppSize.s18,
+                      //     bottom: PAppSize.s18,
+                      //   ),
+                      //   title: Text(
+                      //     'faq'.tr.toUpperCase(),
+                      //     style: Theme.of(context).textTheme.titleMedium
+                      //         ?.copyWith(fontWeight: FontWeight.w500),
+                      //   ),
+                      //   trailing: Assets.icons.arrowForwardIos.svg(
+                      //     color: PHelperFunction.isDarkMode(context)
+                      //         ? PAppColor.whiteColor
+                      //         : PAppColor.darkAppBarColor,
+                      //   ),
+                      // ),
                     ],
                   ),
                 ),
