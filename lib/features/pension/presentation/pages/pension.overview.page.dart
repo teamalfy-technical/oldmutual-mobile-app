@@ -4,8 +4,7 @@ import 'package:get/get.dart';
 import 'package:oldmutual_pensions_app/core/utils/utils.dart';
 import 'package:oldmutual_pensions_app/features/home/home.dart';
 import 'package:oldmutual_pensions_app/features/pension/pension.dart'
-    hide PPensionWidget, PPolicyWidget;
-import 'package:oldmutual_pensions_app/features/policy/policy.dart';
+    hide PPolicyWidget;
 import 'package:oldmutual_pensions_app/gen/assets.gen.dart';
 import 'package:oldmutual_pensions_app/routes/app.pages.dart';
 import 'package:oldmutual_pensions_app/shared/shared.dart';

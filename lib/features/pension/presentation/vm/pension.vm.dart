@@ -8,12 +8,9 @@ import 'package:oldmutual_pensions_app/shared/shared.dart';
 class PPensionVm extends GetxController {
   static PPensionVm get instance => Get.find();
 
-  var policies = <Policy>[].obs;
-  var inforcePolicies = <Policy>[].obs;
-  var expiredPolicies = <Policy>[].obs;
-  var lapsedPolicies = <Policy>[].obs;
-
   var schemes = <Scheme>[].obs;
+  var activeSchemes = <Scheme>[].obs;
+  var inactiveSchemes = <Scheme>[].obs;
   var summary = PensionSummary().obs;
   var selectedScheme = Scheme().obs;
   // var selectedScheme = SelectedScheme().obs;
@@ -106,6 +103,12 @@ class PPensionVm extends GetxController {
       (res) {
         updateLoadingState(LoadingState.completed);
         schemes.value = res.data ?? [];
+           activeSchemes.value = schemes
+            .where((p) => activeStatuses.contains(p.status ?? ""))
+            .toList();
+        inactiveSchemes.value = schemes
+            .where((p) => !activeStatuses.contains(p.status ?? ""))
+            .toList();
         // getProducts();
       },
     );

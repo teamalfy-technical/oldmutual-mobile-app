@@ -25,7 +25,7 @@ enum ProductType { pensions, insurance, corporate }
 
 enum DateDiffUnit { days, months, years }
 
-enum PolicyStatus { inforce, expired, lapsed, paidup }
+enum PolicyStatus { active, inactive, lapsed }
 
 enum BadgeType { report, beneficiary, contribution, maintenance }
 

@@ -6,13 +6,23 @@ import 'package:oldmutual_pensions_app/features/policy/policy.dart';
 import 'package:oldmutual_pensions_app/routes/app.pages.dart';
 import 'package:oldmutual_pensions_app/shared/shared.dart';
 
+final activeStatuses = {
+  "INFORCE POLICY",
+  "MATURITY RESERVE",
+  "PAIDUP",
+  "MOVED TO DAS",
+  "SURRENDER NOTIFIED",
+  "ACTIVE",
+  "DORMANT",
+};
+
 class PPolicyVm extends GetxController {
   static PPolicyVm get instance => Get.find();
 
   var policies = <Policy>[].obs;
-  var inforcePolicies = <Policy>[].obs;
-  var expiredPolicies = <Policy>[].obs;
-  var lapsedPolicies = <Policy>[].obs;
+  var activePolicies = <Policy>[].obs;
+  var inactivePolicies = <Policy>[].obs;
+  // var lapsedPolicies = <Policy>[].obs;
 
   final claimFormKey = GlobalKey<FormState>();
 
@@ -66,7 +76,7 @@ class PPolicyVm extends GetxController {
               availableBalance: 0.0,
               lastUpdated: '',
             );
-        await getAllPolices();
+        await getAllPolicies();
       },
     );
   }
@@ -111,7 +121,7 @@ class PPolicyVm extends GetxController {
   // }
 
   /// Function to fetch all policies or products
-  Future<void> getAllPolices() async {
+  Future<void> getAllPolicies() async {
     updateLoadingState(LoadingState.loading);
 
     final result = await policyService.getPolicies(status: '');
@@ -125,20 +135,27 @@ class PPolicyVm extends GetxController {
       (res) async {
         updateLoadingState(LoadingState.completed);
         policies.value = res.data?.policyDetails ?? [];
-        inforcePolicies.value = policies
-            .where(
-              (p) =>
-                  p.status!.contains(PolicyStatus.inforce.name.toUpperCase()),
-            )
+        activePolicies.value = policies
+            .where((p) => activeStatuses.contains(p.status ?? ""))
             .toList();
-        expiredPolicies.value = policies
-            .where((p) => p.status == PolicyStatus.expired.name.toUpperCase())
+        inactivePolicies.value = policies
+            .where((p) => !activeStatuses.contains(p.status ?? ""))
             .toList();
-        lapsedPolicies.value = policies
-            .where(
-              (p) => p.status!.contains(PolicyStatus.lapsed.name.toUpperCase()),
-            )
-            .toList();
+
+        // activePolicies.value = policies
+        //     .where(
+        //       (p) =>
+        //           p.status!.contains(PolicyStatus.inforce.name.toUpperCase()),
+        //     )
+        //     .toList();
+        // inactivePolicies.value = policies
+        //     .where((p) => p.status == PolicyStatus.expired.name.toUpperCase())
+        //     .toList();
+        // lapsedPolicies.value = policies
+        //     .where(
+        //       (p) => p.status!.contains(PolicyStatus.lapsed.name.toUpperCase()),
+        //     )
+        //     .toList();
         // await getMemberSchemes();
         getProducts();
         // pensionAppLogger.i(policies);

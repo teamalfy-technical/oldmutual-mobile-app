@@ -16,7 +16,6 @@ export 'presentation/pages/tabs/all.product.page.dart';
 export 'presentation/pages/tabs/retail.tab.dart';
 export 'presentation/vm/policy.statement.vm.dart';
 export 'presentation/vm/policy.vm.dart';
-export 'presentation/widgets/pension.widget.dart';
 export 'presentation/widgets/policy.widget.dart';
 export 'presentation/widgets/premium.upgrade.widget.dart';
 export 'presentation/widgets/product.widget.dart';

@@ -74,7 +74,7 @@ class PSecureStorage {
   }
 
   BioData? getBioData() {
-    if (_storage.read(authResKey) == null) {
+    if (_storage.read(bioDataKey) == null) {
       return null;
     }
     return BioData.fromJson(_storage.read(bioDataKey) as Map<String, dynamic>);

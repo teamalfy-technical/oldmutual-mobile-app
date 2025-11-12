@@ -8,7 +8,8 @@ class Policy {
   String? fullAddress;
   String? tIN;
   String? planDescription;
-  int? sumAssured;
+  double? sumAssured;
+  double? cashValue;
   int? termOfPolicy;
   int? clientAge;
   String? clientNumber;
@@ -41,6 +42,7 @@ class Policy {
     this.tIN,
     this.planDescription,
     this.sumAssured,
+    this.cashValue,
     this.termOfPolicy,
     this.clientAge,
     this.clientNumber,
@@ -73,7 +75,8 @@ class Policy {
     fullAddress = json['full_address'];
     tIN = json['TIN'];
     planDescription = json['plan_description'];
-    sumAssured = json['sum_assured'];
+    sumAssured = json['sum_assured']?.toDouble();
+    cashValue = json['cash_value']?.toDouble();
     termOfPolicy = json['term_of_policy'];
     clientAge = json['client_age'];
     clientNumber = json['client_number'];
@@ -118,6 +121,7 @@ class Policy {
     data['TIN'] = tIN;
     data['plan_description'] = planDescription;
     data['sum_assured'] = sumAssured;
+    data['cash_value'] = cashValue;
     data['term_of_policy'] = termOfPolicy;
     data['client_age'] = clientAge;
     data['client_number'] = clientNumber;

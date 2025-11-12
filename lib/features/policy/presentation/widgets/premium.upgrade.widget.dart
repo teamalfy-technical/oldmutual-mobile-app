@@ -154,6 +154,12 @@ class PPremiumUpgradeWidget extends StatelessWidget {
 
               // PAppSize.s8.verticalSpace,
 
+              // style: OutlinedButton.styleFrom(
+              //   foregroundColor: PHelperFunction.isDarkMode(context) ?
+
+              //   PAppColor.whiteColor PAppColor.whiteColor :
+              // ),
+
               // learn more
               TextButton(
                 onPressed: () {},
@@ -161,7 +167,9 @@ class PPremiumUpgradeWidget extends StatelessWidget {
                   'not_interested'.tr,
                   style: Theme.of(context).textTheme.bodyLarge?.copyWith(
                     fontSize: PAppSize.s16,
-                    color: PAppColor.darkBgColor,
+                    color: PHelperFunction.isDarkMode(context)
+                        ? PAppColor.whiteColor
+                        : PAppColor.darkBgColor,
                     fontWeight: FontWeight.w500,
                   ),
                 ),
@@ -219,9 +227,9 @@ class PPremiumUpgradeWidget extends StatelessWidget {
           child: Container(
             padding: EdgeInsets.symmetric(
               horizontal: PAppSize.s16,
-              vertical: PAppSize.s4,
+              vertical: PAppSize.s8,
             ),
-            height: PDeviceUtil.getDeviceHeight(context) * 0.42,
+            height: PDeviceUtil.getDeviceHeight(context) * 0.45,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -240,9 +248,7 @@ class PPremiumUpgradeWidget extends StatelessWidget {
                       radius: PAppSize.s20,
                       backgroundColor: PAppColor.fillColor,
                       child: Assets.icons.closeIcon.svg(
-                        color: PHelperFunction.isDarkMode(context)
-                            ? const Color.fromARGB(255, 26, 23, 23)
-                            : PAppColor.darkAppBarColor,
+                        color: PAppColor.darkAppBarColor,
                       ),
                     ).onPressed(
                       onTap: PHelperFunction.pop,
@@ -257,7 +263,11 @@ class PPremiumUpgradeWidget extends StatelessWidget {
                     children: [
                       _buildListTile(
                         context: context,
-                        icon: Assets.icons.checkDark.svg(),
+                        icon: Assets.icons.checkDark.svg(
+                          color: PHelperFunction.isDarkMode(context)
+                              ? PAppColor.whiteColor
+                              : PAppColor.darkAppBarColor,
+                        ),
                         title: 'Higher Coverage',
                         subTitle:
                             'Increase your sum assured from ₵1.5M to ₵2.5M - that\'s ₵1M in additional protection for your loved ones.',
@@ -265,7 +275,11 @@ class PPremiumUpgradeWidget extends StatelessWidget {
                       PAppSize.s18.verticalSpace,
                       _buildListTile(
                         context: context,
-                        icon: Assets.icons.shieldDark.svg(),
+                        icon: Assets.icons.shieldDark.svg(
+                          color: PHelperFunction.isDarkMode(context)
+                              ? PAppColor.whiteColor
+                              : PAppColor.darkAppBarColor,
+                        ),
                         title: 'Better Financial Security',
                         subTitle:
                             'Enhanced coverage means better financial protection against unexpected events.',
@@ -274,7 +288,11 @@ class PPremiumUpgradeWidget extends StatelessWidget {
                       PAppSize.s18.verticalSpace,
                       _buildListTile(
                         context: context,
-                        icon: Assets.icons.upgradeDark.svg(),
+                        icon: Assets.icons.upgradeDark.svg(
+                          color: PHelperFunction.isDarkMode(context)
+                              ? PAppColor.whiteColor
+                              : PAppColor.darkAppBarColor,
+                        ),
                         title: 'Affordable Increase',
                         subTitle:
                             'For just ₵5,000 more per month, you get significantly more peace of mind.',

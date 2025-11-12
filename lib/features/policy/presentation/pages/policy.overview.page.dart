@@ -32,7 +32,7 @@ class PPolicyOverviewPage extends StatelessWidget {
                 PAppSize.s2.verticalSpace,
                 // Overview Balance
                 Text(
-                  'overview'.tr,
+                  'available_balance'.tr,
                   textAlign: TextAlign.center,
                   softWrap: true,
                   style: Theme.of(context).textTheme.bodyLarge?.copyWith(
@@ -65,7 +65,7 @@ class PPolicyOverviewPage extends StatelessWidget {
                 PAppSize.s12.verticalSpace,
 
                 RefreshIndicator.adaptive(
-                  onRefresh: vm.getAllPolices,
+                  onRefresh: vm.getAllPolicies,
                   color: PAppColor.primary,
                   child: vm.policies.isEmpty
                       ? PEmptyStateWidget(message: 'no_results_found'.tr)

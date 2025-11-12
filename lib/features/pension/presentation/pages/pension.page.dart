@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:oldmutual_pensions_app/core/utils/utils.dart';
+import 'package:oldmutual_pensions_app/features/pension/pension.dart';
 import 'package:oldmutual_pensions_app/features/policy/policy.dart';
 
 class PProductsPage extends StatelessWidget {
   PProductsPage({super.key});
 
   final vm = Get.put(PPolicyVm());
+  final pensionVm = Get.put(PPensionVm());
+  final policyStatementVm = Get.put(PPolicyStatementVm());
 
   @override
   Widget build(BuildContext context) {
@@ -70,9 +73,9 @@ class PProductsPage extends StatelessWidget {
 
                 tabs: [
                   Tab(text: 'all'.tr),
-                  Tab(text: 'inforce'.tr),
-                  Tab(text: 'expired'.tr),
-                  Tab(text: 'lapsed'.tr),
+                  Tab(text: 'active'.tr),
+                  Tab(text: 'inactive'.tr),
+                  // Tab(text: 'lapsed'.tr),
                 ],
               ),
             ),
@@ -82,14 +85,13 @@ class PProductsPage extends StatelessWidget {
           children: [
             PAllProductTab(),
             PRetailTab(
-              policies: vm.inforcePolicies,
-              type: PolicyStatus.inforce,
+              products: [...vm.activePolicies, ...pensionVm.activeSchemes],
+              type: PolicyStatus.active,
             ),
             PRetailTab(
-              policies: vm.expiredPolicies,
-              type: PolicyStatus.expired,
+              products: [...vm.inactivePolicies, ...pensionVm.inactiveSchemes],
+              type: PolicyStatus.inactive,
             ),
-            PRetailTab(policies: vm.lapsedPolicies, type: PolicyStatus.lapsed),
           ],
         ).symmetric(horizontal: PAppSize.s20, vertical: PAppSize.s10),
       ),

@@ -31,7 +31,8 @@ class PPolicyDetailPage extends StatelessWidget {
             PAppSize.s2.verticalSpace,
             // Cover Amount
             Text(
-              'cover_amount'.tr,
+              'available_balance'.tr,
+              // 'cover_amount'.tr,
               textAlign: TextAlign.center,
               softWrap: true,
               style: Theme.of(context).textTheme.bodyLarge?.copyWith(
@@ -82,13 +83,18 @@ class PPolicyDetailPage extends StatelessWidget {
             Row(
               children: [
                 QuickActionWidget(
-                  label: 'pay'.tr,
+                  label: 'pay_premium'.tr,
                   icon: Assets.icons.payIcon.svg(
                     color: PHelperFunction.isDarkMode(context)
                         ? PAppColor.successLight
                         : PAppColor.successDark,
                   ),
-                  onTap: () {},
+                  onTap: () {
+                    PPopupDialog(context).warningMessage(
+                      title: 'Coming Soon',
+                      message: 'This feature will be available soon',
+                    );
+                  },
                 ),
                 // PAppSize.s8.horizontalSpace,
                 // QuickActionWidget(
@@ -156,9 +162,13 @@ class PPolicyDetailPage extends StatelessWidget {
                         ? PAppColor.successLight
                         : PAppColor.successDark,
                   ),
-                  onTap: () => PHelperFunction.switchScreen(
-                    destination: Routes.policyClaimPage,
+                  onTap: () => PPopupDialog(context).warningMessage(
+                    title: 'Coming Soon',
+                    message: 'This feature will be available soon',
                   ),
+                  // PHelperFunction.switchScreen(
+                  //   destination: Routes.policyClaimPage,
+                  // ),
                 ),
               ],
             ).scrollable(scrollDirection: Axis.horizontal),
@@ -169,29 +179,26 @@ class PPolicyDetailPage extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   // Policy
-                  PCustomCardWidget(
-                    useBorder: false,
-                    child: Column(
-                      children: [
-                        buildListTile(
-                          context,
-                          'policy_number'.tr,
-                          '${policy.policyNo}',
-                        ),
-                        Divider(height: PAppSize.s1),
-                        buildListTile(
-                          context,
-                          'investment_term'.tr,
-                          '${PFormatter.calculateDateDiff(policy.maturityDate!, DateDiffUnit.years)} years',
-                        ),
-                      ],
-                    ),
-                  ),
+                  // PCustomCardWidget(
+                  //   useBorder: false,
+                  //   child: Column(
+                  //     children: [
+                  //       buildListTile(
+                  //         context,
+                  //         'policy_number'.tr,
+                  //         '${policy.policyNo}',
+                  //       ),
+                  //       Divider(height: PAppSize.s1),
+                  //       buildListTile(
+                  //         context,
+                  //         'investment_term'.tr,
+                  //         '${PFormatter.calculateDateDiff(policy.maturityDate!, DateDiffUnit.years)} years',
+                  //       ),
+                  //     ],
+                  //   ),
+                  // ),
 
-                  PAppSize.s18.verticalSpace,
-
-                  /// Premium upgrade
-                  PPremiumUpgradeWidget(policy: policy),
+                  // PAppSize.s18.verticalSpace,
                   PAppSize.s16.verticalSpace,
 
                   /// Policy Details
@@ -212,8 +219,8 @@ class PPolicyDetailPage extends StatelessWidget {
                       children: [
                         buildListTile(
                           context,
-                          'contract_number'.tr,
-                          'OMG60338PO461',
+                          'policy_number'.tr,
+                          policy.policyNo ?? '',
                         ),
                         Divider(height: PAppSize.s1),
                         buildListTile(
@@ -224,61 +231,63 @@ class PPolicyDetailPage extends StatelessWidget {
                         Divider(height: PAppSize.s1),
                         buildListTile(
                           context,
-                          'amount_savings_value'.tr,
+                          'modal_premium'.tr,
                           PFormatter.formatCurrency(
-                            amount: policy.premiumPaid ?? 0,
+                            amount: policy.modalPrem ?? 0,
                           ),
                         ),
                         Divider(height: PAppSize.s1),
                         buildListTile(
                           context,
-                          'start_date'.tr,
+                          'premium_due_date'.tr,
                           PFormatter.formatDate(
                             dateFormat: DateFormat('d MMMM y'),
                             date: DateTime.parse(
-                              policy.commencementDate ??
-                                  policy.issuedDate ??
-                                  '',
+                              policy.premDueDate ??
+                                  DateTime.now().toIso8601String(),
                             ),
                           ),
                         ),
                         Divider(height: PAppSize.s1),
                         buildListTile(
                           context,
-                          'end_date'.tr,
-                          PFormatter.formatDate(
-                            dateFormat: DateFormat('d MMMM y'),
-                            date: DateTime.parse(
-                              policy.maturityDate ?? policy.issuedDate ?? '',
-                            ),
-                          ),
-                        ),
-                        Divider(height: PAppSize.s1),
-                        buildListTile(
-                          context,
-                          'monthly_premium'.tr,
-                          '${policy.paymentFrequency}',
-                        ),
-                        Divider(height: PAppSize.s1),
-                        buildListTile(
-                          context,
-                          'premium_amount'.tr,
+                          'sum_assured'.tr,
                           PFormatter.formatCurrency(
-                            amount: policy.modalPrem ?? 00,
+                            amount: policy.sumAssured?.toDouble() ?? 0,
                           ),
                         ),
                         Divider(height: PAppSize.s1),
                         buildListTile(
                           context,
-                          'total_redemption'.tr,
+                          'cash_value'.tr,
                           PFormatter.formatCurrency(
-                            amount: policy.premiumPaid ?? 0,
+                            amount: policy.cashValue?.toDouble() ?? 0,
                           ),
-                          // PFormatter.formatCurrency(amount: 890.70),
                         ),
+                        Divider(height: PAppSize.s1),
+                        buildListTile(
+                          context,
+                          'total_benefit'.tr,
+                          PFormatter.formatCurrency(
+                            amount:
+                                ((policy.cashValue ?? 0) +
+                                (policy.sumAssured ?? 0)),
+                          ),
+                        ),
+                        // Divider(height: PAppSize.s1),
+                        // buildListTile(
+                        //   context,
+                        //   'policy_term'.tr,
+                        //   '${policy.termOfPolicy ?? 0}',
+                        // ),
                       ],
                     ),
                   ),
+
+                  PAppSize.s16.verticalSpace,
+
+                  /// Premium upgrade
+                  PPremiumUpgradeWidget(policy: policy),
 
                   PAppSize.s16.verticalSpace,
 
@@ -435,8 +444,25 @@ class PPolicyDetailPage extends StatelessWidget {
                           return ListTile(
                             leading: CircleAvatar(
                               radius: PAppSize.s24,
-                              backgroundImage: AssetImage(
-                                Assets.images.placeholderImg.path,
+                              backgroundColor:
+                                  PHelperFunction.isDarkMode(context)
+                                  ? PAppColor.whiteColor
+                                  : PAppColor.darkAppBarColor2,
+                              // backgroundImage: AssetImage(
+                              //   Assets.images.placeholderImg.path,
+                              // ),
+                              child: Text(
+                                (beneficiary.fullName ?? '').substring(0, 1),
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .headlineMedium
+                                    ?.copyWith(
+                                      color: PHelperFunction.isDarkMode(context)
+                                          ? PAppColor.darkBgColor
+                                          : PAppColor.whiteColor,
+                                      fontSize: PAppSize.s20,
+                                      fontWeight: FontWeight.w700,
+                                    ),
                               ),
                             ),
                             onTap: () => showBeneficiaryDetailModal(
