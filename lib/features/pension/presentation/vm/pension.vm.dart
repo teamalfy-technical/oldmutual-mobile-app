@@ -103,7 +103,7 @@ class PPensionVm extends GetxController {
       (res) {
         updateLoadingState(LoadingState.completed);
         schemes.value = res.data ?? [];
-           activeSchemes.value = schemes
+        activeSchemes.value = schemes
             .where((p) => activeStatuses.contains(p.status ?? ""))
             .toList();
         inactiveSchemes.value = schemes
@@ -116,21 +116,23 @@ class PPensionVm extends GetxController {
 
   /// Function to get pension certificate
   Future<void> downloadPensionCertificate() async {
-    updateLoadingState(LoadingState.loading);
+    showDownloadLoader(context);
     final result = await pensionService.downloadPensionCertificate(
       employerNumber: selectedScheme.value.employerNumber ?? '',
       staffNumber: PSecureStorage().getBioData()?.staffNumber ?? '',
     );
     result.fold(
       (err) {
-        updateLoadingState(LoadingState.error);
+        PHelperFunction.pop();
         PPopupDialog(
           context,
         ).errorMessage(title: 'error'.tr, message: err.message);
       },
       (res) async {
-        updateLoadingState(LoadingState.completed);
-
+        PHelperFunction.pop();
+        PPopupDialog(
+          context,
+        ).successMessage(title: 'success'.tr, message: 'download_complete'.tr);
         await PHelperFunction.openFile(
           pdfData: res.data ?? Map<String, dynamic>.from({}),
           name: selectedScheme.value.penTypeDescription ?? '',

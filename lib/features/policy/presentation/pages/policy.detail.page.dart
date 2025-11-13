@@ -72,7 +72,9 @@ class PPolicyDetailPage extends StatelessWidget {
                 InvestmentWidget(
                   crossAxisAlignment: CrossAxisAlignment.end,
                   title: 'status'.tr,
-                  value: 'active'.tr,
+                  value: activeStatuses.contains(policy.status)
+                      ? 'active'.tr
+                      : 'inactive'.tr,
                 ),
               ],
             ),
@@ -253,7 +255,7 @@ class PPolicyDetailPage extends StatelessWidget {
                           context,
                           'sum_assured'.tr,
                           PFormatter.formatCurrency(
-                            amount: policy.sumAssured?.toDouble() ?? 0,
+                            amount: policy.sumAssured ?? 0,
                           ),
                         ),
                         Divider(height: PAppSize.s1),
@@ -261,7 +263,7 @@ class PPolicyDetailPage extends StatelessWidget {
                           context,
                           'cash_value'.tr,
                           PFormatter.formatCurrency(
-                            amount: policy.cashValue?.toDouble() ?? 0,
+                            amount: policy.availableBalance ?? 0,
                           ),
                         ),
                         Divider(height: PAppSize.s1),
@@ -270,7 +272,7 @@ class PPolicyDetailPage extends StatelessWidget {
                           'total_benefit'.tr,
                           PFormatter.formatCurrency(
                             amount:
-                                ((policy.cashValue ?? 0) +
+                                ((policy.availableBalance ?? 0) +
                                 (policy.sumAssured ?? 0)),
                           ),
                         ),

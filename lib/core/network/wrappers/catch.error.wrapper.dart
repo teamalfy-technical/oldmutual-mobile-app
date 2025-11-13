@@ -74,7 +74,7 @@ class CatchApiErrorWrapperImpl implements CatchApiErrorWrapper {
             // ApiErrorResponse error =
             //     ApiErrorResponse.fromJson(err.response?.data);
             pensionAppLogger.e(err.response?.data);
-            // errorMessage = err.response?.data['message'] ?? 'Bad request';
+            errorMessage = extractError(err.response?.data);
           } else if (err.response?.data is Map &&
               err.response!.data.containsKey('data')) {
             final error = err.response!.data['data'];
@@ -118,6 +118,8 @@ class CatchApiErrorWrapperImpl implements CatchApiErrorWrapper {
           return entry.value; // Return the error message found
         }
       }
+    } else if (response.containsKey("error")) {
+      return response['error'];
     } else {
       for (var entry in response.entries) {
         if (entry.value is List && entry.value.isNotEmpty) {

@@ -32,7 +32,11 @@ class PPolicyPage extends StatelessWidget {
                   : PAppColor.fillColor,
               child: TabBar(
                 indicatorColor: PAppColor.transparentColor,
-                padding: EdgeInsets.only(top: PAppSize.s4),
+                padding: EdgeInsets.only(
+                  top: PAppSize.s8,
+                  left: PAppSize.s12,
+                  right: PAppSize.s12,
+                ),
                 indicatorPadding: EdgeInsetsGeometry.all(PAppSize.s9),
                 indicatorWeight: 1,
                 dividerColor: PAppColor.transparentColor,

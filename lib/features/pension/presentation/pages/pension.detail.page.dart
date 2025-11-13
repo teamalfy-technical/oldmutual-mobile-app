@@ -131,11 +131,9 @@ class _PPensionDetailPageState extends State<PPensionDetailPage> {
                           InvestmentWidget(
                             crossAxisAlignment: CrossAxisAlignment.end,
                             title: 'status'.tr,
-                            value:
-                                widget.scheme.status
-                                    ?.toLowerCase()
-                                    .capitalizeFirst ??
-                                'active'.tr,
+                            value: activeStatuses.contains(widget.scheme.status)
+                                ? 'active'.tr
+                                : 'inactive'.tr,
                           ),
                         ],
                       ),

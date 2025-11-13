@@ -94,6 +94,10 @@ class PContributionHistoryVm extends GetxController {
 
         selectedYear = res.data?.first;
         selectedMonth = contributionMonths.first;
+        (res.data ?? []).sort(
+          (a, b) => (b.fundYear ?? '0').compareTo(a.fundYear ?? ""),
+        );
+
         contributionYears.value = res.data ?? [];
 
         await getAllContributions();

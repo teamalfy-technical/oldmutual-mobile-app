@@ -24,11 +24,14 @@ class Environment {
 
     final packageInfo = await PackageInfo.fromPlatform();
 
+    print(packageInfo.packageName);
+
     switch (packageInfo.packageName) {
-      case "com.oldmutual.pensions.app.dev":
+      case "com.oldmutual.pensions.app.dev" ||
+          "com.oldmutual.pensions.app.devo":
         _current = EnvironmentType.dev;
         break;
-      case "com.oldmutual.pensions.app":
+      case "com.oldmutual.pensions.app" || "com.oldmutual.pensions.app.prod":
         _current = EnvironmentType.prod;
         break;
       default:
