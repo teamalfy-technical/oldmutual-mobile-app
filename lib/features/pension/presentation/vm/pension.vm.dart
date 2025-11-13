@@ -133,11 +133,11 @@ class PPensionVm extends GetxController {
         PPopupDialog(
           context,
         ).successMessage(title: 'success'.tr, message: 'download_complete'.tr);
+        await Future.delayed(Duration(milliseconds: 1000));
         await PHelperFunction.openFile(
           pdfData: res.data ?? Map<String, dynamic>.from({}),
           name: selectedScheme.value.penTypeDescription ?? '',
         );
-
         // getProducts();
       },
     );

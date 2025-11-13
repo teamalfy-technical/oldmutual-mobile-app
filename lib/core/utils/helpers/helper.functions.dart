@@ -234,7 +234,11 @@ class PHelperFunction {
     // Open the file
     //   await OpenFilex.open(file.path);
     // if (file == null) return;
-    OpenFile.open(file.path);
+    try {
+      await OpenFile.open(file.path);
+    } catch (e) {
+      pensionAppLogger.e('Error opening file: ${e.toString()}');
+    }
   }
 
   // static BadgeType getBadgeType(String status) {

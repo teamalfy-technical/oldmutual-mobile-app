@@ -111,8 +111,8 @@ class PPolicyStatementVm extends GetxController {
         PPopupDialog(
           context,
         ).successMessage(title: 'success'.tr, message: 'download_complete'.tr);
-        await Future.delayed(Duration(milliseconds: 3000));
-        pensionAppLogger.e(res.data);
+        await Future.delayed(Duration(milliseconds: 1000));
+        // pensionAppLogger.e(res.data);
         await PHelperFunction.openFile(
           pdfData: res.data ?? Map<String, dynamic>.from({}),
           name: selectedPolicy?.planDescription ?? '',
