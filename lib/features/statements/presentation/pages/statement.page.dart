@@ -130,7 +130,9 @@ class PStatementPage extends StatelessWidget {
                               final statement = ctrl.statements[index];
                               return ListTile(
                                 title: Text(
-                                  'Statement ${statement.filters?.year}',
+                                  statement.filters?.year == 'All'
+                                      ? 'All Statements'
+                                      : 'Statement ${statement.filters?.year}',
                                   style: Theme.of(context).textTheme.bodyLarge
                                       ?.copyWith(
                                         fontSize: PAppSize.s14,

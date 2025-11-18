@@ -143,19 +143,22 @@ class PPolicyDetailPage extends StatelessWidget {
 
                   // },
                 ),
-                PAppSize.s8.horizontalSpace,
-                QuickActionWidget(
-                  label: 'investment_statement'.tr,
-                  icon: Assets.icons.downloadIcon.svg(
-                    color: PHelperFunction.isDarkMode(context)
-                        ? PAppColor.successLight
-                        : PAppColor.successDark,
+                if ((policy.availableBalance ?? 0) > 0) ...[
+                  PAppSize.s8.horizontalSpace,
+                  QuickActionWidget(
+                    label: 'investment_statement'.tr,
+                    icon: Assets.icons.downloadIcon.svg(
+                      color: PHelperFunction.isDarkMode(context)
+                          ? PAppColor.successLight
+                          : PAppColor.successDark,
+                    ),
+                    onTap: () {
+                      // download investment statement
+                      policyStatementVm.downloadInvestmentStatement();
+                    },
                   ),
-                  onTap: () {
-                    // download investment statement
-                    policyStatementVm.downloadInvestmentStatement();
-                  },
-                ),
+                ],
+
                 PAppSize.s8.horizontalSpace,
                 QuickActionWidget(
                   label: 'claim'.tr,
