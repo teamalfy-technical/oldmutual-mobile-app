@@ -42,6 +42,10 @@ Future<void> initDependencies() async {
   pensionAppLogger.e("Connecting to ${currentEnv.name}");
   pensionAppLogger.e("Connecting to ${currentEnv.apiBaseUrl}");
   await GetStorage.init();
+
+  // Initialize secure storage and migrate existing data
+  await PSecureStorage().init();
+
   //🔐 Initialize Firebase first
   await initFirebaseApp();
 

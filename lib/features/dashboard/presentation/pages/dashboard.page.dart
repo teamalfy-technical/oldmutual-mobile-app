@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:oldmutual_pensions_app/core/utils/utils.dart';
+import 'package:oldmutual_pensions_app/features/auth/domain/models/member.model.dart';
 import 'package:oldmutual_pensions_app/features/dashboard/dashboard.dart';
 import 'package:oldmutual_pensions_app/gen/assets.gen.dart';
 import 'package:oldmutual_pensions_app/shared/shared.dart';
@@ -27,11 +28,17 @@ class PDashboardPage1 extends StatelessWidget {
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
-                      Text(
-                        '${'welcome'.tr}, ${PSecureStorage().getAuthResponse()?.name ?? ''}',
-                        style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                          color: PAppColor.whiteColor,
-                        ),
+                      FutureBuilder<Member?>(
+                        future: PSecureStorage().getAuthResponse(),
+                        builder: (context, snapshot) {
+                          final name = snapshot.data?.name ?? '';
+                          return Text(
+                            '${'welcome'.tr}, $name',
+                            style: Theme.of(context).textTheme.titleSmall?.copyWith(
+                              color: PAppColor.whiteColor,
+                            ),
+                          );
+                        },
                       ),
                       PAppSize.s8.verticalSpace,
                       Text(

@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:oldmutual_pensions_app/core/utils/utils.dart';
-import 'package:oldmutual_pensions_app/features/settings/presentation/vm/settings.vm.dart';
 import 'package:oldmutual_pensions_app/features/settings/settings.dart';
 import 'package:oldmutual_pensions_app/gen/assets.gen.dart';
 import 'package:oldmutual_pensions_app/routes/app.pages.dart';
@@ -74,12 +73,19 @@ class PProfileSettingsPage extends StatelessWidget {
                     height: PAppSize.s0,
                   ),
                   SettingsListTile(
-                    leading: Assets.icons.faceId24.svg(
-                      height: PAppSize.s24,
-                      color: PHelperFunction.isDarkMode(context)
-                          ? PAppColor.whiteColor
-                          : PAppColor.darkAppBarColor,
-                    ),
+                    leading: PDeviceUtil.isAndroid()
+                        ? Assets.icons.fingerprint.svg(
+                            height: PAppSize.s24,
+                            color: PHelperFunction.isDarkMode(context)
+                                ? PAppColor.whiteColor
+                                : PAppColor.darkAppBarColor,
+                          )
+                        : Assets.icons.faceId24.svg(
+                            height: PAppSize.s24,
+                            color: PHelperFunction.isDarkMode(context)
+                                ? PAppColor.whiteColor
+                                : PAppColor.darkAppBarColor,
+                          ),
                     onTap: null,
 
                     padding: EdgeInsets.symmetric(
@@ -88,7 +94,9 @@ class PProfileSettingsPage extends StatelessWidget {
                     ),
 
                     title: Text(
-                      'enable_face_id'.tr,
+                      PDeviceUtil.isAndroid()
+                          ? 'enable_biometrics'.tr
+                          : 'enable_face_id'.tr,
                       style: Theme.of(context).textTheme.titleMedium?.copyWith(
                         fontWeight: FontWeight.w500,
                       ),

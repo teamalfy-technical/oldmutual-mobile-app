@@ -19,7 +19,7 @@ class PSplashVm extends GetxController {
   /// check if user is logged in or not
   /// [showSplashPage]
   void showSplashPage() async {
-    _timer = Timer(Duration(seconds: 3), () {
+    _timer = Timer(Duration(seconds: 3), () async {
       if (PSecureStorage().readData(PSecureStorage().onboardingKey) == null) {
         stop();
         PHelperFunction.switchScreen(
@@ -27,18 +27,18 @@ class PSplashVm extends GetxController {
           replace: true,
         );
       } else {
-        if (PSecureStorage().getAuthResponse()?.token != null) {
-          // PSecureStorage().removeData(PSecureStorage().authResKey);
-          // PHelperFunction.switchScreen(
-          //   destination: Routes.welcomeBackPage,
-          //   replace: true,
-          // );
+        // Check if user has valid auth token AND bioData (indicates active session)
+        final authResponse = await PSecureStorage().getAuthResponse();
+        final bioData = await PSecureStorage().getBioData();
+        final userEmail = await PSecureStorage().getUserEmail();
+
+        if (authResponse?.token != null && bioData != null) {
           final lastLoggedIn = PFormatter.calculateDateDiff(
-            PSecureStorage().getAuthResponse()!.lastLoggedIn!,
+            authResponse!.lastLoggedIn!,
             DateDiffUnit.days,
           );
           // redirect user to welcome back screen after been logged in for 3 days
-          if (lastLoggedIn >= 3 && PSecureStorage().getUserEmail() != null) {
+          if (lastLoggedIn >= 3 && userEmail != null) {
             stop();
             PHelperFunction.switchScreen(
               destination: Routes.welcomeBackPage,
@@ -52,7 +52,7 @@ class PSplashVm extends GetxController {
           }
           stop();
         } else {
-          if (PSecureStorage().getUserEmail() != null) {
+          if (userEmail != null) {
             PHelperFunction.switchScreen(
               destination: Routes.welcomeBackPage,
               replace: true,

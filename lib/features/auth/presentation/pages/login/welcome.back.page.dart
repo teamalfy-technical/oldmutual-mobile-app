@@ -31,6 +31,39 @@ class _PWelcomeBackPageState extends State<PWelcomeBackPage>
       lowerBound: 1.0,
       upperBound: 1.2,
     );
+
+    // Auto-trigger biometric authentication if enabled and user email exists
+    _autoTriggerBiometrics();
+  }
+
+  Future<void> _autoTriggerBiometrics() async {
+    // Small delay to ensure the page is fully loaded
+    await Future.delayed(const Duration(milliseconds: 300));
+
+    // Check if biometric authentication is enabled and user email exists
+    if (!PSecureStorage().isBiometricEnabled) {
+      pensionAppLogger.i(
+        'Biometric authentication is not enabled - skipping auto-trigger',
+      );
+      return;
+    }
+
+    final userEmail = await PSecureStorage().getUserEmail();
+    if (userEmail == null) {
+      pensionAppLogger.i('No user email found - skipping auto-trigger');
+      return;
+    }
+
+    // Check biometric availability (in case it's not ready yet)
+    await ctrl.checkBiometricAvailability();
+
+    if (!ctrl.isBiometricAvailable.value) {
+      pensionAppLogger.i('Biometrics not available - skipping auto-trigger');
+      return;
+    }
+
+    pensionAppLogger.i('Auto-triggering biometric authentication');
+    await ctrl.authenticateWithBiometrics(_controller);
   }
 
   @override
@@ -41,11 +74,6 @@ class _PWelcomeBackPageState extends State<PWelcomeBackPage>
 
   @override
   Widget build(BuildContext context) {
-    final name =
-        (PSecureStorage().getAuthResponse()?.name != null &&
-            PSecureStorage().getAuthResponse()!.name!.isNotEmpty)
-        ? PSecureStorage().getAuthResponse()?.name
-        : PSecureStorage().getBioData()?.firstName;
     return Scaffold(
       appBar: AppBar(
         title: null,
@@ -72,11 +100,19 @@ class _PWelcomeBackPageState extends State<PWelcomeBackPage>
                               ?.copyWith(fontWeight: FontWeight.w600),
                         ),
                         PAppSize.s4.verticalSpace,
-                        Text(
-                          name ?? 'User',
-                          textAlign: TextAlign.center,
-                          style: Theme.of(context).textTheme.headlineLarge
-                              ?.copyWith(fontWeight: FontWeight.w500),
+
+                        // Display user's first name (loaded async from secure storage)
+                        FutureBuilder<String?>(
+                          future: PSecureStorage().getUserFirstName(),
+                          builder: (context, snapshot) {
+                            final name = snapshot.data;
+                            return Text(
+                              name ?? 'User',
+                              textAlign: TextAlign.center,
+                              style: Theme.of(context).textTheme.headlineLarge
+                                  ?.copyWith(fontWeight: FontWeight.w500),
+                            );
+                          },
                         ),
 
                         PAppSize.s24.verticalSpace,
@@ -122,24 +158,32 @@ class _PWelcomeBackPageState extends State<PWelcomeBackPage>
 
                         PAppSize.s20.verticalSpace,
 
-                        if (PSecureStorage().isFaceIdEnabled &&
-                            ctrl.isBiometricAvailable.value &&
-                            PSecureStorage().getAuthResponse() != null) ...[
-                          ScaleTransition(
-                            scale: _controller.drive(
-                              CurveTween(curve: Curves.easeInOut),
-                            ),
-                            child: IconButton(
-                              onPressed: () async => await ctrl
-                                  .authenticateWithBiometrics(_controller),
-                              icon: PDeviceUtil.isIOS()
-                                  ? Assets.icons.fingerprint.svg()
-                                  : Assets.icons.faceId.svg(),
-                            ),
-                          ),
+                        // if (PSecureStorage().isFaceIdEnabled &&
+                        //     ctrl.isBiometricAvailable.value &&
+                        //     PSecureStorage().getAuthResponse() != null) ...[
+                        //   ScaleTransition(
+                        //     scale: _controller.drive(
+                        //       CurveTween(curve: Curves.easeInOut),
+                        //     ),
+                        //     child: IconButton(
+                        //       onPressed: () async => await ctrl
+                        //           .authenticateWithBiometrics(_controller),
+                        //       icon: PDeviceUtil.isAndroid()
+                        //           ? Assets.icons.fingerprint.svg(
+                        //               color: PHelperFunction.isDarkMode(context)
+                        //                   ? PAppColor.whiteColor
+                        //                   : PAppColor.darkBgColor,
+                        //             )
+                        //           : Assets.icons.faceId.svg(
+                        //               color: PHelperFunction.isDarkMode(context)
+                        //                   ? PAppColor.whiteColor
+                        //                   : PAppColor.darkBgColor,
+                        //             ),
+                        //     ),
+                        //   ),
 
-                          PAppSize.s4.verticalSpace,
-                        ],
+                        //   PAppSize.s4.verticalSpace,
+                        // ],
 
                         // Assets.icons.fingerprint.svg(),
                         PAppSize.s8.verticalSpace,
@@ -147,11 +191,15 @@ class _PWelcomeBackPageState extends State<PWelcomeBackPage>
                         // (PDeviceUtil.getDeviceWidth(context) * 0.25)
                         //     .verticalSpace,
                         TextButton(
-                          onPressed: () {
-                            if (PSecureStorage().getUserEmail() != null) {
-                              // clear cached user when user decides to login with different account
-                              PSecureStorage().removeData(
+                          onPressed: () async {
+                            final userEmail = await PSecureStorage().getUserEmail();
+                            if (userEmail != null) {
+                              // clear cached user data when user decides to login with different account
+                              await PSecureStorage().removeSecureData(
                                 PSecureStorage().emailKey,
+                              );
+                              await PSecureStorage().removeSecureData(
+                                PSecureStorage().firstNameKey,
                               );
                             }
                             PHelperFunction.switchScreen(

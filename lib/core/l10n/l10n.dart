@@ -157,6 +157,7 @@ class AppTranslations extends Translations {
       'reset_calculator': 'Reset Calculator',
       'download_as_pdf': 'Download results as PDF',
       'enable_face_id': 'Enable Face ID',
+      'enable_biometrics': 'Enable Biometrics',
       'crop_photo': 'Crop Photo',
       'support_title': 'How may we help you ?',
       'support_desc':

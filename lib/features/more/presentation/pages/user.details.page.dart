@@ -30,96 +30,108 @@ class PUserDetailPage extends StatelessWidget {
     );
   }
 
+  Future<Map<String, String?>> _getUserData() async {
+    final authResponse = await PSecureStorage().getAuthResponse();
+    final bioData = await PSecureStorage().getBioData();
+
+    final fullName = (authResponse?.name == null ||
+                     (authResponse?.name != null && authResponse!.name!.isEmpty))
+        ? bioData?.fullName
+        : authResponse?.name;
+
+    return {
+      'fullName': fullName,
+      'email': authResponse?.email,
+      'phone': authResponse?.phone,
+      'ghanaCardNumber': bioData?.ghanaCardNumber,
+      'ssnitNumber': bioData?.ssnitNumber,
+      'dob': authResponse?.dob,
+      'tin': bioData?.tin,
+    };
+  }
+
   @override
   Widget build(BuildContext context) {
-    final fullName =
-        (PSecureStorage().getAuthResponse()?.name == null ||
-            (PSecureStorage().getAuthResponse()?.name != null &&
-                PSecureStorage().getAuthResponse()!.name!.isEmpty))
-        ? PSecureStorage().getBioData()?.fullName
-        : PSecureStorage().getAuthResponse()?.name;
     return Scaffold(
       backgroundColor: PHelperFunction.isDarkMode(context)
           ? PAppColor.darkBgColor
           : PAppColor.fillColor,
       appBar: AppBar(title: Text('manage_personal_details'.tr)),
-      body: SafeArea(
-        child: Column(
-          children: [
-            // Personal Details
-            Container(
-              padding: EdgeInsets.all(PAppSize.s16),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(PAppSize.s20),
-                color: PHelperFunction.isDarkMode(context)
-                    ? PAppColor.darkAppBarColor
-                    : PAppColor.whiteColor,
-                border: Border.all(
-                  width: PAppSize.s1,
-                  color: PHelperFunction.isDarkMode(context)
-                      ? PAppColor.transparentColor
-                      : PAppColor.fillColor2,
-                ),
-              ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    fullName ?? '',
-                    style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                      fontWeight: FontWeight.w600,
+      body: FutureBuilder<Map<String, String?>>(
+        future: _getUserData(),
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return const Center(child: CircularProgressIndicator());
+          }
+
+          final userData = snapshot.data ?? {};
+
+          return SafeArea(
+            child: Column(
+              children: [
+                // Personal Details
+                Container(
+                  padding: EdgeInsets.all(PAppSize.s16),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(PAppSize.s20),
+                    color: PHelperFunction.isDarkMode(context)
+                        ? PAppColor.darkAppBarColor
+                        : PAppColor.whiteColor,
+                    border: Border.all(
+                      width: PAppSize.s1,
+                      color: PHelperFunction.isDarkMode(context)
+                          ? PAppColor.transparentColor
+                          : PAppColor.fillColor2,
                     ),
                   ),
-                  PAppSize.s8.verticalSpace,
-                  PMoreListTitle(
-                    title: 'email'.tr,
-                    subTitle:
-                        PSecureStorage().getAuthResponse()?.email ??
-                        'not_applicable'.tr,
-                  ),
-                  Divider(height: PAppSize.s1),
-                  PMoreListTitle(
-                    title: 'phone_number'.tr,
-                    subTitle:
-                        PSecureStorage().getAuthResponse()?.phone ??
-                        'not_applicable'.tr,
-                  ),
-                  Divider(height: PAppSize.s1),
-                  PMoreListTitle(
-                    title: 'ghana_card_id'.tr,
-                    subTitle:
-                        PSecureStorage().getBioData()?.ghanaCardNumber ??
-                        'not_applicable'.tr,
-                  ),
-                  Divider(height: PAppSize.s1),
-                  PMoreListTitle(
-                    title: 'ssnit_number'.tr,
-                    subTitle:
-                        PSecureStorage().getBioData()?.ssnitNumber ??
-                        'not_applicable'.tr,
-                  ),
-                  Divider(height: PAppSize.s1),
-                  PMoreListTitle(
-                    title: 'date_of_birth'.tr,
-                    subTitle: PFormatter.formatDate(
-                      dateFormat: DateFormat('MMMM d, y'),
-                      date: DateTime.parse(
-                        PSecureStorage().getAuthResponse()?.dob ??
-                            DateTime.now().toIso8601String(),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        userData['fullName'] ?? '',
+                        style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                          fontWeight: FontWeight.w600,
+                        ),
                       ),
-                    ),
+                      PAppSize.s8.verticalSpace,
+                      PMoreListTitle(
+                        title: 'email'.tr,
+                        subTitle: userData['email'] ?? 'not_applicable'.tr,
+                      ),
+                      Divider(height: PAppSize.s1),
+                      PMoreListTitle(
+                        title: 'phone_number'.tr,
+                        subTitle: userData['phone'] ?? 'not_applicable'.tr,
+                      ),
+                      Divider(height: PAppSize.s1),
+                      PMoreListTitle(
+                        title: 'ghana_card_id'.tr,
+                        subTitle: userData['ghanaCardNumber'] ?? 'not_applicable'.tr,
+                      ),
+                      Divider(height: PAppSize.s1),
+                      PMoreListTitle(
+                        title: 'ssnit_number'.tr,
+                        subTitle: userData['ssnitNumber'] ?? 'not_applicable'.tr,
+                      ),
+                      Divider(height: PAppSize.s1),
+                      PMoreListTitle(
+                        title: 'date_of_birth'.tr,
+                        subTitle: PFormatter.formatDate(
+                          dateFormat: DateFormat('MMMM d, y'),
+                          date: DateTime.parse(
+                            userData['dob'] ?? DateTime.now().toIso8601String(),
+                          ),
+                        ),
+                      ),
+                      Divider(height: PAppSize.s1),
+                      PMoreListTitle(
+                        title: 'tin'.tr.toUpperCase(),
+                        subTitle: userData['tin'] ?? 'not_applicable'.tr,
+                      ),
+                      Divider(height: PAppSize.s1),
+                    ],
                   ),
-                  Divider(height: PAppSize.s1),
-                  PMoreListTitle(
-                    title: 'tin'.tr.toUpperCase(),
-                    subTitle:
-                        PSecureStorage().getBioData()?.tin ??
-                        'not_applicable'.tr,
-                  ),
-                  Divider(height: PAppSize.s1),
-                ],
-              ),
-            ),
+                ),
 
             PAppSize.s16.verticalSpace,
 
@@ -192,6 +204,8 @@ class PUserDetailPage extends StatelessWidget {
             ),
           ],
         ).all(PAppSize.s20),
+      );
+        },
       ),
     );
   }

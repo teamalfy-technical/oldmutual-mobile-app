@@ -143,24 +143,32 @@ class _PLoginPageState extends State<PLoginPage>
 
                         PAppSize.s16.verticalSpace,
 
-                        if (PSecureStorage().isFaceIdEnabled &&
-                            ctrl.isBiometricAvailable.value &&
-                            PSecureStorage().getAuthResponse() != null) ...[
-                          ScaleTransition(
-                            scale: _controller.drive(
-                              CurveTween(curve: Curves.easeInOut),
-                            ),
-                            child: IconButton(
-                              onPressed: () async => await ctrl
-                                  .authenticateWithBiometrics(_controller),
-                              icon: PDeviceUtil.isIOS()
-                                  ? Assets.icons.fingerprint.svg()
-                                  : Assets.icons.faceId.svg(),
-                            ),
-                          ),
+                        // if (PSecureStorage().isFaceIdEnabled &&
+                        //     ctrl.isBiometricAvailable.value &&
+                        //     PSecureStorage().getAuthResponse() != null) ...[
+                        //   ScaleTransition(
+                        //     scale: _controller.drive(
+                        //       CurveTween(curve: Curves.easeInOut),
+                        //     ),
+                        //     child: IconButton(
+                        //       onPressed: () async => await ctrl
+                        //           .authenticateWithBiometrics(_controller),
+                        //       icon: PDeviceUtil.isAndroid()
+                        //           ? Assets.icons.fingerprint.svg(
+                        //               color: PHelperFunction.isDarkMode(context)
+                        //                   ? PAppColor.whiteColor
+                        //                   : PAppColor.darkBgColor,
+                        //             )
+                        //           : Assets.icons.faceId.svg(
+                        //               color: PHelperFunction.isDarkMode(context)
+                        //                   ? PAppColor.whiteColor
+                        //                   : PAppColor.darkBgColor,
+                        //             ),
+                        //     ),
+                        //   ),
 
-                          PAppSize.s4.verticalSpace,
-                        ],
+                        //   PAppSize.s4.verticalSpace,
+                        // ],
 
                         // (PDeviceUtil.getDeviceWidth(context) * 0.20)
                         //     .verticalSpace,

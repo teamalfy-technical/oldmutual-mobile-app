@@ -4,6 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:oldmutual_pensions_app/core/utils/utils.dart';
+import 'package:oldmutual_pensions_app/features/auth/domain/models/member.model.dart';
 import 'package:oldmutual_pensions_app/features/contribution.history/contribution.history.dart';
 import 'package:oldmutual_pensions_app/features/factsheet/factsheet.dart';
 import 'package:oldmutual_pensions_app/features/home/home.dart';
@@ -162,52 +163,58 @@ class PHomeViewOld extends StatelessWidget {
                 // height: PDeviceUtil.getDeviceHeight(context) / 4.0,
                 height: PDeviceUtil.getDeviceHeight(context) * 0.27,
                 decoration: BoxDecoration(color: PAppColor.blackColor),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
-                      '${'welcome'.tr}, ${PSecureStorage().getAuthResponse()?.name ?? ''}',
-                      style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                        color: PAppColor.whiteColor,
-                        fontWeight: FontWeight.w700,
-                      ),
-                    ),
-                    PAppSize.s6.verticalSpace,
-                    Text(
-                      '${PSecureStorage().getAuthResponse()?.schemeType}',
-                      style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                        color: PAppColor.whiteColor,
-                        fontWeight: FontWeight.w500,
-                        fontSize: PAppSize.s14,
-                      ),
-                    ),
-                    PAppSize.s6.verticalSpace,
-                    Text(
-                      PSecureStorage().getAuthResponse()?.employerName ?? '',
-                      textAlign: TextAlign.center,
-                      style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                        color: PAppColor.whiteColor,
-                        fontWeight: FontWeight.w500,
-                        fontSize: PAppSize.s12,
-                      ),
-                    ),
-                    PAppSize.s14.verticalSpace,
-                    Text(
-                      'view_all_schemes'.tr,
-                      textAlign: TextAlign.start,
-                      style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                        color: PAppColor.primary,
-                        fontWeight: FontWeight.w600,
-                        decoration: TextDecoration.underline,
-                        decorationColor: PAppColor.primary,
-                        fontSize: PAppSize.s13,
-                      ),
-                    ).onPressed(
-                      onTap: () => PHelperFunction.switchScreen(
-                        destination: Routes.dashboardPage,
-                      ),
-                    ),
-                  ],
+                child: FutureBuilder<Member?>(
+                  future: PSecureStorage().getAuthResponse(),
+                  builder: (context, snapshot) {
+                    final authResponse = snapshot.data;
+                    return Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          '${'welcome'.tr}, ${authResponse?.name ?? ''}',
+                          style: Theme.of(context).textTheme.titleSmall?.copyWith(
+                            color: PAppColor.whiteColor,
+                            fontWeight: FontWeight.w700,
+                          ),
+                        ),
+                        PAppSize.s6.verticalSpace,
+                        Text(
+                          '${authResponse?.schemeType ?? ''}',
+                          style: Theme.of(context).textTheme.titleSmall?.copyWith(
+                            color: PAppColor.whiteColor,
+                            fontWeight: FontWeight.w500,
+                            fontSize: PAppSize.s14,
+                          ),
+                        ),
+                        PAppSize.s6.verticalSpace,
+                        Text(
+                          authResponse?.employerName ?? '',
+                          textAlign: TextAlign.center,
+                          style: Theme.of(context).textTheme.titleSmall?.copyWith(
+                            color: PAppColor.whiteColor,
+                            fontWeight: FontWeight.w500,
+                            fontSize: PAppSize.s12,
+                          ),
+                        ),
+                        PAppSize.s14.verticalSpace,
+                        Text(
+                          'view_all_schemes'.tr,
+                          textAlign: TextAlign.start,
+                          style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                            color: PAppColor.primary,
+                            fontWeight: FontWeight.w600,
+                            decoration: TextDecoration.underline,
+                            decorationColor: PAppColor.primary,
+                            fontSize: PAppSize.s13,
+                          ),
+                        ).onPressed(
+                          onTap: () => PHelperFunction.switchScreen(
+                            destination: Routes.dashboardPage,
+                          ),
+                        ),
+                      ],
+                    );
+                  },
                 ),
               ),
               // PAppSize.s6.verticalSpace,

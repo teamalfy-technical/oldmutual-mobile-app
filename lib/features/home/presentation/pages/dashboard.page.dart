@@ -36,24 +36,23 @@ class PDashboardPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final name =
-        (PSecureStorage().getAuthResponse()?.name != null &&
-            PSecureStorage().getAuthResponse()!.name!.isNotEmpty)
-        ? PSecureStorage().getAuthResponse()?.name
-        : PSecureStorage().getBioData()?.firstName ?? '';
     return Obx(
       () => Scaffold(
         backgroundColor: PHelperFunction.isDarkMode(context)
             ? PAppColor.darkBgColor
             : PAppColor.fillColor,
         appBar: AppBar(
-          title: Text(
-            ctrl.currentIndex.value == 1
-                ? 'manage'.tr
-                : ctrl.currentIndex.value == 2
-                ? 'more'.tr
-                : 'Hi $name',
-          ),
+          title: ctrl.currentIndex.value == 1
+              ? Text('manage'.tr)
+              : ctrl.currentIndex.value == 2
+              ? Text('more'.tr)
+              : FutureBuilder<String?>(
+                  future: PSecureStorage().getUserFirstName(),
+                  builder: (context, snapshot) {
+                    final name = snapshot.data ?? '';
+                    return Text('Hi $name');
+                  },
+                ),
           // title: Text('Hi Bongani'),
           actions: [
             IconButton(

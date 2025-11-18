@@ -20,12 +20,23 @@ class PSettingsVm extends GetxController {
   final newPasswordTEC = TextEditingController();
   final confirmPasswordTEC = TextEditingController();
 
-  var notification =
-      PSecureStorage().getAuthResponse()?.notificationsEnabled == "True"
-      ? true.obs
-      : false.obs;
+  var notification = false.obs;
 
-  var faceId = PSecureStorage().isFaceIdEnabled.obs;
+  @override
+  void onInit() {
+    init();
+    super.onInit();
+  }
+
+  Future<void> init() async {
+    notification.value =
+        (await PSecureStorage().getAuthResponse())?.notificationsEnabled ==
+            "True"
+        ? true
+        : false;
+  }
+
+  var faceId = PSecureStorage().isBiometricEnabled.obs;
 
   var submitting = LoadingState.completed.obs;
 
@@ -66,13 +77,26 @@ class PSettingsVm extends GetxController {
 
   onFaceIdToggled(bool? value) async {
     if (faceId.value) {
-      await PSecureStorage().saveFaceID(false);
+      // Disabling Face ID - delete stored biometric password
+      await PSecureStorage().saveBiometric(false);
+      await PSecureStorage().deleteBiometricPassword();
       faceId.value = value ?? false;
+      PPopupDialog(context).successMessage(
+        title: 'success'.tr,
+        message:
+            '${PDeviceUtil.isAndroid() ? 'Biometrics' : 'Face ID'} have been disabled. You\'ll not be able to login with your biometrics.',
+      );
     } else {
-      await PSecureStorage().saveFaceID(true);
+      // Enabling Face ID - password will be stored on next successful login
+      await PSecureStorage().saveBiometric(true);
       faceId.value = value ?? false;
+      PPopupDialog(context).successMessage(
+        title: 'success'.tr,
+        message:
+            '${PDeviceUtil.isAndroid() ? 'Biometrics' : 'Face ID'} has been enabled. You can now login securely with your biometrics.',
+      );
     }
-    pensionAppLogger.e(PSecureStorage().isFaceIdEnabled);
+    pensionAppLogger.e(PSecureStorage().isBiometricEnabled);
   }
 
   onNotificationChanged(bool? value) async {
@@ -187,14 +211,20 @@ class PSettingsVm extends GetxController {
   /// soft - defines the level of logout
   /// false if you logged out manually
   /// true if user was logged out due to inactivity
-  void clearCache(bool soft) {
+  Future<void> clearCache(bool soft) async {
     if (soft == false) {
-      PSecureStorage().removeData(PSecureStorage().emailKey);
-      PSecureStorage().removeData(PSecureStorage().authResKey);
-      PSecureStorage().removeData(PSecureStorage().deviceTokenKey);
+      // Manual logout - clear everything including email, first name, and biometric credentials
+      await PSecureStorage().removeSecureData(PSecureStorage().emailKey);
+      await PSecureStorage().removeSecureData(PSecureStorage().firstNameKey);
+      await PSecureStorage().removeSecureData(PSecureStorage().authResKey);
+      await PSecureStorage().removeSecureData(PSecureStorage().deviceTokenKey);
+      await PSecureStorage().deleteBiometricPassword();
+    } else {
+      // Soft logout (inactivity) - clear auth and bioData but keep email and first name for welcome back personalization
+      await PSecureStorage().removeSecureData(PSecureStorage().authResKey);
     }
-    PSecureStorage().removeData(PSecureStorage().bioDataKey);
-    // PSecureStorage().removeData(PSecureStorage().tokenResKey);
+    await PSecureStorage().removeSecureData(PSecureStorage().bioDataKey);
+    // await PSecureStorage().removeSecureData(PSecureStorage().tokenResKey);
   }
 
   Future<void> deleteAccount() async {

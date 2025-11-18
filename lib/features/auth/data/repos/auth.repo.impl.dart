@@ -114,7 +114,9 @@ class AuthRepoImpl implements AuthRepo {
           emailOrPhone: emailOrPhone,
           otp: otp,
         );
-        PSecureStorage().saveAuthResponse(res.data?.toJson());
+        if (res.data != null) {
+          await PSecureStorage().saveAuthResponse(res.data!.toJson());
+        }
         return res;
       },
     );
@@ -188,7 +190,9 @@ class AuthRepoImpl implements AuthRepo {
         //   PSecureStorage().tokenResKey,
         //   res.data?.token,
         // );
-        PSecureStorage().saveAuthResponse(res.data?.toJson());
+        if (res.data != null) {
+          await PSecureStorage().saveAuthResponse(res.data!.toJson());
+        }
         return res;
       },
     );

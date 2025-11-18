@@ -14,6 +14,8 @@ class PProfileVm extends GetxController {
   var profileFile = File('').obs;
 
   var profile = Member().obs;
+  var bioData = BioData().obs;
+  var authResponse = Member().obs;
 
   var loading = LoadingState.completed.obs;
 
@@ -24,7 +26,16 @@ class PProfileVm extends GetxController {
   @override
   void onInit() {
     super.onInit();
+    loadStoredData();
     getProfile();
+  }
+
+  /// Load cached data from secure storage
+  Future<void> loadStoredData() async {
+    final auth = await PSecureStorage().getAuthResponse();
+    final bio = await PSecureStorage().getBioData();
+    if (auth != null) authResponse.value = auth;
+    if (bio != null) bioData.value = bio;
   }
 
   /// Function to get all beneficiaries
@@ -48,8 +59,11 @@ class PProfileVm extends GetxController {
 
   Future<void> getBioData() async {
     final result = await authService.getBioData();
-    result.fold((err) {}, (res) {
-      PSecureStorage().saveBioData(res.data?.first.toJson());
+    result.fold((err) {}, (res) async {
+      if (res.data != null && res.data!.isNotEmpty) {
+        await PSecureStorage().saveBioData(res.data!.first.toJson());
+        bioData.value = res.data!.first;
+      }
     });
   }
 

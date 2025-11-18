@@ -46,54 +46,71 @@ class PRedemptionVm extends GetxController {
   String? selectedRedemptionType = 'Total';
   String? selectedRedemptionValue = 'Percentage';
   String? selectedRedemptionReason = 'none'.tr;
-  List<String> redemptionTypes =
-      PSecureStorage().getAuthResponse()!.schemeType!.contains('TIER 2')
-      ? ['Total']
-      : ['Total', 'Partial'];
 
-  List<String> redemptionValues = ['Percentage', 'Amount'];
+  var redemptionTypes = <String>['Total', 'Partial'].obs;
+  var redemptionValues = <String>['Percentage', 'Amount'].obs;
+  var redemptionReasons = <String>[
+    'None',
+    'Retirement',
+    'Voluntary Retirement',
+    'Resignation',
+    'Death',
+    'Total Incapacity',
+    'Permanent Emigration from Ghana',
+    'Other (Specify)',
+  ].obs;
 
-  List<String> redemptionReasons =
-      PSecureStorage().getAuthResponse()!.schemeType!.contains('TIER 2')
-      ? [
-          'None',
-          'Retirement',
-          'Voluntary Retirement',
-          'Death',
-          'Total Incapacity',
-          'Permanent Emigration from Ghana',
-          'Other (Specify)',
-        ]
-      : PSecureStorage().getAuthResponse()!.masterScheme!.contains('PRESTIGE')
-      ? [
-          'None',
-          'Voluntary Retirement',
-          'Death',
-          'Total Incapacity',
-          'Permanent Emigration from Ghana',
-          'Other (Specify)',
-        ]
-      : [
-          'None',
-          'Retirement',
-          'Voluntary Retirement',
-          'Resignation',
-          'Death',
-          'Total Incapacity',
-          'Permanent Emigration from Ghana',
-          'Other (Specify)',
-        ];
+  @override
+  void onInit() {
+    super.onInit();
+    _initializeRedemptionOptions();
+  }
 
-  // @override
-  // void onInit() {
-  //   super.onInit();
-  //   final schemeType =
-  //       PSecureStorage().getAuthResponse()!.schemeType ??
-  //       Get.put(PDashboardVm()).selectedScheme.value.schemeType ??
-  //       '';
-  //   redemptionTypes =
-  //       schemeType.contains('TIER 2') ? ['Total'] : ['Total', 'Partial'];
-  // }
+  Future<void> _initializeRedemptionOptions() async {
+    final authResponse = await PSecureStorage().getAuthResponse();
+    final schemeType = authResponse?.schemeType ?? '';
+    final masterScheme = authResponse?.masterScheme ?? '';
+
+    // Initialize redemption types based on scheme type
+    if (schemeType.contains('TIER 2')) {
+      redemptionTypes.value = ['Total'];
+    } else {
+      redemptionTypes.value = ['Total', 'Partial'];
+    }
+
+    // Initialize redemption reasons based on scheme type and master scheme
+    if (schemeType.contains('TIER 2')) {
+      redemptionReasons.value = [
+        'None',
+        'Retirement',
+        'Voluntary Retirement',
+        'Death',
+        'Total Incapacity',
+        'Permanent Emigration from Ghana',
+        'Other (Specify)',
+      ];
+    } else if (masterScheme.contains('PRESTIGE')) {
+      redemptionReasons.value = [
+        'None',
+        'Voluntary Retirement',
+        'Death',
+        'Total Incapacity',
+        'Permanent Emigration from Ghana',
+        'Other (Specify)',
+      ];
+    } else {
+      redemptionReasons.value = [
+        'None',
+        'Retirement',
+        'Voluntary Retirement',
+        'Resignation',
+        'Death',
+        'Total Incapacity',
+        'Permanent Emigration from Ghana',
+        'Other (Specify)',
+      ];
+    }
+  }
 
   onRedemptionChanged(value) {
     selectedRedemptionType = value;

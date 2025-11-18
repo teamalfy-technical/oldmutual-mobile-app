@@ -85,14 +85,19 @@ class PAuthVm extends GetxController {
     // Animate the Face ID icon (shrink → expand → shrink back)
     await controller.forward();
     await controller.reverse();
+
+    // Authenticate with biometrics
     final success = await LocalAuthService().authenticateUser();
-    if (success) {
-      PHelperFunction.switchScreen(
-        destination: Routes.dashboardPage,
-        replace: true,
+
+    if (!success) {
+      PPopupDialog(context).errorMessage(
+        title: 'error'.tr,
+        message: 'Biometric authentication failed. Please try again.',
       );
+      return;
     }
-    pensionAppLogger.e(success);
+
+    await login();
   }
 
   /// Function to verify user Ghana Card before signup
@@ -152,8 +157,11 @@ class PAuthVm extends GetxController {
     loading(LoadingState.loading);
 
     final emailOrPhone =
-        PSecureStorage().getUserEmail() ?? emailOrPhoneTEC.text.trim();
-    final password = passwordTEC.text.trim();
+        await PSecureStorage().getUserEmail() ?? emailOrPhoneTEC.text.trim();
+
+    final password =
+        await PSecureStorage().getBiometricPassword() ??
+        passwordTEC.text.trim();
 
     final result = await authService.signIn(
       emailOrPhone: PHelperFunction.isPhone(emailOrPhone)
@@ -174,7 +182,13 @@ class PAuthVm extends GetxController {
       },
       (res) async {
         // loading(LoadingState.completed);
-        PSecureStorage().saveUserEmail<String>(emailOrPhone);
+        await PSecureStorage().saveUserEmail(emailOrPhone);
+
+        // Store password securely if biometric authentication is enabled
+        if (PSecureStorage().isBiometricEnabled) {
+          await PSecureStorage().saveBiometricPassword(password);
+        }
+
         if (PDeviceUtil.isAndroid()) {
           await PNotificationService().saveToken();
         }
@@ -197,9 +211,20 @@ class PAuthVm extends GetxController {
           context,
         ).errorMessage(title: 'error'.tr, message: err.message);
       },
-      (res) {
+      (res) async {
         loading(LoadingState.completed);
-        PSecureStorage().saveBioData(res.data?.first.toJson() ?? BioData());
+        final bioData = res.data?.first;
+
+        // Save bio data securely
+        if (bioData != null) {
+          await PSecureStorage().saveBioData(bioData.toJson());
+
+          // Save first name for welcome back page personalization
+          if (bioData.firstName != null && bioData.firstName!.isNotEmpty) {
+            await PSecureStorage().saveUserFirstName(bioData.firstName!);
+          }
+        }
+
         PHelperFunction.switchScreen(
           destination: Routes.dashboardPage,
           replace: true,

@@ -31,11 +31,17 @@ class PMorePage extends StatelessWidget {
               children: [
                 PAppSize.s14.verticalSpace,
                 // Username
-                Text(
-                  '${PSecureStorage().getAuthResponse()?.name}',
-                  style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                    fontWeight: FontWeight.w600,
-                  ),
+                FutureBuilder<String?>(
+                  future: PSecureStorage().getUserFirstName(),
+                  builder: (context, snapshot) {
+                    final name = snapshot.data ?? '';
+                    return Text(
+                      name,
+                      style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                        fontWeight: FontWeight.w600,
+                      ),
+                    );
+                  },
                 ),
 
                 PAppSize.s8.verticalSpace,

@@ -119,7 +119,7 @@ class PPensionVm extends GetxController {
     showDownloadLoader(context);
     final result = await pensionService.downloadPensionCertificate(
       employerNumber: selectedScheme.value.employerNumber ?? '',
-      staffNumber: PSecureStorage().getBioData()?.staffNumber ?? '',
+      staffNumber: (await PSecureStorage().getBioData())?.staffNumber ?? '',
     );
     result.fold(
       (err) {
@@ -171,8 +171,9 @@ class PPensionVm extends GetxController {
         },
         (res) async {
           selectedScheme(scheme);
+          final authRes = await PSecureStorage().getAuthResponse();
           // selectedScheme.value = res.data ?? SelectedScheme();
-          final updatedMember = PSecureStorage().getAuthResponse()?.copyWith(
+          final updatedMember = authRes?.copyWith(
             masterScheme: res.data?.masterScheme ?? '',
             schemeType: res.data?.schemeType ?? '',
             name: res.data?.name ?? '',
@@ -192,8 +193,8 @@ class PPensionVm extends GetxController {
             updatedAt: res.data?.updatedAt ?? '',
           );
           pensionAppLogger.e(res.data?.toJson());
-          PSecureStorage().saveAuthResponse(updatedMember?.toJson());
-          pensionAppLogger.e(PSecureStorage().getAuthResponse()?.toJson());
+          PSecureStorage().saveAuthResponse(updatedMember?.toJson() ?? {});
+          // pensionAppLogger.e(PSecureStorage().getAuthResponse()?.toJson());
           await Get.put(PContributionHistoryVm()).getContributionsSummary();
           updateLoadingState(LoadingState.completed);
         },

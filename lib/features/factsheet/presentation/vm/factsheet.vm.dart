@@ -151,7 +151,8 @@ class PFactsheetVm extends GetxController {
     //         ? await getExternalStorageDirectory()
     //         : await getApplicationDocumentsDirectory();
     final file = File("${appStorage.path}/$fileName");
-    String? token = PSecureStorage().getAuthResponse()?.token;
+    final authResponse = await PSecureStorage().getAuthResponse();
+    String? token = authResponse?.token;
     String secureUrl = url.replaceFirst('http://', 'https://');
     pensionAppLogger.e(url);
 

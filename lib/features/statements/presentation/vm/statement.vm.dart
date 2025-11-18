@@ -292,7 +292,7 @@ class PStatementVm extends GetxController {
   Future<File?> downloadFile(String url, String fileName) async {
     final appStorage = await getApplicationDocumentsDirectory();
     final file = File("${appStorage.path}/$fileName");
-    String? token = PSecureStorage().getAuthResponse()?.token;
+    String? token = (await PSecureStorage().getAuthResponse())?.token;
     try {
       final response = await Dio().get(
         url,

@@ -97,7 +97,8 @@ class PDashboardVm extends GetxController {
       },
       (res) async {
         selectedScheme.value = res.data ?? SelectedSchemeModel();
-        final updatedMember = PSecureStorage().getAuthResponse()?.copyWith(
+        final authResponse = await PSecureStorage().getAuthResponse();
+        final updatedMember = authResponse?.copyWith(
           masterScheme: res.data?.masterScheme ?? '',
           schemeType: res.data?.schemeType ?? '',
           name: res.data?.name ?? '',
@@ -117,8 +118,11 @@ class PDashboardVm extends GetxController {
           updatedAt: res.data?.updatedAt ?? '',
         );
         pensionAppLogger.e(res.data?.toJson());
-        PSecureStorage().saveAuthResponse(updatedMember?.toJson());
-        pensionAppLogger.e(PSecureStorage().getAuthResponse()?.toJson());
+        if (updatedMember != null) {
+          await PSecureStorage().saveAuthResponse(updatedMember.toJson());
+        }
+        final updatedAuthResponse = await PSecureStorage().getAuthResponse();
+        pensionAppLogger.e(updatedAuthResponse?.toJson());
         await Get.put(PContributionHistoryVm()).getContributionsSummary();
         // updateSelectingState(LoadingState.completed);
         PHelperFunction.pop();
