@@ -156,7 +156,7 @@ class PStatementPage extends StatelessWidget {
                                 trailing: TextButton(
                                   onPressed: () => ctrl.openFile(
                                     url: statement.downloadUrl ?? '',
-                                    fileName: ctrl.all.value
+                                    fileName: statement.filters?.year == 'All'
                                         ? 'All_Contributions_Report.pdf'
                                         : 'Contributions_${statement.filters?.year ?? ''}_Report.pdf',
                                   ),

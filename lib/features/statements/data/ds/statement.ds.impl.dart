@@ -60,11 +60,10 @@ class StatementDsImpl implements StatementDs {
       );
 
       // Parse and filter
-      final statements =
-          (res['data'] as List)
-              .map((e) => Statement.fromJson(e))
-              .where((s) => s.downloadUrl != null && s.downloadUrl!.isNotEmpty)
-              .toList();
+      final statements = (res['data'] as List)
+          .map((e) => Statement.fromJson(e))
+          .where((s) => s.downloadUrl != null && s.downloadUrl!.isNotEmpty)
+          .toList();
       return ApiResponse<List<Statement>>.fromJson(res, (_) => statements);
     });
   }

@@ -1,5 +1,4 @@
 import 'dart:io';
-import 'dart:math';
 
 // import 'package:flutter_downloader/flutter_downloader.dart';
 import 'package:dio/dio.dart';
@@ -15,9 +14,9 @@ import 'package:path_provider/path_provider.dart';
 class PStatementVm extends GetxController {
   static PStatementVm get instance => Get.find();
 
-  var all = false.obs;
+  // var all = false.obs;
 
-  onAllChanged(bool? value) => all.value = value ?? false;
+  // onAllChanged(bool? value) => all.value = value ?? false;
 
   var contributionYears = <ContributedYear>[].obs;
 
@@ -128,7 +127,7 @@ class PStatementVm extends GetxController {
 
     updateGeneratingState(LoadingState.loading);
     final result = await statementService.generateReportV2(
-      all: selectedYear?.fundYear == 'all'.tr ? all.value : false,
+      all: selectedYear?.fundYear == 'all'.tr ? true : false,
       year: selectedYear?.fundYear == 'all'.tr
           ? DateTime.now().year
           : int.parse(selectedYear?.fundYear ?? DateTime.now().year.toString()),
@@ -168,90 +167,90 @@ class PStatementVm extends GetxController {
   }
 
   /// Function to generate report
-  Future<void> generateReport() async {
-    if (all.value == false) {
-      if (selectedYear == null || selectedYear?.fundYear == 'none'.tr) {
-        PPopupDialog(context).informationMessage(
-          title: 'action_required'.tr,
-          message: 'Select a year to proceed',
-        );
-        return;
-      }
-    }
-    updateGeneratingState(LoadingState.loading);
-    final result = await statementService.generateReport(
-      all: all.value,
-      year: selectedYear?.fundYear == 'none'.tr
-          ? DateTime.now().year
-          : int.parse(selectedYear?.fundYear ?? DateTime.now().year.toString()),
-    );
-    result.fold(
-      (err) {
-        updateGeneratingState(LoadingState.error);
-        PPopupDialog(
-          context,
-        ).errorMessage(title: 'error'.tr, message: err.message);
-      },
-      (res) {
-        // updateGeneratingState(LoadingState.completed);
-        // PPopupDialog(
-        //   context,
-        // ).successMessage(title: 'success'.tr, message: res.data ?? '');
-        generatedReport.value = res;
-        Future.delayed(Duration(seconds: 6), () {
-          downloadGeneratedReport(res);
-        });
-      },
-    );
-  }
+  // Future<void> generateReport() async {
+  //   if (all.value == false) {
+  //     if (selectedYear == null || selectedYear?.fundYear == 'none'.tr) {
+  //       PPopupDialog(context).informationMessage(
+  //         title: 'action_required'.tr,
+  //         message: 'Select a year to proceed',
+  //       );
+  //       return;
+  //     }
+  //   }
+  //   updateGeneratingState(LoadingState.loading);
+  //   final result = await statementService.generateReport(
+  //     all: all.value,
+  //     year: selectedYear?.fundYear == 'none'.tr
+  //         ? DateTime.now().year
+  //         : int.parse(selectedYear?.fundYear ?? DateTime.now().year.toString()),
+  //   );
+  //   result.fold(
+  //     (err) {
+  //       updateGeneratingState(LoadingState.error);
+  //       PPopupDialog(
+  //         context,
+  //       ).errorMessage(title: 'error'.tr, message: err.message);
+  //     },
+  //     (res) {
+  //       // updateGeneratingState(LoadingState.completed);
+  //       // PPopupDialog(
+  //       //   context,
+  //       // ).successMessage(title: 'success'.tr, message: res.data ?? '');
+  //       generatedReport.value = res;
+  //       Future.delayed(Duration(seconds: 6), () {
+  //         downloadGeneratedReport(res);
+  //       });
+  //     },
+  //   );
+  // }
 
-  /// Function to get report status
-  Future<void> downloadGeneratedReport(GenerateReport report) async {
-    updateGeneratingState(LoadingState.loading);
-    final result = await statementService.downloadReport(
-      reportId: generatedReport.value.message?.reportId ?? 0,
-    );
-    result.fold(
-      (err) {
-        updateGeneratingState(LoadingState.error);
-        PPopupDialog(
-          context,
-        ).errorMessage(title: 'error'.tr, message: err.message);
-      },
-      (res) {
-        updateGeneratingState(LoadingState.completed);
-        // PPopupDialog(
-        //   context,
-        // ).successMessage(title: 'success'.tr, message: res.message ?? '');
-        final base = ReportDownload.fromJson(res.data!.toJson());
+  // /// Function to get report status
+  // Future<void> downloadGeneratedReport(GenerateReport report) async {
+  //   updateGeneratingState(LoadingState.loading);
+  //   final result = await statementService.downloadReport(
+  //     reportId: generatedReport.value.message?.reportId ?? 0,
+  //   );
+  //   result.fold(
+  //     (err) {
+  //       updateGeneratingState(LoadingState.error);
+  //       PPopupDialog(
+  //         context,
+  //       ).errorMessage(title: 'error'.tr, message: err.message);
+  //     },
+  //     (res) {
+  //       updateGeneratingState(LoadingState.completed);
+  //       // PPopupDialog(
+  //       //   context,
+  //       // ).successMessage(title: 'success'.tr, message: res.message ?? '');
+  //       final base = ReportDownload.fromJson(res.data!.toJson());
 
-        final updatedReport = base.copyWith(
-          period: all.value ? 'All' : selectedYear?.fundYear ?? '',
-          createdAt: DateTime.now().toIso8601String(),
-        );
-        final statement = Statement(
-          id: Random().nextInt(1000),
-          userId: Random().nextInt(10000),
-          filters: Filters(year: updatedReport.period ?? ''),
-          downloadUrl: updatedReport.downloadUrl,
-          createdAt: updatedReport.createdAt,
-          updatedAt: updatedReport.createdAt,
-        );
-        statements.insert(0, statement);
-        pensionAppLogger.e(statements.map((e) => e.toJson()).toList());
-        // PPopupDialog(
-        //   context,
-        // ).successMessage(title: 'success'.tr, message: report.data ?? '');
-        // openFile(
-        //   url: res.data?.downloadUrl ?? '',
-        //   // "https://example.com/sample.pdf",
-        //   fileName: "contributions_report_3_1746207518.pdf",
-        //   // fileName: "intro98.pdf",
-        // );
-        // reportStatus.value = res;
-      },
-    );
-  }
+  //       final updatedReport = base.copyWith(
+  //         period: all.value ? 'All' : selectedYear?.fundYear ?? '',
+  //         createdAt: DateTime.now().toIso8601String(),
+  //       );
+  //       final statement = Statement(
+  //         id: Random().nextInt(1000),
+  //         userId: Random().nextInt(10000),
+  //         filters: Filters(year: updatedReport.period ?? ''),
+  //         downloadUrl: updatedReport.downloadUrl,
+  //         createdAt: updatedReport.createdAt,
+  //         updatedAt: updatedReport.createdAt,
+  //       );
+  //       statements.insert(0, statement);
+  //       pensionAppLogger.e(statements.map((e) => e.toJson()).toList());
+  //       // PPopupDialog(
+  //       //   context,
+  //       // ).successMessage(title: 'success'.tr, message: report.data ?? '');
+  //       // openFile(
+  //       //   url: res.data?.downloadUrl ?? '',
+  //       //   // "https://example.com/sample.pdf",
+  //       //   fileName: "contributions_report_3_1746207518.pdf",
+  //       //   // fileName: "intro98.pdf",
+  //       // );
+  //       // reportStatus.value = res;
+  //     },
+  //   );
+  // }
 
   /// Function to check report status
   Future<void> checkReportStatus(int? reportId) async {
