@@ -158,6 +158,9 @@ class AppTranslations extends Translations {
       'download_as_pdf': 'Download results as PDF',
       'enable_face_id': 'Enable Face ID',
       'enable_biometrics': 'Enable Biometrics',
+      'apply_now': 'Apply Now',
+      'recommended_for_you': 'Recommended For You',
+      'im_interested': 'I\'m Interested',
       'crop_photo': 'Crop Photo',
       'support_title': 'How may we help you ?',
       'support_desc':

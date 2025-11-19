@@ -144,6 +144,12 @@ class AppPages {
       // transition: Transition.circularReveal,
       transitionDuration: const Duration(milliseconds: PAppSize.s450),
     ),
+    GetPage(
+      name: _Paths.recommendationPage,
+      page: () => PRecommendationPage(),
+      transition: Transition.circularReveal,
+      transitionDuration: const Duration(milliseconds: PAppSize.s700),
+    ),
 
     /// Policy Pages
     GetPage(

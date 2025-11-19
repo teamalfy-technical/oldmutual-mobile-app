@@ -16,8 +16,11 @@ abstract class Routes {
   static const livenessInfoPage = _Paths.livenessInfoPage;
   static const forgotPasswordPage = _Paths.forgotPasswordPage;
   static const createPasswordPage = _Paths.createPasswordPage;
+
+  /// --- Dashboard Routes
   static const dashboardPage = _Paths.dashboardPage;
   static const dashboardHighlightPage = _Paths.dashboardHighlightPage;
+  static const recommendationPage = _Paths.recommendationPage;
 
   /// --- Policy Feature Routes
   static const productsPage = _Paths.productsPage;
@@ -71,8 +74,11 @@ abstract class _Paths {
   static const livenessInfoPage = '/liveness-info-page';
   static const forgotPasswordPage = '/forgot-password-page';
   static const createPasswordPage = '/create-password-page';
+
+  /// --- Dashboard Paths
   static const dashboardPage = '/dashboard-page';
   static const dashboardHighlightPage = '/dashboard-highlight-page';
+  static const recommendationPage = '/recommendation-page';
 
   /// --- Policy Feature Paths
   static const productsPage = '/products-page';

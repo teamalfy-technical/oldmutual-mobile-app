@@ -152,22 +152,10 @@ class PDashboardHighlightPage extends StatelessWidget {
                 PAppSize.s24.verticalSpace,
 
                 if (highlight.title2 != 'new_feature'.tr) ...[
-                  PGradientButton(
-                    label: 'quote_now'.tr.toUpperCase(),
-                    textColor: PAppColor.whiteColor,
-                    height: PAppSize.buttonHeightMid,
-                    fontSize: PAppSize.s14,
-                    width: PDeviceUtil.getDeviceWidth(context) * 0.42,
-                    onTap: highlight.onQuoteTap,
-                  ),
-
-                  PAppSize.s10.verticalSpace,
-                  SizedBox(
-                    width: PDeviceUtil.getDeviceWidth(context) * 0.42,
-                    child: TextButton.icon(
-                      iconAlignment: IconAlignment.end,
-                      onPressed: highlight.onLearnMoreTap,
-                      label: Text(
+                  Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Text(
                         'learn_more'.tr.toUpperCase(),
                         textAlign: TextAlign.center,
                         style: TextStyle(
@@ -178,12 +166,75 @@ class PDashboardHighlightPage extends StatelessWidget {
                           fontSize: PAppSize.s14,
                         ),
                       ),
-                      icon: Assets.icons.arrowIcon.svg(
+                      PAppSize.s8.horizontalSpace,
+                      Assets.icons.arrowIcon.svg(
                         color: PHelperFunction.isDarkMode(context)
                             ? PAppColor.whiteColor
                             : PAppColor.textColorDark,
                       ),
-                    ),
+                    ],
+                  ).onPressed(onTap: highlight.onLearnMoreTap),
+                  // SizedBox(
+                  //   width: PDeviceUtil.getDeviceWidth(context) * 0.40,
+                  //   child: TextButton.icon(
+                  //     iconAlignment: IconAlignment.end,
+                  //     onPressed: highlight.onLearnMoreTap,
+                  //     label: Text(
+                  //       'learn_more'.tr.toUpperCase(),
+                  //       textAlign: TextAlign.center,
+                  //       style: TextStyle(
+                  //         fontWeight: FontWeight.w600,
+                  //         color: PHelperFunction.isDarkMode(context)
+                  //             ? PAppColor.whiteColor
+                  //             : PAppColor.textColorDark,
+                  //         fontSize: PAppSize.s14,
+                  //       ),
+                  //     ),
+                  //     icon: Assets.icons.arrowIcon.svg(
+                  //       color: PHelperFunction.isDarkMode(context)
+                  //           ? PAppColor.whiteColor
+                  //           : PAppColor.textColorDark,
+                  //     ),
+                  //   ),
+                  // ),
+                  PAppSize.s16.verticalSpace,
+                  Row(
+                    children: [
+                      PGradientButton(
+                        label: 'apply_now'.tr.toUpperCase(),
+                        textColor: PAppColor.whiteColor,
+                        height: PAppSize.buttonHeightMid,
+                        showIcon: false,
+                        fontSize: PAppSize.s14,
+                        width: PDeviceUtil.getDeviceWidth(context) * 0.40,
+                        onTap: () {},
+                      ),
+                      PAppSize.s8.horizontalSpace,
+                      SizedBox(
+                        width: PDeviceUtil.getDeviceWidth(context) * 0.42,
+                        child: OutlinedButton(
+                          style: OutlinedButton.styleFrom(
+                            side: BorderSide(
+                              width: PAppSize.s1,
+                              color: PHelperFunction.isDarkMode(context)
+                                  ? PAppColor.whiteColor
+                                  : PAppColor.textColorDark,
+                            ),
+                          ),
+                          onPressed: () {},
+                          child: Text(
+                            'im_interested'.tr.toUpperCase(),
+                            style: TextStyle(
+                              fontWeight: FontWeight.w600,
+                              color: PHelperFunction.isDarkMode(context)
+                                  ? PAppColor.whiteColor
+                                  : PAppColor.textColorDark,
+                              fontSize: PAppSize.s16,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
                 ],
               ],

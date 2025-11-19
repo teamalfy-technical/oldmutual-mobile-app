@@ -67,9 +67,9 @@ class PHomeVm extends GetxController {
       ),
     ),
     Highlight(
-      title: 'education_plan'.tr,
+      title: 'educator_plan'.tr,
       title2: 'educator_plan'.tr,
-      heading: 'Education Plan',
+      heading: 'educator_plan'.tr,
       description:
           'An insurance policy structured to enable parents to save for their children\'s education.',
       thumbnail: Assets.images.educatorPlanImg.path,
@@ -84,7 +84,6 @@ class PHomeVm extends GetxController {
         args: ['educator_plan'.tr, PAppConstant.educatorPlanUrl],
       ),
     ),
-
     Highlight(
       title: 'retirement_savings'.tr,
       title2: 'retirement_salary'.tr,
@@ -149,5 +148,24 @@ class PHomeVm extends GetxController {
     //   onLearnMoreTap: null,
     //   onQuoteTap: null,
     // ),
+  ];
+
+  List<Map<String, dynamic>> recommendations = [
+    {
+      'title': 'educator_plan'.tr,
+      'subTitle': 'An insurance policy structured to enable parents...',
+      'image': Assets.images.educatorPlanBg.path,
+    },
+    {
+      'title': 'Cover funeral costs.',
+      'subTitle': 'Give your loved ones a proper send-off without ...',
+      'image': Assets.images.transitionPlusBg.path,
+    },
+    {
+      'title': 'special_investments_plan'.tr,
+      'subTitle':
+          'Become self-sufficient and have more control over your life...',
+      'image': Assets.images.specialInvestmentBg.path,
+    },
   ];
 }

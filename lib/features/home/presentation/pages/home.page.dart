@@ -181,13 +181,51 @@ class PHomePage extends StatelessWidget {
                               },
                             ),
                     ),
-                    // PDeviceUtil.isAndroid()
-                    //     ? (PDeviceUtil.getDeviceHeight(context) * 0.035)
-                    //           .verticalSpace
-                    //     : (PDeviceUtil.getDeviceHeight(context) * 0.065)
-                    //           .verticalSpace,
+
+                    PAppSize.s20.verticalSpace,
+
+                    /// Recommended For You
+                    PSeeAllWidget(
+                      leadingText: 'recommended_for_you'.tr,
+                      trailing: Text(
+                        'see_all'.tr,
+                        textAlign: TextAlign.center,
+                        softWrap: true,
+                        style: Theme.of(context).textTheme.titleMedium
+                            ?.copyWith(
+                              fontSize: PAppSize.s16,
+                              color: PAppColor.successMedium,
+                              fontWeight: FontWeight.w600,
+                            ),
+                      ),
+                      onTap: () => PHelperFunction.switchScreen(
+                        destination: Routes.recommendationPage,
+                      ),
+                    ),
+
+                    PAppSize.s20.verticalSpace,
+
+                    SizedBox(
+                      height: PDeviceUtil.isIOS()
+                          ? PDeviceUtil.getDeviceHeight(context) * 0.30
+                          : PDeviceUtil.getDeviceHeight(context) * 0.33,
+                      child: ListView.builder(
+                        shrinkWrap: true,
+                        itemCount: vm.recommendations.length,
+                        scrollDirection: Axis.horizontal,
+                        itemBuilder: (context, index) {
+                          final recommendation = vm.recommendations[index];
+                          return RecommendationWidget(
+                            recommendation: recommendation,
+                            showArrowButton: false,
+                            width: PDeviceUtil.getDeviceWidth(context) * 0.65,
+                            onTap: () {},
+                          );
+                        },
+                      ),
+                    ),
                   ],
-                ).symmetric(horizontal: PAppSize.s20, vertical: PAppSize.s20),
+                ).symmetric(horizontal: PAppSize.s20, vertical: PAppSize.s20).scrollable(),
               ),
             ),
           ),

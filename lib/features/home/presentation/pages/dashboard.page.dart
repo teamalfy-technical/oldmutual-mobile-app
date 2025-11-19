@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:oldmutual_pensions_app/core/utils/utils.dart';
 import 'package:oldmutual_pensions_app/features/home/home.dart';
-import 'package:oldmutual_pensions_app/features/manage/manage.dart';
 import 'package:oldmutual_pensions_app/features/more/more.services.dart';
 import 'package:oldmutual_pensions_app/gen/assets.gen.dart';
 import 'package:oldmutual_pensions_app/routes/app.pages.dart';
@@ -15,7 +14,8 @@ class PDashboardPage extends StatelessWidget {
 
   final List<Widget> _pages = [
     PHomePage(),
-    PManagePage(),
+    PUserDetailPage(isShowAppBar: false),
+    // PManagePage(),
     // Container(
     //   alignment: Alignment.center,
     //   color: PAppColor.darkAppBarColor2,

@@ -11,8 +11,8 @@ class PInactivityService extends GetxService with WidgetsBindingObserver {
 
   /// Timeout duration for inactivity (finance apps: 2-5 minutes recommended)
   /// Change this value to adjust the timeout period
-  static const Duration timeoutDuration = Duration(minutes: 5);
-  // static const Duration timeoutDuration =\ Duration(seconds: 30);
+  // static const Duration timeoutDuration = Duration(minutes: 5);
+  static const Duration timeoutDuration = Duration(hours: 1);
 
   /// Grace period when returning from background
   /// If app was in background longer than this, force logout
