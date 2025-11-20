@@ -198,50 +198,194 @@ class PDashboardHighlightPage extends StatelessWidget {
                   //   ),
                   // ),
                   PAppSize.s16.verticalSpace,
-                  Row(
-                    children: [
-                      PGradientButton(
-                        label: 'apply_now'.tr.toUpperCase(),
-                        textColor: PAppColor.whiteColor,
-                        height: PAppSize.buttonHeightMid,
-                        showIcon: false,
-                        fontSize: PAppSize.s14,
-                        width: PDeviceUtil.getDeviceWidth(context) * 0.40,
-                        onTap: () {},
-                      ),
-                      PAppSize.s8.horizontalSpace,
-                      SizedBox(
-                        width: PDeviceUtil.getDeviceWidth(context) * 0.42,
-                        child: OutlinedButton(
-                          style: OutlinedButton.styleFrom(
-                            side: BorderSide(
-                              width: PAppSize.s1,
-                              color: PHelperFunction.isDarkMode(context)
-                                  ? PAppColor.whiteColor
-                                  : PAppColor.textColorDark,
+                  if (highlight.title != 'retirement_savings'.tr)
+                    Row(
+                      children: [
+                        PGradientButton(
+                          label: 'apply_now'.tr.toUpperCase(),
+                          textColor: PAppColor.whiteColor,
+                          height: PAppSize.buttonHeightMid,
+                          showIcon: false,
+                          fontSize: PAppSize.s14,
+                          width: PDeviceUtil.getDeviceWidth(context) * 0.40,
+                          onTap: () {
+                            if (highlight.planDescription != null &&
+                                highlight.benefits != null) {
+                              showApplyModal(context, highlight);
+                            }
+                          },
+                        ),
+                        PAppSize.s8.horizontalSpace,
+                        SizedBox(
+                          width: PDeviceUtil.getDeviceWidth(context) * 0.42,
+                          child: OutlinedButton(
+                            style: OutlinedButton.styleFrom(
+                              side: BorderSide(
+                                width: PAppSize.s1,
+                                color: PHelperFunction.isDarkMode(context)
+                                    ? PAppColor.whiteColor
+                                    : PAppColor.textColorDark,
+                              ),
                             ),
-                          ),
-                          onPressed: () {},
-                          child: Text(
-                            'im_interested'.tr.toUpperCase(),
-                            style: TextStyle(
-                              fontWeight: FontWeight.w600,
-                              color: PHelperFunction.isDarkMode(context)
-                                  ? PAppColor.whiteColor
-                                  : PAppColor.textColorDark,
-                              fontSize: PAppSize.s16,
+                            onPressed: () => PHelperFunction.pop(),
+                            child: Text(
+                              'im_interested'.tr.toUpperCase(),
+                              style: TextStyle(
+                                fontWeight: FontWeight.w600,
+                                color: PHelperFunction.isDarkMode(context)
+                                    ? PAppColor.whiteColor
+                                    : PAppColor.textColorDark,
+                                fontSize: PAppSize.s16,
+                              ),
                             ),
                           ),
                         ),
-                      ),
-                    ],
-                  ),
+                      ],
+                    ),
                 ],
               ],
             ).scrollable(),
           ),
         ],
       ).hero(tag: highlight.title),
+    );
+  }
+
+  /// Shows modal to apply for Cross Sell
+  /// params ;- context
+  Future<dynamic> showApplyModal(BuildContext context, Highlight highlight) {
+    return showModalBottomSheet(
+      context: context,
+      backgroundColor: PHelperFunction.isDarkMode(context)
+          ? PAppColor.darkAppBarColor
+          : PAppColor.whiteColor,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(PAppSize.s24),
+      ),
+      builder: (context) {
+        return SafeArea(
+          child: Container(
+            padding: EdgeInsets.symmetric(
+              horizontal: PAppSize.s16,
+              vertical: PAppSize.s8,
+            ),
+            height: PDeviceUtil.getDeviceHeight(context) * 0.50,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                // Title section
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      highlight.title.split('\n').join('') ?? '',
+                      style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                        fontSize: PAppSize.s16.sp,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                    CircleAvatar(
+                      radius: PAppSize.s20,
+                      backgroundColor: PHelperFunction.isDarkMode(context)
+                          ? PAppColor.cardDarkColor
+                          : PAppColor.fillColor,
+                      child: Assets.icons.closeIcon.svg(
+                        color: PHelperFunction.isDarkMode(context)
+                            ? PAppColor.fillColor
+                            : PAppColor.darkAppBarColor,
+                      ),
+                    ).onPressed(
+                      onTap: PHelperFunction.pop,
+                      radius: BorderRadius.circular(PAppSize.s20),
+                    ),
+                  ],
+                ),
+                // Description
+                Text(
+                  highlight.planDescription ?? '',
+                  style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                    fontSize: PAppSize.s16.sp,
+                    fontWeight: FontWeight.w400,
+                  ),
+                ),
+                PAppSize.s10.verticalSpace,
+                // Key Benefits
+                Text(
+                  'key_benefits'.tr,
+                  style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                    fontSize: PAppSize.s16.sp,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+                PAppSize.s10.verticalSpace,
+                Expanded(
+                  child: ListView.builder(
+                    itemCount: highlight.benefits?.length,
+                    itemBuilder: (context, index) {
+                      final benefit = highlight.benefits![index];
+                      return Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Assets.icons.checkIcon.svg(
+                            color: PAppColor.primary,
+                            width: PAppSize.s28,
+                          ),
+                          PAppSize.s8.horizontalSpace,
+                          Expanded(
+                            child: Text(
+                              benefit,
+                              style: Theme.of(context).textTheme.bodyLarge
+                                  ?.copyWith(
+                                    fontSize: PAppSize.s14.sp,
+                                    fontWeight: FontWeight.w400,
+                                  ),
+                            ),
+                          ),
+                        ],
+                      ).only(bottom: PAppSize.s4);
+                    },
+                  ),
+                ),
+
+                PAppSize.s20.verticalSpace,
+                // Action buttons
+                Row(
+                  children: [
+                    Expanded(
+                      child: PGradientButton(
+                        label: 'apply_now'.tr,
+                        showIcon: false,
+                        loading: LoadingState.completed,
+                        textColor: PAppColor.whiteColor,
+                        width: PDeviceUtil.getDeviceWidth(context),
+                        onTap: () {},
+                      ),
+                    ),
+                    PAppSize.s8.horizontalSpace,
+                    Expanded(
+                      child: OutlinedButton(
+                        onPressed: PHelperFunction.pop,
+
+                        style: OutlinedButton.styleFrom(
+                          foregroundColor: PAppColor.successDark,
+                          side: BorderSide(color: PAppColor.successDark),
+                          minimumSize: Size.fromHeight(PAppSize.buttonHeight),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(PAppSize.s24),
+                          ),
+                        ),
+                        child: Text('contact_sales'.tr),
+                      ),
+                    ),
+                  ],
+                ),
+
+                PAppSize.s4.verticalSpace,
+              ],
+            ),
+          ),
+        );
+      },
     );
   }
 }

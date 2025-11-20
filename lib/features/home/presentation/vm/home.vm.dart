@@ -33,6 +33,13 @@ class PHomeVm extends GetxController {
           'This is an insurance product that covers unforeseen losses that might occur to the insured when travelling internationally.',
       thumbnail: Assets.images.internationalTravelImg.path,
       image: Assets.images.internationalTravelBg.path,
+      planDescription: 'Up to €30,000 emergency medical coverage abroad',
+      benefits: [
+        'Up to €30,000 emergency medical expenses cover',
+        'Up to €30,000 emergency medical evacuation cover',
+        '€3,000 permanent total disability cover',
+        // '€3,000 permanent total disability cover'
+      ],
       onLearnMoreTap: () => PHelperFunction.switchScreen(
         destination: Routes.webviewPage,
         args: ['international_travel'.tr, PAppConstant.travelInsuranceUrl],
@@ -51,6 +58,13 @@ class PHomeVm extends GetxController {
           'Become self-sufficient and have more control over your life even in retirement.',
       thumbnail: Assets.images.specialInvestmentImg.path,
       image: Assets.images.specialInvestmentBg.path,
+      planDescription:
+          'Long-term savings with life coverage and flexible withdrawals',
+      benefits: [
+        'Financial security',
+        'Partial withdrawals of up to 50% of the total monthly contributions once in a year',
+        'If the policyholder passes away, the beneficiary will receive either the death benefit or the total contributions, whichever is greater.',
+      ],
       onLearnMoreTap: () => PHelperFunction.switchScreen(
         destination: Routes.webviewPage,
         args: [
@@ -74,7 +88,14 @@ class PHomeVm extends GetxController {
           'An insurance policy structured to enable parents to save for their children\'s education.',
       thumbnail: Assets.images.educatorPlanImg.path,
       image: Assets.images.educatorPlanBg.path,
-
+      planDescription:
+          'Secure your child\'s education with life coverage and savings',
+      benefits: [
+        'Child Life Assurance Protection',
+        'Accumulated Fund Payback after 24 months',
+        'Parent Disability Protection',
+        'Partial withdrawals after 2 years',
+      ],
       onLearnMoreTap: () => PHelperFunction.switchScreen(
         destination: Routes.webviewPage,
         args: ['educator_plan'.tr, PAppConstant.educatorPlanUrl],
@@ -109,6 +130,13 @@ class PHomeVm extends GetxController {
       heading: 'Cover the cost of funeral expenses',
       description:
           'Give your loved ones a proper send-off without having to worry about funeral expenses',
+      planDescription: 'SAffordable life cover with cashback every 3 years',
+      benefits: [
+        'Prompt payout within 48 hours',
+        '10% cashback every 3 years',
+        'No waiting period for accidental death',
+        'Affordable premiums',
+      ],
       onLearnMoreTap: () => PHelperFunction.switchScreen(
         destination: Routes.webviewPage,
         args: [
@@ -132,6 +160,18 @@ class PHomeVm extends GetxController {
       heading: 'Accumulate funds for future projects',
       description:
           'Benefit from the expertise of the best minds in fund management with our Mvest Personal Pension plan',
+      planDescription: 'Secure your personal pension for the future',
+      benefits: [
+        'Competitive returns',
+        'Lump-Sum payment',
+        'Easy application and exit process',
+        'Access to life insurance',
+        'Access to personal loans',
+        'Easy application and exit process',
+        'Different and convenient modes of contribution',
+        'Benefit payment is made within 72 hours',
+        '24/7 online portal',
+      ],
       onLearnMoreTap: () => PHelperFunction.switchScreen(
         destination: Routes.webviewPage,
         args: ['mvest'.tr, PAppConstant.mvestPensionsUrl],
@@ -140,6 +180,56 @@ class PHomeVm extends GetxController {
         destination: Routes.webviewPage,
         args: ['mvest'.tr, PAppConstant.mvestPensionsUrl],
       ),
+    ),
+
+    Highlight(
+      title: 'personal_accident'.tr,
+      title2: 'personal_accident'.tr,
+      thumbnail: Assets.images.personalAccidentImg.path,
+      image: Assets.images.personalAccidentBg.path,
+      heading: 'personal_accident'.tr,
+      description:
+          'This insurance product protects the insured against accidents that may occur both at work and during the course of work.',
+      planDescription:
+          'Financial protection against accidental injuries and disabilities',
+      benefits: [
+        'Accidental death',
+        'Permanent disability of the insured arising from the accident.',
+        'A temporary total disability that makes you lose your source of income.',
+        '€3,000 permanent total disability cover',
+      ],
+      onLearnMoreTap: () => PHelperFunction.switchScreen(
+        destination: Routes.webviewPage,
+        args: ['personal_accident'.tr, PAppConstant.personalAccidentUrl],
+      ),
+      onQuoteTap: () {},
+    ),
+
+    Highlight(
+      title: 'ekyire_asem'.tr,
+      title2: 'digital_funeral'.tr,
+      thumbnail: Assets.images.ekyireAsemImg.path,
+      image: Assets.images.ekyireAsemBg.path,
+      heading: 'ekyire_asem'.tr,
+      description:
+          'An affordable funeral policy that provides all the necessary logistical services for a one-week funeral celebration.',
+      planDescription:
+          'Dignified funeral support with fast claims and logistics help',
+      benefits: [
+        'Claims payment under 24hr',
+        'Affordable premiums',
+        'One Week Funeral Logistics',
+        'Ability to leave a legacy behind',
+        'Security for the family and the future',
+        'Easy application and exit process',
+        'Cash back of 5% of premiums paid',
+        'Optional hospital cover for main life',
+      ],
+      onLearnMoreTap: () => PHelperFunction.switchScreen(
+        destination: Routes.webviewPage,
+        args: ['ekyire_asem'.tr, PAppConstant.ekyireAsemUrl],
+      ),
+      onQuoteTap: () {},
     ),
     // Highlight(
     //   title: 'forgot_login_details'.tr,
@@ -154,18 +244,30 @@ class PHomeVm extends GetxController {
     {
       'title': 'educator_plan'.tr,
       'subTitle': 'An insurance policy structured to enable parents...',
-      'image': Assets.images.educatorPlanBg.path,
+      'image': Assets.images.educatorPlanImg.path,
     },
     {
       'title': 'Cover funeral costs.',
       'subTitle': 'Give your loved ones a proper send-off without ...',
-      'image': Assets.images.transitionPlusBg.path,
+      'image': Assets.images.transitionPlusImg.path,
     },
     {
       'title': 'special_investments_plan'.tr,
       'subTitle':
           'Become self-sufficient and have more control over your life...',
-      'image': Assets.images.specialInvestmentBg.path,
+      'image': Assets.images.specialInvestmentImg.path,
+    },
+    {
+      'title': 'personal_accident'.tr,
+      'subTitle':
+          'Once an accident has happened, it cannot be reversed, but its impact can be lessened.',
+      'image': Assets.images.personalAccidentImg.path,
+    },
+    {
+      'title': 'ekyire_asem'.tr,
+      'subTitle':
+          'An affordable funeral policy that provides all the necessary logistical services for a one-week funeral celebration, along with a cash benefit to cover additional expenses...',
+      'image': Assets.images.ekyireAsemImg.path,
     },
   ];
 }

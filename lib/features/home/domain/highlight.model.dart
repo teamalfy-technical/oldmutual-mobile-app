@@ -7,6 +7,9 @@ class Highlight {
   final String? heading;
   final String? description;
 
+  final String? planDescription;
+  final List<String>? benefits;
+
   final Function()? onQuoteTap;
   final Function()? onLearnMoreTap;
 
@@ -18,7 +21,8 @@ class Highlight {
     this.onQuoteTap,
     this.onLearnMoreTap,
     this.url,
-
+    this.planDescription,
+    this.benefits,
     this.heading,
     this.description,
   });

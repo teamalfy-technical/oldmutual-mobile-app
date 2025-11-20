@@ -451,6 +451,14 @@ class $AssetsImagesGen {
   AssetGenImage get educatorPlanImg =>
       const AssetGenImage('assets/images/educator.plan.img.png');
 
+  /// File path: assets/images/ekyire.asem.bg.png
+  AssetGenImage get ekyireAsemBg =>
+      const AssetGenImage('assets/images/ekyire.asem.bg.png');
+
+  /// File path: assets/images/ekyire.asem.img.png
+  AssetGenImage get ekyireAsemImg =>
+      const AssetGenImage('assets/images/ekyire.asem.img.png');
+
   /// File path: assets/images/forgot.details.img.png
   AssetGenImage get forgotDetailsImg =>
       const AssetGenImage('assets/images/forgot.details.img.png');
@@ -485,6 +493,14 @@ class $AssetsImagesGen {
   /// File path: assets/images/notification.btm.bg.png
   AssetGenImage get notificationBtmBg =>
       const AssetGenImage('assets/images/notification.btm.bg.png');
+
+  /// File path: assets/images/personal.accident.bg.png
+  AssetGenImage get personalAccidentBg =>
+      const AssetGenImage('assets/images/personal.accident.bg.png');
+
+  /// File path: assets/images/personal.accident.img.png
+  AssetGenImage get personalAccidentImg =>
+      const AssetGenImage('assets/images/personal.accident.img.png');
 
   /// File path: assets/images/placeholder.img.png
   AssetGenImage get placeholderImg =>
@@ -544,6 +560,8 @@ class $AssetsImagesGen {
     dashboardBg,
     educatorPlanBg,
     educatorPlanImg,
+    ekyireAsemBg,
+    ekyireAsemImg,
     forgotDetailsImg,
     internationalTravelBg,
     internationalTravelImg,
@@ -553,6 +571,8 @@ class $AssetsImagesGen {
     newFeatureBg,
     newFeatureImg,
     notificationBtmBg,
+    personalAccidentBg,
+    personalAccidentImg,
     placeholderImg,
     retirementSalaryBg,
     retirementSalaryImg,

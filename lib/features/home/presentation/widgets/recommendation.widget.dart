@@ -80,10 +80,12 @@ class RecommendationWidget extends StatelessWidget {
                 Text(
                   recommendation['subTitle'],
                   textAlign: TextAlign.start,
+                  maxLines: 3,
                   softWrap: true,
                   style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                     fontSize: PAppSize.s15,
                     fontWeight: FontWeight.w500,
+                    overflow: TextOverflow.ellipsis,
                   ),
                 ),
               ],
