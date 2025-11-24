@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:oldmutual_pensions_app/core/utils/utils.dart';
+import 'package:oldmutual_pensions_app/features/cross-sell/presentation/vm/cross.sell.vm.dart';
 import 'package:oldmutual_pensions_app/features/home/home.dart';
 
 class PRecommendationPage extends StatelessWidget {
   PRecommendationPage({super.key});
 
-  final vm = PHomeVm.instance;
+  final vm = Get.put(PCrossSellVm());
 
   @override
   Widget build(BuildContext context) {

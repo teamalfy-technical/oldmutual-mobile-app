@@ -1,3 +1,5 @@
+export '../cross-sell/presentation/pages/recommendation.page.dart';
+export '../cross-sell/presentation/widgets/recommendation.widget.dart';
 export '../dashboard/data/ds/dashboard.ds.dart';
 export '../dashboard/data/ds/dashboard.ds.impl.dart';
 export '../dashboard/data/repos/dashboard.repo.dart';
@@ -16,9 +18,7 @@ export 'presentation/pages/dashboard.page.dart';
 export 'presentation/pages/home.page.dart';
 export 'presentation/pages/home.page.old.dart';
 export 'presentation/pages/home.view.old.dart';
-export 'presentation/pages/recommendation.page.dart';
 export 'presentation/vm/home.vm.dart';
 export 'presentation/vm/inactivity.service.dart';
 export 'presentation/widgets/highlight.widget.dart';
 export 'presentation/widgets/home.stats.widget.dart';
-export 'presentation/widgets/recommendation.widget.dart';

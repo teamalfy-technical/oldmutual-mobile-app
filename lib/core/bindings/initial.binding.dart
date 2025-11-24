@@ -2,6 +2,7 @@ import 'package:get/get.dart';
 import 'package:oldmutual_pensions_app/features/auth/auth.dart';
 import 'package:oldmutual_pensions_app/features/beneficiary/presentation/vm/beneficiary.vm.dart';
 import 'package:oldmutual_pensions_app/features/contribution.history/presentation/vm/contribution.history.vm.dart';
+import 'package:oldmutual_pensions_app/features/cross-sell/presentation/vm/cross.sell.vm.dart';
 import 'package:oldmutual_pensions_app/features/dashboard/dashboard.dart';
 import 'package:oldmutual_pensions_app/features/factsheet/presentation/vm/factsheet.vm.dart';
 import 'package:oldmutual_pensions_app/features/future.value.calculator/future.value.calculator.dart';
@@ -25,6 +26,7 @@ class InitialBinding implements Bindings {
     Get.lazyPut(() => PPolicyVm());
     Get.lazyPut(() => PPensionVm());
     Get.lazyPut(() => PDashboardVm());
+    Get.lazyPut(() => PCrossSellVm());
     Get.lazyPut(() => PBeneficiaryVm());
     Get.lazyPut(() => PFactsheetVm());
     Get.lazyPut(() => PContributionHistoryVm());

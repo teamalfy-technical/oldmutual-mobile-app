@@ -388,4 +388,22 @@ abstract class Env {
   static final String downloadPremiumStatement = _Env.downloadPremiumStatement;
 
   /// -------------------- Policies Endpoints Ends Here ------------------------- ///
+  ///
+  /// -------------------- Cross-Sell Endpoints Starts Here ------------------------- ///
+
+  /// [GetRecommendations] endpoint
+  @EnviedField(
+    defaultValue: '/cross-sell/member-recommendations',
+    obfuscate: true,
+  )
+  static final String getRecommendations = _Env.getRecommendations;
+
+  /// [ApplyRecommendations] endpoint
+  @EnviedField(
+    defaultValue: '/cross-sell/apply-recommendation',
+    obfuscate: true,
+  )
+  static final String applyRecommendation = _Env.applyRecommendation;
+
+  /// -------------------- Cross-Sell Endpoints Ends Here ------------------------- ///
 }
