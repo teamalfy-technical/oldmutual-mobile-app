@@ -358,7 +358,7 @@ class PDashboardHighlightPage extends StatelessWidget {
                         loading: LoadingState.completed,
                         textColor: PAppColor.whiteColor,
                         width: PDeviceUtil.getDeviceWidth(context),
-                        onTap: () {},
+                        onTap: PHelperFunction.pop,
                       ),
                     ),
                     PAppSize.s8.horizontalSpace,

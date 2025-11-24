@@ -19,6 +19,12 @@ class PCrossSellVm extends GetxController {
   /// Update the current loading state
   updateLoadingState(LoadingState loadingState) => loading.value = loadingState;
 
+  @override
+  void onInit() {
+    fetchRecommendations();
+    super.onInit();
+  }
+
   /// Fetch recommendations from the API and map them to detailed objects
   /// This retrieves a list of recommendation strings from the backend and
   /// transforms them into full objects with titles, subtitles, and images
@@ -36,6 +42,9 @@ class PCrossSellVm extends GetxController {
       (res) async {
         // Handle success case - map API response strings to detailed recommendation objects
         updateLoadingState(LoadingState.completed);
+        // recommendations.value = ['Digital Funeral', 'Educator Plan']
+        //     .map((recommendation) => getRecommendationTitle(recommendation))
+        //     .toList();
         recommendations.value =
             res.data
                 ?.map(

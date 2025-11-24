@@ -192,7 +192,8 @@ class _PWelcomeBackPageState extends State<PWelcomeBackPage>
                         //     .verticalSpace,
                         TextButton(
                           onPressed: () async {
-                            final userEmail = await PSecureStorage().getUserEmail();
+                            final userEmail = await PSecureStorage()
+                                .getUserEmail();
                             if (userEmail != null) {
                               // clear cached user data when user decides to login with different account
                               await PSecureStorage().removeSecureData(
@@ -202,6 +203,9 @@ class _PWelcomeBackPageState extends State<PWelcomeBackPage>
                                 PSecureStorage().firstNameKey,
                               );
                             }
+                            await PSecureStorage().removeSecureData(
+                              PSecureStorage().biometricPasswordKey,
+                            );
                             PHelperFunction.switchScreen(
                               destination: Routes.loginPage,
                             );

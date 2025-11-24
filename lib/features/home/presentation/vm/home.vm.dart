@@ -240,34 +240,34 @@ class PHomeVm extends GetxController {
     // ),
   ];
 
-  List<Map<String, dynamic>> recommendations = [
-    {
-      'title': 'educator_plan'.tr,
-      'subTitle': 'An insurance policy structured to enable parents...',
-      'image': Assets.images.educatorPlanImg.path,
-    },
-    {
-      'title': 'Cover funeral costs.',
-      'subTitle': 'Give your loved ones a proper send-off without ...',
-      'image': Assets.images.transitionPlusImg.path,
-    },
-    {
-      'title': 'special_investments_plan'.tr,
-      'subTitle':
-          'Become self-sufficient and have more control over your life...',
-      'image': Assets.images.specialInvestmentImg.path,
-    },
-    {
-      'title': 'personal_accident'.tr,
-      'subTitle':
-          'Once an accident has happened, it cannot be reversed, but its impact can be lessened.',
-      'image': Assets.images.personalAccidentImg.path,
-    },
-    {
-      'title': 'ekyire_asem'.tr,
-      'subTitle':
-          'An affordable funeral policy that provides all the necessary logistical services for a one-week funeral celebration, along with a cash benefit to cover additional expenses...',
-      'image': Assets.images.ekyireAsemImg.path,
-    },
-  ];
+  // List<Map<String, dynamic>> recommendations = [
+  //   {
+  //     'title': 'educator_plan'.tr,
+  //     'subTitle': 'An insurance policy structured to enable parents...',
+  //     'image': Assets.images.educatorPlanImg.path,
+  //   },
+  //   {
+  //     'title': 'Cover funeral costs.',
+  //     'subTitle': 'Give your loved ones a proper send-off without ...',
+  //     'image': Assets.images.transitionPlusImg.path,
+  //   },
+  //   {
+  //     'title': 'special_investments_plan'.tr,
+  //     'subTitle':
+  //         'Become self-sufficient and have more control over your life...',
+  //     'image': Assets.images.specialInvestmentImg.path,
+  //   },
+  //   {
+  //     'title': 'personal_accident'.tr,
+  //     'subTitle':
+  //         'Once an accident has happened, it cannot be reversed, but its impact can be lessened.',
+  //     'image': Assets.images.personalAccidentImg.path,
+  //   },
+  //   {
+  //     'title': 'ekyire_asem'.tr,
+  //     'subTitle':
+  //         'An affordable funeral policy that provides all the necessary logistical services for a one-week funeral celebration, along with a cash benefit to cover additional expenses...',
+  //     'image': Assets.images.ekyireAsemImg.path,
+  //   },
+  // ];
 }

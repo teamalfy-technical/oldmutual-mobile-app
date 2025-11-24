@@ -209,11 +209,12 @@ class PValidator {
     }
 
     // RegExp for phone number validation (e.g., a 10-digit us phone number format)
-    final phoneRegExp = RegExp(r'^\d{10}$');
+
+    final phoneRegex = RegExp(r'^\d{9,10}$');
 
     // check of special characters
-    if (!phoneRegExp.hasMatch(value)) {
-      return 'Invalid phone number format (10 digits required).';
+    if (!phoneRegex.hasMatch(value)) {
+      return 'Invalid phone number format (9 or 10 digits required).';
     }
 
     return null;

@@ -31,14 +31,15 @@ class PSplashVm extends GetxController {
         final authResponse = await PSecureStorage().getAuthResponse();
         final bioData = await PSecureStorage().getBioData();
         final userEmail = await PSecureStorage().getUserEmail();
+        final userPassword = await PSecureStorage().getBiometricPassword();
 
-        if (authResponse?.token != null && bioData != null) {
+        if (authResponse?.token != null) {
           final lastLoggedIn = PFormatter.calculateDateDiff(
             authResponse!.lastLoggedIn!,
             DateDiffUnit.days,
           );
           // redirect user to welcome back screen after been logged in for 3 days
-          if (lastLoggedIn >= 3 && userEmail != null) {
+          if (lastLoggedIn >= 3 && userEmail != null && userPassword != null) {
             stop();
             PHelperFunction.switchScreen(
               destination: Routes.welcomeBackPage,
@@ -52,7 +53,7 @@ class PSplashVm extends GetxController {
           }
           stop();
         } else {
-          if (userEmail != null) {
+          if (userEmail != null && userPassword != null) {
             PHelperFunction.switchScreen(
               destination: Routes.welcomeBackPage,
               replace: true,
@@ -60,7 +61,6 @@ class PSplashVm extends GetxController {
           } else {
             PHelperFunction.switchScreen(
               destination: Routes.loginPage,
-              // destination: Routes.createAccountPage,
               replace: true,
             );
           }

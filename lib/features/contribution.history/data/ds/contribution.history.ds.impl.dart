@@ -99,7 +99,7 @@ class ContributionHistoryDsImpl implements ContributionHistoryDs {
       );
 
       return ApiResponse<List<Contribution>>.fromJson(
-        res,
+        res['data'],
         (data) => (data as List).map((e) => Contribution.fromJson(e)).toList(),
       );
     });

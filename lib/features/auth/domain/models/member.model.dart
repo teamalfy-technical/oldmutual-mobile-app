@@ -2,6 +2,7 @@ class Member {
   String? token;
   int? id;
   String? name;
+  String? ghanaCardNumber;
   String? memberNumber;
   String? schemeType;
   String? masterScheme;
@@ -29,6 +30,7 @@ class Member {
     this.token,
     this.id,
     this.name,
+    this.ghanaCardNumber,
     this.memberNumber,
     this.schemeType,
     this.masterScheme,
@@ -57,6 +59,7 @@ class Member {
     String? token,
     int? id,
     String? name,
+    String? ghanaCardNumber,
     String? memberNumber,
     String? schemeType,
     String? masterScheme,
@@ -84,6 +87,7 @@ class Member {
       token: token ?? this.token,
       id: id ?? this.id,
       name: name ?? this.name,
+      ghanaCardNumber: ghanaCardNumber ?? this.name,
       memberNumber: memberNumber ?? this.memberNumber,
       schemeType: schemeType ?? this.schemeType,
       masterScheme: masterScheme ?? this.masterScheme,
@@ -113,6 +117,7 @@ class Member {
     token = json['token'];
     id = json['id'];
     name = json['name'];
+    ghanaCardNumber = json['ghana_card_number'];
     memberNumber = json['member_number'];
     schemeType = json['scheme_type'];
     masterScheme = json['master_scheme'];
@@ -142,6 +147,8 @@ class Member {
     data['token'] = token;
     data['id'] = id;
     data['name'] = name;
+    data['ghana_card_number'] = ghanaCardNumber;
+
     data['member_number'] = memberNumber;
     data['scheme_type'] = schemeType;
     data['master_scheme'] = masterScheme;

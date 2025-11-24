@@ -31,7 +31,8 @@ class CrossSellDsImpl implements CrossSellDs {
         endPoint: Env.getRecommendations,
       );
       return ApiResponse<List<String>>.fromJson(
-        res['recommendations'],
+        res,
+        // res['recommendations'],
         (data) => (data as List).map((e) => e.toString()).toList(),
       );
     });

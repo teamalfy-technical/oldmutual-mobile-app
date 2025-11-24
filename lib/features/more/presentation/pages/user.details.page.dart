@@ -45,8 +45,9 @@ class PUserDetailPage extends StatelessWidget {
       'fullName': fullName,
       'email': authResponse?.email,
       'phone': authResponse?.phone,
-      'ghanaCardNumber': bioData?.ghanaCardNumber,
-      'ssnitNumber': bioData?.ssnitNumber,
+      'ghanaCardNumber':
+          authResponse?.ghanaCardNumber ?? bioData?.ghanaCardNumber,
+      'ssnitNumber': authResponse?.ssnitNumber ?? bioData?.ssnitNumber,
       'dob': authResponse?.dob,
       'tin': bioData?.tin,
     };
@@ -207,7 +208,7 @@ class PUserDetailPage extends StatelessWidget {
                           ),
                 ),
               ],
-            ).all(PAppSize.s20),
+            ).all(PAppSize.s20).scrollable(),
           );
         },
       ),

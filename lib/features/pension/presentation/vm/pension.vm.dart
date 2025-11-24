@@ -1,5 +1,6 @@
 import 'package:get/get.dart';
 import 'package:oldmutual_pensions_app/core/utils/utils.dart';
+import 'package:oldmutual_pensions_app/features/auth/auth.dart';
 import 'package:oldmutual_pensions_app/features/contribution.history/contribution.history.dart';
 import 'package:oldmutual_pensions_app/features/pension/pension.dart';
 import 'package:oldmutual_pensions_app/features/policy/policy.dart';
@@ -197,6 +198,9 @@ class PPensionVm extends GetxController {
           // pensionAppLogger.e(PSecureStorage().getAuthResponse()?.toJson());
           await Get.put(PContributionHistoryVm()).getContributionsSummary();
           updateLoadingState(LoadingState.completed);
+          await Get.put(
+            PAuthVm(),
+          ).getBioData(); // get bio data after selecting scheme
         },
       );
     } else {

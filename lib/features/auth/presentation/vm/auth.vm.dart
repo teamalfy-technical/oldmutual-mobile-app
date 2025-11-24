@@ -1,6 +1,7 @@
 import 'package:country_picker/country_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:oldmutual_pensions_app/core/network/network.dart';
 import 'package:oldmutual_pensions_app/core/utils/utils.dart';
 import 'package:oldmutual_pensions_app/features/auth/auth.dart';
 import 'package:oldmutual_pensions_app/features/notification/notification.dart';
@@ -181,24 +182,49 @@ class PAuthVm extends GetxController {
         );
       },
       (res) async {
-        // loading(LoadingState.completed);
-        await PSecureStorage().saveUserEmail(emailOrPhone);
+        loading(LoadingState.completed);
 
-        // Store password securely if biometric authentication is enabled
-        if (PSecureStorage().isBiometricEnabled) {
-          await PSecureStorage().saveBiometricPassword(password);
-        }
-
-        if (PDeviceUtil.isAndroid()) {
-          await PNotificationService().saveToken();
-        }
-        await getBioData();
-        clearFields();
-        PPopupDialog(
-          context,
-        ).successMessage(title: 'success'.tr, message: res.message ?? '');
+        navigateToDashBoard(
+          emailOrPhone: emailOrPhone,
+          password: password,
+          res: res,
+        );
       },
     );
+  }
+
+  navigateToDashBoard({
+    required ApiResponse<Member> res,
+    required String emailOrPhone,
+    required String password,
+  }) async {
+    // loading(LoadingState.completed);
+    await PSecureStorage().saveUserEmail(emailOrPhone);
+
+    // Store password securely if biometric authentication is enabled
+    if (PSecureStorage().isBiometricEnabled) {
+      await PSecureStorage().saveBiometricPassword(password);
+    }
+
+    if (PDeviceUtil.isAndroid()) {
+      await PNotificationService().saveToken();
+    }
+
+    if (res.data?.name != null && res.data!.name!.isNotEmpty) {
+      await PSecureStorage().saveUserFirstName(
+        res.data?.name?.split(' ')[0] ?? '',
+      );
+    }
+    clearFields();
+    // await getBioData();
+    PHelperFunction.switchScreen(
+      destination: Routes.dashboardPage,
+      replace: true,
+    );
+
+    PPopupDialog(
+      context,
+    ).successMessage(title: 'success'.tr, message: res.message ?? '');
   }
 
   /// Function to sign up user by sending OTP code
@@ -225,10 +251,10 @@ class PAuthVm extends GetxController {
           }
         }
 
-        PHelperFunction.switchScreen(
-          destination: Routes.dashboardPage,
-          replace: true,
-        );
+        // PHelperFunction.switchScreen(
+        //   destination: Routes.dashboardPage,
+        //   replace: true,
+        // );
       },
     );
   }
