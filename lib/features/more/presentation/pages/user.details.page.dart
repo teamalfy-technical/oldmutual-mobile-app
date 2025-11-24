@@ -42,13 +42,13 @@ class PUserDetailPage extends StatelessWidget {
         : authResponse?.name;
 
     return {
-      'fullName': fullName,
-      'email': authResponse?.email,
-      'phone': authResponse?.phone,
+      'fullName': bioData?.fullName ?? fullName,
+      'email': bioData?.email ?? authResponse?.email,
+      'phone': bioData?.mobileNo ?? authResponse?.phone,
       'ghanaCardNumber':
-          authResponse?.ghanaCardNumber ?? bioData?.ghanaCardNumber,
-      'ssnitNumber': authResponse?.ssnitNumber ?? bioData?.ssnitNumber,
-      'dob': authResponse?.dob,
+          bioData?.ghanaCardNumber ?? authResponse?.ghanaCardNumber,
+      'ssnitNumber': bioData?.ssnitNumber ?? authResponse?.ssnitNumber,
+      'dob': bioData?.dob ?? authResponse?.dob,
       'tin': bioData?.tin,
     };
   }

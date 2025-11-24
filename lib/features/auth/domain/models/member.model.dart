@@ -87,7 +87,7 @@ class Member {
       token: token ?? this.token,
       id: id ?? this.id,
       name: name ?? this.name,
-      ghanaCardNumber: ghanaCardNumber ?? this.name,
+      ghanaCardNumber: ghanaCardNumber ?? this.ghanaCardNumber,
       memberNumber: memberNumber ?? this.memberNumber,
       schemeType: schemeType ?? this.schemeType,
       masterScheme: masterScheme ?? this.masterScheme,
@@ -148,7 +148,6 @@ class Member {
     data['id'] = id;
     data['name'] = name;
     data['ghana_card_number'] = ghanaCardNumber;
-
     data['member_number'] = memberNumber;
     data['scheme_type'] = schemeType;
     data['master_scheme'] = masterScheme;
