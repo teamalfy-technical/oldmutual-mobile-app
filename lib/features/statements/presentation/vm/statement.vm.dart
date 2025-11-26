@@ -1,15 +1,11 @@
-import 'dart:io';
-
 // import 'package:flutter_downloader/flutter_downloader.dart';
-import 'package:dio/dio.dart';
+
 import 'package:get/get.dart';
 import 'package:oldmutual_pensions_app/core/utils/utils.dart';
 import 'package:oldmutual_pensions_app/features/contribution.history/contribution.history.dart';
 import 'package:oldmutual_pensions_app/features/statements/statements.dart';
 import 'package:oldmutual_pensions_app/routes/app.pages.dart';
 import 'package:oldmutual_pensions_app/shared/shared.dart';
-import 'package:open_file/open_file.dart';
-import 'package:path_provider/path_provider.dart';
 
 class PStatementVm extends GetxController {
   static PStatementVm get instance => Get.find();
@@ -278,59 +274,6 @@ class PStatementVm extends GetxController {
         );
       },
     );
-  }
-
-  openFile({required String url, required String fileName}) async {
-    pensionAppLogger.e(url);
-    final file = await downloadFile(url, fileName);
-    if (file == null) return;
-    OpenFile.open(file.path);
-  }
-
-  // Download file into private folder not visible to user
-  Future<File?> downloadFile(String url, String fileName) async {
-    final appStorage = await getApplicationDocumentsDirectory();
-    final file = File("${appStorage.path}/$fileName");
-    String? token = (await PSecureStorage().getAuthResponse())?.token;
-    try {
-      final response = await Dio().get(
-        url,
-        options: Options(
-          responseType: ResponseType.bytes,
-          // headers: PHelperFunction.appTokenHeader(),
-          followRedirects: false,
-          headers: {
-            "Authorization": "Bearer $token",
-            "Accept": "application/pdf",
-          },
-        ),
-      );
-
-      pensionAppLogger.e(
-        "Response content-type: ${response.headers['content-type']}",
-      );
-      pensionAppLogger.e("Response status: ${response.statusCode}");
-
-      // Decode bytes to string (just to check what's inside)
-      pensionAppLogger.e(String.fromCharCodes(response.data!));
-
-      final raf = file.openSync(mode: FileMode.write);
-      raf.writeFromSync(response.data);
-      await raf.close();
-      return file;
-    } catch (err) {
-      // if (err is DioException) {
-      //   if (err.response?.statusCode == 404) {
-      //     // PPopupDialog(context).errorMessage(
-      //     //   title: 'error'.tr,
-      //     //   message: err.response?.data['message'],
-      //     // );
-      //     pensionAppLogger.i(err.response?.data);
-      //   }
-      // }
-      pensionAppLogger.e("Error: $err");
-      return null;
-    }
   }
 
   /// Function to download report file

@@ -154,7 +154,7 @@ class PStatementPage extends StatelessWidget {
                                       ),
                                 ),
                                 trailing: TextButton(
-                                  onPressed: () => ctrl.openFile(
+                                  onPressed: () => PHelperFunction.openFileWithURl(
                                     url: statement.downloadUrl ?? '',
                                     fileName: statement.filters?.year == 'All'
                                         ? 'All_Contributions_Report.pdf'

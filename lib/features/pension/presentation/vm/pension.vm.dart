@@ -135,7 +135,7 @@ class PPensionVm extends GetxController {
           context,
         ).successMessage(title: 'success'.tr, message: 'download_complete'.tr);
         await Future.delayed(Duration(milliseconds: 1000));
-        await PHelperFunction.openFile(
+        await PHelperFunction.openFileWithData(
           pdfData: res.data ?? Map<String, dynamic>.from({}),
           name: selectedScheme.value.penTypeDescription ?? '',
         );

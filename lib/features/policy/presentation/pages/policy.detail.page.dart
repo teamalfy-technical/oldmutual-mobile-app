@@ -120,6 +120,7 @@ class PPolicyDetailPage extends StatelessWidget {
                   ),
                   onTap: () {
                     // download policy document
+                    // policyStatementVm.downloadPolicyStatement();
                     PPopupDialog(context).warningMessage(
                       title: 'Coming Soon',
                       message: 'This feature will be available soon',

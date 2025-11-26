@@ -170,7 +170,7 @@ class PPremiumStatementPage extends StatelessWidget {
                                       ),
                                 ),
                                 trailing: TextButton(
-                                  onPressed: () => statementVm.openFile(
+                                  onPressed: () => PHelperFunction.openFileWithURl(
                                     url: statement.downloadUrl ?? '',
                                     fileName:
                                         vm.selectedYear?.fundYear == 'all'.tr

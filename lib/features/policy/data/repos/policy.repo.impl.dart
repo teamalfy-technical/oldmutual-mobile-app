@@ -112,4 +112,13 @@ class PolicyRepoImpl implements PolicyRepo {
           await policyDs.downloadPremiumStatement(policyNumber: policyNumber),
     );
   }
+
+  @override
+  Future<Either<PFailure, ApiResponse<Map<String, dynamic>>>>
+  downloadPolicyStatement({required String policyNumber}) async {
+    return await customRepositoryWrapper.wrapRepositoryFunction(
+      function: () async =>
+          await policyDs.downloadPolicyStatement(policyNumber: policyNumber),
+    );
+  }
 }

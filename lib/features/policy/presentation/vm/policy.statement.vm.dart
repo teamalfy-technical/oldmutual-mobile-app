@@ -113,7 +113,7 @@ class PPolicyStatementVm extends GetxController {
         ).successMessage(title: 'success'.tr, message: 'download_complete'.tr);
         await Future.delayed(Duration(milliseconds: 1000));
         // pensionAppLogger.e(res.data);
-        await PHelperFunction.openFile(
+        await PHelperFunction.openFileWithData(
           pdfData: res.data ?? Map<String, dynamic>.from({}),
           name: selectedPolicy?.planDescription ?? '',
         );
@@ -140,9 +140,40 @@ class PPolicyStatementVm extends GetxController {
           context,
         ).successMessage(title: 'success'.tr, message: 'download_complete'.tr);
         pensionAppLogger.e(res.data);
-        await PHelperFunction.openFile(
+        await PHelperFunction.openFileWithData(
           pdfData: res.data ?? Map<String, dynamic>.from({}),
           name: selectedPolicy?.planDescription ?? '',
+        );
+      },
+    );
+  }
+
+  /// Function to download policy document / statement
+  Future<void> downloadPolicyStatement() async {
+    showDownloadLoader(context);
+    final result = await policyService.downloadPolicyStatement(
+      policyNumber: selectedPolicy?.policyNo ?? '',
+    );
+    result.fold(
+      (err) {
+        PHelperFunction.pop();
+        PPopupDialog(
+          context,
+        ).errorMessage(title: 'error'.tr, message: 'error_occurred_msg'.tr);
+      },
+      (res) async {
+        PHelperFunction.pop();
+        PPopupDialog(
+          context,
+        ).successMessage(title: 'success'.tr, message: 'download_complete'.tr);
+        pensionAppLogger.e(res.data);
+        // await PHelperFunction.openFileWithData(
+        //   pdfData: res.data ?? Map<String, dynamic>.from({}),
+        //   name: selectedPolicy?.planDescription ?? '',
+        // );
+        await PHelperFunction.openFileWithURl(
+          url: res.data?['url'] ?? '',
+          fileName: selectedPolicy?.planDescription ?? '',
         );
       },
     );

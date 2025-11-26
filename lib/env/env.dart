@@ -387,6 +387,10 @@ abstract class Env {
   @EnviedField(defaultValue: '/life/premium-statement', obfuscate: true)
   static final String downloadPremiumStatement = _Env.downloadPremiumStatement;
 
+  /// [PolicyStatementDownload] endpoint
+  @EnviedField(defaultValue: '/life/policy-statement', obfuscate: true)
+  static final String downloadPolicyStatement = _Env.downloadPolicyStatement;
+
   /// -------------------- Policies Endpoints Ends Here ------------------------- ///
   ///
   /// -------------------- Cross-Sell Endpoints Starts Here ------------------------- ///

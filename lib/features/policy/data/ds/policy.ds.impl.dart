@@ -224,4 +224,16 @@ class PolicyDsImpl implements PolicyDs {
     );
     return ApiResponse<Map<String, dynamic>>.fromJson(res, (data) => data);
   }
+
+  @override
+  Future<ApiResponse<Map<String, dynamic>>> downloadPolicyStatement({
+    required String policyNumber,
+  }) async {
+    final res = await apiService.callService(
+      requestType: RequestType.get,
+      queryParams: {'policy_number': policyNumber},
+      endPoint: Env.downloadPolicyStatement,
+    );
+    return ApiResponse<Map<String, dynamic>>.fromJson(res, (data) => data);
+  }
 }

@@ -30,4 +30,7 @@ abstract class PolicyDs {
   Future<ApiResponse<Map<String, dynamic>>> downloadPremiumStatement({
     required String policyNumber,
   });
+  Future<ApiResponse<Map<String, dynamic>>> downloadPolicyStatement({
+    required String policyNumber,
+  });
 }

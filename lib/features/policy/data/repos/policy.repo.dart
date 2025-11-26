@@ -36,4 +36,6 @@ abstract class PolicyRepo {
   downloadInvestmentStatement({required String policyNumber});
   Future<Either<PFailure, ApiResponse<Map<String, dynamic>>>>
   downloadPremiumStatement({required String policyNumber});
+  Future<Either<PFailure, ApiResponse<Map<String, dynamic>>>>
+  downloadPolicyStatement({required String policyNumber});
 }
