@@ -93,8 +93,8 @@ class PPolicyDetailPage extends StatelessWidget {
                   ),
                   onTap: () {
                     PPopupDialog(context).warningMessage(
-                      title: 'Coming Soon',
-                      message: 'This feature will be available soon',
+                      title: 'coming_soon_title'.tr,
+                      message: 'coming_soon_msg'.tr,
                     );
                   },
                 ),
@@ -120,11 +120,11 @@ class PPolicyDetailPage extends StatelessWidget {
                   ),
                   onTap: () {
                     // download policy document
-                    // policyStatementVm.downloadPolicyStatement();
-                    PPopupDialog(context).warningMessage(
-                      title: 'Coming Soon',
-                      message: 'This feature will be available soon',
-                    );
+                    policyStatementVm.downloadPolicyDocument();
+                    // PPopupDialog(context).warningMessage(
+                    //   title: 'Coming Soon',
+                    //   message: 'This feature will be available soon',
+                    // );
                   },
                 ),
                 PAppSize.s8.horizontalSpace,
@@ -169,8 +169,8 @@ class PPolicyDetailPage extends StatelessWidget {
                         : PAppColor.successDark,
                   ),
                   onTap: () => PPopupDialog(context).warningMessage(
-                    title: 'Coming Soon',
-                    message: 'This feature will be available soon',
+                    title: 'coming_soon_title'.tr,
+                    message: 'coming_soon_msg'.tr,
                   ),
                   // PHelperFunction.switchScreen(
                   //   destination: Routes.policyClaimPage,

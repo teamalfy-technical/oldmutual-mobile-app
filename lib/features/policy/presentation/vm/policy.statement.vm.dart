@@ -149,7 +149,7 @@ class PPolicyStatementVm extends GetxController {
   }
 
   /// Function to download policy document / statement
-  Future<void> downloadPolicyStatement() async {
+  Future<void> downloadPolicyDocument() async {
     showDownloadLoader(context);
     final result = await policyService.downloadPolicyStatement(
       policyNumber: selectedPolicy?.policyNo ?? '',
@@ -166,14 +166,18 @@ class PPolicyStatementVm extends GetxController {
         PPopupDialog(
           context,
         ).successMessage(title: 'success'.tr, message: 'download_complete'.tr);
-        pensionAppLogger.e(res.data);
+        pensionAppLogger.d(res.data?['data']);
         // await PHelperFunction.openFileWithData(
         //   pdfData: res.data ?? Map<String, dynamic>.from({}),
         //   name: selectedPolicy?.planDescription ?? '',
         // );
-        await PHelperFunction.openFileWithURl(
-          url: res.data?['url'] ?? '',
-          fileName: selectedPolicy?.planDescription ?? '',
+        await PHelperFunction.openFileWithURL(
+          url: res.data?['data']['url'] ?? '',
+          fileName:
+              res.data?['data']['url'].toString().split('/').last ??
+              '${selectedPolicy?.planDescription?.toLowerCase().replaceAll(' ', '-')}.pdf',
+          //selectedPolicy?.planDescription ?? '',
+          requiresAuth: false,
         );
       },
     );

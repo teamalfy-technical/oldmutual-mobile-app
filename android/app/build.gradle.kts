@@ -59,6 +59,13 @@ android {
         }
         release {
             signingConfig = signingConfigs.getByName("release")
+            // Enable ProGuard/R8 for code obfuscation in protected builds
+            isMinifyEnabled = true
+            isShrinkResources = true
+            proguardFiles(
+                getDefaultProguardFile("proguard-android-optimize.txt"),
+                "proguard-rules.pro"
+            )
         }
     }
 
@@ -79,6 +86,23 @@ android {
                 name = "app_name",
                 value = "My OldMutual GH")
             applicationIdSuffix = ""
+        }
+        create("prodPentest") {
+            dimension = "default"
+            resValue(
+                type = "string",
+                name = "app_name",
+                value = "My OldMutual GH Pentest")
+            applicationIdSuffix = ".pentest"
+        }
+    }
+
+    // Configure build variants
+    applicationVariants.all {
+        val variant = this
+        // Disable obfuscation for pentest flavor
+        if (variant.flavorName == "prodPentest") {
+            variant.buildConfigField("Boolean", "PENTEST_BUILD", "true")
         }
     }
 }

@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_image_compress/flutter_image_compress.dart';
 import 'package:get/get.dart';
@@ -8,7 +9,6 @@ import 'package:oldmutual_pensions_app/core/utils/utils.dart';
 import 'package:oldmutual_pensions_app/gen/assets.gen.dart';
 import 'package:open_file/open_file.dart';
 import 'package:path_provider/path_provider.dart';
-import 'package:dio/dio.dart';
 
 class PHelperFunction {
   //HHelperFunction._();
@@ -244,32 +244,41 @@ class PHelperFunction {
   }
 
   // Download and open file with URL and Filename
-  static openFileWithURl({
+  static openFileWithURL({
     required String url,
     required String fileName,
+    bool requiresAuth = true,
   }) async {
     pensionAppLogger.e(url);
-    final file = await downloadFile(url, fileName);
+    final file = await downloadFile(url, fileName, requiresAuth: requiresAuth);
     if (file == null) return;
     OpenFile.open(file.path);
   }
 
   // Download file into private folder not visible to user
-  static Future<File?> downloadFile(String url, String fileName) async {
+  static Future<File?> downloadFile(
+    String url,
+    String fileName, {
+    bool requiresAuth = true,
+  }) async {
     final appStorage = await getApplicationDocumentsDirectory();
     final file = File("${appStorage.path}/$fileName");
-    String? token = (await PSecureStorage().getAuthResponse())?.token;
+
+    // Prepare headers based on authentication requirement
+    Map<String, dynamic> headers = {"Accept": "application/pdf"};
+
+    if (requiresAuth) {
+      String? token = (await PSecureStorage().getAuthResponse())?.token;
+      headers["Authorization"] = "Bearer $token";
+    }
+
     try {
       final response = await Dio().get(
         url,
         options: Options(
           responseType: ResponseType.bytes,
-          // headers: PHelperFunction.appTokenHeader(),
           followRedirects: false,
-          headers: {
-            "Authorization": "Bearer $token",
-            "Accept": "application/pdf",
-          },
+          headers: headers,
         ),
       );
 
@@ -286,15 +295,6 @@ class PHelperFunction {
       await raf.close();
       return file;
     } catch (err) {
-      // if (err is DioException) {
-      //   if (err.response?.statusCode == 404) {
-      //     // PPopupDialog(context).errorMessage(
-      //     //   title: 'error'.tr,
-      //     //   message: err.response?.data['message'],
-      //     // );
-      //     pensionAppLogger.i(err.response?.data);
-      //   }
-      // }
       pensionAppLogger.e("Error: $err");
       return null;
     }
