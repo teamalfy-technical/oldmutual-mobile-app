@@ -33,7 +33,9 @@
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSCameraUsageDescription</key>
-	<string>This app requires access to your camera to allow you to take photos for uploading or sharing.</string>
+	<string>This app requires camera access for face verification, identity authentication, and uploading photos.</string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>This app requires access to your microphone for face verification and identity authentication.</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>This app requires access to your photo library to allow you to select and upload images.</string>
 	<key>NSFaceIDUsageDescription</key>

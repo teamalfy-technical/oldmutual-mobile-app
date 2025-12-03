@@ -128,24 +128,59 @@ class PAuthVm extends GetxController {
   /// Function to navigate user to face verification page
   Future<void> verifyFaceIdentification() async {
     try {
-      // Request camera & microphone permissions
-      final cam = await Permission.camera.request();
-      final mic = await Permission.microphone.request();
+      // Request camera permission
+      var cameraStatus = await Permission.camera.status;
+      if (!cameraStatus.isGranted) {
+        cameraStatus = await Permission.camera.request();
+      }
 
-      if (cam.isGranted && mic.isGranted) {
-        PHelperFunction.switchScreen(
-          destination: Routes.webviewPage,
-          args: ['face_verification'.tr, url.value],
-        );
-      } else {
-        // Show a dialog to enable permissions
+      // Handle camera permission denial
+      if (!cameraStatus.isGranted) {
         PPopupDialog(context).errorMessage(
           title: 'error'.tr,
-          message: 'Camera & microphone permissions are required',
+          message: cameraStatus.isPermanentlyDenied
+              ? 'Camera permission is permanently denied. Please enable it in Settings.'
+              : 'Camera permission is required for face verification',
         );
+
+        if (cameraStatus.isPermanentlyDenied) {
+          await openAppSettings();
+        }
+        return;
       }
+
+      // Request microphone permission
+      var microphoneStatus = await Permission.microphone.status;
+      if (!microphoneStatus.isGranted) {
+        microphoneStatus = await Permission.microphone.request();
+      }
+
+      // Handle microphone permission denial
+      if (!microphoneStatus.isGranted) {
+        PPopupDialog(context).errorMessage(
+          title: 'error'.tr,
+          message: microphoneStatus.isPermanentlyDenied
+              ? 'Microphone permission is permanently denied. Please enable it in Settings.'
+              : 'Microphone permission is required for face verification',
+        );
+
+        if (microphoneStatus.isPermanentlyDenied) {
+          await openAppSettings();
+        }
+        return;
+      }
+
+      // Both permissions granted, navigate to webview
+      PHelperFunction.switchScreen(
+        destination: Routes.webviewPage,
+        args: ['face_verification'.tr, url.value],
+      );
     } catch (err) {
-      pensionAppLogger.e(err.toString());
+      pensionAppLogger.e('Error in verifyFaceIdentification: $err');
+      PPopupDialog(context).errorMessage(
+        title: 'error'.tr,
+        message: 'An error occurred while requesting permissions. Please try again.',
+      );
     }
   }
 
