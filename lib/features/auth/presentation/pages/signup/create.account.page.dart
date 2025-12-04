@@ -35,6 +35,15 @@ class _PCreateAccountPageState extends State<PCreateAccountPage> {
     });
   }
 
+  bool get _isPasswordValid =>
+      hasMinLength &&
+      hasUppercase &&
+      hasNumber &&
+      hasSpecialChar &&
+      ctrl.passwordTEC.text.isNotEmpty &&
+      ctrl.confirmPasswordTEC.text.isNotEmpty &&
+      ctrl.passwordTEC.text == ctrl.confirmPasswordTEC.text;
+
   @override
   Widget build(BuildContext context) {
     pensionAppLogger.i('Verification Token: ${ctrl.verificationToken}');
@@ -174,6 +183,7 @@ class _PCreateAccountPageState extends State<PCreateAccountPage> {
                         obscure: ctrl.obscure.value,
                         onObscureChanged: ctrl.onObscureChanged,
                         controller: ctrl.confirmPasswordTEC,
+                        onChanged: (_) => setState(() {}),
                       ),
 
                       PAppSize.s20.verticalSpace,
@@ -236,11 +246,13 @@ class _PCreateAccountPageState extends State<PCreateAccountPage> {
                         showIcon: false,
                         loading: ctrl.loading.value,
                         width: PDeviceUtil.getDeviceWidth(context),
-                        onTap: () {
-                          if (formKey.currentState!.validate()) {
-                            ctrl.createAccount();
-                          }
-                        },
+                        onTap: _isPasswordValid
+                            ? () {
+                                if (formKey.currentState!.validate()) {
+                                  ctrl.createAccount();
+                                }
+                              }
+                            : null,
                       ),
                       PAppSize.s24.verticalSpace,
                       // already have an account
