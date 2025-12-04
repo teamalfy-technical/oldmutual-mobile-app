@@ -58,10 +58,8 @@ class CatchApiErrorWrapperImpl implements CatchApiErrorWrapper {
             }
             pensionAppLogger.e(err.response?.data);
           } else if (err.response?.statusCode == 404) {
-            errorMessage =
-                err.response?.data['error'] ??
-                err.response?.data['message'] ??
-                'Requested resource is not found';
+            pensionAppLogger.e(err.response?.data);
+            errorMessage = extractError(err.response?.data);
           } else if (err.response?.statusCode == 422) {
             // ApiErrorResponse error =
             //     ApiErrorResponse.fromJson(err.response?.data);
@@ -120,6 +118,8 @@ class CatchApiErrorWrapperImpl implements CatchApiErrorWrapper {
       }
     } else if (response.containsKey("error")) {
       return response['error'];
+    } else if (response.containsKey("message")) {
+      return response['message']['message'];
     } else {
       for (var entry in response.entries) {
         if (entry.value is List && entry.value.isNotEmpty) {

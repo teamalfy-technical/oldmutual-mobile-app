@@ -1,141 +1,146 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:oldmutual_pensions_app/core/utils/utils.dart';
-import 'package:oldmutual_pensions_app/features/auth/domain/models/member.model.dart';
-import 'package:oldmutual_pensions_app/features/dashboard/dashboard.dart';
+import 'package:oldmutual_pensions_app/features/home/home.dart';
+import 'package:oldmutual_pensions_app/features/more/more.services.dart';
 import 'package:oldmutual_pensions_app/gen/assets.gen.dart';
-import 'package:oldmutual_pensions_app/shared/shared.dart';
+import 'package:oldmutual_pensions_app/routes/app.pages.dart';
+import 'package:oldmutual_pensions_app/shared/widgets/annotated.region.dart';
 
-class PDashboardPage1 extends StatelessWidget {
-  PDashboardPage1({super.key});
+class PDashboardPage extends StatelessWidget {
+  PDashboardPage({super.key});
 
-  final ctrl = Get.put(PDashboardVm());
+  final ctrl = Get.put(PHomeVm());
+
+  final List<Widget> _pages = [
+    PHomePage(),
+    PUserDetailPage(isShowAppBar: false),
+    // PManagePage(),
+    // Container(
+    //   alignment: Alignment.center,
+    //   color: PAppColor.darkAppBarColor2,
+    //   child: Text('manage'.tr),
+    // ),
+    PMorePage(),
+    // PProfileSettingsPage(),
+    // Container(
+    //   alignment: Alignment.center,
+    //   color: PAppColor.darkAppBarColor2,
+    //   child: Text('more'.tr),
+    // ),
+    // PFactSheetPage(),
+    // PNotificationPage(),
+    // PProfilePage(),
+    // PMoreServicesPage(),
+  ];
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: PAnnotatedRegion(
-        child: Stack(
-          children: [
-            Column(
-              children: [
-                Container(
-                  width: PDeviceUtil.getDeviceWidth(context),
-                  // height: PDeviceUtil.getDeviceHeight(context) / 3.5,
-                  height: PDeviceUtil.getDeviceHeight(context) * 0.3,
-                  decoration: BoxDecoration(color: PAppColor.blackColor),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      FutureBuilder<Member?>(
-                        future: PSecureStorage().getAuthResponse(),
-                        builder: (context, snapshot) {
-                          final name = snapshot.data?.name ?? '';
-                          return Text(
-                            '${'welcome'.tr}, $name',
-                            style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                              color: PAppColor.whiteColor,
-                            ),
-                          );
-                        },
-                      ),
-                      PAppSize.s8.verticalSpace,
-                      Text(
-                        'Your Schemes',
-                        style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                          color: PAppColor.whiteColor,
-                        ),
-                      ),
-                      PAppSize.s6.verticalSpace,
-                    ],
-                  ).only(bottom: PDeviceUtil.getDeviceWidth(context) * 0.15),
+    return Obx(
+      () => Scaffold(
+        backgroundColor: PHelperFunction.isDarkMode(context)
+            ? PAppColor.darkBgColor
+            : PAppColor.fillColor,
+        appBar: AppBar(
+          title: ctrl.currentIndex.value == 1
+              ? Text('manage'.tr)
+              : ctrl.currentIndex.value == 2
+              ? Text('more'.tr)
+              : FutureBuilder<String?>(
+                  future: PSecureStorage().getUserFirstName(),
+                  builder: (context, snapshot) {
+                    final name = snapshot.data ?? '';
+                    return Text('Hi $name');
+                  },
                 ),
-                Opacity(
-                  opacity: PAppSize.s0_3,
-                  child: Image.asset(
-                    Assets.images.dashboardBg.path,
-                    fit: BoxFit.cover,
-                    width: PDeviceUtil.getDeviceWidth(context),
-                    height: PDeviceUtil.getDeviceHeight(context) * 0.70,
-                    colorBlendMode: BlendMode.dstATop,
-                    color: PAppColor.whiteColor.withOpacityExt(
-                      PAppSize.s0_6,
-                    ), // Adjust opacity
-                  ),
-                ),
-              ],
-            ),
-
-            Obx(
-              () => Positioned(
-                top:
-                    (ctrl.schemes.isEmpty &&
-                        ctrl.loading.value == LoadingState.completed)
-                    ? PDeviceUtil.getDeviceHeight(context) * 0.45
-                    : PDeviceUtil.getDeviceHeight(context) * 0.22,
-                // bottom: PDeviceUtil.getDeviceHeight(context) * 0.02,
-                left: PAppSize.s16,
-                right: PAppSize.s16,
-                bottom: PAppSize.s0,
-                child: RefreshIndicator(
-                  onRefresh: ctrl.getMemberSchemes,
-                  color: PAppColor.primary,
-                  child: ctrl.loading.value == LoadingState.loading
-                      ? ListView.builder(
-                          shrinkWrap: true,
-                          itemCount: 5,
-                          itemBuilder: (context, index) {
-                            return PensionTierRedactWidget(
-                              loading: ctrl.loading.value,
-                            );
-                          },
-                        )
-                      : ctrl.schemes.isEmpty
-                      ? PEmptyStateWidget(message: 'no_results_found'.tr)
-                      : ListView.builder(
-                          itemCount: ctrl.schemes.length,
-                          shrinkWrap: true,
-                          itemBuilder: (context, index) {
-                            final scheme = ctrl.schemes[index];
-                            return PensionTierWidget(
-                              scheme: scheme,
-                              onTap: () {
-                                // pensionAppLogger.e(scheme.toJson());
-                                ctrl.getMemberSelectedScheme(
-                                  employerName: scheme.employerName ?? '',
-                                  employerNumber: scheme.employerNumber ?? '',
-                                  memberName: scheme.memberName ?? '',
-                                  memberNumber: scheme.memberNumber ?? '',
-                                  ssnitNumber: scheme.ssnitNumber ?? '',
-                                  masterScheme:
-                                      scheme.masterSchemeDescription ?? '',
-                                  schemeType: scheme.penTypeDescription ?? '',
-                                  email: scheme.email ?? '',
-                                  dob: scheme.dob ?? '',
-                                  dateJoined: scheme.dateJoined ?? '',
-                                  sex: scheme.sex ?? '',
-                                  nationality: scheme.nationality ?? '',
-                                );
-                                // PHelperFunction.switchScreen(
-                                //   destination: Routes.homePage,
-                                //   replace: false,
-                                // );
-                              },
-                            );
-                          },
-                        ),
-                ),
+          // title: Text('Hi Bongani'),
+          actions: [
+            IconButton(
+              // onPressed: () => showFeedbackDialog(
+              //   context: context,
+              //   onPositiveTap: () {},
+              //   onNegativeTap: () {},
+              // ),
+              onPressed: () => PHelperFunction.switchScreen(
+                destination: Routes.notificationPage,
+              ),
+              icon: Assets.icons.notificationIcon.svg(
+                height: PAppSize.s28,
+                color: PHelperFunction.isDarkMode(context)
+                    ? PAppColor.whiteColor
+                    : PAppColor.cardDarkColor,
               ),
             ),
-
-            if (ctrl.selecting.value == LoadingState.loading)
-              Align(
-                alignment: Alignment.center,
-                child: PCustomLoadingIndicator(),
-              ),
           ],
         ),
+        bottomNavigationBar: BottomNavigationBar(
+          currentIndex: ctrl.currentIndex.value,
+          onTap: ctrl.onPageChanged,
+          elevation: PAppSize.s2,
+          backgroundColor: PHelperFunction.isDarkMode(context)
+              ? PAppColor.darkAppBarColor
+              : PAppColor.whiteColor,
+          showSelectedLabels: true,
+          showUnselectedLabels: true,
+          selectedItemColor: PHelperFunction.isDarkMode(context)
+              ? PAppColor.successLight
+              : PAppColor.successDark,
+          selectedIconTheme: IconThemeData(
+            color: PHelperFunction.isDarkMode(context)
+                ? PAppColor.successLight
+                : PAppColor.successDark,
+          ),
+          selectedFontSize: PAppSize.s10,
+          unselectedItemColor: PHelperFunction.isDarkMode(context)
+              ? PAppColor.whiteColor
+              : PAppColor.blackColor,
+          unselectedIconTheme: IconThemeData(
+            color: PHelperFunction.isDarkMode(context)
+                ? PAppColor.whiteColor
+                : PAppColor.blackColor,
+          ),
+          // unselectedFontSize: PAppSize.s1,
+          type: BottomNavigationBarType.fixed,
+          items: [
+            BottomNavigationBarItem(
+              icon: Assets.icons.homeIcon.svg(
+                color: ctrl.currentIndex.value == 0
+                    ? PHelperFunction.isDarkMode(context)
+                          ? PAppColor.successLight
+                          : PAppColor.successDark
+                    : PHelperFunction.isDarkMode(context)
+                    ? PAppColor.whiteColor
+                    : PAppColor.blackColor,
+              ),
+              label: 'home'.tr,
+            ),
+            BottomNavigationBarItem(
+              icon: Assets.icons.manageIcon.svg(
+                color: ctrl.currentIndex.value == 1
+                    ? PHelperFunction.isDarkMode(context)
+                          ? PAppColor.successLight
+                          : PAppColor.successDark
+                    : PHelperFunction.isDarkMode(context)
+                    ? PAppColor.whiteColor
+                    : PAppColor.blackColor,
+              ),
+              label: 'manage'.tr,
+            ),
+            BottomNavigationBarItem(
+              icon: Assets.icons.moreIcon.svg(
+                color: ctrl.currentIndex.value == 2
+                    ? PHelperFunction.isDarkMode(context)
+                          ? PAppColor.successLight
+                          : PAppColor.successDark
+                    : PHelperFunction.isDarkMode(context)
+                    ? PAppColor.whiteColor
+                    : PAppColor.blackColor,
+              ),
+              label: 'more'.tr,
+            ),
+          ],
+        ),
+        body: PAnnotatedRegion(child: _pages[ctrl.currentIndex.value]),
       ),
     );
   }

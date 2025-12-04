@@ -8,6 +8,7 @@ import 'package:oldmutual_pensions_app/features/auth/presentation/pages/verify.o
 import 'package:oldmutual_pensions_app/features/beneficiary/beneficiary.dart';
 import 'package:oldmutual_pensions_app/features/beneficiary/presentation/pages/add.beneficiary.page.dart';
 import 'package:oldmutual_pensions_app/features/contribution.history/contribution.history.dart';
+import 'package:oldmutual_pensions_app/features/cross-sell/presentation/pages/recommendation.highlight.page.dart';
 import 'package:oldmutual_pensions_app/features/future.value.calculator/future.value.calculator.dart';
 import 'package:oldmutual_pensions_app/features/home/home.dart';
 import 'package:oldmutual_pensions_app/features/manage/manage.dart';
@@ -149,6 +150,12 @@ class AppPages {
       page: () => PRecommendationPage(),
       transition: Transition.circularReveal,
       transitionDuration: const Duration(milliseconds: PAppSize.s700),
+    ),
+    GetPage(
+      name: _Paths.recommendationHighlightPage,
+      page: () => PRecommendationHighlightPage(highlight: Get.arguments),
+      // transition: Transition.circularReveal,
+      transitionDuration: const Duration(milliseconds: PAppSize.s450),
     ),
 
     /// Policy Pages

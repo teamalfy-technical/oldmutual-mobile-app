@@ -223,7 +223,10 @@ class PHomePage extends StatelessWidget {
                                 : PDeviceUtil.getDeviceHeight(context) * 0.33,
                             child: ListView.builder(
                               shrinkWrap: true,
-                              itemCount: crossSellVm.recommendations.length,
+                              itemCount: crossSellVm.recommendations
+                                  .take(3)
+                                  .toList()
+                                  .length,
                               scrollDirection: Axis.horizontal,
                               itemBuilder: (context, index) {
                                 final recommendation =
@@ -234,7 +237,11 @@ class PHomePage extends StatelessWidget {
                                   width:
                                       PDeviceUtil.getDeviceWidth(context) *
                                       0.65,
-                                  onTap: () {},
+                                  onTap: () => PHelperFunction.switchScreen(
+                                    destination:
+                                        Routes.recommendationHighlightPage,
+                                    args: recommendation,
+                                  ),
                                 );
                               },
                             ),

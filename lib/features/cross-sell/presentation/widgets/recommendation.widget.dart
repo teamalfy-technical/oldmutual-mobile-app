@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:oldmutual_pensions_app/core/utils/utils.dart';
+import 'package:oldmutual_pensions_app/features/home/home.dart';
 import 'package:oldmutual_pensions_app/gen/assets.gen.dart';
 
 class RecommendationWidget extends StatelessWidget {
-  final Map<String, dynamic> recommendation;
+  final Highlight recommendation;
   final double? width;
   final double? height;
   final EdgeInsets? margin;
@@ -44,7 +45,7 @@ class RecommendationWidget extends StatelessWidget {
               borderRadius: BorderRadius.circular(PAppSize.s16),
               image: DecorationImage(
                 fit: BoxFit.cover,
-                image: AssetImage(recommendation['image']),
+                image: AssetImage(recommendation.image),
               ),
             ),
           ),
@@ -58,7 +59,7 @@ class RecommendationWidget extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      recommendation['title'],
+                      recommendation.title,
                       textAlign: TextAlign.start,
                       softWrap: true,
                       style: Theme.of(context).textTheme.titleMedium?.copyWith(
@@ -78,7 +79,7 @@ class RecommendationWidget extends StatelessWidget {
                 ),
                 PAppSize.s4.verticalSpace,
                 Text(
-                  recommendation['subTitle'],
+                  recommendation.description ?? '',
                   textAlign: TextAlign.start,
                   maxLines: 3,
                   softWrap: true,

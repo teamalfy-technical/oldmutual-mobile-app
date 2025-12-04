@@ -18,12 +18,18 @@ class PolicyDsImpl implements PolicyDs {
         queryParams: {'status': status},
         endPoint: Env.getPolicies,
       );
-      final combinedList = combinePolicies(res);
-      pensionAppLogger.i(combinedList);
+
+      pensionAppLogger.i(res);
       return ApiResponse<PolicyResponse>.fromJson(
-        combinedList,
+        res,
         (data) => PolicyResponse.fromJson(data),
       );
+      // final combinedList = combinePolicies(res);
+      // pensionAppLogger.i(combinedList);
+      // return ApiResponse<PolicyResponse>.fromJson(
+      //   combinedList,
+      //   (data) => PolicyResponse.fromJson(data),
+      // );
     });
   }
 

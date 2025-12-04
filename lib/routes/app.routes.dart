@@ -21,6 +21,7 @@ abstract class Routes {
   static const dashboardPage = _Paths.dashboardPage;
   static const dashboardHighlightPage = _Paths.dashboardHighlightPage;
   static const recommendationPage = _Paths.recommendationPage;
+  static const recommendationHighlightPage = _Paths.recommendationHighlightPage;
 
   /// --- Policy Feature Routes
   static const productsPage = _Paths.productsPage;
@@ -79,6 +80,7 @@ abstract class _Paths {
   static const dashboardPage = '/dashboard-page';
   static const dashboardHighlightPage = '/dashboard-highlight-page';
   static const recommendationPage = '/recommendation-page';
+  static const recommendationHighlightPage = '/recommendation-highlight-page';
 
   /// --- Policy Feature Paths
   static const productsPage = '/products-page';

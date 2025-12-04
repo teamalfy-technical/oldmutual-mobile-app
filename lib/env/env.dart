@@ -393,6 +393,30 @@ abstract class Env {
 
   /// -------------------- Policies Endpoints Ends Here ------------------------- ///
   ///
+  /// -------------------- Upsell Endpoints Starts Here ------------------------- ///
+
+  /// [GetUpsellRecommendations] endpoint
+  @EnviedField(defaultValue: '/upsell/member-recommendations', obfuscate: true)
+  static final String getUpsellRecommendations = _Env.getUpsellRecommendations;
+
+  /// [UpgradeRecommendation] endpoint
+  @EnviedField(defaultValue: '/upsell/upgrade-product', obfuscate: true)
+  static final String upgradeRecommendation = _Env.upgradeRecommendation;
+
+  /// [DismissRecommendation] endpoint
+  @EnviedField(defaultValue: '/upsell/dismise-recommendation', obfuscate: true)
+  static final String dismissRecommendation = _Env.dismissRecommendation;
+
+  /// [GetAcceptedRecommendations] endpoint
+  @EnviedField(
+    defaultValue: '/upsell/accepted-recommendations',
+    obfuscate: true,
+  )
+  static final String getAcceptedRecommendations =
+      _Env.getAcceptedRecommendations;
+
+  /// -------------------- Upsell Endpoints Ends Here ------------------------- ///
+  ///
   /// -------------------- Cross-Sell Endpoints Starts Here ------------------------- ///
 
   /// [GetRecommendations] endpoint

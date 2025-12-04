@@ -31,9 +31,7 @@ class AppTranslations extends Translations {
       'signing_up': 'Signing UP...',
       'signing_in': 'Signing IN...',
       'phone_number': 'Phone number',
-      'ghana_'
-              'min_8_characters':
-          'Min 8 characters',
+      'min_8_characters': 'Min 8 characters',
       'an_uppercase': 'An uppercase',
       'a_special_case': 'A special character',
       'a_number': 'A number',
@@ -234,7 +232,7 @@ class AppTranslations extends Translations {
       'confirm_delete': 'Confirm Delete',
       'confirm_delete_msg': 'Type “DELETE” to confirm delete of your \naccount',
       'account_deleted_msg':
-          'Your account has been temporary deleted. You cant reactivate the account within 30 dys after which it is permanently deleted',
+          'Your account has been temporarily deleted. You can reactivate the account within 30 dys after which it is permanently deleted',
       'no_cancel': 'No, Cancel',
       'delete': 'Delete',
       'delete_acc_positive': 'I understand the risks, continue',
@@ -396,6 +394,8 @@ class AppTranslations extends Translations {
       'available_balance': 'Available balance',
       'total_investments': 'Total investments',
       'key_benefits': 'Key Benefits',
+      'coming_soon_title': 'Coming Soon',
+      'coming_soon_msg': 'This feature will be available soon',
       'your_total_contribution': 'Your total contributions',
       'no_policy_found': 'You\'ve no @name policies available',
       'no_product_found': 'You\'ve no @name products available',

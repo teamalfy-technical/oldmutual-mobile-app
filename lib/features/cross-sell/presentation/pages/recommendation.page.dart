@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:oldmutual_pensions_app/core/utils/utils.dart';
 import 'package:oldmutual_pensions_app/features/cross-sell/presentation/vm/cross.sell.vm.dart';
 import 'package:oldmutual_pensions_app/features/home/home.dart';
+import 'package:oldmutual_pensions_app/routes/app.pages.dart';
 
 class PRecommendationPage extends StatelessWidget {
   PRecommendationPage({super.key});
@@ -27,7 +28,10 @@ class PRecommendationPage extends StatelessWidget {
               margin: EdgeInsets.only(bottom: PAppSize.s16),
               recommendation: recommendation,
               showArrowButton: false,
-              onTap: () {},
+              onTap: () => PHelperFunction.switchScreen(
+                destination: Routes.recommendationHighlightPage,
+                args: recommendation,
+              ),
             );
           },
         ).all(PAppSize.s16),
