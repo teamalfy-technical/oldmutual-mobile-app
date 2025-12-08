@@ -238,6 +238,7 @@ class AppTranslations extends Translations {
       'delete_acc_positive': 'I understand the risks, continue',
       'terms_n_conditions': 'Terms and conditions',
       'terms_and_conditions': 'Terms & Conditions',
+      'congratulations': 'Congratulations',
       'app_support': 'App Support',
       'operating_hours': 'Operating hours',
       'monday_to_friday': 'Monday to Friday',

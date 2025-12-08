@@ -15,6 +15,7 @@ import 'package:oldmutual_pensions_app/features/redemptions/presentation/vm/rede
 import 'package:oldmutual_pensions_app/features/settings/settings.dart';
 import 'package:oldmutual_pensions_app/features/splash/presentation/vm/splash.vm.dart';
 import 'package:oldmutual_pensions_app/features/statements/presentation/vm/statement.vm.dart';
+import 'package:oldmutual_pensions_app/features/up-sell/up.sell.dart';
 
 class InitialBinding implements Bindings {
   @override
@@ -27,6 +28,7 @@ class InitialBinding implements Bindings {
     Get.lazyPut(() => PPensionVm());
     Get.lazyPut(() => PDashboardVm());
     Get.lazyPut(() => PCrossSellVm());
+    Get.lazyPut(() => PUpsellVm());
     Get.lazyPut(() => PBeneficiaryVm());
     Get.lazyPut(() => PFactsheetVm());
     Get.lazyPut(() => PContributionHistoryVm());

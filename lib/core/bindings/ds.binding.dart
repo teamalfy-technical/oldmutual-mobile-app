@@ -2,6 +2,7 @@ import 'package:get/get.dart';
 import 'package:oldmutual_pensions_app/features/auth/auth.dart';
 import 'package:oldmutual_pensions_app/features/beneficiary/beneficiary.dart';
 import 'package:oldmutual_pensions_app/features/contribution.history/contribution.history.dart';
+import 'package:oldmutual_pensions_app/features/cross-sell/cross.sell.dart';
 import 'package:oldmutual_pensions_app/features/factsheet/factsheet.dart';
 import 'package:oldmutual_pensions_app/features/home/home.dart';
 import 'package:oldmutual_pensions_app/features/notification/notification.dart';
@@ -10,6 +11,7 @@ import 'package:oldmutual_pensions_app/features/policy/policy.dart';
 import 'package:oldmutual_pensions_app/features/profile/profile.dart';
 import 'package:oldmutual_pensions_app/features/redemptions/redemption.dart';
 import 'package:oldmutual_pensions_app/features/statements/statements.dart';
+import 'package:oldmutual_pensions_app/features/up-sell/up.sell.dart';
 
 class DataSourceBinding implements Bindings {
   @override
@@ -41,6 +43,12 @@ class DataSourceBinding implements Bindings {
     Get.lazyPut<PensionDs>(() => PensionDsImpl(), tag: (PensionDs).toString());
 
     Get.lazyPut<PolicyDs>(() => PolicyDsImpl(), tag: (PolicyDs).toString());
+
+    Get.lazyPut<UpsellDs>(() => UpsellDsImpl(), tag: (UpsellDs).toString());
+    Get.lazyPut<CrossSellDs>(
+      () => CrossSellDsImpl(),
+      tag: (CrossSellDs).toString(),
+    );
 
     Get.lazyPut<FactsheetDs>(
       () => FactsheetDsImpl(),

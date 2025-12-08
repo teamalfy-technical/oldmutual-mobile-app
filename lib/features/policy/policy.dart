@@ -1,3 +1,4 @@
+export '../up-sell/presentation/pages/premium.upgrade.widget.dart';
 export 'application/services/policy.service.dart';
 export 'application/services/policy.service.impl.dart';
 export 'data/ds/policy.ds.dart';
@@ -17,7 +18,6 @@ export 'presentation/pages/tabs/retail.tab.dart';
 export 'presentation/vm/policy.statement.vm.dart';
 export 'presentation/vm/policy.vm.dart';
 export 'presentation/widgets/policy.widget.dart';
-export 'presentation/widgets/premium.upgrade.widget.dart';
 export 'presentation/widgets/product.widget.dart';
 export 'presentation/widgets/quick.action.widget.dart';
 export 'presentation/widgets/retail.widget.dart';
