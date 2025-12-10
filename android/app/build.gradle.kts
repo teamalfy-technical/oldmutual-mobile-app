@@ -38,7 +38,8 @@ android {
 
     defaultConfig {
         applicationId = "com.oldmutual.pensions.app"
-        minSdk = flutter.minSdkVersion
+        // minSdk must be at least 23 for EncryptedSharedPreferences (secure token storage)
+        minSdk = maxOf(flutter.minSdkVersion, 23)
         targetSdk = flutter.targetSdkVersion
         versionCode = flutter.versionCode
         versionName = flutter.versionName
@@ -115,4 +116,6 @@ dependencies {
     implementation("androidx.window:window:1.0.0")
     implementation("androidx.window:window-java:1.0.0")
     coreLibraryDesugaring("com.android.tools:desugar_jdk_libs:2.1.4")
+    // Security library for EncryptedSharedPreferences (required for flutter_secure_storage)
+    implementation("androidx.security:security-crypto:1.1.0-alpha06")
 }

@@ -119,7 +119,12 @@ class CatchApiErrorWrapperImpl implements CatchApiErrorWrapper {
     } else if (response.containsKey("error")) {
       return response['error'];
     } else if (response.containsKey("message")) {
-      return response['message']['message'];
+      final message = response['message'];
+      if (message is Map) {
+        return message['message'] ?? "Bad Request";
+      } else if (message is String) {
+        return message;
+      }
     } else {
       for (var entry in response.entries) {
         if (entry.value is List && entry.value.isNotEmpty) {

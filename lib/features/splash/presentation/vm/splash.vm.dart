@@ -20,6 +20,19 @@ class PSplashVm extends GetxController {
   /// [showSplashPage]
   void showSplashPage() async {
     _timer = Timer(Duration(seconds: 3), () async {
+      // Perform device security check first
+      final securityStatus = await DeviceSecurityService().checkDeviceSecurity();
+
+      if (securityStatus.isCompromised) {
+        stop();
+        PHelperFunction.switchScreen(
+          destination: Routes.securityBlockedPage,
+          replace: true,
+          args: securityStatus.securityIssueMessage,
+        );
+        return;
+      }
+
       if (PSecureStorage().readData(PSecureStorage().onboardingKey) == null) {
         stop();
         PHelperFunction.switchScreen(

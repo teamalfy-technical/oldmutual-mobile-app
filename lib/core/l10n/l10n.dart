@@ -487,6 +487,17 @@ class AppTranslations extends Translations {
       'premium_upgrade_subtitle': 'Increase your coverage today',
       'additional_advantage': 'additional advantage',
       'new_coverage': 'New Coverage Benefit (Sum Assured)',
+
+      // Security strings
+      'security_alert': 'Security Alert',
+      'why_blocked': 'Why is this happening?',
+      'rooted_jailbroken_reason':
+          'Rooted or jailbroken devices can compromise your financial data.',
+      'emulator_reason':
+          'Emulators and virtual devices are not allowed for security.',
+      'protect_data_reason':
+          'We prioritize protecting your sensitive pension information.',
+      'close_app': 'Close App',
     },
     'hi_IN': {'app_name': 'Pensions App'},
     'fr_FR': {'app_name': 'Pensions App'},

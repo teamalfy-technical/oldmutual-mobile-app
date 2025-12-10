@@ -4,6 +4,7 @@ export 'constants/app.colors.dart';
 export 'constants/app.constants.dart';
 export 'constants/app.sizes.dart';
 // Device Imports
+export 'device/device.security.dart';
 export 'device/device.util.dart';
 // Enums Imports
 export 'enums/app.enums.dart';

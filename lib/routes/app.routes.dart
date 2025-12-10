@@ -5,6 +5,7 @@ abstract class Routes {
   Routes._();
 
   static const splashPage = _Paths.splashPage;
+  static const securityBlockedPage = _Paths.securityBlockedPage;
   static const onboardingPage = _Paths.onboardingPage;
   static const welcomePage = _Paths.welcomePage;
   static const loginPage = _Paths.loginPage;
@@ -64,6 +65,7 @@ abstract class Routes {
 
 abstract class _Paths {
   static const splashPage = '/splash-page';
+  static const securityBlockedPage = '/security-blocked-page';
   static const onboardingPage = '/onboarding-page';
   static const welcomePage = '/welcome-page';
   static const loginPage = '/login-page';

@@ -6,6 +6,7 @@ import 'package:oldmutual_pensions_app/core/utils/utils.dart';
 import 'package:oldmutual_pensions_app/features/more/more.services.dart';
 import 'package:oldmutual_pensions_app/gen/assets.gen.dart';
 import 'package:oldmutual_pensions_app/routes/app.pages.dart';
+import 'package:redacted/redacted.dart';
 
 class PUserDetailPage extends StatelessWidget {
   final bool isShowAppBar;
@@ -65,10 +66,7 @@ class PUserDetailPage extends StatelessWidget {
       body: FutureBuilder<Map<String, String?>>(
         future: _getUserData(),
         builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return const Center(child: CircularProgressIndicator());
-          }
-
+          final isLoading = snapshot.connectionState == ConnectionState.waiting;
           final userData = snapshot.data ?? {};
 
           return SafeArea(
@@ -93,51 +91,83 @@ class PUserDetailPage extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        userData['fullName'] ?? '',
+                        isLoading
+                            ? '****************************************'
+                            : (userData['fullName'] ?? ''),
                         style: Theme.of(context).textTheme.titleMedium
                             ?.copyWith(fontWeight: FontWeight.w600),
-                      ),
+                      ).redacted(context: context, redact: isLoading),
                       PAppSize.s8.verticalSpace,
                       PMoreListTitle(
-                        title: 'email'.tr,
-                        subTitle: userData['email'] ?? 'not_applicable'.tr,
+                        title: isLoading
+                            ? '****************************************'
+                            : 'email'.tr,
+                        subTitle: isLoading
+                            ? '****************************************'
+                            : (userData['email'] ?? 'not_applicable'.tr),
+                        isLoading: isLoading,
                       ),
                       Divider(height: PAppSize.s1),
                       PMoreListTitle(
-                        title: 'phone_number'.tr,
-                        subTitle: userData['phone'] ?? 'not_applicable'.tr,
+                        title: isLoading
+                            ? '****************************************'
+                            : 'phone_number'.tr,
+                        subTitle: isLoading
+                            ? '****************************************'
+                            : (userData['phone'] ?? 'not_applicable'.tr),
+                        isLoading: isLoading,
                       ),
                       Divider(height: PAppSize.s1),
                       PMoreListTitle(
-                        title: 'ghana_card_id'.tr,
-                        subTitle:
-                            userData['ghanaCardNumber'] ?? 'not_applicable'.tr,
+                        title: isLoading
+                            ? '****************************************'
+                            : 'ghana_card_id'.tr,
+                        subTitle: isLoading
+                            ? '****************************************'
+                            : (userData['ghanaCardNumber'] ??
+                                  'not_applicable'.tr),
+                        isLoading: isLoading,
                       ),
                       Divider(height: PAppSize.s1),
                       PMoreListTitle(
-                        title: 'ssnit_number'.tr,
-                        subTitle:
-                            userData['ssnitNumber'] ?? 'not_applicable'.tr,
+                        title: isLoading
+                            ? '****************************************'
+                            : 'ssnit_number'.tr,
+                        subTitle: isLoading
+                            ? '****************************************'
+                            : (userData['ssnitNumber'] ?? 'not_applicable'.tr),
+                        isLoading: isLoading,
                       ),
                       Divider(height: PAppSize.s1),
                       PMoreListTitle(
-                        title: 'date_of_birth'.tr,
-                        subTitle: PFormatter.formatDate(
-                          dateFormat: DateFormat('MMMM d, y'),
-                          date: DateTime.parse(
-                            userData['dob'] ?? DateTime.now().toIso8601String(),
-                          ),
-                        ),
+                        title: isLoading
+                            ? '****************************************'
+                            : 'date_of_birth'.tr,
+                        subTitle: isLoading
+                            ? '****************************************'
+                            : PFormatter.formatDate(
+                                dateFormat: DateFormat('MMMM d, y'),
+                                date: DateTime.parse(
+                                  userData['dob'] ??
+                                      DateTime.now().toIso8601String(),
+                                ),
+                              ),
+                        isLoading: isLoading,
                       ),
                       Divider(height: PAppSize.s1),
                       PMoreListTitle(
-                        title: 'tin'.tr.toUpperCase(),
-                        subTitle: userData['tin'] ?? 'not_applicable'.tr,
+                        title: isLoading
+                            ? '****************************************'
+                            : 'tin'.tr.toUpperCase(),
+                        subTitle: isLoading
+                            ? '****************************************'
+                            : (userData['tin'] ?? 'not_applicable'.tr),
+                        isLoading: isLoading,
                       ),
                       Divider(height: PAppSize.s1),
                     ],
                   ),
-                ),
+                ).redacted(context: context, redact: isLoading),
 
                 PAppSize.s16.verticalSpace,
 

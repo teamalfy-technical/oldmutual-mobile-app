@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:oldmutual_pensions_app/core/utils/utils.dart';
+import 'package:redacted/redacted.dart';
 
 class PMoreListTitle extends StatelessWidget {
   final String title;
@@ -8,6 +9,7 @@ class PMoreListTitle extends StatelessWidget {
   final Widget? leading;
   final Widget? trailing;
   final EdgeInsetsGeometry? contentPadding;
+  final bool isLoading;
   const PMoreListTitle({
     super.key,
     required this.title,
@@ -15,6 +17,7 @@ class PMoreListTitle extends StatelessWidget {
     this.leading,
     this.trailing,
     this.contentPadding,
+    this.isLoading = false,
   });
 
   @override
@@ -29,14 +32,14 @@ class PMoreListTitle extends StatelessWidget {
           fontSize: PAppSize.s14.sp,
           fontWeight: FontWeight.w500,
         ),
-      ),
+      ).redacted(context: context, redact: isLoading),
       subtitle: Text(
         subTitle,
         style: Theme.of(context).textTheme.bodyLarge?.copyWith(
           fontSize: PAppSize.s14.sp,
           fontWeight: FontWeight.w400,
         ),
-      ),
+      ).redacted(context: context, redact: isLoading),
       trailing: trailing,
     );
   }

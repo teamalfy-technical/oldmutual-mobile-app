@@ -24,6 +24,7 @@ import 'package:oldmutual_pensions_app/features/settings/presentation/pages/chan
 import 'package:oldmutual_pensions_app/features/settings/presentation/pages/profile.settings.page.dart';
 import 'package:oldmutual_pensions_app/features/settings/presentation/pages/settings.success.page.dart';
 import 'package:oldmutual_pensions_app/features/settings/settings.dart';
+import 'package:oldmutual_pensions_app/features/splash/presentation/pages/security.blocked.page.dart';
 import 'package:oldmutual_pensions_app/features/splash/splash.dart';
 import 'package:oldmutual_pensions_app/features/statements/presentation/pages/statement.page.dart';
 import 'package:oldmutual_pensions_app/features/webview/webview.dart';
@@ -40,6 +41,10 @@ class AppPages {
 
   static final routes = [
     GetPage(name: _Paths.splashPage, page: () => PSplashPage()),
+    GetPage(
+      name: _Paths.securityBlockedPage,
+      page: () => SecurityBlockedPage(message: Get.arguments),
+    ),
 
     GetPage(
       name: _Paths.onboardingPage,
