@@ -27,7 +27,6 @@ dependencies:
   flutter_linkify: ^6.0.0
   flutter_local_notifications: ^19.0.0
   flutter_screenutil: ^5.9.3
-  flutter_jailbreak_detection: ^1.10.0
   flutter_secure_storage: ^9.2.4
   safe_device: ^1.3.8
   flutter_staggered_animations: ^1.1.1

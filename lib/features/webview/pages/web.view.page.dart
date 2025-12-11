@@ -132,17 +132,40 @@ class _PWebViewState extends State<PWebView> {
   // }
 
   Future<void> checkCallBackResponse() async {
-    // Get the page content
-    String pageContent =
-        await _controller.runJavaScriptReturningResult(
-              "document.body.innerText",
-            )
-            as String;
-
     try {
-      final json = jsonDecode(jsonDecode(pageContent));
+      // Get the page content
+      final result = await _controller.runJavaScriptReturningResult(
+        "document.body.innerText",
+      );
 
-      if (json is Map<String, dynamic>) {
+      // Handle different return types from runJavaScriptReturningResult
+      String pageContent;
+      if (result is String) {
+        pageContent = result;
+      } else if (result is Map) {
+        // If already a Map, convert to JSON string first
+        pageContent = jsonEncode(result);
+      } else {
+        pageContent = result.toString();
+      }
+
+      // Try to parse the content - it might be double-encoded JSON string
+      dynamic json;
+      try {
+        // First decode (removes outer string quotes if present)
+        final firstDecode = jsonDecode(pageContent);
+        // Check if result is still a string (double-encoded)
+        if (firstDecode is String) {
+          json = jsonDecode(firstDecode);
+        } else {
+          json = firstDecode;
+        }
+      } catch (_) {
+        // If first approach fails, try direct decode
+        json = jsonDecode(pageContent);
+      }
+
+      if (json is Map<String, dynamic> && json.containsKey('data')) {
         Get.find<PAuthVm>().verificationToken(
           json['data']['verification_token'],
         );

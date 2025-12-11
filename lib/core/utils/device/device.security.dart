@@ -1,7 +1,6 @@
 import 'dart:io';
 
 import 'package:flutter/foundation.dart';
-import 'package:flutter_jailbreak_detection/flutter_jailbreak_detection.dart';
 import 'package:oldmutual_pensions_app/core/utils/utils.dart';
 import 'package:safe_device/safe_device.dart';
 
@@ -105,16 +104,12 @@ class DeviceSecurityService {
       bool isMockLocation = false;
       bool isSafeDevice = true;
 
-      // Check using flutter_jailbreak_detection
-      isJailbroken = await FlutterJailbreakDetection.jailbroken;
-      isEmulator = await FlutterJailbreakDetection.developerMode;
-
-      // Use safe_device's comprehensive check
+      // Use safe_device's comprehensive check (covers all platforms)
       isSafeDevice = await SafeDevice.isSafeDevice;
       isRealDevice = await SafeDevice.isRealDevice;
-      isEmulator = isEmulator || !isRealDevice;
+      isEmulator = !isRealDevice;
 
-      // Additional platform-specific checks using safe_device 1.3.8
+      // Platform-specific checks using safe_device 1.3.8
       if (Platform.isAndroid) {
         isRooted = await SafeDevice.isJailBroken;
         isDeveloperModeEnabled = await SafeDevice.isDevelopmentModeEnable;
