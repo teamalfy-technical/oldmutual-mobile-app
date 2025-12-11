@@ -133,8 +133,8 @@ class PHomePage extends StatelessWidget {
                                 );
                               },
                             )
-                          : (policyVm.policies.isEmpty &&
-                                pensionVm.schemes.isEmpty)
+                          : ((policyVm.summary.value.totalPolicies ?? 0) == 0 &&
+                                (pensionVm.summary.value.totalPensions ?? 0) == 0)
                           ? PEmptyStateWidget(message: 'no_results_found'.tr)
                           : Column(
                               children: [
@@ -192,62 +192,62 @@ class PHomePage extends StatelessWidget {
                     ),
 
                     // Cross-Sell (Recommendations)
-                    if (crossSellVm.recommendations.isNotEmpty)
-                      Column(
-                        children: [
-                          PAppSize.s20.verticalSpace,
+                    // if (crossSellVm.recommendations.isNotEmpty)
+                    //   Column(
+                    //     children: [
+                    //       PAppSize.s20.verticalSpace,
 
-                          /// Recommended For You
-                          PSeeAllWidget(
-                            leadingText: 'recommended_for_you'.tr,
-                            trailing: Text(
-                              'see_all'.tr,
-                              textAlign: TextAlign.center,
-                              softWrap: true,
-                              style: Theme.of(context).textTheme.titleMedium
-                                  ?.copyWith(
-                                    fontSize: PAppSize.s16,
-                                    color: PAppColor.successMedium,
-                                    fontWeight: FontWeight.w600,
-                                  ),
-                            ),
-                            onTap: () => PHelperFunction.switchScreen(
-                              destination: Routes.recommendationPage,
-                            ),
-                          ),
+                    //       /// Recommended For You
+                    //       PSeeAllWidget(
+                    //         leadingText: 'recommended_for_you'.tr,
+                    //         trailing: Text(
+                    //           'see_all'.tr,
+                    //           textAlign: TextAlign.center,
+                    //           softWrap: true,
+                    //           style: Theme.of(context).textTheme.titleMedium
+                    //               ?.copyWith(
+                    //                 fontSize: PAppSize.s16,
+                    //                 color: PAppColor.successMedium,
+                    //                 fontWeight: FontWeight.w600,
+                    //               ),
+                    //         ),
+                    //         onTap: () => PHelperFunction.switchScreen(
+                    //           destination: Routes.recommendationPage,
+                    //         ),
+                    //       ),
 
-                          PAppSize.s20.verticalSpace,
-                          SizedBox(
-                            height: PDeviceUtil.isIOS()
-                                ? PDeviceUtil.getDeviceHeight(context) * 0.30
-                                : PDeviceUtil.getDeviceHeight(context) * 0.33,
-                            child: ListView.builder(
-                              shrinkWrap: true,
-                              itemCount: crossSellVm.recommendations
-                                  .take(3)
-                                  .toList()
-                                  .length,
-                              scrollDirection: Axis.horizontal,
-                              itemBuilder: (context, index) {
-                                final recommendation =
-                                    crossSellVm.recommendations[index];
-                                return RecommendationWidget(
-                                  recommendation: recommendation,
-                                  showArrowButton: false,
-                                  width:
-                                      PDeviceUtil.getDeviceWidth(context) *
-                                      0.65,
-                                  onTap: () => PHelperFunction.switchScreen(
-                                    destination:
-                                        Routes.recommendationHighlightPage,
-                                    args: recommendation,
-                                  ),
-                                );
-                              },
-                            ),
-                          ),
-                        ],
-                      ),
+                    //       PAppSize.s20.verticalSpace,
+                    //       SizedBox(
+                    //         height: PDeviceUtil.isIOS()
+                    //             ? PDeviceUtil.getDeviceHeight(context) * 0.30
+                    //             : PDeviceUtil.getDeviceHeight(context) * 0.33,
+                    //         child: ListView.builder(
+                    //           shrinkWrap: true,
+                    //           itemCount: crossSellVm.recommendations
+                    //               .take(3)
+                    //               .toList()
+                    //               .length,
+                    //           scrollDirection: Axis.horizontal,
+                    //           itemBuilder: (context, index) {
+                    //             final recommendation =
+                    //                 crossSellVm.recommendations[index];
+                    //             return RecommendationWidget(
+                    //               recommendation: recommendation,
+                    //               showArrowButton: false,
+                    //               width:
+                    //                   PDeviceUtil.getDeviceWidth(context) *
+                    //                   0.65,
+                    //               onTap: () => PHelperFunction.switchScreen(
+                    //                 destination:
+                    //                     Routes.recommendationHighlightPage,
+                    //                 args: recommendation,
+                    //               ),
+                    //             );
+                    //           },
+                    //         ),
+                    //       ),
+                    //     ],
+                    //   ),
                   ],
                 ).symmetric(horizontal: PAppSize.s20, vertical: PAppSize.s20).scrollable(),
               ),

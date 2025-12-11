@@ -36,6 +36,9 @@ class PPolicyVm extends GetxController {
 
   var loading = LoadingState.completed.obs;
 
+  /// Flag to track if policies have been fetched at least once
+  var _hasFetchedPolicies = false;
+
   final context = Get.context!;
 
   updateLoadingState(LoadingState loadingState) => loading.value = loadingState;
@@ -76,7 +79,7 @@ class PPolicyVm extends GetxController {
               availableBalance: 0.0,
               lastUpdated: '',
             );
-        await getAllPolicies();
+        getProducts();
       },
     );
   }
@@ -120,6 +123,13 @@ class PPolicyVm extends GetxController {
   //   );
   // }
 
+  /// Fetches policies only on first load, subsequent calls are ignored
+  /// Use this when navigating to the policy overview page
+  Future<void> fetchPoliciesOnFirstLoad() async {
+    if (_hasFetchedPolicies) return;
+    await getAllPolicies();
+  }
+
   /// Function to fetch all policies or products
   Future<void> getAllPolicies() async {
     updateLoadingState(LoadingState.loading);
@@ -134,6 +144,7 @@ class PPolicyVm extends GetxController {
       },
       (res) async {
         updateLoadingState(LoadingState.completed);
+        _hasFetchedPolicies = true;
         policies.value = res.data?.policyDetails ?? [];
         activePolicies.value = policies
             .where((p) => activeStatuses.contains(p.status ?? ""))
@@ -157,7 +168,7 @@ class PPolicyVm extends GetxController {
         //     )
         //     .toList();
         // await getMemberSchemes();
-        getProducts();
+        // getProducts();
         // pensionAppLogger.i(policies);
       },
     );

@@ -8,12 +8,26 @@ import 'package:oldmutual_pensions_app/gen/assets.gen.dart';
 import 'package:oldmutual_pensions_app/routes/app.pages.dart';
 import 'package:oldmutual_pensions_app/shared/shared.dart';
 
-class PPolicyOverviewPage extends StatelessWidget {
+class PPolicyOverviewPage extends StatefulWidget {
   final Map<String, dynamic> product;
-  PPolicyOverviewPage({super.key, required this.product});
+  const PPolicyOverviewPage({super.key, required this.product});
 
+  @override
+  State<PPolicyOverviewPage> createState() => _PPolicyOverviewPageState();
+}
+
+class _PPolicyOverviewPageState extends State<PPolicyOverviewPage> {
   final vm = Get.find<PPolicyVm>();
   final policyStatementVm = Get.put(PPolicyStatementVm());
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      vm.fetchPoliciesOnFirstLoad();
+      setState(() {});
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +35,7 @@ class PPolicyOverviewPage extends StatelessWidget {
       backgroundColor: PHelperFunction.isDarkMode(context)
           ? PAppColor.darkBgColor
           : PAppColor.fillColor,
-      appBar: AppBar(title: Text(product['name'])),
+      appBar: AppBar(title: Text(widget.product['name'])),
       body: Stack(
         children: [
           Positioned(top: -16, right: -0, child: Assets.icons.pictogram.svg()),
@@ -41,7 +55,9 @@ class PPolicyOverviewPage extends StatelessWidget {
                   ),
                 ),
                 Text(
-                  PFormatter.formatCurrency(amount: product['contribution']),
+                  PFormatter.formatCurrency(
+                    amount: widget.product['contribution'],
+                  ),
                   textAlign: TextAlign.center,
                   softWrap: true,
                   style: Theme.of(context).textTheme.headlineMedium?.copyWith(
@@ -64,31 +80,44 @@ class PPolicyOverviewPage extends StatelessWidget {
 
                 PAppSize.s12.verticalSpace,
 
-                RefreshIndicator.adaptive(
-                  onRefresh: vm.getAllPolicies,
-                  color: PAppColor.primary,
-                  child: vm.policies.isEmpty
-                      ? PEmptyStateWidget(message: 'no_results_found'.tr)
-                      : ListView.builder(
-                          shrinkWrap: true,
-                          itemCount: vm.policies.length,
-                          itemBuilder: (context, index) {
-                            final policy = vm.policies[index];
-                            return PPolicyWidget(
-                              policy: policy,
-                              onTap: () {
-                                policyStatementVm.onSelectedPolicyReport(
-                                  policy,
-                                );
-                                PHelperFunction.switchScreen(
-                                  destination: Routes.policyDetailPage,
-                                  args: policy,
-                                  // args: 'investments'.tr,
+                Expanded(
+                  child: Obx(
+                    () => RefreshIndicator.adaptive(
+                      onRefresh: vm.getAllPolicies,
+                      color: PAppColor.primary,
+                      child: vm.loading.value == LoadingState.loading
+                          ? ListView.builder(
+                              shrinkWrap: true,
+                              itemCount: 10,
+                              itemBuilder: (context, index) {
+                                return PProductRedactedWidget(
+                                  loading: vm.loading.value,
                                 );
                               },
-                            );
-                          },
-                        ),
+                            )
+                          : vm.policies.isEmpty
+                          ? PEmptyStateWidget(message: 'no_results_found'.tr)
+                          : ListView.builder(
+                              shrinkWrap: true,
+                              itemCount: vm.policies.length,
+                              itemBuilder: (context, index) {
+                                final policy = vm.policies[index];
+                                return PPolicyWidget(
+                                  policy: policy,
+                                  onTap: () {
+                                    policyStatementVm.onSelectedPolicyReport(
+                                      policy,
+                                    );
+                                    PHelperFunction.switchScreen(
+                                      destination: Routes.policyDetailPage,
+                                      args: policy,
+                                    );
+                                  },
+                                );
+                              },
+                            ),
+                    ),
+                  ),
                 ),
 
                 // RefreshIndicator.adaptive(

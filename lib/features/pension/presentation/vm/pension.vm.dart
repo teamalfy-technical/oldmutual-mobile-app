@@ -19,6 +19,9 @@ class PPensionVm extends GetxController {
 
   var loading = LoadingState.completed.obs;
 
+  /// Flag to track if schemes have been fetched at least once
+  var _hasFetchedSchemes = false;
+
   final context = Get.context!;
 
   updateLoadingState(LoadingState loadingState) => loading.value = loadingState;
@@ -50,8 +53,10 @@ class PPensionVm extends GetxController {
         updateLoadingState(LoadingState.completed);
         summary.value =
             res.data ?? PensionSummary(totalInvestment: 0, totalPensions: 0);
-        // await Get.put(PContributionHistoryVm()).getContributionsSummary();
-        await getMemberSchemes();
+        // Update products to reflect pension summary data
+        if (Get.isRegistered<PPolicyVm>()) {
+          Get.find<PPolicyVm>().getProducts();
+        }
       },
     );
   }
@@ -90,6 +95,13 @@ class PPensionVm extends GetxController {
   //   );
   // }
 
+  /// Fetches schemes only on first load, subsequent calls are ignored
+  /// Use this when navigating to the pension overview page
+  Future<void> fetchSchemesOnFirstLoad() async {
+    if (_hasFetchedSchemes) return;
+    await getMemberSchemes();
+  }
+
   /// Function to get all schemes or retail
   Future<void> getMemberSchemes() async {
     updateLoadingState(LoadingState.loading);
@@ -103,6 +115,7 @@ class PPensionVm extends GetxController {
       },
       (res) {
         updateLoadingState(LoadingState.completed);
+        _hasFetchedSchemes = true;
         schemes.value = res.data ?? [];
         activeSchemes.value = schemes
             .where((p) => activeStatuses.contains(p.status ?? ""))
@@ -110,7 +123,6 @@ class PPensionVm extends GetxController {
         inactiveSchemes.value = schemes
             .where((p) => !activeStatuses.contains(p.status ?? ""))
             .toList();
-        // getProducts();
       },
     );
   }
