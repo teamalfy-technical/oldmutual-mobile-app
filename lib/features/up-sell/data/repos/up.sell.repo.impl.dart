@@ -10,7 +10,7 @@ final UpsellRepo upsellRepo = Get.put(UpsellRepoImpl());
 class UpsellRepoImpl implements UpsellRepo {
   @override
   Future<Either<PFailure, ApiResponse<List<Message>>>> dismissRecommendation({
-    required String id,
+    required int id,
   }) async {
     return await customRepositoryWrapper.wrapRepositoryFunction(
       function: () async => await upsellDs.dismissRecommendation(id: id),
@@ -41,7 +41,7 @@ class UpsellRepoImpl implements UpsellRepo {
 
   @override
   Future<Either<PFailure, ApiResponse<List<Message>>>> upgradeRecommendation({
-    required String id,
+    required int id,
   }) async {
     return await customRepositoryWrapper.wrapRepositoryFunction(
       function: () async => await upsellDs.upgradeRecommendation(id: id),

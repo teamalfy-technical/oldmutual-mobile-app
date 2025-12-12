@@ -2,12 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:oldmutual_pensions_app/core/utils/utils.dart';
-import 'package:oldmutual_pensions_app/features/home/home.dart';
 import 'package:oldmutual_pensions_app/features/pension/pension.dart'
     hide PPolicyWidget;
-import 'package:oldmutual_pensions_app/features/policy/presentation/widgets/product.redacted.widget.dart';
+import 'package:oldmutual_pensions_app/features/policy/policy.dart';
 import 'package:oldmutual_pensions_app/gen/assets.gen.dart';
-import 'package:oldmutual_pensions_app/routes/app.pages.dart';
 import 'package:oldmutual_pensions_app/shared/shared.dart';
 
 class PPensionOverviewPage extends StatefulWidget {
@@ -18,16 +16,30 @@ class PPensionOverviewPage extends StatefulWidget {
   State<PPensionOverviewPage> createState() => _PPensionOverviewPageState();
 }
 
-class _PPensionOverviewPageState extends State<PPensionOverviewPage> {
+class _PPensionOverviewPageState extends State<PPensionOverviewPage>
+    with SingleTickerProviderStateMixin {
   final vm = Get.find<PPensionVm>();
+  late TabController _tabController;
 
   @override
   void initState() {
     super.initState();
+    _tabController = TabController(length: 2, vsync: this);
+    _tabController.addListener(() {
+      if (!_tabController.indexIsChanging) {
+        setState(() {});
+      }
+    });
     WidgetsBinding.instance.addPostFrameCallback((_) {
       vm.fetchSchemesOnFirstLoad();
       setState(() {});
     });
+  }
+
+  @override
+  void dispose() {
+    _tabController.dispose();
+    super.dispose();
   }
 
   @override
@@ -75,12 +87,20 @@ class _PPensionOverviewPageState extends State<PPensionOverviewPage> {
                   thickness: PAppSize.s4,
                 ),
 
-                PAppSize.s5.verticalSpace,
+                PAppSize.s2.verticalSpace,
+                PCustomTabBarWidget(
+                  controller: _tabController,
+                  horizontalPadding: PAppSize.s0,
+                  tabs: [
+                    Tab(text: 'active'.tr),
+                    Tab(text: 'inactive'.tr),
+                  ],
+                ),
 
-                InvestmentWidget(title: 'status'.tr, value: 'active'.tr),
+                // PAppSize.s5.verticalSpace,
 
-                PAppSize.s12.verticalSpace,
-
+                // InvestmentWidget(title: 'status'.tr, value: 'active'.tr),
+                PAppSize.s16.verticalSpace,
                 Expanded(
                   child: Obx(
                     () => RefreshIndicator.adaptive(
@@ -98,22 +118,38 @@ class _PPensionOverviewPageState extends State<PPensionOverviewPage> {
                             )
                           : vm.schemes.isEmpty
                           ? PEmptyStateWidget(message: 'no_results_found'.tr)
-                          : ListView.builder(
-                              shrinkWrap: true,
-                              itemCount: vm.schemes.length,
-                              itemBuilder: (context, index) {
-                                final scheme = vm.schemes[index];
-                                return PPensionWidget(
-                                  scheme: vm.schemes[index],
-                                  onTap: () {
-                                    PHelperFunction.switchScreen(
-                                      destination: Routes.pensionDetailPage,
-                                      args: scheme,
-                                    );
-                                  },
-                                );
-                              },
+                          : TabBarView(
+                              controller: _tabController,
+                              children: [
+                                // PAllProductTab(),
+                                PRetailTab(
+                                  products: vm.activeSchemes,
+                                  type: PolicyStatus.active,
+                                ),
+                                PRetailTab(
+                                  products: vm.inactiveSchemes,
+                                  type: PolicyStatus.inactive,
+                                ),
+                                // PRetailTab(policies: vm.lapsedPolicies, type: PolicyStatus.lapsed),
+                              ],
                             ),
+
+                      // ListView.builder(
+                      //     shrinkWrap: true,
+                      //     itemCount: vm.schemes.length,
+                      //     itemBuilder: (context, index) {
+                      //       final scheme = vm.schemes[index];
+                      //       return PPensionWidget(
+                      //         scheme: vm.schemes[index],
+                      //         onTap: () {
+                      //           PHelperFunction.switchScreen(
+                      //             destination: Routes.pensionDetailPage,
+                      //             args: scheme,
+                      //           );
+                      //         },
+                      //       );
+                      //     },
+                      //   ),
                     ),
                   ),
                 ),

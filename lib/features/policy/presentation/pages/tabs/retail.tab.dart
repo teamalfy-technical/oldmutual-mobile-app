@@ -17,7 +17,11 @@ class PRetailTab extends StatelessWidget {
   Widget build(BuildContext context) {
     return (products.isEmpty)
         ? PEmptyStateWidget(
-            message: 'no_product_found'.trParams({'name': type.name}),
+            message: products is List<Scheme>
+                ? 'no_scheme_found'.trParams({'name': type.name})
+                : products is List<Policy>
+                ? 'no_policy_found'.trParams({'name': type.name})
+                : 'no_product_found'.trParams({'name': type.name}),
           )
         : ListView.builder(
             shrinkWrap: true,

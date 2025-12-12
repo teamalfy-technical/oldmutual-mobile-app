@@ -18,9 +18,18 @@ class PAppConstant {
   static const String travelInsuranceQuoteUrl =
       'https://www.oldmutual.com.gh/travel-insurance/';
 
+  static const String ekyireAsemQuoteUrl =
+      'https://www.oldmutual.com.gh/ekyire-asem/';
+  static const String personalAccidentQuoteUrl =
+      'https://www.oldmutual.com.gh/personal-accident/';
+
+  static const String internationalTravel = 'INTERNATIONAL TRAVEL';
+
   /// Learn More URLs
   // static const String travelInsuranceUrl =
   //     'https://www.oldmutual.com.gh/travel-insurance/';
+
+  static const String homeUrl = 'https://www.oldmutual.com.gh/';
 
   static const String travelInsuranceUrl =
       'https://www.oldmutual.com.gh/personal/international-travel-insurance/';

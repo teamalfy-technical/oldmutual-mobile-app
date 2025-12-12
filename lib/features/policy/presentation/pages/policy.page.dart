@@ -84,20 +84,25 @@ class PPolicyPage extends StatelessWidget {
             ),
           ),
         ),
-        body: TabBarView(
-          children: [
-            PAllProductTab(),
-            PRetailTab(
-              products: [...vm.activePolicies, ...pensionVm.activeSchemes],
-              type: PolicyStatus.active,
-            ),
-            PRetailTab(
-              products: [...vm.inactivePolicies, ...pensionVm.inactiveSchemes],
-              type: PolicyStatus.inactive,
-            ),
-            // PRetailTab(policies: vm.lapsedPolicies, type: PolicyStatus.lapsed),
-          ],
-        ).symmetric(horizontal: PAppSize.s20, vertical: PAppSize.s10),
+        body: Obx(
+          () => TabBarView(
+            children: [
+              PAllProductTab(),
+              PRetailTab(
+                products: [...vm.activePolicies, ...pensionVm.activeSchemes],
+                type: PolicyStatus.active,
+              ),
+              PRetailTab(
+                products: [
+                  ...vm.inactivePolicies,
+                  ...pensionVm.inactiveSchemes,
+                ],
+                type: PolicyStatus.inactive,
+              ),
+              // PRetailTab(policies: vm.lapsedPolicies, type: PolicyStatus.lapsed),
+            ],
+          ).symmetric(horizontal: PAppSize.s20, vertical: PAppSize.s10),
+        ),
       ),
     );
   }

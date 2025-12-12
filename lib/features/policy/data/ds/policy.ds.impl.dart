@@ -238,7 +238,7 @@ class PolicyDsImpl implements PolicyDs {
     final res = await apiService.callService(
       requestType: RequestType.get,
       queryParams: {'policy_number': policyNumber},
-      endPoint: Env.downloadPolicyStatement,
+      endPoint: Env.downloadPolicyDocument,
     );
     return ApiResponse<Map<String, dynamic>>.fromJson(res, (data) => data);
   }

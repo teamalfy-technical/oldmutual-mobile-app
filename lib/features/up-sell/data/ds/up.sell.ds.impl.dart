@@ -1,3 +1,4 @@
+import 'package:dio/dio.dart' as dio;
 import 'package:get/get.dart';
 import 'package:oldmutual_pensions_app/core/network/network.dart';
 import 'package:oldmutual_pensions_app/core/utils/utils.dart';
@@ -10,7 +11,7 @@ final UpsellDs upsellDs = Get.put(UpsellDsImpl());
 class UpsellDsImpl implements UpsellDs {
   @override
   Future<ApiResponse<List<Message>>> dismissRecommendation({
-    required String id,
+    required int id,
   }) async {
     return await asyncFunctionWrapper.handleAsyncNetworkCall(() async {
       final res = await apiService.callService(
@@ -62,12 +63,15 @@ class UpsellDsImpl implements UpsellDs {
 
   @override
   Future<ApiResponse<List<Message>>> upgradeRecommendation({
-    required String id,
+    required int id,
   }) async {
     return await asyncFunctionWrapper.handleAsyncNetworkCall(() async {
+      final formData = dio.FormData.fromMap({'channel': 'App'});
       final res = await apiService.callService(
         requestType: RequestType.post,
         endPoint: '${Env.upgradeRecommendation}/$id',
+        payload: formData,
+        // payload: {'channel': 'App'},
       );
       return ApiResponse<List<Message>>.fromJson(
         res,

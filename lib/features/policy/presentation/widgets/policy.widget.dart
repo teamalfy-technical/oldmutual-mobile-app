@@ -31,7 +31,7 @@ class PPolicyWidget extends StatelessWidget {
         subtitle: Text(
           PFormatter.formatCurrency(
             amount: policy.sumAssured?.toDouble() ?? 0,
-            symbol: policy.planDescription == 'INTERNATIONAL TRAVEL'
+            symbol: policy.planDescription == PAppConstant.internationalTravel
                 ? '€'
                 : '₵',
           ),

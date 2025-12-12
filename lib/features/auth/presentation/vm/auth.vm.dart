@@ -27,6 +27,7 @@ class PAuthVm extends GetxController {
   // final createPasswordFormKey = GlobalKey<FormState>();
 
   var obscure = true.obs;
+  var obscure2 = true.obs;
 
   var loading = LoadingState.completed.obs;
 
@@ -46,6 +47,8 @@ class PAuthVm extends GetxController {
   onTermsCheckboxChanged(bool? value) => agreeToTerms.value = value ?? false;
 
   onObscureChanged() => obscure.value = !obscure.value;
+
+  onObscure2Changed() => obscure2.value = !obscure2.value;
 
   final context = Get.context!;
 
@@ -179,7 +182,8 @@ class PAuthVm extends GetxController {
       pensionAppLogger.e('Error in verifyFaceIdentification: $err');
       PPopupDialog(context).errorMessage(
         title: 'error'.tr,
-        message: 'An error occurred while requesting permissions. Please try again.',
+        message:
+            'An error occurred while requesting permissions. Please try again.',
       );
     }
   }

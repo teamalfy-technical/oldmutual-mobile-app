@@ -76,30 +76,33 @@ class PDashboardHighlightPage extends StatelessWidget {
             bottom: PAppSize.s100,
             child: Hero(
               tag: highlight.title,
-              flightShuttleBuilder: (
-                BuildContext flightContext,
-                Animation<double> animation,
-                HeroFlightDirection flightDirection,
-                BuildContext fromHeroContext,
-                BuildContext toHeroContext,
-              ) {
-                return AnimatedBuilder(
-                  animation: animation,
-                  builder: (context, child) {
-                    return Container(
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(
-                          PAppSize.s12 + (PAppSize.s32 - PAppSize.s12) * (1 - animation.value),
-                        ),
-                        image: DecorationImage(
-                          image: AssetImage(highlight.image),
-                          fit: BoxFit.cover,
-                        ),
-                      ),
+              flightShuttleBuilder:
+                  (
+                    BuildContext flightContext,
+                    Animation<double> animation,
+                    HeroFlightDirection flightDirection,
+                    BuildContext fromHeroContext,
+                    BuildContext toHeroContext,
+                  ) {
+                    return AnimatedBuilder(
+                      animation: animation,
+                      builder: (context, child) {
+                        return Container(
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(
+                              PAppSize.s12 +
+                                  (PAppSize.s32 - PAppSize.s12) *
+                                      (1 - animation.value),
+                            ),
+                            image: DecorationImage(
+                              image: AssetImage(highlight.image),
+                              fit: BoxFit.cover,
+                            ),
+                          ),
+                        );
+                      },
                     );
                   },
-                );
-              },
               child: Container(
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.only(
@@ -176,31 +179,22 @@ class PDashboardHighlightPage extends StatelessWidget {
                   style: Theme.of(context).textTheme.bodyLarge,
                 ),
 
-                PAppSize.s24.verticalSpace,
+                PAppSize.s20.verticalSpace,
 
                 if (highlight.title2 != 'new_feature'.tr) ...[
-                  Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Text(
-                        'learn_more'.tr.toUpperCase(),
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                          fontWeight: FontWeight.w600,
-                          color: PHelperFunction.isDarkMode(context)
-                              ? PAppColor.whiteColor
-                              : PAppColor.textColorDark,
-                          fontSize: PAppSize.s14,
-                        ),
-                      ),
-                      PAppSize.s8.horizontalSpace,
-                      Assets.icons.arrowIcon.svg(
-                        color: PHelperFunction.isDarkMode(context)
-                            ? PAppColor.whiteColor
-                            : PAppColor.textColorDark,
-                      ),
-                    ],
-                  ).onPressed(onTap: highlight.onLearnMoreTap),
+                  if (highlight.onQuoteTap != null) ...[
+                    PGradientButton(
+                      label: 'quote_now'.tr.toUpperCase(),
+                      textColor: PAppColor.whiteColor,
+                      height: PAppSize.buttonHeightMid,
+                      showIcon: false,
+                      fontSize: PAppSize.s14,
+                      width: PDeviceUtil.getDeviceWidth(context) * 0.40,
+                      onTap: highlight.onQuoteTap,
+                    ),
+                    PAppSize.s8.verticalSpace,
+                  ],
+
                   SizedBox(
                     width: PDeviceUtil.getDeviceWidth(context) * 0.40,
                     child: TextButton.icon(
@@ -224,6 +218,30 @@ class PDashboardHighlightPage extends StatelessWidget {
                       ),
                     ),
                   ),
+                  // PAppSize.s20.verticalSpace,
+                  // Row(
+                  //   mainAxisSize: MainAxisSize.min,
+                  //   children: [
+                  //     Text(
+                  //       'learn_more'.tr.toUpperCase(),
+                  //       textAlign: TextAlign.center,
+                  //       style: TextStyle(
+                  //         fontWeight: FontWeight.w600,
+                  //         color: PHelperFunction.isDarkMode(context)
+                  //             ? PAppColor.whiteColor
+                  //             : PAppColor.textColorDark,
+                  //         fontSize: PAppSize.s14,
+                  //       ),
+                  //     ),
+                  //     PAppSize.s8.horizontalSpace,
+                  //     Assets.icons.arrowIcon.svg(
+                  //       color: PHelperFunction.isDarkMode(context)
+                  //           ? PAppColor.whiteColor
+                  //           : PAppColor.textColorDark,
+                  //     ),
+                  //   ],
+                  // ).onPressed(onTap: highlight.onLearnMoreTap),
+
                   // PAppSize.s16.verticalSpace,
                   // if (highlight.title != 'retirement_savings'.tr)
                   //   Row(

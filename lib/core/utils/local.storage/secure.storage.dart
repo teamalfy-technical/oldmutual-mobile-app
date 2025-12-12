@@ -40,6 +40,11 @@ class PSecureStorage {
 
   bool _migrationCompleted = false;
 
+  /// Initialize storage and perform migration if needed
+  Future<void> init() async {
+    // await _migrateToSecureStorage();
+  }
+
   /// Migrate existing data from GetStorage to FlutterSecureStorage
   /// This ensures existing users don't lose their data
   Future<void> _migrateToSecureStorage() async {
@@ -91,11 +96,6 @@ class PSecureStorage {
     } catch (e) {
       pensionAppLogger.e('Error during storage migration: $e');
     }
-  }
-
-  /// Initialize storage and perform migration if needed
-  Future<void> init() async {
-    await _migrateToSecureStorage();
   }
 
   // ========== NON-SENSITIVE DATA METHODS (GetStorage) ==========

@@ -10,7 +10,7 @@ final UpsellService upsellService = Get.put(UpsellServiceImpl());
 class UpsellServiceImpl implements UpsellService {
   @override
   Future<Either<PFailure, ApiResponse<List<Message>>>> dismissRecommendation({
-    required String id,
+    required int id,
   }) {
     return upsellRepo.dismissRecommendation(id: id);
   }
@@ -35,7 +35,7 @@ class UpsellServiceImpl implements UpsellService {
 
   @override
   Future<Either<PFailure, ApiResponse<List<Message>>>> upgradeRecommendation({
-    required String id,
+    required int id,
   }) {
     return upsellRepo.upgradeRecommendation(id: id);
   }

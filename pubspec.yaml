@@ -3,7 +3,7 @@ description: "A new Flutter project."
 
 publish_to: "none" # Remove this line if you wish to publish to pub.dev
 
-version: 2.0.0+43
+version: 2.0.0+45
 
 environment:
   sdk: ^3.8.1
@@ -28,7 +28,6 @@ dependencies:
   flutter_local_notifications: ^19.0.0
   flutter_screenutil: ^5.9.3
   flutter_secure_storage: ^9.2.4
-  safe_device: ^1.3.8
   flutter_staggered_animations: ^1.1.1
   flutter_svg: ^2.0.17
   fpdart: ^1.1.1
@@ -46,7 +45,9 @@ dependencies:
   permission_handler: ^12.0.1
   pinput: ^5.0.1
   redacted: ^1.0.13
+  safe_device: ^1.3.8
   shimmer: ^3.0.0
+  upgrader: ^12.3.0
   url_launcher: ^6.3.2
   webview_flutter: ^4.10.0
 

@@ -202,7 +202,10 @@ class PHomeVm extends GetxController {
         destination: Routes.webviewPage,
         args: ['personal_accident'.tr, PAppConstant.personalAccidentUrl],
       ),
-      onQuoteTap: () {},
+      onQuoteTap: () => PHelperFunction.switchScreen(
+        destination: Routes.webviewPage,
+        args: ['personal_accident'.tr, PAppConstant.personalAccidentQuoteUrl],
+      ),
     ),
 
     Highlight(
@@ -229,7 +232,10 @@ class PHomeVm extends GetxController {
         destination: Routes.webviewPage,
         args: ['ekyire_asem'.tr, PAppConstant.ekyireAsemUrl],
       ),
-      onQuoteTap: () {},
+      onQuoteTap: () => PHelperFunction.switchScreen(
+        destination: Routes.webviewPage,
+        args: ['ekyire_asem'.tr, PAppConstant.ekyireAsemQuoteUrl],
+      ),
     ),
     // Highlight(
     //   title: 'forgot_login_details'.tr,

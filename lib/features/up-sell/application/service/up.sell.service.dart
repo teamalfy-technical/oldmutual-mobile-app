@@ -7,10 +7,10 @@ abstract class UpsellService {
   Future<Either<PFailure, ApiResponse<List<Upsell>>>>
   getUpsellRecommendations();
   Future<Either<PFailure, ApiResponse<List<Message>>>> upgradeRecommendation({
-    required String id,
+    required int id,
   });
   Future<Either<PFailure, ApiResponse<List<Message>>>> dismissRecommendation({
-    required String id,
+    required int id,
   });
   Future<Either<PFailure, ApiResponse<List<Upsell>>>>
   getAcceptedRecommendations({String? filterChannel, String? filterAcceptedAt});

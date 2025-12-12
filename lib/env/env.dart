@@ -387,9 +387,9 @@ abstract class Env {
   @EnviedField(defaultValue: '/life/premium-statement', obfuscate: true)
   static final String downloadPremiumStatement = _Env.downloadPremiumStatement;
 
-  /// [PolicyStatementDownload] endpoint
-  @EnviedField(defaultValue: '/life/policy-statement', obfuscate: true)
-  static final String downloadPolicyStatement = _Env.downloadPolicyStatement;
+  /// [PolicyDocumentDownload] endpoint
+  @EnviedField(defaultValue: '/life/policy-document', obfuscate: true)
+  static final String downloadPolicyDocument = _Env.downloadPolicyDocument;
 
   /// -------------------- Policies Endpoints Ends Here ------------------------- ///
   ///

@@ -166,15 +166,15 @@ class PPolicyStatementVm extends GetxController {
         PPopupDialog(
           context,
         ).successMessage(title: 'success'.tr, message: 'download_complete'.tr);
-        pensionAppLogger.d(res.data?['data']);
+        pensionAppLogger.d(res.data);
         // await PHelperFunction.openFileWithData(
         //   pdfData: res.data ?? Map<String, dynamic>.from({}),
         //   name: selectedPolicy?.planDescription ?? '',
         // );
         await PHelperFunction.openFileWithURL(
-          url: res.data?['data']['url'] ?? '',
+          url: res.data?['url'] ?? '',
           fileName:
-              res.data?['data']['url'].toString().split('/').last ??
+              res.data?['url'].toString().split('/').last ??
               '${selectedPolicy?.planDescription?.toLowerCase().replaceAll(' ', '-')}.pdf',
           //selectedPolicy?.planDescription ?? '',
           requiresAuth: false,

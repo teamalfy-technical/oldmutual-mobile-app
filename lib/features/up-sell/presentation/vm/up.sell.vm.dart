@@ -14,6 +14,12 @@ class PUpsellVm extends GetxController {
   var loading = LoadingState.completed.obs;
   var submitting = LoadingState.completed.obs;
 
+  @override
+  void onInit() {
+    getRecommendations();
+    super.onInit();
+  }
+
   /// [Function] get all recommendations
   Future<void> getRecommendations() async {
     loading(LoadingState.loading);
@@ -33,18 +39,20 @@ class PUpsellVm extends GetxController {
   }
 
   /// [Function] upgrade a recommendation
-  Future<void> upgradeRecommendation({required String id}) async {
+  Future<void> upgradeRecommendation({required int id}) async {
     submitting(LoadingState.loading);
     final result = await upsellService.upgradeRecommendation(id: id);
     result.fold(
       (err) {
         submitting(LoadingState.error);
+        PHelperFunction.pop();
         PPopupDialog(
           context,
         ).errorMessage(title: 'error'.tr, message: err.message);
       },
       (res) {
         submitting(LoadingState.completed);
+        PHelperFunction.pop();
         PPopupDialog(
           context,
         ).errorMessage(title: 'congratulations'.tr, message: res.message ?? '');
@@ -53,7 +61,7 @@ class PUpsellVm extends GetxController {
   }
 
   /// [Function] dismiss a recommendation
-  Future<void> dismissRecommendation({required String id}) async {
+  Future<void> dismissRecommendation({required int id}) async {
     submitting(LoadingState.loading);
     final result = await upsellService.dismissRecommendation(id: id);
     result.fold(
@@ -63,8 +71,12 @@ class PUpsellVm extends GetxController {
           context,
         ).errorMessage(title: 'error'.tr, message: err.message);
       },
-      (res) {
+      (res) async {
         submitting(LoadingState.completed);
+
+        // recommendations.clear();
+
+        await getRecommendations();
 
         PPopupDialog(
           context,

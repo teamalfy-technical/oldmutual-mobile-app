@@ -260,6 +260,11 @@ class PPolicyDetailPage extends StatelessWidget {
                           'sum_assured'.tr,
                           PFormatter.formatCurrency(
                             amount: policy.sumAssured ?? 0,
+                            symbol:
+                                policy.planDescription ==
+                                    PAppConstant.internationalTravel
+                                ? '€'
+                                : '₵',
                           ),
                         ),
                         Divider(height: PAppSize.s1),
@@ -278,6 +283,11 @@ class PPolicyDetailPage extends StatelessWidget {
                             amount:
                                 ((policy.availableBalance ?? 0) +
                                 (policy.sumAssured ?? 0)),
+                            symbol:
+                                policy.planDescription ==
+                                    PAppConstant.internationalTravel
+                                ? '€'
+                                : '₵',
                           ),
                         ),
                         // Divider(height: PAppSize.s1),
@@ -292,10 +302,10 @@ class PPolicyDetailPage extends StatelessWidget {
 
                   PAppSize.s16.verticalSpace,
 
-                  /// Premium upgrade
-                  PPremiumUpgradeWidget(policy: policy),
+                  /// Premium upgrade (Upsell)
+                  // PPremiumUpgradeWidget(policy: policy),
 
-                  PAppSize.s16.verticalSpace,
+                  // PAppSize.s16.verticalSpace,
 
                   // if (title == 'investments'.tr) ...[
                   //   /// Products

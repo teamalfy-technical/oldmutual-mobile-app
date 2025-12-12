@@ -398,6 +398,7 @@ class AppTranslations extends Translations {
       'coming_soon_title': 'Coming Soon',
       'coming_soon_msg': 'This feature will be available soon',
       'your_total_contribution': 'Your total contributions',
+      'no_scheme_found': 'You\'ve no @name schemes available',
       'no_policy_found': 'You\'ve no @name policies available',
       'no_product_found': 'You\'ve no @name products available',
       'total_cover': 'Your total cover',

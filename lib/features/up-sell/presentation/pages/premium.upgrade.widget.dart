@@ -4,182 +4,214 @@ import 'package:get/get.dart';
 import 'package:oldmutual_pensions_app/core/utils/utils.dart';
 import 'package:oldmutual_pensions_app/features/home/presentation/pages/home.page.dart';
 import 'package:oldmutual_pensions_app/features/policy/policy.dart';
+import 'package:oldmutual_pensions_app/features/up-sell/domain/up.sell.model.dart';
+import 'package:oldmutual_pensions_app/features/up-sell/up.sell.dart';
 import 'package:oldmutual_pensions_app/gen/assets.gen.dart';
+import 'package:oldmutual_pensions_app/routes/app.pages.dart';
 import 'package:oldmutual_pensions_app/shared/shared.dart';
 
 class PPremiumUpgradeWidget extends StatelessWidget {
   final Policy policy;
   PPremiumUpgradeWidget({super.key, required this.policy});
 
-  final vm = Get.put(PPolicyVm());
+  final vm = Get.put(PUpsellVm());
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        InvestmentWidget(
-          title: 'premium_upgrade_title'.tr,
-          value: 'premium_upgrade_subtitle'.tr,
-          titleStyle: Theme.of(context).textTheme.bodyLarge?.copyWith(
-            fontSize: PAppSize.s16,
-            fontWeight: FontWeight.w600,
-          ),
-          subTitleStyle: Theme.of(context).textTheme.bodyLarge?.copyWith(
-            fontSize: PAppSize.s15,
-            fontWeight: FontWeight.w400,
-          ),
-        ),
-        PAppSize.s12.verticalSpace,
-        PCustomCardWidget(
-          useBorder: false,
-          child: Column(
+    final recommendation = vm.recommendations.isEmpty
+        ? Upsell()
+        : vm.recommendations.first;
+    return vm.recommendations.isEmpty
+        ? SizedBox.shrink()
+        : Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              buildListTile(
-                context,
-                'current_premium'.tr,
-                PFormatter.formatCurrency(
-                  amount: policy.modalPrem?.toDouble() ?? 0,
+              InvestmentWidget(
+                title: 'premium_upgrade_title'.tr,
+                value: 'premium_upgrade_subtitle'.tr,
+                titleStyle: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                  fontSize: PAppSize.s16,
+                  fontWeight: FontWeight.w600,
+                ),
+                subTitleStyle: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                  fontSize: PAppSize.s15,
+                  fontWeight: FontWeight.w400,
                 ),
               ),
-              Divider(height: PAppSize.s1).horizontal(PAppSize.s14),
-              buildListTile(
-                context,
-                'suggested_premium'.tr,
-                PFormatter.formatCurrency(
-                  amount: policy.premiumPaid?.toDouble() ?? 0,
-                ),
-              ),
-              // Card
-              Container(
-                width: PDeviceUtil.getDeviceWidth(context),
-                padding: EdgeInsets.all(PAppSize.s14),
-                decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                    colors: [PAppColor.primaryDark, PAppColor.primary],
-                  ),
-                  borderRadius: BorderRadius.circular(PAppSize.s16),
-                ),
+              PAppSize.s12.verticalSpace,
+              PCustomCardWidget(
+                useBorder: false,
                 child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
-                      'new_coverage'.tr,
-                      style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                        fontSize: PAppSize.s16,
-                        color: PAppColor.whiteColor,
-                        fontWeight: FontWeight.w700,
+                    buildListTile(
+                      context,
+                      'current_premium'.tr,
+                      PFormatter.formatCurrency(
+                        amount: double.parse(
+                          recommendation.currentPremium ?? '0',
+                        ),
                       ),
                     ),
-                    // PAppSize.s16.verticalSpace,
-                    PAppSize.s4.verticalSpace,
-                    // Cost
-                    RichText(
-                      text: TextSpan(
-                        style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                          fontSize: PAppSize.s18,
-                          color: PAppColor.whiteColor,
-                          fontWeight: FontWeight.w700,
+                    Divider(height: PAppSize.s1).horizontal(PAppSize.s14),
+                    buildListTile(
+                      context,
+                      'suggested_premium'.tr,
+                      PFormatter.formatCurrency(
+                        amount: double.parse(
+                          recommendation.recommendedPremium ?? '0',
                         ),
-                        text: '${PFormatter.formatCurrency(amount: 1090.70)} ',
+                      ),
+                    ),
+                    // Card
+                    Container(
+                      width: PDeviceUtil.getDeviceWidth(context),
+                      padding: EdgeInsets.all(PAppSize.s14),
+                      decoration: BoxDecoration(
+                        gradient: LinearGradient(
+                          colors: [PAppColor.primaryDark, PAppColor.primary],
+                        ),
+                        borderRadius: BorderRadius.circular(PAppSize.s16),
+                      ),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          TextSpan(
+                          Text(
+                            'new_coverage'.tr,
                             style: Theme.of(context).textTheme.bodyLarge
                                 ?.copyWith(
-                                  fontSize: PAppSize.s13,
+                                  fontSize: PAppSize.s16,
                                   color: PAppColor.whiteColor,
-                                  fontWeight: FontWeight.w500,
-                                  decorationColor: PAppColor.whiteColor,
-                                  decoration: TextDecoration.lineThrough,
+                                  fontWeight: FontWeight.w700,
                                 ),
-                            text: PFormatter.formatCurrency(amount: 1090.70),
                           ),
-                        ],
-                      ),
-                    ),
-                    PAppSize.s3.verticalSpace,
-                    Row(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Assets.icons.checkIcon.svg(
-                          color: PAppColor.whiteColor,
-                          width: PAppSize.s28,
-                        ),
-                        RichText(
-                          text: TextSpan(
-                            style: Theme.of(context).textTheme.bodyLarge
-                                ?.copyWith(
-                                  fontSize: PAppSize.s13,
-                                  color: PAppColor.whiteColor,
-                                  fontWeight: FontWeight.w500,
-                                ),
-                            text: '${PFormatter.formatCurrency(amount: 10)} ',
-                            children: [
-                              TextSpan(
-                                style: Theme.of(context).textTheme.bodyLarge
-                                    ?.copyWith(
-                                      fontSize: PAppSize.s13,
-                                      color: PAppColor.whiteColor,
-                                      fontWeight: FontWeight.w500,
+                          // PAppSize.s16.verticalSpace,
+                          PAppSize.s4.verticalSpace,
+                          // Cost
+                          RichText(
+                            text: TextSpan(
+                              style: Theme.of(context).textTheme.bodyLarge
+                                  ?.copyWith(
+                                    fontSize: PAppSize.s18,
+                                    color: PAppColor.whiteColor,
+                                    fontWeight: FontWeight.w700,
+                                  ),
+                              text:
+                                  '${PFormatter.formatCurrency(amount: double.parse(recommendation.recommendedPremium ?? "0"))} ',
+                              children: [
+                                TextSpan(
+                                  style: Theme.of(context).textTheme.bodyLarge
+                                      ?.copyWith(
+                                        fontSize: PAppSize.s13,
+                                        color: PAppColor.whiteColor,
+                                        fontWeight: FontWeight.w500,
+                                        decorationColor: PAppColor.whiteColor,
+                                        decoration: TextDecoration.lineThrough,
+                                      ),
+                                  text: PFormatter.formatCurrency(
+                                    amount: double.parse(
+                                      recommendation.currentPremium ?? "0",
                                     ),
-                                text: 'additional_advantage'.tr,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                          PAppSize.s3.verticalSpace,
+                          Row(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Assets.icons.checkIcon.svg(
+                                color: PAppColor.whiteColor,
+                                width: PAppSize.s28,
+                              ),
+                              RichText(
+                                text: TextSpan(
+                                  style: Theme.of(context).textTheme.bodyLarge
+                                      ?.copyWith(
+                                        fontSize: PAppSize.s13,
+                                        color: PAppColor.whiteColor,
+                                        fontWeight: FontWeight.w500,
+                                      ),
+                                  text:
+                                      '${PFormatter.formatCurrency(amount: (double.parse(recommendation.recommendedPremium ?? "0") - double.parse(recommendation.currentPremium ?? "0")))} ',
+                                  children: [
+                                    TextSpan(
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .bodyLarge
+                                          ?.copyWith(
+                                            fontSize: PAppSize.s13,
+                                            color: PAppColor.whiteColor,
+                                            fontWeight: FontWeight.w500,
+                                          ),
+                                      text: 'additional_advantage'.tr,
+                                    ),
+                                  ],
+                                ),
                               ),
                             ],
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
+                    ).horizontal(PAppSize.s16),
+
+                    PAppSize.s20.verticalSpace,
+
+                    PGradientButton(
+                      label: 'upgrade_now'.tr,
+                      showIcon: true,
+                      icon: Assets.icons.upgradeIcon.svg(),
+                      textColor: PAppColor.whiteColor,
+                      loading: LoadingState.completed,
+                      width: PDeviceUtil.getDeviceWidth(context),
+                      onTap: () => showUpgradeModal(context, recommendation),
+                    ).horizontal(PAppSize.s16),
+
+                    PAppSize.s8.verticalSpace,
+
+                    OutlinedButton(
+                      onPressed: () {
+                        PHelperFunction.switchScreen(
+                          destination: Routes.webviewPage,
+                          args: [policy.planDescription, PAppConstant.homeUrl],
+                        );
+                      },
+                      child: Text('learn_more'.tr),
+                    ).horizontal(PAppSize.s16),
+
+                    // PAppSize.s8.verticalSpace,
+
+                    // style: OutlinedButton.styleFrom(
+                    //   foregroundColor: PHelperFunction.isDarkMode(context) ?
+
+                    //   PAppColor.whiteColor PAppColor.whiteColor :
+                    // ),
+
+                    // learn more
+                    TextButton(
+                      onPressed: () {
+                        vm.dismissRecommendation(id: recommendation.id ?? 0);
+                      },
+                      child: vm.submitting.value == LoadingState.loading
+                          ? PCustomLoadingIndicator()
+                          : Text(
+                              'not_interested'.tr,
+                              style: Theme.of(context).textTheme.bodySmall
+                                  ?.copyWith(
+                                    fontSize: PAppSize.s16,
+                                    color: PHelperFunction.isDarkMode(context)
+                                        ? PAppColor.whiteColor
+                                        : PAppColor.darkBgColor,
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                            ),
                     ),
+                    PAppSize.s16.verticalSpace,
                   ],
                 ),
-              ).horizontal(PAppSize.s16),
-
-              PAppSize.s20.verticalSpace,
-
-              PGradientButton(
-                label: 'upgrade_now'.tr,
-                showIcon: true,
-                icon: Assets.icons.upgradeIcon.svg(),
-                textColor: PAppColor.whiteColor,
-                loading: LoadingState.completed,
-                width: PDeviceUtil.getDeviceWidth(context),
-                onTap: () => showUpgradeModal(context),
-              ).horizontal(PAppSize.s16),
-
-              PAppSize.s8.verticalSpace,
-
-              OutlinedButton(
-                onPressed: () {},
-                child: Text('learn_more'.tr),
-              ).horizontal(PAppSize.s16),
-
-              // PAppSize.s8.verticalSpace,
-
-              // style: OutlinedButton.styleFrom(
-              //   foregroundColor: PHelperFunction.isDarkMode(context) ?
-
-              //   PAppColor.whiteColor PAppColor.whiteColor :
-              // ),
-
-              // learn more
-              TextButton(
-                onPressed: () {},
-                child: Text(
-                  'not_interested'.tr,
-                  style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                    fontSize: PAppSize.s16,
-                    color: PHelperFunction.isDarkMode(context)
-                        ? PAppColor.whiteColor
-                        : PAppColor.darkBgColor,
-                    fontWeight: FontWeight.w500,
-                  ),
-                ),
               ),
-              PAppSize.s16.verticalSpace,
             ],
-          ),
-        ),
-      ],
-    );
+          );
   }
 
   Widget _buildListTile({
@@ -213,7 +245,10 @@ class PPremiumUpgradeWidget extends StatelessWidget {
 
   /// Shows modal to logout user from app
   /// params ;- context
-  Future<dynamic> showUpgradeModal(BuildContext context) {
+  Future<dynamic> showUpgradeModal(
+    BuildContext context,
+    Upsell recommendation,
+  ) {
     return showModalBottomSheet(
       context: context,
       backgroundColor: PHelperFunction.isDarkMode(context)
@@ -310,17 +345,20 @@ class PPremiumUpgradeWidget extends StatelessWidget {
                         child: PGradientButton(
                           label: 'upgrade_now'.tr,
                           showIcon: false,
-                          loading: vm.loading.value,
+                          loading: vm.submitting.value,
                           textColor: PAppColor.whiteColor,
                           width: PDeviceUtil.getDeviceWidth(context),
-                          onTap: () {},
+                          onTap: () {
+                            vm.upgradeRecommendation(
+                              id: recommendation.id ?? 0,
+                            );
+                          },
                         ),
                       ),
                       PAppSize.s8.horizontalSpace,
                       Expanded(
                         child: OutlinedButton(
                           onPressed: PHelperFunction.pop,
-
                           style: OutlinedButton.styleFrom(
                             foregroundColor: PAppColor.successDark,
                             side: BorderSide(color: PAppColor.successDark),
