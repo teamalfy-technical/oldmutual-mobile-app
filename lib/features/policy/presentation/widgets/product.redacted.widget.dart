@@ -4,7 +4,16 @@ import 'package:redacted/redacted.dart';
 
 class PProductRedactedWidget extends StatelessWidget {
   final LoadingState loading;
-  const PProductRedactedWidget({super.key, required this.loading});
+  final LoadingState? secondaryLoading;
+  const PProductRedactedWidget({
+    super.key,
+    required this.loading,
+    this.secondaryLoading,
+  });
+
+  bool get _isLoading =>
+      loading == LoadingState.loading ||
+      secondaryLoading == LoadingState.loading;
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +37,7 @@ class PProductRedactedWidget extends StatelessWidget {
               ),
             ).redacted(
               context: context,
-              redact: loading == LoadingState.loading ? true : false,
+              redact: _isLoading,
             ),
         subtitle:
             Text(
@@ -39,7 +48,7 @@ class PProductRedactedWidget extends StatelessWidget {
               ),
             ).redacted(
               context: context,
-              redact: loading == LoadingState.loading ? true : false,
+              redact: _isLoading,
             ),
         trailing:
             Text(
@@ -50,12 +59,12 @@ class PProductRedactedWidget extends StatelessWidget {
               ),
             ).redacted(
               context: context,
-              redact: loading == LoadingState.loading ? true : false,
+              redact: _isLoading,
             ),
       ),
     ).redacted(
       context: context,
-      redact: loading == LoadingState.loading ? true : false,
+      redact: _isLoading,
     );
   }
 }

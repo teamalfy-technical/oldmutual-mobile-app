@@ -23,6 +23,8 @@ class _PCreateAccountPageState extends State<PCreateAccountPage> {
   bool hasUppercase = false;
   bool hasNumber = false;
   bool hasSpecialChar = false;
+  String? confirmPasswordError;
+  String? emailError;
 
   int _maxLength = 10;
 
@@ -32,14 +34,38 @@ class _PCreateAccountPageState extends State<PCreateAccountPage> {
       hasUppercase = RegExp(r'[A-Z]').hasMatch(password);
       hasNumber = RegExp(r'[0-9]').hasMatch(password);
       hasSpecialChar = RegExp(r'[!@#\$&*~%^().,?":{}|<>]').hasMatch(password);
+      _validateConfirmPassword();
     });
   }
 
-  bool get _isPasswordValid =>
+  void _validateConfirmPassword() {
+    final confirmPassword = ctrl.confirmPasswordTEC.text;
+    if (confirmPassword.isNotEmpty &&
+        confirmPassword != ctrl.passwordTEC.text) {
+      confirmPasswordError = 'Password does not match';
+    } else {
+      confirmPasswordError = null;
+    }
+  }
+
+  void _validateEmail(String email) {
+    setState(() {
+      if (email.isNotEmpty &&
+          !RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$').hasMatch(email)) {
+        emailError = 'Please enter a valid email';
+      } else {
+        emailError = null;
+      }
+    });
+  }
+
+  bool get _isFormValid =>
       hasMinLength &&
       hasUppercase &&
       hasNumber &&
       hasSpecialChar &&
+      ctrl.emailOrPhoneTEC.text.isNotEmpty &&
+      ctrl.phoneTEC.text.isNotEmpty &&
       ctrl.passwordTEC.text.isNotEmpty &&
       ctrl.confirmPasswordTEC.text.isNotEmpty &&
       ctrl.passwordTEC.text == ctrl.confirmPasswordTEC.text;
@@ -83,6 +109,8 @@ class _PCreateAccountPageState extends State<PCreateAccountPage> {
                         labelText: 'hint_email'.tr,
                         textInputType: TextInputType.emailAddress,
                         validator: PValidator.validateEmail,
+                        errorText: emailError,
+                        onChanged: _validateEmail,
                       ),
                       PAppSize.s24.verticalSpace,
                       // PCustomPhoneTextfield(
@@ -180,10 +208,15 @@ class _PCreateAccountPageState extends State<PCreateAccountPage> {
                           val,
                           ctrl.passwordTEC.text.trim(),
                         ),
-                        obscure: ctrl.obscure.value,
-                        onObscureChanged: ctrl.onObscureChanged,
+                        errorText: confirmPasswordError,
+                        obscure: ctrl.obscure2.value,
+                        onObscureChanged: ctrl.onObscure2Changed,
                         controller: ctrl.confirmPasswordTEC,
-                        onChanged: (_) => setState(() {}),
+                        onChanged: (_) {
+                          setState(() {
+                            _validateConfirmPassword();
+                          });
+                        },
                       ),
 
                       PAppSize.s20.verticalSpace,
@@ -246,7 +279,7 @@ class _PCreateAccountPageState extends State<PCreateAccountPage> {
                         showIcon: false,
                         loading: ctrl.loading.value,
                         width: PDeviceUtil.getDeviceWidth(context),
-                        onTap: _isPasswordValid
+                        onTap: _isFormValid
                             ? () {
                                 if (formKey.currentState!.validate()) {
                                   ctrl.createAccount();

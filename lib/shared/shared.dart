@@ -16,6 +16,7 @@ export 'widgets/custom.loading.indicator.dart';
 export 'widgets/custom.password.textfield.dart';
 export 'widgets/custom.phone.textfield.dart';
 export 'widgets/custom.pin.put.dart';
+export 'widgets/custom.tabbar.widget.dart';
 export 'widgets/custom.textfield.dart';
 export 'widgets/empty.state.widget.dart';
 export 'widgets/gradient.button.dart';

@@ -18,6 +18,7 @@ class PCustomPasswordTextField extends StatefulWidget {
   // final String? hintText;
   final void Function(String)? onChanged;
   final AutovalidateMode? autovalidateMode;
+  final String? errorText;
   const PCustomPasswordTextField({
     super.key,
     // required this.labelText,
@@ -33,6 +34,7 @@ class PCustomPasswordTextField extends StatefulWidget {
     // this.isPasswordStrong = false,
     this.validator,
     this.autovalidateMode,
+    this.errorText,
     // this.titleText,
     // this.border,
     // this.enabledBorder,
@@ -98,6 +100,7 @@ class _PCustomPasswordTextFieldState extends State<PCustomPasswordTextField> {
           ),
           decoration: InputDecoration(
             // contentPadding: widget.contentPadding,
+            errorText: widget.errorText,
             label:
                 // widget.labelText == null
                 //     ? null

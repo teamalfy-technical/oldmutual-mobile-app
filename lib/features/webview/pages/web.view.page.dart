@@ -183,6 +183,7 @@ class _PWebViewState extends State<PWebView> {
   void navigateToCreateAccount(String message) {
     PHelperFunction.switchScreen(
       destination: Routes.createAccountPage,
+      popAndPush: true,
       args: true,
     );
     PPopupDialog(context).successMessage(title: 'success'.tr, message: message);
