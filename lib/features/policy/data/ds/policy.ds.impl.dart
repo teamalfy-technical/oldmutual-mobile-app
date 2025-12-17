@@ -68,7 +68,8 @@ class PolicyDsImpl implements PolicyDs {
     return await asyncFunctionWrapper.handleAsyncNetworkCall(() async {
       final res = await apiService.callService(
         requestType: RequestType.get,
-        endPoint: '${Env.getPolicies}/$policyNumber',
+        queryParams: {'policy_number': policyNumber},
+        endPoint: Env.getPolicy,
       );
       return ApiResponse<Policy>.fromJson(res, (data) => Policy.fromJson(data));
     });

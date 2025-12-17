@@ -1,57 +1,74 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:intl/intl.dart';
 import 'package:oldmutual_pensions_app/core/utils/utils.dart';
 import 'package:oldmutual_pensions_app/features/more/more.services.dart';
 import 'package:oldmutual_pensions_app/gen/assets.gen.dart';
 import 'package:oldmutual_pensions_app/routes/app.pages.dart';
-import 'package:redacted/redacted.dart';
+import 'package:oldmutual_pensions_app/shared/shared.dart';
 
-class PUserDetailPage extends StatelessWidget {
+class UserDetailsData {
+  final Map<String, String?> biodata;
+  final Map<String, String?> profile;
+
+  UserDetailsData({required this.biodata, required this.profile});
+}
+
+class PUserDetailPage extends StatefulWidget {
   final bool isShowAppBar;
   const PUserDetailPage({super.key, this.isShowAppBar = true});
 
-  Widget _buildListTile(BuildContext context, String title, String subTitle) {
-    return ListTile(
-      contentPadding: EdgeInsets.symmetric(horizontal: PAppSize.s0),
-      title: Text(
-        title,
-        style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-          fontSize: PAppSize.s14.sp,
-          fontWeight: FontWeight.w500,
-        ),
-      ),
-      subtitle: Text(
-        subTitle,
-        style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-          fontSize: PAppSize.s14.sp,
-          fontWeight: FontWeight.w400,
-        ),
-      ),
-    );
+  @override
+  State<PUserDetailPage> createState() => _PUserDetailPageState();
+}
+
+class _PUserDetailPageState extends State<PUserDetailPage>
+    with SingleTickerProviderStateMixin {
+  late TabController _tabController;
+  late Future<UserDetailsData> _userDataFuture;
+
+  @override
+  void initState() {
+    super.initState();
+    _tabController = TabController(length: 2, vsync: this);
+    _tabController.addListener(() {
+      if (!_tabController.indexIsChanging) {
+        setState(() {});
+      }
+    });
+    _userDataFuture = _loadUserData();
   }
 
-  Future<Map<String, String?>> _getUserData() async {
+  @override
+  void dispose() {
+    _tabController.dispose();
+    super.dispose();
+  }
+
+  Future<UserDetailsData> _loadUserData() async {
     final authResponse = await PSecureStorage().getAuthResponse();
     final bioData = await PSecureStorage().getBioData();
 
-    final fullName =
-        (authResponse?.name == null ||
-            (authResponse?.name != null && authResponse!.name!.isEmpty))
-        ? bioData?.fullName
-        : authResponse?.name;
-
-    return {
-      'fullName': bioData?.fullName ?? fullName,
-      'email': bioData?.email ?? authResponse?.email,
-      'phone': bioData?.mobileNo ?? authResponse?.phone,
-      'ghanaCardNumber':
-          bioData?.ghanaCardNumber ?? authResponse?.ghanaCardNumber,
-      'ssnitNumber': bioData?.ssnitNumber ?? authResponse?.ssnitNumber,
-      'dob': bioData?.dob ?? authResponse?.dob,
+    final biodata = {
+      'fullName': bioData?.fullName ?? 'not_applicable'.tr,
+      'email': bioData?.email ?? 'not_applicable'.tr,
+      'phone': bioData?.mobileNo ?? 'not_applicable'.tr,
+      'ghanaCardNumber': bioData?.ghanaCardNumber ?? 'not_applicable'.tr,
+      'ssnitNumber': bioData?.ssnitNumber ?? 'not_applicable'.tr,
+      'dob': bioData?.dob,
       'tin': bioData?.tin,
     };
+
+    final profile = {
+      'fullName': authResponse?.name ?? 'not_applicable'.tr,
+      'email': authResponse?.email ?? 'not_applicable'.tr,
+      'phone': authResponse?.phone ?? 'not_applicable'.tr,
+      'ghanaCardNumber': authResponse?.ghanaCardNumber ?? 'not_applicable'.tr,
+      'ssnitNumber': authResponse?.ssnitNumber ?? 'not_applicable'.tr,
+      'dob': authResponse?.dob,
+    };
+
+    return UserDetailsData(biodata: biodata, profile: profile);
   }
 
   @override
@@ -60,114 +77,41 @@ class PUserDetailPage extends StatelessWidget {
       backgroundColor: PHelperFunction.isDarkMode(context)
           ? PAppColor.darkBgColor
           : PAppColor.fillColor,
-      appBar: isShowAppBar
+      appBar: widget.isShowAppBar
           ? AppBar(title: Text('manage_personal_details'.tr))
           : null,
-      body: FutureBuilder<Map<String, String?>>(
-        future: _getUserData(),
+      body: FutureBuilder<UserDetailsData>(
+        future: _userDataFuture,
         builder: (context, snapshot) {
           final isLoading = snapshot.connectionState == ConnectionState.waiting;
-          final userData = snapshot.data ?? {};
-
+          final userDetailsData = snapshot.data;
           return SafeArea(
             child: Column(
               children: [
-                // Personal Details
-                Container(
-                  padding: EdgeInsets.all(PAppSize.s16),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(PAppSize.s20),
-                    color: PHelperFunction.isDarkMode(context)
-                        ? PAppColor.darkAppBarColor
-                        : PAppColor.whiteColor,
-                    border: Border.all(
-                      width: PAppSize.s1,
-                      color: PHelperFunction.isDarkMode(context)
-                          ? PAppColor.transparentColor
-                          : PAppColor.fillColor2,
-                    ),
-                  ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
+                PCustomTabBarWidget(
+                  controller: _tabController,
+                  horizontalPadding: PAppSize.s0,
+                  tabs: [
+                    Tab(text: 'biodata'.tr),
+                    Tab(text: 'profile'.tr),
+                  ],
+                ),
+                PAppSize.s16.verticalSpace,
+                Expanded(
+                  child: TabBarView(
+                    controller: _tabController,
                     children: [
-                      Text(
-                        isLoading
-                            ? '****************************************'
-                            : (userData['fullName'] ?? ''),
-                        style: Theme.of(context).textTheme.titleMedium
-                            ?.copyWith(fontWeight: FontWeight.w600),
-                      ).redacted(context: context, redact: isLoading),
-                      PAppSize.s8.verticalSpace,
-                      PMoreListTitle(
-                        title: isLoading
-                            ? '****************************************'
-                            : 'email'.tr,
-                        subTitle: isLoading
-                            ? '****************************************'
-                            : (userData['email'] ?? 'not_applicable'.tr),
+                      PBiodataTab(
+                        userData: userDetailsData?.biodata ?? {},
                         isLoading: isLoading,
                       ),
-                      Divider(height: PAppSize.s1),
-                      PMoreListTitle(
-                        title: isLoading
-                            ? '****************************************'
-                            : 'phone_number'.tr,
-                        subTitle: isLoading
-                            ? '****************************************'
-                            : (userData['phone'] ?? 'not_applicable'.tr),
+                      PProfileTab(
+                        userData: userDetailsData?.profile ?? {},
                         isLoading: isLoading,
                       ),
-                      Divider(height: PAppSize.s1),
-                      PMoreListTitle(
-                        title: isLoading
-                            ? '****************************************'
-                            : 'ghana_card_id'.tr,
-                        subTitle: isLoading
-                            ? '****************************************'
-                            : (userData['ghanaCardNumber'] ??
-                                  'not_applicable'.tr),
-                        isLoading: isLoading,
-                      ),
-                      Divider(height: PAppSize.s1),
-                      PMoreListTitle(
-                        title: isLoading
-                            ? '****************************************'
-                            : 'ssnit_number'.tr,
-                        subTitle: isLoading
-                            ? '****************************************'
-                            : (userData['ssnitNumber'] ?? 'not_applicable'.tr),
-                        isLoading: isLoading,
-                      ),
-                      Divider(height: PAppSize.s1),
-                      PMoreListTitle(
-                        title: isLoading
-                            ? '****************************************'
-                            : 'date_of_birth'.tr,
-                        subTitle: isLoading
-                            ? '****************************************'
-                            : PFormatter.formatDate(
-                                dateFormat: DateFormat('MMMM d, y'),
-                                date: DateTime.parse(
-                                  userData['dob'] ??
-                                      DateTime.now().toIso8601String(),
-                                ),
-                              ),
-                        isLoading: isLoading,
-                      ),
-                      Divider(height: PAppSize.s1),
-                      PMoreListTitle(
-                        title: isLoading
-                            ? '****************************************'
-                            : 'tin'.tr.toUpperCase(),
-                        subTitle: isLoading
-                            ? '****************************************'
-                            : (userData['tin'] ?? 'not_applicable'.tr),
-                        isLoading: isLoading,
-                      ),
-                      Divider(height: PAppSize.s1),
                     ],
                   ),
-                ).redacted(context: context, redact: isLoading),
+                ),
 
                 PAppSize.s16.verticalSpace,
 
@@ -181,9 +125,10 @@ class PUserDetailPage extends StatelessWidget {
                     ),
                   ),
                 ),
+
                 PAppSize.s12.verticalSpace,
 
-                // Danger zone / Logout section
+                // Danger zone
                 Container(
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(PAppSize.s20),
@@ -238,7 +183,7 @@ class PUserDetailPage extends StatelessWidget {
                           ),
                 ),
               ],
-            ).all(PAppSize.s20).scrollable(),
+            ).all(PAppSize.s20),
           );
         },
       ),

@@ -40,6 +40,9 @@ class PAuthVm extends GetxController {
 
   var isBiometricAvailable = false.obs;
 
+  /// Flag to indicate if biometric auth succeeded (used to allow stored password usage)
+  var biometricAuthSucceeded = false;
+
   var maskedValue = ''.obs;
 
   final authService = Get.put(AuthServiceImpl());
@@ -94,13 +97,17 @@ class PAuthVm extends GetxController {
     final success = await LocalAuthService().authenticateUser();
 
     if (!success) {
+      // Reset flag - user must enter password manually if biometric fails
+      biometricAuthSucceeded = false;
       PPopupDialog(context).errorMessage(
         title: 'error'.tr,
-        message: 'Biometric authentication failed. Please try again.',
+        message: 'Biometric authentication failed. Please enter your password.',
       );
       return;
     }
 
+    // Biometric succeeded - allow stored password usage
+    biometricAuthSucceeded = true;
     await login();
   }
 
@@ -199,9 +206,18 @@ class PAuthVm extends GetxController {
     final emailOrPhone =
         await PSecureStorage().getUserEmail() ?? emailOrPhoneTEC.text.trim();
 
-    final password =
-        await PSecureStorage().getBiometricPassword() ??
-        passwordTEC.text.trim();
+    // Only use stored biometric password if biometric auth succeeded
+    // Otherwise, require user to enter password manually
+    String password;
+    if (biometricAuthSucceeded) {
+      password = await PSecureStorage().getBiometricPassword() ??
+          passwordTEC.text.trim();
+    } else {
+      password = passwordTEC.text.trim();
+    }
+
+    // Reset the flag after using it
+    biometricAuthSucceeded = false;
 
     final result = await authService.signIn(
       emailOrPhone: PHelperFunction.isPhone(emailOrPhone)

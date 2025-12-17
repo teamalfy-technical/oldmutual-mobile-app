@@ -359,7 +359,7 @@ abstract class Env {
   static final String getPolicySummary = _Env.getPolicySummary;
 
   /// [GetPolicy] endpoint
-  @EnviedField(defaultValue: '/policy', obfuscate: true)
+  @EnviedField(defaultValue: '/policy/policy-details', obfuscate: true)
   static final String getPolicy = _Env.getPolicy;
 
   /// [GetPolicyBeneficiaries] endpoint

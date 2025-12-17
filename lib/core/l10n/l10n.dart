@@ -232,7 +232,9 @@ class AppTranslations extends Translations {
       'confirm_delete': 'Confirm Delete',
       'confirm_delete_msg': 'Type “DELETE” to confirm delete of your \naccount',
       'account_deleted_msg':
-          'Your account has been temporarily deleted. You can reactivate the account within 30 dys after which it is permanently deleted',
+          'Your account has been deleted successfully. All your products have been deactivated',
+      // 'account_deleted_msg':
+      //     'Your account has been temporarily deleted. You can reactivate the account within 30 dys after which it is permanently deleted',
       'no_cancel': 'No, Cancel',
       'delete': 'Delete',
       'delete_acc_positive': 'I understand the risks, continue',
@@ -403,6 +405,7 @@ class AppTranslations extends Translations {
       'no_product_found': 'You\'ve no @name products available',
       'total_cover': 'Your total cover',
       'see_all': 'see all',
+      'biodata': 'Biodata',
       'products': 'Products',
       'manage': 'Manage',
       'new': 'New',
