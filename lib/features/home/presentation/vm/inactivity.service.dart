@@ -73,6 +73,9 @@ class PInactivityService extends GetxService with WidgetsBindingObserver {
               currentRoute == Routes.loginPage ||
               currentRoute == Routes.createAccountPage ||
               currentRoute == Routes.idEntryPage ||
+              currentRoute == Routes.livenessInfoPage ||
+              currentRoute == Routes.verifyOTPPage ||
+              currentRoute == Routes.webviewPage ||
               currentRoute == Routes.welcomeBackPage ||
               currentRoute == Routes.forgotPasswordPage;
 
@@ -107,6 +110,9 @@ class PInactivityService extends GetxService with WidgetsBindingObserver {
     if (currentRoute != Routes.loginPage &&
         currentRoute != Routes.createAccountPage &&
         currentRoute != Routes.idEntryPage &&
+        currentRoute != Routes.livenessInfoPage &&
+        currentRoute != Routes.verifyOTPPage &&
+        currentRoute != Routes.webviewPage &&
         currentRoute != Routes.welcomeBackPage &&
         currentRoute != Routes.forgotPasswordPage) {
       pensionAppLogger.w(
@@ -135,6 +141,9 @@ class PInactivityService extends GetxService with WidgetsBindingObserver {
         currentRoute == Routes.loginPage ||
         currentRoute == Routes.createAccountPage ||
         currentRoute == Routes.idEntryPage ||
+        currentRoute == Routes.livenessInfoPage ||
+        currentRoute == Routes.verifyOTPPage ||
+        currentRoute == Routes.webviewPage ||
         currentRoute == Routes.welcomeBackPage ||
         currentRoute == Routes.forgotPasswordPage ||
         currentRoute == Routes.splashPage;

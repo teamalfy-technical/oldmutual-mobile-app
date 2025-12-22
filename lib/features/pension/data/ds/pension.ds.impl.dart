@@ -72,7 +72,9 @@ class PensionDsImpl implements PensionDs {
     );
     return ApiResponse<PensionSummary>.fromJson(
       res,
-      (data) => PensionSummary.fromJson(data),
+      (data) => data is Map<String, dynamic>
+          ? PensionSummary.fromJson(data)
+          : PensionSummary(),
     );
   }
 

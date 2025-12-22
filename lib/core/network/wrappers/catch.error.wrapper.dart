@@ -91,10 +91,10 @@ class CatchApiErrorWrapperImpl implements CatchApiErrorWrapper {
               // Handle other types of messages
             }
           } else if (err.response?.statusCode == 412) {
-            errorMessage = err.message;
+            errorMessage = extractError(err.response?.data);
           }
         } else {
-          errorMessage = err.response?.data['error'];
+          errorMessage = extractError(err.response?.data);
         }
       } else {
         errorMessage = ServerException.getErrorMessage(err);

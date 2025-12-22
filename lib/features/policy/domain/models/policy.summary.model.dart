@@ -23,10 +23,10 @@ class PolicySummary {
     totalPolicies = json['total_policies'];
     activePolicies = json['active_policies'];
     expiredPolicies = json['expired_policies'];
-    totalClaimAmount = json['total_claim_amount']?.toDouble();
+    totalClaimAmount = (json['total_claim_amount'] as num?)?.toDouble();
     pendingClaims = json['pending_claims'];
-    totalLifeInvestment = json['total_life_investment']?.toDouble();
-    availableBalance = json['total_available_balance']?.toDouble();
+    totalLifeInvestment = (json['total_life_investment'] as num?)?.toDouble();
+    availableBalance = (json['total_available_balance'] as num?)?.toDouble();
     lastUpdated = json['last_updated'];
   }
 

@@ -8,11 +8,19 @@ import Firebase
   // Privacy overlay view to hide sensitive content in app switcher
   private var privacyOverlayView: UIView?
 
+  // Secure text field for screenshot prevention
+  private var secureTextField: UITextField?
+
   override func application(
     _ application: UIApplication,
     didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?
   ) -> Bool {
     FirebaseApp.configure()
+
+    // Enable screenshot prevention
+    DispatchQueue.main.async {
+      self.preventScreenCapture()
+    }
     // This is required to make any communication available in the action isolate.
     FlutterLocalNotificationsPlugin.setPluginRegistrantCallback { (registry) in
         GeneratedPluginRegistrant.register(with: registry)
@@ -69,6 +77,29 @@ import Firebase
   private func hidePrivacyOverlay() {
     privacyOverlayView?.removeFromSuperview()
     privacyOverlayView = nil
+  }
+
+  // MARK: - Screenshot Prevention
+
+  private func preventScreenCapture() {
+    guard let window = self.window else { return }
+
+    // Create a secure text field (used for password fields, inherently blocks screen capture)
+    let textField = UITextField()
+    textField.isSecureTextEntry = true
+    textField.isUserInteractionEnabled = false
+
+    // Add the secure text field to the window
+    window.addSubview(textField)
+    textField.centerYAnchor.constraint(equalTo: window.centerYAnchor).isActive = true
+    textField.centerXAnchor.constraint(equalTo: window.centerXAnchor).isActive = true
+
+    // Move the window's layer to be hosted by the secure text field's layer
+    // This makes the entire window content protected from screenshots
+    window.layer.superlayer?.addSublayer(textField.layer)
+    textField.layer.sublayers?.first?.addSublayer(window.layer)
+
+    self.secureTextField = textField
   }
 
 }
