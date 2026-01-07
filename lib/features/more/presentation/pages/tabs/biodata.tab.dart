@@ -36,7 +36,7 @@ class PBiodataTab extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            userData['fullName'] ?? '',
+            userData['fullName'] ?? 'not_applicable'.tr,
             style: Theme.of(
               context,
             ).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w600),
@@ -69,6 +69,8 @@ class PBiodataTab extends StatelessWidget {
           PMoreListTitle(
             title: 'date_of_birth'.tr,
             subTitle: isLoading
+                ? 'not_applicable'.tr
+                : userData['dob'] == null
                 ? 'not_applicable'.tr
                 : PFormatter.formatDate(
                     dateFormat: DateFormat('MMMM d, y'),
