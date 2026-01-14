@@ -15,16 +15,20 @@ class PWelcomeBackPage extends StatefulWidget {
 }
 
 class _PWelcomeBackPageState extends State<PWelcomeBackPage>
-    with SingleTickerProviderStateMixin {
+    with SingleTickerProviderStateMixin, WidgetsBindingObserver {
   final ctrl = Get.put(PAuthVm());
 
   final formKey = GlobalKey<FormState>();
 
   late AnimationController _controller;
 
+  /// Track if biometric auth is in progress to avoid duplicate prompts
+  bool _isBiometricInProgress = false;
+
   @override
   void initState() {
     super.initState();
+    WidgetsBinding.instance.addObserver(this);
     _controller = AnimationController(
       vsync: this,
       duration: const Duration(milliseconds: 200),
@@ -36,7 +40,23 @@ class _PWelcomeBackPageState extends State<PWelcomeBackPage>
     _autoTriggerBiometrics();
   }
 
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    super.didChangeAppLifecycleState(state);
+    if (state == AppLifecycleState.resumed) {
+      // Re-trigger biometric authentication when app resumes (e.g., after device unlock)
+      pensionAppLogger.i('App resumed on Welcome Back page - re-triggering biometrics');
+      _autoTriggerBiometrics();
+    }
+  }
+
   Future<void> _autoTriggerBiometrics() async {
+    // Prevent duplicate biometric prompts
+    if (_isBiometricInProgress) {
+      pensionAppLogger.i('Biometric auth already in progress - skipping');
+      return;
+    }
+
     // Small delay to ensure the page is fully loaded
     await Future.delayed(const Duration(milliseconds: 300));
 
@@ -62,12 +82,18 @@ class _PWelcomeBackPageState extends State<PWelcomeBackPage>
       return;
     }
 
+    _isBiometricInProgress = true;
     pensionAppLogger.i('Auto-triggering biometric authentication');
-    await ctrl.authenticateWithBiometrics(_controller);
+    try {
+      await ctrl.authenticateWithBiometrics(_controller);
+    } finally {
+      _isBiometricInProgress = false;
+    }
   }
 
   @override
   void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
     _controller.dispose();
     super.dispose();
   }
@@ -158,32 +184,45 @@ class _PWelcomeBackPageState extends State<PWelcomeBackPage>
 
                         PAppSize.s20.verticalSpace,
 
-                        // if (PSecureStorage().isFaceIdEnabled &&
-                        //     ctrl.isBiometricAvailable.value &&
-                        //     PSecureStorage().getAuthResponse() != null) ...[
-                        //   ScaleTransition(
-                        //     scale: _controller.drive(
-                        //       CurveTween(curve: Curves.easeInOut),
-                        //     ),
-                        //     child: IconButton(
-                        //       onPressed: () async => await ctrl
-                        //           .authenticateWithBiometrics(_controller),
-                        //       icon: PDeviceUtil.isAndroid()
-                        //           ? Assets.icons.fingerprint.svg(
-                        //               color: PHelperFunction.isDarkMode(context)
-                        //                   ? PAppColor.whiteColor
-                        //                   : PAppColor.darkBgColor,
-                        //             )
-                        //           : Assets.icons.faceId.svg(
-                        //               color: PHelperFunction.isDarkMode(context)
-                        //                   ? PAppColor.whiteColor
-                        //                   : PAppColor.darkBgColor,
-                        //             ),
-                        //     ),
-                        //   ),
+                        if (PSecureStorage().isBiometricEnabled) ...[
+                          IconButton(
+                            onPressed: () async =>
+                                await _autoTriggerBiometrics(),
+                            icon: PDeviceUtil.isAndroid()
+                                ? Assets.icons.fingerprint.svg(
+                                    color: PHelperFunction.isDarkMode(context)
+                                        ? PAppColor.whiteColor
+                                        : PAppColor.darkBgColor,
+                                  )
+                                : Assets.icons.faceId.svg(
+                                    color: PHelperFunction.isDarkMode(context)
+                                        ? PAppColor.whiteColor
+                                        : PAppColor.darkBgColor,
+                                  ),
+                          ),
+                          // ScaleTransition(
+                          //   scale: _controller.drive(
+                          //     CurveTween(curve: Curves.easeInOut),
+                          //   ),
+                          //   child: IconButton(
+                          //     onPressed: () async =>
+                          //         await _autoTriggerBiometrics(),
+                          //     icon: PDeviceUtil.isAndroid()
+                          //         ? Assets.icons.fingerprint.svg(
+                          //             color: PHelperFunction.isDarkMode(context)
+                          //                 ? PAppColor.whiteColor
+                          //                 : PAppColor.darkBgColor,
+                          //           )
+                          //         : Assets.icons.faceId.svg(
+                          //             color: PHelperFunction.isDarkMode(context)
+                          //                 ? PAppColor.whiteColor
+                          //                 : PAppColor.darkBgColor,
+                          //           ),
+                          //   ),
+                          // ),
 
-                        //   PAppSize.s4.verticalSpace,
-                        // ],
+                          // PAppSize.s4.verticalSpace,
+                        ],
 
                         // Assets.icons.fingerprint.svg(),
                         PAppSize.s8.verticalSpace,

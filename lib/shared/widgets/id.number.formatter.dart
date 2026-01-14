@@ -6,24 +6,41 @@ class IdNumberFormatter extends TextInputFormatter {
     TextEditingValue oldValue,
     TextEditingValue newValue,
   ) {
-    // Remove any existing hyphen
-    String digitsOnly = newValue.text.replaceAll('-', '');
+    // Remove any existing hyphens
+    String cleaned = newValue.text.replaceAll('-', '').toUpperCase();
 
-    // Limit to max 10 digits (before adding hyphen)
-    if (digitsOnly.length > 10) {
-      digitsOnly = digitsOnly.substring(0, 10);
+    // Limit to max 13 characters (GHA + 9 digits + 1 digit = 13 without hyphens)
+    if (cleaned.length > 13) {
+      cleaned = cleaned.substring(0, 13);
     }
 
-    String formatted = digitsOnly;
+    String formatted = cleaned;
 
-    // Insert hyphen after 9th digit if available
-    if (digitsOnly.length > 9) {
-      formatted = digitsOnly.substring(0, 9) + '-' + digitsOnly.substring(9);
+    // Insert hyphen after prefix (3 chars) and after 9 digits
+    if (cleaned.length > 3) {
+      formatted = '${cleaned.substring(0, 3)}-${cleaned.substring(3)}';
+    }
+    if (cleaned.length > 12) {
+      formatted =
+          '${cleaned.substring(0, 3)}-${cleaned.substring(3, 12)}-${cleaned.substring(12)}';
     }
 
     return TextEditingValue(
       text: formatted,
       selection: TextSelection.collapsed(offset: formatted.length),
+    );
+  }
+}
+
+class UpperCaseTextFormatter extends TextInputFormatter {
+  @override
+  TextEditingValue formatEditUpdate(
+    TextEditingValue oldValue,
+    TextEditingValue newValue,
+  ) {
+    return TextEditingValue(
+      text: newValue.text.toUpperCase(),
+      selection: newValue.selection,
     );
   }
 }

@@ -193,11 +193,11 @@ class PValidator {
       return "ID number is required";
     }
 
-    // Pattern: 9 digits, hyphen, 1 digit
-    final regex = RegExp(r'^\d{9}-\d{1}$');
+    // Pattern: GHA or ZWE prefix, 9 digits, hyphen, 1 digit
+    final regex = RegExp(r'^(GHA|ZWE)-\d{9}-\d{1}$');
 
     if (!regex.hasMatch(value)) {
-      return "Enter a valid ID (e.g. 000400500-5)";
+      return "Enter a valid ID (e.g. GHA-234445555-5)";
     }
 
     return null; // valid

@@ -51,15 +51,15 @@ class _PIdEntryPageState extends State<PIdEntryPage> {
                     PAppSize.s34.verticalSpace,
 
                     PCustomTextField(
-                      // labelText: 'password'.tr,
                       controller: ctrl.ghanaCardNumberTEC,
-                      prefixText: 'GHA-',
-                      labelText: 'ghana_card_number'.tr,
-                      textInputType: TextInputType.number,
+                      labelText: 'GHA-XXXXXXXXX-X',
+                      textInputType: TextInputType.text,
                       validator: PValidator.validateIdNumber,
-                      maxLength: 11,
+                      maxLength: 15,
                       inputFormatters: [
-                        FilteringTextInputFormatter.digitsOnly,
+                        FilteringTextInputFormatter.allow(
+                          RegExp(r'[A-Za-z0-9\-]'),
+                        ),
                         IdNumberFormatter(),
                       ],
                     ),
