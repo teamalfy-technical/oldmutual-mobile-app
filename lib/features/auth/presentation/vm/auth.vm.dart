@@ -115,7 +115,7 @@ class PAuthVm extends GetxController {
   Future<void> verifyGhanaCard() async {
     loading(LoadingState.loading);
     final res = await authService.verifyGhanaCard(
-      cardNumber: 'GHA-${ghanaCardNumberTEC.text.trim()}',
+      cardNumber: ghanaCardNumberTEC.text.trim(),
     );
     res.fold(
       (err) {
@@ -210,7 +210,8 @@ class PAuthVm extends GetxController {
     // Otherwise, require user to enter password manually
     String password;
     if (biometricAuthSucceeded) {
-      password = await PSecureStorage().getBiometricPassword() ??
+      password =
+          await PSecureStorage().getBiometricPassword() ??
           passwordTEC.text.trim();
     } else {
       password = passwordTEC.text.trim();

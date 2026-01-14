@@ -68,35 +68,35 @@ class Policy {
   });
 
   Policy.fromJson(Map<String, dynamic> json) {
-    policyNo = json['policy_no'];
-    planCode = json['plan_code'];
-    name = json['name'];
-    mobile = json['mobile'];
-    fullAddress = json['full_address'];
-    tIN = json['TIN'];
-    planDescription = json['plan_description'];
-    sumAssured = json['sum_assured']?.toDouble();
-    cashValue = json['cash_value']?.toDouble();
-    termOfPolicy = json['term_of_policy'];
-    clientAge = json['client_age'];
-    clientNumber = json['client_number'];
-    modalPrem = json['modal_prem']?.toDouble();
-    paymentFrequency = json['payment_frequency'];
-    paymentModeDescription = json['payment_mode_description'];
-    maturityDate = json['maturity_date'];
-    clientBirthdate = json['client_birthdate'];
-    occupationName = json['occupation_name'];
-    issuedDate = json['issued_date'];
-    premDueDate = json['prem_due_date'];
-    lastPremDate = json['last_prem_date'];
-    commencementDate = json['commencement_date'];
-    agentName = json['agent_name'];
-    agentNo = json['agent_no'];
-    agentBranchName = json['agent_branch_name'];
-    proposalDate = json['proposal_date'];
-    premiumPaid = json['premium_paid']?.toDouble();
-    availableBalance = json['available_balance']?.toDouble();
-    status = json['status'];
+    policyNo = _parseString(json['policy_no']);
+    planCode = _parseInt(json['plan_code']);
+    name = _parseString(json['name']);
+    mobile = _parseString(json['mobile']);
+    fullAddress = _parseString(json['full_address']);
+    tIN = _parseString(json['TIN']);
+    planDescription = _parseString(json['plan_description']);
+    sumAssured = _parseDouble(json['sum_assured']);
+    cashValue = _parseDouble(json['cash_value']);
+    termOfPolicy = _parseInt(json['term_of_policy']);
+    clientAge = _parseInt(json['client_age']);
+    clientNumber = _parseString(json['client_number']);
+    modalPrem = _parseDouble(json['modal_prem']);
+    paymentFrequency = _parseString(json['payment_frequency']);
+    paymentModeDescription = _parseString(json['payment_mode_description']);
+    maturityDate = _parseString(json['maturity_date']);
+    clientBirthdate = _parseString(json['client_birthdate']);
+    occupationName = _parseString(json['occupation_name']);
+    issuedDate = _parseString(json['issued_date']);
+    premDueDate = _parseString(json['prem_due_date']);
+    lastPremDate = _parseString(json['last_prem_date']);
+    commencementDate = _parseString(json['commencement_date']);
+    agentName = _parseString(json['agent_name']);
+    agentNo = _parseString(json['agent_no']);
+    agentBranchName = _parseString(json['agent_branch_name']);
+    proposalDate = _parseString(json['proposal_date']);
+    premiumPaid = _parseDouble(json['premium_paid']);
+    availableBalance = _parseDouble(json['available_balance']);
+    status = _parseString(json['status']);
     if (json['dependants'] != null) {
       dependants = <Dependant>[];
       json['dependants'].forEach((v) {
@@ -109,6 +109,27 @@ class Policy {
         beneficiaries!.add(Beneficiary.fromJson(v));
       });
     }
+  }
+
+  static String? _parseString(dynamic value) {
+    if (value == null) return null;
+    return value.toString();
+  }
+
+  static int? _parseInt(dynamic value) {
+    if (value == null) return null;
+    if (value is int) return value;
+    if (value is double) return value.toInt();
+    if (value is String) return int.tryParse(value);
+    return null;
+  }
+
+  static double? _parseDouble(dynamic value) {
+    if (value == null) return null;
+    if (value is double) return value;
+    if (value is int) return value.toDouble();
+    if (value is String) return double.tryParse(value);
+    return null;
   }
 
   Map<String, dynamic> toJson() {
@@ -172,13 +193,34 @@ class Dependant {
   });
 
   Dependant.fromJson(Map<String, dynamic> json) {
-    name = json['name'];
-    birthdate = json['birthdate'];
-    age = json['age'];
-    gender = json['gender'];
-    premium = json['premium']?.toDouble();
-    relationship = json['relationship'];
-    sumAssured = json['sum_assured'];
+    name = _parseString(json['name']);
+    birthdate = _parseString(json['birthdate']);
+    age = _parseString(json['age']);
+    gender = _parseString(json['gender']);
+    premium = _parseDouble(json['premium']);
+    relationship = _parseString(json['relationship']);
+    sumAssured = _parseInt(json['sum_assured']);
+  }
+
+  static String? _parseString(dynamic value) {
+    if (value == null) return null;
+    return value.toString();
+  }
+
+  static int? _parseInt(dynamic value) {
+    if (value == null) return null;
+    if (value is int) return value;
+    if (value is double) return value.toInt();
+    if (value is String) return int.tryParse(value);
+    return null;
+  }
+
+  static double? _parseDouble(dynamic value) {
+    if (value == null) return null;
+    if (value is double) return value;
+    if (value is int) return value.toDouble();
+    if (value is String) return double.tryParse(value);
+    return null;
   }
 
   Map<String, dynamic> toJson() {

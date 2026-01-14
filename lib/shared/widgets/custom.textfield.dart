@@ -19,6 +19,7 @@ class PCustomTextField extends StatefulWidget {
   final List<TextInputFormatter>? inputFormatters;
   final String? Function(String?)? validator;
   final Function(String)? onChanged;
+  final TextCapitalization textCapitalization;
   final String? errorText;
 
   const PCustomTextField({
@@ -36,6 +37,7 @@ class PCustomTextField extends StatefulWidget {
     this.onChanged,
     this.prefixText,
     this.inputFormatters,
+    this.textCapitalization = TextCapitalization.none,
     this.maxLength,
     this.alignLabelWithHint,
     this.hintText,
@@ -69,6 +71,7 @@ class _PCustomTextFieldState extends State<PCustomTextField> {
       focusNode: _focusNode,
       controller: widget.controller,
       validator: widget.validator,
+      textCapitalization: widget.textCapitalization,
       enabled: widget.enabled,
       maxLines: widget.maxLines,
       minLines: widget.minLines,

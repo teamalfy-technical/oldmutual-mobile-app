@@ -43,25 +43,46 @@ class Scheme {
   });
 
   Scheme.fromJson(Map<String, dynamic> json) {
-    memberName = json['MemberName'];
-    masterSchemeDescription = json['MasterSchemeDescription'];
-    penTypeDescription = json['PenTypeDescription'];
-    memberNumber = json['MemberNumber'];
-    memberId = json['MemberId'];
-    effectiveDate = json['EffectiveDate'];
-    monthlyContribution = json['MonthlyContribution']?.toDouble();
-    ssnitNumber = json['ssnitNumber'];
-    employerNumber = json['EmployerNumber'];
-    schemeCurrentValue = json['SchemeCurrentValue']?.toDouble();
-    employerName = json['EmployerName'];
-    email = json['Email'];
-    dob = json['Dob'];
-    dateJoined = json['DateJoined'];
-    sex = json['Sex'];
-    nationality = json['Nationality'];
-    status = json['Status'];
-    fundYear = json['FundYear'];
-    balanceBroughtForward = json['BalanceBroughtForward'];
+    memberName = _parseString(json['MemberName']);
+    masterSchemeDescription = _parseString(json['MasterSchemeDescription']);
+    penTypeDescription = _parseString(json['PenTypeDescription']);
+    memberNumber = _parseString(json['MemberNumber']);
+    memberId = _parseInt(json['MemberId']);
+    effectiveDate = _parseString(json['EffectiveDate']);
+    monthlyContribution = _parseDouble(json['MonthlyContribution']);
+    ssnitNumber = _parseString(json['ssnitNumber']);
+    employerNumber = _parseString(json['EmployerNumber']);
+    schemeCurrentValue = _parseDouble(json['SchemeCurrentValue']);
+    employerName = _parseString(json['EmployerName']);
+    email = _parseString(json['Email']);
+    dob = _parseString(json['Dob']);
+    dateJoined = _parseString(json['DateJoined']);
+    sex = _parseString(json['Sex']);
+    nationality = _parseString(json['Nationality']);
+    status = _parseString(json['Status']);
+    fundYear = _parseInt(json['FundYear']);
+    balanceBroughtForward = _parseDouble(json['BalanceBroughtForward']);
+  }
+
+  static String? _parseString(dynamic value) {
+    if (value == null) return null;
+    return value.toString();
+  }
+
+  static int? _parseInt(dynamic value) {
+    if (value == null) return null;
+    if (value is int) return value;
+    if (value is double) return value.toInt();
+    if (value is String) return int.tryParse(value);
+    return null;
+  }
+
+  static double? _parseDouble(dynamic value) {
+    if (value == null) return null;
+    if (value is double) return value;
+    if (value is int) return value.toDouble();
+    if (value is String) return double.tryParse(value);
+    return null;
   }
 
   Map<String, dynamic> toJson() {
