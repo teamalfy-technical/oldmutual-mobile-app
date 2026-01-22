@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:io';
 
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
@@ -22,6 +23,7 @@ import 'package:oldmutual_pensions_app/firebase_options_dev.dart' as dev;
 import 'package:oldmutual_pensions_app/firebase_options_prod.dart' as prod;
 import 'package:oldmutual_pensions_app/flavor.config.dart';
 import 'package:oldmutual_pensions_app/routes/app.pages.dart';
+import 'package:screen_protector/screen_protector.dart';
 
 import 'features/notification/presentation/vm/notification.service.dart';
 
@@ -49,6 +51,9 @@ Future<void> initDependencies() async {
   //🔐 Initialize Firebase first
   await initFirebaseApp();
 
+  // 🔒 Enable screenshot prevention
+  await _initScreenProtection();
+
   await FirebaseCrashlytics.instance.setCrashlyticsCollectionEnabled(
     !kDebugMode,
   );
@@ -57,6 +62,27 @@ Future<void> initDependencies() async {
   FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterFatalError;
 
   FirebaseMessaging.onBackgroundMessage(_backgroundHandler);
+}
+
+/// Initialize screen protection to prevent screenshots and screen recording
+Future<void> _initScreenProtection() async {
+  try {
+    if (Platform.isIOS) {
+      // Protect  screen shot with launch image
+      await ScreenProtector.protectDataLeakageWithImage('LaunchImage');
+      // Prevent screenshots on iOS
+      await ScreenProtector.preventScreenshotOn();
+      // Protect against screen recording with blur effect
+      await ScreenProtector.protectDataLeakageWithBlur();
+    } else if (Platform.isAndroid) {
+      // Android uses FLAG_SECURE
+      await ScreenProtector.preventScreenshotOn();
+      await ScreenProtector.protectDataLeakageOn();
+    }
+    pensionAppLogger.i("Screen protection enabled");
+  } catch (e) {
+    pensionAppLogger.e("Failed to enable screen protection: $e");
+  }
 }
 
 GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
