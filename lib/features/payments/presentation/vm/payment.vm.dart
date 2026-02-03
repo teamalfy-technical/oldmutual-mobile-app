@@ -5,7 +5,6 @@ import 'package:oldmutual_pensions_app/features/payments/payments.dart';
 import 'package:oldmutual_pensions_app/features/policy/policy.dart';
 import 'package:oldmutual_pensions_app/routes/app.pages.dart';
 import 'package:oldmutual_pensions_app/shared/shared.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 enum PaymentType { pensions, policy }
 
@@ -37,16 +36,20 @@ class PPaymentVm extends GetxController {
   /// Selected policy number and product for payment
   String? selectedPolicyNumber;
   String? selectedProduct;
+  var amount = 0.0.obs;
 
   /// Currency for payment (default GHS)
   String currency = 'GHS';
 
-  updateLoadingState(LoadingState loadingState) =>
-      loading.value = loadingState;
+  updateLoadingState(LoadingState loadingState) => loading.value = loadingState;
 
   onPaymentMethodChanged(PaymentMethod? value) {
     selectedPaymentMethod = value;
     update();
+  }
+
+  onAmountChanged(String value) {
+    amount.value = double.tryParse(value) ?? 0.0;
   }
 
   /// Set the payment context for policy payment
@@ -136,10 +139,7 @@ class PPaymentVm extends GetxController {
     final amount = double.tryParse(amountTEC.text.trim()) ?? 0.0;
 
     if (currentPaymentType == PaymentType.pensions) {
-      await _initiatePensionsPayment(
-        amount: amount,
-        currency: currency,
-      );
+      await _initiatePensionsPayment(amount: amount, currency: currency);
     } else {
       await _initiatePolicyPayment(
         amount: amount,
@@ -173,9 +173,11 @@ class PPaymentVm extends GetxController {
 
         // Open checkout URL if available
         final checkoutUrl = res.data?.checkoutUrl;
-        if (checkoutUrl != null && checkoutUrl.isNotEmpty) {
-          await _launchCheckoutUrl(checkoutUrl);
-        }
+
+        PHelperFunction.switchScreen(
+          destination: Routes.webviewPage,
+          args: ['make_payment'.tr, checkoutUrl],
+        );
 
         // Refresh payment history
         _hasFetchedPensionsPayments = false;
@@ -211,9 +213,10 @@ class PPaymentVm extends GetxController {
 
         // Open checkout URL if available
         final checkoutUrl = res.data?.checkoutUrl;
-        if (checkoutUrl != null && checkoutUrl.isNotEmpty) {
-          await _launchCheckoutUrl(checkoutUrl);
-        }
+        PHelperFunction.switchScreen(
+          destination: Routes.webviewPage,
+          args: ['make_payment'.tr, checkoutUrl],
+        );
 
         // Refresh payment history
         _hasFetchedPolicyPayments = false;
@@ -223,25 +226,24 @@ class PPaymentVm extends GetxController {
   }
 
   /// Launch checkout URL in browser
-  Future<void> _launchCheckoutUrl(String url) async {
-    try {
-      final uri = Uri.parse(url);
-      if (await canLaunchUrl(uri)) {
-        await launchUrl(uri, mode: LaunchMode.externalApplication);
-      } else {
-        PPopupDialog(context).errorMessage(
-          title: 'error'.tr,
-          message: 'Could not open payment page',
-        );
-      }
-    } catch (e) {
-      pensionAppLogger.e('Error launching checkout URL: $e');
-      PPopupDialog(context).errorMessage(
-        title: 'error'.tr,
-        message: 'Could not open payment page',
-      );
-    }
-  }
+  // Future<void> _launchCheckoutUrl(String url) async {
+  //   try {
+  //     final uri = Uri.parse(url);
+  //     if (await canLaunchUrl(uri)) {
+  //       await launchUrl(uri, mode: LaunchMode.externalApplication);
+  //     } else {
+  //       PPopupDialog(context).errorMessage(
+  //         title: 'error'.tr,
+  //         message: 'Could not open payment page',
+  //       );
+  //     }
+  //   } catch (e) {
+  //     pensionAppLogger.e('Error launching checkout URL: $e');
+  //     PPopupDialog(
+  //       context,
+  //     ).errorMessage(title: 'error'.tr, message: 'Could not open payment page');
+  //   }
+  // }
 
   /// Navigate to success page after payment initiation
   void navigateToSuccessPage() {
@@ -249,10 +251,13 @@ class PPaymentVm extends GetxController {
     PHelperFunction.switchScreen(
       destination: Routes.settingsSuccessPage,
       args: [
-        'payment_success_subtitle'.tr,
+        'payment_success_msg'.trParams({
+          'amount': '**${PFormatter.formatCurrency(amount: amount.value)}**',
+        }),
         'payment_success_title'.tr,
         'done'.tr.toUpperCase(),
         () {
+          PHelperFunction.pop();
           PHelperFunction.pop();
           PHelperFunction.pop();
         },

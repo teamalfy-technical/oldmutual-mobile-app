@@ -4,15 +4,13 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:oldmutual_pensions_app/core/utils/utils.dart';
 import 'package:oldmutual_pensions_app/features/payments/payments.dart';
+import 'package:oldmutual_pensions_app/gen/assets.gen.dart';
 import 'package:oldmutual_pensions_app/shared/shared.dart';
 
 class PPaymentHistoryPage extends StatefulWidget {
   final PaymentType paymentType;
 
-  const PPaymentHistoryPage({
-    super.key,
-    this.paymentType = PaymentType.policy,
-  });
+  const PPaymentHistoryPage({super.key, this.paymentType = PaymentType.policy});
 
   @override
   State<PPaymentHistoryPage> createState() => _PPaymentHistoryPageState();
@@ -42,9 +40,7 @@ class _PPaymentHistoryPageState extends State<PPaymentHistoryPage> {
       backgroundColor: PHelperFunction.isDarkMode(context)
           ? PAppColor.darkBgColor
           : PAppColor.fillColor,
-      appBar: AppBar(
-        title: Text('payment_history'.tr),
-      ),
+      appBar: AppBar(title: Text('payment_history'.tr)),
       body: Obx(() {
         final payments = widget.paymentType == PaymentType.pensions
             ? ctrl.pensionsPayments
@@ -61,8 +57,8 @@ class _PPaymentHistoryPageState extends State<PPaymentHistoryPage> {
                 child: ctrl.loading.value == LoadingState.loading
                     ? _buildLoadingList()
                     : payments.isEmpty
-                        ? PEmptyStateWidget(message: 'no_results_found'.tr)
-                        : _buildPaymentList(context, payments),
+                    ? PEmptyStateWidget(message: 'no_results_found'.tr)
+                    : _buildPaymentList(context, payments),
               ),
             ),
             (PDeviceUtil.getDeviceHeight(context) * 0.08).verticalSpace,
@@ -123,13 +119,13 @@ class _PPaymentHistoryPageState extends State<PPaymentHistoryPage> {
 
   Widget _buildPaymentTile(BuildContext context, Payment payment) {
     return ListTile(
-      onTap: () => _showPaymentDetails(context, payment),
+      onTap: () => showPaymentDetailModal(context, payment),
       title: Text(
         payment.product ?? payment.policyNumber ?? '',
         style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-              fontSize: PAppSize.s14,
-              fontWeight: FontWeight.w500,
-            ),
+          fontSize: PAppSize.s14,
+          fontWeight: FontWeight.w500,
+        ),
         maxLines: 1,
         overflow: TextOverflow.ellipsis,
       ),
@@ -140,30 +136,35 @@ class _PPaymentHistoryPageState extends State<PPaymentHistoryPage> {
           Text(
             _formatDate(payment.createdAt),
             style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                  fontSize: PAppSize.s13,
-                  fontWeight: FontWeight.w400,
-                ),
+              fontSize: PAppSize.s13,
+              fontWeight: FontWeight.w400,
+            ),
+          ),
+        ],
+      ),
+      trailing: Column(
+        crossAxisAlignment: CrossAxisAlignment.end,
+        children: [
+          Text(
+            PFormatter.formatCurrency(
+              amount: payment.amountAsDouble,
+              symbol: payment.currency ?? 'GHS',
+            ),
+            style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+              fontSize: PAppSize.s14,
+              color: payment.isSuccessful
+                  ? PAppColor.successMedium
+                  : payment.isFailed
+                  ? PAppColor.redColor
+                  : PAppColor.warning500,
+              fontWeight: FontWeight.w600,
+            ),
           ),
           PAppSize.s4.verticalSpace,
           _buildStatusChip(context, payment.status ?? ''),
         ],
       ),
-      trailing: Text(
-        PFormatter.formatCurrency(
-          amount: payment.amountAsDouble,
-          symbol: payment.currency ?? 'GHS',
-        ),
-        style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-              fontSize: PAppSize.s14,
-              color: payment.isSuccessful
-                  ? PAppColor.successMedium
-                  : payment.isFailed
-                      ? PAppColor.redColor
-                      : PAppColor.warning500,
-              fontWeight: FontWeight.w600,
-            ),
-      ),
-      isThreeLine: true,
+      isThreeLine: false,
     );
   }
 
@@ -173,15 +174,15 @@ class _PPaymentHistoryPageState extends State<PPaymentHistoryPage> {
 
     switch (status.toUpperCase()) {
       case 'SUCCESS':
-        bgColor = PAppColor.successMedium.withOpacityExt(0.1);
+        bgColor = PAppColor.successMedium.withOpacityExt(PAppSize.s0_1);
         textColor = PAppColor.successMedium;
         break;
       case 'FAILED':
-        bgColor = PAppColor.redColor.withOpacityExt(0.1);
+        bgColor = PAppColor.redColor.withOpacityExt(PAppSize.s0_1);
         textColor = PAppColor.redColor;
         break;
       default:
-        bgColor = PAppColor.warning500.withOpacityExt(0.1);
+        bgColor = PAppColor.warning500.withOpacityExt(PAppSize.s0_1);
         textColor = PAppColor.warning500;
     }
 
@@ -195,12 +196,12 @@ class _PPaymentHistoryPageState extends State<PPaymentHistoryPage> {
         borderRadius: BorderRadius.circular(PAppSize.s4),
       ),
       child: Text(
-        status.toUpperCase(),
+        status.capitalizeFirst ?? '',
         style: Theme.of(context).textTheme.bodySmall?.copyWith(
-              fontSize: PAppSize.s10,
-              fontWeight: FontWeight.w600,
-              color: textColor,
-            ),
+          fontSize: PAppSize.s10,
+          fontWeight: FontWeight.w600,
+          color: textColor,
+        ),
       ),
     );
   }
@@ -218,12 +219,13 @@ class _PPaymentHistoryPageState extends State<PPaymentHistoryPage> {
     }
   }
 
-  void _showPaymentDetails(BuildContext context, Payment payment) {
-    showModalBottomSheet(
+  Future showPaymentDetailModal(BuildContext context, Payment payment) {
+    return showModalBottomSheet(
       context: context,
-      showDragHandle: true,
+      showDragHandle: false,
+      isScrollControlled: true,
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.only(
+        borderRadius: BorderRadiusGeometry.only(
           topLeft: Radius.circular(PAppSize.s24),
           topRight: Radius.circular(PAppSize.s24),
         ),
@@ -231,118 +233,101 @@ class _PPaymentHistoryPageState extends State<PPaymentHistoryPage> {
       builder: (context) {
         return Container(
           padding: EdgeInsets.all(PAppSize.s20),
+          height: PDeviceUtil.getDeviceHeight(context) * 0.70,
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(PAppSize.s20),
+            color: PHelperFunction.isDarkMode(context)
+                ? PAppColor.darkBgColor
+                : PAppColor.fillColor,
+          ),
           child: SafeArea(
             child: Column(
-              mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
-                  'payment_details'.tr,
-                  style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                        fontWeight: FontWeight.w600,
+                PAppSize.s8.verticalSpace,
+                PSeeAllWidget(
+                  leadingText: 'payment_details'.tr,
+                  leadingFontSize: PAppSize.s20,
+                  trailing: Assets.icons.closeIcon.svg(
+                    color: PHelperFunction.isDarkMode(context)
+                        ? PAppColor.whiteColor
+                        : PAppColor.blackColor,
+                  ),
+                  onTap: () => PHelperFunction.pop(),
+                ),
+                PAppSize.s14.verticalSpace,
+                Divider(),
+
+                // PAppSize.s6.verticalSpace,
+                Expanded(
+                  child: Column(
+                    children: [
+                      CustomListTile(
+                        title: PFormatter.formatCurrency(
+                          amount: payment.amountAsDouble,
+                        ),
+                        subtitle: 'payment_amount'.tr,
                       ),
+                      Divider(),
+
+                      CustomListTile(
+                        title: payment.paymentChannel ?? 'not_applicable'.tr,
+                        subtitle: 'payment_method'.tr,
+                      ),
+                      Divider(),
+
+                      CustomListTile(
+                        title: payment.paymentReference ?? 'not_applicable'.tr,
+                        subtitle: 'payment_reference'.tr,
+                      ),
+
+                      Divider(),
+
+                      CustomListTile(
+                        title: PFormatter.formatDate(
+                          dateFormat: DateFormat('yMMMMd').add_jmv(),
+                          date: DateTime.parse(payment.createdAt ?? ''),
+                        ),
+                        subtitle: 'date'.tr,
+                      ),
+
+                      Divider(),
+
+                      CustomListTile(
+                        title: payment.status ?? 'not_applicable'.tr,
+                        subtitle: 'status'.tr,
+                      ),
+
+                      Divider(),
+
+                      PAppSize.s20.verticalSpace,
+
+                      RichText(
+                        textAlign: TextAlign.center,
+                        text: TextSpan(
+                          children: [
+                            TextSpan(
+                              text: '${'reach_support_text'.tr}\n',
+                              style: Theme.of(context).textTheme.bodyMedium
+                                  ?.copyWith(fontWeight: FontWeight.w500),
+                            ),
+                            TextSpan(
+                              text: PAppConstant.supportEmail,
+
+                              style: Theme.of(context).textTheme.bodyMedium
+                                  ?.copyWith(fontWeight: FontWeight.w400),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ).scrollable(),
                 ),
-                PAppSize.s20.verticalSpace,
-                _buildDetailRow(
-                  context,
-                  label: 'product'.tr,
-                  value: payment.product ?? '-',
-                ),
-                _buildDetailRow(
-                  context,
-                  label: 'policy_number'.tr,
-                  value: payment.policyNumber ?? '-',
-                ),
-                _buildDetailRow(
-                  context,
-                  label: 'amount'.tr,
-                  value: PFormatter.formatCurrency(
-                    amount: payment.amountAsDouble,
-                    symbol: payment.currency ?? 'GHS',
-                  ),
-                ),
-                _buildDetailRow(
-                  context,
-                  label: 'status'.tr,
-                  value: payment.status ?? '-',
-                  valueColor: payment.isSuccessful
-                      ? PAppColor.successMedium
-                      : payment.isFailed
-                          ? PAppColor.redColor
-                          : null,
-                ),
-                _buildDetailRow(
-                  context,
-                  label: 'payment_channel'.tr,
-                  value: payment.paymentChannel ?? '-',
-                ),
-                _buildDetailRow(
-                  context,
-                  label: 'reference'.tr,
-                  value: payment.clientReference ?? '-',
-                ),
-                _buildDetailRow(
-                  context,
-                  label: 'date'.tr,
-                  value: _formatDate(payment.createdAt),
-                ),
-                if (payment.completedAt != null) ...[
-                  _buildDetailRow(
-                    context,
-                    label: 'completed_at'.tr,
-                    value: _formatDate(payment.completedAt),
-                  ),
-                ],
-                if (payment.failureReason != null &&
-                    payment.failureReason!.isNotEmpty) ...[
-                  _buildDetailRow(
-                    context,
-                    label: 'failure_reason'.tr,
-                    value: payment.failureReason!,
-                    valueColor: PAppColor.redColor,
-                  ),
-                ],
-                PAppSize.s20.verticalSpace,
               ],
             ),
           ),
         );
       },
-    );
-  }
-
-  Widget _buildDetailRow(
-    BuildContext context, {
-    required String label,
-    required String value,
-    Color? valueColor,
-  }) {
-    return Padding(
-      padding: EdgeInsets.symmetric(vertical: PAppSize.s8),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            label,
-            style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                  fontWeight: FontWeight.w400,
-                  color: PAppColor.greyColor,
-                ),
-          ),
-          SizedBox(width: PAppSize.s16),
-          Flexible(
-            child: Text(
-              value,
-              style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                    fontWeight: FontWeight.w600,
-                    color: valueColor,
-                  ),
-              textAlign: TextAlign.end,
-            ),
-          ),
-        ],
-      ),
     );
   }
 }

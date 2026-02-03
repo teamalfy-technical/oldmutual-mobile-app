@@ -143,6 +143,29 @@ class _PPensionDetailPageState extends State<PPensionDetailPage> {
                       /// Quick Actions
                       Row(
                         children: [
+                          if (widget.scheme.penTypeDescription != null &&
+                                  widget.scheme.penTypeDescription!
+                                      .toLowerCase()
+                                      .contains('mvest') ||
+                              widget.scheme.masterSchemeDescription != null &&
+                                  widget.scheme.masterSchemeDescription!
+                                      .toLowerCase()
+                                      .contains('mvest')) ...[
+                            QuickActionWidget(
+                              label: 'pay_premium'.tr,
+                              icon: Assets.icons.payIcon.svg(
+                                color: PHelperFunction.isDarkMode(context)
+                                    ? PAppColor.successLight
+                                    : PAppColor.successDark,
+                              ),
+                              onTap: () {
+                                showPayModal(
+                                  context: context,
+                                  product: widget.scheme,
+                                );
+                              },
+                            ),
+                          ],
                           QuickActionWidget(
                             label: 'generate_statement'.tr,
                             icon: Assets.icons.factsheetIcon.svg(

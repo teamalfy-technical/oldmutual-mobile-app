@@ -54,10 +54,10 @@ class PSettingsSuccessPage extends StatelessWidget {
                           ),
                     ),
                     PAppSize.s12.verticalSpace,
-                    Text(
+                    _buildRichText(
+                      context,
                       title,
-                      textAlign: TextAlign.center,
-                      style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                      baseStyle: Theme.of(context).textTheme.bodySmall?.copyWith(
                         fontWeight: FontWeight.w400,
                         fontSize: PAppSize.s16,
                         color: PHelperFunction.isDarkMode(context)
@@ -94,6 +94,47 @@ class PSettingsSuccessPage extends StatelessWidget {
           ),
         ),
       ),
+    );
+  }
+
+  /// Builds a RichText widget that parses **bold** markers
+  Widget _buildRichText(BuildContext context, String text, {TextStyle? baseStyle}) {
+    final List<TextSpan> spans = [];
+    final RegExp boldPattern = RegExp(r'\*\*(.+?)\*\*');
+    int lastEnd = 0;
+
+    for (final match in boldPattern.allMatches(text)) {
+      // Add text before the match
+      if (match.start > lastEnd) {
+        spans.add(TextSpan(
+          text: text.substring(lastEnd, match.start),
+          style: baseStyle,
+        ));
+      }
+      // Add the bold text
+      spans.add(TextSpan(
+        text: match.group(1),
+        style: baseStyle?.copyWith(fontWeight: FontWeight.w700),
+      ));
+      lastEnd = match.end;
+    }
+
+    // Add remaining text after last match
+    if (lastEnd < text.length) {
+      spans.add(TextSpan(
+        text: text.substring(lastEnd),
+        style: baseStyle,
+      ));
+    }
+
+    // If no bold markers found, return simple text
+    if (spans.isEmpty) {
+      spans.add(TextSpan(text: text, style: baseStyle));
+    }
+
+    return RichText(
+      textAlign: TextAlign.center,
+      text: TextSpan(children: spans),
     );
   }
 }
