@@ -56,23 +56,21 @@ class _PClaimPageState extends State<PClaimPage> {
 
                 GetBuilder<PPolicyVm>(
                   builder: (ctrl) {
+                    // Remove duplicates and skip placeholder
+                    final uniqueMethods = ctrl.paymentMethods
+                        .skip(1) // Skip the first placeholder item
+                        .toSet()
+                        .toList();
+
                     return PCustomDropdownField<PaymentMethod>(
                       labelText: 'payment_method'.tr,
                       initialValue: ctrl.selectedPaymentMethod,
                       onChanged: ctrl.onPaymentMethodChanged,
-                      items: ctrl.paymentMethods
-                          .asMap()
-                          .entries
+                      items: uniqueMethods
                           .map(
-                            (entry) => DropdownMenuItem<PaymentMethod>(
-                              value: entry.key == 0 ? null : entry.value,
-                              enabled: entry.key != 0,
-                              child: Text(
-                                entry.value.name ?? '',
-                                style: entry.key == 0
-                                    ? const TextStyle(color: Colors.grey)
-                                    : null,
-                              ),
+                            (method) => DropdownMenuItem<PaymentMethod>(
+                              value: method,
+                              child: Text(method.name ?? ''),
                             ),
                           )
                           .toList(),
