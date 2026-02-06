@@ -21,6 +21,7 @@ class PAppColor {
 
   static const Color orangeColor = Color(0xFFF5823D);
   static const Color yellowColor = Color(0xFFFFDD1A);
+  static const Color lightBlueColor = Color(0xFFD1D9FA);
 
   // Dark theme colors
 

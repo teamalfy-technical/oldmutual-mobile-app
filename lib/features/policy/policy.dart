@@ -1,3 +1,5 @@
+export '../payments/presentation/pages/pay.now.page.dart';
+export '../payments/presentation/pages/payment.history.page.dart';
 export '../up-sell/presentation/pages/premium.upgrade.widget.dart';
 export 'application/services/policy.service.dart';
 export 'application/services/policy.service.impl.dart';
@@ -5,6 +7,8 @@ export 'data/ds/policy.ds.dart';
 export 'data/ds/policy.ds.impl.dart';
 export 'data/repos/policy.repo.dart';
 export 'data/repos/policy.repo.impl.dart';
+export 'domain/models/claim.request.model.dart';
+export 'domain/models/payment.method.model.dart';
 export 'domain/models/policy.model.dart';
 export 'domain/models/policy.report.model.dart';
 export 'domain/models/policy.summary.model.dart';

@@ -10,6 +10,9 @@ class PCustomCardWidget extends StatelessWidget {
     this.width,
     this.height,
     this.useBorder = true,
+    this.onTap,
+    this.darkColor,
+    this.borderRadius,
   });
   final Widget child;
   final EdgeInsets? padding;
@@ -17,6 +20,9 @@ class PCustomCardWidget extends StatelessWidget {
   final double? width;
   final double? height;
   final bool useBorder;
+  final Color? darkColor;
+  final Function()? onTap;
+  final BorderRadius? borderRadius;
 
   @override
   Widget build(BuildContext context) {
@@ -32,12 +38,17 @@ class PCustomCardWidget extends StatelessWidget {
                   ? null
                   : Border.all(width: PAppSize.s1, color: PAppColor.fillColor2)
             : null,
-        borderRadius: BorderRadius.circular(PAppSize.s20),
+        borderRadius: borderRadius ?? BorderRadius.circular(PAppSize.s20),
         color: PHelperFunction.isDarkMode(context)
-            ? PAppColor.darkAppBarColor
+            ? darkColor ?? PAppColor.darkAppBarColor
             : PAppColor.whiteColor,
       ),
-      child: child,
+      child: child.onPressed(
+        onTap: onTap,
+        radius: BorderRadius.circular(PAppSize.s20),
+      ),
     );
+    //
+    // .onPressed(onTap: onTap, radius: BorderRadius.circular(PAppSize.s20));
   }
 }

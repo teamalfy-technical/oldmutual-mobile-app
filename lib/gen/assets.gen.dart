@@ -53,6 +53,10 @@ class $AssetsIconsGen {
   /// File path: assets/icons/Insure.svg
   SvgGenImage get insure => const SvgGenImage('assets/icons/Insure.svg');
 
+  /// File path: assets/icons/access_time.svg
+  SvgGenImage get accessTime =>
+      const SvgGenImage('assets/icons/access_time.svg');
+
   /// File path: assets/icons/account_balance_wallet.svg
   SvgGenImage get accountBalanceWallet =>
       const SvgGenImage('assets/icons/account_balance_wallet.svg');
@@ -241,6 +245,9 @@ class $AssetsIconsGen {
   /// File path: assets/icons/pay.icon.svg
   SvgGenImage get payIcon => const SvgGenImage('assets/icons/pay.icon.svg');
 
+  /// File path: assets/icons/pay.svg
+  SvgGenImage get pay => const SvgGenImage('assets/icons/pay.svg');
+
   /// File path: assets/icons/person.add.icon.svg
   SvgGenImage get personAddIcon =>
       const SvgGenImage('assets/icons/person.add.icon.svg');
@@ -257,6 +264,9 @@ class $AssetsIconsGen {
 
   /// File path: assets/icons/pictogram.svg
   SvgGenImage get pictogram => const SvgGenImage('assets/icons/pictogram.svg');
+
+  /// File path: assets/icons/plus.icon.svg
+  SvgGenImage get plusIcon => const SvgGenImage('assets/icons/plus.icon.svg');
 
   /// File path: assets/icons/selfie.svg
   SvgGenImage get selfie => const SvgGenImage('assets/icons/selfie.svg');
@@ -347,6 +357,7 @@ class $AssetsIconsGen {
   /// List of all assets
   List<SvgGenImage> get values => [
     insure,
+    accessTime,
     accountBalanceWallet,
     addIcon,
     anchorIcon,
@@ -401,11 +412,13 @@ class $AssetsIconsGen {
     notificationGreenIcon,
     notificationIcon,
     payIcon,
+    pay,
     personAddIcon,
     personBlack,
     person,
     phoneIcon,
     pictogram,
+    plusIcon,
     selfie,
     settingsIcon,
     shieldDark,

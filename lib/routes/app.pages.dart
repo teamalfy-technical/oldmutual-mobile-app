@@ -293,5 +293,12 @@ class AppPages {
     /// --- Manage Feature Pages
     GetPage(name: _Paths.managePage, page: () => PManagePage()),
     GetPage(name: _Paths.documentsPage, page: () => PDocumentsPage()),
+
+    /// --- Pay Now Feature Pages
+    GetPage(
+      name: _Paths.payNowPage,
+      page: () => PPayNowPage(product: Get.arguments),
+    ),
+    GetPage(name: _Paths.paymentHistoryPage, page: () => PPaymentHistoryPage()),
   ];
 }

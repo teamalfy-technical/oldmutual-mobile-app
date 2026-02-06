@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:oldmutual_pensions_app/core/utils/utils.dart';
@@ -28,6 +29,10 @@ class PInactivityService extends GetxService with WidgetsBindingObserver {
   @override
   void onInit() {
     super.onInit();
+    if (kDebugMode) {
+      pensionAppLogger.i('Inactivity service disabled in debug mode');
+      return;
+    }
     WidgetsBinding.instance.addObserver(this);
     _startTimer();
     // Mark session as validated since user successfully logged in
@@ -49,6 +54,7 @@ class PInactivityService extends GetxService with WidgetsBindingObserver {
   /// Handle app lifecycle changes
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
+    if (kDebugMode) return;
     switch (state) {
       case AppLifecycleState.paused:
         // App went to background
@@ -105,6 +111,7 @@ class PInactivityService extends GetxService with WidgetsBindingObserver {
   }
 
   void _handleInactivity() {
+    if (kDebugMode) return;
     // Check if user is on login/signup pages - don't log out
     final currentRoute = Get.currentRoute;
     if (currentRoute != Routes.loginPage &&

@@ -92,10 +92,11 @@ class PPolicyDetailPage extends StatelessWidget {
                         : PAppColor.successDark,
                   ),
                   onTap: () {
-                    PPopupDialog(context).warningMessage(
-                      title: 'coming_soon_title'.tr,
-                      message: 'coming_soon_msg'.tr,
-                    );
+                    showPayModal(context: context, product: policy);
+                    // PPopupDialog(context).warningMessage(
+                    //   title: 'coming_soon_title'.tr,
+                    //   message: 'coming_soon_msg'.tr,
+                    // );
                   },
                 ),
                 // PAppSize.s8.horizontalSpace,
@@ -168,13 +169,13 @@ class PPolicyDetailPage extends StatelessWidget {
                         ? PAppColor.successLight
                         : PAppColor.successDark,
                   ),
-                  onTap: () => PPopupDialog(context).warningMessage(
-                    title: 'coming_soon_title'.tr,
-                    message: 'coming_soon_msg'.tr,
-                  ),
-                  // PHelperFunction.switchScreen(
-                  //   destination: Routes.policyClaimPage,
+                  // onTap: () => PPopupDialog(context).warningMessage(
+                  //   title: 'coming_soon_title'.tr,
+                  //   message: 'coming_soon_msg'.tr,
                   // ),
+                  onTap: () => PHelperFunction.switchScreen(
+                    destination: Routes.policyClaimPage,
+                  ),
                 ),
               ],
             ).scrollable(scrollDirection: Axis.horizontal),

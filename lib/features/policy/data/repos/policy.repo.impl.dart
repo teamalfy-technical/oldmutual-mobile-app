@@ -121,4 +121,31 @@ class PolicyRepoImpl implements PolicyRepo {
           await policyDs.downloadPolicyStatement(policyNumber: policyNumber),
     );
   }
+
+  @override
+  Future<Either<PFailure, ApiResponse<List<PaymentMethod>>>>
+  getPaymentMethods() async {
+    return await customRepositoryWrapper.wrapRepositoryFunction(
+      function: () async => await policyDs.getPaymentMethods(),
+    );
+  }
+
+  @override
+  Future<Either<PFailure, ApiResponse<List<Message>>>> submitClaimRequest({
+    required String policyNumber,
+    required double currentCashValue,
+    required double claimAmount,
+    required String claimDefaultTelcomethod,
+    required String claimDefaultMomoWallet,
+  }) async {
+    return await customRepositoryWrapper.wrapRepositoryFunction(
+      function: () async => await policyDs.submitClaimRequest(
+        policyNumber: policyNumber,
+        currentCashValue: currentCashValue,
+        claimAmount: claimAmount,
+        claimDefaultTelcomethod: claimDefaultTelcomethod,
+        claimDefaultMomoWallet: claimDefaultMomoWallet,
+      ),
+    );
+  }
 }

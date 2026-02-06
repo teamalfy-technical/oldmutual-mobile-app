@@ -1,6 +1,6 @@
 import 'package:oldmutual_pensions_app/core/network/network.dart';
 import 'package:oldmutual_pensions_app/features/beneficiary/beneficiary.dart';
-import 'package:oldmutual_pensions_app/features/home/home.dart';
+import 'package:oldmutual_pensions_app/features/policy/policy.dart';
 
 abstract class PolicyDs {
   Future<ApiResponse<PolicyResponse>> getPolicies({required String status});
@@ -32,5 +32,13 @@ abstract class PolicyDs {
   });
   Future<ApiResponse<Map<String, dynamic>>> downloadPolicyStatement({
     required String policyNumber,
+  });
+  Future<ApiResponse<List<PaymentMethod>>> getPaymentMethods();
+  Future<ApiResponse<List<Message>>> submitClaimRequest({
+    required String policyNumber,
+    required double currentCashValue,
+    required double claimAmount,
+    required String claimDefaultTelcomethod,
+    required String claimDefaultMomoWallet,
   });
 }

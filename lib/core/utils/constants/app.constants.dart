@@ -5,6 +5,7 @@ class PAppConstant {
       'https://www.oldmutual.com.gh/personal/mvest-personal-pension-scheme/terms-and-conditions/';
 
   static const String emailSupport = 'DigitalSupport@oldmutual.com.gh';
+  static const String supportEmail = 'support@oldmutual.com.gh';
   static const String phoneSupport = '+233 (0) 303 968 667';
   static const String beneficiaryPhoneSupport = '0303968667 / 0501519374';
 

@@ -6,6 +6,7 @@ class PAppSize {
   static const double s0 = 0.0;
   static const double s0_0_5 = 0.05;
   static const double s0_1 = 0.1;
+  static const double s0_1_5 = 0.15;
   static const double s0_2 = 0.2;
   static const double s0_3 = 0.3;
   static const double s0_4 = 0.4;

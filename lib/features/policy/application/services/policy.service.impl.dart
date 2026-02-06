@@ -90,4 +90,27 @@ class PolicyServiceImpl implements PolicyService {
   downloadPolicyStatement({required String policyNumber}) {
     return policyRepo.downloadPolicyStatement(policyNumber: policyNumber);
   }
+
+  @override
+  Future<Either<PFailure, ApiResponse<List<PaymentMethod>>>>
+  getPaymentMethods() {
+    return policyRepo.getPaymentMethods();
+  }
+
+  @override
+  Future<Either<PFailure, ApiResponse<List<Message>>>> submitClaimRequest({
+    required String policyNumber,
+    required double currentCashValue,
+    required double claimAmount,
+    required String claimDefaultTelcomethod,
+    required String claimDefaultMomoWallet,
+  }) {
+    return policyRepo.submitClaimRequest(
+      policyNumber: policyNumber,
+      currentCashValue: currentCashValue,
+      claimAmount: claimAmount,
+      claimDefaultTelcomethod: claimDefaultTelcomethod,
+      claimDefaultMomoWallet: claimDefaultMomoWallet,
+    );
+  }
 }

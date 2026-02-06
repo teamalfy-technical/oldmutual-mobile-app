@@ -36,6 +36,33 @@ class PValidator {
     return null;
   }
 
+  static String? Function(String?) validateClaimAmount(num maxAmount) {
+    return (String? value) {
+      if (value == null || value.trim().isEmpty) {
+        return 'This field is required';
+      }
+      final amount = double.tryParse(value);
+      if (amount == null) {
+        return 'Please enter a valid amount';
+      }
+      if (amount > maxAmount) {
+        return 'Amount cannot exceed cash value (${maxAmount.toStringAsFixed(2)})';
+      }
+      return null;
+    };
+  }
+
+  static String? validatePaymentAmount(String? value) {
+    if (value == null || value.isEmpty) {
+      return 'amount_required'.tr;
+    }
+    // final amount = double.tryParse(value);
+    // if (amount == null || amount <= 0) {
+    //   return 'enter_valid_amount'.tr;
+    // }
+    return null;
+  }
+
   String? normalizeAndValidatePhoneNumber(String input) {
     // Remove spaces and any non-digit characters
     String cleaned = input.replaceAll(RegExp(r'\D'), '');

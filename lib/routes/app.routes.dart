@@ -61,6 +61,10 @@ abstract class Routes {
   /// ---- Manage Feature Routes
   static const managePage = _Paths.managePage;
   static const documentsPage = _Paths.documentsPage;
+
+  /// ---- Pay Now Feature Routes
+  static const payNowPage = _Paths.payNowPage;
+  static const paymentHistoryPage = _Paths.paymentHistoryPage;
 }
 
 abstract class _Paths {
@@ -121,4 +125,8 @@ abstract class _Paths {
   /// --- Manage Feature Paths
   static const managePage = '/manage-page';
   static const documentsPage = '/documents-page';
+
+  /// --- Pay Nnow Feature Paths
+  static const payNowPage = '/pay-now-page';
+  static const paymentHistoryPage = '/payment-history-page';
 }

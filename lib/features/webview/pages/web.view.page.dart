@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:oldmutual_pensions_app/core/utils/utils.dart';
 import 'package:oldmutual_pensions_app/features/auth/auth.dart';
+import 'package:oldmutual_pensions_app/features/payments/payments.dart';
 import 'package:oldmutual_pensions_app/features/webview/webview.dart';
 import 'package:oldmutual_pensions_app/routes/app.pages.dart';
 import 'package:oldmutual_pensions_app/shared/shared.dart';
@@ -149,6 +150,8 @@ class _PWebViewState extends State<PWebView> {
         pageContent = result.toString();
       }
 
+      pensionAppLogger.d("📄 Page Content: $pageContent");
+
       // Try to parse the content - it might be double-encoded JSON string
       dynamic json;
       try {
@@ -165,7 +168,15 @@ class _PWebViewState extends State<PWebView> {
         json = jsonDecode(pageContent);
       }
 
-      if (json is Map<String, dynamic> && json.containsKey('data')) {
+      if (json is Map<String, dynamic> &&
+          json.containsKey('data') &&
+          json['data'].containsKey('verification_token')) {
+        pensionAppLogger.d("✅ Verification Token Found");
+      }
+
+      if (json is Map<String, dynamic> &&
+          json.containsKey('data') &&
+          json['data'].containsKey('verification_token')) {
         Get.find<PAuthVm>().verificationToken(
           json['data']['verification_token'],
         );
@@ -174,6 +185,10 @@ class _PWebViewState extends State<PWebView> {
           "✅ Token: ${json['data']['verification_token']}, Ghana Card: ${json['data']['ghana_card']}",
         );
         navigateToCreateAccount(json['data']['message']);
+      } else if (json is Map<String, dynamic> &&
+          json.containsKey('data') &&
+          json['data'].containsKey('message')) {
+        Get.find<PPaymentVm>().navigateToSuccessPage();
       }
     } catch (e) {
       pensionAppLogger.e("❌ Not valid JSON: $e");

@@ -11,33 +11,6 @@ class PBeneficiaryDetailWidget extends StatelessWidget {
   final Beneficiary beneficiary;
   const PBeneficiaryDetailWidget({super.key, required this.beneficiary});
 
-  Widget _customListTile({
-    required BuildContext context,
-    required String title,
-
-    String? subtitle,
-  }) {
-    return ListTile(
-      contentPadding: EdgeInsets.zero,
-      title: Text(
-        title,
-        style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-          fontSize: PAppSize.s16,
-          fontWeight: subtitle != null ? FontWeight.w500 : FontWeight.w600,
-        ),
-      ),
-      subtitle: subtitle != null
-          ? Text(
-              subtitle,
-              style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                fontSize: PAppSize.s14,
-                fontWeight: FontWeight.w400,
-              ),
-            )
-          : null,
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -71,49 +44,42 @@ class PBeneficiaryDetailWidget extends StatelessWidget {
             Expanded(
               child: Column(
                 children: [
-                  _customListTile(
-                    context: context,
+                  CustomListTile(
                     title: beneficiary.fullName ?? 'not_applicable'.tr,
                     subtitle: 'full_name'.tr,
                   ),
                   Divider(),
 
-                  _customListTile(
-                    context: context,
+                  CustomListTile(
                     title: beneficiary.relationship ?? 'not_applicable'.tr,
                     subtitle: 'relationship'.tr,
                   ),
                   Divider(),
 
-                  _customListTile(
-                    context: context,
+                  CustomListTile(
                     title: 'not_applicable'.tr,
                     subtitle: 'id_number'.tr,
                   ),
                   Divider(),
 
-                  _customListTile(
-                    context: context,
+                  CustomListTile(
                     title: 'not_applicable'.tr,
                     subtitle: 'phone_number'.tr,
                   ),
                   Divider(),
-                  _customListTile(
-                    context: context,
+                  CustomListTile(
                     title: 'not_applicable'.tr,
                     subtitle: 'email_address'.tr,
                   ),
                   Divider(),
 
-                  _customListTile(
-                    context: context,
+                  CustomListTile(
                     title: beneficiary.address ?? 'not_applicable'.tr,
                     subtitle: 'address'.tr,
                   ),
                   Divider(),
 
-                  _customListTile(
-                    context: context,
+                  CustomListTile(
                     title: beneficiary.birthDate == null
                         ? 'not_applicable'.tr
                         : beneficiary.birthDate == null
@@ -129,21 +95,16 @@ class PBeneficiaryDetailWidget extends StatelessWidget {
                   ),
                   Divider(),
 
-                  _customListTile(
-                    context: context,
-                    title: 'percentage_split'.tr,
-                  ),
+                  CustomListTile(title: 'percentage_split'.tr),
                   Divider(),
 
-                  _customListTile(
-                    context: context,
+                  CustomListTile(
                     title: beneficiary.fullName ?? 'not_applicable'.tr,
                     subtitle: 'beneficiary_name'.tr,
                   ),
                   Divider(),
 
-                  _customListTile(
-                    context: context,
+                  CustomListTile(
                     title: '${beneficiary.percAlloc}%',
                     subtitle: 'percentage_split'.tr,
                   ),

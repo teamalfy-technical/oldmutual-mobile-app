@@ -12,6 +12,7 @@ export 'widgets/custom.dropdown.dart';
 export 'widgets/custom.dropdown.field.dart';
 export 'widgets/custom.line.chart.dart';
 export 'widgets/custom.line.chart.new.dart';
+export 'widgets/custom.list.title.dart';
 export 'widgets/custom.loading.indicator.dart';
 export 'widgets/custom.password.textfield.dart';
 export 'widgets/custom.phone.textfield.dart';

@@ -45,3 +45,6 @@ app.*.map.json
 /android/app/release
 
 lib/env/env.g.dart
+# Pentest delivery files (too large for GitHub)
+pentest_delivery/
+pentest_delivery_bundles_archives/

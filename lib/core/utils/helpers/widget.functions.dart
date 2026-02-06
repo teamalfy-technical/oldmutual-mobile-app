@@ -7,6 +7,7 @@ import 'package:get/get.dart';
 import 'package:logger/logger.dart';
 import 'package:oldmutual_pensions_app/core/utils/utils.dart';
 import 'package:oldmutual_pensions_app/gen/assets.gen.dart';
+import 'package:oldmutual_pensions_app/routes/app.pages.dart';
 import 'package:oldmutual_pensions_app/shared/shared.dart';
 
 var pensionAppLogger = Logger(printer: PrettyPrinter(lineLength: 500));
@@ -25,6 +26,146 @@ Future showCustomBottomSheet({
     // shape: customRectShape,
     context: context,
     builder: (context) => child,
+  );
+}
+
+/// Shows modal to make payment for a product
+Future<dynamic> showPayModal({
+  required BuildContext context,
+  required Object product,
+}) {
+  return showModalBottomSheet(
+    context: context,
+    backgroundColor: PHelperFunction.isDarkMode(context)
+        ? PAppColor.darkAppBarColor
+        : PAppColor.fillColor,
+    shape: RoundedRectangleBorder(
+      borderRadius: BorderRadius.circular(PAppSize.s24),
+    ),
+    builder: (context) {
+      return SafeArea(
+        child: Container(
+          padding: EdgeInsets.symmetric(
+            horizontal: PAppSize.s16,
+            vertical: PAppSize.s8,
+          ),
+          height: PDeviceUtil.getDeviceHeight(context) * 0.25,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              // Title section
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          'pay'.tr,
+                          style: Theme.of(context).textTheme.titleLarge
+                              ?.copyWith(
+                                fontSize: PAppSize.s15.sp,
+                                fontWeight: FontWeight.w600,
+                              ),
+                        ),
+                        Assets.icons.closeIcon
+                            .svg(
+                              color: PHelperFunction.isDarkMode(context)
+                                  ? PAppColor.whiteColor
+                                  : PAppColor.darkAppBarColor,
+                            )
+                            .onPressed(
+                              onTap: PHelperFunction.pop,
+                              radius: BorderRadius.circular(PAppSize.s20),
+                            ),
+                      ],
+                    ),
+                    // PAppSize.s14.verticalSpace,
+                    // Text(
+                    //   'logout_msg'.tr,
+                    //   style: Theme.of(context).textTheme.titleSmall?.copyWith(
+                    //     fontSize: PAppSize.s13.sp,
+                    //     fontWeight: FontWeight.w400,
+                    //   ),
+                    // ),
+                  ],
+                ).scrollable(),
+              ),
+
+              PAppSize.s16.verticalSpace,
+              // Action buttons
+              PCustomCardWidget(
+                useBorder: false,
+                darkColor: PAppColor.cardDarkColor,
+                onTap: () {
+                  PHelperFunction.pop();
+                  PHelperFunction.switchScreen(
+                    destination: Routes.payNowPage,
+                    args: product,
+                  );
+                },
+
+                child: ListTile(
+                  leading: Assets.icons.pay.svg(
+                    color: PHelperFunction.isDarkMode(context)
+                        ? PAppColor.whiteColor
+                        : PAppColor.darkAppBarColor,
+                  ),
+                  trailing: Assets.icons.arrowForwardIos.svg(
+                    color: PHelperFunction.isDarkMode(context)
+                        ? PAppColor.whiteColor
+                        : PAppColor.darkAppBarColor,
+                  ),
+
+                  title: Text(
+                    'pay_now'.tr,
+                    style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
+                ),
+              ),
+
+              PAppSize.s8.verticalSpace,
+
+              // Payment History
+              PCustomCardWidget(
+                useBorder: false,
+                darkColor: PAppColor.cardDarkColor,
+                onTap: () {
+                  PHelperFunction.pop();
+                  PHelperFunction.switchScreen(
+                    destination: Routes.paymentHistoryPage,
+                  );
+                },
+                child: ListTile(
+                  leading: Assets.icons.accessTime.svg(
+                    color: PHelperFunction.isDarkMode(context)
+                        ? PAppColor.whiteColor
+                        : PAppColor.darkAppBarColor,
+                  ),
+                  trailing: Assets.icons.arrowForwardIos.svg(
+                    color: PHelperFunction.isDarkMode(context)
+                        ? PAppColor.whiteColor
+                        : PAppColor.darkAppBarColor,
+                  ),
+
+                  title: Text(
+                    'payment_history'.tr,
+                    style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
+                ),
+              ),
+
+              PAppSize.s4.verticalSpace,
+            ],
+          ),
+        ),
+      );
+    },
   );
 }
 

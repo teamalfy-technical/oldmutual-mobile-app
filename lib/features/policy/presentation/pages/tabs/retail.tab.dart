@@ -11,6 +11,7 @@ class PRetailTab extends StatelessWidget {
   final PolicyStatus type;
   PRetailTab({super.key, required this.products, required this.type});
 
+  final policyVm = Get.put(PPolicyVm());
   final policyStatementVm = Get.put(PPolicyStatementVm());
 
   @override
@@ -32,6 +33,7 @@ class PRetailTab extends StatelessWidget {
                 return PPolicyWidget(
                   policy: product,
                   onTap: () {
+                    policyVm.onSelectedPolicy(product); // keep selected policy
                     policyStatementVm.onSelectedPolicyReport(product);
                     PHelperFunction.switchScreen(
                       destination: Routes.policyDetailPage,

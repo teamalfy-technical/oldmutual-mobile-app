@@ -11,6 +11,7 @@ class ProductWidget extends StatelessWidget {
   final double? height;
   final EdgeInsets? margin;
   final Function()? onTap;
+  final Function()? onAddTap;
   ProductWidget({
     super.key,
     required this.product,
@@ -18,6 +19,7 @@ class ProductWidget extends StatelessWidget {
     this.margin,
     this.onTap,
     this.height,
+    this.onAddTap,
   });
   final vm = Get.put(PPolicyVm());
 
@@ -58,15 +60,29 @@ class ProductWidget extends StatelessWidget {
                               ),
                         ),
                         PAppSize.s2.verticalSpace,
-                        Text(
-                          'You have \n${product['num_of_account']} ${product['type'] == ProductType.insurance ? 'policies' : 'schemes'}',
-                          softWrap: true,
-                          style: Theme.of(context).textTheme.titleMedium
-                              ?.copyWith(
-                                fontSize: PAppSize.s16,
-                                fontWeight: FontWeight.w500,
-                              ),
-                        ),
+                        if (product['type'] != ProductType.corporate) ...[
+                          Text(
+                            'You have \n${product['num_of_account']} ${product['type'] == ProductType.insurance ? 'policies' : 'schemes'}',
+                            softWrap: true,
+                            style: Theme.of(context).textTheme.titleMedium
+                                ?.copyWith(
+                                  fontSize: PAppSize.s16,
+                                  fontWeight: FontWeight.w500,
+                                ),
+                          ),
+                        ] else ...[
+                          //use as a placeholder to maintain alignment
+                          Text(
+                            'You have \n${product['num_of_account']} ${product['type'] == ProductType.insurance ? 'policies' : 'schemes'}',
+                            softWrap: true,
+                            style: Theme.of(context).textTheme.titleMedium
+                                ?.copyWith(
+                                  color: PAppColor.transparentColor,
+                                  fontSize: PAppSize.s16,
+                                  fontWeight: FontWeight.w500,
+                                ),
+                          ),
+                        ],
 
                         PAppSize.s8.verticalSpace,
 
@@ -84,36 +100,61 @@ class ProductWidget extends StatelessWidget {
                                     ? PAppColor.whiteColor
                                     : PAppColor.blackColor,
                               )
-                            : Assets.icons.invest.svg(
-                                color: PHelperFunction.isDarkMode(context)
-                                    ? PAppColor.whiteColor
-                                    : PAppColor.blackColor,
+                            : Container(
+                                padding: EdgeInsets.all(PAppSize.s16),
+                                decoration: BoxDecoration(
+                                  shape: BoxShape.circle,
+                                  color: PHelperFunction.isDarkMode(context)
+                                      ? PAppColor.whiteColor
+                                      : PAppColor.blackColor,
+                                ),
+                                child: Assets.icons.plusIcon.svg(
+                                  color: PHelperFunction.isDarkMode(context)
+                                      ? PAppColor.blackColor
+                                      : PAppColor.whiteColor,
+                                ),
+                              ).onPressed(
+                                onTap: onTap,
+                                radius: BorderRadius.circular(PAppSize.s50),
                               ),
 
                         PAppSize.s8.verticalSpace,
                       ],
                     ),
 
-                    Text(
-                      product['type'] == ProductType.insurance
-                          ? 'available_balance'.tr
-                          : 'your_total_contribution'.tr,
-                      textAlign: TextAlign.center,
-                      softWrap: true,
-                      style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                        fontSize: PAppSize.s14,
-                        fontWeight: FontWeight.w500,
+                    if (product['type'] != ProductType.corporate) ...[
+                      Text(
+                        product['type'] == ProductType.insurance
+                            ? 'available_balance'.tr
+                            : 'your_total_contribution'.tr,
+                        textAlign: TextAlign.center,
+                        softWrap: true,
+                        style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                          fontSize: PAppSize.s14,
+                          fontWeight: FontWeight.w500,
+                        ),
                       ),
-                    ),
-                    Text(
-                      PFormatter.formatCurrency(
-                        amount: product['contribution'],
+                      Text(
+                        PFormatter.formatCurrency(
+                          amount: product['contribution'],
+                        ),
+                        textAlign: TextAlign.center,
+                        softWrap: true,
+                        style: Theme.of(context).textTheme.headlineMedium
+                            ?.copyWith(fontWeight: FontWeight.w600),
                       ),
-                      textAlign: TextAlign.center,
-                      softWrap: true,
-                      style: Theme.of(context).textTheme.headlineMedium
-                          ?.copyWith(fontWeight: FontWeight.w600),
-                    ),
+                    ] else ...[
+                      Text(
+                        'corporate_account_hint'.tr,
+                        textAlign: TextAlign.start,
+                        softWrap: true,
+                        style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                          fontSize: PAppSize.s14,
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
+                    ],
+
                     PAppSize.s8.verticalSpace,
                   ],
                 ),

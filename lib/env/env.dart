@@ -391,6 +391,14 @@ abstract class Env {
   @EnviedField(defaultValue: '/life/policy-document', obfuscate: true)
   static final String downloadPolicyDocument = _Env.downloadPolicyDocument;
 
+  /// [GetPaymentMethods] endpoint
+  @EnviedField(defaultValue: '/policy/telco/pay-methods', obfuscate: true)
+  static final String getPaymentMethods = _Env.getPaymentMethods;
+
+  /// [SubmitClaimRequest] endpoint
+  @EnviedField(defaultValue: '/policy/claim-request', obfuscate: true)
+  static final String submitClaimRequest = _Env.submitClaimRequest;
+
   /// -------------------- Policies Endpoints Ends Here ------------------------- ///
   ///
   /// -------------------- Upsell Endpoints Starts Here ------------------------- ///
@@ -434,4 +442,27 @@ abstract class Env {
   static final String applyRecommendation = _Env.applyRecommendation;
 
   /// -------------------- Cross-Sell Endpoints Ends Here ------------------------- ///
+  ///
+  /// -------------------- Pay Now Endpoints Starts Here ------------------------- ///
+
+  /// [InitiatePensionsPayment] endpoint
+  @EnviedField(defaultValue: '/initiate/pensions-payment', obfuscate: true)
+  static final String initiatePensionsPayment = _Env.initiatePensionsPayment;
+
+  /// [InitiatePolicyPayment] endpoint
+  @EnviedField(
+    defaultValue: '/initiate/life-insurance-payment',
+    obfuscate: true,
+  )
+  static final String initiatePolicyPayment = _Env.initiatePolicyPayment;
+
+  /// [GetPensionsPayment] endpoint
+  @EnviedField(defaultValue: '/payment/pensions-payments', obfuscate: true)
+  static final String getPensionsPayment = _Env.getPensionsPayment;
+
+  /// [GetPolicyPayment] endpoint
+  @EnviedField(defaultValue: '/payment/life-payments', obfuscate: true)
+  static final String getPolicyPayment = _Env.getPolicyPayment;
+
+  /// -------------------- Pay Now Endpoints Ends Here ------------------------- ///
 }

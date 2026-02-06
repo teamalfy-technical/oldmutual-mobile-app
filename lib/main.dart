@@ -69,7 +69,7 @@ Future<void> _initScreenProtection() async {
   try {
     if (Platform.isIOS) {
       // Protect  screen shot with launch image
-      await ScreenProtector.protectDataLeakageWithImage('LaunchImage');
+      // await ScreenProtector.protectDataLeakageWithImage('LaunchImage');
       // Prevent screenshots on iOS
       await ScreenProtector.preventScreenshotOn();
       // Protect against screen recording with blur effect

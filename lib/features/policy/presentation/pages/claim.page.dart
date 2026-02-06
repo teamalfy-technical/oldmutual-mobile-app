@@ -2,13 +2,26 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:oldmutual_pensions_app/core/utils/utils.dart';
-import 'package:oldmutual_pensions_app/features/policy/presentation/vm/policy.vm.dart';
+import 'package:oldmutual_pensions_app/features/policy/policy.dart';
 import 'package:oldmutual_pensions_app/shared/shared.dart';
 
-class PClaimPage extends StatelessWidget {
-  PClaimPage({super.key});
+class PClaimPage extends StatefulWidget {
+  const PClaimPage({super.key});
 
+  @override
+  State<PClaimPage> createState() => _PClaimPageState();
+}
+
+class _PClaimPageState extends State<PClaimPage> {
   final ctrl = Get.put(PPolicyVm());
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback(
+      (_) => ctrl.getPaymentMethods(),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -25,6 +38,7 @@ class PClaimPage extends StatelessWidget {
           ),
           child: Form(
             key: ctrl.claimFormKey,
+            autovalidateMode: AutovalidateMode.onUserInteraction,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -40,27 +54,67 @@ class PClaimPage extends StatelessWidget {
 
                 PAppSize.s10.verticalSpace,
 
+                GetBuilder<PPolicyVm>(
+                  builder: (ctrl) {
+                    return PCustomDropdownField<PaymentMethod>(
+                      labelText: 'payment_method'.tr,
+                      initialValue: ctrl.selectedPaymentMethod,
+                      onChanged: ctrl.onPaymentMethodChanged,
+                      items: ctrl.paymentMethods
+                          .asMap()
+                          .entries
+                          .map(
+                            (entry) => DropdownMenuItem<PaymentMethod>(
+                              value: entry.key == 0 ? null : entry.value,
+                              enabled: entry.key != 0,
+                              child: Text(
+                                entry.value.name ?? '',
+                                style: entry.key == 0
+                                    ? const TextStyle(color: Colors.grey)
+                                    : null,
+                              ),
+                            ),
+                          )
+                          .toList(),
+                    );
+                  },
+                ),
+
+                PAppSize.s20.verticalSpace,
+
                 PCustomTextField(
-                  labelText: 'amount'.tr,
-                  hintText: '5000',
-                  controller: ctrl.amountTEC,
+                  labelText: 'momo_number'.tr,
+                  hintText: '024XXXXXXX',
+                  controller: ctrl.accountNumberTEC,
                   textInputType: TextInputType.number,
                   validator: PValidator.validateText,
                 ),
 
                 PAppSize.s20.verticalSpace,
 
+                PCustomTextField(
+                  labelText: 'amount'.tr,
+                  hintText: '5000',
+                  controller: ctrl.amountTEC,
+                  textInputType: TextInputType.number,
+                  validator: PValidator.validateClaimAmount(
+                    ctrl.selectedPolicy?.cashValue ?? 0,
+                  ),
+                ),
+
+                PAppSize.s25.verticalSpace,
+
                 Obx(
                   () => PGradientButton(
                     label: 'continue'.tr,
                     showIcon: true,
-                    loading: ctrl.loading.value,
+                    loading: ctrl.submitting.value,
                     iconDirection: IconDirection.right,
                     textColor: PAppColor.whiteColor,
                     width: PDeviceUtil.getDeviceWidth(context),
                     onTap: () {
                       if (ctrl.claimFormKey.currentState!.validate()) {
-                        ctrl.submitWithdrawalRequest();
+                        ctrl.submitClaimRequest();
                       }
                     },
                   ),

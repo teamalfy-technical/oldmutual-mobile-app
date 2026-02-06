@@ -27,14 +27,21 @@ class PPolicyVm extends GetxController {
   final claimFormKey = GlobalKey<FormState>();
 
   final amountTEC = TextEditingController();
+  final accountNumberTEC = TextEditingController();
 
   // var schemes = <Scheme>[].obs;
   var products = <Map<String, dynamic>>[].obs;
+
+  var paymentMethods = <PaymentMethod>[].obs;
+
+  PaymentMethod? selectedPaymentMethod;
+  Policy? selectedPolicy;
 
   var summary = PolicySummary().obs;
   // var pensionSummary = PensionSummary().obs;
 
   var loading = LoadingState.completed.obs;
+  var submitting = LoadingState.completed.obs;
 
   /// Flag to track if policies have been fetched at least once
   var _hasFetchedPolicies = false;
@@ -45,6 +52,12 @@ class PPolicyVm extends GetxController {
 
   var currentIndex = 0.obs;
 
+  onSelectedPolicy(Policy val) {
+    selectedPolicy = val;
+    update();
+    pensionAppLogger.e(selectedPolicy?.toJson());
+  }
+
   onPageChanged(int val) {
     currentIndex.value = val;
   }
@@ -53,6 +66,11 @@ class PPolicyVm extends GetxController {
   void onInit() {
     getPolicySummary();
     super.onInit();
+  }
+
+  onPaymentMethodChanged(value) {
+    selectedPaymentMethod = value;
+    update();
   }
 
   /// Function to get all schemes or retail
@@ -80,6 +98,56 @@ class PPolicyVm extends GetxController {
               lastUpdated: '',
             );
         getProducts();
+      },
+    );
+  }
+
+  /// Function to get all payment methods
+  Future<void> getPaymentMethods() async {
+    updateLoadingState(LoadingState.loading);
+    final result = await policyService.getPaymentMethods();
+    result.fold(
+      (err) {
+        updateLoadingState(LoadingState.error);
+        PPopupDialog(
+          context,
+        ).errorMessage(title: 'error'.tr, message: err.message);
+      },
+      (res) async {
+        updateLoadingState(LoadingState.completed);
+        paymentMethods.value = res.data ?? [];
+        pensionAppLogger.d(paymentMethods.map((e) => e.toJson()));
+        update();
+      },
+    );
+  }
+
+  /// Function to get all schemes or retail
+  Future<void> submitClaimRequest() async {
+    submitting(LoadingState.loading);
+
+    final result = await policyService.submitClaimRequest(
+      claimAmount: amountTEC.text.trim().isEmpty
+          ? 0.0
+          : double.parse(amountTEC.text),
+      claimDefaultMomoWallet: accountNumberTEC.text,
+      claimDefaultTelcomethod: selectedPaymentMethod?.code ?? '',
+      currentCashValue: selectedPolicy?.cashValue ?? 0,
+      policyNumber: selectedPolicy?.policyNo ?? '',
+    );
+    result.fold(
+      (err) {
+        submitting(LoadingState.error);
+
+        PPopupDialog(
+          context,
+        ).errorMessage(title: 'error'.tr, message: err.message);
+      },
+      (res) async {
+        submitting(LoadingState.completed);
+
+        /// Navigate to success page
+        navigateToSuccessPage();
       },
     );
   }
@@ -213,10 +281,10 @@ class PPolicyVm extends GetxController {
         'contribution': vm.summary.value.totalInvestment?.toDouble() ?? 0.00,
       },
       // {
-      //   'name': 'Corporate',
+      //   'name': 'corporate_account'.tr,
       //   'type': ProductType.corporate,
       //   'num_of_account': 0,
-      //   'contribution': 0.00,
+      //   'description': 'corporate_account_hint'.tr,
       // },
       // {
       //   'name': 'Solutions for you',
@@ -230,10 +298,10 @@ class PPolicyVm extends GetxController {
     return products;
   }
 
-  Future<void> submitWithdrawalRequest() async {
-    amountTEC.clear();
-    navigateToSuccessPage();
-  }
+  // Future<void> submitWithdrawalRequest() async {
+  //   amountTEC.clear();
+  //   navigateToSuccessPage();
+  // }
 
   /// Function to navigate user to success screen after report has been generated
   navigateToSuccessPage() {

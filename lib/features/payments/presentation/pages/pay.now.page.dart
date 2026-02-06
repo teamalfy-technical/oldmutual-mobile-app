@@ -48,6 +48,7 @@ class _PPayNowPageState extends State<PPayNowPage> {
       backgroundColor: PHelperFunction.isDarkMode(context)
           ? PAppColor.darkBgColor
           : PAppColor.fillColor,
+      resizeToAvoidBottomInset: false,
       appBar: AppBar(title: Text('pay_now'.tr)),
       body: SafeArea(
         child: Obx(
@@ -203,11 +204,13 @@ class _PPayNowPageState extends State<PPayNowPage> {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        Text(
-          label,
-          style: Theme.of(context).textTheme.bodySmall?.copyWith(
-            fontWeight: FontWeight.w500,
-            color: PAppColor.greyColor,
+        Expanded(
+          child: Text(
+            label,
+            style: Theme.of(context).textTheme.bodySmall?.copyWith(
+              fontWeight: FontWeight.w500,
+              color: PAppColor.greyColor,
+            ),
           ),
         ),
         Flexible(
