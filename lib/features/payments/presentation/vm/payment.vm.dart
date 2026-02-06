@@ -15,6 +15,12 @@ class PPaymentVm extends GetxController {
 
   final amountTEC = TextEditingController();
 
+  // Filter controllers
+  final filterAmountTEC = TextEditingController();
+  final filterPaymentRefTEC = TextEditingController();
+  final filterClientRefTEC = TextEditingController();
+  final filterPolicyNumberTEC = TextEditingController();
+
   var pensionsPayments = <Payment>[].obs;
   var policyPayments = <Payment>[].obs;
 
@@ -36,12 +42,18 @@ class PPaymentVm extends GetxController {
   /// Selected policy number and product for payment
   String? selectedPolicyNumber;
   String? selectedProduct;
+  String? selectedStatus;
   var amount = 0.0.obs;
 
   /// Currency for payment (default GHS)
   String currency = 'GHS';
 
   updateLoadingState(LoadingState loadingState) => loading.value = loadingState;
+
+  onSelectedStatus(String? value) {
+    selectedStatus = value;
+    update();
+  }
 
   onPaymentMethodChanged(PaymentMethod? value) {
     selectedPaymentMethod = value;
@@ -91,9 +103,19 @@ class PPaymentVm extends GetxController {
   }
 
   /// Get pensions payment history
-  Future<void> getPensionsPayments() async {
+  Future<void> getPensionsPayments({
+    String? amount,
+    String? status,
+    String? paymentReference,
+    String? clientReference,
+  }) async {
     updateLoadingState(LoadingState.loading);
-    final result = await paymentService.getPensionsPayments();
+    final result = await paymentService.getPensionsPayments(
+      amount: amount,
+      status: status,
+      paymentReference: paymentReference,
+      clientReference: clientReference,
+    );
     result.fold(
       (err) {
         updateLoadingState(LoadingState.error);
@@ -111,9 +133,21 @@ class PPaymentVm extends GetxController {
   }
 
   /// Get policy payment history
-  Future<void> getPolicyPayments() async {
+  Future<void> getPolicyPayments({
+    String? amount,
+    String? policyNumber,
+    String? status,
+    String? paymentReference,
+    String? clientReference,
+  }) async {
     updateLoadingState(LoadingState.loading);
-    final result = await paymentService.getPolicyPayments();
+    final result = await paymentService.getPolicyPayments(
+      amount: amount,
+      policyNumber: policyNumber,
+      status: status,
+      paymentReference: paymentReference,
+      clientReference: clientReference,
+    );
     result.fold(
       (err) {
         updateLoadingState(LoadingState.error);
@@ -128,6 +162,51 @@ class PPaymentVm extends GetxController {
         pensionAppLogger.d('Policy Payments: ${policyPayments.length}');
       },
     );
+  }
+
+  /// Apply filters for pensions payments
+  Future<void> applyPensionsFilters() async {
+    await getPensionsPayments(
+      amount: filterAmountTEC.text.trim().isEmpty
+          ? null
+          : filterAmountTEC.text.trim(),
+      status: selectedStatus?.toLowerCase(),
+      paymentReference: filterPaymentRefTEC.text.trim().isEmpty
+          ? null
+          : filterPaymentRefTEC.text.trim(),
+      clientReference: filterClientRefTEC.text.trim().isEmpty
+          ? null
+          : filterClientRefTEC.text.trim(),
+    );
+  }
+
+  /// Apply filters for policy payments
+  Future<void> applyPolicyFilters() async {
+    await getPolicyPayments(
+      amount: filterAmountTEC.text.trim().isEmpty
+          ? null
+          : filterAmountTEC.text.trim(),
+      policyNumber: filterPolicyNumberTEC.text.trim().isEmpty
+          ? null
+          : filterPolicyNumberTEC.text.trim(),
+      status: selectedStatus?.toLowerCase(),
+      paymentReference: filterPaymentRefTEC.text.trim().isEmpty
+          ? null
+          : filterPaymentRefTEC.text.trim(),
+      clientReference: filterClientRefTEC.text.trim().isEmpty
+          ? null
+          : filterClientRefTEC.text.trim(),
+    );
+  }
+
+  /// Reset all filters
+  void resetFilters() {
+    filterAmountTEC.clear();
+    filterPaymentRefTEC.clear();
+    filterClientRefTEC.clear();
+    filterPolicyNumberTEC.clear();
+    selectedStatus = null;
+    update();
   }
 
   /// Initiate a payment based on current payment type

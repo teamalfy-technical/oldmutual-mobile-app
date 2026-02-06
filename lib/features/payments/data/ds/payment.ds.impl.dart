@@ -71,10 +71,12 @@ class PaymentDsImpl implements PaymentDs {
   }) async {
     return await asyncFunctionWrapper.handleAsyncNetworkCall(() async {
       final Map<String, dynamic> queryParams = {};
-      if (amount != null) queryParams['amount'] = amount;
-      if (status != null) queryParams['status'] = status;
-      if (paymentReference != null) queryParams['payment_reference'] = paymentReference;
-      if (clientReference != null) queryParams['client_reference'] = clientReference;
+      if (amount != null) queryParams['filter[amount]'] = amount;
+      if (status != null) queryParams['filter[status]'] = status;
+      if (paymentReference != null)
+        queryParams['filter[payment_reference]'] = paymentReference;
+      if (clientReference != null)
+        queryParams['filter[client_reference]'] = clientReference;
 
       final res = await apiService.callService(
         requestType: RequestType.get,
@@ -100,11 +102,14 @@ class PaymentDsImpl implements PaymentDs {
   }) async {
     return await asyncFunctionWrapper.handleAsyncNetworkCall(() async {
       final Map<String, dynamic> queryParams = {};
-      if (amount != null) queryParams['amount'] = amount;
-      if (policyNumber != null) queryParams['policy_number'] = policyNumber;
-      if (status != null) queryParams['status'] = status;
-      if (paymentReference != null) queryParams['payment_reference'] = paymentReference;
-      if (clientReference != null) queryParams['client_reference'] = clientReference;
+      if (amount != null) queryParams['filter[amount]'] = amount;
+      if (policyNumber != null)
+        queryParams['filter[policy_number]'] = policyNumber;
+      if (status != null) queryParams['filter[status]'] = status;
+      if (paymentReference != null)
+        queryParams['filter[payment_reference]'] = paymentReference;
+      if (clientReference != null)
+        queryParams['filter[client_reference]'] = clientReference;
 
       final res = await apiService.callService(
         requestType: RequestType.get,

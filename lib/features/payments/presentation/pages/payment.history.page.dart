@@ -40,7 +40,19 @@ class _PPaymentHistoryPageState extends State<PPaymentHistoryPage> {
       backgroundColor: PHelperFunction.isDarkMode(context)
           ? PAppColor.darkBgColor
           : PAppColor.fillColor,
-      appBar: AppBar(title: Text('payment_history'.tr)),
+      appBar: AppBar(
+        title: Text('payment_history'.tr),
+        actions: [
+          IconButton(
+            icon: Assets.icons.filter.svg(
+              color: PHelperFunction.isDarkMode(context)
+                  ? PAppColor.whiteColor
+                  : PAppColor.blackColor,
+            ),
+            onPressed: () => _showFilterBottomSheet(context),
+          ),
+        ],
+      ),
       body: Obx(() {
         final payments = widget.paymentType == PaymentType.pensions
             ? ctrl.pensionsPayments
@@ -224,21 +236,19 @@ class _PPaymentHistoryPageState extends State<PPaymentHistoryPage> {
       context: context,
       showDragHandle: false,
       isScrollControlled: true,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadiusGeometry.only(
-          topLeft: Radius.circular(PAppSize.s24),
-          topRight: Radius.circular(PAppSize.s24),
-        ),
-      ),
+
       builder: (context) {
         return Container(
           padding: EdgeInsets.all(PAppSize.s20),
           height: PDeviceUtil.getDeviceHeight(context) * 0.70,
           decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(PAppSize.s20),
+            borderRadius: BorderRadiusGeometry.only(
+              topLeft: Radius.circular(PAppSize.s24),
+              topRight: Radius.circular(PAppSize.s24),
+            ),
             color: PHelperFunction.isDarkMode(context)
-                ? PAppColor.darkBgColor
-                : PAppColor.fillColor,
+                ? PAppColor.darkAppBarColor
+                : PAppColor.whiteColor,
           ),
           child: SafeArea(
             child: Column(
@@ -284,6 +294,13 @@ class _PPaymentHistoryPageState extends State<PPaymentHistoryPage> {
                       Divider(),
 
                       CustomListTile(
+                        title: payment.clientReference ?? 'not_applicable'.tr,
+                        subtitle: 'client_reference'.tr,
+                      ),
+
+                      Divider(),
+
+                      CustomListTile(
                         title: PFormatter.formatDate(
                           dateFormat: DateFormat('yMMMMd').add_jmv(),
                           date: DateTime.parse(payment.createdAt ?? ''),
@@ -294,7 +311,9 @@ class _PPaymentHistoryPageState extends State<PPaymentHistoryPage> {
                       Divider(),
 
                       CustomListTile(
-                        title: payment.status ?? 'not_applicable'.tr,
+                        title:
+                            payment.status?.capitalizeFirst ??
+                            'not_applicable'.tr,
                         subtitle: 'status'.tr,
                       ),
 
@@ -313,9 +332,11 @@ class _PPaymentHistoryPageState extends State<PPaymentHistoryPage> {
                             ),
                             TextSpan(
                               text: PAppConstant.supportEmail,
-
                               style: Theme.of(context).textTheme.bodyMedium
-                                  ?.copyWith(fontWeight: FontWeight.w400),
+                                  ?.copyWith(
+                                    fontWeight: FontWeight.w500,
+                                    color: PAppColor.primary,
+                                  ),
                             ),
                           ],
                         ),
@@ -324,6 +345,169 @@ class _PPaymentHistoryPageState extends State<PPaymentHistoryPage> {
                   ).scrollable(),
                 ),
               ],
+            ),
+          ),
+        );
+      },
+    );
+  }
+
+  Future _showFilterBottomSheet(BuildContext context) {
+    return showModalBottomSheet(
+      context: context,
+      showDragHandle: false,
+      isScrollControlled: true,
+
+      builder: (context) {
+        return Padding(
+          padding: EdgeInsets.only(
+            bottom: MediaQuery.of(context).viewInsets.bottom,
+          ),
+          child: Container(
+            padding: EdgeInsets.all(PAppSize.s20),
+            height: PDeviceUtil.getDeviceHeight(context) * 0.73,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadiusGeometry.only(
+                topLeft: Radius.circular(PAppSize.s24),
+                topRight: Radius.circular(PAppSize.s24),
+              ),
+              color: PHelperFunction.isDarkMode(context)
+                  ? PAppColor.darkAppBarColor
+                  : PAppColor.whiteColor,
+            ),
+            child: SafeArea(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  PAppSize.s8.verticalSpace,
+                  PSeeAllWidget(
+                    leadingText: 'filter_payments'.tr,
+                    leadingFontSize: PAppSize.s20,
+                    trailing: Assets.icons.closeIcon.svg(
+                      color: PHelperFunction.isDarkMode(context)
+                          ? PAppColor.whiteColor
+                          : PAppColor.blackColor,
+                    ),
+                    onTap: () => PHelperFunction.pop(),
+                  ),
+                  PAppSize.s14.verticalSpace,
+                  Divider(),
+                  PAppSize.s16.verticalSpace,
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        // Amount filter
+                        PCustomTextField(
+                          labelText: 'amount'.tr,
+                          hintText: 'enter_amount'.tr,
+                          controller: ctrl.filterAmountTEC,
+                          textInputType: TextInputType.number,
+                        ),
+                        PAppSize.s16.verticalSpace,
+
+                        // Policy number filter (only for policy payments)
+                        if (widget.paymentType == PaymentType.policy) ...[
+                          PCustomTextField(
+                            labelText: 'policy_number'.tr,
+                            hintText: 'enter_policy_number'.tr,
+                            controller: ctrl.filterPolicyNumberTEC,
+                          ),
+                          PAppSize.s16.verticalSpace,
+                        ],
+
+                        // Status filter
+                        PCustomDropdownField<String>(
+                          labelText: 'select_status'.tr,
+                          initialValue: ctrl.selectedStatus,
+                          items: PaymentStatus.values
+                              .map(
+                                (status) => DropdownMenuItem<String>(
+                                  value: status.value,
+                                  child: Text(status.value),
+                                ),
+                              )
+                              .toList(),
+                          onChanged: ctrl.onSelectedStatus,
+                        ),
+                        PAppSize.s16.verticalSpace,
+
+                        // Payment reference filter
+                        PCustomTextField(
+                          labelText: 'payment_reference'.tr,
+                          hintText: 'enter_payment_reference'.tr,
+                          controller: ctrl.filterPaymentRefTEC,
+                        ),
+                        PAppSize.s16.verticalSpace,
+
+                        // Client reference filter
+                        PCustomTextField(
+                          labelText: 'client_reference'.tr,
+                          hintText: 'enter_client_reference'.tr,
+                          controller: ctrl.filterClientRefTEC,
+                        ),
+                        PAppSize.s24.verticalSpace,
+                      ],
+                    ).scrollable(),
+                  ),
+                  PAppSize.s16.verticalSpace,
+
+                  // Filter and Reset buttons
+                  Row(
+                    children: [
+                      Expanded(
+                        child: OutlinedButton(
+                          onPressed: () {
+                            ctrl.resetFilters();
+                            PHelperFunction.pop();
+                            // Reload without filters
+                            if (widget.paymentType == PaymentType.pensions) {
+                              ctrl.getPensionsPayments();
+                            } else {
+                              ctrl.getPolicyPayments();
+                            }
+                          },
+                          style: OutlinedButton.styleFrom(
+                            padding: EdgeInsets.symmetric(
+                              vertical: PAppSize.s16,
+                            ),
+                            side: BorderSide(color: PAppColor.primary),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(PAppSize.s24),
+                            ),
+                          ),
+                          child: Text(
+                            'reset'.tr,
+                            style: TextStyle(
+                              color: PAppColor.primary,
+                              fontWeight: FontWeight.w600,
+                              fontSize: PAppSize.s16,
+                            ),
+                          ),
+                        ),
+                      ),
+                      PAppSize.s12.horizontalSpace,
+                      Expanded(
+                        child: Obx(
+                          () => PGradientButton(
+                            label: 'apply_filters'.tr,
+                            showIcon: false,
+                            loading: ctrl.loading.value,
+                            onTap: () async {
+                              if (widget.paymentType == PaymentType.pensions) {
+                                await ctrl.applyPensionsFilters();
+                              } else {
+                                await ctrl.applyPolicyFilters();
+                              }
+                              PHelperFunction.pop();
+                            },
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
             ),
           ),
         );

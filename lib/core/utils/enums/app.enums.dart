@@ -27,6 +27,18 @@ enum DateDiffUnit { days, months, years }
 
 enum PolicyStatus { active, inactive, lapsed }
 
+enum PaymentStatus {
+  success('Success'),
+  failed('Failed'),
+  pending('Pending');
+
+  final String value;
+  const PaymentStatus(this.value);
+
+  @override
+  String toString() => value;
+}
+
 enum BadgeType { report, beneficiary, contribution, maintenance }
 
 // enum Environment { dev, prod }
