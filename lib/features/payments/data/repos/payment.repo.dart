@@ -25,8 +25,19 @@ abstract class PaymentRepo {
   });
 
   /// Get pensions payment history
-  Future<Either<PFailure, ApiResponse<List<Payment>>>> getPensionsPayments();
+  Future<Either<PFailure, ApiResponse<List<Payment>>>> getPensionsPayments({
+    String? amount,
+    String? status,
+    String? paymentReference,
+    String? clientReference,
+  });
 
   /// Get policy (life insurance) payment history
-  Future<Either<PFailure, ApiResponse<List<Payment>>>> getPolicyPayments();
+  Future<Either<PFailure, ApiResponse<List<Payment>>>> getPolicyPayments({
+    String? amount,
+    String? policyNumber,
+    String? status,
+    String? paymentReference,
+    String? clientReference,
+  });
 }

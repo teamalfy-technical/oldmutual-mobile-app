@@ -63,11 +63,23 @@ class PaymentDsImpl implements PaymentDs {
   }
 
   @override
-  Future<ApiResponse<List<Payment>>> getPensionsPayments() async {
+  Future<ApiResponse<List<Payment>>> getPensionsPayments({
+    String? amount,
+    String? status,
+    String? paymentReference,
+    String? clientReference,
+  }) async {
     return await asyncFunctionWrapper.handleAsyncNetworkCall(() async {
+      final Map<String, dynamic> queryParams = {};
+      if (amount != null) queryParams['amount'] = amount;
+      if (status != null) queryParams['status'] = status;
+      if (paymentReference != null) queryParams['payment_reference'] = paymentReference;
+      if (clientReference != null) queryParams['client_reference'] = clientReference;
+
       final res = await apiService.callService(
         requestType: RequestType.get,
         endPoint: Env.getPensionsPayment,
+        queryParams: queryParams.isNotEmpty ? queryParams : null,
       );
 
       pensionAppLogger.i(res);
@@ -79,11 +91,25 @@ class PaymentDsImpl implements PaymentDs {
   }
 
   @override
-  Future<ApiResponse<List<Payment>>> getPolicyPayments() async {
+  Future<ApiResponse<List<Payment>>> getPolicyPayments({
+    String? amount,
+    String? policyNumber,
+    String? status,
+    String? paymentReference,
+    String? clientReference,
+  }) async {
     return await asyncFunctionWrapper.handleAsyncNetworkCall(() async {
+      final Map<String, dynamic> queryParams = {};
+      if (amount != null) queryParams['amount'] = amount;
+      if (policyNumber != null) queryParams['policy_number'] = policyNumber;
+      if (status != null) queryParams['status'] = status;
+      if (paymentReference != null) queryParams['payment_reference'] = paymentReference;
+      if (clientReference != null) queryParams['client_reference'] = clientReference;
+
       final res = await apiService.callService(
         requestType: RequestType.get,
         endPoint: Env.getPolicyPayment,
+        queryParams: queryParams.isNotEmpty ? queryParams : null,
       );
 
       pensionAppLogger.i(res);

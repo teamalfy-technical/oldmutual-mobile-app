@@ -40,18 +40,38 @@ class PaymentRepoImpl implements PaymentRepo {
   }
 
   @override
-  Future<Either<PFailure, ApiResponse<List<Payment>>>>
-      getPensionsPayments() async {
+  Future<Either<PFailure, ApiResponse<List<Payment>>>> getPensionsPayments({
+    String? amount,
+    String? status,
+    String? paymentReference,
+    String? clientReference,
+  }) async {
     return await customRepositoryWrapper.wrapRepositoryFunction(
-      function: () async => await paymentDs.getPensionsPayments(),
+      function: () async => await paymentDs.getPensionsPayments(
+        amount: amount,
+        status: status,
+        paymentReference: paymentReference,
+        clientReference: clientReference,
+      ),
     );
   }
 
   @override
-  Future<Either<PFailure, ApiResponse<List<Payment>>>>
-      getPolicyPayments() async {
+  Future<Either<PFailure, ApiResponse<List<Payment>>>> getPolicyPayments({
+    String? amount,
+    String? policyNumber,
+    String? status,
+    String? paymentReference,
+    String? clientReference,
+  }) async {
     return await customRepositoryWrapper.wrapRepositoryFunction(
-      function: () async => await paymentDs.getPolicyPayments(),
+      function: () async => await paymentDs.getPolicyPayments(
+        amount: amount,
+        policyNumber: policyNumber,
+        status: status,
+        paymentReference: paymentReference,
+        clientReference: clientReference,
+      ),
     );
   }
 }

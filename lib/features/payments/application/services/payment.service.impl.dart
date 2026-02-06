@@ -36,12 +36,34 @@ class PaymentServiceImpl implements PaymentService {
   }
 
   @override
-  Future<Either<PFailure, ApiResponse<List<Payment>>>> getPensionsPayments() {
-    return paymentRepo.getPensionsPayments();
+  Future<Either<PFailure, ApiResponse<List<Payment>>>> getPensionsPayments({
+    String? amount,
+    String? status,
+    String? paymentReference,
+    String? clientReference,
+  }) {
+    return paymentRepo.getPensionsPayments(
+      amount: amount,
+      status: status,
+      paymentReference: paymentReference,
+      clientReference: clientReference,
+    );
   }
 
   @override
-  Future<Either<PFailure, ApiResponse<List<Payment>>>> getPolicyPayments() {
-    return paymentRepo.getPolicyPayments();
+  Future<Either<PFailure, ApiResponse<List<Payment>>>> getPolicyPayments({
+    String? amount,
+    String? policyNumber,
+    String? status,
+    String? paymentReference,
+    String? clientReference,
+  }) {
+    return paymentRepo.getPolicyPayments(
+      amount: amount,
+      policyNumber: policyNumber,
+      status: status,
+      paymentReference: paymentReference,
+      clientReference: clientReference,
+    );
   }
 }

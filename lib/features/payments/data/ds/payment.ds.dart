@@ -21,8 +21,19 @@ abstract class PaymentDs {
   });
 
   /// Get pensions payment history
-  Future<ApiResponse<List<Payment>>> getPensionsPayments();
+  Future<ApiResponse<List<Payment>>> getPensionsPayments({
+    String? amount,
+    String? status,
+    String? paymentReference,
+    String? clientReference,
+  });
 
   /// Get policy (life insurance) payment history
-  Future<ApiResponse<List<Payment>>> getPolicyPayments();
+  Future<ApiResponse<List<Payment>>> getPolicyPayments({
+    String? amount,
+    String? policyNumber,
+    String? status,
+    String? paymentReference,
+    String? clientReference,
+  });
 }
