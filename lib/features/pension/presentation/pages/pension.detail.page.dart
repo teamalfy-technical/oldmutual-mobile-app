@@ -143,14 +143,10 @@ class _PPensionDetailPageState extends State<PPensionDetailPage> {
                       /// Quick Actions
                       Row(
                         children: [
-                          if (widget.scheme.penTypeDescription != null &&
-                                  widget.scheme.penTypeDescription!
-                                      .toLowerCase()
-                                      .contains('mvest') ||
-                              widget.scheme.masterSchemeDescription != null &&
-                                  widget.scheme.masterSchemeDescription!
-                                      .toLowerCase()
-                                      .contains('mvest')) ...[
+                          if (widget.scheme.memberNumber != null &&
+                              widget.scheme.memberNumber!
+                                  .toLowerCase()
+                                  .contains('mv')) ...[
                             QuickActionWidget(
                               label: 'pay_premium'.tr,
                               icon: Assets.icons.payIcon.svg(
@@ -165,6 +161,7 @@ class _PPensionDetailPageState extends State<PPensionDetailPage> {
                                 );
                               },
                             ),
+                            PAppSize.s8.horizontalSpace,
                           ],
                           QuickActionWidget(
                             label: 'generate_statement'.tr,
@@ -256,6 +253,61 @@ class _PPensionDetailPageState extends State<PPensionDetailPage> {
                           children: [
                             _buildListTile(
                               context,
+                              'member_number'.tr,
+                              widget.scheme.memberNumber ?? 'not_applicable'.tr,
+                            ),
+                            Divider(height: PAppSize.s1),
+                            _buildListTile(
+                              context,
+                              'member_name'.tr,
+                              widget.scheme.memberName ?? 'not_applicable'.tr,
+                            ),
+                            Divider(height: PAppSize.s1),
+                            _buildListTile(
+                              context,
+                              'pension_type'.tr,
+                              widget.scheme.penTypeDescription ??
+                                  'not_applicable'.tr,
+                            ),
+                            Divider(height: PAppSize.s1),
+                            _buildListTile(
+                              context,
+                              'employer_name'.tr,
+                              widget.scheme.employerName ?? 'not_applicable'.tr,
+                            ),
+                            Divider(height: PAppSize.s1),
+                            _buildListTile(
+                              context,
+                              'employer_number'.tr,
+                              widget.scheme.employerNumber ??
+                                  'not_applicable'.tr,
+                            ),
+                            Divider(height: PAppSize.s1),
+                            _buildListTile(
+                              context,
+                              'ssnit_number'.tr,
+                              widget.scheme.ssnitNumber ?? 'not_applicable'.tr,
+                            ),
+                            Divider(height: PAppSize.s1),
+                            _buildListTile(
+                              context,
+                              'total_premium_amount'.tr,
+                              PFormatter.formatCurrency(
+                                amount: widget.scheme.schemeCurrentValue ?? 0,
+                              ),
+                            ),
+                            Divider(height: PAppSize.s1),
+                            _buildListTile(
+                              context,
+                              'premium_amount'.tr,
+                              PFormatter.formatCurrency(
+                                amount: widget.scheme.monthlyContribution ?? 0,
+                              ),
+                            ),
+
+                            Divider(height: PAppSize.s1),
+                            _buildListTile(
+                              context,
                               'total_contributions'.tr,
                               PFormatter.formatCurrency(
                                 amount:
@@ -295,7 +347,13 @@ class _PPensionDetailPageState extends State<PPensionDetailPage> {
                             Divider(height: PAppSize.s1),
                             _buildListTile(
                               context,
-                              'start_date'.tr,
+                              'premium_frequency'.tr,
+                              'monthly',
+                            ),
+                            Divider(height: PAppSize.s1),
+                            _buildListTile(
+                              context,
+                              'scheme_start_date'.tr,
                               PFormatter.formatDate(
                                 dateFormat: DateFormat('yMMMMd'),
                                 date: DateTime.parse(
@@ -303,6 +361,12 @@ class _PPensionDetailPageState extends State<PPensionDetailPage> {
                                       DateTime.now().toIso8601String(),
                                 ),
                               ),
+                            ),
+                            Divider(height: PAppSize.s1),
+                            _buildListTile(
+                              context,
+                              'scheme_end_date'.tr,
+                              'not_applicable'.tr,
                             ),
                           ],
                         ),

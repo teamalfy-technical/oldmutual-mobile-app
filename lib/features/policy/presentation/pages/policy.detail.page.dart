@@ -232,8 +232,14 @@ class PPolicyDetailPage extends StatelessWidget {
                         Divider(height: PAppSize.s1),
                         buildListTile(
                           context,
-                          'product_description'.tr,
+                          'policy_description'.tr,
                           '${policy.planDescription}',
+                        ),
+                        Divider(height: PAppSize.s1),
+                        buildListTile(
+                          context,
+                          'payment_mode_description'.tr,
+                          '${policy.paymentModeDescription}',
                         ),
                         Divider(height: PAppSize.s1),
                         buildListTile(
@@ -241,18 +247,6 @@ class PPolicyDetailPage extends StatelessWidget {
                           'modal_premium'.tr,
                           PFormatter.formatCurrency(
                             amount: policy.modalPrem ?? 0,
-                          ),
-                        ),
-                        Divider(height: PAppSize.s1),
-                        buildListTile(
-                          context,
-                          'premium_due_date'.tr,
-                          PFormatter.formatDate(
-                            dateFormat: DateFormat('d MMMM y'),
-                            date: DateTime.parse(
-                              policy.premDueDate ??
-                                  DateTime.now().toIso8601String(),
-                            ),
                           ),
                         ),
                         Divider(height: PAppSize.s1),
@@ -289,6 +283,61 @@ class PPolicyDetailPage extends StatelessWidget {
                                     PAppConstant.internationalTravel
                                 ? '€'
                                 : '₵',
+                          ),
+                        ),
+                        Divider(height: PAppSize.s1),
+                        buildListTile(
+                          context,
+                          'premium_frequency'.tr,
+                          policy.paymentFrequency ?? '',
+                        ),
+
+                        Divider(height: PAppSize.s1),
+                        buildListTile(
+                          context,
+                          'premium_due_date'.tr,
+                          PFormatter.formatDate(
+                            dateFormat: DateFormat('d MMMM y'),
+                            date: DateTime.parse(
+                              policy.premDueDate ??
+                                  DateTime.now().toIso8601String(),
+                            ),
+                          ),
+                        ),
+                        Divider(height: PAppSize.s1),
+                        buildListTile(
+                          context,
+                          'last_premium_date'.tr,
+                          PFormatter.formatDate(
+                            dateFormat: DateFormat('d MMMM y'),
+                            date: DateTime.parse(
+                              policy.lastPremDate ??
+                                  DateTime.now().toIso8601String(),
+                            ),
+                          ),
+                        ),
+                        Divider(height: PAppSize.s1),
+                        buildListTile(
+                          context,
+                          'premium_issued_date'.tr,
+                          PFormatter.formatDate(
+                            dateFormat: DateFormat('d MMMM y'),
+                            date: DateTime.parse(
+                              policy.issuedDate ??
+                                  DateTime.now().toIso8601String(),
+                            ),
+                          ),
+                        ),
+                        Divider(height: PAppSize.s1),
+                        buildListTile(
+                          context,
+                          'premium_maturity_date'.tr,
+                          PFormatter.formatDate(
+                            dateFormat: DateFormat('d MMMM y'),
+                            date: DateTime.parse(
+                              policy.maturityDate ??
+                                  DateTime.now().toIso8601String(),
+                            ),
                           ),
                         ),
                         // Divider(height: PAppSize.s1),

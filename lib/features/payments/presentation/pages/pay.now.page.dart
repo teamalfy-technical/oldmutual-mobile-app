@@ -24,6 +24,11 @@ class PPayNowPage extends StatefulWidget {
 
 class _PPayNowPageState extends State<PPayNowPage> {
   late final PPaymentVm ctrl;
+  bool _isFullPayment = true;
+
+  double get _totalAmount => widget.product is Scheme
+      ? (widget.product as Scheme).monthlyContribution ?? 0.0
+      : (widget.product as Policy).modalPrem ?? 0.0;
 
   @override
   void initState() {
@@ -40,6 +45,10 @@ class _PPayNowPageState extends State<PPayNowPage> {
     } else {
       ctrl.setPaymentContextForPensions();
     }
+
+    // Default to full payment amount
+    ctrl.amountTEC.text = _totalAmount.toStringAsFixed(2);
+    ctrl.onAmountChanged(ctrl.amountTEC.text);
   }
 
   @override
@@ -51,30 +60,34 @@ class _PPayNowPageState extends State<PPayNowPage> {
       resizeToAvoidBottomInset: false,
       appBar: AppBar(title: Text('pay_now'.tr)),
       body: SafeArea(
-        child: Obx(
-          () => Column(
-            children: [
-              PAppSize.s4.verticalSpace,
-              ListTile(
-                title: Text(
-                  'pay_now'.tr,
-                  style: Theme.of(
-                    context,
-                  ).textTheme.bodySmall?.copyWith(fontWeight: FontWeight.w600),
-                ),
-                subtitle: Text(
-                  'pay_now_hint'.tr,
-                  style: Theme.of(
-                    context,
-                  ).textTheme.bodySmall?.copyWith(fontWeight: FontWeight.w500),
-                ),
+        child: Column(
+          children: [
+            PAppSize.s4.verticalSpace,
+            ListTile(
+              title: Text(
+                'pay_now'.tr,
+                style: Theme.of(
+                  context,
+                ).textTheme.bodySmall?.copyWith(fontWeight: FontWeight.w600),
               ),
-              PCustomCardWidget(
+              subtitle: Text(
+                'pay_now_hint'.trParams({
+                  'name': widget.product is Policy
+                      ? 'life_policy'.tr
+                      : 'pension_scheme'.tr,
+                }),
+                style: Theme.of(
+                  context,
+                ).textTheme.bodySmall?.copyWith(fontWeight: FontWeight.w500),
+              ),
+            ),
+            Expanded(
+              child: PCustomCardWidget(
                 borderRadius: BorderRadius.circular(PAppSize.s0),
                 useBorder: false,
                 padding: EdgeInsets.symmetric(
                   horizontal: PAppSize.s20,
-                  vertical: PAppSize.s28,
+                  vertical: PAppSize.s20,
                 ),
                 child: Form(
                   key: ctrl.paymentFormKey,
@@ -96,9 +109,9 @@ class _PPayNowPageState extends State<PPayNowPage> {
                           value:
                               (widget.product as Policy).planDescription ?? '',
                         ),
-                        PAppSize.s16.verticalSpace,
+                        PAppSize.s12.verticalSpace,
                         Divider(),
-                        PAppSize.s16.verticalSpace,
+                        PAppSize.s12.verticalSpace,
                       ],
                       if (widget.product is Scheme) ...[
                         _buildInfoRow(
@@ -117,27 +130,97 @@ class _PPayNowPageState extends State<PPayNowPage> {
                                   .masterSchemeDescription ??
                               '',
                         ),
-                        PAppSize.s16.verticalSpace,
+                        PAppSize.s12.verticalSpace,
                         Divider(),
-                        PAppSize.s16.verticalSpace,
+                        PAppSize.s12.verticalSpace,
                       ],
 
-                      PCustomTextField(
-                        labelText: 'enter_amount'.tr,
-                        hintText: '100.00',
-                        controller: ctrl.amountTEC,
-                        textInputType: TextInputType.numberWithOptions(
-                          decimal: true,
+                      _buildPaymentOptionTile(
+                        context,
+                        title: 'total_amount_due'.tr,
+                        subtitle: PFormatter.formatCurrency(
+                          amount: _totalAmount,
                         ),
-                        onChanged: ctrl.onAmountChanged,
-                        validator: PValidator.validatePaymentAmount,
+                        isSelected: _isFullPayment,
+                        bgColor: PHelperFunction.isDarkMode(context)
+                            ? PAppColor.cardDarkColor
+                            : PAppColor.fillColor,
+                        borderColor: PHelperFunction.isDarkMode(context)
+                            ? PAppColor.cardDarkColor
+                            : PAppColor.fillColor,
                       ),
 
                       PAppSize.s16.verticalSpace,
 
-                      Divider(),
+                      Text(
+                        'select_payment_type'.tr,
+                        style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+
+                      PAppSize.s10.verticalSpace,
+
+                      // Full Payment option
+                      _buildPaymentOptionTile(
+                        context,
+                        title: 'full_payment'.tr,
+                        subtitle: 'full_payment_hint'.trParams({
+                          'amount': PFormatter.formatCurrency(
+                            amount: _totalAmount,
+                          ),
+                        }),
+                        isSelected: _isFullPayment,
+                        onTap: () {
+                          setState(() {
+                            _isFullPayment = true;
+                            ctrl.amountTEC.text = _totalAmount.toStringAsFixed(
+                              2,
+                            );
+                            ctrl.onAmountChanged(ctrl.amountTEC.text);
+                          });
+                        },
+                      ),
 
                       PAppSize.s16.verticalSpace,
+
+                      // Partial Payment option
+                      _buildPaymentOptionTile(
+                        context,
+                        title: 'partial_payment'.tr,
+                        subtitle: 'partial_payment_hint'.trParams({
+                          'amount': PFormatter.formatCurrency(amount: 1.0),
+                        }),
+                        isSelected: !_isFullPayment,
+                        onTap: () {
+                          setState(() {
+                            _isFullPayment = false;
+                            ctrl.amountTEC.clear();
+                            ctrl.onAmountChanged('');
+                          });
+                        },
+                      ),
+
+                      PAppSize.s16.verticalSpace,
+
+                      // Show text field only for partial payment
+                      if (!_isFullPayment) ...[
+                        PCustomTextField(
+                          labelText: 'enter_amount'.tr,
+                          hintText: '100.00',
+                          controller: ctrl.amountTEC,
+                          textInputType: TextInputType.numberWithOptions(
+                            decimal: true,
+                          ),
+                          onChanged: ctrl.onAmountChanged,
+                          validator: PValidator.validatePaymentAmount,
+                        ),
+                        PAppSize.s16.verticalSpace,
+                      ],
+
+                      Divider(),
+
+                      PAppSize.s12.verticalSpace,
 
                       // Currency info
                       Container(
@@ -147,8 +230,9 @@ class _PPayNowPageState extends State<PPayNowPage> {
                           horizontal: PAppSize.s16,
                         ),
                         decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(PAppSize.s8),
                           color: PHelperFunction.isDarkMode(context)
-                              ? PAppColor.darkBgColor
+                              ? PAppColor.cardDarkColor
                               : PAppColor.lightBlueColor,
                         ),
                         child: RichText(
@@ -162,7 +246,7 @@ class _PPayNowPageState extends State<PPayNowPage> {
                               ),
                               TextSpan(
                                 text: PFormatter.formatCurrency(
-                                  amount: ctrl.amount.value,
+                                  amount: _totalAmount,
                                 ),
                                 style: Theme.of(context).textTheme.bodyMedium
                                     ?.copyWith(fontWeight: FontWeight.w700),
@@ -174,23 +258,110 @@ class _PPayNowPageState extends State<PPayNowPage> {
 
                       PAppSize.s20.verticalSpace,
 
-                      Obx(
-                        () => PGradientButton(
-                          label: 'continue'.tr,
-                          showIcon: true,
-                          loading: ctrl.submitting.value,
-                          iconDirection: IconDirection.right,
-                          textColor: PAppColor.whiteColor,
-                          width: PDeviceUtil.getDeviceWidth(context),
-                          onTap: () => ctrl.initiatePayment(),
-                        ),
-                      ),
+                      // Obx(
+                      //   () => PGradientButton(
+                      //     label: 'continue'.tr,
+                      //     showIcon: true,
+                      //     loading: ctrl.submitting.value,
+                      //     iconDirection: IconDirection.right,
+                      //     textColor: PAppColor.whiteColor,
+                      //     width: PDeviceUtil.getDeviceWidth(context),
+                      //     onTap: () => ctrl.initiatePayment(),
+                      //   ),
+                      // ),
                     ],
                   ).scrollable(),
                 ),
               ),
-            ],
+            ),
+            Obx(
+              () =>
+                  PGradientButton(
+                    label: 'continue'.tr,
+                    showIcon: true,
+                    loading: ctrl.submitting.value,
+                    iconDirection: IconDirection.right,
+                    textColor: PAppColor.whiteColor,
+                    width: PDeviceUtil.getDeviceWidth(context),
+                    onTap: () => ctrl.initiatePayment(),
+                  ).only(
+                    left: PAppSize.s20,
+                    right: PAppSize.s20,
+                    top: PAppSize.s20,
+                  ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildPaymentOptionTile(
+    BuildContext context, {
+    required String title,
+    required String subtitle,
+    required bool isSelected,
+    Color? bgColor,
+    Color? borderColor,
+    VoidCallback? onTap,
+  }) {
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        padding: EdgeInsets.all(PAppSize.s16),
+        decoration: BoxDecoration(
+          color:
+              bgColor ??
+              (isSelected
+                  ? PHelperFunction.isDarkMode(context)
+                        ? PAppColor.primaryBorderColor.withOpacityExt(
+                            PAppSize.s0_1,
+                          )
+                        : PAppColor.primaryBorderLight
+                  : PAppColor.transparentColor),
+          border: Border.all(
+            color:
+                borderColor ??
+                (isSelected
+                    ? PAppColor.primaryBorderColor
+                    : PAppColor.fillColor2),
+            width: PAppSize.s1,
           ),
+          borderRadius: BorderRadius.circular(PAppSize.s8),
+        ),
+        child: Row(
+          children: [
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    title,
+                    style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                  SizedBox(height: 4),
+                  Text(
+                    subtitle,
+                    style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                      fontWeight: FontWeight.w500,
+                      color: PAppColor.greyColor,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            if (onTap != null)
+              Icon(
+                isSelected
+                    ? Icons.radio_button_checked
+                    : Icons.radio_button_off,
+                color: isSelected
+                    ? PAppColor.primaryBorderColor
+                    : PAppColor.fillColor2,
+              ),
+          ],
         ),
       ),
     );

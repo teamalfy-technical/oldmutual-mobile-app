@@ -81,7 +81,7 @@ class _PClaimPageState extends State<PClaimPage> {
                 PAppSize.s20.verticalSpace,
 
                 PCustomTextField(
-                  labelText: 'momo_number'.tr,
+                  labelText: 'momo_wallet_number'.tr,
                   hintText: '024XXXXXXX',
                   controller: ctrl.accountNumberTEC,
                   textInputType: TextInputType.number,
@@ -91,7 +91,7 @@ class _PClaimPageState extends State<PClaimPage> {
                 PAppSize.s20.verticalSpace,
 
                 PCustomTextField(
-                  labelText: 'amount'.tr,
+                  labelText: 'withdrawal_amount'.tr,
                   hintText: '5000',
                   controller: ctrl.amountTEC,
                   textInputType: TextInputType.number,

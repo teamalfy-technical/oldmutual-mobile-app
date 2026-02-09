@@ -11,6 +11,7 @@ class PAppColor {
   static const Color primaryRest = Color(0xFFB9E2B6);
   static const Color primaryBorderColor = Color(0xFF96D491);
   static const Color primary950 = Color(0xFFD9E7E3);
+  static const Color primaryBorderLight = Color(0xFFF6FFED);
 
   static const Color greyColorShade300 = Color(0xFFE0E0E0);
   static const Color greyColorShade100 = Color(0xFFf5f5f5);
