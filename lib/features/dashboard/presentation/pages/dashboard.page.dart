@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:oldmutual_pensions_app/core/utils/utils.dart';
+import 'package:oldmutual_pensions_app/features/auth/auth.dart';
 import 'package:oldmutual_pensions_app/features/home/home.dart';
 import 'package:oldmutual_pensions_app/features/more/more.services.dart';
 import 'package:oldmutual_pensions_app/gen/assets.gen.dart';
@@ -46,37 +47,49 @@ class PDashboardPage extends StatelessWidget {
           backgroundColor: PHelperFunction.isDarkMode(context)
               ? PAppColor.darkBgColor
               : PAppColor.fillColor,
-          appBar: AppBar(
-            title: ctrl.currentIndex.value == 1
-                ? Text('manage'.tr)
-                : ctrl.currentIndex.value == 2
-                ? Text('more'.tr)
-                : FutureBuilder<String?>(
-                    future: PSecureStorage().getUserFirstName(),
-                    builder: (context, snapshot) {
-                      final name = snapshot.data ?? '';
-                      return Text('Hi $name');
-                    },
-                  ),
-            // title: Text('Hi Bongani'),
-            actions: [
-              IconButton(
-                // onPressed: () => showFeedbackDialog(
-                //   context: context,
-                //   onPositiveTap: () {},
-                //   onNegativeTap: () {},
-                // ),
-                onPressed: () => PHelperFunction.switchScreen(
-                  destination: Routes.notificationPage,
-                ),
-                icon: Assets.icons.notificationIcon.svg(
-                  height: PAppSize.s28,
-                  color: PHelperFunction.isDarkMode(context)
-                      ? PAppColor.whiteColor
-                      : PAppColor.cardDarkColor,
-                ),
-              ),
-            ],
+          appBar: PreferredSize(
+            preferredSize: Size.fromHeight(MediaQuery.of(context).padding.top),
+            child: FutureBuilder<Member?>(
+              future: PSecureStorage().getAuthResponse(),
+              builder: (context, snapshot) {
+                final user = snapshot.data;
+                // Hide AppBar if user is affluent, but keep status bar spacing
+                if (user?.affluent == true) {
+                  return Container(
+                    color: PHelperFunction.isDarkMode(context)
+                        ? PAppColor.darkAppBarColor
+                        : PAppColor.whiteColor,
+                    height: MediaQuery.of(context).padding.top,
+                  );
+                }
+                // Show AppBar if user is not affluent
+                return AppBar(
+                  title: ctrl.currentIndex.value == 1
+                      ? Text('manage'.tr)
+                      : ctrl.currentIndex.value == 2
+                      ? Text('more'.tr)
+                      : FutureBuilder<String?>(
+                          future: PSecureStorage().getUserFirstName(),
+                          builder: (context, snapshot) {
+                            return Text('Hi ${snapshot.data ?? ''}');
+                          },
+                        ),
+                  actions: [
+                    IconButton(
+                      onPressed: () => PHelperFunction.switchScreen(
+                        destination: Routes.notificationPage,
+                      ),
+                      icon: Assets.icons.notificationIcon.svg(
+                        height: PAppSize.s28,
+                        color: PHelperFunction.isDarkMode(context)
+                            ? PAppColor.whiteColor
+                            : PAppColor.cardDarkColor,
+                      ),
+                    ),
+                  ],
+                );
+              },
+            ),
           ),
           bottomNavigationBar: BottomNavigationBar(
             currentIndex: ctrl.currentIndex.value,

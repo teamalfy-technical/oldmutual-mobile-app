@@ -559,6 +559,11 @@ class AppTranslations extends Translations {
       'close_app': 'Close App',
       'corporate_account': 'Corporate Account',
       'corporate_account_hint': 'Link your corporate \naccount',
+
+      // Affluent
+      'affluent': 'Affluent',
+      'affluent_desc': 'Welcome back! Your premium experience awaits.',
+      'your_relationship_officer': 'Your relationship Officer',
     },
     'hi_IN': {'app_name': 'Pensions App'},
     'fr_FR': {'app_name': 'Pensions App'},

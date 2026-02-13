@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:oldmutual_pensions_app/core/utils/utils.dart';
+import 'package:oldmutual_pensions_app/features/affluent/presentation/widgets/affluent.badge.widget.dart';
 import 'package:oldmutual_pensions_app/features/cross-sell/cross.sell.dart';
 import 'package:oldmutual_pensions_app/features/dashboard/dashboard.dart';
 import 'package:oldmutual_pensions_app/features/home/home.dart';
@@ -32,7 +33,11 @@ class PHomePage extends StatelessWidget {
                   ? PAppColor.cardDarkColor
                   : PAppColor.whiteColor,
             ),
-            child:
+            child: Column(
+              children: [
+                // Affluent user profile
+                AffluentBadgeWidget(),
+                // Dashboard Highlights
                 Row(
                       children: List.generate(vm.highlights.length, (index) {
                         return HighlightWidget(
@@ -50,7 +55,58 @@ class PHomePage extends StatelessWidget {
                     )
                     .symmetric(horizontal: PAppSize.s16)
                     .scrollable(scrollDirection: Axis.horizontal),
+              ],
+            ),
           ),
+
+          // Relationship officer
+          Container(
+            padding: EdgeInsets.all(PAppSize.s16),
+            margin: EdgeInsets.all(PAppSize.s20),
+
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(PAppSize.s20),
+              color: PHelperFunction.isDarkMode(context)
+                  ? PAppColor.darkAppBarColor
+                  : PAppColor.whiteColor,
+            ),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                // Office Info
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'your_relationship_officer'.tr,
+                      style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                        fontSize: PAppSize.s14,
+                        fontWeight: FontWeight.w400,
+                      ),
+                    ),
+                    Text(
+                      'Sarah Osei',
+                      style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                        fontSize: PAppSize.s16,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                  ],
+                ),
+
+                Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(PAppSize.s20),
+                    color: PHelperFunction.isDarkMode(context)
+                        ? PAppColor.darkAppBarColor
+                        : PAppColor.whiteColor,
+                  ),
+                ),
+              ],
+            ),
+          ),
+
+          PAppSize.s8.verticalSpace,
 
           //body
           Expanded(
@@ -97,26 +153,6 @@ class PHomePage extends StatelessWidget {
                       thickness: PAppSize.s4,
                     ),
 
-                    // PAppSize.s2.verticalSpace,
-
-                    // Row(
-                    //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    //   children: [
-                    //     InvestmentWidget(
-                    //       title: 'total_investments'.tr,
-                    //       value: PFormatter.formatCurrency(
-                    //         amount: pensionVm.summary.value.totalInvestment ?? 0,
-                    //       ),
-                    //     ),
-                    //     InvestmentWidget(
-                    //       crossAxisAlignment: CrossAxisAlignment.end,
-                    //       title: 'total_cover'.tr,
-                    //       value: PFormatter.formatCurrency(
-                    //         amount: policyVm.summary.value.totalCover ?? 0,
-                    //       ),
-                    //     ),
-                    //   ],
-                    // ),
                     PAppSize.s20.verticalSpace,
 
                     SizedBox(

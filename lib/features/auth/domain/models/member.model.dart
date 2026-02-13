@@ -23,6 +23,7 @@ class Member {
   String? lastLoggedInIp;
   String? lastLoggedInAgent;
   String? role;
+  bool? affluent;
   String? createdAt;
   String? updatedAt;
 
@@ -51,6 +52,7 @@ class Member {
     this.lastLoggedInIp,
     this.lastLoggedInAgent,
     this.role,
+    this.affluent,
     this.createdAt,
     this.updatedAt,
   });
@@ -80,6 +82,7 @@ class Member {
     String? lastLoggedInIp,
     String? lastLoggedInAgent,
     String? role,
+    bool? affluent,
     String? createdAt,
     String? updatedAt,
   }) {
@@ -108,6 +111,7 @@ class Member {
       lastLoggedInIp: lastLoggedInIp ?? this.lastLoggedInIp,
       lastLoggedInAgent: lastLoggedInAgent ?? this.lastLoggedInAgent,
       role: role ?? this.role,
+      affluent: affluent ?? this.affluent,
       createdAt: createdAt ?? this.createdAt,
       updatedAt: updatedAt ?? this.updatedAt,
     );
@@ -138,6 +142,7 @@ class Member {
     lastLoggedInIp = json['last_logged_in_ip'];
     lastLoggedInAgent = json['last_logged_in_agent'];
     role = json['role'];
+    affluent = json['affluent'] ?? false;
     createdAt = json['created_at'];
     updatedAt = json['updated_at'];
   }
@@ -168,6 +173,7 @@ class Member {
     data['last_logged_in_ip'] = lastLoggedInIp;
     data['last_logged_in_agent'] = lastLoggedInAgent;
     data['role'] = role;
+    data['affluent'] = affluent;
     data['created_at'] = createdAt;
     data['updated_at'] = updatedAt;
     return data;

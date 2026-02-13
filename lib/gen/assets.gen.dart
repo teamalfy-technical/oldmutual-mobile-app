@@ -64,6 +64,14 @@ class $AssetsIconsGen {
   /// File path: assets/icons/add.icon.svg
   SvgGenImage get addIcon => const SvgGenImage('assets/icons/add.icon.svg');
 
+  /// File path: assets/icons/affluent.avatar.svg
+  SvgGenImage get affluentAvatar =>
+      const SvgGenImage('assets/icons/affluent.avatar.svg');
+
+  /// File path: assets/icons/affluent.badge.svg
+  SvgGenImage get affluentBadge =>
+      const SvgGenImage('assets/icons/affluent.badge.svg');
+
   /// File path: assets/icons/anchor.icon.svg
   SvgGenImage get anchorIcon =>
       const SvgGenImage('assets/icons/anchor.icon.svg');
@@ -360,6 +368,8 @@ class $AssetsIconsGen {
     accessTime,
     accountBalanceWallet,
     addIcon,
+    affluentAvatar,
+    affluentBadge,
     anchorIcon,
     arrowDownIos,
     arrowForwardIos,

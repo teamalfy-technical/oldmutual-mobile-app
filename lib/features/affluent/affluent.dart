@@ -1,0 +1,10 @@
+export 'application/service/affluent.service.dart';
+export 'application/service/affluent.service.impl.dart';
+export 'data/ds/affluent.ds.dart';
+export 'data/ds/affluent.ds.impl.dart';
+export 'data/repos/affluent.repo.dart';
+export 'data/repos/affluent.repo.impl.dart';
+export 'domain/models/affluent.model.dart';
+export 'presentation/pages/affluent.page.dart';
+export 'presentation/vm/affluent.vm.dart';
+export 'presentation/widgets/affluent.badge.widget.dart';
