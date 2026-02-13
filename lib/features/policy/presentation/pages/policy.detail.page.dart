@@ -84,34 +84,25 @@ class PPolicyDetailPage extends StatelessWidget {
             /// Quick Actions
             Row(
               children: [
-                QuickActionWidget(
-                  label: 'pay_premium'.tr,
-                  icon: Assets.icons.payIcon.svg(
-                    color: PHelperFunction.isDarkMode(context)
-                        ? PAppColor.successLight
-                        : PAppColor.successDark,
+                if (activeStatuses.contains(policy.status)) ...[
+                  QuickActionWidget(
+                    label: 'pay_premium'.tr,
+                    icon: Assets.icons.payIcon.svg(
+                      color: PHelperFunction.isDarkMode(context)
+                          ? PAppColor.successLight
+                          : PAppColor.successDark,
+                    ),
+                    onTap: () {
+                      showPayModal(context: context, product: policy);
+                      // PPopupDialog(context).warningMessage(
+                      //   title: 'coming_soon_title'.tr,
+                      //   message: 'coming_soon_msg'.tr,
+                      // );
+                    },
                   ),
-                  onTap: () {
-                    showPayModal(context: context, product: policy);
-                    // PPopupDialog(context).warningMessage(
-                    //   title: 'coming_soon_title'.tr,
-                    //   message: 'coming_soon_msg'.tr,
-                    // );
-                  },
-                ),
-                // PAppSize.s8.horizontalSpace,
-                // QuickActionWidget(
-                //   label: 'generate_report'.tr,
-                //   icon: Assets.icons.document.svg(
-                //     color: PHelperFunction.isDarkMode(context)
-                //         ? PAppColor.successLight
-                //         : PAppColor.successDark,
-                //   ),
-                //   onTap: () => PHelperFunction.switchScreen(
-                //     destination: Routes.policyDocumentPage,
-                //   ),
-                // ),
-                PAppSize.s8.horizontalSpace,
+                  PAppSize.s8.horizontalSpace,
+                ],
+
                 QuickActionWidget(
                   label: 'policy_document'.tr,
                   icon: Assets.icons.downloadIcon.svg(
@@ -139,11 +130,6 @@ class PPolicyDetailPage extends StatelessWidget {
                   onTap: () => PHelperFunction.switchScreen(
                     destination: Routes.premiumStatementPage,
                   ),
-                  // onTap: () {
-                  //   // download premium statement
-                  //   policyStatementVm.downloadPremiumStatement();
-
-                  // },
                 ),
                 if ((policy.availableBalance ?? 0) > 0) ...[
                   PAppSize.s8.horizontalSpace,
@@ -169,10 +155,6 @@ class PPolicyDetailPage extends StatelessWidget {
                         ? PAppColor.successLight
                         : PAppColor.successDark,
                   ),
-                  // onTap: () => PPopupDialog(context).warningMessage(
-                  //   title: 'coming_soon_title'.tr,
-                  //   message: 'coming_soon_msg'.tr,
-                  // ),
                   onTap: () => PHelperFunction.switchScreen(
                     destination: Routes.policyClaimPage,
                   ),

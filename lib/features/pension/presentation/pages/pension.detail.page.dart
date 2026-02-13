@@ -146,7 +146,10 @@ class _PPensionDetailPageState extends State<PPensionDetailPage> {
                           if (widget.scheme.memberNumber != null &&
                               widget.scheme.memberNumber!
                                   .toLowerCase()
-                                  .contains('mv')) ...[
+                                  .contains('mv') &&
+                              activeStatuses.contains(
+                                widget.scheme.status,
+                              )) ...[
                             QuickActionWidget(
                               label: 'pay_premium'.tr,
                               icon: Assets.icons.payIcon.svg(
@@ -209,8 +212,8 @@ class _PPensionDetailPageState extends State<PPensionDetailPage> {
                               destination: Routes.futureValueCalcPage,
                             ),
                           ),
-                          PAppSize.s8.horizontalSpace,
 
+                          PAppSize.s8.horizontalSpace,
                           QuickActionWidget(
                             label: 'withdrawal'.tr,
                             icon: Assets.icons.accountBalanceWallet.svg(
@@ -222,6 +225,7 @@ class _PPensionDetailPageState extends State<PPensionDetailPage> {
                               destination: Routes.redemptionPage,
                             ),
                           ),
+
                           PAppSize.s8.horizontalSpace,
                           QuickActionWidget(
                             label: 'beneficiaries'.tr,

@@ -96,7 +96,7 @@ class _PClaimPageState extends State<PClaimPage> {
                   controller: ctrl.amountTEC,
                   textInputType: TextInputType.number,
                   validator: PValidator.validateClaimAmount(
-                    ctrl.selectedPolicy?.cashValue ?? 0,
+                    ctrl.selectedPolicy?.availableBalance ?? 0,
                   ),
                 ),
 

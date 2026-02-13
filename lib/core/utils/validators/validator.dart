@@ -56,10 +56,11 @@ class PValidator {
     if (value == null || value.isEmpty) {
       return 'amount_required'.tr;
     }
-    // final amount = double.tryParse(value);
-    // if (amount == null || amount <= 0) {
-    //   return 'enter_valid_amount'.tr;
-    // }
+    final amount = double.tryParse(value);
+    // TODO: Change minimum amount to 1 when going to production
+    if (amount == null || amount <= 0) {
+      return 'enter_valid_amount'.tr;
+    }
     return null;
   }
 
