@@ -53,6 +53,10 @@ class PAppColor {
   static const Color errorColor = Color(0xFFfa4b69);
   static const Color focusedErrorColor = Color(0xFFE4A11B);
 
+  // Gold
+  static const Color darkGold = Color(0xFFD4AF37);
+  static const Color lightGold = Color(0xFFF4E5B0);
+
   // bars color
   static const Color voiletLight = Color(0xF08061DB);
   static const Color voiletDark = Color(0x618061DB);

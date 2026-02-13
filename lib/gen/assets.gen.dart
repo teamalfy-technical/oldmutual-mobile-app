@@ -112,8 +112,14 @@ class $AssetsIconsGen {
   /// File path: assets/icons/call.icon.svg
   SvgGenImage get callIcon => const SvgGenImage('assets/icons/call.icon.svg');
 
+  /// File path: assets/icons/call.svg
+  SvgGenImage get call => const SvgGenImage('assets/icons/call.svg');
+
   /// File path: assets/icons/chart_data.svg
   SvgGenImage get chartData => const SvgGenImage('assets/icons/chart_data.svg');
+
+  /// File path: assets/icons/chat.svg
+  SvgGenImage get chat => const SvgGenImage('assets/icons/chat.svg');
 
   /// File path: assets/icons/check.dark.svg
   SvgGenImage get checkDark => const SvgGenImage('assets/icons/check.dark.svg');
@@ -219,6 +225,9 @@ class $AssetsIconsGen {
   /// File path: assets/icons/logout.icon.svg
   SvgGenImage get logoutIcon =>
       const SvgGenImage('assets/icons/logout.icon.svg');
+
+  /// File path: assets/icons/mail.svg
+  SvgGenImage get mail => const SvgGenImage('assets/icons/mail.svg');
 
   /// File path: assets/icons/maintenance.svg
   SvgGenImage get maintenance =>
@@ -381,7 +390,9 @@ class $AssetsIconsGen {
     brightness,
     calculate,
     callIcon,
+    call,
     chartData,
+    chat,
     checkDark,
     checkIcon,
     checkWhite,
@@ -413,6 +424,7 @@ class $AssetsIconsGen {
     lockIcon,
     lockOutline,
     logoutIcon,
+    mail,
     maintenance,
     manageIcon,
     memberIcon,

@@ -142,7 +142,7 @@ class Member {
     lastLoggedInIp = json['last_logged_in_ip'];
     lastLoggedInAgent = json['last_logged_in_agent'];
     role = json['role'];
-    affluent = json['affluent'] ?? false;
+    affluent = json['affluent'] ?? true;
     createdAt = json['created_at'];
     updatedAt = json['updated_at'];
   }

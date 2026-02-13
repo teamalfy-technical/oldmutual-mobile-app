@@ -564,6 +564,7 @@ class AppTranslations extends Translations {
       'affluent': 'Affluent',
       'affluent_desc': 'Welcome back! Your premium experience awaits.',
       'your_relationship_officer': 'Your relationship Officer',
+      'quick_access': 'Quick Access',
     },
     'hi_IN': {'app_name': 'Pensions App'},
     'fr_FR': {'app_name': 'Pensions App'},

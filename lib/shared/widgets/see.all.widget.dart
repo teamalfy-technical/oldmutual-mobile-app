@@ -4,13 +4,13 @@ import 'package:oldmutual_pensions_app/core/utils/utils.dart';
 class PSeeAllWidget extends StatelessWidget {
   final String leadingText;
   final double? leadingFontSize;
-  final Widget trailing;
+  final Widget? trailing;
   // final String trailingText;
   final Function()? onTap;
   const PSeeAllWidget({
     super.key,
     required this.leadingText,
-    required this.trailing,
+    this.trailing,
     this.leadingFontSize,
     this.onTap,
   });
@@ -29,8 +29,7 @@ class PSeeAllWidget extends StatelessWidget {
             fontWeight: FontWeight.w600,
           ),
         ),
-        trailing
-        .onPressed(onTap: onTap),
+        if (trailing != null) ...[trailing!.onPressed(onTap: onTap)],
       ],
     );
   }
