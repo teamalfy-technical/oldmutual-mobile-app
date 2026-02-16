@@ -64,6 +64,10 @@ class $AssetsIconsGen {
   /// File path: assets/icons/add.icon.svg
   SvgGenImage get addIcon => const SvgGenImage('assets/icons/add.icon.svg');
 
+  /// File path: assets/icons/affluent-card.svg
+  SvgGenImage get affluentCard =>
+      const SvgGenImage('assets/icons/affluent-card.svg');
+
   /// File path: assets/icons/affluent.avatar.svg
   SvgGenImage get affluentAvatar =>
       const SvgGenImage('assets/icons/affluent.avatar.svg');
@@ -134,6 +138,10 @@ class $AssetsIconsGen {
   /// File path: assets/icons/close.icon.svg
   SvgGenImage get closeIcon => const SvgGenImage('assets/icons/close.icon.svg');
 
+  /// File path: assets/icons/complimentary-services.svg
+  SvgGenImage get complimentaryServices =>
+      const SvgGenImage('assets/icons/complimentary-services.svg');
+
   /// File path: assets/icons/contribution.alert.svg
   SvgGenImage get contributionAlert =>
       const SvgGenImage('assets/icons/contribution.alert.svg');
@@ -183,6 +191,10 @@ class $AssetsIconsGen {
 
   /// File path: assets/icons/filter.svg
   SvgGenImage get filter => const SvgGenImage('assets/icons/filter.svg');
+
+  /// File path: assets/icons/financial-insight.svg
+  SvgGenImage get financialInsight =>
+      const SvgGenImage('assets/icons/financial-insight.svg');
 
   /// File path: assets/icons/fingerprint.svg
   SvgGenImage get fingerprint =>
@@ -325,6 +337,10 @@ class $AssetsIconsGen {
   SvgGenImage get topLogoBanner =>
       const SvgGenImage('assets/icons/top.logo.banner.svg');
 
+  /// File path: assets/icons/track-claims.svg
+  SvgGenImage get trackClaims =>
+      const SvgGenImage('assets/icons/track-claims.svg');
+
   /// File path: assets/icons/trash.red.icon.svg
   SvgGenImage get trashRedIcon =>
       const SvgGenImage('assets/icons/trash.red.icon.svg');
@@ -377,6 +393,7 @@ class $AssetsIconsGen {
     accessTime,
     accountBalanceWallet,
     addIcon,
+    affluentCard,
     affluentAvatar,
     affluentBadge,
     anchorIcon,
@@ -397,6 +414,7 @@ class $AssetsIconsGen {
     checkIcon,
     checkWhite,
     closeIcon,
+    complimentaryServices,
     contributionAlert,
     deleteIcon,
     document,
@@ -412,6 +430,7 @@ class $AssetsIconsGen {
     faqIcon,
     fileDownload,
     filter,
+    financialInsight,
     fingerprint,
     ghanaFlag,
     helpIcon,
@@ -452,6 +471,7 @@ class $AssetsIconsGen {
     supportIcon,
     termsIcon,
     topLogoBanner,
+    trackClaims,
     trashRedIcon,
     upgradeDark,
     upgradeIcon,

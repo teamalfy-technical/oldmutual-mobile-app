@@ -2,13 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:oldmutual_pensions_app/core/utils/utils.dart';
-import 'package:oldmutual_pensions_app/features/affluent/presentation/widgets/affluent.badge.widget.dart';
-import 'package:oldmutual_pensions_app/features/affluent/presentation/widgets/relationship.officer.card.dart';
+import 'package:oldmutual_pensions_app/features/affluent/affluent.dart';
 import 'package:oldmutual_pensions_app/features/cross-sell/cross.sell.dart';
 import 'package:oldmutual_pensions_app/features/dashboard/dashboard.dart';
 import 'package:oldmutual_pensions_app/features/home/home.dart';
 import 'package:oldmutual_pensions_app/features/pension/pension.dart';
 import 'package:oldmutual_pensions_app/features/policy/policy.dart';
+import 'package:oldmutual_pensions_app/gen/assets.gen.dart';
 import 'package:oldmutual_pensions_app/routes/app.pages.dart';
 import 'package:oldmutual_pensions_app/shared/shared.dart';
 
@@ -220,6 +220,66 @@ class PHomePage extends StatelessWidget {
                           PAppSize.s16.verticalSpace,
                           // Quick Actions for Affluent Users
                           PSeeAllWidget(leadingText: 'quick_access'.tr),
+
+                          PAppSize.s16.verticalSpace,
+
+                          // Quick Access Grid
+                          GridView.count(
+                            crossAxisCount: 2,
+                            shrinkWrap: true,
+                            physics: const NeverScrollableScrollPhysics(),
+                            mainAxisSpacing: PAppSize.s20,
+                            crossAxisSpacing: PAppSize.s20,
+                            // childAspectRatio: 1.3,
+                            children: [
+                              _QuickAccessCard(
+                                icon: Assets.icons.financialInsight.svg(),
+                                label: 'Financial\nInsights',
+                                onTap: () {
+                                  // TODO: Navigate to Financial Insights page
+                                },
+                              ),
+                              _QuickAccessCard(
+                                icon: Assets.icons.complimentaryServices.svg(),
+                                label: 'Complimentary\nServices',
+                                onTap: () {
+                                  // TODO: Navigate to Complimentary Services page
+                                },
+                              ),
+                              _QuickAccessCard(
+                                icon: Assets.icons.affluentCard.svg(),
+                                label: 'Affluent\nCard',
+                                onTap: () {
+                                  // TODO: Navigate to Affluent Card page
+                                },
+                              ),
+                              _QuickAccessCard(
+                                icon: Assets.icons.trackClaims.svg(),
+                                label: 'Track\nClaims',
+                                onTap: () {
+                                  // TODO: Navigate to Track Claims page
+                                },
+                              ),
+                            ],
+                          ),
+
+                          PAppSize.s16.verticalSpace,
+
+                          // Exclusive Announcements for Affluent Users
+                          PSeeAllWidget(
+                            leadingText: 'Exclusive Announcements'.tr,
+                          ),
+
+                          PAppSize.s16.verticalSpace,
+
+                          ListView.builder(
+                            itemCount: 2,
+                            shrinkWrap: true,
+                            physics: const NeverScrollableScrollPhysics(),
+                            itemBuilder: (context, index) {
+                              return PExclusiveWidget();
+                            },
+                          ),
                         ],
 
                         // Cross-Sell (Recommendations)
@@ -338,6 +398,66 @@ class InvestmentWidget extends StatelessWidget {
               ),
         ),
       ],
+    );
+  }
+}
+
+class _QuickAccessCard extends StatelessWidget {
+  const _QuickAccessCard({
+    required this.icon,
+    required this.label,
+    required this.onTap,
+  });
+
+  final Widget icon;
+  final String label;
+  final VoidCallback onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    final isDarkMode = PHelperFunction.isDarkMode(context);
+
+    return Container(
+      decoration: BoxDecoration(
+        color: isDarkMode ? PAppColor.cardDarkColor : PAppColor.whiteColor,
+        borderRadius: BorderRadius.circular(PAppSize.s20),
+      ),
+      child:
+          Column(
+                // mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Container(
+                    padding: EdgeInsets.all(PAppSize.s14),
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      border: Border.all(
+                        color: PAppColor.fillColor.withOpacityExt(
+                          PAppSize.s0_3,
+                        ),
+                        width: PAppSize.s1,
+                      ),
+                    ),
+                    child: icon,
+                  ),
+                  PAppSize.s18.verticalSpace,
+                  Text(
+                    label,
+                    textAlign: TextAlign.start,
+                    style: Theme.of(context).textTheme.headlineLarge?.copyWith(
+                      fontSize: PAppSize.s15,
+                      height: 1.5,
+
+                      // fontWeight: FontWeight.w500,
+                    ),
+                  ),
+                ],
+              )
+              .paddingAll(PAppSize.s25)
+              .onPressed(
+                onTap: onTap,
+                radius: BorderRadius.circular(PAppSize.s20),
+              ),
     );
   }
 }

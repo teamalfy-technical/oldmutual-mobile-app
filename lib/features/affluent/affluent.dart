@@ -8,4 +8,5 @@ export 'domain/models/affluent.model.dart';
 export 'presentation/pages/affluent.page.dart';
 export 'presentation/vm/affluent.vm.dart';
 export 'presentation/widgets/affluent.badge.widget.dart';
+export 'presentation/widgets/exclusive.announcement.widget.dart';
 export 'presentation/widgets/relationship.officer.card.dart';
