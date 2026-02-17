@@ -19,6 +19,7 @@ class PHomePage extends StatelessWidget {
   final policyVm = Get.put(PPolicyVm());
   final pensionVm = Get.put(PPensionVm());
   final crossSellVm = Get.put(PCrossSellVm());
+  final affluentVm = Get.put(PAffluentVm());
 
   @override
   Widget build(BuildContext context) {
@@ -232,30 +233,30 @@ class PHomePage extends StatelessWidget {
                             crossAxisSpacing: PAppSize.s20,
                             // childAspectRatio: 1.3,
                             children: [
-                              _QuickAccessCard(
+                              QuickAccessCard(
                                 icon: Assets.icons.financialInsight.svg(),
-                                label: 'Financial\nInsights',
-                                onTap: () {
-                                  // TODO: Navigate to Financial Insights page
-                                },
+                                label: 'financial_insights'.tr,
+                                onTap: () => PHelperFunction.switchScreen(
+                                  destination: Routes.financialInsightPage,
+                                ),
                               ),
-                              _QuickAccessCard(
+                              QuickAccessCard(
                                 icon: Assets.icons.complimentaryServices.svg(),
-                                label: 'Complimentary\nServices',
+                                label: 'complimentary_services'.tr,
                                 onTap: () {
                                   // TODO: Navigate to Complimentary Services page
                                 },
                               ),
-                              _QuickAccessCard(
+                              QuickAccessCard(
                                 icon: Assets.icons.affluentCard.svg(),
-                                label: 'Affluent\nCard',
+                                label: 'affluent_card'.tr,
                                 onTap: () {
                                   // TODO: Navigate to Affluent Card page
                                 },
                               ),
-                              _QuickAccessCard(
+                              QuickAccessCard(
                                 icon: Assets.icons.trackClaims.svg(),
-                                label: 'Track\nClaims',
+                                label: 'track_claims'.tr,
                                 onTap: () {
                                   // TODO: Navigate to Track Claims page
                                 },
@@ -267,17 +268,45 @@ class PHomePage extends StatelessWidget {
 
                           // Exclusive Announcements for Affluent Users
                           PSeeAllWidget(
-                            leadingText: 'Exclusive Announcements'.tr,
+                            leadingText: 'exclusive_announcements'.tr,
                           ),
 
                           PAppSize.s16.verticalSpace,
 
-                          ListView.builder(
-                            itemCount: 2,
+                          ListView.separated(
+                            separatorBuilder: (context, index) =>
+                                PAppSize.s20.verticalSpace,
+                            itemCount: affluentVm.exclusiveAnnouncements.length,
                             shrinkWrap: true,
                             physics: const NeverScrollableScrollPhysics(),
                             itemBuilder: (context, index) {
-                              return PExclusiveWidget();
+                              final announcement =
+                                  affluentVm.exclusiveAnnouncements[index];
+                              return PExclusiveWidget(
+                                announcement: announcement,
+                              );
+                            },
+                          ),
+
+                          PAppSize.s16.verticalSpace,
+
+                          // Benefit Reminders for Affluent Users
+                          PSeeAllWidget(leadingText: 'benefit_reminders'.tr),
+
+                          PAppSize.s16.verticalSpace,
+
+                          ListView.separated(
+                            separatorBuilder: (context, index) =>
+                                PAppSize.s20.verticalSpace,
+                            itemCount: affluentVm.benefitReminders.length,
+                            shrinkWrap: true,
+                            physics: const NeverScrollableScrollPhysics(),
+                            itemBuilder: (context, index) {
+                              final reminder =
+                                  affluentVm.benefitReminders[index];
+                              return PBenefitRemindersWidget(
+                                reminder: reminder,
+                              );
                             },
                           ),
                         ],
@@ -350,114 +379,6 @@ class PHomePage extends StatelessWidget {
           );
         },
       ),
-    );
-  }
-}
-
-class InvestmentWidget extends StatelessWidget {
-  const InvestmentWidget({
-    super.key,
-    required this.title,
-    required this.value,
-    this.titleStyle,
-    this.subTitleStyle,
-    this.crossAxisAlignment = CrossAxisAlignment.start,
-  });
-
-  final String title;
-  final String value;
-  final TextStyle? titleStyle;
-  final TextStyle? subTitleStyle;
-  final CrossAxisAlignment crossAxisAlignment;
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: crossAxisAlignment,
-      children: [
-        Text(
-          title,
-          textAlign: TextAlign.center,
-          softWrap: true,
-          style:
-              titleStyle ??
-              Theme.of(context).textTheme.bodyLarge?.copyWith(
-                fontSize: PAppSize.s13,
-                fontWeight: FontWeight.w400,
-              ),
-        ),
-        Text(
-          value,
-          textAlign: TextAlign.center,
-          softWrap: true,
-          style:
-              subTitleStyle ??
-              Theme.of(context).textTheme.bodyLarge?.copyWith(
-                fontSize: PAppSize.s15,
-                fontWeight: FontWeight.w500,
-              ),
-        ),
-      ],
-    );
-  }
-}
-
-class _QuickAccessCard extends StatelessWidget {
-  const _QuickAccessCard({
-    required this.icon,
-    required this.label,
-    required this.onTap,
-  });
-
-  final Widget icon;
-  final String label;
-  final VoidCallback onTap;
-
-  @override
-  Widget build(BuildContext context) {
-    final isDarkMode = PHelperFunction.isDarkMode(context);
-
-    return Container(
-      decoration: BoxDecoration(
-        color: isDarkMode ? PAppColor.cardDarkColor : PAppColor.whiteColor,
-        borderRadius: BorderRadius.circular(PAppSize.s20),
-      ),
-      child:
-          Column(
-                // mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Container(
-                    padding: EdgeInsets.all(PAppSize.s14),
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      border: Border.all(
-                        color: PAppColor.fillColor.withOpacityExt(
-                          PAppSize.s0_3,
-                        ),
-                        width: PAppSize.s1,
-                      ),
-                    ),
-                    child: icon,
-                  ),
-                  PAppSize.s18.verticalSpace,
-                  Text(
-                    label,
-                    textAlign: TextAlign.start,
-                    style: Theme.of(context).textTheme.headlineLarge?.copyWith(
-                      fontSize: PAppSize.s15,
-                      height: 1.5,
-
-                      // fontWeight: FontWeight.w500,
-                    ),
-                  ),
-                ],
-              )
-              .paddingAll(PAppSize.s25)
-              .onPressed(
-                onTap: onTap,
-                radius: BorderRadius.circular(PAppSize.s20),
-              ),
     );
   }
 }

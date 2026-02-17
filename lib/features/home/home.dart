@@ -22,3 +22,4 @@ export 'presentation/vm/home.vm.dart';
 export 'presentation/vm/inactivity.service.dart';
 export 'presentation/widgets/highlight.widget.dart';
 export 'presentation/widgets/home.stats.widget.dart';
+export 'presentation/widgets/investment.widget.dart';

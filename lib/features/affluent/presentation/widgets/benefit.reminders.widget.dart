@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:intl/intl.dart';
+import 'package:get/get.dart';
 import 'package:oldmutual_pensions_app/core/utils/utils.dart';
 import 'package:oldmutual_pensions_app/features/affluent/affluent.dart';
 
-class PExclusiveWidget extends StatelessWidget {
-  final BenefitReminder announcement;
-  const PExclusiveWidget({super.key, required this.announcement});
+class PBenefitRemindersWidget extends StatelessWidget {
+  final BenefitReminder reminder;
+  const PBenefitRemindersWidget({super.key, required this.reminder});
 
   @override
   Widget build(BuildContext context) {
@@ -23,34 +23,34 @@ class PExclusiveWidget extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            announcement.title,
+            reminder.title,
             textAlign: TextAlign.start,
             style: Theme.of(context).textTheme.headlineLarge?.copyWith(
               fontSize: PAppSize.s16,
               fontWeight: FontWeight.w700,
             ),
           ),
-          PAppSize.s10.verticalSpace,
+          PAppSize.s8.verticalSpace,
           Text(
-            announcement.description,
+            reminder.description,
             textAlign: TextAlign.start,
             style: Theme.of(context).textTheme.headlineLarge?.copyWith(
               fontSize: PAppSize.s15,
-
               fontWeight: FontWeight.w600,
             ),
           ),
-          PAppSize.s10.verticalSpace,
+          PAppSize.s8.verticalSpace,
           Text(
-            PFormatter.formatDate(
-              dateFormat: DateFormat('dd MMM yyyy • HH:mm'),
-              date: announcement.createdAt,
-            ),
+            reminder.createdAt.difference(DateTime.now()).inDays > 3
+                ? 'available'.tr
+                : 'expires_soon'.tr,
             textAlign: TextAlign.start,
             style: Theme.of(context).textTheme.headlineLarge?.copyWith(
-              fontSize: PAppSize.s15,
-
+              fontSize: PAppSize.s14,
               fontWeight: FontWeight.w600,
+              color: reminder.createdAt.difference(DateTime.now()).inDays > 3
+                  ? PAppColor.primaryBorderColor
+                  : PAppColor.alert100,
             ),
           ),
         ],

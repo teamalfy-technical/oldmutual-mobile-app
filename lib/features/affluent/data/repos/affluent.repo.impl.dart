@@ -8,9 +8,28 @@ final AffluentRepo affluentRepo = Get.put(AffluentRepoImpl());
 
 class AffluentRepoImpl implements AffluentRepo {
   @override
-  Future<Either<PFailure, ApiResponse<Affluent>>> getAffluentStatus() async {
+  Future<Either<PFailure, ApiResponse<List<ContentCategory>>>>
+  getContentCategories() async {
     return await customRepositoryWrapper.wrapRepositoryFunction(
-      function: () async => await affluentDs.getAffluentStatus(),
+      function: () async => await affluentDs.getContentCategories(),
+    );
+  }
+
+  @override
+  Future<Either<PFailure, ApiResponse<ContentCategory>>> getContentCategory({
+    required int id,
+  }) async {
+    return await customRepositoryWrapper.wrapRepositoryFunction(
+      function: () async => await affluentDs.getContentCategory(id: id),
+    );
+  }
+
+  @override
+  Future<Either<PFailure, ApiResponse<dynamic>>> deleteContentCategory({
+    required int id,
+  }) async {
+    return await customRepositoryWrapper.wrapRepositoryFunction(
+      function: () async => await affluentDs.deleteContentCategory(id: id),
     );
   }
 }

@@ -1,5 +1,6 @@
 import 'package:get/get.dart';
 import 'package:oldmutual_pensions_app/core/utils/utils.dart';
+import 'package:oldmutual_pensions_app/features/affluent/affluent.dart';
 import 'package:oldmutual_pensions_app/features/auth/auth.dart';
 import 'package:oldmutual_pensions_app/features/auth/presentation/pages/forgot.password/forgot.password.page.dart';
 import 'package:oldmutual_pensions_app/features/auth/presentation/pages/login/welcome.back.page.dart';
@@ -300,5 +301,15 @@ class AppPages {
       page: () => PPayNowPage(product: Get.arguments),
     ),
     GetPage(name: _Paths.paymentHistoryPage, page: () => PPaymentHistoryPage()),
+
+    /// --- Affluent Feature Pages
+    GetPage(
+      name: _Paths.financialInsightPage,
+      page: () => PFinancialInsightPage(),
+    ),
+    GetPage(
+      name: _Paths.financialInsightDetailPage,
+      page: () => PFinancialInsightDetailPage(article: Get.arguments),
+    ),
   ];
 }

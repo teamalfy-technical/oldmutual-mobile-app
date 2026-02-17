@@ -8,7 +8,22 @@ final AffluentService affluentService = Get.put(AffluentServiceImpl());
 
 class AffluentServiceImpl implements AffluentService {
   @override
-  Future<Either<PFailure, ApiResponse<Affluent>>> getAffluentStatus() {
-    return affluentRepo.getAffluentStatus();
+  Future<Either<PFailure, ApiResponse<List<ContentCategory>>>>
+  getContentCategories() {
+    return affluentRepo.getContentCategories();
+  }
+
+  @override
+  Future<Either<PFailure, ApiResponse<ContentCategory>>> getContentCategory({
+    required int id,
+  }) {
+    return affluentRepo.getContentCategory(id: id);
+  }
+
+  @override
+  Future<Either<PFailure, ApiResponse<dynamic>>> deleteContentCategory({
+    required int id,
+  }) {
+    return affluentRepo.deleteContentCategory(id: id);
   }
 }

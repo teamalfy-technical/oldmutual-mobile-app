@@ -22,8 +22,6 @@ class Environment {
 
     final packageInfo = await PackageInfo.fromPlatform();
 
-    print(packageInfo.packageName);
-
     switch (packageInfo.packageName) {
       case "com.oldmutual.pensions.app.dev" ||
           "com.oldmutual.pensions.app.devo":

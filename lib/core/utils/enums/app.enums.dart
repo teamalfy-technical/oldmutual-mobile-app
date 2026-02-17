@@ -44,4 +44,6 @@ enum BadgeType { report, beneficiary, contribution, maintenance }
 // enum Environment { dev, prod }
 enum SchemeType { anchor, prestige, aspire }
 
+enum ContentType { article, video }
+
 enum ConnectivityStatus { connected, disconnected }

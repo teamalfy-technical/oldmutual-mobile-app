@@ -102,6 +102,13 @@ class $AssetsIconsGen {
   SvgGenImage get benchmarkIcon =>
       const SvgGenImage('assets/icons/benchmark.icon.svg');
 
+  /// File path: assets/icons/book.icon.svg
+  SvgGenImage get bookIcon => const SvgGenImage('assets/icons/book.icon.svg');
+
+  /// File path: assets/icons/bookmark.icon.svg
+  SvgGenImage get bookmarkIcon =>
+      const SvgGenImage('assets/icons/bookmark.icon.svg');
+
   /// File path: assets/icons/bottom.logo.banner.svg
   SvgGenImage get bottomLogoBanner =>
       const SvgGenImage('assets/icons/bottom.logo.banner.svg');
@@ -112,6 +119,10 @@ class $AssetsIconsGen {
 
   /// File path: assets/icons/calculate.svg
   SvgGenImage get calculate => const SvgGenImage('assets/icons/calculate.svg');
+
+  /// File path: assets/icons/calendar.icon.svg
+  SvgGenImage get calendarIcon =>
+      const SvgGenImage('assets/icons/calendar.icon.svg');
 
   /// File path: assets/icons/call.icon.svg
   SvgGenImage get callIcon => const SvgGenImage('assets/icons/call.icon.svg');
@@ -134,6 +145,9 @@ class $AssetsIconsGen {
   /// File path: assets/icons/check.white.svg
   SvgGenImage get checkWhite =>
       const SvgGenImage('assets/icons/check.white.svg');
+
+  /// File path: assets/icons/clock.icon.svg
+  SvgGenImage get clockIcon => const SvgGenImage('assets/icons/clock.icon.svg');
 
   /// File path: assets/icons/close.icon.svg
   SvgGenImage get closeIcon => const SvgGenImage('assets/icons/close.icon.svg');
@@ -403,9 +417,12 @@ class $AssetsIconsGen {
     arrowRightBlack,
     article,
     benchmarkIcon,
+    bookIcon,
+    bookmarkIcon,
     bottomLogoBanner,
     brightness,
     calculate,
+    calendarIcon,
     callIcon,
     call,
     chartData,
@@ -413,6 +430,7 @@ class $AssetsIconsGen {
     checkDark,
     checkIcon,
     checkWhite,
+    clockIcon,
     closeIcon,
     complimentaryServices,
     contributionAlert,

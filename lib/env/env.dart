@@ -465,4 +465,23 @@ abstract class Env {
   static final String getPolicyPayment = _Env.getPolicyPayment;
 
   /// -------------------- Pay Now Endpoints Ends Here ------------------------- ///
+  ///
+  /// -------------------- Affluent Endpoints Starts Here ------------------------- ///
+
+  /// [GetContentCategories] endpoint
+  @EnviedField(defaultValue: '/affluent/content-categories', obfuscate: true)
+  static final String getContentCategories = _Env.getContentCategories;
+
+  /// [GetContentCategory] endpoint
+  @EnviedField(defaultValue: '/affluent/content-category', obfuscate: true)
+  static final String getContentCategory = _Env.getContentCategory;
+
+  /// [DeleteContentCategory] endpoint
+  @EnviedField(
+    defaultValue: '/affluent/content-category/delete',
+    obfuscate: true,
+  )
+  static final String deleteContentCategory = _Env.deleteContentCategory;
+
+  /// -------------------- Affluent Endpoints Ends Here ------------------------- ///
 }

@@ -65,6 +65,10 @@ abstract class Routes {
   /// ---- Pay Now Feature Routes
   static const payNowPage = _Paths.payNowPage;
   static const paymentHistoryPage = _Paths.paymentHistoryPage;
+
+  /// ---- Affluent Feature Routes
+  static const financialInsightPage = _Paths.financialInsightPage;
+  static const financialInsightDetailPage = _Paths.financialInsightDetailPage;
 }
 
 abstract class _Paths {
@@ -126,7 +130,11 @@ abstract class _Paths {
   static const managePage = '/manage-page';
   static const documentsPage = '/documents-page';
 
-  /// --- Pay Nnow Feature Paths
+  /// --- Pay Now Feature Paths
   static const payNowPage = '/pay-now-page';
   static const paymentHistoryPage = '/payment-history-page';
+
+  /// --- Affluent Feature Paths
+  static const financialInsightPage = '/financial-insight-page';
+  static const financialInsightDetailPage = '/financial-insight-detail-page';
 }
