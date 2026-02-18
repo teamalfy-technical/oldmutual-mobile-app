@@ -578,6 +578,8 @@ class AppTranslations extends Translations {
       'wealth_preservation_strategies': 'Wealth Preservation Strategies',
       'wealth_preservation_desc':
           'Learn how to protect and grow \nyour wealth in 2026',
+      'complementary_benefits': 'Complimentary Benefits',
+      'valid_until': 'Valid until @date',
     },
     'hi_IN': {'app_name': 'Pensions App'},
     'fr_FR': {'app_name': 'Pensions App'},

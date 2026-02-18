@@ -243,9 +243,9 @@ class PHomePage extends StatelessWidget {
                               QuickAccessCard(
                                 icon: Assets.icons.complimentaryServices.svg(),
                                 label: 'complimentary_services'.tr,
-                                onTap: () {
-                                  // TODO: Navigate to Complimentary Services page
-                                },
+                                onTap: () => PHelperFunction.switchScreen(
+                                  destination: Routes.complimentaryServicePage,
+                                ),
                               ),
                               QuickAccessCard(
                                 icon: Assets.icons.affluentCard.svg(),

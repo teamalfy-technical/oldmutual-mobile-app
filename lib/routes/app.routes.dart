@@ -69,6 +69,7 @@ abstract class Routes {
   /// ---- Affluent Feature Routes
   static const financialInsightPage = _Paths.financialInsightPage;
   static const financialInsightDetailPage = _Paths.financialInsightDetailPage;
+  static const complimentaryServicePage = _Paths.complimentaryServicePage;
 }
 
 abstract class _Paths {
@@ -137,4 +138,5 @@ abstract class _Paths {
   /// --- Affluent Feature Paths
   static const financialInsightPage = '/financial-insight-page';
   static const financialInsightDetailPage = '/financial-insight-detail-page';
+  static const complimentaryServicePage = '/complimentary-service-page';
 }

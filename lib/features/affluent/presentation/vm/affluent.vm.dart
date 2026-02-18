@@ -5,6 +5,8 @@ import 'package:oldmutual_pensions_app/features/affluent/affluent.dart';
 import 'package:oldmutual_pensions_app/shared/shared.dart';
 
 class PAffluentVm extends GetxController {
+  static PAffluentVm get instance => Get.find();
+
   var affluentStatus = Affluent().obs;
   var loading = LoadingState.completed.obs;
 
@@ -16,6 +18,26 @@ class PAffluentVm extends GetxController {
   var selectedContentCategory = ContentCategory().obs;
   var contentCategoriesLoading = LoadingState.completed.obs;
 
+  var selectedFCategoryIndex = 0.obs;
+  var selectedCCategoryIndex = 0.obs;
+  var selectedCCategory = ''.obs;
+  var selectedFCategory = ''.obs;
+
+  final List<String> fCategories = [
+    'All',
+    'Insurance',
+    'Restaurant',
+    'Financial',
+  ];
+
+  final List<String> cCategories = [
+    'All',
+    'Health & Fitness',
+    'Travel',
+    'Lifestyle',
+    'Entertainment',
+  ];
+
   final context = Get.context!;
 
   bool get isAffluent => affluentStatus.value.isAffluent ?? false;
@@ -24,6 +46,16 @@ class PAffluentVm extends GetxController {
 
   updateContentCategoriesLoading(LoadingState loadingState) =>
       contentCategoriesLoading.value = loadingState;
+
+  onSelectedFCategory(int index) {
+    selectedFCategoryIndex.value = index;
+    selectedFCategory.value = fCategories[selectedFCategoryIndex.value];
+  }
+
+  onSelectedCCategory(int index) {
+    selectedCCategoryIndex.value = index;
+    selectedCCategory.value = cCategories[selectedCCategoryIndex.value];
+  }
 
   @override
   void onInit() {

@@ -311,5 +311,9 @@ class AppPages {
       name: _Paths.financialInsightDetailPage,
       page: () => PFinancialInsightDetailPage(article: Get.arguments),
     ),
+    GetPage(
+      name: _Paths.complimentaryServicePage,
+      page: () => PComplimentaryServicePage(),
+    ),
   ];
 }

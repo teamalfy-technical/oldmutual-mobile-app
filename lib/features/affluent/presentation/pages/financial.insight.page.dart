@@ -2,25 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:oldmutual_pensions_app/core/utils/utils.dart';
+import 'package:oldmutual_pensions_app/features/affluent/affluent.dart';
 import 'package:oldmutual_pensions_app/routes/app.pages.dart';
 import 'package:oldmutual_pensions_app/shared/shared.dart';
 
-class PFinancialInsightPage extends StatefulWidget {
-  const PFinancialInsightPage({super.key});
+class PFinancialInsightPage extends StatelessWidget {
+  PFinancialInsightPage({super.key});
 
-  @override
-  State<PFinancialInsightPage> createState() => _PFinancialInsightPageState();
-}
-
-class _PFinancialInsightPageState extends State<PFinancialInsightPage> {
-  int selectedCategoryIndex = 0;
-
-  final List<String> categories = [
-    'All',
-    'Insurance',
-    'Restaurant',
-    'Financial',
-  ];
+  final vm = PAffluentVm.instance;
 
   final List<Map<String, dynamic>> recommendedArticles = [
     {
@@ -102,171 +91,127 @@ Income protection should be part of a comprehensive financial strategy that incl
           ? PAppColor.darkBgColor
           : PAppColor.fillColor,
       appBar: AppBar(title: Text('financial_insights_title'.tr)),
-      body: Column(
-        children: [
-          SizedBox(
-            height: PDeviceUtil.getDeviceHeight(context) * 0.25,
-            child: ListView.builder(
-              itemCount: 2,
-              shrinkWrap: true,
-              scrollDirection: Axis.horizontal,
-              itemBuilder: (context, index) {
-                return Container(
-                  margin: EdgeInsets.only(right: PAppSize.s20),
-                  width: PDeviceUtil.getDeviceWidth(context) * 0.70,
-                  decoration: BoxDecoration(
-                    color: PHelperFunction.isDarkMode(context)
-                        ? PAppColor.cardDarkColor
-                        : PAppColor.whiteColor,
-                    borderRadius: BorderRadius.circular(PAppSize.s20),
-                  ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Expanded(
-                        child: Container(
-                          // height: PDeviceUtil.getDeviceHeight(context) * 0.15,
-                          width: PDeviceUtil.getDeviceWidth(context),
-                          decoration: BoxDecoration(
-                            image: DecorationImage(
-                              fit: BoxFit.cover,
-                              image: NetworkImage(
-                                'https://picsum.photos/200/300',
-                              ),
-                            ),
-                            borderRadius: BorderRadius.only(
-                              topLeft: Radius.circular(PAppSize.s20),
-                              topRight: Radius.circular(PAppSize.s20),
-                            ),
-                          ),
-                        ),
-                      ),
-
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            'wealth_preservation_strategies'.tr,
-                            textAlign: TextAlign.start,
-                            softWrap: true,
-                            style: Theme.of(context).textTheme.bodyLarge
-                                ?.copyWith(
-                                  fontSize: PAppSize.s15,
-                                  fontWeight: FontWeight.w600,
-                                ),
-                          ),
-                          Text(
-                            'wealth_preservation_desc'.tr,
-                            textAlign: TextAlign.start,
-                            softWrap: true,
-                            style: Theme.of(context).textTheme.bodyLarge
-                                ?.copyWith(
-                                  fontSize: PAppSize.s13,
-                                  fontWeight: FontWeight.w500,
-                                ),
-                          ),
-                        ],
-                      ).all(PAppSize.s20),
-                    ],
-                  ),
-                );
-              },
-            ),
-          ),
-
-          // Browse by category
-          PAppSize.s16.verticalSpace,
-          // Quick Actions for Affluent Users
-          PSeeAllWidget(leadingText: 'browse_by_category'.tr),
-
-          PAppSize.s16.verticalSpace,
-
-          // Category Pills
-          SizedBox(
-            height: PAppSize.s50,
-            child: ListView.separated(
-              scrollDirection: Axis.horizontal,
-              itemCount: categories.length,
-              separatorBuilder: (context, index) =>
-                  PAppSize.s12.horizontalSpace,
-              itemBuilder: (context, index) {
-                final isSelected = selectedCategoryIndex == index;
-                return GestureDetector(
-                  onTap: () {
-                    setState(() {
-                      selectedCategoryIndex = index;
-                    });
-                  },
-                  child: Container(
-                    padding: EdgeInsets.symmetric(
-                      horizontal: PAppSize.s28,
-                      vertical: PAppSize.s8,
-                    ),
+      body: Obx(
+        () => Column(
+          children: [
+            SizedBox(
+              height: PDeviceUtil.getDeviceHeight(context) * 0.25,
+              child: ListView.builder(
+                itemCount: 2,
+                shrinkWrap: true,
+                scrollDirection: Axis.horizontal,
+                itemBuilder: (context, index) {
+                  return Container(
+                    margin: EdgeInsets.only(right: PAppSize.s20),
+                    width: PDeviceUtil.getDeviceWidth(context) * 0.70,
                     decoration: BoxDecoration(
-                      color: isSelected
+                      color: PHelperFunction.isDarkMode(context)
                           ? PAppColor.cardDarkColor
-                          : Colors.transparent,
-                      borderRadius: BorderRadius.circular(PAppSize.s24),
-                      border: Border.all(
-                        color: isSelected
-                            ? PAppColor.cardDarkColor
-                            : PAppColor.fillColor4.withOpacityExt(
-                                PAppSize.s0_4,
+                          : PAppColor.whiteColor,
+                      borderRadius: BorderRadius.circular(PAppSize.s20),
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Expanded(
+                          child: Container(
+                            // height: PDeviceUtil.getDeviceHeight(context) * 0.15,
+                            width: PDeviceUtil.getDeviceWidth(context),
+                            decoration: BoxDecoration(
+                              image: DecorationImage(
+                                fit: BoxFit.cover,
+                                image: NetworkImage(
+                                  'https://picsum.photos/200/300',
+                                ),
                               ),
-                        width: PAppSize.s1,
-                      ),
-                    ),
-                    child: Center(
-                      child: Text(
-                        categories[index],
-                        style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                          color: isSelected
-                              ? PAppColor.whiteColor
-                              : PHelperFunction.isDarkMode(context)
-                              ? PAppColor.whiteColor
-                              : PAppColor.darkBgColor,
-                          fontWeight: FontWeight.w600,
+                              borderRadius: BorderRadius.only(
+                                topLeft: Radius.circular(PAppSize.s20),
+                                topRight: Radius.circular(PAppSize.s20),
+                              ),
+                            ),
+                          ),
                         ),
-                      ),
+
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              'wealth_preservation_strategies'.tr,
+                              textAlign: TextAlign.start,
+                              softWrap: true,
+                              style: Theme.of(context).textTheme.bodyLarge
+                                  ?.copyWith(
+                                    fontSize: PAppSize.s15,
+                                    fontWeight: FontWeight.w600,
+                                  ),
+                            ),
+                            Text(
+                              'wealth_preservation_desc'.tr,
+                              textAlign: TextAlign.start,
+                              softWrap: true,
+                              style: Theme.of(context).textTheme.bodyLarge
+                                  ?.copyWith(
+                                    fontSize: PAppSize.s13,
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                            ),
+                          ],
+                        ).all(PAppSize.s20),
+                      ],
                     ),
-                  ),
-                );
-              },
+                  );
+                },
+              ),
             ),
-          ),
 
-          // Recommended for you
-          PAppSize.s16.verticalSpace,
-          // Quick Actions for Affluent Users
-          PSeeAllWidget(leadingText: 'recommended_for_you'.tr),
+            // Browse by category
+            PAppSize.s16.verticalSpace,
+            // Quick Actions for Affluent Users
+            PSeeAllWidget(leadingText: 'browse_by_category'.tr),
 
-          PAppSize.s16.verticalSpace,
+            PAppSize.s16.verticalSpace,
 
-          // Recommended Articles List
-          Expanded(
-            child: ListView.separated(
-              itemCount: recommendedArticles.length,
-              separatorBuilder: (context, index) => PAppSize.s20.verticalSpace,
-              itemBuilder: (context, index) {
-                final article = recommendedArticles[index];
-                return _RecommendedCard(
-                  onTap: () => PHelperFunction.switchScreen(
-                    destination: Routes.financialInsightDetailPage,
-                    args: article,
-                  ),
-
-                  type:
-                      (article['type'] as ContentType).name.capitalizeFirst ??
-                      '',
-                  duration: '${article['duration']} read' ?? '',
-                  title: article['title'] ?? '',
-                  description: article['description'] ?? '',
-                );
-              },
+            // Category Pills
+            PCategoryPills(
+              categories: vm.fCategories,
+              selectedIndex: vm.selectedFCategoryIndex.value,
+              onSelected: vm.onSelectedFCategory,
             ),
-          ),
-        ],
-      ).all(PAppSize.s20),
+
+            // Recommended for you
+            PAppSize.s16.verticalSpace,
+            // Quick Actions for Affluent Users
+            PSeeAllWidget(leadingText: 'recommended_for_you'.tr),
+
+            PAppSize.s16.verticalSpace,
+
+            // Recommended Articles List
+            Expanded(
+              child: ListView.separated(
+                itemCount: recommendedArticles.length,
+                separatorBuilder: (context, index) =>
+                    PAppSize.s20.verticalSpace,
+                itemBuilder: (context, index) {
+                  final article = recommendedArticles[index];
+                  return _RecommendedCard(
+                    onTap: () => PHelperFunction.switchScreen(
+                      destination: Routes.financialInsightDetailPage,
+                      args: article,
+                    ),
+
+                    type:
+                        (article['type'] as ContentType).name.capitalizeFirst ??
+                        '',
+                    duration: '${article['duration']} read' ?? '',
+                    title: article['title'] ?? '',
+                    description: article['description'] ?? '',
+                  );
+                },
+              ),
+            ),
+          ],
+        ).all(PAppSize.s20),
+      ),
     );
   }
 }

@@ -76,6 +76,10 @@ class $AssetsIconsGen {
   SvgGenImage get affluentBadge =>
       const SvgGenImage('assets/icons/affluent.badge.svg');
 
+  /// File path: assets/icons/airport.security.icon.svg
+  SvgGenImage get airportSecurityIcon =>
+      const SvgGenImage('assets/icons/airport.security.icon.svg');
+
   /// File path: assets/icons/anchor.icon.svg
   SvgGenImage get anchorIcon =>
       const SvgGenImage('assets/icons/anchor.icon.svg');
@@ -152,6 +156,10 @@ class $AssetsIconsGen {
   /// File path: assets/icons/close.icon.svg
   SvgGenImage get closeIcon => const SvgGenImage('assets/icons/close.icon.svg');
 
+  /// File path: assets/icons/color.food.icon.svg
+  SvgGenImage get colorFoodIcon =>
+      const SvgGenImage('assets/icons/color.food.icon.svg');
+
   /// File path: assets/icons/complimentary-services.svg
   SvgGenImage get complimentaryServices =>
       const SvgGenImage('assets/icons/complimentary-services.svg');
@@ -217,11 +225,21 @@ class $AssetsIconsGen {
   /// File path: assets/icons/ghana.flag.svg
   SvgGenImage get ghanaFlag => const SvgGenImage('assets/icons/ghana.flag.svg');
 
+  /// File path: assets/icons/golf.icon.svg
+  SvgGenImage get golfIcon => const SvgGenImage('assets/icons/golf.icon.svg');
+
+  /// File path: assets/icons/health.icons.svg
+  SvgGenImage get healthIcons =>
+      const SvgGenImage('assets/icons/health.icons.svg');
+
   /// File path: assets/icons/help.icon.svg
   SvgGenImage get helpIcon => const SvgGenImage('assets/icons/help.icon.svg');
 
   /// File path: assets/icons/home.icon.svg
   SvgGenImage get homeIcon => const SvgGenImage('assets/icons/home.icon.svg');
+
+  /// File path: assets/icons/hotel.icon.svg
+  SvgGenImage get hotelIcon => const SvgGenImage('assets/icons/hotel.icon.svg');
 
   /// File path: assets/icons/info.icon.svg
   SvgGenImage get infoIcon => const SvgGenImage('assets/icons/info.icon.svg');
@@ -410,6 +428,7 @@ class $AssetsIconsGen {
     affluentCard,
     affluentAvatar,
     affluentBadge,
+    airportSecurityIcon,
     anchorIcon,
     arrowDownIos,
     arrowForwardIos,
@@ -432,6 +451,7 @@ class $AssetsIconsGen {
     checkWhite,
     clockIcon,
     closeIcon,
+    colorFoodIcon,
     complimentaryServices,
     contributionAlert,
     deleteIcon,
@@ -451,8 +471,11 @@ class $AssetsIconsGen {
     financialInsight,
     fingerprint,
     ghanaFlag,
+    golfIcon,
+    healthIcons,
     helpIcon,
     homeIcon,
+    hotelIcon,
     infoIcon,
     invest,
     keyboardArrowDown,
