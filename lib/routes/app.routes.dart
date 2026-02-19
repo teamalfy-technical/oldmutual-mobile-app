@@ -70,6 +70,9 @@ abstract class Routes {
   static const financialInsightPage = _Paths.financialInsightPage;
   static const financialInsightDetailPage = _Paths.financialInsightDetailPage;
   static const complimentaryServicePage = _Paths.complimentaryServicePage;
+  static const complimentaryServiceDetailPage =
+      _Paths.complimentaryServiceDetailPage;
+  static const affluentCardPage = _Paths.affluentCardPage;
 }
 
 abstract class _Paths {
@@ -139,4 +142,7 @@ abstract class _Paths {
   static const financialInsightPage = '/financial-insight-page';
   static const financialInsightDetailPage = '/financial-insight-detail-page';
   static const complimentaryServicePage = '/complimentary-service-page';
+  static const complimentaryServiceDetailPage =
+      '/complimentary-service-detail-page';
+  static const affluentCardPage = '/affluent-card-page';
 }

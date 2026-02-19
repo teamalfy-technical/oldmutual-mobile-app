@@ -255,16 +255,12 @@ class _PPaymentHistoryPageState extends State<PPaymentHistoryPage> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 PAppSize.s8.verticalSpace,
-                PSeeAllWidget(
-                  leadingText: 'payment_details'.tr,
-                  leadingFontSize: PAppSize.s20,
-                  trailing: Assets.icons.closeIcon.svg(
-                    color: PHelperFunction.isDarkMode(context)
-                        ? PAppColor.whiteColor
-                        : PAppColor.blackColor,
-                  ),
-                  onTap: () => PHelperFunction.pop(),
+                PAppSize.s8.verticalSpace,
+                PDialogTitleWidget(
+                  title: 'payment_details'.tr,
+                  onClose: () => PHelperFunction.pop(),
                 ),
+
                 PAppSize.s14.verticalSpace,
                 Divider(),
 
@@ -380,16 +376,11 @@ class _PPaymentHistoryPageState extends State<PPaymentHistoryPage> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   PAppSize.s8.verticalSpace,
-                  PSeeAllWidget(
-                    leadingText: 'filter_payments'.tr,
-                    leadingFontSize: PAppSize.s20,
-                    trailing: Assets.icons.closeIcon.svg(
-                      color: PHelperFunction.isDarkMode(context)
-                          ? PAppColor.whiteColor
-                          : PAppColor.blackColor,
-                    ),
-                    onTap: () => PHelperFunction.pop(),
+                  PDialogTitleWidget(
+                    title: 'filter_payments'.tr,
+                    onClose: () => PHelperFunction.pop(),
                   ),
+
                   PAppSize.s14.verticalSpace,
                   Divider(),
                   PAppSize.s16.verticalSpace,

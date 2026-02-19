@@ -130,13 +130,15 @@ class PAppColor {
   static const Color info300 = Color(0xFF9271ec);
   static const Color info500 = Color(0xFF5c2be2);
   static const Color info700 = Color(0xFF411fa0);
+
+  static final primaryGradient = LinearGradient(
+  colors: [PAppColor.primaryDark, PAppColor.primary],
+  begin: Alignment.centerLeft,
+  end: Alignment.centerRight,
+);
 }
 
-final gradient = LinearGradient(
-  begin: Alignment.bottomCenter,
-  end: Alignment.topCenter,
-  colors: [PAppColor.voiletLight, PAppColor.voiletDark],
-);
+
 
 final borderRadius = BorderRadius.only(
   topLeft: Radius.circular(PAppSize.s6),

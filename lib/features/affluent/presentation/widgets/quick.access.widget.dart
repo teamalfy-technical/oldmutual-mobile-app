@@ -34,9 +34,9 @@ class QuickAccessCard extends StatelessWidget {
                     decoration: BoxDecoration(
                       shape: BoxShape.circle,
                       border: Border.all(
-                        color: PAppColor.fillColor.withOpacityExt(
-                          PAppSize.s0_3,
-                        ),
+                        color: PHelperFunction.isDarkMode(context)
+                            ? PAppColor.fillColor.withOpacityExt(PAppSize.s0_3)
+                            : PAppColor.primary.withOpacityExt(PAppSize.s0_3),
                         width: PAppSize.s1,
                       ),
                     ),

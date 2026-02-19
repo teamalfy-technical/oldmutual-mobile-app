@@ -19,6 +19,7 @@ export 'widgets/custom.phone.textfield.dart';
 export 'widgets/custom.pin.put.dart';
 export 'widgets/custom.tabbar.widget.dart';
 export 'widgets/custom.textfield.dart';
+export 'widgets/dialog.title.widget.dart';
 export 'widgets/empty.state.widget.dart';
 export 'widgets/gradient.button.dart';
 export 'widgets/id.number.formatter.dart';

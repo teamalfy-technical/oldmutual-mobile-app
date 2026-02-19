@@ -580,6 +580,29 @@ class AppTranslations extends Translations {
           'Learn how to protect and grow \nyour wealth in 2026',
       'complementary_benefits': 'Complimentary Benefits',
       'valid_until': 'Valid until @date',
+
+      // Complimentary Service Detail Page
+      'whats_included': 'What\'s Included',
+      'how_to_redeem': 'How to Redeem',
+      'contact_information': 'Contact Information',
+      'visit_partner': 'Visit Partner',
+      'contact_ro': 'Contact RO',
+      'simply_present_affluent_card': 'Simply present your Affluent Card',
+      'copied': 'Copied',
+      'redemption_code_copied': 'Redemption code copied to clipboard',
+
+      // Affluent Card Page
+      'affluent_member_card': 'AFFLUENT MEMBER CARD',
+      'my_affluent_card': 'My Affluent Card',
+      'ghana_card_no': 'Ghana Card No:',
+      'member_since': 'Member Since',
+      'your_ro': 'Your RO',
+      'download_card': 'Download Card',
+      'share_securely': 'Share Securely',
+      'track_claims_text': 'Track Claims',
+      'save_content': 'Save Content',
+      'bookmarked_articles':
+          'Your bookmarked articles, videos, and infographics',
     },
     'hi_IN': {'app_name': 'Pensions App'},
     'fr_FR': {'app_name': 'Pensions App'},

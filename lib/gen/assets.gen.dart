@@ -266,6 +266,9 @@ class $AssetsIconsGen {
   SvgGenImage get lockOutline =>
       const SvgGenImage('assets/icons/lock.outline.svg');
 
+  /// File path: assets/icons/logomark.svg
+  SvgGenImage get logomark => const SvgGenImage('assets/icons/logomark.svg');
+
   /// File path: assets/icons/logout.icon.svg
   SvgGenImage get logoutIcon =>
       const SvgGenImage('assets/icons/logout.icon.svg');
@@ -483,6 +486,7 @@ class $AssetsIconsGen {
     linkBtnIcon,
     lockIcon,
     lockOutline,
+    logomark,
     logoutIcon,
     mail,
     maintenance,

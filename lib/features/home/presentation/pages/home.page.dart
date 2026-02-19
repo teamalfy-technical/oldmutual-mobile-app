@@ -161,19 +161,7 @@ class PHomePage extends StatelessWidget {
                                   children: [
                                     PSeeAllWidget(
                                       leadingText: 'products'.tr,
-                                      trailing: Text(
-                                        'see_all'.tr,
-                                        textAlign: TextAlign.center,
-                                        softWrap: true,
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .titleMedium
-                                            ?.copyWith(
-                                              fontSize: PAppSize.s16,
-                                              color: PAppColor.successMedium,
-                                              fontWeight: FontWeight.w600,
-                                            ),
-                                      ),
+
                                       onTap: () => PHelperFunction.switchScreen(
                                         destination: Routes.productsPage,
                                       ),
@@ -250,9 +238,10 @@ class PHomePage extends StatelessWidget {
                               QuickAccessCard(
                                 icon: Assets.icons.affluentCard.svg(),
                                 label: 'affluent_card'.tr,
-                                onTap: () {
-                                  // TODO: Navigate to Affluent Card page
-                                },
+                                onTap: () => PHelperFunction.switchScreen(
+                                  destination: Routes.affluentCardPage,
+                                  args: user,
+                                ),
                               ),
                               QuickAccessCard(
                                 icon: Assets.icons.trackClaims.svg(),
@@ -320,17 +309,7 @@ class PHomePage extends StatelessWidget {
                               /// Recommended For You
                               PSeeAllWidget(
                                 leadingText: 'recommended_for_you'.tr,
-                                trailing: Text(
-                                  'see_all'.tr,
-                                  textAlign: TextAlign.center,
-                                  softWrap: true,
-                                  style: Theme.of(context).textTheme.titleMedium
-                                      ?.copyWith(
-                                        fontSize: PAppSize.s16,
-                                        color: PAppColor.successMedium,
-                                        fontWeight: FontWeight.w600,
-                                      ),
-                                ),
+
                                 onTap: () => PHelperFunction.switchScreen(
                                   destination: Routes.recommendationPage,
                                 ),

@@ -315,5 +315,13 @@ class AppPages {
       name: _Paths.complimentaryServicePage,
       page: () => PComplimentaryServicePage(),
     ),
+    GetPage(
+      name: _Paths.complimentaryServiceDetailPage,
+      page: () => PComplimentaryServiceDetailPage(service: Get.arguments),
+    ),
+    GetPage(
+      name: _Paths.affluentCardPage,
+      page: () => PAffluentCardPage(user: Get.arguments),
+    ),
   ];
 }
