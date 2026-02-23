@@ -26,4 +26,57 @@ class AffluentServiceImpl implements AffluentService {
   }) {
     return affluentRepo.deleteContentCategory(id: id);
   }
+
+  @override
+  Future<Either<PFailure, ApiResponse<List<Content>>>> getContents({
+    String? title,
+    String? categoryName,
+    String? slug,
+    String? contentType,
+  }) {
+    return affluentRepo.getContents(
+      title: title,
+      categoryName: categoryName,
+      slug: slug,
+      contentType: contentType,
+    );
+  }
+
+  @override
+  Future<Either<PFailure, ApiResponse<Content>>> getContentById({
+    required int id,
+  }) {
+    return affluentRepo.getContentById(id: id);
+  }
+
+  @override
+  Future<Either<PFailure, ApiResponse<Content>>> getContentBySlug({
+    required String slug,
+  }) {
+    return affluentRepo.getContentBySlug(slug: slug);
+  }
+
+  @override
+  Future<Either<PFailure, PaginatedResponse<Content>>> getBookmarkedContents() {
+    return affluentRepo.getBookmarkedContents();
+  }
+
+  @override
+  Future<Either<PFailure, ApiResponse<Content>>> bookmarkContent({
+    required int id,
+  }) {
+    return affluentRepo.bookmarkContent(id: id);
+  }
+
+  @override
+  Future<Either<PFailure, ApiResponse<Content>>> getBookmarkedContent({
+    required int id,
+  }) {
+    return affluentRepo.getBookmarkedContent(id: id);
+  }
+
+  @override
+  Future<Either<PFailure, ApiResponse<int>>> getBookmarkedContentCount() {
+    return affluentRepo.getBookmarkedContentCount();
+  }
 }

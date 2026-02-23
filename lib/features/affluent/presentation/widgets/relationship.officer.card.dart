@@ -7,7 +7,18 @@ import 'package:oldmutual_pensions_app/gen/assets.gen.dart';
 
 class PRelationshipOfficerCard extends StatelessWidget {
   final Member? user;
-  const PRelationshipOfficerCard({super.key, this.user});
+  final Function()? onCallTap;
+  final Function()? onMessageTap;
+  final Function()? onEmailTap;
+  final String? label;
+  const PRelationshipOfficerCard({
+    super.key,
+    this.user,
+    this.onCallTap,
+    this.onMessageTap,
+    this.onEmailTap,
+    this.label,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -29,15 +40,19 @@ class PRelationshipOfficerCard extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(
-                        'your_relationship_officer'.tr,
-                        style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                          fontSize: PAppSize.s14,
-                          fontWeight: FontWeight.w400,
+                      Visibility(
+                        visible: label == null,
+                        child: Text(
+                          'your_relationship_officer'.tr,
+                          style: Theme.of(context).textTheme.bodyLarge
+                              ?.copyWith(
+                                fontSize: PAppSize.s14,
+                                fontWeight: FontWeight.w400,
+                              ),
                         ),
                       ),
                       Text(
-                        'Sarah Osei',
+                        label ?? 'Sarah Osei',
                         style: Theme.of(context).textTheme.bodyLarge?.copyWith(
                           fontSize: PAppSize.s16,
                           fontWeight: FontWeight.w600,
@@ -49,7 +64,7 @@ class PRelationshipOfficerCard extends StatelessWidget {
 
                 ctaButton(
                   context: context,
-                  onTap: () {},
+                  onTap: onCallTap,
                   icon: Assets.icons.call.svg(
                     color: PHelperFunction.isDarkMode(context)
                         ? PAppColor.whiteColor
@@ -59,7 +74,7 @@ class PRelationshipOfficerCard extends StatelessWidget {
                 PAppSize.s8.horizontalSpace,
                 ctaButton(
                   context: context,
-                  onTap: () {},
+                  onTap: onMessageTap,
                   icon: Assets.icons.chat.svg(
                     color: PHelperFunction.isDarkMode(context)
                         ? PAppColor.whiteColor
@@ -70,7 +85,7 @@ class PRelationshipOfficerCard extends StatelessWidget {
                 PAppSize.s8.horizontalSpace,
                 ctaButton(
                   context: context,
-                  onTap: () {},
+                  onTap: onEmailTap,
                   icon: Assets.icons.mail.svg(
                     color: PHelperFunction.isDarkMode(context)
                         ? PAppColor.whiteColor

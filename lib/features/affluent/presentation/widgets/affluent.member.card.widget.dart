@@ -25,7 +25,8 @@ class PAffluentMemberCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isDarkMode = PHelperFunction.isDarkMode(context);
-    final colors = gradientColors ?? [const Color(0xFFD4AF37), const Color(0xFFF4E5B0)];
+    final colors =
+        gradientColors ?? [const Color(0xFFD4AF37), const Color(0xFFF4E5B0)];
 
     return Container(
       decoration: BoxDecoration(
@@ -89,11 +90,12 @@ class PAffluentMemberCard extends StatelessWidget {
                         PAppSize.s4.verticalSpace,
                         Text(
                           '${'ghana_card_no'.tr} $cardNumber',
-                          style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                            fontSize: PAppSize.s14,
-                            fontWeight: FontWeight.w500,
-                            color: PAppColor.primary,
-                          ),
+                          style: Theme.of(context).textTheme.bodyMedium
+                              ?.copyWith(
+                                fontSize: PAppSize.s14,
+                                fontWeight: FontWeight.w500,
+                                color: PAppColor.primary,
+                              ),
                         ),
                       ],
                     ],
@@ -115,7 +117,8 @@ class PAffluentMemberCard extends StatelessWidget {
               color: isDarkMode
                   ? PAppColor.greyColor.withOpacityExt(PAppSize.s0_3)
                   : PAppColor.greyColor.withOpacityExt(PAppSize.s0_2),
-              thickness: 1,
+              thickness: PAppSize.s1,
+              height: PAppSize.s1,
             ),
 
             PAppSize.s16.verticalSpace,

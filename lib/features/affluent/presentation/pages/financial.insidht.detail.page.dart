@@ -3,12 +3,13 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:oldmutual_pensions_app/core/utils/utils.dart';
+import 'package:oldmutual_pensions_app/features/affluent/affluent.dart';
 import 'package:oldmutual_pensions_app/gen/assets.gen.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
 class PFinancialInsightDetailPage extends StatefulWidget {
-  final Map<String, dynamic> article;
-  const PFinancialInsightDetailPage({super.key, required this.article});
+  final Content content;
+  const PFinancialInsightDetailPage({super.key, required this.content});
 
   @override
   State<PFinancialInsightDetailPage> createState() =>
@@ -18,7 +19,7 @@ class PFinancialInsightDetailPage extends StatefulWidget {
 class _PFinancialInsightDetailPageState
     extends State<PFinancialInsightDetailPage> {
   late WebViewController _webViewController;
-  bool get isVideo => widget.article['type'] == ContentType.video;
+  bool get isVideo => widget.content.contentType != 'article';
 
   @override
   void initState() {
@@ -29,7 +30,7 @@ class _PFinancialInsightDetailPageState
   }
 
   void _initializeWebView() {
-    final videoUrl = widget.article['video_url'] ?? '';
+    final videoUrl = widget.content.mediaUrl ?? '';
     final embedUrl = _convertToEmbedUrl(videoUrl);
 
     _webViewController = WebViewController()
@@ -109,10 +110,9 @@ class _PFinancialInsightDetailPageState
 
   @override
   Widget build(BuildContext context) {
-    final article = widget.article;
-    final contentType =
-        (article['type'] as ContentType).name.capitalizeFirst ?? '';
-    final duration = article['duration'] ?? '';
+    final content = widget.content;
+    final contentType = content.contentType?.capitalizeFirst ?? '';
+    final duration = content.duration ?? '6 mins';
     final currentDate = DateFormat('MMM dd, yyyy').format(DateTime.now());
 
     return Scaffold(
@@ -120,11 +120,13 @@ class _PFinancialInsightDetailPageState
           ? PAppColor.darkBgColor
           : PAppColor.fillColor,
       appBar: AppBar(
-        title: Text(article['title']),
+        title: Text(content.title ?? ''),
         actions: [
           IconButton(
             onPressed: () {
-              // bookmark content
+              if (content.id != null) {
+                PAffluentVm.instance.bookmarkContent(id: content.id!);
+              }
             },
             icon: Assets.icons.bookmarkIcon.svg(
               color: PHelperFunction.isDarkMode(context)
@@ -194,7 +196,7 @@ class _PFinancialInsightDetailPageState
           ],
 
           // Long Description with styled headings
-          _buildStyledDescription(context, article['long_description'] ?? ''),
+          _buildStyledDescription(context, content.content ?? ''),
         ],
       ).all(PAppSize.s20).scrollable(),
     );

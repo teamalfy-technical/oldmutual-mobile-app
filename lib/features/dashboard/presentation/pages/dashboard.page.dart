@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:oldmutual_pensions_app/core/utils/utils.dart';
-import 'package:oldmutual_pensions_app/features/auth/auth.dart';
+import 'package:oldmutual_pensions_app/features/affluent/affluent.dart';
 import 'package:oldmutual_pensions_app/features/home/home.dart';
 import 'package:oldmutual_pensions_app/features/more/more.services.dart';
 import 'package:oldmutual_pensions_app/gen/assets.gen.dart';
@@ -14,26 +14,71 @@ class PDashboardPage extends StatelessWidget {
 
   final ctrl = Get.put(PHomeVm());
 
-  final List<Widget> _pages = [
+  BottomNavigationBarItem _buildNavItem({
+    required BuildContext context,
+    required Widget icon,
+    required String label,
+  }) {
+    final unselectedColor = PHelperFunction.isDarkMode(context)
+        ? PAppColor.whiteColor
+        : PAppColor.blackColor;
+
+    return BottomNavigationBarItem(
+      icon: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          ColorFiltered(
+            colorFilter: ColorFilter.mode(unselectedColor, BlendMode.srcIn),
+            child: icon,
+          ),
+          SizedBox(height: PAppSize.s4),
+          Text(
+            label,
+            style: TextStyle(
+              fontSize: PAppSize.s10,
+              color: unselectedColor,
+              fontWeight: FontWeight.w600,
+            ),
+          ),
+        ],
+      ),
+      activeIcon: ShaderMask(
+        blendMode: BlendMode.srcIn,
+        shaderCallback: (bounds) =>
+            PAppColor.primaryGradient.createShader(bounds),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            ColorFiltered(
+              colorFilter: const ColorFilter.mode(
+                Colors.white,
+                BlendMode.srcIn,
+              ),
+              child: icon,
+            ),
+            SizedBox(height: PAppSize.s4),
+            Text(
+              label,
+              style: TextStyle(
+                fontSize: PAppSize.s10,
+                color: Colors.white,
+                fontWeight: FontWeight.w700,
+              ),
+            ),
+          ],
+        ),
+      ),
+      label: label,
+    );
+  }
+
+  List<Widget> get _pages => [
     PHomePage(),
     PUserDetailPage(isShowAppBar: false),
-    // PManagePage(),
-    // Container(
-    //   alignment: Alignment.center,
-    //   color: PAppColor.darkAppBarColor2,
-    //   child: Text('manage'.tr),
-    // ),
+    if (ctrl.user.value?.affluent == true) ...[
+      PSupportPage(user: ctrl.user.value),
+    ],
     PMorePage(),
-    // PProfileSettingsPage(),
-    // Container(
-    //   alignment: Alignment.center,
-    //   color: PAppColor.darkAppBarColor2,
-    //   child: Text('more'.tr),
-    // ),
-    // PFactSheetPage(),
-    // PNotificationPage(),
-    // PProfilePage(),
-    // PMoreServicesPage(),
   ];
 
   @override
@@ -49,47 +94,40 @@ class PDashboardPage extends StatelessWidget {
               : PAppColor.fillColor,
           appBar: PreferredSize(
             preferredSize: Size.fromHeight(MediaQuery.of(context).padding.top),
-            child: FutureBuilder<Member?>(
-              future: PSecureStorage().getAuthResponse(),
-              builder: (context, snapshot) {
-                final user = snapshot.data;
+            child:
                 // Hide AppBar if user is affluent, but keep status bar spacing
-                if (user?.affluent == true) {
-                  return Container(
+                ctrl.user.value?.affluent == true
+                ? Container(
                     color: PHelperFunction.isDarkMode(context)
                         ? PAppColor.darkAppBarColor
                         : PAppColor.whiteColor,
                     height: MediaQuery.of(context).padding.top,
-                  );
-                }
-                // Show AppBar if user is not affluent
-                return AppBar(
-                  title: ctrl.currentIndex.value == 1
-                      ? Text('manage'.tr)
-                      : ctrl.currentIndex.value == 2
-                      ? Text('more'.tr)
-                      : FutureBuilder<String?>(
-                          future: PSecureStorage().getUserFirstName(),
-                          builder: (context, snapshot) {
-                            return Text('Hi ${snapshot.data ?? ''}');
-                          },
+                  )
+                : AppBar(
+                    title: ctrl.currentIndex.value == 1
+                        ? Text('manage'.tr)
+                        : ctrl.currentIndex.value == 2
+                        ? Text('more'.tr)
+                        : FutureBuilder<String?>(
+                            future: PSecureStorage().getUserFirstName(),
+                            builder: (context, snapshot) {
+                              return Text('Hi ${snapshot.data ?? ''}');
+                            },
+                          ),
+                    actions: [
+                      IconButton(
+                        onPressed: () => PHelperFunction.switchScreen(
+                          destination: Routes.notificationPage,
                         ),
-                  actions: [
-                    IconButton(
-                      onPressed: () => PHelperFunction.switchScreen(
-                        destination: Routes.notificationPage,
+                        icon: Assets.icons.notificationIcon.svg(
+                          height: PAppSize.s28,
+                          color: PHelperFunction.isDarkMode(context)
+                              ? PAppColor.whiteColor
+                              : PAppColor.cardDarkColor,
+                        ),
                       ),
-                      icon: Assets.icons.notificationIcon.svg(
-                        height: PAppSize.s28,
-                        color: PHelperFunction.isDarkMode(context)
-                            ? PAppColor.whiteColor
-                            : PAppColor.cardDarkColor,
-                      ),
-                    ),
-                  ],
-                );
-              },
-            ),
+                    ],
+                  ),
           ),
           bottomNavigationBar: BottomNavigationBar(
             currentIndex: ctrl.currentIndex.value,
@@ -98,62 +136,30 @@ class PDashboardPage extends StatelessWidget {
             backgroundColor: PHelperFunction.isDarkMode(context)
                 ? PAppColor.darkAppBarColor
                 : PAppColor.whiteColor,
-            showSelectedLabels: true,
-            showUnselectedLabels: true,
-            selectedItemColor: PHelperFunction.isDarkMode(context)
-                ? PAppColor.successLight
-                : PAppColor.successDark,
-            selectedIconTheme: IconThemeData(
-              color: PHelperFunction.isDarkMode(context)
-                  ? PAppColor.successLight
-                  : PAppColor.successDark,
-            ),
-            selectedFontSize: PAppSize.s10,
-            unselectedItemColor: PHelperFunction.isDarkMode(context)
-                ? PAppColor.whiteColor
-                : PAppColor.blackColor,
-            unselectedIconTheme: IconThemeData(
-              color: PHelperFunction.isDarkMode(context)
-                  ? PAppColor.whiteColor
-                  : PAppColor.blackColor,
-            ),
-            // unselectedFontSize: PAppSize.s1,
+            showSelectedLabels: false,
+            showUnselectedLabels: false,
             type: BottomNavigationBarType.fixed,
             items: [
-              BottomNavigationBarItem(
-                icon: Assets.icons.homeIcon.svg(
-                  color: ctrl.currentIndex.value == 0
-                      ? PHelperFunction.isDarkMode(context)
-                            ? PAppColor.successLight
-                            : PAppColor.successDark
-                      : PHelperFunction.isDarkMode(context)
-                      ? PAppColor.whiteColor
-                      : PAppColor.blackColor,
-                ),
+              _buildNavItem(
+                context: context,
+                icon: Assets.icons.homeIcon.svg(),
                 label: 'home'.tr,
               ),
-              BottomNavigationBarItem(
-                icon: Assets.icons.manageIcon.svg(
-                  color: ctrl.currentIndex.value == 1
-                      ? PHelperFunction.isDarkMode(context)
-                            ? PAppColor.successLight
-                            : PAppColor.successDark
-                      : PHelperFunction.isDarkMode(context)
-                      ? PAppColor.whiteColor
-                      : PAppColor.blackColor,
-                ),
+              _buildNavItem(
+                context: context,
+                icon: Assets.icons.manageIcon.svg(),
                 label: 'manage'.tr,
               ),
-              BottomNavigationBarItem(
-                icon: Assets.icons.moreIcon.svg(
-                  color: ctrl.currentIndex.value == 2
-                      ? PHelperFunction.isDarkMode(context)
-                            ? PAppColor.successLight
-                            : PAppColor.successDark
-                      : PHelperFunction.isDarkMode(context)
-                      ? PAppColor.whiteColor
-                      : PAppColor.blackColor,
+              if (ctrl.user.value?.affluent == true) ...[
+                _buildNavItem(
+                  context: context,
+                  icon: Assets.icons.supportIcon.svg(),
+                  label: 'support'.tr,
                 ),
+              ],
+              _buildNavItem(
+                context: context,
+                icon: Assets.icons.moreIcon.svg(),
                 label: 'more'.tr,
               ),
             ],

@@ -231,9 +231,10 @@ class PHomePage extends StatelessWidget {
                               QuickAccessCard(
                                 icon: Assets.icons.complimentaryServices.svg(),
                                 label: 'complimentary_services'.tr,
-                                onTap: () => PHelperFunction.switchScreen(
-                                  destination: Routes.complimentaryServicePage,
-                                ),
+                                onTap: () {},
+                                // onTap: () => PHelperFunction.switchScreen(
+                                //   destination: Routes.complimentaryServicePage,
+                                // ),
                               ),
                               QuickAccessCard(
                                 icon: Assets.icons.affluentCard.svg(),
@@ -246,9 +247,9 @@ class PHomePage extends StatelessWidget {
                               QuickAccessCard(
                                 icon: Assets.icons.trackClaims.svg(),
                                 label: 'track_claims'.tr,
-                                onTap: () {
-                                  // TODO: Navigate to Track Claims page
-                                },
+                                onTap: () => PHelperFunction.switchScreen(
+                                  destination: Routes.trackClaimsPage,
+                                ),
                               ),
                             ],
                           ),

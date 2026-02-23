@@ -32,4 +32,72 @@ class AffluentRepoImpl implements AffluentRepo {
       function: () async => await affluentDs.deleteContentCategory(id: id),
     );
   }
+
+  @override
+  Future<Either<PFailure, ApiResponse<List<Content>>>> getContents({
+    String? title,
+    String? categoryName,
+    String? slug,
+    String? contentType,
+  }) async {
+    return await customRepositoryWrapper.wrapRepositoryFunction(
+      function: () async => await affluentDs.getContents(
+        title: title,
+        categoryName: categoryName,
+        slug: slug,
+        contentType: contentType,
+      ),
+    );
+  }
+
+  @override
+  Future<Either<PFailure, ApiResponse<Content>>> getContentById({
+    required int id,
+  }) async {
+    return await customRepositoryWrapper.wrapRepositoryFunction(
+      function: () async => await affluentDs.getContentById(id: id),
+    );
+  }
+
+  @override
+  Future<Either<PFailure, ApiResponse<Content>>> getContentBySlug({
+    required String slug,
+  }) async {
+    return await customRepositoryWrapper.wrapRepositoryFunction(
+      function: () async => await affluentDs.getContentBySlug(slug: slug),
+    );
+  }
+
+  @override
+  Future<Either<PFailure, PaginatedResponse<Content>>>
+  getBookmarkedContents() async {
+    return await customRepositoryWrapper.wrapRepositoryFunction(
+      function: () async => await affluentDs.getBookmarkedContents(),
+    );
+  }
+
+  @override
+  Future<Either<PFailure, ApiResponse<Content>>> bookmarkContent({
+    required int id,
+  }) async {
+    return await customRepositoryWrapper.wrapRepositoryFunction(
+      function: () async => await affluentDs.bookmarkContent(id: id),
+    );
+  }
+
+  @override
+  Future<Either<PFailure, ApiResponse<Content>>> getBookmarkedContent({
+    required int id,
+  }) async {
+    return await customRepositoryWrapper.wrapRepositoryFunction(
+      function: () async => await affluentDs.getBookmarkedContent(id: id),
+    );
+  }
+
+  @override
+  Future<Either<PFailure, ApiResponse<int>>> getBookmarkedContentCount() async {
+    return await customRepositoryWrapper.wrapRepositoryFunction(
+      function: () async => await affluentDs.getBookmarkedContentCount(),
+    );
+  }
 }

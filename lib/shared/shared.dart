@@ -28,4 +28,5 @@ export 'widgets/page.tag.widget.dart';
 export 'widgets/popup.dialog.dart';
 export 'widgets/radio.listtile.widget.dart';
 export 'widgets/see.all.widget.dart';
+export 'widgets/shimmer.wrapper.dart';
 export 'widgets/text.button.dart';

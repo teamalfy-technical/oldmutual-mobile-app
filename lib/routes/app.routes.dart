@@ -73,6 +73,8 @@ abstract class Routes {
   static const complimentaryServiceDetailPage =
       _Paths.complimentaryServiceDetailPage;
   static const affluentCardPage = _Paths.affluentCardPage;
+  static const saveContentPage = _Paths.saveContentPage;
+  static const trackClaimsPage = _Paths.trackClaimsPage;
 }
 
 abstract class _Paths {
@@ -145,4 +147,6 @@ abstract class _Paths {
   static const complimentaryServiceDetailPage =
       '/complimentary-service-detail-page';
   static const affluentCardPage = '/affluent-card-page';
+  static const saveContentPage = '/save-content-page';
+  static const trackClaimsPage = '/track-claims-page';
 }

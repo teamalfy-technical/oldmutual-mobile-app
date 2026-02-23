@@ -50,4 +50,111 @@ class AffluentDsImpl implements AffluentDs {
       return ApiResponse<dynamic>.fromJson(res, (data) => data);
     });
   }
+
+  @override
+  Future<ApiResponse<List<Content>>> getContents({
+    String? title,
+    String? categoryName,
+    String? slug,
+    String? contentType,
+  }) async {
+    return await asyncFunctionWrapper.handleAsyncNetworkCall(() async {
+      final queryParams = <String, dynamic>{
+        if (title != null) 'filter[title]': title,
+        if (categoryName != null) 'filter[category.name]': categoryName,
+        if (slug != null) 'filter[slug]': slug,
+        if (contentType != null) 'filter[content_type]': contentType,
+      };
+      final res = await apiService.callService(
+        requestType: RequestType.get,
+        endPoint: Env.getContents,
+        queryParams: queryParams.isNotEmpty ? queryParams : null,
+      );
+      return ApiResponse<List<Content>>.fromJson(
+        res,
+        (data) => (data as List).map((e) => Content.fromJson(e)).toList(),
+      );
+    });
+  }
+
+  @override
+  Future<ApiResponse<Content>> getContentById({required int id}) async {
+    return await asyncFunctionWrapper.handleAsyncNetworkCall(() async {
+      final res = await apiService.callService(
+        requestType: RequestType.get,
+        endPoint: '${Env.getContentById}/$id',
+      );
+      return ApiResponse<Content>.fromJson(
+        res,
+        (data) => Content.fromJson(data),
+      );
+    });
+  }
+
+  @override
+  Future<ApiResponse<Content>> getContentBySlug({required String slug}) async {
+    return await asyncFunctionWrapper.handleAsyncNetworkCall(() async {
+      final res = await apiService.callService(
+        requestType: RequestType.get,
+        endPoint: '${Env.getContentBySlug}/$slug',
+      );
+      return ApiResponse<Content>.fromJson(
+        res,
+        (data) => Content.fromJson(data),
+      );
+    });
+  }
+
+  @override
+  Future<PaginatedResponse<Content>> getBookmarkedContents() async {
+    return await asyncFunctionWrapper.handleAsyncNetworkCall(() async {
+      final res = await apiService.callService(
+        requestType: RequestType.get,
+        endPoint: Env.getBookmarkedContents,
+      );
+      return PaginatedResponse<Content>.fromJson(
+        res,
+        (data) => Content.fromJson(data),
+      );
+    });
+  }
+
+  @override
+  Future<ApiResponse<Content>> bookmarkContent({required int id}) async {
+    return await asyncFunctionWrapper.handleAsyncNetworkCall(() async {
+      final res = await apiService.callService(
+        requestType: RequestType.post,
+        endPoint: '${Env.bookmarkContent}/$id',
+      );
+      return ApiResponse<Content>.fromJson(
+        res,
+        (data) => Content.fromJson(data),
+      );
+    });
+  }
+
+  @override
+  Future<ApiResponse<Content>> getBookmarkedContent({required int id}) async {
+    return await asyncFunctionWrapper.handleAsyncNetworkCall(() async {
+      final res = await apiService.callService(
+        requestType: RequestType.get,
+        endPoint: '${Env.getBookmarkedContent}/$id',
+      );
+      return ApiResponse<Content>.fromJson(
+        res,
+        (data) => Content.fromJson(data),
+      );
+    });
+  }
+
+  @override
+  Future<ApiResponse<int>> getBookmarkedContentCount() async {
+    return await asyncFunctionWrapper.handleAsyncNetworkCall(() async {
+      final res = await apiService.callService(
+        requestType: RequestType.get,
+        endPoint: Env.getBookmarkedContentCount,
+      );
+      return ApiResponse<int>.fromJson(res, (data) => data as int);
+    });
+  }
 }

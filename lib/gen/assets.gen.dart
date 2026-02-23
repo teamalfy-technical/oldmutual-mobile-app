@@ -109,6 +109,10 @@ class $AssetsIconsGen {
   /// File path: assets/icons/book.icon.svg
   SvgGenImage get bookIcon => const SvgGenImage('assets/icons/book.icon.svg');
 
+  /// File path: assets/icons/bookmark.icon.solid.svg
+  SvgGenImage get bookmarkIconSolid =>
+      const SvgGenImage('assets/icons/bookmark.icon.solid.svg');
+
   /// File path: assets/icons/bookmark.icon.svg
   SvgGenImage get bookmarkIcon =>
       const SvgGenImage('assets/icons/bookmark.icon.svg');
@@ -440,6 +444,7 @@ class $AssetsIconsGen {
     article,
     benchmarkIcon,
     bookIcon,
+    bookmarkIconSolid,
     bookmarkIcon,
     bottomLogoBanner,
     brightness,

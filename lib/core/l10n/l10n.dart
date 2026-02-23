@@ -600,9 +600,14 @@ class AppTranslations extends Translations {
       'download_card': 'Download Card',
       'share_securely': 'Share Securely',
       'track_claims_text': 'Track Claims',
-      'save_content': 'Save Content',
+      'save_content': 'Saved Content',
+      'no_saved_content':
+          'No saved content yet.\nBookmark articles, videos, and\ninfographics from Financial Insights!',
       'bookmarked_articles':
           'Your bookmarked articles, videos, and infographics',
+      'my_relationship_manager': 'My Relationship Manager',
+      'service_hours': 'Service Hours',
+      'contact': 'Contact',
     },
     'hi_IN': {'app_name': 'Pensions App'},
     'fr_FR': {'app_name': 'Pensions App'},

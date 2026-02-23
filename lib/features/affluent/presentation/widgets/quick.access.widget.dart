@@ -26,31 +26,35 @@ class QuickAccessCard extends StatelessWidget {
       ),
       child:
           Column(
-                // mainAxisAlignment: MainAxisAlignment.center,
+                mainAxisSize: MainAxisSize.min,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Container(
-                    padding: EdgeInsets.all(PAppSize.s14),
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      border: Border.all(
-                        color: PHelperFunction.isDarkMode(context)
-                            ? PAppColor.fillColor.withOpacityExt(PAppSize.s0_3)
-                            : PAppColor.primary.withOpacityExt(PAppSize.s0_3),
-                        width: PAppSize.s1,
+                  Expanded(
+                    child: Container(
+                      padding: EdgeInsets.all(PAppSize.s14),
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        border: Border.all(
+                          color: PHelperFunction.isDarkMode(context)
+                              ? PAppColor.fillColor.withOpacityExt(
+                                  PAppSize.s0_3,
+                                )
+                              : PAppColor.primary.withOpacityExt(PAppSize.s0_3),
+                          width: PAppSize.s1,
+                        ),
                       ),
+                      child: icon,
                     ),
-                    child: icon,
                   ),
                   PAppSize.s18.verticalSpace,
                   Text(
                     label,
                     textAlign: TextAlign.start,
+                    maxLines: 2,
                     style: Theme.of(context).textTheme.headlineLarge?.copyWith(
                       fontSize: PAppSize.s15,
                       height: 1.5,
-
-                      // fontWeight: FontWeight.w500,
+                      overflow: TextOverflow.ellipsis,
                     ),
                   ),
                 ],

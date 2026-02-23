@@ -14,7 +14,6 @@ import 'package:oldmutual_pensions_app/features/future.value.calculator/future.v
 import 'package:oldmutual_pensions_app/features/home/home.dart';
 import 'package:oldmutual_pensions_app/features/manage/manage.dart';
 import 'package:oldmutual_pensions_app/features/more/more.services.dart';
-import 'package:oldmutual_pensions_app/features/more/presentation/pages/support.page.dart';
 import 'package:oldmutual_pensions_app/features/notification/notification.dart';
 import 'package:oldmutual_pensions_app/features/pension/pension.dart';
 import 'package:oldmutual_pensions_app/features/policy/policy.dart';
@@ -309,7 +308,7 @@ class AppPages {
     ),
     GetPage(
       name: _Paths.financialInsightDetailPage,
-      page: () => PFinancialInsightDetailPage(article: Get.arguments),
+      page: () => PFinancialInsightDetailPage(content: Get.arguments),
     ),
     GetPage(
       name: _Paths.complimentaryServicePage,
@@ -323,5 +322,7 @@ class AppPages {
       name: _Paths.affluentCardPage,
       page: () => PAffluentCardPage(user: Get.arguments),
     ),
+    GetPage(name: _Paths.saveContentPage, page: () => PSaveContentPage()),
+    GetPage(name: _Paths.trackClaimsPage, page: () => PTrackClaimsPage()),
   ];
 }
