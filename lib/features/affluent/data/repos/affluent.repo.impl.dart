@@ -69,26 +69,25 @@ class AffluentRepoImpl implements AffluentRepo {
   }
 
   @override
-  Future<Either<PFailure, PaginatedResponse<Content>>>
-  getBookmarkedContents() async {
+  Future<Either<PFailure, PaginatedResponse<BookmarkedContent>>>
+  getBookmarkedContents({int page = 1}) async {
     return await customRepositoryWrapper.wrapRepositoryFunction(
-      function: () async => await affluentDs.getBookmarkedContents(),
+      function: () async =>
+          await affluentDs.getBookmarkedContents(page: page),
     );
   }
 
   @override
-  Future<Either<PFailure, ApiResponse<Content>>> bookmarkContent({
-    required int id,
-  }) async {
+  Future<Either<PFailure, PaginatedResponse<BookmarkedContent>>>
+  bookmarkContent({required int id}) async {
     return await customRepositoryWrapper.wrapRepositoryFunction(
       function: () async => await affluentDs.bookmarkContent(id: id),
     );
   }
 
   @override
-  Future<Either<PFailure, ApiResponse<Content>>> getBookmarkedContent({
-    required int id,
-  }) async {
+  Future<Either<PFailure, ApiResponse<BookmarkedContent>>>
+  getBookmarkedContent({required int id}) async {
     return await customRepositoryWrapper.wrapRepositoryFunction(
       function: () async => await affluentDs.getBookmarkedContent(id: id),
     );
@@ -98,6 +97,23 @@ class AffluentRepoImpl implements AffluentRepo {
   Future<Either<PFailure, ApiResponse<int>>> getBookmarkedContentCount() async {
     return await customRepositoryWrapper.wrapRepositoryFunction(
       function: () async => await affluentDs.getBookmarkedContentCount(),
+    );
+  }
+
+  @override
+  Future<Either<PFailure, ApiResponse<dynamic>>> deleteBookedContent({
+    required int id,
+  }) async {
+    return await customRepositoryWrapper.wrapRepositoryFunction(
+      function: () async => await affluentDs.deleteBookedContent(id: id),
+    );
+  }
+
+  @override
+  Future<Either<PFailure, ApiResponse<dynamic>>>
+  clearBookmarkedContents() async {
+    return await customRepositoryWrapper.wrapRepositoryFunction(
+      function: () async => await affluentDs.clearBookmarkedContents(),
     );
   }
 }

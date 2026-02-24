@@ -18,6 +18,7 @@ class Member {
   dynamic sex;
   String? nationality;
   String? notificationsEnabled;
+  String? phoneVerified;
   String? terms;
   String? lastLoggedIn;
   String? lastLoggedInIp;
@@ -47,6 +48,7 @@ class Member {
     this.sex,
     this.nationality,
     this.notificationsEnabled,
+    this.phoneVerified,
     this.terms,
     this.lastLoggedIn,
     this.lastLoggedInIp,
@@ -77,6 +79,7 @@ class Member {
     dynamic sex,
     String? nationality,
     String? notificationsEnabled,
+    String? phoneVerified,
     String? terms,
     String? lastLoggedIn,
     String? lastLoggedInIp,
@@ -106,6 +109,7 @@ class Member {
       sex: sex ?? this.sex,
       nationality: nationality ?? this.nationality,
       notificationsEnabled: notificationsEnabled ?? this.notificationsEnabled,
+      phoneVerified: phoneVerified ?? this.phoneVerified,
       terms: terms ?? this.terms,
       lastLoggedIn: lastLoggedIn ?? this.lastLoggedIn,
       lastLoggedInIp: lastLoggedInIp ?? this.lastLoggedInIp,
@@ -137,12 +141,13 @@ class Member {
     sex = json['sex'];
     nationality = json['nationality'];
     notificationsEnabled = json['notifications_enabled'];
+    phoneVerified = json['phone_verified'];
     terms = json['terms'];
     lastLoggedIn = json['last_logged_in'];
     lastLoggedInIp = json['last_logged_in_ip'];
     lastLoggedInAgent = json['last_logged_in_agent'];
     role = json['role'];
-    affluent = json['affluent'] ?? true;
+    affluent = json['affluent'] ?? false;
     createdAt = json['created_at'];
     updatedAt = json['updated_at'];
   }
@@ -167,6 +172,7 @@ class Member {
     data['date_joined'] = dateJoined;
     data['sex'] = sex;
     data['nationality'] = nationality;
+    data['phone_verified'] = phoneVerified;
     data['notifications_enabled'] = notificationsEnabled;
     data['terms'] = terms;
     data['last_logged_in'] = lastLoggedIn;

@@ -21,7 +21,8 @@ class PSplashVm extends GetxController {
   void showSplashPage() async {
     _timer = Timer(Duration(seconds: 3), () async {
       // Perform device security check first
-      final securityStatus = await DeviceSecurityService().checkDeviceSecurity();
+      final securityStatus = await DeviceSecurityService()
+          .checkDeviceSecurity();
 
       if (securityStatus.isCompromised) {
         stop();
@@ -42,13 +43,12 @@ class PSplashVm extends GetxController {
       } else {
         // Check if user has valid auth token AND bioData (indicates active session)
         final authResponse = await PSecureStorage().getAuthResponse();
-        final bioData = await PSecureStorage().getBioData();
         final userEmail = await PSecureStorage().getUserEmail();
         final userPassword = await PSecureStorage().getBiometricPassword();
 
         if (authResponse?.token != null) {
           final lastLoggedIn = PFormatter.calculateDateDiff(
-            authResponse!.lastLoggedIn!,
+            authResponse!.lastLoggedIn ?? DateTime.now().toIso8601String(),
             DateDiffUnit.days,
           );
           // redirect user to welcome back screen after been logged in for 3 days

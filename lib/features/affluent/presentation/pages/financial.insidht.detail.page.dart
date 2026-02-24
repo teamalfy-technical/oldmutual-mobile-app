@@ -20,6 +20,7 @@ class _PFinancialInsightDetailPageState
     extends State<PFinancialInsightDetailPage> {
   late WebViewController _webViewController;
   bool get isVideo => widget.content.contentType != 'article';
+  bool _isBookmarked = false;
 
   @override
   void initState() {
@@ -27,6 +28,21 @@ class _PFinancialInsightDetailPageState
     if (isVideo) {
       _initializeWebView();
     }
+    _checkIfBookmarked();
+  }
+
+  Future<void> _checkIfBookmarked() async {
+    final contentId = widget.content.id;
+    if (contentId == null) return;
+    final result = await affluentService.getBookmarkedContent(id: contentId);
+    result.fold(
+      (_) => null,
+      (res) {
+        if (res.data != null && mounted) {
+          setState(() => _isBookmarked = true);
+        }
+      },
+    );
   }
 
   void _initializeWebView() {
@@ -112,7 +128,7 @@ class _PFinancialInsightDetailPageState
   Widget build(BuildContext context) {
     final content = widget.content;
     final contentType = content.contentType?.capitalizeFirst ?? '';
-    final duration = content.duration ?? '6 mins';
+    final duration = content.duration ?? 'default_duration'.tr;
     final currentDate = DateFormat('MMM dd, yyyy').format(DateTime.now());
 
     return Scaffold(
@@ -124,15 +140,53 @@ class _PFinancialInsightDetailPageState
         actions: [
           IconButton(
             onPressed: () {
-              if (content.id != null) {
+              if (content.id == null) return;
+              if (_isBookmarked) {
+                showAdaptiveDialog(
+                  context: context,
+                  builder: (context) => AlertDialog.adaptive(
+                    backgroundColor: PHelperFunction.isDarkMode(context)
+                        ? PAppColor.lightBlackColor
+                        : PAppColor.whiteColor,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(PAppSize.s10),
+                    ),
+                    title: Text('remove_bookmark'.tr),
+                    content: Text('remove_bookmark_msg'.tr),
+                    actions: [
+                      TextButton(
+                        onPressed: () => Navigator.pop(context),
+                        child: Text('cancel'.tr),
+                      ),
+                      TextButton(
+                        onPressed: () {
+                          Navigator.pop(context);
+                          PAffluentVm.instance.deleteBookedContent(
+                            id: content.id!,
+                          );
+                          setState(() => _isBookmarked = false);
+                        },
+                        child: Text('yes'.tr),
+                      ),
+                    ],
+                  ),
+                );
+              } else {
                 PAffluentVm.instance.bookmarkContent(id: content.id!);
+                setState(() => _isBookmarked = true);
               }
             },
-            icon: Assets.icons.bookmarkIcon.svg(
-              color: PHelperFunction.isDarkMode(context)
-                  ? PAppColor.whiteColor
-                  : PAppColor.blackColor,
-            ),
+            icon: _isBookmarked
+                ? Assets.icons.bookmarkIconSolid.svg(
+                    color: PHelperFunction.isDarkMode(context)
+                        ? PAppColor.whiteColor
+                        : PAppColor.blackColor,
+                  )
+                : Assets.icons.bookmarkIcon.svg(
+                    color: PHelperFunction.isDarkMode(context)
+                        ? PAppColor.whiteColor
+                        : PAppColor.blackColor,
+                  ),
           ),
         ],
       ),

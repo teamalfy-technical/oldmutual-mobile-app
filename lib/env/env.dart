@@ -512,6 +512,10 @@ abstract class Env {
   static final String getBookmarkedContentCount =
       _Env.getBookmarkedContentCount;
 
+  /// [DeleteBookedContent] endpoint
+  @EnviedField(defaultValue: '/affluent/bookmark/delete', obfuscate: true)
+  static final String deleteBookedContent = _Env.deleteBookedContent;
+
   /// [ClearBookmarkedContents] endpoint
   @EnviedField(defaultValue: '/affluent/bookmarks/clear', obfuscate: true)
   static final String clearBookmarkedContents = _Env.clearBookmarkedContents;

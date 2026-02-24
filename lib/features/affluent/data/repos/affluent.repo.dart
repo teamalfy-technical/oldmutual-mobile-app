@@ -1,8 +1,7 @@
 import 'package:fpdart/fpdart.dart';
 import 'package:oldmutual_pensions_app/core/errors/failure.dart';
 import 'package:oldmutual_pensions_app/core/network/network.dart';
-import 'package:oldmutual_pensions_app/features/affluent/domain/models/content.category.model.dart';
-import 'package:oldmutual_pensions_app/features/affluent/domain/models/content.model.dart';
+import 'package:oldmutual_pensions_app/features/affluent/affluent.dart';
 
 abstract class AffluentRepo {
   Future<Either<PFailure, ApiResponse<List<ContentCategory>>>>
@@ -25,12 +24,15 @@ abstract class AffluentRepo {
   Future<Either<PFailure, ApiResponse<Content>>> getContentBySlug({
     required String slug,
   });
-  Future<Either<PFailure, PaginatedResponse<Content>>> getBookmarkedContents();
-  Future<Either<PFailure, ApiResponse<Content>>> bookmarkContent({
-    required int id,
-  });
-  Future<Either<PFailure, ApiResponse<Content>>> getBookmarkedContent({
-    required int id,
-  });
+  Future<Either<PFailure, PaginatedResponse<BookmarkedContent>>>
+  getBookmarkedContents({int page = 1});
+  Future<Either<PFailure, PaginatedResponse<BookmarkedContent>>>
+  bookmarkContent({required int id});
+  Future<Either<PFailure, ApiResponse<BookmarkedContent>>>
+  getBookmarkedContent({required int id});
   Future<Either<PFailure, ApiResponse<int>>> getBookmarkedContentCount();
+  Future<Either<PFailure, ApiResponse<dynamic>>> deleteBookedContent({
+    required int id,
+  });
+  Future<Either<PFailure, ApiResponse<dynamic>>> clearBookmarkedContents();
 }

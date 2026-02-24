@@ -608,6 +608,11 @@ class AppTranslations extends Translations {
       'my_relationship_manager': 'My Relationship Manager',
       'service_hours': 'Service Hours',
       'contact': 'Contact',
+      'remove_bookmark': 'Remove Bookmark',
+      'remove_bookmark_msg':
+          'Are you sure you want to remove this content from your bookmarks?',
+      'yes': 'Yes',
+      'default_duration': '6 mins',
     },
     'hi_IN': {'app_name': 'Pensions App'},
     'fr_FR': {'app_name': 'Pensions App'},

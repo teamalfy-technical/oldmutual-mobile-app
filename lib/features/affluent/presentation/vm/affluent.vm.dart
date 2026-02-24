@@ -24,6 +24,11 @@ class PAffluentVm extends GetxController {
   var selectedContent = Content().obs;
   var contentsLoading = LoadingState.completed.obs;
   var bookmarkedContentCount = 0.obs;
+  var bookmarkedContents = <BookmarkedContent>[].obs;
+  var bookmarkedCurrentPage = 1.obs;
+  var bookmarkedLastPage = 1.obs;
+  var isLoadingMoreBookmarks = false.obs;
+  bool get hasMoreBookmarks => bookmarkedCurrentPage.value < bookmarkedLastPage.value;
 
   var selectedFCategoryIndex = 0.obs;
   var selectedCCategoryIndex = 0.obs;
@@ -274,8 +279,9 @@ Our experts break down complex tax concepts into actionable strategies you can i
         updateContentsLoading(LoadingState.error);
         PPopupDialog(context).errorMessage(
           title: 'error'.tr,
-          message:
-              err.message.isNotEmpty ? err.message : 'Failed to load contents',
+          message: err.message.isNotEmpty
+              ? err.message
+              : 'Failed to load contents',
         );
       },
       (res) {
@@ -294,8 +300,9 @@ Our experts break down complex tax concepts into actionable strategies you can i
         updateContentsLoading(LoadingState.error);
         PPopupDialog(context).errorMessage(
           title: 'error'.tr,
-          message:
-              err.message.isNotEmpty ? err.message : 'Failed to load content',
+          message: err.message.isNotEmpty
+              ? err.message
+              : 'Failed to load content',
         );
       },
       (res) {
@@ -314,8 +321,9 @@ Our experts break down complex tax concepts into actionable strategies you can i
         updateContentsLoading(LoadingState.error);
         PPopupDialog(context).errorMessage(
           title: 'error'.tr,
-          message:
-              err.message.isNotEmpty ? err.message : 'Failed to load content',
+          message: err.message.isNotEmpty
+              ? err.message
+              : 'Failed to load content',
         );
       },
       (res) {
@@ -326,12 +334,27 @@ Our experts break down complex tax concepts into actionable strategies you can i
   }
 
   /// Get all bookmarked contents (paginated)
-  Future<void> fetchBookmarkedContents() async {
-    updateContentsLoading(LoadingState.loading);
-    final result = await affluentService.getBookmarkedContents();
+  Future<void> fetchBookmarkedContents({bool loadMore = false}) async {
+    if (loadMore) {
+      if (!hasMoreBookmarks || isLoadingMoreBookmarks.value) return;
+      isLoadingMoreBookmarks.value = true;
+    } else {
+      bookmarkedCurrentPage.value = 1;
+      updateContentsLoading(LoadingState.loading);
+    }
+
+    final page = loadMore
+        ? bookmarkedCurrentPage.value + 1
+        : 1;
+
+    final result = await affluentService.getBookmarkedContents(page: page);
     result.fold(
       (err) {
-        updateContentsLoading(LoadingState.error);
+        if (loadMore) {
+          isLoadingMoreBookmarks.value = false;
+        } else {
+          updateContentsLoading(LoadingState.error);
+        }
         PPopupDialog(context).errorMessage(
           title: 'error'.tr,
           message: err.message.isNotEmpty
@@ -340,8 +363,15 @@ Our experts break down complex tax concepts into actionable strategies you can i
         );
       },
       (res) {
-        updateContentsLoading(LoadingState.completed);
-        contents.value = res.data ?? [];
+        if (loadMore) {
+          bookmarkedContents.addAll(res.data ?? []);
+          isLoadingMoreBookmarks.value = false;
+        } else {
+          bookmarkedContents.value = res.data ?? [];
+          updateContentsLoading(LoadingState.completed);
+        }
+        bookmarkedCurrentPage.value = res.meta?.currentPage ?? page;
+        bookmarkedLastPage.value = res.meta?.lastPage ?? 1;
       },
     );
   }
@@ -361,7 +391,7 @@ Our experts break down complex tax concepts into actionable strategies you can i
       (res) {
         PPopupDialog(context).successMessage(
           title: 'success'.tr,
-          message: res.message ?? 'Content bookmarked successfully',
+          message: 'Content bookmarked successfully',
         );
       },
     );
@@ -383,7 +413,52 @@ Our experts break down complex tax concepts into actionable strategies you can i
       },
       (res) {
         updateContentsLoading(LoadingState.completed);
-        selectedContent.value = res.data ?? Content();
+        selectedContent.value = res.data?.content ?? Content();
+      },
+    );
+  }
+
+  /// Delete a booked content by id
+  Future<void> deleteBookedContent({required int id}) async {
+    final result = await affluentService.deleteBookedContent(id: id);
+    result.fold(
+      (err) {
+        PPopupDialog(context).errorMessage(
+          title: 'error'.tr,
+          message: err.message.isNotEmpty
+              ? err.message
+              : 'Failed to delete booked content',
+        );
+      },
+      (res) {
+        bookmarkedContents.removeWhere((item) => item.content?.id == id);
+        PPopupDialog(context).successMessage(
+          title: 'success'.tr,
+          message: res.message ?? 'Booked content deleted successfully',
+        );
+      },
+    );
+  }
+
+  /// Clear all bookmarked contents
+  Future<void> clearBookmarkedContents() async {
+    final result = await affluentService.clearBookmarkedContents();
+    result.fold(
+      (err) {
+        PPopupDialog(context).errorMessage(
+          title: 'error'.tr,
+          message: err.message.isNotEmpty
+              ? err.message
+              : 'Failed to clear bookmarked contents',
+        );
+      },
+      (res) {
+        bookmarkedContents.clear();
+        bookmarkedContentCount.value = 0;
+        PPopupDialog(context).successMessage(
+          title: 'success'.tr,
+          message: res.message ?? 'Bookmarked contents cleared successfully',
+        );
       },
     );
   }

@@ -11,6 +11,7 @@ import 'package:oldmutual_pensions_app/features/affluent/affluent.dart';
 import 'package:oldmutual_pensions_app/features/auth/auth.dart';
 import 'package:oldmutual_pensions_app/routes/app.pages.dart';
 import 'package:oldmutual_pensions_app/shared/shared.dart';
+import 'package:gal/gal.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:share_plus/share_plus.dart';
 
@@ -28,6 +29,13 @@ class _PAffluentCardPageState extends State<PAffluentCardPage> {
   final PageController _pageController = PageController();
   final int _currentPage = 0;
   bool _isSharing = false;
+  bool _isDownloading = false;
+
+  @override
+  void initState() {
+    super.initState();
+    vm.fetchBookmarkedContents();
+  }
 
   @override
   void dispose() {
@@ -80,6 +88,70 @@ class _PAffluentCardPageState extends State<PAffluentCardPage> {
     }
   }
 
+  Future<void> _downloadCard() async {
+    if (_isDownloading) return;
+
+    setState(() => _isDownloading = true);
+
+    try {
+      // Check and request gallery access
+      final hasAccess = await Gal.hasAccess(toAlbum: true);
+      if (!hasAccess) {
+        final granted = await Gal.requestAccess(toAlbum: true);
+        if (!granted) {
+          if (mounted) {
+            PPopupDialog(context).errorMessage(
+              title: 'error'.tr,
+              message:
+                  'Gallery permission is required to save the card. Please enable it in Settings.',
+            );
+          }
+          return;
+        }
+      }
+
+      final boundary =
+          _cardKey.currentContext?.findRenderObject() as RenderRepaintBoundary?;
+
+      if (boundary == null) {
+        throw Exception('Could not capture card image');
+      }
+
+      final image = await boundary.toImage(pixelRatio: 3.0);
+      final byteData = await image.toByteData(format: ui.ImageByteFormat.png);
+
+      if (byteData == null) {
+        throw Exception('Could not convert image to bytes');
+      }
+
+      // Save to temporary file first
+      final tempDir = await getTemporaryDirectory();
+      final file = File('${tempDir.path}/affluent_card.png');
+      await file.writeAsBytes(byteData.buffer.asUint8List());
+
+      // Save to device gallery
+      await Gal.putImage(file.path, album: 'Old Mutual');
+
+      if (mounted) {
+        PPopupDialog(context).successMessage(
+          title: 'success'.tr,
+          message: 'download_complete'.tr,
+        );
+      }
+    } catch (e) {
+      if (mounted) {
+        PPopupDialog(context).errorMessage(
+          title: 'error'.tr,
+          message: 'error_occurred_msg'.tr,
+        );
+      }
+    } finally {
+      if (mounted) {
+        setState(() => _isDownloading = false);
+      }
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final isDarkMode = PHelperFunction.isDarkMode(context);
@@ -115,6 +187,7 @@ class _PAffluentCardPageState extends State<PAffluentCardPage> {
             //   ),
             // ),
             RepaintBoundary(
+              key: _cardKey,
               child: PAffluentMemberCard(
                 memberName: user?.name ?? '',
                 cardNumber: user?.ghanaCardNumber ?? 'AFF-2024-00847',
@@ -184,7 +257,10 @@ class _PAffluentCardPageState extends State<PAffluentCardPage> {
                     showIcon: false,
                     textColor: PAppColor.whiteColor,
                     fontSize: PAppSize.s14,
-                    onTap: () {},
+                    loading: _isDownloading
+                        ? LoadingState.loading
+                        : LoadingState.completed,
+                    onTap: _isDownloading ? null : _downloadCard,
                   ),
                 ),
                 PAppSize.s12.horizontalSpace,
@@ -251,40 +327,60 @@ class _PAffluentCardPageState extends State<PAffluentCardPage> {
             PAppSize.s12.verticalSpace,
 
             // Bookmarked Articles List
-            Obx(
-              () => vm.bookmarkedArticles.isEmpty
-                  ? Center(
-                      child: Text(
-                        'no_saved_content'.tr,
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                          fontSize: PAppSize.s14,
-                          fontWeight: FontWeight.w400,
-                        ),
-                      ),
-                    )
-                  : ListView.separated(
-                      shrinkWrap: true,
-                      physics: NeverScrollableScrollPhysics(),
-                      itemCount: vm.bookmarkedArticles.take(1).toList().length,
-                      separatorBuilder: (context, index) =>
-                          PAppSize.s12.verticalSpace,
-                      itemBuilder: (context, index) {
-                        final article = vm.bookmarkedArticles[index];
-                        return _BookmarkedArticleCard(
-                          onTap: () => PHelperFunction.switchScreen(
-                            destination: Routes.financialInsightDetailPage,
-                            args: article,
-                          ),
-                          type:
-                              article.contentType?.capitalizeFirst ?? '',
-                          duration: '${article.duration ?? '5 mins'} read',
-                          title: article.title ?? '',
-                          description: article.description ?? '',
-                        );
-                      },
+            Obx(() {
+              if (vm.contentsLoading.value == LoadingState.loading &&
+                  vm.bookmarkedContents.isEmpty) {
+                return ShimmerWrapper(
+                  child: _BookmarkedArticleCard(
+                    type: 'Article',
+                    duration: '5 mins read',
+                    title: 'Placeholder title here',
+                    description:
+                        'Placeholder description text goes here for shimmer',
+                  ),
+                );
+              }
+
+              if (vm.bookmarkedContents.isEmpty) {
+                return Center(
+                  child: Text(
+                    'no_saved_content'.tr,
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontSize: PAppSize.s14,
+                      fontWeight: FontWeight.w400,
                     ),
-            ),
+                  ),
+                );
+              }
+
+              return ListView.separated(
+                shrinkWrap: true,
+                physics: NeverScrollableScrollPhysics(),
+                itemCount: vm.bookmarkedContents.take(1).length,
+                separatorBuilder: (context, index) =>
+                    PAppSize.s12.verticalSpace,
+                itemBuilder: (context, index) {
+                  final bookmarked = vm.bookmarkedContents[index];
+                  final content = bookmarked.content;
+                  return _BookmarkedArticleCard(
+                    onTap: () {
+                      if (content != null) {
+                        PHelperFunction.switchScreen(
+                          destination: Routes.financialInsightDetailPage,
+                          args: content,
+                        );
+                      }
+                    },
+                    type: content?.contentType?.capitalizeFirst ?? '',
+                    duration:
+                        '${content?.duration ?? 'default_duration'.tr} read',
+                    title: content?.title ?? '',
+                    description: content?.description ?? '',
+                  );
+                },
+              );
+            }),
 
             PAppSize.s20.verticalSpace,
 

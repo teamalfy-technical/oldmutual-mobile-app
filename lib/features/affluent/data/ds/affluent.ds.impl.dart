@@ -106,43 +106,50 @@ class AffluentDsImpl implements AffluentDs {
   }
 
   @override
-  Future<PaginatedResponse<Content>> getBookmarkedContents() async {
+  Future<PaginatedResponse<BookmarkedContent>> getBookmarkedContents({
+    int page = 1,
+  }) async {
     return await asyncFunctionWrapper.handleAsyncNetworkCall(() async {
       final res = await apiService.callService(
         requestType: RequestType.get,
         endPoint: Env.getBookmarkedContents,
+        queryParams: {'page': page},
       );
-      return PaginatedResponse<Content>.fromJson(
+      return PaginatedResponse<BookmarkedContent>.fromJson(
         res,
-        (data) => Content.fromJson(data),
+        (data) => BookmarkedContent.fromJson(data),
       );
     });
   }
 
   @override
-  Future<ApiResponse<Content>> bookmarkContent({required int id}) async {
+  Future<PaginatedResponse<BookmarkedContent>> bookmarkContent({
+    required int id,
+  }) async {
     return await asyncFunctionWrapper.handleAsyncNetworkCall(() async {
       final res = await apiService.callService(
         requestType: RequestType.post,
         endPoint: '${Env.bookmarkContent}/$id',
       );
-      return ApiResponse<Content>.fromJson(
+      return PaginatedResponse<BookmarkedContent>.fromJson(
         res,
-        (data) => Content.fromJson(data),
+        (data) => BookmarkedContent.fromJson(data),
       );
     });
   }
 
   @override
-  Future<ApiResponse<Content>> getBookmarkedContent({required int id}) async {
+  Future<ApiResponse<BookmarkedContent>> getBookmarkedContent({
+    required int id,
+  }) async {
     return await asyncFunctionWrapper.handleAsyncNetworkCall(() async {
       final res = await apiService.callService(
         requestType: RequestType.get,
         endPoint: '${Env.getBookmarkedContent}/$id',
       );
-      return ApiResponse<Content>.fromJson(
+      return ApiResponse<BookmarkedContent>.fromJson(
         res,
-        (data) => Content.fromJson(data),
+        (data) => BookmarkedContent.fromJson(data),
       );
     });
   }
@@ -155,6 +162,28 @@ class AffluentDsImpl implements AffluentDs {
         endPoint: Env.getBookmarkedContentCount,
       );
       return ApiResponse<int>.fromJson(res, (data) => data as int);
+    });
+  }
+
+  @override
+  Future<ApiResponse<dynamic>> deleteBookedContent({required int id}) async {
+    return await asyncFunctionWrapper.handleAsyncNetworkCall(() async {
+      final res = await apiService.callService(
+        requestType: RequestType.delete,
+        endPoint: '${Env.deleteBookedContent}/$id',
+      );
+      return ApiResponse<dynamic>.fromJson(res, (data) => data);
+    });
+  }
+
+  @override
+  Future<ApiResponse<dynamic>> clearBookmarkedContents() async {
+    return await asyncFunctionWrapper.handleAsyncNetworkCall(() async {
+      final res = await apiService.callService(
+        requestType: RequestType.delete,
+        endPoint: Env.clearBookmarkedContents,
+      );
+      return ApiResponse<dynamic>.fromJson(res, (data) => data);
     });
   }
 }

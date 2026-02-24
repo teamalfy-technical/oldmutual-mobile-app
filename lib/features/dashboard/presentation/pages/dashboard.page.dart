@@ -75,7 +75,7 @@ class PDashboardPage extends StatelessWidget {
   List<Widget> get _pages => [
     PHomePage(),
     PUserDetailPage(isShowAppBar: false),
-    if (ctrl.user.value?.affluent == true) ...[
+    if (ctrl.user.value?.affluent == false) ...[
       PSupportPage(user: ctrl.user.value),
     ],
     PMorePage(),
@@ -96,7 +96,7 @@ class PDashboardPage extends StatelessWidget {
             preferredSize: Size.fromHeight(MediaQuery.of(context).padding.top),
             child:
                 // Hide AppBar if user is affluent, but keep status bar spacing
-                ctrl.user.value?.affluent == true
+                ctrl.user.value?.affluent == false
                 ? Container(
                     color: PHelperFunction.isDarkMode(context)
                         ? PAppColor.darkAppBarColor
@@ -150,7 +150,7 @@ class PDashboardPage extends StatelessWidget {
                 icon: Assets.icons.manageIcon.svg(),
                 label: 'manage'.tr,
               ),
-              if (ctrl.user.value?.affluent == true) ...[
+              if (ctrl.user.value?.affluent == false) ...[
                 _buildNavItem(
                   context: context,
                   icon: Assets.icons.supportIcon.svg(),

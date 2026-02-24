@@ -7,6 +7,7 @@ export 'data/repos/affluent.repo.impl.dart';
 export 'domain/models/affluent.model.dart';
 export 'domain/models/benefit.reminder.model.dart';
 export 'domain/models/complimentary.service.model.dart';
+export 'domain/models/bookmarked.content.model.dart';
 export 'domain/models/content.category.model.dart';
 export 'domain/models/content.model.dart';
 export 'presentation/pages/affluent.card.page.dart';

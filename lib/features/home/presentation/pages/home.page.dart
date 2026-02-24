@@ -77,7 +77,7 @@ class PHomePage extends StatelessWidget {
                     () => Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        if (user?.affluent == true) ...[
+                        if (user?.affluent == false) ...[
                           // Relationship officer
                           PAppSize.s8.verticalSpace,
 
@@ -205,7 +205,7 @@ class PHomePage extends StatelessWidget {
                                 ),
                         ),
 
-                        if (user?.affluent == true) ...[
+                        if (user?.affluent == false) ...[
                           PAppSize.s16.verticalSpace,
                           // Quick Actions for Affluent Users
                           PSeeAllWidget(leadingText: 'quick_access'.tr),
