@@ -17,8 +17,8 @@ class PPolicyOverviewPage extends StatefulWidget {
 
 class _PPolicyOverviewPageState extends State<PPolicyOverviewPage>
     with SingleTickerProviderStateMixin {
-  final vm = Get.find<PPolicyVm>();
-  final pensionVm = Get.find<PPensionVm>();
+  final vm = PPolicyVm.instance;
+  final pensionVm = PPensionVm.instance;
   final policyStatementVm = Get.put(PPolicyStatementVm());
   late TabController _tabController;
 

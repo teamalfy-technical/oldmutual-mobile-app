@@ -90,4 +90,10 @@ class AffluentServiceImpl implements AffluentService {
   Future<Either<PFailure, ApiResponse<dynamic>>> clearBookmarkedContents() {
     return affluentRepo.clearBookmarkedContents();
   }
+
+  @override
+  Future<Either<PFailure, ApiResponse<RelationshipOfficer>>>
+  getAffluentRelationshipOfficer({required String agentNo}) {
+    return affluentRepo.getAffluentRelationshipOfficer(agentNo: agentNo);
+  }
 }

@@ -334,6 +334,7 @@ class AppTranslations extends Translations {
       'switch_scheme_msg': 'Hang tight! We’re switching your scheme now...',
       'change_password_msg': 'Hang tight! We’re changing your password now...',
       'not_applicable': 'N/A',
+      'unavailable': 'Unavailable',
       'deleting_beneficiary': 'Deleting Beneficiary',
       'adding_beneficiary_msg': 'Adding New Beneficiary...',
       'updating_beneficiary_msg': 'Updating Beneficiary Details...',

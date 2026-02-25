@@ -116,4 +116,13 @@ class AffluentRepoImpl implements AffluentRepo {
       function: () async => await affluentDs.clearBookmarkedContents(),
     );
   }
+
+  @override
+  Future<Either<PFailure, ApiResponse<RelationshipOfficer>>>
+  getAffluentRelationshipOfficer({required String agentNo}) async {
+    return await customRepositoryWrapper.wrapRepositoryFunction(
+      function: () async =>
+          await affluentDs.getAffluentRelationshipOfficer(agentNo: agentNo),
+    );
+  }
 }

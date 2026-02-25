@@ -14,8 +14,8 @@ class PPolicyDetailPage extends StatelessWidget {
   final Policy policy;
   PPolicyDetailPage({super.key, required this.policy});
 
-  final vm = Get.put(PPolicyVm());
-  final policyStatementVm = Get.find<PPolicyStatementVm>();
+  final vm = PPolicyVm.instance;
+  final policyStatementVm = PPolicyStatementVm.instance;
 
   @override
   Widget build(BuildContext context) {

@@ -2,6 +2,7 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:oldmutual_pensions_app/core/utils/utils.dart';
 import 'package:oldmutual_pensions_app/features/affluent/affluent.dart';
+import 'package:oldmutual_pensions_app/features/policy/policy.dart';
 import 'package:oldmutual_pensions_app/shared/shared.dart';
 
 class PAffluentVm extends GetxController {
@@ -9,6 +10,10 @@ class PAffluentVm extends GetxController {
 
   var affluentStatus = Affluent().obs;
   var loading = LoadingState.completed.obs;
+
+  // Relationship Officer
+  var relationshipOfficer = RelationshipOfficer().obs;
+  var relationshipOfficerLoading = LoadingState.completed.obs;
 
   var benefitReminders = <BenefitReminder>[].obs;
   var exclusiveAnnouncements = <BenefitReminder>[].obs;
@@ -28,7 +33,8 @@ class PAffluentVm extends GetxController {
   var bookmarkedCurrentPage = 1.obs;
   var bookmarkedLastPage = 1.obs;
   var isLoadingMoreBookmarks = false.obs;
-  bool get hasMoreBookmarks => bookmarkedCurrentPage.value < bookmarkedLastPage.value;
+  bool get hasMoreBookmarks =>
+      bookmarkedCurrentPage.value < bookmarkedLastPage.value;
 
   var selectedFCategoryIndex = 0.obs;
   var selectedCCategoryIndex = 0.obs;
@@ -75,6 +81,9 @@ class PAffluentVm extends GetxController {
 
   updateLoadingState(LoadingState loadingState) => loading.value = loadingState;
 
+  updateRelationshipOfficerLoading(LoadingState loadingState) =>
+      relationshipOfficerLoading.value = loadingState;
+
   updateContentCategoriesLoading(LoadingState loadingState) =>
       contentCategoriesLoading.value = loadingState;
 
@@ -105,6 +114,30 @@ class PAffluentVm extends GetxController {
     getExclusiveAnnouncements();
     getBenefitReminders();
     getBookmarkedArticles();
+
+    _fetchRelationshipOfficer();
+  }
+
+  Future<void> _fetchRelationshipOfficer() async {
+    final policyVm = PPolicyVm.instance;
+
+    // If policies are already loaded, use them directly
+    if (policyVm.policies.isNotEmpty) {
+      final agentNo = policyVm.policies.first.agentNo;
+      if (agentNo != null && agentNo.isNotEmpty) {
+        getAffluentRelationshipOfficer(agentNo: '26523' ?? agentNo);
+      }
+      return;
+    }
+
+    // Otherwise fetch policies first, then get the officer
+    await policyVm.getAllPolicies();
+    if (policyVm.policies.isNotEmpty) {
+      final agentNo = policyVm.policies.first.agentNo;
+      if (agentNo != null && agentNo.isNotEmpty) {
+        getAffluentRelationshipOfficer(agentNo: '26523' ?? agentNo);
+      }
+    }
   }
 
   Future<void> getExclusiveAnnouncements() async {
@@ -343,9 +376,7 @@ Our experts break down complex tax concepts into actionable strategies you can i
       updateContentsLoading(LoadingState.loading);
     }
 
-    final page = loadMore
-        ? bookmarkedCurrentPage.value + 1
-        : 1;
+    final page = loadMore ? bookmarkedCurrentPage.value + 1 : 1;
 
     final result = await affluentService.getBookmarkedContents(page: page);
     result.fold(
@@ -459,6 +490,29 @@ Our experts break down complex tax concepts into actionable strategies you can i
           title: 'success'.tr,
           message: res.message ?? 'Bookmarked contents cleared successfully',
         );
+      },
+    );
+  }
+
+  /// Get affluent relationship officer
+  Future<void> getAffluentRelationshipOfficer({required String agentNo}) async {
+    updateRelationshipOfficerLoading(LoadingState.loading);
+    final result = await affluentService.getAffluentRelationshipOfficer(
+      agentNo: agentNo,
+    );
+    result.fold(
+      (err) {
+        updateRelationshipOfficerLoading(LoadingState.error);
+        PPopupDialog(context).errorMessage(
+          title: 'error'.tr,
+          message: err.message.isNotEmpty
+              ? err.message
+              : 'Failed to load relationship officer',
+        );
+      },
+      (res) {
+        updateRelationshipOfficerLoading(LoadingState.completed);
+        relationshipOfficer.value = res.data ?? RelationshipOfficer();
       },
     );
   }

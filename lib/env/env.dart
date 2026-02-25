@@ -468,6 +468,11 @@ abstract class Env {
   ///
   /// -------------------- Affluent Endpoints Starts Here ------------------------- ///
 
+  /// [GetAffluentRelationshipOfficer] endpoint
+  @EnviedField(defaultValue: '/affluent/relationship-officer', obfuscate: true)
+  static final String getAffluentRelationshipOfficer =
+      _Env.getAffluentRelationshipOfficer;
+
   /// [GetContentCategories] endpoint
   @EnviedField(defaultValue: '/affluent/content-categories', obfuscate: true)
   static final String getContentCategories = _Env.getContentCategories;

@@ -25,4 +25,7 @@ abstract class AffluentDs {
   Future<ApiResponse<int>> getBookmarkedContentCount();
   Future<ApiResponse<dynamic>> deleteBookedContent({required int id});
   Future<ApiResponse<dynamic>> clearBookmarkedContents();
+  Future<ApiResponse<RelationshipOfficer>> getAffluentRelationshipOfficer({
+    required String agentNo,
+  });
 }

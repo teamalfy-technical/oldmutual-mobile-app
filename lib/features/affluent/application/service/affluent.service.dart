@@ -35,4 +35,6 @@ abstract class AffluentService {
     required int id,
   });
   Future<Either<PFailure, ApiResponse<dynamic>>> clearBookmarkedContents();
+  Future<Either<PFailure, ApiResponse<RelationshipOfficer>>>
+  getAffluentRelationshipOfficer({required String agentNo});
 }

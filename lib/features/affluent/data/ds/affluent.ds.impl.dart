@@ -186,4 +186,21 @@ class AffluentDsImpl implements AffluentDs {
       return ApiResponse<dynamic>.fromJson(res, (data) => data);
     });
   }
+
+  @override
+  Future<ApiResponse<RelationshipOfficer>> getAffluentRelationshipOfficer({
+    required String agentNo,
+  }) async {
+    return await asyncFunctionWrapper.handleAsyncNetworkCall(() async {
+      final res = await apiService.callService(
+        requestType: RequestType.get,
+        endPoint: Env.getAffluentRelationshipOfficer,
+        queryParams: {'agent_no': agentNo},
+      );
+      return ApiResponse<RelationshipOfficer>.fromJson(
+        res,
+        (data) => RelationshipOfficer.fromJson(data),
+      );
+    });
+  }
 }

@@ -10,6 +10,7 @@ export 'domain/models/complimentary.service.model.dart';
 export 'domain/models/bookmarked.content.model.dart';
 export 'domain/models/content.category.model.dart';
 export 'domain/models/content.model.dart';
+export 'domain/models/relationship.officer.model.dart';
 export 'presentation/pages/affluent.card.page.dart';
 export 'presentation/pages/complimentary.services.detail.page.dart';
 export 'presentation/pages/complimentary.services.page.dart';
