@@ -230,12 +230,9 @@ class PAuthVm extends GetxController {
       (err) {
         // PHelperFunction.pop();
         loading(LoadingState.error);
-        PPopupDialog(context).errorMessage(
-          title: 'error'.tr,
-          message: err.message == '${'unauthorised'.tr}.'
-              ? 'phone_exist_msg'.tr
-              : err.message,
-        );
+        PPopupDialog(
+          context,
+        ).errorMessage(title: 'login_error'.tr, message: err.message);
       },
       (res) async {
         loading(LoadingState.completed);

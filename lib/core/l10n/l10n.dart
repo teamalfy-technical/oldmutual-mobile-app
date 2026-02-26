@@ -129,6 +129,7 @@ class AppTranslations extends Translations {
       'i_agree_to': 'I agree to the',
       'phone_exist_msg': 'Invalid phone number or password. Please try again.',
       'unauthorised': 'Unauthorised',
+      'login_error': 'Login Error',
       'statement_generated_msg': 'Statement generated successfully',
       'policy_statement_generated_msg':
           'Policy statement generated successfully',
