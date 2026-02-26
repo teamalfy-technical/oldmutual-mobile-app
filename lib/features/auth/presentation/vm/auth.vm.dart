@@ -217,6 +217,8 @@ class PAuthVm extends GetxController {
       password = passwordTEC.text.trim();
     }
 
+    pensionAppLogger.e('Attempting login with email/phone: $password');
+
     // Reset the flag after using it
     biometricAuthSucceeded = false;
 

@@ -1,6 +1,5 @@
 import 'dart:async';
 
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:oldmutual_pensions_app/core/utils/utils.dart';
@@ -17,6 +16,7 @@ class PInactivityService extends GetxService with WidgetsBindingObserver {
 
   /// Grace period when returning from background
   /// If app was in background longer than this, force logout
+  // static const Duration backgroundGracePeriod = Duration(minutes: 2);
   static const Duration backgroundGracePeriod = Duration(seconds: 30);
 
   Timer? _inactivityTimer;
@@ -29,10 +29,10 @@ class PInactivityService extends GetxService with WidgetsBindingObserver {
   @override
   void onInit() {
     super.onInit();
-    if (kDebugMode) {
-      pensionAppLogger.i('Inactivity service disabled in debug mode');
-      return;
-    }
+    // if (kDebugMode) {
+    //   pensionAppLogger.i('Inactivity service disabled in debug mode');
+    //   return;
+    // }
     WidgetsBinding.instance.addObserver(this);
     _startTimer();
     // Mark session as validated since user successfully logged in
@@ -54,18 +54,13 @@ class PInactivityService extends GetxService with WidgetsBindingObserver {
   /// Handle app lifecycle changes
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
-    if (kDebugMode) return;
+    // if (kDebugMode) return;
     switch (state) {
       case AppLifecycleState.paused:
         // App went to background
         _appPausedTime = DateTime.now();
         _inactivityTimer?.cancel();
         pensionAppLogger.i('App paused - inactivity timer stopped');
-
-        // Clear auth token when app goes to background
-        // This ensures user must re-authenticate if app is killed and restarted
-        // User credentials (email, biometric password) are preserved for easy re-auth
-        _clearAuthTokenOnBackground();
         break;
 
       case AppLifecycleState.resumed:
@@ -86,10 +81,11 @@ class PInactivityService extends GetxService with WidgetsBindingObserver {
               currentRoute == Routes.forgotPasswordPage;
 
           if (!isAuthRoute && backgroundDuration > backgroundGracePeriod) {
-            // App was in background too long - force logout
+            // App was in background too long - soft logout
             pensionAppLogger.w(
-              'App was in background for ${backgroundDuration.inSeconds}s - forcing logout',
+              'App was in background for ${backgroundDuration.inSeconds}s - soft logout',
             );
+            _clearAuthTokenOnBackground();
             logoutUser();
           } else {
             // Resume timer
@@ -111,7 +107,7 @@ class PInactivityService extends GetxService with WidgetsBindingObserver {
   }
 
   void _handleInactivity() {
-    if (kDebugMode) return;
+    // if (kDebugMode) return;
     // Check if user is on login/signup pages - don't log out
     final currentRoute = Get.currentRoute;
     if (currentRoute != Routes.loginPage &&

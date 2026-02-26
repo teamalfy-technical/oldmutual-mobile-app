@@ -142,6 +142,14 @@ class PPensionVm extends GetxController {
         ).errorMessage(title: 'error'.tr, message: err.message);
       },
       (res) async {
+        if (res.data!['success'] == false) {
+          PHelperFunction.pop();
+          PPopupDialog(context).errorMessage(
+            title: 'error'.tr,
+            message: res.data?['message'] ?? 'download_failed'.tr,
+          );
+          return;
+        }
         PHelperFunction.pop();
         PPopupDialog(
           context,

@@ -21,6 +21,7 @@ class PCustomTextField extends StatefulWidget {
   final Function(String)? onChanged;
   final TextCapitalization textCapitalization;
   final String? errorText;
+  final FocusNode? focusNode;
 
   const PCustomTextField({
     super.key,
@@ -42,6 +43,7 @@ class PCustomTextField extends StatefulWidget {
     this.alignLabelWithHint,
     this.hintText,
     this.errorText,
+    this.focusNode,
   });
 
   @override
@@ -49,11 +51,18 @@ class PCustomTextField extends StatefulWidget {
 }
 
 class _PCustomTextFieldState extends State<PCustomTextField> {
-  final FocusNode _focusNode = FocusNode();
+  late final FocusNode _focusNode;
+  bool _ownsNode = false;
 
   @override
   void initState() {
     super.initState();
+    if (widget.focusNode != null) {
+      _focusNode = widget.focusNode!;
+    } else {
+      _focusNode = FocusNode();
+      _ownsNode = true;
+    }
     _focusNode.addListener(() {
       setState(() {}); // rebuild when focus changes
     });
@@ -61,7 +70,7 @@ class _PCustomTextFieldState extends State<PCustomTextField> {
 
   @override
   void dispose() {
-    _focusNode.dispose();
+    if (_ownsNode) _focusNode.dispose();
     super.dispose();
   }
 

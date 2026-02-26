@@ -11,6 +11,11 @@ class PRedemptionPage extends StatelessWidget {
 
   final ctrl = Get.put(PRedemptionVm());
 
+  final FocusNode _idFocusNode = FocusNode();
+  final FocusNode _percentageFocusNode = FocusNode();
+  final FocusNode _amountFocusNode = FocusNode();
+  final FocusNode _accountNumberFocusNode = FocusNode();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -34,18 +39,22 @@ class PRedemptionPage extends StatelessWidget {
                       key: ctrl.redemptionFormKey,
                       child: Column(
                         children: [
-                          PCustomTextField(
-                            labelText: 'national_id'.tr,
-                            hintText: 'XXXXXXXXX-X',
-                            prefixText: 'GHA-',
-                            controller: ctrl.nationIdTEC,
-                            textInputType: TextInputType.number,
-                            validator: PValidator.validateIdNumber,
-                            maxLength: 11,
-                            inputFormatters: [
-                              FilteringTextInputFormatter.digitsOnly,
-                              IdNumberFormatter(),
-                            ],
+                          PKeyboardActions(
+                            focusNode: _idFocusNode,
+                            child: PCustomTextField(
+                              labelText: 'national_id'.tr,
+                              hintText: 'XXXXXXXXX-X',
+                              prefixText: 'GHA-',
+                              controller: ctrl.nationIdTEC,
+                              focusNode: _idFocusNode,
+                              textInputType: TextInputType.number,
+                              validator: PValidator.validateIdNumber,
+                              maxLength: 11,
+                              inputFormatters: [
+                                FilteringTextInputFormatter.digitsOnly,
+                                IdNumberFormatter(),
+                              ],
+                            ),
                           ),
                           PAppSize.s20.verticalSpace,
                           PCustomDropdownField<String>(
@@ -105,30 +114,38 @@ class PRedemptionPage extends StatelessWidget {
                           ),
                           PAppSize.s14.verticalSpace,
                           ctrl.selectedRedemptionValue == 'Amount'
-                              ? PCustomTextField(
-                                  labelText: 'amount_to_redeem'.tr,
-                                  hintText: 'E.g. 35000',
-                                  controller: ctrl.amountTEC,
-                                  textInputType:
-                                      TextInputType.numberWithOptions(
-                                        decimal: true,
-                                      ),
+                              ? PKeyboardActions(
+                                  focusNode: _amountFocusNode,
+                                  child: PCustomTextField(
+                                    labelText: 'amount_to_redeem'.tr,
+                                    hintText: 'E.g. 35000',
+                                    controller: ctrl.amountTEC,
+                                    focusNode: _amountFocusNode,
+                                    textInputType:
+                                        TextInputType.numberWithOptions(
+                                          decimal: true,
+                                        ),
+                                  ),
                                 )
-                              : PCustomTextField(
-                                  labelText: 'percentage'.tr,
-                                  hintText: 'E.g. 50',
-                                  controller: ctrl.percentageTEC,
-                                  textInputType:
-                                      TextInputType.numberWithOptions(
-                                        decimal: true,
-                                      ),
-                                  validator: PValidator.validatePercentage,
-                                  maxLength: PAppSize.s3.toInt(),
-                                  onChanged: (val) {
-                                    PValidator.validatePercentage(val);
-                                    ctrl.redemptionFormKey.currentState
-                                        ?.validate();
-                                  },
+                              : PKeyboardActions(
+                                  focusNode: _percentageFocusNode,
+                                  child: PCustomTextField(
+                                    labelText: 'percentage'.tr,
+                                    hintText: 'E.g. 50',
+                                    controller: ctrl.percentageTEC,
+                                    focusNode: _percentageFocusNode,
+                                    textInputType:
+                                        TextInputType.numberWithOptions(
+                                          decimal: true,
+                                        ),
+                                    validator: PValidator.validatePercentage,
+                                    maxLength: PAppSize.s3.toInt(),
+                                    onChanged: (val) {
+                                      PValidator.validatePercentage(val);
+                                      ctrl.redemptionFormKey.currentState
+                                          ?.validate();
+                                    },
+                                  ),
                                 ),
 
                           PAppSize.s20.verticalSpace,
@@ -156,11 +173,15 @@ class PRedemptionPage extends StatelessWidget {
                           ),
 
                           PAppSize.s20.verticalSpace,
-                          PCustomTextField(
-                            labelText: 'account_number'.tr,
-                            hintText: 'E.g. 14XXXXXXXX097',
-                            controller: ctrl.accountNumberTEC,
-                            textInputType: TextInputType.number,
+                          PKeyboardActions(
+                            focusNode: _accountNumberFocusNode,
+                            child: PCustomTextField(
+                              labelText: 'account_number'.tr,
+                              hintText: 'E.g. 14XXXXXXXX097',
+                              focusNode: _accountNumberFocusNode,
+                              controller: ctrl.accountNumberTEC,
+                              textInputType: TextInputType.number,
+                            ),
                           ),
 
                           PAppSize.s20.verticalSpace,
