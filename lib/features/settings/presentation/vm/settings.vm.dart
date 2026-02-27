@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:oldmutual_pensions_app/core/utils/utils.dart';
 import 'package:oldmutual_pensions_app/features/auth/auth.dart';
+import 'package:oldmutual_pensions_app/features/home/home.dart';
 import 'package:oldmutual_pensions_app/features/notification/presentation/vm/notification.vm.dart';
 import 'package:oldmutual_pensions_app/features/profile/profile.dart';
 import 'package:oldmutual_pensions_app/routes/app.pages.dart';
@@ -136,7 +137,7 @@ class PSettingsVm extends GetxController {
         // PHelperFunction.pop();
         PPopupDialog(
           context,
-        ).errorMessage(title: 'error'.tr, message: err.message);
+        ).errorMessage(title: err.title ?? 'error'.tr, message: err.message);
       },
       (res) {
         loading(LoadingState.completed);
@@ -182,27 +183,34 @@ class PSettingsVm extends GetxController {
         // else {
         //   PPopupDialog(
         //     context,
-        //   ).errorMessage(title: 'error'.tr, message: err.message);
+        //   ).errorMessage(title: err.title ?? 'error'.tr, message: err.message);
         // }
       },
       (res) {
         loading(LoadingState.completed);
         clearCache(soft);
-        if (soft) {
-          // navigate to next screen
-          PHelperFunction.switchScreen(
-            destination: Routes.welcomeBackPage,
-            replace: true,
-          );
-        } else {
-          PHelperFunction.switchScreen(
-            destination: Routes.loginPage,
-            replace: true,
-          );
-          PPopupDialog(
-            context,
-          ).successMessage(title: 'success'.tr, message: res.message ?? '');
-        }
+        PHelperFunction.switchScreen(
+          destination: Routes.welcomeBackPage,
+          replace: true,
+        );
+        PPopupDialog(
+          context,
+        ).successMessage(title: 'success'.tr, message: res.message ?? '');
+        // if (soft) {
+        //   // navigate to next screen
+        //   PHelperFunction.switchScreen(
+        //     destination: Routes.welcomeBackPage,
+        //     replace: true,
+        //   );
+        // } else {
+        //   PHelperFunction.switchScreen(
+        //     destination: Routes.loginPage,
+        //     replace: true,
+        //   );
+        //   PPopupDialog(
+        //     context,
+        //   ).successMessage(title: 'success'.tr, message: res.message ?? '');
+        // }
       },
     );
   }
@@ -216,6 +224,9 @@ class PSettingsVm extends GetxController {
   Future<void> clearCache(bool soft) async {
     await PSecureStorage().removeSecureData(PSecureStorage().authResKey);
     await PSecureStorage().removeSecureData(PSecureStorage().bioDataKey);
+    if (Get.isRegistered<PHomeVm>()) {
+      PHomeVm.instance.currentIndex.value = 0;
+    }
   }
 
   Future<void> deleteAccount() async {
@@ -234,7 +245,7 @@ class PSettingsVm extends GetxController {
         loading(LoadingState.error);
         PPopupDialog(
           context,
-        ).errorMessage(title: 'error'.tr, message: err.message);
+        ).errorMessage(title: err.title ?? 'error'.tr, message: err.message);
       },
       (res) {
         loading(LoadingState.completed);
