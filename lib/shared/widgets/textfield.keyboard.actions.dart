@@ -9,9 +9,15 @@ class PKeyboardActions extends StatelessWidget {
   const PKeyboardActions({super.key, this.child, required this.focusNode});
   @override
   Widget build(BuildContext context) {
+    final isDark = PHelperFunction.isDarkMode(context);
     return KeyboardActions(
       autoScroll: false,
       config: KeyboardActionsConfig(
+        keyboardBarColor: isDark
+            ? CupertinoColors
+                  .systemGroupedBackground
+                  .darkHighContrastElevatedColor
+            : CupertinoColors.systemGroupedBackground.highContrastElevatedColor,
         actions: [
           KeyboardActionsItem(
             focusNode: focusNode,
@@ -19,7 +25,15 @@ class PKeyboardActions extends StatelessWidget {
               (node) {
                 return GestureDetector(
                   onTap: () => node.unfocus(), // Dismiss the keyboard
-                  child: Text('done'.tr).all(PAppSize.s8),
+                  child: Text(
+                    'done'.tr,
+                    style: TextStyle(
+                      color: isDark
+                          ? PAppColor.whiteColor
+                          : PAppColor.textColorDark,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ).all(PAppSize.s8),
                 );
               },
             ],
