@@ -10,7 +10,7 @@ class PKeyboardActions extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return KeyboardActions(
-      autoScroll: false,
+      autoScroll: true,
       config: KeyboardActionsConfig(
         actions: [
           KeyboardActionsItem(

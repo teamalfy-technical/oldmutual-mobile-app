@@ -130,38 +130,48 @@ class PPensionVm extends GetxController {
   /// Function to get pension certificate
   Future<void> downloadPensionCertificate() async {
     showDownloadLoader(context);
-    final result = await pensionService.downloadPensionCertificate(
-      employerNumber: selectedScheme.value.employerNumber ?? '',
-      staffNumber: (await PSecureStorage().getBioData())?.staffNumber ?? '',
-    );
-    result.fold(
-      (err) {
-        PHelperFunction.pop();
-        PPopupDialog(
-          context,
-        ).errorMessage(title: 'error'.tr, message: err.message);
-      },
-      (res) async {
-        if (res.data!['success'] == false) {
+    try {
+      final result = await pensionService.downloadPensionCertificate(
+        employerNumber: selectedScheme.value.employerNumber ?? '',
+        staffNumber: (await PSecureStorage().getBioData())?.staffNumber ?? '',
+      );
+      result.fold(
+        (err) {
           PHelperFunction.pop();
-          PPopupDialog(context).errorMessage(
-            title: 'error'.tr,
-            message: res.data?['message'] ?? 'download_failed'.tr,
+          PPopupDialog(
+            context,
+          ).errorMessage(title: 'error'.tr, message: err.message);
+        },
+        (res) async {
+          if (res.data!['success'] == false) {
+            PHelperFunction.pop();
+            PPopupDialog(context).errorMessage(
+              title: 'error'.tr,
+              message: res.data?['message'] ?? 'download_failed'.tr,
+            );
+            return;
+          }
+          PHelperFunction.pop();
+          PPopupDialog(
+            context,
+          ).successMessage(
+            title: 'success'.tr,
+            message: 'download_complete'.tr,
           );
-          return;
-        }
-        PHelperFunction.pop();
-        PPopupDialog(
-          context,
-        ).successMessage(title: 'success'.tr, message: 'download_complete'.tr);
-        await Future.delayed(Duration(milliseconds: 1000));
-        await PHelperFunction.openFileWithData(
-          pdfData: res.data ?? Map<String, dynamic>.from({}),
-          name: selectedScheme.value.penTypeDescription ?? '',
-        );
-        // getProducts();
-      },
-    );
+          await Future.delayed(Duration(milliseconds: 1000));
+          await PHelperFunction.openFileWithData(
+            pdfData: res.data ?? Map<String, dynamic>.from({}),
+            name: selectedScheme.value.penTypeDescription ?? '',
+          );
+        },
+      );
+    } catch (e) {
+      PHelperFunction.pop();
+      PPopupDialog(context).errorMessage(
+        title: 'error'.tr,
+        message: 'error_occurred_msg'.tr,
+      );
+    }
   }
 
   /// Function to get all selected scheme

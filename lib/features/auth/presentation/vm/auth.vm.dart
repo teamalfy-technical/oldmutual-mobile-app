@@ -210,14 +210,22 @@ class PAuthVm extends GetxController {
     // Otherwise, require user to enter password manually
     String password;
     if (biometricAuthSucceeded) {
-      password =
-          await PSecureStorage().getBiometricPassword() ??
-          passwordTEC.text.trim();
+      final storedPassword = await PSecureStorage().getBiometricPassword();
+      if (storedPassword == null || storedPassword.isEmpty) {
+        // Biometric auth succeeded but no stored password found
+        loading(LoadingState.error);
+        biometricAuthSucceeded = false;
+        PPopupDialog(context).errorMessage(
+          title: 'error'.tr,
+          message:
+              'Stored credentials not found. Please login with your password to re-enable biometrics.',
+        );
+        return;
+      }
+      password = storedPassword;
     } else {
       password = passwordTEC.text.trim();
     }
-
-    pensionAppLogger.e('Attempting login with email/phone: $password');
 
     // Reset the flag after using it
     biometricAuthSucceeded = false;

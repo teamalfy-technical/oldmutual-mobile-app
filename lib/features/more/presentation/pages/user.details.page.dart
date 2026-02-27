@@ -57,6 +57,14 @@ class _PUserDetailPageState extends State<PUserDetailPage>
       'ssnitNumber': bioData?.ssnitNumber ?? 'not_applicable'.tr,
       'dob': bioData?.dob,
       'tin': bioData?.tin,
+      'memberNo': bioData?.memberNo ?? 'not_applicable'.tr,
+      'monthlyContribution': bioData?.monthlyContribution != null
+          ? PFormatter.formatCurrency(amount: bioData!.monthlyContribution!)
+          : 'not_applicable'.tr,
+      'employerName': bioData?.employerName ?? 'not_applicable'.tr,
+      'employerNumber': bioData?.employerNumber ?? 'not_applicable'.tr,
+      'pensionTypeName': bioData?.pensionTypeName ?? 'not_applicable'.tr,
+      'schemeName': bioData?.schemeName ?? 'not_applicable'.tr,
     };
 
     final profile = {

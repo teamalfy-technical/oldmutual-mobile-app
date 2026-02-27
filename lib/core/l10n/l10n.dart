@@ -314,6 +314,7 @@ class AppTranslations extends Translations {
       'view_pdf': 'View PDF',
       'employer': 'Employer',
       'pending_review': 'Pending Review',
+      'member_no': 'Member No.',
       'employer_name': 'Employer Name',
       'view_all_schemes': 'View All Schemes',
       'redemption_confirm_msg':

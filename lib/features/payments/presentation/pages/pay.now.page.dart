@@ -226,6 +226,7 @@ class _PPayNowPageState extends State<PPayNowPage> {
                               textInputType: TextInputType.numberWithOptions(
                                 decimal: true,
                               ),
+                              textInputAction: TextInputAction.done,
                               onChanged: ctrl.onAmountChanged,
                               validator: PValidator.validatePaymentAmount,
                             ),

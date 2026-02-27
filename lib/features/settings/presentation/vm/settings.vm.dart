@@ -207,24 +207,15 @@ class PSettingsVm extends GetxController {
     );
   }
 
-  // Erase data from login cache
+  // Erase session data from login cache
+  // User data (email, first name, device token, biometric credentials)
+  // persists across logouts and is only cleared on app uninstall or cache clear
   /// soft - defines the level of logout
   /// false if you logged out manually
   /// true if user was logged out due to inactivity
   Future<void> clearCache(bool soft) async {
-    if (soft == false) {
-      // Manual logout - clear everything including email, first name, and biometric credentials
-      await PSecureStorage().removeSecureData(PSecureStorage().emailKey);
-      await PSecureStorage().removeSecureData(PSecureStorage().firstNameKey);
-      await PSecureStorage().removeSecureData(PSecureStorage().authResKey);
-      await PSecureStorage().removeSecureData(PSecureStorage().deviceTokenKey);
-      await PSecureStorage().deleteBiometricPassword();
-    } else {
-      // Soft logout (inactivity) - clear auth and bioData but keep email and first name for welcome back personalization
-      await PSecureStorage().removeSecureData(PSecureStorage().authResKey);
-    }
+    await PSecureStorage().removeSecureData(PSecureStorage().authResKey);
     await PSecureStorage().removeSecureData(PSecureStorage().bioDataKey);
-    // await PSecureStorage().removeSecureData(PSecureStorage().tokenResKey);
   }
 
   Future<void> deleteAccount() async {

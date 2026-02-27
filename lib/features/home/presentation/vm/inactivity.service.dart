@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:oldmutual_pensions_app/core/utils/utils.dart';
@@ -16,8 +17,8 @@ class PInactivityService extends GetxService with WidgetsBindingObserver {
 
   /// Grace period when returning from background
   /// If app was in background longer than this, force logout
-  // static const Duration backgroundGracePeriod = Duration(minutes: 2);
-  static const Duration backgroundGracePeriod = Duration(seconds: 30);
+  static const Duration backgroundGracePeriod = Duration(minutes: 2);
+  // static const Duration backgroundGracePeriod = Duration(seconds: 30);
 
   Timer? _inactivityTimer;
   DateTime? _appPausedTime;
@@ -29,10 +30,10 @@ class PInactivityService extends GetxService with WidgetsBindingObserver {
   @override
   void onInit() {
     super.onInit();
-    // if (kDebugMode) {
-    //   pensionAppLogger.i('Inactivity service disabled in debug mode');
-    //   return;
-    // }
+    if (kDebugMode) {
+      pensionAppLogger.i('Inactivity service disabled in debug mode');
+      return;
+    }
     WidgetsBinding.instance.addObserver(this);
     _startTimer();
     // Mark session as validated since user successfully logged in
@@ -54,7 +55,7 @@ class PInactivityService extends GetxService with WidgetsBindingObserver {
   /// Handle app lifecycle changes
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
-    // if (kDebugMode) return;
+    if (kDebugMode) return;
     switch (state) {
       case AppLifecycleState.paused:
         // App went to background
@@ -107,7 +108,7 @@ class PInactivityService extends GetxService with WidgetsBindingObserver {
   }
 
   void _handleInactivity() {
-    // if (kDebugMode) return;
+    if (kDebugMode) return;
     // Check if user is on login/signup pages - don't log out
     final currentRoute = Get.currentRoute;
     if (currentRoute != Routes.loginPage &&

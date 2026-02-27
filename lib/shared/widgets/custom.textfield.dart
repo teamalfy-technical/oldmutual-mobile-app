@@ -22,6 +22,7 @@ class PCustomTextField extends StatefulWidget {
   final TextCapitalization textCapitalization;
   final String? errorText;
   final FocusNode? focusNode;
+  final TextInputAction? textInputAction;
 
   const PCustomTextField({
     super.key,
@@ -44,6 +45,7 @@ class PCustomTextField extends StatefulWidget {
     this.hintText,
     this.errorText,
     this.focusNode,
+    this.textInputAction,
   });
 
   @override
@@ -81,6 +83,7 @@ class _PCustomTextFieldState extends State<PCustomTextField> {
       controller: widget.controller,
       validator: widget.validator,
       textCapitalization: widget.textCapitalization,
+      textInputAction: widget.textInputAction,
       enabled: widget.enabled,
       maxLines: widget.maxLines,
       minLines: widget.minLines,

@@ -43,7 +43,7 @@ class _PWelcomeBackPageState extends State<PWelcomeBackPage>
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
     super.didChangeAppLifecycleState(state);
-    if (state == AppLifecycleState.resumed) {
+    if (state == AppLifecycleState.resumed && mounted) {
       // Re-trigger biometric authentication when app resumes (e.g., after device unlock)
       pensionAppLogger.i('App resumed on Welcome Back page - re-triggering biometrics');
       _autoTriggerBiometrics();
@@ -59,6 +59,9 @@ class _PWelcomeBackPageState extends State<PWelcomeBackPage>
 
     // Small delay to ensure the page is fully loaded
     await Future.delayed(const Duration(milliseconds: 300));
+
+    // Check if widget is still mounted after delay
+    if (!mounted) return;
 
     // Check if biometric authentication is enabled and user email exists
     if (!PSecureStorage().isBiometricEnabled) {

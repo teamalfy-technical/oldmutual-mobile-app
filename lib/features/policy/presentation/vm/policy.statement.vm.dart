@@ -96,91 +96,116 @@ class PPolicyStatementVm extends GetxController {
   /// Function to download policy investment statement
   Future<void> downloadInvestmentStatement() async {
     showDownloadLoader(context);
-    final result = await policyService.downloadInvestmentStatement(
-      policyNumber: selectedPolicy?.policyNo ?? '',
-    );
-    result.fold(
-      (err) {
-        PHelperFunction.pop();
-        PPopupDialog(
-          context,
-        ).errorMessage(title: 'error'.tr, message: 'error_occurred_msg'.tr);
-      },
-      (res) async {
-        PHelperFunction.pop();
-        PPopupDialog(
-          context,
-        ).successMessage(title: 'success'.tr, message: 'download_complete'.tr);
-        await Future.delayed(Duration(milliseconds: 1000));
-        // pensionAppLogger.e(res.data);
-        await PHelperFunction.openFileWithData(
-          pdfData: res.data ?? Map<String, dynamic>.from({}),
-          name: selectedPolicy?.planDescription ?? '',
-        );
-      },
-    );
+    try {
+      final result = await policyService.downloadInvestmentStatement(
+        policyNumber: selectedPolicy?.policyNo ?? '',
+      );
+      result.fold(
+        (err) {
+          PHelperFunction.pop();
+          PPopupDialog(
+            context,
+          ).errorMessage(title: 'error'.tr, message: 'error_occurred_msg'.tr);
+        },
+        (res) async {
+          PHelperFunction.pop();
+          PPopupDialog(
+            context,
+          ).successMessage(
+            title: 'success'.tr,
+            message: 'download_complete'.tr,
+          );
+          await Future.delayed(Duration(milliseconds: 1000));
+          await PHelperFunction.openFileWithData(
+            pdfData: res.data ?? Map<String, dynamic>.from({}),
+            name: selectedPolicy?.planDescription ?? '',
+          );
+        },
+      );
+    } catch (e) {
+      PHelperFunction.pop();
+      PPopupDialog(context).errorMessage(
+        title: 'error'.tr,
+        message: 'error_occurred_msg'.tr,
+      );
+    }
   }
 
   /// Function to download policy premium statement
   Future<void> downloadPremiumStatement() async {
     showDownloadLoader(context);
-    final result = await policyService.downloadPremiumStatement(
-      policyNumber: selectedPolicy?.policyNo ?? '',
-    );
-    result.fold(
-      (err) {
-        PHelperFunction.pop();
-        PPopupDialog(
-          context,
-        ).errorMessage(title: 'error'.tr, message: 'error_occurred_msg'.tr);
-      },
-      (res) async {
-        PHelperFunction.pop();
-        PPopupDialog(
-          context,
-        ).successMessage(title: 'success'.tr, message: 'download_complete'.tr);
-        pensionAppLogger.e(res.data);
-        await PHelperFunction.openFileWithData(
-          pdfData: res.data ?? Map<String, dynamic>.from({}),
-          name: selectedPolicy?.planDescription ?? '',
-        );
-      },
-    );
+    try {
+      final result = await policyService.downloadPremiumStatement(
+        policyNumber: selectedPolicy?.policyNo ?? '',
+      );
+      result.fold(
+        (err) {
+          PHelperFunction.pop();
+          PPopupDialog(
+            context,
+          ).errorMessage(title: 'error'.tr, message: 'error_occurred_msg'.tr);
+        },
+        (res) async {
+          PHelperFunction.pop();
+          PPopupDialog(
+            context,
+          ).successMessage(
+            title: 'success'.tr,
+            message: 'download_complete'.tr,
+          );
+          await PHelperFunction.openFileWithData(
+            pdfData: res.data ?? Map<String, dynamic>.from({}),
+            name: selectedPolicy?.planDescription ?? '',
+          );
+        },
+      );
+    } catch (e) {
+      PHelperFunction.pop();
+      PPopupDialog(context).errorMessage(
+        title: 'error'.tr,
+        message: 'error_occurred_msg'.tr,
+      );
+    }
   }
 
   /// Function to download policy document / statement
   Future<void> downloadPolicyDocument() async {
     showDownloadLoader(context);
-    final result = await policyService.downloadPolicyStatement(
-      policyNumber: selectedPolicy?.policyNo ?? '',
-    );
-    result.fold(
-      (err) {
-        PHelperFunction.pop();
-        PPopupDialog(
-          context,
-        ).errorMessage(title: 'error'.tr, message: 'error_occurred_msg'.tr);
-      },
-      (res) async {
-        PHelperFunction.pop();
-        PPopupDialog(
-          context,
-        ).successMessage(title: 'success'.tr, message: 'download_complete'.tr);
-        pensionAppLogger.d(res.data);
-        // await PHelperFunction.openFileWithData(
-        //   pdfData: res.data ?? Map<String, dynamic>.from({}),
-        //   name: selectedPolicy?.planDescription ?? '',
-        // );
-        await PHelperFunction.openFileWithURL(
-          url: res.data?['url'] ?? '',
-          fileName:
-              res.data?['url'].toString().split('/').last ??
-              '${selectedPolicy?.planDescription?.toLowerCase().replaceAll(' ', '-')}.pdf',
-          //selectedPolicy?.planDescription ?? '',
-          requiresAuth: false,
-        );
-      },
-    );
+    try {
+      final result = await policyService.downloadPolicyStatement(
+        policyNumber: selectedPolicy?.policyNo ?? '',
+      );
+      result.fold(
+        (err) {
+          PHelperFunction.pop();
+          PPopupDialog(
+            context,
+          ).errorMessage(title: 'error'.tr, message: 'error_occurred_msg'.tr);
+        },
+        (res) async {
+          PHelperFunction.pop();
+          PPopupDialog(
+            context,
+          ).successMessage(
+            title: 'success'.tr,
+            message: 'download_complete'.tr,
+          );
+          await PHelperFunction.openFileWithURL(
+            url: res.data?['url'] ?? '',
+            fileName:
+                res.data?['url'].toString().split('/').last ??
+                '${selectedPolicy?.planDescription?.toLowerCase().replaceAll(' ', '-')}.pdf',
+            requiresAuth: false,
+          );
+        },
+      );
+    } catch (e) {
+      PHelperFunction.pop();
+      PPopupDialog(context).errorMessage(
+        title: 'error'.tr,
+        message: 'error_occurred_msg'.tr,
+      );
+    }
   }
 
   ContributedYear get defaultContributionYear => ContributedYear(

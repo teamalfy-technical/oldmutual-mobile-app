@@ -38,7 +38,7 @@ class LocalAuthService {
       final bool didAuthenticate = await _auth.authenticate(
         localizedReason: 'Please authenticate to securely login',
         options: AuthenticationOptions(
-          biometricOnly: true, // 🔒 Only biometrics, no device PIN fallback
+          biometricOnly: false, // Allow device PIN/passcode as fallback
           stickyAuth: true, // Keep auth session active while switching apps
           useErrorDialogs: true,
         ),
