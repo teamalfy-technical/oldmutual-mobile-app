@@ -10,6 +10,7 @@ class PMoreListTitle extends StatelessWidget {
   final Widget? trailing;
   final EdgeInsetsGeometry? contentPadding;
   final bool isLoading;
+  final Function()? onTap;
   const PMoreListTitle({
     super.key,
     required this.title,
@@ -18,11 +19,13 @@ class PMoreListTitle extends StatelessWidget {
     this.trailing,
     this.contentPadding,
     this.isLoading = false,
+    this.onTap,
   });
 
   @override
   Widget build(BuildContext context) {
     return ListTile(
+      onTap: onTap,
       leading: leading,
       contentPadding:
           contentPadding ?? EdgeInsets.symmetric(horizontal: PAppSize.s0),

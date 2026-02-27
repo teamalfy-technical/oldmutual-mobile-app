@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:oldmutual_pensions_app/core/utils/utils.dart';
 import 'package:oldmutual_pensions_app/features/more/more.services.dart';
 import 'package:oldmutual_pensions_app/gen/assets.gen.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class PSupportPage extends StatelessWidget {
   const PSupportPage({super.key});
@@ -90,6 +91,15 @@ class PSupportPage extends StatelessWidget {
                             ? PAppColor.whiteColor
                             : PAppColor.darkAppBarColor,
                       ),
+                      onTap: () async {
+                        final uri = Uri(
+                          scheme: 'tel',
+                          path: PAppConstant.phoneSupport,
+                        );
+                        if (await canLaunchUrl(uri)) {
+                          await launchUrl(uri);
+                        }
+                      },
                     ).symmetric(horizontal: PAppSize.s14),
                     Divider(
                       height: PAppSize.s1,
@@ -102,6 +112,15 @@ class PSupportPage extends StatelessWidget {
                             ? PAppColor.whiteColor
                             : PAppColor.darkAppBarColor,
                       ),
+                      onTap: () async {
+                        final uri = Uri(
+                          scheme: 'mailto',
+                          path: PAppConstant.emailSupport,
+                        );
+                        if (await canLaunchUrl(uri)) {
+                          await launchUrl(uri);
+                        }
+                      },
                     ).symmetric(horizontal: PAppSize.s14),
                     Divider(
                       height: PAppSize.s1,
