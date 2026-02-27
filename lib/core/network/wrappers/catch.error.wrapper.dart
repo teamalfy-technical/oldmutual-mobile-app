@@ -31,75 +31,65 @@ class CatchApiErrorWrapperImpl implements CatchApiErrorWrapper {
           err.response?.data,
           StackTrace.current,
         );
-        if (err.response!.statusCode != 500) {
-          if (err.response?.data['status'] == 'error' &&
-              err.response?.statusCode == 200) {
-            errorMessage = err.response!.data['data'];
-          } else if (err.response?.statusCode == 400) {
-            errorMessage = extractError(err.response?.data);
-            //errorMessage = err.response?.data['error'];
-          } else if (err.response?.statusCode == 401) {
-            if (Get.currentRoute != Routes.loginPage) {
-              // Get.put(PSettingsVm()).signout(soft: true);
-            }
-            errorMessage =
-                err.response?.data['error'] ?? 'Unauthorized request';
-            pensionAppLogger.e(err.response?.data);
-          } else if (err.response?.statusCode == 403) {
-            if (Get.currentRoute != Routes.loginPage) {
-              // Get.put(PSettingsVm()).signout(soft: true);
-              errorMessage =
-                  err.response?.data['data']['error'] ??
-                  err.response?.data['message'] ??
-                  'Forbidden Access';
-            } else {
-              errorMessage =
-                  err.response?.data['message'] ?? 'Forbidden Access';
-            }
-            pensionAppLogger.e(err.response?.data);
-          } else if (err.response?.statusCode == 404) {
-            pensionAppLogger.e(err.response?.data);
-            errorMessage = extractError(err.response?.data);
-          } else if (err.response?.statusCode == 422) {
-            // ApiErrorResponse error =
-            //     ApiErrorResponse.fromJson(err.response?.data);
-            pensionAppLogger.e(err.response?.data);
-            errorMessage = err.response?.data['message'] ?? 'Bad request';
-          } else if (err.response?.statusCode == 429) {
-            if (Get.currentRoute != Routes.loginPage) {
-              // Get.put(PSettingsVm()).signout(soft: true);
-            }
-            // ApiErrorResponse error =
-            //     ApiErrorResponse.fromJson(err.response?.data);
-            pensionAppLogger.e(err.response?.data);
-            errorMessage = extractError(err.response?.data);
-          } else if (err.response?.data is Map &&
-              err.response!.data.containsKey('data')) {
-            final error = err.response!.data['data'];
-            // final error = errorMessageFromJson(e.response!.data.toString()).message;
-            // Check the type of message and handle accordingly
-            if (error is List) {
-              List<String> messages = error.cast<String>();
-              errorMessage = messages.first.toString();
-              // Handle list of messages
-            } else if (error is String) {
-              // Handle single string message
-              errorMessage = error;
-            } else if (error is int) {
-              // Handle integer message
-            } else {
-              // Handle other types of messages
-            }
-          } else if (err.response?.statusCode == 412) {
-            errorMessage = extractError(err.response?.data);
-          }
-        } else {
+        final statusCode = err.response!.statusCode ?? 0;
+
+        // Handle 5xx server errors explicitly
+        if (statusCode >= 500) {
+          pensionAppLogger.e(
+            'Server error $statusCode: ${err.response?.data}',
+          );
+          errorMessage = 'error_occurred_msg'.tr;
+        } else if (err.response?.data['status'] == 'error' &&
+            statusCode == 200) {
+          errorMessage = err.response!.data['data'];
+        } else if (statusCode == 400) {
           errorMessage = extractError(err.response?.data);
+        } else if (statusCode == 401) {
+          if (Get.currentRoute != Routes.loginPage) {
+            // Get.put(PSettingsVm()).signout(soft: true);
+          }
+          errorMessage =
+              err.response?.data['error'] ?? 'Unauthorized request';
+          pensionAppLogger.e(err.response?.data);
+        } else if (statusCode == 403) {
+          if (Get.currentRoute != Routes.loginPage) {
+            errorMessage =
+                err.response?.data['data']['error'] ??
+                err.response?.data['message'] ??
+                'Forbidden Access';
+          } else {
+            errorMessage =
+                err.response?.data['message'] ?? 'Forbidden Access';
+          }
+          pensionAppLogger.e(err.response?.data);
+        } else if (statusCode == 404) {
+          pensionAppLogger.e(err.response?.data);
+          errorMessage = extractError(err.response?.data);
+        } else if (statusCode == 422) {
+          pensionAppLogger.e(err.response?.data);
+          errorMessage = err.response?.data['message'] ?? 'Bad request';
+        } else if (statusCode == 429) {
+          if (Get.currentRoute != Routes.loginPage) {
+            // Get.put(PSettingsVm()).signout(soft: true);
+          }
+          pensionAppLogger.e(err.response?.data);
+          errorMessage = extractError(err.response?.data);
+        } else if (statusCode == 412) {
+          errorMessage = extractError(err.response?.data);
+        } else if (err.response?.data is Map &&
+            err.response!.data.containsKey('data')) {
+          final error = err.response!.data['data'];
+          if (error is List) {
+            List<String> messages = error.cast<String>();
+            errorMessage = messages.first.toString();
+          } else if (error is String) {
+            errorMessage = error;
+          }
         }
       } else {
         errorMessage = ServerException.getErrorMessage(err);
       }
-      return PFailure(message: errorMessage ?? err.toString());
+      return PFailure(message: errorMessage ?? 'error_occurred_msg'.tr);
     } else {
       return UnknownFailure();
     }
