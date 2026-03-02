@@ -155,9 +155,14 @@ class PPolicyDetailPage extends StatelessWidget {
                         ? PAppColor.successLight
                         : PAppColor.successDark,
                   ),
-                  onTap: () => PHelperFunction.switchScreen(
-                    destination: Routes.policyClaimPage,
+                  onTap: () => PPopupDialog(context).warningMessage(
+                    title: 'coming_soon_title'.tr,
+                    message: 'coming_soon_msg'.tr,
                   ),
+
+                  // PHelperFunction.switchScreen(
+                  //   destination: Routes.policyClaimPage,
+                  // ),
                 ),
               ],
             ).scrollable(scrollDirection: Axis.horizontal),
