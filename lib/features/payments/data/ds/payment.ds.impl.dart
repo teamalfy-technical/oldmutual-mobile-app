@@ -17,6 +17,7 @@ class PaymentDsImpl implements PaymentDs {
       final payload = dio.FormData.fromMap({
         'amount': amount,
         'currency': currency,
+        'platform': 'mobile',
       });
 
       final res = await apiService.callService(
@@ -46,6 +47,7 @@ class PaymentDsImpl implements PaymentDs {
         'policy_number': policyNumber,
         'product': product,
         'currency': currency,
+        'platform': 'mobile',
       });
 
       final res = await apiService.callService(
