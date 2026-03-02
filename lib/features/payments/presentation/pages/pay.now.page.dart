@@ -304,7 +304,7 @@ class _PPayNowPageState extends State<PPayNowPage> {
                       left: PAppSize.s20,
                       right: PAppSize.s20,
                       top: PAppSize.s20,
-                      bottom: PAppSize.s20,
+                      bottom: PAppSize.s50,
                     ),
               ),
             ],

@@ -11,9 +11,10 @@ abstract class Failure extends Equatable {
 }
 
 class PFailure extends Failure {
-  const PFailure({required this.message});
+  const PFailure({required this.message, this.title});
 
   final String message;
+  final String? title;
 
   @override
   List<Object> get props => [message];

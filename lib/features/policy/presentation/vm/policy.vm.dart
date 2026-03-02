@@ -82,7 +82,7 @@ class PPolicyVm extends GetxController {
         updateLoadingState(LoadingState.error);
         PPopupDialog(
           context,
-        ).errorMessage(title: 'error'.tr, message: err.message);
+        ).errorMessage(title: err.title ?? 'error'.tr, message: err.message);
       },
       (res) async {
         updateLoadingState(LoadingState.completed);
@@ -111,7 +111,7 @@ class PPolicyVm extends GetxController {
         updateLoadingState(LoadingState.error);
         PPopupDialog(
           context,
-        ).errorMessage(title: 'error'.tr, message: err.message);
+        ).errorMessage(title: err.title ?? 'error'.tr, message: err.message);
       },
       (res) async {
         updateLoadingState(LoadingState.completed);
@@ -141,7 +141,7 @@ class PPolicyVm extends GetxController {
 
         PPopupDialog(
           context,
-        ).errorMessage(title: 'error'.tr, message: err.message);
+        ).errorMessage(title: err.title ?? 'error'.tr, message: err.message);
       },
       (res) async {
         submitting(LoadingState.completed);
@@ -161,7 +161,7 @@ class PPolicyVm extends GetxController {
   //       updateLoadingState(LoadingState.error);
   //       PPopupDialog(
   //         context,
-  //       ).errorMessage(title: 'error'.tr, message: err.message);
+  //       ).errorMessage(title: err.title ?? 'error'.tr, message: err.message);
   //     },
   //     (res) async {
   //       updateLoadingState(LoadingState.completed);
@@ -181,7 +181,7 @@ class PPolicyVm extends GetxController {
   //       updateLoadingState(LoadingState.error);
   //       PPopupDialog(
   //         context,
-  //       ).errorMessage(title: 'error'.tr, message: err.message);
+  //       ).errorMessage(title: err.title ?? 'error'.tr, message: err.message);
   //     },
   //     (res) {
   //       updateLoadingState(LoadingState.completed);
@@ -208,7 +208,7 @@ class PPolicyVm extends GetxController {
         updateLoadingState(LoadingState.error);
         PPopupDialog(
           context,
-        ).errorMessage(title: 'error'.tr, message: err.message);
+        ).errorMessage(title: err.title ?? 'error'.tr, message: err.message);
       },
       (res) async {
         updateLoadingState(LoadingState.completed);
@@ -251,7 +251,7 @@ class PPolicyVm extends GetxController {
   //       updateLoadingState(LoadingState.error);
   //       PPopupDialog(
   //         context,
-  //       ).errorMessage(title: 'error'.tr, message: err.message);
+  //       ).errorMessage(title: err.title ?? 'error'.tr, message: err.message);
   //     },
   //     (res) {
   //       updateLoadingState(LoadingState.completed);

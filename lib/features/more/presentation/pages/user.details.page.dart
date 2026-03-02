@@ -49,6 +49,8 @@ class _PUserDetailPageState extends State<PUserDetailPage>
     final authResponse = await PSecureStorage().getAuthResponse();
     final bioData = await PSecureStorage().getBioData();
 
+    pensionAppLogger.e(bioData?.toJson());
+
     final biodata = {
       'fullName': bioData?.fullName ?? 'not_applicable'.tr,
       'email': bioData?.email ?? 'not_applicable'.tr,

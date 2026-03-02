@@ -142,7 +142,9 @@ class AppTranslations extends Translations {
       'or': 'or',
       'downloading_msg': 'Downloading.\nPlease wait...',
       'download_complete': 'Download complete',
-      'error_occurred_msg': 'An error occurred. Please try again later',
+      'server_error_title': 'Something Went Wrong',
+      'error_occurred_msg':
+          'Service temporarily unavailable. Please try again later',
       'continue': 'Continue',
       'cancel': 'Cancel',
       'successful': 'Successful',
@@ -549,6 +551,8 @@ class AppTranslations extends Translations {
       'payment_success_msg':
           'Your @amount payment has been received successfully',
       'reach_support_text': 'If you have any questions, contact support at',
+      'claim_amount_hint': 'Enter the claim amount(max: ₵2,366.77)',
+      'momo_wallet_hint': 'Enter MoMo wallet number (e.g. 024XXXXXXXX)',
 
       // Security strings
       'security_alert': 'Security Alert',

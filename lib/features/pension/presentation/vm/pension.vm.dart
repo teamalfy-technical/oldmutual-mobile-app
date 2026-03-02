@@ -47,7 +47,7 @@ class PPensionVm extends GetxController {
         updateLoadingState(LoadingState.error);
         PPopupDialog(
           context,
-        ).errorMessage(title: 'error'.tr, message: err.message);
+        ).errorMessage(title: err.title ?? 'error'.tr, message: err.message);
       },
       (res) async {
         updateLoadingState(LoadingState.completed);
@@ -70,7 +70,7 @@ class PPensionVm extends GetxController {
   //       updateLoadingState(LoadingState.error);
   //       PPopupDialog(
   //         context,
-  //       ).errorMessage(title: 'error'.tr, message: err.message);
+  //       ).errorMessage(title: err.title ?? 'error'.tr, message: err.message);
   //     },
   //     (res) async {
   //       updateLoadingState(LoadingState.completed);
@@ -111,7 +111,7 @@ class PPensionVm extends GetxController {
         updateLoadingState(LoadingState.error);
         PPopupDialog(
           context,
-        ).errorMessage(title: 'error'.tr, message: err.message);
+        ).errorMessage(title: err.title ?? 'error'.tr, message: err.message);
       },
       (res) {
         updateLoadingState(LoadingState.completed);
@@ -140,7 +140,7 @@ class PPensionVm extends GetxController {
           PHelperFunction.pop();
           PPopupDialog(
             context,
-          ).errorMessage(title: 'error'.tr, message: err.message);
+          ).errorMessage(title: err.title ?? 'error'.tr, message: err.message);
         },
         (res) async {
           if (res.data!['success'] == false) {
@@ -152,9 +152,7 @@ class PPensionVm extends GetxController {
             return;
           }
           PHelperFunction.pop();
-          PPopupDialog(
-            context,
-          ).successMessage(
+          PPopupDialog(context).successMessage(
             title: 'success'.tr,
             message: 'download_complete'.tr,
           );
@@ -167,10 +165,9 @@ class PPensionVm extends GetxController {
       );
     } catch (e) {
       PHelperFunction.pop();
-      PPopupDialog(context).errorMessage(
-        title: 'error'.tr,
-        message: 'error_occurred_msg'.tr,
-      );
+      PPopupDialog(
+        context,
+      ).errorMessage(title: 'error'.tr, message: 'error_occurred_msg'.tr);
     }
   }
 
@@ -198,7 +195,7 @@ class PPensionVm extends GetxController {
           // updateSelectingState(LoadingState.error);
           PPopupDialog(
             context,
-          ).errorMessage(title: 'error'.tr, message: err.message);
+          ).errorMessage(title: err.title ?? 'error'.tr, message: err.message);
         },
         (res) async {
           selectedScheme(scheme);
@@ -223,18 +220,18 @@ class PPensionVm extends GetxController {
             employerNumber: res.data?.employerNumber ?? '',
             updatedAt: res.data?.updatedAt ?? '',
           );
-          pensionAppLogger.e(res.data?.toJson());
           PSecureStorage().saveAuthResponse(updatedMember?.toJson() ?? {});
-          // pensionAppLogger.e(PSecureStorage().getAuthResponse()?.toJson());
           await Get.put(PContributionHistoryVm()).getContributionsSummary();
           updateLoadingState(LoadingState.completed);
-          await Get.put(
-            PAuthVm(),
-          ).getBioData(); // get bio data after selecting scheme
+          // await Get.put(
+          //   PAuthVm(),
+          // ).getBioData(); // get bio data after selecting scheme
         },
       );
     } else {
       await Get.put(PContributionHistoryVm()).getContributionsSummary();
     }
+    // get bio data after selecting scheme
+    await Get.put(PAuthVm()).getBioData();
   }
 }

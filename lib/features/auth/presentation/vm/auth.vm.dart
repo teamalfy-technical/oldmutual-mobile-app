@@ -122,7 +122,7 @@ class PAuthVm extends GetxController {
         loading(LoadingState.error);
         PPopupDialog(
           context,
-        ).errorMessage(title: 'error'.tr, message: err.message);
+        ).errorMessage(title: err.title ?? 'error'.tr, message: err.message);
       },
       (res) {
         loading(LoadingState.completed);
@@ -298,7 +298,7 @@ class PAuthVm extends GetxController {
         loading(LoadingState.error);
         PPopupDialog(
           context,
-        ).errorMessage(title: 'error'.tr, message: err.message);
+        ).errorMessage(title: err.title ?? 'error'.tr, message: err.message);
       },
       (res) async {
         loading(LoadingState.completed);
@@ -307,6 +307,10 @@ class PAuthVm extends GetxController {
         // Save bio data securely
         if (bioData != null) {
           await PSecureStorage().saveBioData(bioData.toJson());
+
+          pensionAppLogger.d(
+            'bioData saved to secure storage: ${bioData.toJson()}',
+          );
 
           // Save first name for welcome back page personalization
           if (bioData.firstName != null && bioData.firstName!.isNotEmpty) {
@@ -342,7 +346,7 @@ class PAuthVm extends GetxController {
         // PHelperFunction.pop();
         PPopupDialog(
           context,
-        ).errorMessage(title: 'error'.tr, message: err.message);
+        ).errorMessage(title: err.title ?? 'error'.tr, message: err.message);
       },
       (res) {
         loading(LoadingState.completed);
@@ -384,7 +388,7 @@ class PAuthVm extends GetxController {
         loading(LoadingState.error);
         PPopupDialog(
           context,
-        ).errorMessage(title: 'error'.tr, message: err.message);
+        ).errorMessage(title: err.title ?? 'error'.tr, message: err.message);
       },
       (res) {
         loading(LoadingState.completed);
@@ -429,7 +433,7 @@ class PAuthVm extends GetxController {
         loading(LoadingState.error);
         PPopupDialog(
           context,
-        ).errorMessage(title: 'error'.tr, message: err.message);
+        ).errorMessage(title: err.title ?? 'error'.tr, message: err.message);
       },
       (res) {
         loading(LoadingState.completed);
@@ -475,7 +479,7 @@ class PAuthVm extends GetxController {
   //       // PHelperFunction.pop();
   //       PPopupDialog(
   //         context,
-  //       ).errorMessage(title: 'error'.tr, message: err.message);
+  //       ).errorMessage(title: err.title ?? 'error'.tr, message: err.message);
   //     },
   //     (res) {
   //       loading(LoadingState.loading);
@@ -516,7 +520,7 @@ class PAuthVm extends GetxController {
         loading(LoadingState.error);
         PPopupDialog(
           context,
-        ).errorMessage(title: 'error'.tr, message: err.message);
+        ).errorMessage(title: err.title ?? 'error'.tr, message: err.message);
       },
       (res) {
         loading(LoadingState.completed);
@@ -547,7 +551,7 @@ class PAuthVm extends GetxController {
         loading(LoadingState.error);
         PPopupDialog(
           context,
-        ).errorMessage(title: 'error'.tr, message: err.message);
+        ).errorMessage(title: err.title ?? 'error'.tr, message: err.message);
       },
       (res) {
         loading(LoadingState.completed);

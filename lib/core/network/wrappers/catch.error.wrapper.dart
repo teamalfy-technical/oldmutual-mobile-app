@@ -21,6 +21,7 @@ class CatchApiErrorWrapperImpl implements CatchApiErrorWrapper {
     pensionAppLogger.e('Error: ${err.toString()}');
 
     String? errorMessage = '';
+    String? errorTitle;
     // if (err.runtimeType != NoInternetException) {
     //   unawaited(FirebaseCrashlytics.instance.recordError(err, stackTrace));
     // }
@@ -35,9 +36,8 @@ class CatchApiErrorWrapperImpl implements CatchApiErrorWrapper {
 
         // Handle 5xx server errors explicitly
         if (statusCode >= 500) {
-          pensionAppLogger.e(
-            'Server error $statusCode: ${err.response?.data}',
-          );
+          pensionAppLogger.e('Server error $statusCode: ${err.response?.data}');
+          errorTitle = 'server_error_title'.tr;
           errorMessage = 'error_occurred_msg'.tr;
         } else if (err.response?.data['status'] == 'error' &&
             statusCode == 200) {
@@ -48,8 +48,7 @@ class CatchApiErrorWrapperImpl implements CatchApiErrorWrapper {
           if (Get.currentRoute != Routes.loginPage) {
             // Get.put(PSettingsVm()).signout(soft: true);
           }
-          errorMessage =
-              err.response?.data['error'] ?? 'Unauthorized request';
+          errorMessage = err.response?.data['error'] ?? 'Unauthorized request';
           pensionAppLogger.e(err.response?.data);
         } else if (statusCode == 403) {
           if (Get.currentRoute != Routes.loginPage) {
@@ -59,7 +58,9 @@ class CatchApiErrorWrapperImpl implements CatchApiErrorWrapper {
                 'Forbidden Access';
           } else {
             errorMessage =
-                err.response?.data['message'] ?? 'Forbidden Access';
+                err.response?.data['data']['error'] ??
+                err.response?.data['message'] ??
+                'Forbidden Access';
           }
           pensionAppLogger.e(err.response?.data);
         } else if (statusCode == 404) {
@@ -89,7 +90,10 @@ class CatchApiErrorWrapperImpl implements CatchApiErrorWrapper {
       } else {
         errorMessage = ServerException.getErrorMessage(err);
       }
-      return PFailure(message: errorMessage ?? 'error_occurred_msg'.tr);
+      return PFailure(
+        message: errorMessage ?? 'error_occurred_msg'.tr,
+        title: errorTitle,
+      );
     } else {
       return UnknownFailure();
     }

@@ -5,12 +5,16 @@ import 'package:pinput/pinput.dart';
 class PCustomPinput extends StatelessWidget {
   final Function(String) onCompleted;
   final int length;
+  final FocusNode? focusNode;
+  final TextInputAction? textInputAction;
   final PinputAutovalidateMode pinputAutovalidateMode;
   PCustomPinput({
     super.key,
     required this.onCompleted,
     this.pinputAutovalidateMode = PinputAutovalidateMode.onSubmit,
     this.length = 6,
+    this.textInputAction,
+    this.focusNode,
   });
 
   final defaultPinTheme = PinTheme(
@@ -43,11 +47,13 @@ class PCustomPinput extends StatelessWidget {
     );
     return Pinput(
       length: length,
+      focusNode: focusNode,
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       defaultPinTheme: defaultPinTheme,
       focusedPinTheme: focusedPinTheme,
       submittedPinTheme: submittedPinTheme,
       pinputAutovalidateMode: pinputAutovalidateMode,
+      textInputAction: textInputAction,
       showCursor: true,
       onCompleted: onCompleted,
       // (pin) => oldmutualLogger.d(pin),
