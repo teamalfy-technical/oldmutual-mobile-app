@@ -11,7 +11,7 @@ class AffluentBadgeWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return (user?.affluent == false)
+    return (user?.affluent == true)
         ? Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [

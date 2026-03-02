@@ -51,7 +51,7 @@ class PHomePage extends StatelessWidget {
                             return HighlightWidget(
                               index: index,
                               vm: vm,
-                              affluent: user?.affluent == false ? true : true,
+                              affluent: user?.affluent ?? false,
                               highlight: vm.highlights[index],
                               onTap: () {
                                 PHelperFunction.switchScreen(
@@ -78,7 +78,7 @@ class PHomePage extends StatelessWidget {
                     () => Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        if (user?.affluent == false) ...[
+                        if (user?.affluent == true) ...[
                           // Relationship officer
                           PAppSize.s8.verticalSpace,
 
@@ -206,7 +206,7 @@ class PHomePage extends StatelessWidget {
                                 ),
                         ),
 
-                        if (user?.affluent == false) ...[
+                        if (user?.affluent == true) ...[
                           PAppSize.s16.verticalSpace,
                           // Quick Actions for Affluent Users
                           PSeeAllWidget(
