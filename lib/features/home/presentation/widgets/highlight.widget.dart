@@ -11,10 +11,12 @@ class HighlightWidget extends StatelessWidget {
     required this.index,
     this.onTap,
     required this.vm,
+    this.affluent = false,
   });
 
   final Highlight highlight;
   final PHomeVm vm;
+  final bool affluent;
   final Function()? onTap;
 
   final int index;
@@ -27,44 +29,47 @@ class HighlightWidget extends StatelessWidget {
           children: [
             Hero(
               tag: highlight.title,
-              child: Container(
-                padding: EdgeInsets.all(PAppSize.s4),
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  gradient: LinearGradient(
-                    colors:
-                        // index == vm.highlights.length - 1
-                        //     ? [Color(0xFFA7A9AC), Color(0xFFA7A9AC)]
-                        //     :
-                        [PAppColor.primaryDark, PAppColor.primary],
-                  ), //
-                ),
-                child: Container(
-                  height: PAppSize.s70,
-                  width: PAppSize.s70,
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    border: Border.all(
-                      color: PHelperFunction.isDarkMode(context)
-                          ? PAppColor.cardDarkColor
-                          : PAppColor.whiteColor,
-                      width: PAppSize.s3,
+              child:
+                  Container(
+                    padding: EdgeInsets.all(PAppSize.s4),
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      gradient: LinearGradient(
+                        colors:
+                            // index == vm.highlights.length - 1
+                            //     ? [Color(0xFFA7A9AC), Color(0xFFA7A9AC)]
+                            //     :
+                            affluent
+                            ? [PAppColor.darkGold, PAppColor.lightGold]
+                            : [PAppColor.primaryDark, PAppColor.primary],
+                      ), //
                     ),
-                    image: DecorationImage(
-                      fit: BoxFit.cover,
-                      alignment: index == 1
-                          ? Alignment.topRight
-                          : (index == 3 || index == 4 || index == 6)
-                          ? Alignment.centerLeft
-                          : Alignment.center,
-                      image: AssetImage(highlight.thumbnail),
+                    child: Container(
+                      height: PAppSize.s60,
+                      width: PAppSize.s60,
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        border: Border.all(
+                          color: PHelperFunction.isDarkMode(context)
+                              ? PAppColor.cardDarkColor
+                              : PAppColor.whiteColor,
+                          width: PAppSize.s3,
+                        ),
+                        image: DecorationImage(
+                          fit: BoxFit.cover,
+                          alignment: index == 1
+                              ? Alignment.topRight
+                              : (index == 3 || index == 4 || index == 6)
+                              ? Alignment.centerLeft
+                              : Alignment.center,
+                          image: AssetImage(highlight.thumbnail),
+                        ),
+                      ),
                     ),
+                  ).onPressed(
+                    onTap: onTap,
+                    radius: BorderRadius.circular(PAppSize.s32),
                   ),
-                ),
-              ).onPressed(
-                onTap: onTap,
-                radius: BorderRadius.circular(PAppSize.s32),
-              ),
             ),
             if (index == 0) ...[
               Positioned(

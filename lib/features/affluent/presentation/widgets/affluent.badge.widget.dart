@@ -52,7 +52,7 @@ class AffluentBadgeWidget extends StatelessWidget {
                             ),
                             PAppSize.s4.horizontalSpace,
                             Text(
-                              'affluent'.tr,
+                              'legacy'.tr,
                               style: Theme.of(context).textTheme.bodyLarge
                                   ?.copyWith(
                                     fontSize: PAppSize.s16,

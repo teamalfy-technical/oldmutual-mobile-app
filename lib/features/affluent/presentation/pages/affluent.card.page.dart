@@ -4,6 +4,7 @@ import 'dart:ui' as ui;
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:gal/gal.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:oldmutual_pensions_app/core/utils/utils.dart';
@@ -11,7 +12,6 @@ import 'package:oldmutual_pensions_app/features/affluent/affluent.dart';
 import 'package:oldmutual_pensions_app/features/auth/auth.dart';
 import 'package:oldmutual_pensions_app/routes/app.pages.dart';
 import 'package:oldmutual_pensions_app/shared/shared.dart';
-import 'package:gal/gal.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:share_plus/share_plus.dart';
 
@@ -133,17 +133,15 @@ class _PAffluentCardPageState extends State<PAffluentCardPage> {
       await Gal.putImage(file.path, album: 'Old Mutual');
 
       if (mounted) {
-        PPopupDialog(context).successMessage(
-          title: 'success'.tr,
-          message: 'download_complete'.tr,
-        );
+        PPopupDialog(
+          context,
+        ).successMessage(title: 'success'.tr, message: 'download_complete'.tr);
       }
     } catch (e) {
       if (mounted) {
-        PPopupDialog(context).errorMessage(
-          title: 'error'.tr,
-          message: 'error_occurred_msg'.tr,
-        );
+        PPopupDialog(
+          context,
+        ).errorMessage(title: 'error'.tr, message: 'error_occurred_msg'.tr);
       }
     } finally {
       if (mounted) {
@@ -199,7 +197,7 @@ class _PAffluentCardPageState extends State<PAffluentCardPage> {
                 ),
                 relationshipOfficer: 'Sarah Osei',
               ),
-            ).symmetric(horizontal: PAppSize.s4),
+            ),
 
             PAppSize.s20.verticalSpace,
 

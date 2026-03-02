@@ -48,7 +48,8 @@ abstract class Routes {
   static const statementPage = _Paths.statementPage;
   static const settingsPage = _Paths.settingsPage;
   static const profileSettingsPage = _Paths.profileSettingsPage;
-  static const supportPage = _Paths.supportPage;
+
+  static const helpPage = _Paths.helpPage;
   static const changePasswordPage = _Paths.changePasswordPage;
   static const webviewPage = _Paths.webviewPage;
   static const successPage = _Paths.successPage;
@@ -72,6 +73,7 @@ abstract class Routes {
   static const complimentaryServicePage = _Paths.complimentaryServicePage;
   static const complimentaryServiceDetailPage =
       _Paths.complimentaryServiceDetailPage;
+  static const supportPage = _Paths.supportPage;
   static const affluentCardPage = _Paths.affluentCardPage;
   static const saveContentPage = _Paths.saveContentPage;
   static const trackClaimsPage = _Paths.trackClaimsPage;
@@ -122,7 +124,8 @@ abstract class _Paths {
   static const statementPage = '/statement-page';
   static const settingsPage = '/settings-page';
   static const profileSettingsPage = '/profile-settings-page';
-  static const supportPage = '/support-page';
+
+  static const helpPage = '/help-page';
   static const changePasswordPage = '/change-password-page';
   static const webviewPage = '/webview-page';
   static const successPage = '/success-page';
@@ -146,6 +149,7 @@ abstract class _Paths {
   static const complimentaryServicePage = '/complimentary-service-page';
   static const complimentaryServiceDetailPage =
       '/complimentary-service-detail-page';
+  static const supportPage = '/support-page';
   static const affluentCardPage = '/affluent-card-page';
   static const saveContentPage = '/save-content-page';
   static const trackClaimsPage = '/track-claims-page';

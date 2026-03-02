@@ -23,7 +23,8 @@ import 'package:oldmutual_pensions_app/features/redemptions/redemption.dart';
 import 'package:oldmutual_pensions_app/features/settings/presentation/pages/change.password.page.dart';
 import 'package:oldmutual_pensions_app/features/settings/presentation/pages/profile.settings.page.dart';
 import 'package:oldmutual_pensions_app/features/settings/presentation/pages/settings.success.page.dart';
-import 'package:oldmutual_pensions_app/features/settings/settings.dart';
+import 'package:oldmutual_pensions_app/features/settings/settings.dart'
+    hide PHelpPage;
 import 'package:oldmutual_pensions_app/features/splash/presentation/pages/security.blocked.page.dart';
 import 'package:oldmutual_pensions_app/features/splash/splash.dart';
 import 'package:oldmutual_pensions_app/features/statements/presentation/pages/statement.page.dart';
@@ -318,6 +319,7 @@ class AppPages {
       name: _Paths.complimentaryServiceDetailPage,
       page: () => PComplimentaryServiceDetailPage(service: Get.arguments),
     ),
+    GetPage(name: _Paths.helpPage, page: () => PHelpPage()),
     GetPage(
       name: _Paths.affluentCardPage,
       page: () => PAffluentCardPage(user: Get.arguments),

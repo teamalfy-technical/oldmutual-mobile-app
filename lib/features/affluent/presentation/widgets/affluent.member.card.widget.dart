@@ -30,12 +30,8 @@ class PAffluentMemberCard extends StatelessWidget {
 
     return Container(
       decoration: BoxDecoration(
-        gradient: LinearGradient(
-          colors: colors,
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
-        ),
-        borderRadius: BorderRadius.circular(PAppSize.s20),
+        color: isDarkMode ? PAppColor.cardDarkColor : PAppColor.whiteColor,
+        borderRadius: BorderRadius.circular(PAppSize.s18),
         boxShadow: [
           BoxShadow(
             color: PAppColor.blackColor.withOpacityExt(0.14),
@@ -51,121 +47,39 @@ class PAffluentMemberCard extends StatelessWidget {
           ),
         ],
       ),
-      padding: EdgeInsets.all(PAppSize.s2),
-      child: Container(
-        decoration: BoxDecoration(
-          color: isDarkMode ? PAppColor.cardDarkColor : PAppColor.whiteColor,
-          borderRadius: BorderRadius.circular(PAppSize.s18),
-        ),
-        padding: EdgeInsets.all(PAppSize.s24),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            // Top Row: Member Info + Logomark
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                // Left Column: Member Details
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        'affluent_member_card'.tr,
-                        style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                          fontSize: PAppSize.s16,
-                          fontWeight: FontWeight.w700,
-                          letterSpacing: 1.2,
-                        ),
+      padding: EdgeInsets.all(PAppSize.s24),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          // Top Row: Member Info + Logomark
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              // Left Column: Member Details
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'affluent_member_card'.tr,
+                      style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                        fontSize: PAppSize.s16,
+                        fontWeight: FontWeight.w700,
+                        letterSpacing: 1.2,
                       ),
-                      PAppSize.s8.verticalSpace,
-                      Text(
-                        memberName,
-                        style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                          fontSize: PAppSize.s16,
-                          fontWeight: FontWeight.w600,
-                        ),
+                    ),
+                    PAppSize.s8.verticalSpace,
+                    Text(
+                      memberName,
+                      style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                        fontSize: PAppSize.s16,
+                        fontWeight: FontWeight.w600,
                       ),
-                      if (cardNumber != null) ...[
-                        PAppSize.s4.verticalSpace,
-                        Text(
-                          '${'ghana_card_no'.tr} $cardNumber',
-                          style: Theme.of(context).textTheme.bodyMedium
-                              ?.copyWith(
-                                fontSize: PAppSize.s14,
-                                fontWeight: FontWeight.w500,
-                                color: PAppColor.primary,
-                              ),
-                        ),
-                      ],
-                    ],
-                  ),
-                ),
-
-                // Right: Logomark Icon
-                Assets.icons.logomark.svg(
-                  width: PAppSize.s40,
-                  height: PAppSize.s40,
-                ),
-              ],
-            ),
-
-            PAppSize.s16.verticalSpace,
-
-            // Divider
-            Divider(
-              color: isDarkMode
-                  ? PAppColor.greyColor.withOpacityExt(PAppSize.s0_3)
-                  : PAppColor.greyColor.withOpacityExt(PAppSize.s0_2),
-              thickness: PAppSize.s1,
-              height: PAppSize.s1,
-            ),
-
-            PAppSize.s16.verticalSpace,
-
-            // Bottom Row: Member Since & Your RO
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                // Column 1: Member Since
-                if (memberSince != null)
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
+                    ),
+                    if (cardNumber != null) ...[
+                      PAppSize.s4.verticalSpace,
                       Text(
-                        'member_since'.tr,
-                        style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                          fontSize: PAppSize.s14,
-                          fontWeight: FontWeight.w500,
-                        ),
-                      ),
-                      PAppSize.s2.verticalSpace,
-                      Text(
-                        memberSince!,
-                        style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                          fontSize: PAppSize.s16,
-                          fontWeight: FontWeight.w500,
-                          color: PAppColor.primary,
-                        ),
-                      ),
-                    ],
-                  ),
-
-                // Column 2: Your RO
-                if (relationshipOfficer != null)
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        'your_ro'.tr,
-                        style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                          fontSize: PAppSize.s14,
-                          fontWeight: FontWeight.w500,
-                        ),
-                      ),
-                      PAppSize.s2.verticalSpace,
-                      Text(
-                        relationshipOfficer!,
+                        '${'ghana_card_no'.tr} $cardNumber',
                         style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                           fontSize: PAppSize.s14,
                           fontWeight: FontWeight.w500,
@@ -173,11 +87,85 @@ class PAffluentMemberCard extends StatelessWidget {
                         ),
                       ),
                     ],
-                  ),
-              ],
-            ),
-          ],
-        ),
+                  ],
+                ),
+              ),
+
+              // Right: Logomark Icon
+              Assets.icons.logomark.svg(
+                width: PAppSize.s40,
+                height: PAppSize.s40,
+              ),
+            ],
+          ),
+
+          PAppSize.s16.verticalSpace,
+
+          // Divider
+          Divider(
+            color: isDarkMode
+                ? PAppColor.greyColor.withOpacityExt(PAppSize.s0_3)
+                : PAppColor.greyColor.withOpacityExt(PAppSize.s0_2),
+            thickness: PAppSize.s1,
+            height: PAppSize.s1,
+          ),
+
+          PAppSize.s16.verticalSpace,
+
+          // Bottom Row: Member Since & Your RO
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              // Column 1: Member Since
+              if (memberSince != null)
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'member_since'.tr,
+                      style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                        fontSize: PAppSize.s14,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                    PAppSize.s2.verticalSpace,
+                    Text(
+                      memberSince!,
+                      style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                        fontSize: PAppSize.s16,
+                        fontWeight: FontWeight.w500,
+                        color: PAppColor.primary,
+                      ),
+                    ),
+                  ],
+                ),
+
+              // Column 2: Your RO
+              if (relationshipOfficer != null)
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'your_ro'.tr,
+                      style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                        fontSize: PAppSize.s14,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                    PAppSize.s2.verticalSpace,
+                    Text(
+                      relationshipOfficer!,
+                      style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                        fontSize: PAppSize.s14,
+                        fontWeight: FontWeight.w500,
+                        color: PAppColor.primary,
+                      ),
+                    ),
+                  ],
+                ),
+            ],
+          ),
+        ],
       ),
     ).onPressed(onTap: onTap);
   }

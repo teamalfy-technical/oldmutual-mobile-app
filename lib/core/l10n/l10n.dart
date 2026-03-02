@@ -563,6 +563,7 @@ class AppTranslations extends Translations {
 
       // Affluent
       'affluent': 'Affluent',
+      'legacy': 'Legacy',
       'affluent_desc': 'Welcome back! Your premium experience awaits.',
       'your_relationship_officer': 'Your relationship Officer',
       'quick_access': 'Quick Access',

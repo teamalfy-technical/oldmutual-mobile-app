@@ -51,6 +51,7 @@ class PHomePage extends StatelessWidget {
                             return HighlightWidget(
                               index: index,
                               vm: vm,
+                              affluent: user?.affluent == false ? true : true,
                               highlight: vm.highlights[index],
                               onTap: () {
                                 PHelperFunction.switchScreen(
@@ -208,7 +209,10 @@ class PHomePage extends StatelessWidget {
                         if (user?.affluent == false) ...[
                           PAppSize.s16.verticalSpace,
                           // Quick Actions for Affluent Users
-                          PSeeAllWidget(leadingText: 'quick_access'.tr),
+                          PSeeAllWidget(
+                            leadingText: 'quick_access'.tr,
+                            showTrailing: false,
+                          ),
 
                           PAppSize.s16.verticalSpace,
 
@@ -259,6 +263,7 @@ class PHomePage extends StatelessWidget {
                           // Exclusive Announcements for Affluent Users
                           PSeeAllWidget(
                             leadingText: 'exclusive_announcements'.tr,
+                            showTrailing: false,
                           ),
 
                           PAppSize.s16.verticalSpace,
@@ -281,7 +286,10 @@ class PHomePage extends StatelessWidget {
                           PAppSize.s16.verticalSpace,
 
                           // Benefit Reminders for Affluent Users
-                          PSeeAllWidget(leadingText: 'benefit_reminders'.tr),
+                          PSeeAllWidget(
+                            leadingText: 'benefit_reminders'.tr,
+                            showTrailing: false,
+                          ),
 
                           PAppSize.s16.verticalSpace,
 
