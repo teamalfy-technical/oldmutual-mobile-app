@@ -28,21 +28,18 @@ class _PFinancialInsightDetailPageState
     if (isVideo) {
       _initializeWebView();
     }
-    _checkIfBookmarked();
+    WidgetsBinding.instance.addPostFrameCallback((_) => _checkIfBookmarked());
   }
 
   Future<void> _checkIfBookmarked() async {
     final contentId = widget.content.id;
     if (contentId == null) return;
     final result = await affluentService.getBookmarkedContent(id: contentId);
-    result.fold(
-      (_) => null,
-      (res) {
-        if (res.data != null && mounted) {
-          setState(() => _isBookmarked = true);
-        }
-      },
-    );
+    result.fold((_) => null, (res) {
+      if (res.data != null && mounted) {
+        setState(() => _isBookmarked = true);
+      }
+    });
   }
 
   void _initializeWebView() {

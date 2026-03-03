@@ -235,7 +235,11 @@ class PHomePage extends StatelessWidget {
                               QuickAccessCard(
                                 icon: Assets.icons.complimentaryServices.svg(),
                                 label: 'complimentary_services'.tr,
-                                onTap: () {},
+                                onTap: () =>
+                                    PPopupDialog(context).warningMessage(
+                                      title: 'coming_soon_title'.tr,
+                                      message: 'coming_soon_msg'.tr,
+                                    ),
                                 // onTap: () => PHelperFunction.switchScreen(
                                 //   destination: Routes.complimentaryServicePage,
                                 // ),

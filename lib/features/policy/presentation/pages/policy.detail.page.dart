@@ -156,8 +156,8 @@ class PPolicyDetailPage extends StatelessWidget {
                         : PAppColor.successDark,
                   ),
                   onTap: () => PPopupDialog(context).warningMessage(
-                    title: 'Coming Soon',
-                    message: 'This feature will be available soon',
+                    title: 'coming_soon_title'.tr,
+                    message: 'coming_soon_msg'.tr,
                   ),
 
                   // PHelperFunction.switchScreen(

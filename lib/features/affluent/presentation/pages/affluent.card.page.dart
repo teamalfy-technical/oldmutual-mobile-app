@@ -152,6 +152,7 @@ class _PAffluentCardPageState extends State<PAffluentCardPage> {
 
   @override
   Widget build(BuildContext context) {
+    final affluentVm = PAffluentVm.instance;
     final isDarkMode = PHelperFunction.isDarkMode(context);
     final user = widget.user;
 
@@ -184,20 +185,24 @@ class _PAffluentCardPageState extends State<PAffluentCardPage> {
             //     },
             //   ),
             // ),
-            RepaintBoundary(
-              key: _cardKey,
-              child: PAffluentMemberCard(
-                memberName: user?.name ?? '',
-                cardNumber: user?.ghanaCardNumber ?? 'AFF-2024-00847',
-                memberSince: PFormatter.formatDate(
-                  dateFormat: DateFormat('MMM yyyy'),
-                  date: DateTime.parse(
-                    user?.dateJoined ?? DateTime.now().toIso8601String(),
+            Obx(() {
+              final officer = affluentVm.relationshipOfficer.value;
+              final officerName = officer.name ?? 'not_applicable'.tr;
+              return RepaintBoundary(
+                key: _cardKey,
+                child: PAffluentMemberCard(
+                  memberName: user?.name ?? '',
+                  cardNumber: user?.ghanaCardNumber ?? 'AFF-2024-00847',
+                  memberSince: PFormatter.formatDate(
+                    dateFormat: DateFormat('MMM yyyy'),
+                    date: DateTime.parse(
+                      user?.dateJoined ?? DateTime.now().toIso8601String(),
+                    ),
                   ),
+                  relationshipOfficer: officerName,
                 ),
-                relationshipOfficer: 'Sarah Osei',
-              ),
-            ),
+              );
+            }),
 
             PAppSize.s20.verticalSpace,
 
