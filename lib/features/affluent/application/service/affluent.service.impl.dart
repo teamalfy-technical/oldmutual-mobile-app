@@ -93,7 +93,7 @@ class AffluentServiceImpl implements AffluentService {
 
   @override
   Future<Either<PFailure, ApiResponse<RelationshipOfficer>>>
-  getAffluentRelationshipOfficer({required String agentNo}) {
-    return affluentRepo.getAffluentRelationshipOfficer(agentNo: agentNo);
+  getAffluentRelationshipOfficer() {
+    return affluentRepo.getAffluentRelationshipOfficer();
   }
 }

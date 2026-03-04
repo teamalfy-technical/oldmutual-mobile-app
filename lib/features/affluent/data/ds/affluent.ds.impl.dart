@@ -188,14 +188,11 @@ class AffluentDsImpl implements AffluentDs {
   }
 
   @override
-  Future<ApiResponse<RelationshipOfficer>> getAffluentRelationshipOfficer({
-    required String agentNo,
-  }) async {
+  Future<ApiResponse<RelationshipOfficer>> getAffluentRelationshipOfficer() async {
     return await asyncFunctionWrapper.handleAsyncNetworkCall(() async {
       final res = await apiService.callService(
         requestType: RequestType.get,
         endPoint: Env.getAffluentRelationshipOfficer,
-        queryParams: {'agent_no': agentNo},
       );
       return ApiResponse<RelationshipOfficer>.fromJson(
         res,

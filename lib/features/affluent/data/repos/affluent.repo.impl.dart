@@ -119,10 +119,10 @@ class AffluentRepoImpl implements AffluentRepo {
 
   @override
   Future<Either<PFailure, ApiResponse<RelationshipOfficer>>>
-  getAffluentRelationshipOfficer({required String agentNo}) async {
+  getAffluentRelationshipOfficer() async {
     return await customRepositoryWrapper.wrapRepositoryFunction(
       function: () async =>
-          await affluentDs.getAffluentRelationshipOfficer(agentNo: agentNo),
+          await affluentDs.getAffluentRelationshipOfficer(),
     );
   }
 }

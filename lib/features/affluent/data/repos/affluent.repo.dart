@@ -36,5 +36,5 @@ abstract class AffluentRepo {
   });
   Future<Either<PFailure, ApiResponse<dynamic>>> clearBookmarkedContents();
   Future<Either<PFailure, ApiResponse<RelationshipOfficer>>>
-  getAffluentRelationshipOfficer({required String agentNo});
+  getAffluentRelationshipOfficer();
 }

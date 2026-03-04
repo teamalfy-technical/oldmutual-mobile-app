@@ -2,7 +2,6 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:oldmutual_pensions_app/core/utils/utils.dart';
 import 'package:oldmutual_pensions_app/features/affluent/affluent.dart';
-import 'package:oldmutual_pensions_app/features/policy/policy.dart';
 import 'package:oldmutual_pensions_app/shared/shared.dart';
 
 class PAffluentVm extends GetxController {
@@ -119,25 +118,7 @@ class PAffluentVm extends GetxController {
   }
 
   Future<void> _fetchRelationshipOfficer() async {
-    final policyVm = PPolicyVm.instance;
-
-    // If policies are already loaded, use them directly
-    if (policyVm.policies.isNotEmpty) {
-      final agentNo = policyVm.policies.first.agentNo;
-      if (agentNo != null && agentNo.isNotEmpty) {
-        getAffluentRelationshipOfficer(agentNo: '26523' ?? agentNo);
-      }
-      return;
-    }
-
-    // Otherwise fetch policies first, then get the officer
-    await policyVm.getAllPolicies();
-    if (policyVm.policies.isNotEmpty) {
-      final agentNo = policyVm.policies.first.agentNo;
-      if (agentNo != null && agentNo.isNotEmpty) {
-        getAffluentRelationshipOfficer(agentNo: '26523' ?? agentNo);
-      }
-    }
+    await getAffluentRelationshipOfficer();
   }
 
   Future<void> getExclusiveAnnouncements() async {
@@ -495,11 +476,9 @@ Our experts break down complex tax concepts into actionable strategies you can i
   }
 
   /// Get affluent relationship officer
-  Future<void> getAffluentRelationshipOfficer({required String agentNo}) async {
+  Future<void> getAffluentRelationshipOfficer() async {
     updateRelationshipOfficerLoading(LoadingState.loading);
-    final result = await affluentService.getAffluentRelationshipOfficer(
-      agentNo: agentNo,
-    );
+    final result = await affluentService.getAffluentRelationshipOfficer();
     result.fold(
       (err) {
         updateRelationshipOfficerLoading(LoadingState.error);
