@@ -1,7 +1,7 @@
 import 'package:package_info_plus/package_info_plus.dart';
 
-// const apiBaseUrlProd = "https://app.oldmutual.com.gh/api";
-const apiBaseUrlProd = "https://test-app.oldmutual.com.gh/api";
+const apiBaseUrlProd = "https://app.oldmutual.com.gh/api";
+// const apiBaseUrlProd = "https://test-app.oldmutual.com.gh/api";
 const apiBaseUrlDev = "https://test-app.oldmutual.com.gh/api";
 
 enum EnvironmentType {
@@ -21,8 +21,6 @@ class Environment {
     }
 
     final packageInfo = await PackageInfo.fromPlatform();
-
-    print(packageInfo.packageName);
 
     switch (packageInfo.packageName) {
       case "com.oldmutual.pensions.app.dev" ||
