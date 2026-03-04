@@ -40,47 +40,27 @@ class PForceUpdateService {
     });
 
     try {
-      final activated = await _remoteConfig.fetchAndActivate();
-      pensionAppLogger.i('Remote Config fetched & activated: $activated');
+      await _remoteConfig.fetchAndActivate();
     } catch (e) {
       pensionAppLogger.e('Remote Config fetch failed: $e');
     }
 
     _initialized = true;
-    pensionAppLogger.i('ForceUpdateService initialized');
   }
 
   Future<void> checkForUpdate(BuildContext context) async {
-    pensionAppLogger.d('Force update check started');
-
-    if (!_initialized) {
-      pensionAppLogger.w('ForceUpdateService not initialized, skipping check');
-      return;
-    }
-    if (_dialogShowing) {
-      pensionAppLogger.w('Force update dialog already showing, skipping');
-      return;
-    }
+    if (!_initialized || _dialogShowing) return;
 
     final enabled = _remoteConfig.getBool(_keyEnabled);
-    pensionAppLogger.d('force_update_enabled: $enabled');
     if (!enabled) return;
 
     final minVersionStr = _remoteConfig.getString(_keyMinVersion);
     final packageInfo = await PackageInfo.fromPlatform();
     final currentVersionStr = packageInfo.version;
 
-    pensionAppLogger.d(
-      'Current version: $currentVersionStr, Min required: $minVersionStr',
-    );
-
-    final needsUpdate = _isVersionBelow(currentVersionStr, minVersionStr);
-    pensionAppLogger.d('Update required: $needsUpdate');
-
-    if (needsUpdate) {
+    if (_isVersionBelow(currentVersionStr, minVersionStr)) {
       _dialogShowing = true;
       if (context.mounted) {
-        pensionAppLogger.i('Showing force update dialog');
         _showForceUpdateDialog(context);
       }
     }
