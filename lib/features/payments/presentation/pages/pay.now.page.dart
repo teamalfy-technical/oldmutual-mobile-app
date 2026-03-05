@@ -239,35 +239,43 @@ class _PPayNowPageState extends State<PPayNowPage> {
                         PAppSize.s12.verticalSpace,
 
                         // Currency info
-                        Container(
-                          width: PDeviceUtil.getDeviceWidth(context),
-                          padding: EdgeInsets.symmetric(
-                            vertical: PAppSize.s16,
-                            horizontal: PAppSize.s16,
-                          ),
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(PAppSize.s8),
-                            color: PHelperFunction.isDarkMode(context)
-                                ? PAppColor.cardDarkColor
-                                : PAppColor.lightBlueColor,
-                          ),
-                          child: RichText(
-                            textAlign: TextAlign.center,
-                            text: TextSpan(
-                              children: [
-                                TextSpan(
-                                  text: '${'total_payment_amount'.tr}: ',
-                                  style: Theme.of(context).textTheme.bodyMedium
-                                      ?.copyWith(fontWeight: FontWeight.w500),
-                                ),
-                                TextSpan(
-                                  text: PFormatter.formatCurrency(
-                                    amount: _totalAmount,
+                        Obx(
+                          () => Container(
+                            width: PDeviceUtil.getDeviceWidth(context),
+                            padding: EdgeInsets.symmetric(
+                              vertical: PAppSize.s16,
+                              horizontal: PAppSize.s16,
+                            ),
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(PAppSize.s8),
+                              color: PHelperFunction.isDarkMode(context)
+                                  ? PAppColor.cardDarkColor
+                                  : PAppColor.lightBlueColor,
+                            ),
+                            child: RichText(
+                              textAlign: TextAlign.center,
+                              text: TextSpan(
+                                children: [
+                                  TextSpan(
+                                    text: '${'total_payment_amount'.tr}: ',
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .bodyMedium
+                                        ?.copyWith(fontWeight: FontWeight.w500),
                                   ),
-                                  style: Theme.of(context).textTheme.bodyMedium
-                                      ?.copyWith(fontWeight: FontWeight.w700),
-                                ),
-                              ],
+                                  TextSpan(
+                                    text: PFormatter.formatCurrency(
+                                      amount: _isFullPayment
+                                          ? _totalAmount
+                                          : ctrl.amount.value,
+                                    ),
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .bodyMedium
+                                        ?.copyWith(fontWeight: FontWeight.w700),
+                                  ),
+                                ],
+                              ),
                             ),
                           ),
                         ),
