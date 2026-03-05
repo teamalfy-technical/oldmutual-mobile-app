@@ -240,7 +240,13 @@ class _PPayNowPageState extends State<PPayNowPage> {
 
                         // Currency info
                         Obx(
-                          () => Container(
+                          () {
+                            // Always read the observable so GetX registers it
+                            final amount = ctrl.amount.value;
+                            final displayAmount = _isFullPayment
+                                ? _totalAmount
+                                : amount;
+                            return Container(
                             width: PDeviceUtil.getDeviceWidth(context),
                             padding: EdgeInsets.symmetric(
                               vertical: PAppSize.s16,
@@ -265,9 +271,7 @@ class _PPayNowPageState extends State<PPayNowPage> {
                                   ),
                                   TextSpan(
                                     text: PFormatter.formatCurrency(
-                                      amount: _isFullPayment
-                                          ? _totalAmount
-                                          : ctrl.amount.value,
+                                      amount: displayAmount,
                                     ),
                                     style: Theme.of(context)
                                         .textTheme
@@ -277,7 +281,8 @@ class _PPayNowPageState extends State<PPayNowPage> {
                                 ],
                               ),
                             ),
-                          ),
+                          );
+                          },
                         ),
 
                         // PAppSize.s20.verticalSpace,
