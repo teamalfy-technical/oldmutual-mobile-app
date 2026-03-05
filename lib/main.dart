@@ -16,6 +16,7 @@ import 'package:oldmutual_pensions_app/core/bindings/bindings.dart';
 import 'package:oldmutual_pensions_app/core/l10n/l10n.dart';
 import 'package:oldmutual_pensions_app/core/theme/app.theme.dart';
 import 'package:oldmutual_pensions_app/core/utils/utils.dart';
+import 'package:oldmutual_pensions_app/core/services/force.update.service.dart';
 import 'package:oldmutual_pensions_app/env/env.dart';
 import 'package:oldmutual_pensions_app/features/home/home.dart'
     show PInactivityService;
@@ -148,6 +149,7 @@ Future<void> initFirebaseApp() async {
   }
 
   await PNotificationService().init();
+  await PForceUpdateService().init();
 }
 
 @pragma('vm:entry-point')

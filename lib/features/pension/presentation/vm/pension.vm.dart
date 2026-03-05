@@ -47,7 +47,7 @@ class PPensionVm extends GetxController {
         updateLoadingState(LoadingState.error);
         PPopupDialog(
           context,
-        ).errorMessage(title: 'error'.tr, message: err.message);
+        ).errorMessage(title: err.title ?? 'error'.tr, message: err.message);
       },
       (res) async {
         updateLoadingState(LoadingState.completed);
@@ -70,7 +70,7 @@ class PPensionVm extends GetxController {
   //       updateLoadingState(LoadingState.error);
   //       PPopupDialog(
   //         context,
-  //       ).errorMessage(title: 'error'.tr, message: err.message);
+  //       ).errorMessage(title: err.title ?? 'error'.tr, message: err.message);
   //     },
   //     (res) async {
   //       updateLoadingState(LoadingState.completed);
@@ -111,7 +111,7 @@ class PPensionVm extends GetxController {
         updateLoadingState(LoadingState.error);
         PPopupDialog(
           context,
-        ).errorMessage(title: 'error'.tr, message: err.message);
+        ).errorMessage(title: err.title ?? 'error'.tr, message: err.message);
       },
       (res) {
         updateLoadingState(LoadingState.completed);
@@ -130,30 +130,45 @@ class PPensionVm extends GetxController {
   /// Function to get pension certificate
   Future<void> downloadPensionCertificate() async {
     showDownloadLoader(context);
-    final result = await pensionService.downloadPensionCertificate(
-      employerNumber: selectedScheme.value.employerNumber ?? '',
-      staffNumber: (await PSecureStorage().getBioData())?.staffNumber ?? '',
-    );
-    result.fold(
-      (err) {
-        PHelperFunction.pop();
-        PPopupDialog(
-          context,
-        ).errorMessage(title: 'error'.tr, message: err.message);
-      },
-      (res) async {
-        PHelperFunction.pop();
-        PPopupDialog(
-          context,
-        ).successMessage(title: 'success'.tr, message: 'download_complete'.tr);
-        await Future.delayed(Duration(milliseconds: 1000));
-        await PHelperFunction.openFileWithData(
-          pdfData: res.data ?? Map<String, dynamic>.from({}),
-          name: selectedScheme.value.penTypeDescription ?? '',
-        );
-        // getProducts();
-      },
-    );
+    try {
+      final result = await pensionService.downloadPensionCertificate(
+        employerNumber: selectedScheme.value.employerNumber ?? '',
+        staffNumber: (await PSecureStorage().getBioData())?.staffNumber ?? '',
+      );
+      result.fold(
+        (err) {
+          PHelperFunction.pop();
+          PPopupDialog(
+            context,
+          ).errorMessage(title: err.title ?? 'error'.tr, message: err.message);
+        },
+        (res) async {
+          if (res.data!['success'] == false) {
+            PHelperFunction.pop();
+            PPopupDialog(context).errorMessage(
+              title: 'error'.tr,
+              message: res.data?['message'] ?? 'download_failed'.tr,
+            );
+            return;
+          }
+          PHelperFunction.pop();
+          PPopupDialog(context).successMessage(
+            title: 'success'.tr,
+            message: 'download_complete'.tr,
+          );
+          await Future.delayed(Duration(milliseconds: 1000));
+          await PHelperFunction.openFileWithData(
+            pdfData: res.data ?? Map<String, dynamic>.from({}),
+            name: selectedScheme.value.penTypeDescription ?? '',
+          );
+        },
+      );
+    } catch (e) {
+      PHelperFunction.pop();
+      PPopupDialog(
+        context,
+      ).errorMessage(title: 'error'.tr, message: 'error_occurred_msg'.tr);
+    }
   }
 
   /// Function to get all selected scheme
@@ -180,7 +195,7 @@ class PPensionVm extends GetxController {
           // updateSelectingState(LoadingState.error);
           PPopupDialog(
             context,
-          ).errorMessage(title: 'error'.tr, message: err.message);
+          ).errorMessage(title: err.title ?? 'error'.tr, message: err.message);
         },
         (res) async {
           selectedScheme(scheme);
@@ -205,18 +220,18 @@ class PPensionVm extends GetxController {
             employerNumber: res.data?.employerNumber ?? '',
             updatedAt: res.data?.updatedAt ?? '',
           );
-          pensionAppLogger.e(res.data?.toJson());
           PSecureStorage().saveAuthResponse(updatedMember?.toJson() ?? {});
-          // pensionAppLogger.e(PSecureStorage().getAuthResponse()?.toJson());
           await Get.put(PContributionHistoryVm()).getContributionsSummary();
           updateLoadingState(LoadingState.completed);
-          await Get.put(
-            PAuthVm(),
-          ).getBioData(); // get bio data after selecting scheme
+          // await Get.put(
+          //   PAuthVm(),
+          // ).getBioData(); // get bio data after selecting scheme
         },
       );
     } else {
       await Get.put(PContributionHistoryVm()).getContributionsSummary();
     }
+    // get bio data after selecting scheme
+    await Get.put(PAuthVm()).getBioData();
   }
 }

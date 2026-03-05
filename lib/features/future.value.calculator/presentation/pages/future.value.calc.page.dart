@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -17,6 +15,11 @@ class PFutureValueCalcPage extends StatefulWidget {
 
 class _PFutureValueCalcPageState extends State<PFutureValueCalcPage> {
   final vm = Get.put(PFutureValueCalcVm());
+
+  final FocusNode _initialSumFocusNode = FocusNode();
+  final FocusNode _monthlyContributionFocusNode = FocusNode();
+  final FocusNode _numOfYearsFocusNode = FocusNode();
+  final FocusNode _annualInterestRateFocusNode = FocusNode();
 
   Future showParametersModal(BuildContext context) {
     return showModalBottomSheet(
@@ -169,35 +172,51 @@ class _PFutureValueCalcPageState extends State<PFutureValueCalcPage> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          PCustomTextField(
-                            controller: vm.initialLumpSumTEC,
-                            prefixText: 'GH₵',
-                            labelText: 'initial_lump_sum'.tr,
-                            textInputType: TextInputType.numberWithOptions(
-                              decimal: true,
+                          PKeyboardActions(
+                            focusNode: _initialSumFocusNode,
+                            child: PCustomTextField(
+                              controller: vm.initialLumpSumTEC,
+                              focusNode: _initialSumFocusNode,
+                              prefixText: 'GH₵',
+                              labelText: 'initial_lump_sum'.tr,
+                              textInputType: TextInputType.numberWithOptions(
+                                decimal: true,
+                              ),
                             ),
                           ),
                           PAppSize.s16.verticalSpace,
-                          PCustomTextField(
-                            controller: vm.monthlyContributionTEC,
-                            prefixText: 'GH₵',
-                            labelText: 'monthly_contribution'.tr,
-                            textInputType: TextInputType.numberWithOptions(
-                              decimal: true,
+                          PKeyboardActions(
+                            focusNode: _monthlyContributionFocusNode,
+                            child: PCustomTextField(
+                              controller: vm.monthlyContributionTEC,
+                              focusNode: _monthlyContributionFocusNode,
+                              prefixText: 'GH₵',
+                              labelText: 'monthly_contribution'.tr,
+                              textInputType: TextInputType.numberWithOptions(
+                                decimal: true,
+                              ),
                             ),
                           ),
                           PAppSize.s16.verticalSpace,
-                          PCustomTextField(
-                            controller: vm.numOfYearsRateTEC,
-                            labelText: 'years_to_retirement'.tr,
-                            textInputType: TextInputType.number,
+                          PKeyboardActions(
+                            focusNode: _numOfYearsFocusNode,
+                            child: PCustomTextField(
+                              controller: vm.numOfYearsRateTEC,
+                              focusNode: _numOfYearsFocusNode,
+                              labelText: 'years_to_retirement'.tr,
+                              textInputType: TextInputType.number,
+                            ),
                           ),
                           PAppSize.s16.verticalSpace,
-                          PCustomTextField(
-                            controller: vm.annualInterestRateTEC,
-                            labelText: 'annual_interest_rate'.tr,
-                            textInputType: TextInputType.numberWithOptions(
-                              decimal: true,
+                          PKeyboardActions(
+                            focusNode: _annualInterestRateFocusNode,
+                            child: PCustomTextField(
+                              controller: vm.annualInterestRateTEC,
+                              focusNode: _annualInterestRateFocusNode,
+                              labelText: 'annual_interest_rate'.tr,
+                              textInputType: TextInputType.numberWithOptions(
+                                decimal: true,
+                              ),
                             ),
                           ),
                           PAppSize.s8.verticalSpace,
@@ -321,8 +340,8 @@ class _PFutureValueCalcPageState extends State<PFutureValueCalcPage> {
               ),
             ),
             // Show keyboard toolbar only on iOS when keyboard is visible
-            if (Platform.isIOS && MediaQuery.of(context).viewInsets.bottom > 0)
-              _buildKeyboardToolbar(),
+            // if (Platform.isIOS && MediaQuery.of(context).viewInsets.bottom > 0)
+            //   _buildKeyboardToolbar(),
           ],
         ),
       ),

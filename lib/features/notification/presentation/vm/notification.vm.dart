@@ -34,7 +34,7 @@ class PNotificationVM extends GetxController {
       (err) {
         PPopupDialog(
           context,
-        ).errorMessage(title: 'error'.tr, message: err.message);
+        ).errorMessage(title: err.title ?? 'error'.tr, message: err.message);
       },
       (res) {
         PPopupDialog(
@@ -54,7 +54,7 @@ class PNotificationVM extends GetxController {
       (err) {
         PPopupDialog(
           context,
-        ).errorMessage(title: 'error'.tr, message: err.message);
+        ).errorMessage(title: err.title ?? 'error'.tr, message: err.message);
       },
       (res) {
         PPopupDialog(
@@ -73,7 +73,7 @@ class PNotificationVM extends GetxController {
         updateLoadingState(LoadingState.error);
         PPopupDialog(
           context,
-        ).errorMessage(title: 'error'.tr, message: err.message);
+        ).errorMessage(title: err.title ?? 'error'.tr, message: err.message);
       },
       (res) {
         updateLoadingState(LoadingState.completed);
@@ -95,7 +95,7 @@ class PNotificationVM extends GetxController {
         updateLoadingState(LoadingState.error);
         PPopupDialog(
           context,
-        ).errorMessage(title: 'error'.tr, message: err.message);
+        ).errorMessage(title: err.title ?? 'error'.tr, message: err.message);
       },
       (res) {
         // updateLoadingState(LoadingState.completed);
@@ -147,7 +147,7 @@ class PNotificationVM extends GetxController {
       (err) {
         PPopupDialog(
           context,
-        ).errorMessage(title: 'error'.tr, message: err.message);
+        ).errorMessage(title: err.title ?? 'error'.tr, message: err.message);
       },
       (res) {
         notifications.value = res.data ?? [];
@@ -166,7 +166,7 @@ class PNotificationVM extends GetxController {
       (err) {
         PPopupDialog(
           context,
-        ).errorMessage(title: 'error'.tr, message: err.message);
+        ).errorMessage(title: err.title ?? 'error'.tr, message: err.message);
       },
       (res) {
         final index = notifications.indexWhere(

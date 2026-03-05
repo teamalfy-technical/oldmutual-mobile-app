@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:oldmutual_pensions_app/core/services/force.update.service.dart';
 import 'package:oldmutual_pensions_app/core/utils/utils.dart';
 import 'package:oldmutual_pensions_app/features/affluent/affluent.dart';
 import 'package:oldmutual_pensions_app/features/home/home.dart';
@@ -9,9 +10,14 @@ import 'package:oldmutual_pensions_app/routes/app.pages.dart';
 import 'package:oldmutual_pensions_app/shared/widgets/annotated.region.dart';
 import 'package:upgrader/upgrader.dart';
 
-class PDashboardPage extends StatelessWidget {
-  PDashboardPage({super.key});
+class PDashboardPage extends StatefulWidget {
+  const PDashboardPage({super.key});
 
+  @override
+  State<PDashboardPage> createState() => _PDashboardPageState();
+}
+
+class _PDashboardPageState extends State<PDashboardPage> {
   final ctrl = Get.put(PHomeVm());
 
   BottomNavigationBarItem _buildNavItem({
@@ -82,8 +88,17 @@ class PDashboardPage extends StatelessWidget {
   ];
 
   @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      PForceUpdateService().checkForUpdate(context);
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
     return UpgradeAlert(
+      upgrader: Upgrader(durationUntilAlertAgain: Duration.zero),
       dialogStyle: PDeviceUtil.isIOS()
           ? UpgradeDialogStyle.cupertino
           : UpgradeDialogStyle.material,

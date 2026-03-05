@@ -129,6 +129,8 @@ class AppTranslations extends Translations {
       'i_agree_to': 'I agree to the',
       'phone_exist_msg': 'Invalid phone number or password. Please try again.',
       'unauthorised': 'Unauthorised',
+      'login_error': 'Login Error',
+      'download_failed': 'Download failed. Please try again later.',
       'statement_generated_msg': 'Statement generated successfully',
       'policy_statement_generated_msg':
           'Policy statement generated successfully',
@@ -140,7 +142,9 @@ class AppTranslations extends Translations {
       'or': 'or',
       'downloading_msg': 'Downloading.\nPlease wait...',
       'download_complete': 'Download complete',
-      'error_occurred_msg': 'An error occurred. Please try again later',
+      'server_error_title': 'Something Went Wrong',
+      'error_occurred_msg':
+          'Service temporarily unavailable. Please try again later',
       'continue': 'Continue',
       'cancel': 'Cancel',
       'successful': 'Successful',
@@ -160,8 +164,9 @@ class AppTranslations extends Translations {
       'enable_biometrics': 'Enable Biometrics',
       'apply_now': 'Apply Now',
       'recommended_for_you': 'Recommended For You',
-      'personal_accident': 'Personal\n Accident',
-      'ekyire_asem': 'Ekyire\n Asem',
+      'personal_accident_nl': 'Personal\n Accident',
+      'personal_accident': 'Personal Accident',
+      'ekyire_asem_nl': 'Ekyire \nAsem',
       'digital_funeral': 'Digital Funeral (Ekyire Asem)',
       'im_interested': 'I\'m Interested',
       'crop_photo': 'Crop Photo',
@@ -312,6 +317,7 @@ class AppTranslations extends Translations {
       'view_pdf': 'View PDF',
       'employer': 'Employer',
       'pending_review': 'Pending Review',
+      'member_no': 'Member No.',
       'employer_name': 'Employer Name',
       'view_all_schemes': 'View All Schemes',
       'redemption_confirm_msg':
@@ -389,7 +395,7 @@ class AppTranslations extends Translations {
       'travel_insurance_text': 'Travel \nInsurance',
       'retirement_savings': 'Retirement \nSavings',
       'retirement_salary': 'Retirement Salary',
-      'education_plan': 'Education \nPlan',
+      'educator_plan_nl': 'Education \nPlan',
       'educator_plan': 'Educator Plan',
       'investment_plan': 'Investment \nPlan',
       'transition_plus_plan': 'Transition \nPlus Plan',
@@ -547,6 +553,8 @@ class AppTranslations extends Translations {
       'payment_success_msg':
           'Your @amount payment has been received successfully',
       'reach_support_text': 'If you have any questions, contact support at',
+      'claim_amount_hint': 'Enter the claim amount(max: ₵2,366.77)',
+      'momo_wallet_hint': 'Enter MoMo wallet number (e.g. 024XXXXXXXX)',
 
       // Security strings
       'security_alert': 'Security Alert',

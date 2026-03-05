@@ -29,7 +29,7 @@ class PUpsellVm extends GetxController {
         loading(LoadingState.error);
         PPopupDialog(
           context,
-        ).errorMessage(title: 'error'.tr, message: err.message);
+        ).errorMessage(title: err.title ?? 'error'.tr, message: err.message);
       },
       (res) {
         loading(LoadingState.completed);
@@ -48,7 +48,7 @@ class PUpsellVm extends GetxController {
         PHelperFunction.pop();
         PPopupDialog(
           context,
-        ).errorMessage(title: 'error'.tr, message: err.message);
+        ).errorMessage(title: err.title ?? 'error'.tr, message: err.message);
       },
       (res) {
         submitting(LoadingState.completed);
@@ -69,7 +69,7 @@ class PUpsellVm extends GetxController {
         submitting(LoadingState.error);
         PPopupDialog(
           context,
-        ).errorMessage(title: 'error'.tr, message: err.message);
+        ).errorMessage(title: err.title ?? 'error'.tr, message: err.message);
       },
       (res) async {
         submitting(LoadingState.completed);

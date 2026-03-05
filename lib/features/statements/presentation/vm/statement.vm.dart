@@ -57,7 +57,7 @@ class PStatementVm extends GetxController {
         updateLoadingState(LoadingState.error);
         PPopupDialog(
           context,
-        ).errorMessage(title: 'error'.tr, message: err.message);
+        ).errorMessage(title: err.title ?? 'error'.tr, message: err.message);
       },
       (res) {
         updateLoadingState(LoadingState.completed);
@@ -78,7 +78,7 @@ class PStatementVm extends GetxController {
         // updateLoadingState(LoadingState.error);
         PPopupDialog(
           context,
-        ).errorMessage(title: 'error'.tr, message: err.message);
+        ).errorMessage(title: err.title ?? 'error'.tr, message: err.message);
       },
       (res) {
         // updateLoadingState(LoadingState.completed);
@@ -133,7 +133,7 @@ class PStatementVm extends GetxController {
         updateGeneratingState(LoadingState.error);
         PPopupDialog(
           context,
-        ).errorMessage(title: 'error'.tr, message: err.message);
+        ).errorMessage(title: err.title ?? 'error'.tr, message: err.message);
       },
       (res) {
         updateGeneratingState(LoadingState.completed);
@@ -185,7 +185,7 @@ class PStatementVm extends GetxController {
   //       updateGeneratingState(LoadingState.error);
   //       PPopupDialog(
   //         context,
-  //       ).errorMessage(title: 'error'.tr, message: err.message);
+  //       ).errorMessage(title: err.title ?? 'error'.tr, message: err.message);
   //     },
   //     (res) {
   //       // updateGeneratingState(LoadingState.completed);
@@ -211,7 +211,7 @@ class PStatementVm extends GetxController {
   //       updateGeneratingState(LoadingState.error);
   //       PPopupDialog(
   //         context,
-  //       ).errorMessage(title: 'error'.tr, message: err.message);
+  //       ).errorMessage(title: err.title ?? 'error'.tr, message: err.message);
   //     },
   //     (res) {
   //       updateGeneratingState(LoadingState.completed);
@@ -259,7 +259,7 @@ class PStatementVm extends GetxController {
         updateGeneratingState(LoadingState.error);
         PPopupDialog(
           context,
-        ).errorMessage(title: 'error'.tr, message: err.message);
+        ).errorMessage(title: err.title ?? 'error'.tr, message: err.message);
       },
       (res) {
         updateGeneratingState(LoadingState.completed);

@@ -107,6 +107,7 @@ class HighlightWidget extends StatelessWidget {
           highlight.title,
           textAlign: TextAlign.center,
           softWrap: true,
+          maxLines: 2,
           style: Theme.of(context).textTheme.bodyLarge?.copyWith(
             fontSize: PAppSize.s10,
             fontWeight: FontWeight.w600,

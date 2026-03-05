@@ -17,7 +17,8 @@ class PInactivityService extends GetxService with WidgetsBindingObserver {
 
   /// Grace period when returning from background
   /// If app was in background longer than this, force logout
-  static const Duration backgroundGracePeriod = Duration(seconds: 30);
+  static const Duration backgroundGracePeriod = Duration(minutes: 2);
+  // static const Duration backgroundGracePeriod = Duration(seconds: 30);
 
   Timer? _inactivityTimer;
   DateTime? _appPausedTime;
@@ -61,11 +62,6 @@ class PInactivityService extends GetxService with WidgetsBindingObserver {
         _appPausedTime = DateTime.now();
         _inactivityTimer?.cancel();
         pensionAppLogger.i('App paused - inactivity timer stopped');
-
-        // Clear auth token when app goes to background
-        // This ensures user must re-authenticate if app is killed and restarted
-        // User credentials (email, biometric password) are preserved for easy re-auth
-        _clearAuthTokenOnBackground();
         break;
 
       case AppLifecycleState.resumed:
@@ -86,10 +82,11 @@ class PInactivityService extends GetxService with WidgetsBindingObserver {
               currentRoute == Routes.forgotPasswordPage;
 
           if (!isAuthRoute && backgroundDuration > backgroundGracePeriod) {
-            // App was in background too long - force logout
+            // App was in background too long - soft logout
             pensionAppLogger.w(
-              'App was in background for ${backgroundDuration.inSeconds}s - forcing logout',
+              'App was in background for ${backgroundDuration.inSeconds}s - soft logout',
             );
+            _clearAuthTokenOnBackground();
             logoutUser();
           } else {
             // Resume timer

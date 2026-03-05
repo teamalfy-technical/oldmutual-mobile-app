@@ -151,7 +151,7 @@ class _PPensionDetailPageState extends State<PPensionDetailPage> {
                                 widget.scheme.status,
                               )) ...[
                             QuickActionWidget(
-                              label: 'pay_premium'.tr,
+                              label: 'pay_now'.tr,
                               icon: Assets.icons.payIcon.svg(
                                 color: PHelperFunction.isDarkMode(context)
                                     ? PAppColor.successLight

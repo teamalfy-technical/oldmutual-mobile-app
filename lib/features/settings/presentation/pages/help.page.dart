@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:oldmutual_pensions_app/core/utils/utils.dart';
 import 'package:oldmutual_pensions_app/features/settings/presentation/vm/settings.vm.dart';
 import 'package:oldmutual_pensions_app/gen/assets.gen.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class PHelpPage extends StatelessWidget {
   PHelpPage({super.key});
@@ -57,6 +58,13 @@ class PHelpPage extends StatelessWidget {
             style: Theme.of(
               context,
             ).textTheme.bodyLarge?.copyWith(fontWeight: FontWeight.w600),
+          ).onPressed(
+            onTap: () async {
+              final uri = Uri(scheme: 'tel', path: '0303968667');
+              if (await canLaunchUrl(uri)) {
+                await launchUrl(uri);
+              }
+            },
           ),
 
           Row(
@@ -88,6 +96,16 @@ class PHelpPage extends StatelessWidget {
             style: Theme.of(
               context,
             ).textTheme.bodyLarge?.copyWith(fontWeight: FontWeight.w600),
+          ).onPressed(
+            onTap: () async {
+              final uri = Uri(
+                scheme: 'mailto',
+                path: PAppConstant.emailSupport,
+              );
+              if (await canLaunchUrl(uri)) {
+                await launchUrl(uri);
+              }
+            },
           ),
           Divider(color: PAppColor.fillColor),
         ],

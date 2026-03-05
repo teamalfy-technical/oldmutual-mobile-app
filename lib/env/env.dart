@@ -86,7 +86,7 @@ abstract class Env {
   static final String verifyResetOtp = _Env.verifyResetOtp;
 
   /// [ForgotPassword] user endpoint
-  @EnviedField(defaultValue: '/self-service/fogot-password', obfuscate: true)
+  @EnviedField(defaultValue: '/self-service/forgot-password', obfuscate: true)
   static final String forgotPassword = _Env.forgotPassword;
 
   /// [VerifyGhanaCard] user endpoint

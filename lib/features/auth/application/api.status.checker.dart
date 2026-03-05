@@ -33,7 +33,7 @@ class ApiStatusChecker {
           _controller.add(false);
           PPopupDialog(
             context,
-          ).errorMessage(title: 'error'.tr, message: err.getMessage());
+          ).errorMessage(title: err.title ?? 'error'.tr, message: err.getMessage());
         },
         (res) {
           if (res.data == LoadingState.completed.name) {

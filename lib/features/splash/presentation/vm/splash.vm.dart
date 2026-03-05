@@ -41,44 +41,31 @@ class PSplashVm extends GetxController {
           replace: true,
         );
       } else {
-        // Check if user has valid auth token AND bioData (indicates active session)
-        final authResponse = await PSecureStorage().getAuthResponse();
+        // On a fresh app start, always require re-authentication.
+        // Never go directly to the dashboard from splash.
         final userEmail = await PSecureStorage().getUserEmail();
         final userPassword = await PSecureStorage().getBiometricPassword();
 
-        if (authResponse?.token != null) {
-          final lastLoggedIn = PFormatter.calculateDateDiff(
-            authResponse!.lastLoggedIn ?? DateTime.now().toIso8601String(),
-            DateDiffUnit.days,
+        // Clear any stale session data so user must re-authenticate
+        await PSecureStorage().removeSecureData(PSecureStorage().authResKey);
+        await PSecureStorage().removeSecureData(PSecureStorage().bioDataKey);
+
+        if (userEmail != null &&
+            userPassword != null &&
+            PSecureStorage().isBiometricEnabled) {
+          // User has saved credentials and biometric enabled - show welcome back for biometric/quick login
+          PHelperFunction.switchScreen(
+            destination: Routes.welcomeBackPage,
+            replace: true,
           );
-          // redirect user to welcome back screen after been logged in for 3 days
-          if (lastLoggedIn >= 3 && userEmail != null && userPassword != null) {
-            stop();
-            PHelperFunction.switchScreen(
-              destination: Routes.welcomeBackPage,
-              replace: true,
-            );
-          } else {
-            PHelperFunction.switchScreen(
-              destination: Routes.dashboardPage,
-              replace: true,
-            );
-          }
-          stop();
         } else {
-          if (userEmail != null && userPassword != null) {
-            PHelperFunction.switchScreen(
-              destination: Routes.welcomeBackPage,
-              replace: true,
-            );
-          } else {
-            PHelperFunction.switchScreen(
-              destination: Routes.loginPage,
-              replace: true,
-            );
-          }
-          stop();
+          // No saved credentials - show full login
+          PHelperFunction.switchScreen(
+            destination: Routes.loginPage,
+            replace: true,
+          );
         }
+        stop();
       }
     });
   }

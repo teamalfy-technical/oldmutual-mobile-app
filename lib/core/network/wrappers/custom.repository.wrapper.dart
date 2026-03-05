@@ -2,6 +2,7 @@ import 'package:fpdart/fpdart.dart';
 import 'package:get/get.dart';
 import 'package:oldmutual_pensions_app/core/errors/errors.dart';
 import 'package:oldmutual_pensions_app/core/network/network.dart';
+import 'package:oldmutual_pensions_app/core/utils/utils.dart';
 
 typedef AsyncFunction<T> = Future<T> Function();
 
@@ -35,21 +36,19 @@ class CustomRepositoryWrapperImpl implements CustomRepositoryWrapper {
       final result = await function();
       return Right(result);
     } catch (err, stackTrace) {
-      if (customError == null) {
+      try {
         return Left(
           await catchApiErrorWrapper.handleError(
             err: err,
             stackTrace: stackTrace,
           ),
         );
-      } else {
-        return Left(
-          await catchApiErrorWrapper.handleError(
-            err: err,
-            stackTrace: stackTrace,
-          ),
+      } catch (handlerError) {
+        // Ensure we always return a failure, even if error handling itself fails
+        pensionAppLogger.e(
+          'Error in error handler: $handlerError | Original: $err',
         );
-        //return Left( customError(err, stackTrace)!);
+        return Left(PFailure(message: 'error_occurred_msg'.tr));
       }
     }
   }

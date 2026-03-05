@@ -47,7 +47,7 @@ class PProfileVm extends GetxController {
         updateLoadingState(LoadingState.error);
         PPopupDialog(
           context,
-        ).errorMessage(title: 'error'.tr, message: err.message);
+        ).errorMessage(title: err.title ?? 'error'.tr, message: err.message);
       },
       (res) async {
         await getBioData();

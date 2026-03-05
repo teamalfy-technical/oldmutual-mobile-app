@@ -7,6 +7,12 @@ class PTimerVm extends GetxController {
   Timer? _timer;
   var completed = false.obs;
 
+  @override
+  void onInit() {
+    startCountdown();
+    super.onInit();
+  }
+
   void startCountdown() {
     _timer?.cancel(); // Ensure previous timer is cancelled
     secondsRemaining.value = 59;

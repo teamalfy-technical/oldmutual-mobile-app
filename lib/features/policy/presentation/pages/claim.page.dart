@@ -15,6 +15,9 @@ class PClaimPage extends StatefulWidget {
 class _PClaimPageState extends State<PClaimPage> {
   final ctrl = Get.put(PPolicyVm());
 
+  final FocusNode _amountFocusNode = FocusNode();
+  final FocusNode _accountNumberFocusNode = FocusNode();
+
   @override
   void initState() {
     super.initState();
@@ -54,6 +57,22 @@ class _PClaimPageState extends State<PClaimPage> {
 
                 PAppSize.s10.verticalSpace,
 
+                PKeyboardActions(
+                  focusNode: _amountFocusNode,
+                  child: PCustomTextField(
+                    labelText: 'withdrawal_amount'.tr,
+                    hintText: 'claim_amount_hint'.tr,
+                    controller: ctrl.amountTEC,
+                    focusNode: _amountFocusNode,
+                    textInputType: TextInputType.number,
+                    validator: PValidator.validateClaimAmount(
+                      ctrl.selectedPolicy?.availableBalance ?? 0,
+                    ),
+                  ),
+                ),
+
+                PAppSize.s20.verticalSpace,
+
                 GetBuilder<PPolicyVm>(
                   builder: (ctrl) {
                     // Remove duplicates and skip placeholder
@@ -80,23 +99,15 @@ class _PClaimPageState extends State<PClaimPage> {
 
                 PAppSize.s20.verticalSpace,
 
-                PCustomTextField(
-                  labelText: 'momo_wallet_number'.tr,
-                  hintText: '024XXXXXXX',
-                  controller: ctrl.accountNumberTEC,
-                  textInputType: TextInputType.number,
-                  validator: PValidator.validateText,
-                ),
-
-                PAppSize.s20.verticalSpace,
-
-                PCustomTextField(
-                  labelText: 'withdrawal_amount'.tr,
-                  hintText: '5000',
-                  controller: ctrl.amountTEC,
-                  textInputType: TextInputType.number,
-                  validator: PValidator.validateClaimAmount(
-                    ctrl.selectedPolicy?.availableBalance ?? 0,
+                PKeyboardActions(
+                  focusNode: _accountNumberFocusNode,
+                  child: PCustomTextField(
+                    labelText: 'momo_wallet_number'.tr,
+                    hintText: 'momo_wallet_hint'.tr,
+                    focusNode: _accountNumberFocusNode,
+                    controller: ctrl.accountNumberTEC,
+                    textInputType: TextInputType.number,
+                    validator: PValidator.validateText,
                   ),
                 ),
 

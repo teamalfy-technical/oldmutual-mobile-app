@@ -93,7 +93,7 @@ class PHomeVm extends GetxController {
       ),
     ),
     Highlight(
-      title: 'educator_plan'.tr,
+      title: 'educator_plan_nl'.tr,
       title2: 'educator_plan'.tr,
       heading: 'educator_plan'.tr,
       description:
@@ -195,7 +195,7 @@ class PHomeVm extends GetxController {
     ),
 
     Highlight(
-      title: 'personal_accident'.tr,
+      title: 'personal_accident_nl'.tr,
       title2: 'personal_accident'.tr,
       thumbnail: Assets.images.personalAccidentImg.path,
       image: Assets.images.personalAccidentBg.path,
@@ -221,7 +221,7 @@ class PHomeVm extends GetxController {
     ),
 
     Highlight(
-      title: 'ekyire_asem'.tr,
+      title: 'ekyire_asem_nl'.tr,
       title2: 'digital_funeral'.tr,
       thumbnail: Assets.images.ekyireAsemImg.path,
       image: Assets.images.ekyireAsemBg.path,

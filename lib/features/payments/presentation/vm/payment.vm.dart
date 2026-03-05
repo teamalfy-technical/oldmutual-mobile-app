@@ -121,7 +121,7 @@ class PPaymentVm extends GetxController {
         updateLoadingState(LoadingState.error);
         PPopupDialog(
           context,
-        ).errorMessage(title: 'error'.tr, message: err.message);
+        ).errorMessage(title: err.title ?? 'error'.tr, message: err.message);
       },
       (res) {
         updateLoadingState(LoadingState.completed);
@@ -153,7 +153,7 @@ class PPaymentVm extends GetxController {
         updateLoadingState(LoadingState.error);
         PPopupDialog(
           context,
-        ).errorMessage(title: 'error'.tr, message: err.message);
+        ).errorMessage(title: err.title ?? 'error'.tr, message: err.message);
       },
       (res) {
         updateLoadingState(LoadingState.completed);
@@ -244,7 +244,7 @@ class PPaymentVm extends GetxController {
         submitting(LoadingState.error);
         PPopupDialog(
           context,
-        ).errorMessage(title: 'error'.tr, message: err.message);
+        ).errorMessage(title: err.title ?? 'error'.tr, message: err.message);
       },
       (res) async {
         submitting(LoadingState.completed);
@@ -284,7 +284,7 @@ class PPaymentVm extends GetxController {
         submitting(LoadingState.error);
         PPopupDialog(
           context,
-        ).errorMessage(title: 'error'.tr, message: err.message);
+        ).errorMessage(title: err.title ?? 'error'.tr, message: err.message);
       },
       (res) async {
         submitting(LoadingState.completed);

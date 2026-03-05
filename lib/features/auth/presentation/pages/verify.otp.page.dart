@@ -11,12 +11,10 @@ class PVerifyOTPPage extends StatelessWidget {
 
   final ctrl = Get.find<PAuthVm>();
   final timerCtrl = Get.put(PTimerVm());
-
-
+  final FocusNode _otpFocusNode = FocusNode();
 
   @override
   Widget build(BuildContext context) {
-    timerCtrl.startCountdown();
     return Scaffold(
       appBar: AppBar(title: Text('verify_phone_number'.tr)),
       body: PAnnotatedRegion(
@@ -32,7 +30,8 @@ class PVerifyOTPPage extends StatelessWidget {
                       PAppSize.s20.verticalSpace,
                       Text(
                         'verify_phone_number_hint'.trParams({
-                          'contact': PHelperFunction.isPhone(ctrl.maskedValue.value)
+                          'contact':
+                              PHelperFunction.isPhone(ctrl.maskedValue.value)
                               ? 'phone_number'.tr.toLowerCase()
                               : 'email_address'.tr.toLowerCase(),
                           'value': ctrl.maskedValue.value,
@@ -47,12 +46,17 @@ class PVerifyOTPPage extends StatelessWidget {
                         ),
                       ),
                       PAppSize.s20.verticalSpace,
-                      PCustomPinput(
-                        length: 6,
-                        onCompleted: (pin) {
-                          ctrl.updateOTP(pin);
-                          ctrl.verifyOTP(pin: pin, isSignup: isSignup);
-                        },
+                      PKeyboardActions(
+                        focusNode: _otpFocusNode,
+                        child: PCustomPinput(
+                          length: 6,
+                          focusNode: _otpFocusNode,
+                          textInputAction: TextInputAction.done,
+                          onCompleted: (pin) {
+                            ctrl.updateOTP(pin);
+                            ctrl.verifyOTP(pin: pin, isSignup: isSignup);
+                          },
+                        ),
                       ),
                       PAppSize.s3.verticalSpace,
                       Text(
