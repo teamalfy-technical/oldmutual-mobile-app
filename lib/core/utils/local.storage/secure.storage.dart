@@ -27,9 +27,9 @@ class PSecureStorage {
   // Storage keys
   // Non-sensitive data (stored in GetStorage)
   final String onboardingKey = 'onboarding';
-  final String biometricKey = 'enabled_biometric_key';
 
   // Sensitive data (stored in FlutterSecureStorage)
+  final String biometricKey = 'enabled_biometric_key';
   final String authResKey = 'secure_auth_res_key';
   final String tokenResKey = 'secure_token_res_key';
   final String bioDataKey = 'secure_bio_data_key';
@@ -39,10 +39,44 @@ class PSecureStorage {
   final String biometricPasswordKey = 'secure_biometric_password_key';
 
   bool _migrationCompleted = false;
+  bool _biometricEnabled = false;
 
   /// Initialize storage and perform migration if needed
   Future<void> init() async {
-    // await _migrateToSecureStorage();
+    await _migrateToSecureStorage();
+    await _migrateBiometricFlag();
+    _biometricEnabled = await _readBiometricFlag();
+  }
+
+  /// Migrate the biometric enabled flag from GetStorage to FlutterSecureStorage.
+  /// This ensures existing users don't lose their biometric setting after app updates,
+  /// since GetStorage (file-based) may not persist reliably across store updates,
+  /// while FlutterSecureStorage (Keychain/EncryptedSharedPreferences) does.
+  Future<void> _migrateBiometricFlag() async {
+    try {
+      final oldValue = _storage.read(biometricKey);
+      if (oldValue != null) {
+        await _secureStorage.write(
+          key: biometricKey,
+          value: oldValue.toString(),
+        );
+        await _storage.remove(biometricKey);
+        pensionAppLogger.i('Migrated biometric flag to secure storage');
+      }
+    } catch (e) {
+      pensionAppLogger.e('Error migrating biometric flag: $e');
+    }
+  }
+
+  /// Read biometric flag from FlutterSecureStorage
+  Future<bool> _readBiometricFlag() async {
+    try {
+      final value = await _secureStorage.read(key: biometricKey);
+      return value == 'true';
+    } catch (e) {
+      pensionAppLogger.e('Error reading biometric flag: $e');
+      return false;
+    }
   }
 
   /// Migrate existing data from GetStorage to FlutterSecureStorage
@@ -68,8 +102,11 @@ class PSecureStorage {
         if (oldValue != null) {
           // Migrate to new storage
           if (oldKey == 'enabled_face_id_key') {
-            // This stays in GetStorage but with new key
-            await _storage.write(biometricKey, oldValue);
+            // Biometric flag migrates to FlutterSecureStorage
+            await _secureStorage.write(
+              key: newKey,
+              value: oldValue.toString(),
+            );
           } else {
             // Migrate to FlutterSecureStorage
             if (oldValue is Map || oldValue is List) {
@@ -108,13 +145,13 @@ class PSecureStorage {
   T? readData<T>(String key) => _storage.read<T>(key);
 
   /// Save biometric enabled/disabled flag
-  Future<void> saveBiometric<T>(T value) async =>
-      await _storage.write(biometricKey, value);
-
-  /// Check if biometric authentication is enabled
-  bool get isBiometricEnabled {
-    return _storage.read(biometricKey) ?? false;
+  Future<void> saveBiometric(bool value) async {
+    await _secureStorage.write(key: biometricKey, value: value.toString());
+    _biometricEnabled = value;
   }
+
+  /// Check if biometric authentication is enabled (cached, synchronous)
+  bool get isBiometricEnabled => _biometricEnabled;
 
   // ========== SENSITIVE DATA METHODS (FlutterSecureStorage) ==========
 
@@ -215,5 +252,6 @@ class PSecureStorage {
   Future<void> clearAll() async {
     await _storage.erase();
     await _secureStorage.deleteAll();
+    _biometricEnabled = false;
   }
 }
