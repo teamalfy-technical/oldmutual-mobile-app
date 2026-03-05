@@ -18,7 +18,7 @@ dependencies:
   envied: ^1.1.1
   equatable: ^2.0.7
   firebase_core: ^3.12.1
-  firebase_crashlytics: ^4.3.512
+  firebase_crashlytics: ^4.3.10
   firebase_messaging: ^15.2.4
   firebase_remote_config: ^5.4.0
   fl_chart: ^0.70.2
