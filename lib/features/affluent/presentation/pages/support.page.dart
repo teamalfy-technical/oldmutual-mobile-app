@@ -50,7 +50,7 @@ class PSupportPage extends StatelessWidget {
                   ),
                   PAppSize.s8.verticalSpace,
                   Text(
-                    'Senior Relationship Manager',
+                    'Relationship Manager',
                     textAlign: TextAlign.start,
                     style: Theme.of(context).textTheme.headlineLarge?.copyWith(
                       fontSize: PAppSize.s16,

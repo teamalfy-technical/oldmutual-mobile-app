@@ -24,11 +24,9 @@ class PHomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: FutureBuilder(
-        future: PSecureStorage().getAuthResponse(),
-        builder: (context, snapshot) {
-          final user = snapshot.data;
-          return Column(
+      body: Obx(() {
+        final user = vm.user.value;
+        return Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               // Highlight options
@@ -74,17 +72,17 @@ class PHomePage extends StatelessWidget {
                   color: PHelperFunction.isDarkMode(context)
                       ? PAppColor.darkBgColor
                       : PAppColor.fillColor,
-                  child: Obx(
-                    () => Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        if (user?.affluent == true) ...[
-                          // Relationship officer
-                          PAppSize.s8.verticalSpace,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      if (user?.affluent == true) ...[
+                        // Relationship officer
+                        PAppSize.s8.verticalSpace,
 
-                          PRelationshipOfficerCard(user: user),
-                        ] else ...[
-                          Column(
+                        PRelationshipOfficerCard(user: user),
+                      ] else ...[
+                        Obx(
+                          () => Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               PAppSize.s8.verticalSpace,
@@ -132,11 +130,13 @@ class PHomePage extends StatelessWidget {
                               ),
                             ],
                           ),
-                        ],
+                        ),
+                      ],
 
-                        PAppSize.s20.verticalSpace,
+                      PAppSize.s20.verticalSpace,
 
-                        SizedBox(
+                      Obx(
+                        () => SizedBox(
                           height: PDeviceUtil.isIOS()
                               ? PDeviceUtil.getDeviceHeight(context) * 0.35
                               : PDeviceUtil.getDeviceHeight(context) * 0.38,
@@ -205,117 +205,119 @@ class PHomePage extends StatelessWidget {
                                   ],
                                 ),
                         ),
+                      ),
 
-                        if (user?.affluent == true) ...[
-                          PAppSize.s16.verticalSpace,
-                          // Quick Actions for Affluent Users
-                          PSeeAllWidget(
-                            leadingText: 'quick_access'.tr,
-                            showTrailing: false,
-                          ),
+                      if (user?.affluent == true) ...[
+                        PAppSize.s16.verticalSpace,
+                        // Quick Actions for Affluent Users
+                        PSeeAllWidget(
+                          leadingText: 'quick_access'.tr,
+                          showTrailing: false,
+                        ),
 
-                          PAppSize.s16.verticalSpace,
+                        PAppSize.s16.verticalSpace,
 
-                          // Quick Access Grid
-                          GridView.count(
-                            crossAxisCount: 2,
-                            shrinkWrap: true,
-                            physics: const NeverScrollableScrollPhysics(),
-                            mainAxisSpacing: PAppSize.s20,
-                            crossAxisSpacing: PAppSize.s20,
-                            // childAspectRatio: 1.3,
-                            children: [
-                              QuickAccessCard(
-                                icon: Assets.icons.financialInsight.svg(),
-                                label: 'financial_insights'.tr,
-                                onTap: () => PHelperFunction.switchScreen(
-                                  destination: Routes.financialInsightPage,
-                                ),
+                        // Quick Access Grid
+                        GridView.count(
+                          crossAxisCount: 2,
+                          shrinkWrap: true,
+                          physics: const NeverScrollableScrollPhysics(),
+                          mainAxisSpacing: PAppSize.s20,
+                          crossAxisSpacing: PAppSize.s20,
+                          // childAspectRatio: 1.3,
+                          children: [
+                            QuickAccessCard(
+                              icon: Assets.icons.financialInsight.svg(),
+                              label: 'financial_insights'.tr,
+                              onTap: () => PHelperFunction.switchScreen(
+                                destination: Routes.financialInsightPage,
                               ),
-                              QuickAccessCard(
-                                icon: Assets.icons.complimentaryServices.svg(),
-                                label: 'complimentary_services'.tr,
-                                onTap: () =>
-                                    PPopupDialog(context).warningMessage(
-                                      title: 'coming_soon_title'.tr,
-                                      message: 'coming_soon_msg'.tr,
-                                    ),
-                                // onTap: () => PHelperFunction.switchScreen(
-                                //   destination: Routes.complimentaryServicePage,
-                                // ),
+                            ),
+                            QuickAccessCard(
+                              icon: Assets.icons.complimentaryServices.svg(),
+                              label: 'complimentary_services'.tr,
+                              onTap: () =>
+                                  PPopupDialog(context).warningMessage(
+                                    title: 'coming_soon_title'.tr,
+                                    message: 'coming_soon_msg'.tr,
+                                  ),
+                              // onTap: () => PHelperFunction.switchScreen(
+                              //   destination: Routes.complimentaryServicePage,
+                              // ),
+                            ),
+                            QuickAccessCard(
+                              icon: Assets.icons.affluentCard.svg(),
+                              label: 'affluent_card'.tr,
+                              onTap: () => PHelperFunction.switchScreen(
+                                destination: Routes.affluentCardPage,
+                                args: user,
                               ),
-                              QuickAccessCard(
-                                icon: Assets.icons.affluentCard.svg(),
-                                label: 'affluent_card'.tr,
-                                onTap: () => PHelperFunction.switchScreen(
-                                  destination: Routes.affluentCardPage,
-                                  args: user,
-                                ),
+                            ),
+                            QuickAccessCard(
+                              icon: Assets.icons.trackClaims.svg(),
+                              label: 'track_claims'.tr,
+                              onTap: () => PHelperFunction.switchScreen(
+                                destination: Routes.trackClaimsPage,
                               ),
-                              QuickAccessCard(
-                                icon: Assets.icons.trackClaims.svg(),
-                                label: 'track_claims'.tr,
-                                onTap: () => PHelperFunction.switchScreen(
-                                  destination: Routes.trackClaimsPage,
-                                ),
-                              ),
-                            ],
-                          ),
+                            ),
+                          ],
+                        ),
 
-                          PAppSize.s16.verticalSpace,
+                        PAppSize.s16.verticalSpace,
 
-                          // Exclusive Announcements for Affluent Users
-                          PSeeAllWidget(
-                            leadingText: 'exclusive_announcements'.tr,
-                            showTrailing: false,
-                          ),
+                        // Exclusive Announcements for Affluent Users
+                        PSeeAllWidget(
+                          leadingText: 'exclusive_announcements'.tr,
+                          showTrailing: false,
+                        ),
 
-                          PAppSize.s16.verticalSpace,
+                        PAppSize.s16.verticalSpace,
 
-                          ListView.separated(
-                            separatorBuilder: (context, index) =>
-                                PAppSize.s20.verticalSpace,
-                            itemCount: affluentVm.exclusiveAnnouncements.length,
-                            shrinkWrap: true,
-                            physics: const NeverScrollableScrollPhysics(),
-                            itemBuilder: (context, index) {
-                              final announcement =
-                                  affluentVm.exclusiveAnnouncements[index];
-                              return PExclusiveWidget(
-                                announcement: announcement,
-                              );
-                            },
-                          ),
+                        ListView.separated(
+                          separatorBuilder: (context, index) =>
+                              PAppSize.s20.verticalSpace,
+                          itemCount: affluentVm.exclusiveAnnouncements.length,
+                          shrinkWrap: true,
+                          physics: const NeverScrollableScrollPhysics(),
+                          itemBuilder: (context, index) {
+                            final announcement =
+                                affluentVm.exclusiveAnnouncements[index];
+                            return PExclusiveWidget(
+                              announcement: announcement,
+                            );
+                          },
+                        ),
 
-                          PAppSize.s16.verticalSpace,
+                        PAppSize.s16.verticalSpace,
 
-                          // Benefit Reminders for Affluent Users
-                          PSeeAllWidget(
-                            leadingText: 'benefit_reminders'.tr,
-                            showTrailing: false,
-                          ),
+                        // Benefit Reminders for Affluent Users
+                        PSeeAllWidget(
+                          leadingText: 'benefit_reminders'.tr,
+                          showTrailing: false,
+                        ),
 
-                          PAppSize.s16.verticalSpace,
+                        PAppSize.s16.verticalSpace,
 
-                          ListView.separated(
-                            separatorBuilder: (context, index) =>
-                                PAppSize.s20.verticalSpace,
-                            itemCount: affluentVm.benefitReminders.length,
-                            shrinkWrap: true,
-                            physics: const NeverScrollableScrollPhysics(),
-                            itemBuilder: (context, index) {
-                              final reminder =
-                                  affluentVm.benefitReminders[index];
-                              return PBenefitRemindersWidget(
-                                reminder: reminder,
-                              );
-                            },
-                          ),
-                        ],
+                        ListView.separated(
+                          separatorBuilder: (context, index) =>
+                              PAppSize.s20.verticalSpace,
+                          itemCount: affluentVm.benefitReminders.length,
+                          shrinkWrap: true,
+                          physics: const NeverScrollableScrollPhysics(),
+                          itemBuilder: (context, index) {
+                            final reminder =
+                                affluentVm.benefitReminders[index];
+                            return PBenefitRemindersWidget(
+                              reminder: reminder,
+                            );
+                          },
+                        ),
+                      ],
 
-                        // Cross-Sell (Recommendations)
-                        if (crossSellVm.recommendations.isNotEmpty)
-                          Column(
+                      // Cross-Sell (Recommendations)
+                      Obx(
+                        () => crossSellVm.recommendations.isNotEmpty
+                          ? Column(
                             children: [
                               PAppSize.s20.verticalSpace,
 
@@ -361,16 +363,16 @@ class PHomePage extends StatelessWidget {
                                 ),
                               ),
                             ],
-                          ),
-                      ],
-                    ).symmetric(horizontal: PAppSize.s20, vertical: PAppSize.s20).scrollable(),
-                  ),
+                          )
+                          : const SizedBox.shrink(),
+                      ),
+                    ],
+                  ).symmetric(horizontal: PAppSize.s20, vertical: PAppSize.s20).scrollable(),
                 ),
               ),
             ],
           );
-        },
-      ),
+        }),
     );
   }
 }

@@ -19,6 +19,22 @@ class PDashboardPage extends StatefulWidget {
 
 class _PDashboardPageState extends State<PDashboardPage> {
   final ctrl = Get.put(PHomeVm());
+  List<Widget>? _cachedPages;
+  bool? _lastAffluentState;
+
+  List<Widget> get _pages {
+    final isAffluent = ctrl.user.value?.affluent == true;
+    if (_cachedPages == null || _lastAffluentState != isAffluent) {
+      _lastAffluentState = isAffluent;
+      _cachedPages = [
+        PHomePage(),
+        PUserDetailPage(isShowAppBar: false),
+        if (isAffluent) PSupportPage(user: ctrl.user.value),
+        PMorePage(),
+      ];
+    }
+    return _cachedPages!;
+  }
 
   BottomNavigationBarItem _buildNavItem({
     required BuildContext context,
@@ -77,15 +93,6 @@ class _PDashboardPageState extends State<PDashboardPage> {
       label: label,
     );
   }
-
-  List<Widget> get _pages => [
-    PHomePage(),
-    PUserDetailPage(isShowAppBar: false),
-    if (ctrl.user.value?.affluent == true) ...[
-      PSupportPage(user: ctrl.user.value),
-    ],
-    PMorePage(),
-  ];
 
   @override
   void initState() {

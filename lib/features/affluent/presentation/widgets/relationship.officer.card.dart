@@ -42,7 +42,7 @@ class PRelationshipOfficerCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final affluentVm = PAffluentVm.instance;
 
-    return user?.affluent == false
+    return user?.affluent == true
         ? Obx(() {
             final officer = affluentVm.relationshipOfficer.value;
             final officerName = officer.name ?? 'not_applicable'.tr;

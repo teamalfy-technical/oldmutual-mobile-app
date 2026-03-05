@@ -4,12 +4,7 @@ class RelationshipOfficer {
   String? phone;
   String? name;
 
-  RelationshipOfficer({
-    this.agentCode,
-    this.email,
-    this.phone,
-    this.name,
-  });
+  RelationshipOfficer({this.agentCode, this.email, this.phone, this.name});
 
   RelationshipOfficer copyWith({
     String? agentCode,
@@ -29,7 +24,7 @@ class RelationshipOfficer {
     agentCode = json['agent_code'];
     email = json['email'];
     phone = json['phone'];
-    name = json['name'];
+    name = json['agent_name'];
   }
 
   Map<String, dynamic> toJson() {
@@ -37,7 +32,7 @@ class RelationshipOfficer {
     data['agent_code'] = agentCode;
     data['email'] = email;
     data['phone'] = phone;
-    data['name'] = name;
+    data['agent_name'] = name;
     return data;
   }
 }
