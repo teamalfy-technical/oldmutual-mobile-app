@@ -7,6 +7,7 @@ class Member {
   String? schemeType;
   String? masterScheme;
   String? phone;
+  bool? phoneVerified;
   String? email;
   String? emailVerifiedAt;
   String? employerName;
@@ -35,6 +36,7 @@ class Member {
     this.schemeType,
     this.masterScheme,
     this.phone,
+    this.phoneVerified,
     this.email,
     this.emailVerifiedAt,
     this.employerName,
@@ -64,6 +66,7 @@ class Member {
     String? schemeType,
     String? masterScheme,
     String? phone,
+    bool? phoneVerified,
     String? email,
     String? emailVerifiedAt,
     String? employerName,
@@ -92,6 +95,7 @@ class Member {
       schemeType: schemeType ?? this.schemeType,
       masterScheme: masterScheme ?? this.masterScheme,
       phone: phone ?? this.phone,
+      phoneVerified: phoneVerified ?? this.phoneVerified,
       email: email ?? this.email,
       emailVerifiedAt: emailVerifiedAt ?? this.emailVerifiedAt,
       employerName: employerName ?? this.employerName,
@@ -122,6 +126,9 @@ class Member {
     schemeType = json['scheme_type'];
     masterScheme = json['master_scheme'];
     phone = json['phone'];
+    phoneVerified = json['phone_verified'] is bool
+        ? json['phone_verified']
+        : json['phone_verified']?.toString().toLowerCase() == 'true';
     email = json['email'];
     emailVerifiedAt = json['email_verified_at'];
     employerName = json['employer_name'];
@@ -152,6 +159,7 @@ class Member {
     data['scheme_type'] = schemeType;
     data['master_scheme'] = masterScheme;
     data['phone'] = phone;
+    data['phone_verified'] = phoneVerified;
     data['email'] = email;
     data['email_verified_at'] = emailVerifiedAt;
     data['employer_name'] = employerName;

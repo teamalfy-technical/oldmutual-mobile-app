@@ -247,6 +247,8 @@ class PAuthVm extends GetxController {
       (res) async {
         loading(LoadingState.completed);
 
+        checkIfPhoneIsVerified(res.data?.phoneVerified, res.message);
+
         navigateToDashBoard(
           emailOrPhone: emailOrPhone,
           password: password,
@@ -254,6 +256,22 @@ class PAuthVm extends GetxController {
         );
       },
     );
+  }
+
+  checkIfPhoneIsVerified(bool? isPhoneVerified, String? message) {
+    if (isPhoneVerified != null && isPhoneVerified == false) {
+      PHelperFunction.switchScreen(
+        destination: Routes.verifyOTPPage,
+        replace: true,
+      );
+      if (message != null && message.isNotEmpty) {
+        PPopupDialog(
+          context,
+        ).successMessage(title: 'success'.tr, message: message);
+      }
+
+      return;
+    }
   }
 
   navigateToDashBoard({
@@ -269,9 +287,7 @@ class PAuthVm extends GetxController {
       await PSecureStorage().saveBiometricPassword(password);
     }
 
-    if (PDeviceUtil.isAndroid()) {
-      await PNotificationService().saveToken();
-    }
+    await PNotificationService().saveToken();
 
     if (res.data?.name != null && res.data!.name!.isNotEmpty) {
       await PSecureStorage().saveUserFirstName(
@@ -350,11 +366,15 @@ class PAuthVm extends GetxController {
       },
       (res) {
         loading(LoadingState.completed);
-        // PHelperFunction.pop();
         PHelperFunction.switchScreen(
           destination: Routes.verifyOTPPage,
           args: true,
         );
+        if (res.message != null && res.message!.isNotEmpty) {
+          PPopupDialog(
+            context,
+          ).successMessage(title: 'success'.tr, message: res.message!);
+        }
       },
     );
   }
