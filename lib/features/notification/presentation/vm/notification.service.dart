@@ -166,39 +166,27 @@ class PNotificationService {
   Future<String?> getToken() async {
     String? token;
     if (Platform.isIOS) {
-      // String? apnsToken = await _firebaseMessaging.getAPNSToken();
-      String? apnsToken = await _firebaseMessaging.getToken();
-      if (apnsToken != null) {
-        token = apnsToken;
-      } else {
+      // On iOS, APNS token must be available before FCM can generate a token
+      String? apnsToken = await _firebaseMessaging.getAPNSToken();
+      if (apnsToken == null) {
+        // APNS token not ready yet, wait and retry
         await Future<void>.delayed(const Duration(seconds: 3));
-        //apnsToken = await _firebaseMessaging.getAPNSToken();
-        apnsToken = await _firebaseMessaging.getToken();
-        if (apnsToken != null) {
-          token = apnsToken;
-        }
+        apnsToken = await _firebaseMessaging.getAPNSToken();
       }
+      if (apnsToken != null) {
+        token = await _firebaseMessaging.getToken();
+      }
+      pensionAppLogger.w("APNS Token (iOS): $apnsToken");
       pensionAppLogger.w("FCM Token (iOS): $token");
     } else {
-      token = (await _firebaseMessaging.getToken());
-      if (token != null) {
-        token = token;
-      } else {
+      token = await _firebaseMessaging.getToken();
+      if (token == null) {
         await Future.delayed(const Duration(seconds: 1));
-        token = (await _firebaseMessaging.getToken())!;
-        _firebaseMessaging.onTokenRefresh.listen(
-          (token) {
-            token = token;
-          },
-          onError: (err) {
-            pensionAppLogger.e("Error FCM Token: $err");
-          },
-        );
+        token = await _firebaseMessaging.getToken();
       }
       pensionAppLogger.w("FCM Token (Android): $token");
     }
 
-    pensionAppLogger.d("FCM Token: ${await _firebaseMessaging.getToken()}");
     return token;
   }
 
@@ -207,8 +195,7 @@ class PNotificationService {
   Future<void> saveToken() async {
     final token = await getToken();
     if (token != null) {
-      pensionAppLogger.w('FCM Token: $token');
-      PSecureStorage().saveData(PSecureStorage().deviceTokenKey, token);
+      await PSecureStorage().saveDeviceToken(token);
       final result = await authService.updateFcmToken(token: token);
       result.fold(
         (err) => pensionAppLogger.e(err.getMessage()),
@@ -314,17 +301,16 @@ class PNotificationService {
         );
     await flutterLocalNotificationsPlugin.initialize(
       initializationSettings,
-      onDidReceiveNotificationResponse: (
-        NotificationResponse notificationResponse,
-      ) {
-        // debugPrint(
-        //     '------foreground notification click payload------- ${jsonEncode(jsonDecode(notificationResponse.payload!))}');
-        // handleNotificationClick(
-        //     null,
-        //     NotificationType.fromJson(
-        //         notificationResponse.payload));
-        onSelectedNotification(notificationResponse);
-      },
+      onDidReceiveNotificationResponse:
+          (NotificationResponse notificationResponse) {
+            // debugPrint(
+            //     '------foreground notification click payload------- ${jsonEncode(jsonDecode(notificationResponse.payload!))}');
+            // handleNotificationClick(
+            //     null,
+            //     NotificationType.fromJson(
+            //         notificationResponse.payload));
+            onSelectedNotification(notificationResponse);
+          },
       onDidReceiveBackgroundNotificationResponse: notificationTapBackground,
     );
   }
@@ -440,8 +426,8 @@ class PNotificationService {
   }
 
   Future<void> _registerInteractionHandler() async {
-    RemoteMessage? initialMessage =
-        await FirebaseMessaging.instance.getInitialMessage();
+    RemoteMessage? initialMessage = await FirebaseMessaging.instance
+        .getInitialMessage();
     if (initialMessage != null) {
       // handleNotificationClick(
       //   null,

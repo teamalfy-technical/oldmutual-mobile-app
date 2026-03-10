@@ -52,6 +52,26 @@ class AuthDsImpl implements AuthDs {
   }
 
   @override
+  Future<ApiResponse<List<Message>>> verifySignupOtp({
+    required String phone,
+    required String otp,
+  }) async {
+    return await asyncFunctionWrapper.handleAsyncNetworkCall(() async {
+      final payload = dio.FormData.fromMap({'phone': phone, 'otp': otp});
+      final res = await apiService.callService(
+        requestType: RequestType.post,
+        payload: payload,
+        endPoint: Env.verifyOtp,
+        // client: DioClient(baseUrl: Env.selfServiceBaseUrl),
+      );
+      return ApiResponse<List<Message>>.fromJson(
+        res,
+        (data) => (data as List).map((e) => Message.fromJson(e)).toList(),
+      );
+    });
+  }
+
+  @override
   Future<ApiResponse<Member>> verifyForgotPasswordOTP({
     required String otp,
     required String emailOrPhone,
@@ -234,7 +254,9 @@ class AuthDsImpl implements AuthDs {
       );
       return ApiResponse<List<Message>>.fromJson(
         res,
-        (data) => (data as List).map((e) => Message.fromJson(e)).toList(),
+        (data) => data is List
+            ? data.map((e) => Message.fromJson(e)).toList()
+            : [],
       );
     });
   }
@@ -291,26 +313,6 @@ class AuthDsImpl implements AuthDs {
       //   (data) => VerificationResponse.fromJson(data),
       // );
       return ApiResponse<String>.fromJson(res, (data) => data);
-    });
-  }
-
-  @override
-  Future<ApiResponse<List<Message>>> verifySignupOtp({
-    required String phone,
-    required String otp,
-  }) async {
-    return await asyncFunctionWrapper.handleAsyncNetworkCall(() async {
-      final payload = dio.FormData.fromMap({'phone': phone, 'otp': otp});
-      final res = await apiService.callService(
-        requestType: RequestType.post,
-        payload: payload,
-        endPoint: Env.verifyOtp,
-        // client: DioClient(baseUrl: Env.selfServiceBaseUrl),
-      );
-      return ApiResponse<List<Message>>.fromJson(
-        res,
-        (data) => (data as List).map((e) => Message.fromJson(e)).toList(),
-      );
     });
   }
 

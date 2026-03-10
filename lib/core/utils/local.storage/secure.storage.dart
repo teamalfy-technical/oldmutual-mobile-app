@@ -3,7 +3,9 @@ import 'dart:convert';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:oldmutual_pensions_app/core/utils/utils.dart';
+import 'package:oldmutual_pensions_app/env/env.dart';
 import 'package:oldmutual_pensions_app/features/auth/auth.dart';
+import 'package:oldmutual_pensions_app/flavor.config.dart';
 
 /// Hybrid secure storage that uses:
 /// - FlutterSecureStorage for sensitive data (encrypted)
@@ -41,11 +43,35 @@ class PSecureStorage {
   bool _migrationCompleted = false;
   bool _biometricEnabled = false;
 
+  /// Whether the app is running in test mode (test URL with production applicationId).
+  /// Used for internal testing and TestFlight builds.
+  bool get isTestMode => Env.baseUrl == apiBaseUrlDev;
+
   /// Initialize storage and perform migration if needed
   Future<void> init() async {
+    await _clearKeychainOnReinstallForTestMode();
     await _migrateToSecureStorage();
     await _migrateBiometricFlag();
     _biometricEnabled = await _readBiometricFlag();
+  }
+
+  /// Clear all keychain data on fresh install/reinstall ONLY in test mode.
+  /// In production, keychain data (email, password, biometric flag) persists
+  /// across reinstalls so biometric users can continue seamlessly.
+  /// In test mode, we clear everything so testers always start fresh.
+  Future<void> _clearKeychainOnReinstallForTestMode() async {
+    if (!isTestMode) return;
+
+    const installedKey = 'has_been_installed';
+    final hasBeenInstalled = _storage.read(installedKey);
+    if (hasBeenInstalled != true) {
+      await _secureStorage.deleteAll();
+      _biometricEnabled = false;
+      await _storage.write(installedKey, true);
+      pensionAppLogger.i(
+        'Test mode fresh install detected — cleared all keychain data',
+      );
+    }
   }
 
   /// Migrate the biometric enabled flag from GetStorage to FlutterSecureStorage.
@@ -103,10 +129,7 @@ class PSecureStorage {
           // Migrate to new storage
           if (oldKey == 'enabled_face_id_key') {
             // Biometric flag migrates to FlutterSecureStorage
-            await _secureStorage.write(
-              key: newKey,
-              value: oldValue.toString(),
-            );
+            await _secureStorage.write(key: newKey, value: oldValue.toString());
           } else {
             // Migrate to FlutterSecureStorage
             if (oldValue is Map || oldValue is List) {
