@@ -269,7 +269,6 @@ class PAuthVm extends GetxController {
           context,
         ).successMessage(title: 'success'.tr, message: message);
       }
-
       return;
     }
   }
