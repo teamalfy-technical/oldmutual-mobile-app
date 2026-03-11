@@ -258,8 +258,8 @@ class PAuthVm extends GetxController {
     );
   }
 
-  checkIfPhoneIsVerified(bool? isPhoneVerified, String? message) {
-    if (isPhoneVerified != null && isPhoneVerified == false) {
+  checkIfPhoneIsVerified(String? isPhoneVerified, String? message) {
+    if (isPhoneVerified != null && isPhoneVerified == 'false') {
       PHelperFunction.switchScreen(
         destination: Routes.verifyOTPPage,
         replace: true,
