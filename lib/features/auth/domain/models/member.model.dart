@@ -7,7 +7,7 @@ class Member {
   String? schemeType;
   String? masterScheme;
   String? phone;
-  bool? phoneVerified;
+  String? phoneVerified;
   String? email;
   String? emailVerifiedAt;
   String? employerName;
@@ -68,7 +68,7 @@ class Member {
     String? schemeType,
     String? masterScheme,
     String? phone,
-    bool? phoneVerified,
+    String? phoneVerified,
     String? email,
     String? emailVerifiedAt,
     String? employerName,
@@ -130,9 +130,7 @@ class Member {
     schemeType = json['scheme_type'];
     masterScheme = json['master_scheme'];
     phone = json['phone'];
-    phoneVerified = json['phone_verified'] is bool
-        ? json['phone_verified']
-        : json['phone_verified']?.toString().toLowerCase() == 'true';
+    phoneVerified = json['phone_verified'];
     email = json['email'];
     emailVerifiedAt = json['email_verified_at'];
     employerName = json['employer_name'];
