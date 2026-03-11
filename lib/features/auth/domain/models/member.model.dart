@@ -19,7 +19,6 @@ class Member {
   dynamic sex;
   String? nationality;
   String? notificationsEnabled;
-  String? phoneVerified;
   String? terms;
   String? lastLoggedIn;
   String? lastLoggedInIp;
@@ -50,7 +49,6 @@ class Member {
     this.sex,
     this.nationality,
     this.notificationsEnabled,
-    this.phoneVerified,
     this.terms,
     this.lastLoggedIn,
     this.lastLoggedInIp,
@@ -82,7 +80,6 @@ class Member {
     dynamic sex,
     String? nationality,
     String? notificationsEnabled,
-    String? phoneVerified,
     String? terms,
     String? lastLoggedIn,
     String? lastLoggedInIp,
@@ -113,7 +110,6 @@ class Member {
       sex: sex ?? this.sex,
       nationality: nationality ?? this.nationality,
       notificationsEnabled: notificationsEnabled ?? this.notificationsEnabled,
-      phoneVerified: phoneVerified ?? this.phoneVerified,
       terms: terms ?? this.terms,
       lastLoggedIn: lastLoggedIn ?? this.lastLoggedIn,
       lastLoggedInIp: lastLoggedInIp ?? this.lastLoggedInIp,
