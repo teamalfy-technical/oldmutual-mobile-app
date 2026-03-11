@@ -247,7 +247,10 @@ class PAuthVm extends GetxController {
       (res) async {
         loading(LoadingState.completed);
 
-        checkIfPhoneIsVerified(res.data?.phoneVerified, res.message);
+        final isVerified =
+            checkIfPhoneIsVerified(res.data?.phoneVerified, res.message);
+
+        if (!isVerified) return;
 
         navigateToDashBoard(
           emailOrPhone: emailOrPhone,
@@ -258,7 +261,7 @@ class PAuthVm extends GetxController {
     );
   }
 
-  checkIfPhoneIsVerified(String? isPhoneVerified, String? message) {
+  bool checkIfPhoneIsVerified(String? isPhoneVerified, String? message) {
     if (isPhoneVerified != null && isPhoneVerified == 'false') {
       PHelperFunction.switchScreen(
         destination: Routes.verifyOTPPage,
@@ -269,8 +272,9 @@ class PAuthVm extends GetxController {
           context,
         ).successMessage(title: 'success'.tr, message: message);
       }
-      return;
+      return false;
     }
+    return true;
   }
 
   navigateToDashBoard({

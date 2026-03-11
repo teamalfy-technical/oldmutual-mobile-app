@@ -50,16 +50,19 @@ if [[ "$confirm" != "y" && "$confirm" != "Y" ]]; then
   exit 0
 fi
 
+# Back up flavor config before modifying
+cp "$FLAVOR_CONFIG" "${FLAVOR_CONFIG}.bak"
+
+# Restore the original file on exit (success or failure)
+restore_config() {
+  echo -e "${YELLOW}Restoring prod API URL...${NC}"
+  mv "${FLAVOR_CONFIG}.bak" "$FLAVOR_CONFIG"
+}
+trap restore_config EXIT
+
 # Swap prod API URL to test API URL
 echo -e "${YELLOW}Switching prod API to test environment...${NC}"
 sed -i '' 's|const apiBaseUrlProd = "https://app.oldmutual.com.gh/api";|const apiBaseUrlProd = "https://test-app.oldmutual.com.gh/api";|' "$FLAVOR_CONFIG"
-
-# Restore the original URL on exit (success or failure)
-restore_config() {
-  echo -e "${YELLOW}Restoring prod API URL...${NC}"
-  sed -i '' 's|const apiBaseUrlProd = "https://test-app.oldmutual.com.gh/api";|const apiBaseUrlProd = "https://app.oldmutual.com.gh/api";|' "$FLAVOR_CONFIG"
-}
-trap restore_config EXIT
 
 echo -e "${YELLOW}Cleaning previous builds...${NC}"
 flutter clean
