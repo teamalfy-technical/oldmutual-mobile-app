@@ -36,7 +36,7 @@ abstract class AuthDs {
     required String password,
   });
 
-  Future<ApiResponse<List<Message>>> signUp({
+  Future<ApiResponse<Member>> signUp({
     required String email,
     required String phone,
     required String verificationToken,
@@ -45,11 +45,11 @@ abstract class AuthDs {
   });
 
   Future<ApiResponse<List<Message>>> verifySignupOtp({
-    required String phone,
     required String otp,
+    required String otpRef,
   });
 
-  Future<ApiResponse<List<Message>>> resendOtp({required String phone});
+  Future<ApiResponse<Member>> resendOtp({required String otpRef});
 
   Future<ApiResponse<String>> verifyGhanaCard({required String cardNumber});
 
@@ -59,13 +59,13 @@ abstract class AuthDs {
 
   Future<ApiResponse<List<Message>>> updateFcmToken({required String token});
 
-  Future<ApiResponse<List<Message>>> forgotPassword({
+  Future<ApiResponse<Member>> forgotPassword({
     required String emailOrPhone,
   });
 
   Future<ApiResponse<Member>> verifyForgotPasswordOTP({
     required String otp,
-    required String emailOrPhone,
+    required String otpRef,
   });
 
   Future<ApiResponse<List<Message>>> resetPassword({

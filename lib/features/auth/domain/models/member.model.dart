@@ -8,6 +8,7 @@ class Member {
   String? masterScheme;
   String? phone;
   String? phoneVerified;
+  String? otpRef;
   String? email;
   String? emailVerifiedAt;
   String? employerName;
@@ -38,6 +39,7 @@ class Member {
     this.masterScheme,
     this.phone,
     this.phoneVerified,
+    this.otpRef,
     this.email,
     this.emailVerifiedAt,
     this.employerName,
@@ -69,6 +71,7 @@ class Member {
     String? masterScheme,
     String? phone,
     String? phoneVerified,
+    String? otpRef,
     String? email,
     String? emailVerifiedAt,
     String? employerName,
@@ -99,6 +102,7 @@ class Member {
       masterScheme: masterScheme ?? this.masterScheme,
       phone: phone ?? this.phone,
       phoneVerified: phoneVerified ?? this.phoneVerified,
+      otpRef: otpRef ?? this.otpRef,
       email: email ?? this.email,
       emailVerifiedAt: emailVerifiedAt ?? this.emailVerifiedAt,
       employerName: employerName ?? this.employerName,
@@ -131,6 +135,7 @@ class Member {
     masterScheme = json['master_scheme'];
     phone = json['phone'];
     phoneVerified = json['phone_verified'];
+    otpRef = json['otp_ref'];
     email = json['email'];
     emailVerifiedAt = json['email_verified_at'];
     employerName = json['employer_name'];
@@ -164,6 +169,7 @@ class Member {
     data['master_scheme'] = masterScheme;
     data['phone'] = phone;
     data['phone_verified'] = phoneVerified;
+    data['otp_ref'] = otpRef;
     data['email'] = email;
     data['email_verified_at'] = emailVerifiedAt;
     data['employer_name'] = employerName;

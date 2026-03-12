@@ -21,7 +21,7 @@ class AuthServiceImpl implements AuthService {
   }
 
   @override
-  Future<Either<PFailure, ApiResponse<List<Message>>>> forgotPassword({
+  Future<Either<PFailure, ApiResponse<Member>>> forgotPassword({
     required String emailOrPhone,
   }) {
     return authRepo.forgotPassword(emailOrPhone: emailOrPhone);
@@ -76,13 +76,10 @@ class AuthServiceImpl implements AuthService {
 
   @override
   Future<Either<PFailure, ApiResponse<Member>>> verifyForgotPasswordOTP({
-    required String emailOrPhone,
     required String otp,
+    required String otpRef,
   }) {
-    return authRepo.verifyForgotPasswordOTP(
-      emailOrPhone: emailOrPhone,
-      otp: otp,
-    );
+    return authRepo.verifyForgotPasswordOTP(otp: otp, otpRef: otpRef);
   }
 
   @override
@@ -99,7 +96,7 @@ class AuthServiceImpl implements AuthService {
   }
 
   @override
-  Future<Either<PFailure, ApiResponse<List<Message>>>> signUp({
+  Future<Either<PFailure, ApiResponse<Member>>> signUp({
     required String email,
     required String phone,
     required String verificationToken,
@@ -116,9 +113,9 @@ class AuthServiceImpl implements AuthService {
   }
 
   @override
-  Future<Either<PFailure, ApiResponse<List<Message>>>> resendOtp({
-    required String phone,
-  }) => authRepo.resendOtp(phone: phone);
+  Future<Either<PFailure, ApiResponse<Member>>> resendOtp({
+    required String otpRef,
+  }) => authRepo.resendOtp(otpRef: otpRef);
 
   @override
   Future<Either<PFailure, ApiResponse<Member>>> signIn({
@@ -133,9 +130,9 @@ class AuthServiceImpl implements AuthService {
 
   @override
   Future<Either<PFailure, ApiResponse<List<Message>>>> verifySignupOtp({
-    required String phone,
     required String otp,
-  }) => authRepo.verifySignupOtp(phone: phone, otp: otp);
+    required String otpRef,
+  }) => authRepo.verifySignupOtp(otp: otp, otpRef: otpRef);
 
   @override
   Future<Either<PFailure, ApiResponse<String>>> checkCardVerificationStatus({

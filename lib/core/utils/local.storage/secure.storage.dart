@@ -39,6 +39,7 @@ class PSecureStorage {
   final String firstNameKey = 'secure_first_name_key';
   final String deviceTokenKey = 'secure_device_token_key';
   final String biometricPasswordKey = 'secure_biometric_password_key';
+  final String otpRefKey = 'otp_ref_key';
 
   bool _migrationCompleted = false;
   bool _biometricEnabled = false;
@@ -208,6 +209,11 @@ class PSecureStorage {
     await _secureStorage.write(key: biometricPasswordKey, value: password);
   }
 
+  /// Save OTP ref for verification
+  Future<void> saveOtpRef(String value) async {
+    await _storage.write(otpRefKey, value);
+  }
+
   // ========== READ METHODS (FlutterSecureStorage) ==========
 
   /// Get user email from secure storage
@@ -254,6 +260,9 @@ class PSecureStorage {
     return await _secureStorage.read(key: deviceTokenKey);
   }
 
+  /// Get OTP ref from storage
+  String? getOtpRef() => _storage.read<String>(otpRefKey);
+
   // ========== DELETE/REMOVE METHODS ==========
 
   /// Remove non-sensitive data from GetStorage
@@ -269,6 +278,11 @@ class PSecureStorage {
   /// Delete biometric password
   Future<void> deleteBiometricPassword() async {
     await _secureStorage.delete(key: biometricPasswordKey);
+  }
+
+  /// Remove OTP ref
+  Future<void> removeOtpRef() async {
+    await _storage.remove(otpRefKey);
   }
 
   /// Clear all data from both storages

@@ -37,13 +37,13 @@ abstract class AuthService {
     required String token,
   });
 
-  Future<Either<PFailure, ApiResponse<List<Message>>>> forgotPassword({
+  Future<Either<PFailure, ApiResponse<Member>>> forgotPassword({
     required String emailOrPhone,
   });
 
   Future<Either<PFailure, ApiResponse<Member>>> verifyForgotPasswordOTP({
-    required String emailOrPhone,
     required String otp,
+    required String otpRef,
   });
 
   Future<Either<PFailure, ApiResponse<List<Message>>>> resetPassword({
@@ -56,7 +56,7 @@ abstract class AuthService {
     required String password,
   });
 
-  Future<Either<PFailure, ApiResponse<List<Message>>>> signUp({
+  Future<Either<PFailure, ApiResponse<Member>>> signUp({
     required String email,
     required String phone,
     required String verificationToken,
@@ -65,12 +65,12 @@ abstract class AuthService {
   });
 
   Future<Either<PFailure, ApiResponse<List<Message>>>> verifySignupOtp({
-    required String phone,
     required String otp,
+    required String otpRef,
   });
 
-  Future<Either<PFailure, ApiResponse<List<Message>>>> resendOtp({
-    required String phone,
+  Future<Either<PFailure, ApiResponse<Member>>> resendOtp({
+    required String otpRef,
   });
 
   Future<Either<PFailure, ApiResponse<String>>> verifyGhanaCard({

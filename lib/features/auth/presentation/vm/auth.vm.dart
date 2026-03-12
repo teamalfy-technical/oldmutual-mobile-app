@@ -37,6 +37,7 @@ class PAuthVm extends GetxController {
   var agreeToTerms = false.obs;
 
   var otpcode = ''.obs;
+  var otpRefValue = ''.obs;
 
   var isBiometricAvailable = false.obs;
 
@@ -60,7 +61,20 @@ class PAuthVm extends GetxController {
   @override
   void onInit() {
     checkBiometricAvailability();
+    _restoreOtpRef();
     super.onInit();
+  }
+
+  void _restoreOtpRef() {
+    final savedOtpRef = PSecureStorage().getOtpRef();
+    if (savedOtpRef != null && savedOtpRef.isNotEmpty) {
+      otpRefValue.value = savedOtpRef;
+    }
+  }
+
+  void _saveOtpRef(String value) {
+    otpRefValue.value = value;
+    PSecureStorage().saveOtpRef(value);
   }
 
   Future<void> checkBiometricAvailability() async {
@@ -247,8 +261,12 @@ class PAuthVm extends GetxController {
       (res) async {
         loading(LoadingState.completed);
 
-        final isVerified =
-            checkIfPhoneIsVerified(res.data?.phoneVerified, res.message);
+        _saveOtpRef(res.data?.otpRef ?? '');
+
+        final isVerified = checkIfPhoneIsVerified(
+          res.data?.phoneVerified,
+          res.message,
+        );
 
         if (!isVerified) return;
 
@@ -336,11 +354,6 @@ class PAuthVm extends GetxController {
             await PSecureStorage().saveUserFirstName(bioData.firstName!);
           }
         }
-
-        // PHelperFunction.switchScreen(
-        //   destination: Routes.dashboardPage,
-        //   replace: true,
-        // );
       },
     );
   }
@@ -369,6 +382,8 @@ class PAuthVm extends GetxController {
       },
       (res) {
         loading(LoadingState.completed);
+        _saveOtpRef(res.data?.otpRef ?? '');
+        maskedValue.value = res.data?.phone ?? maskedValue.value;
         PHelperFunction.switchScreen(
           destination: Routes.verifyOTPPage,
           args: true,
@@ -386,9 +401,6 @@ class PAuthVm extends GetxController {
   /// @params => pin
   /// @params => isSignup
   Future<void> verifyOTP({required String pin, required bool isSignup}) async {
-    String phone = PHelperFunction.formatPhoneNumber(phoneTEC.text.trim());
-    String email = emailOrPhoneTEC.text.trim();
-
     if (otpcode.isEmpty) {
       PPopupDialog(context).errorMessage(
         title: 'action_required'.tr,
@@ -397,13 +409,14 @@ class PAuthVm extends GetxController {
       );
       return;
     }
+    pensionAppLogger.d('OTP: $pin, OTP Ref: ${otpRefValue.value}');
 
     loading(LoadingState.loading);
     final result = isSignup
-        ? await authService.verifySignupOtp(otp: pin, phone: phone)
+        ? await authService.verifySignupOtp(otp: pin, otpRef: otpRefValue.value)
         : await authService.verifyForgotPasswordOTP(
             otp: pin,
-            emailOrPhone: email,
+            otpRef: otpRefValue.value,
           );
     result.fold(
       (err) {
@@ -447,10 +460,8 @@ class PAuthVm extends GetxController {
   /// @params => pin
   /// @params => isSignup
   Future<void> resendOTP({required String pin, required bool isSignup}) async {
-    String phone = PHelperFunction.formatPhoneNumber(phoneTEC.text.trim());
-
     loading(LoadingState.loading);
-    final result = await authService.resendOtp(phone: phone);
+    final result = await authService.resendOtp(otpRef: otpRefValue.value);
     result.fold(
       (err) {
         loading(LoadingState.error);
@@ -460,6 +471,7 @@ class PAuthVm extends GetxController {
       },
       (res) {
         loading(LoadingState.completed);
+        _saveOtpRef(res.data?.otpRef ?? otpRefValue.value);
       },
     );
   }
@@ -473,60 +485,6 @@ class PAuthVm extends GetxController {
     }
     return;
   }
-
-  /// [Function] Create password for either sign
-  /// or reset password flow
-  /// @ params - bool isSignup
-  // Future<void> createPassword({required bool isSignup}) async {
-  //   // String phone = phoneTEC.text.trim();
-  //   String password = passwordTEC.text.trim();
-  //   String confirmPassword = confirmPasswordTEC.text.trim();
-
-  //   String phone = PFormatter.formatPhone(
-  //     code: selectedCountry.value.phoneCode,
-  //     phone: phoneTEC.text.trim(),
-  //   );
-
-  //   checkIfPasswordMatch();
-
-  //   loading(LoadingState.loading);
-
-  //   final result = await authService.addPassword(
-  //     phone: phone,
-  //     password: password,
-  //     confirmPassword: confirmPassword,
-  //   );
-  //   result.fold(
-  //     (err) {
-  //       loading(LoadingState.error);
-  //       // PHelperFunction.pop();
-  //       PPopupDialog(
-  //         context,
-  //       ).errorMessage(title: err.title ?? 'error'.tr, message: err.message);
-  //     },
-  //     (res) {
-  //       loading(LoadingState.loading);
-
-  //       // navigate to next screen
-  //       clearFields();
-  //       PHelperFunction.switchScreen(
-  //         destination: Routes.successPage,
-  //         args: [
-  //           'password_changed_title'.tr,
-  //           'password_changed_msg'.tr,
-  //           // 'go_to_dashboard'.tr,
-  //           'go_to_login'.tr,
-  //           () => PHelperFunction.switchScreen(
-  //             // destination: Routes.dashboardPage,
-  //             destination: Routes.loginPage,
-  //             replace: true,
-  //           ),
-  //         ],
-  //       );
-  //       // });
-  //     },
-  //   );
-  // }
 
   /// [Function] Forgot password to send password reset link
   Future<void> forgotPassword() async {
@@ -547,6 +505,7 @@ class PAuthVm extends GetxController {
       },
       (res) {
         loading(LoadingState.completed);
+        _saveOtpRef(res.data?.otpRef ?? '');
         // PHelperFunction.pop();
         PHelperFunction.switchScreen(
           destination: Routes.verifyOTPPage,

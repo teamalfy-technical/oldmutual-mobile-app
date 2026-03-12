@@ -24,7 +24,7 @@ class AuthRepoImpl implements AuthRepo {
   }
 
   @override
-  Future<Either<PFailure, ApiResponse<List<Message>>>> forgotPassword({
+  Future<Either<PFailure, ApiResponse<Member>>> forgotPassword({
     required String emailOrPhone,
   }) async {
     return await customRepositoryWrapper.wrapRepositoryFunction(
@@ -105,14 +105,14 @@ class AuthRepoImpl implements AuthRepo {
 
   @override
   Future<Either<PFailure, ApiResponse<Member>>> verifyForgotPasswordOTP({
-    required String emailOrPhone,
     required String otp,
+    required String otpRef,
   }) async {
     return await customRepositoryWrapper.wrapRepositoryFunction(
       function: () async {
         final res = await authDs.verifyForgotPasswordOTP(
-          emailOrPhone: emailOrPhone,
           otp: otp,
+          otpRef: otpRef,
         );
         if (res.data != null) {
           await PSecureStorage().saveAuthResponse(res.data!.toJson());
@@ -142,7 +142,7 @@ class AuthRepoImpl implements AuthRepo {
   }
 
   @override
-  Future<Either<PFailure, ApiResponse<List<Message>>>> signUp({
+  Future<Either<PFailure, ApiResponse<Member>>> signUp({
     required String email,
     required String phone,
     required String verificationToken,
@@ -164,12 +164,12 @@ class AuthRepoImpl implements AuthRepo {
   }
 
   @override
-  Future<Either<PFailure, ApiResponse<List<Message>>>> resendOtp({
-    required String phone,
+  Future<Either<PFailure, ApiResponse<Member>>> resendOtp({
+    required String otpRef,
   }) async {
     return await customRepositoryWrapper.wrapRepositoryFunction(
       function: () async {
-        final res = await authDs.resendOtp(phone: phone);
+        final res = await authDs.resendOtp(otpRef: otpRef);
         return res;
       },
     );
@@ -208,12 +208,12 @@ class AuthRepoImpl implements AuthRepo {
 
   @override
   Future<Either<PFailure, ApiResponse<List<Message>>>> verifySignupOtp({
-    required String phone,
     required String otp,
+    required String otpRef,
   }) async {
     return await customRepositoryWrapper.wrapRepositoryFunction(
       function: () async {
-        final res = await authDs.verifySignupOtp(phone: phone, otp: otp);
+        final res = await authDs.verifySignupOtp(otp: otp, otpRef: otpRef);
         return res;
       },
     );
