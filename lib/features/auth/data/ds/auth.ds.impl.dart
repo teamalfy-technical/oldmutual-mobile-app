@@ -33,7 +33,7 @@ class AuthDsImpl implements AuthDs {
   }
 
   @override
-  Future<ApiResponse<List<Message>>> forgotPassword({
+  Future<ApiResponse<Member>> forgotPassword({
     required String emailOrPhone,
   }) async {
     return await asyncFunctionWrapper.handleAsyncNetworkCall(() async {
@@ -42,27 +42,27 @@ class AuthDsImpl implements AuthDs {
         requestType: RequestType.post,
         payload: payload,
         endPoint: Env.forgotPassword,
-        // client: DioClient(baseUrl: Env.selfServiceBaseUrl),
       );
-      return ApiResponse<List<Message>>.fromJson(
+      return ApiResponse<Member>.fromJson(
         res,
-        (data) => (data as List).map((e) => Message.fromJson(e)).toList(),
+        (data) => data is Map<String, dynamic>
+            ? Member.fromJson(data)
+            : Member(),
       );
     });
   }
 
   @override
   Future<ApiResponse<List<Message>>> verifySignupOtp({
-    required String phone,
     required String otp,
+    required String otpRef,
   }) async {
     return await asyncFunctionWrapper.handleAsyncNetworkCall(() async {
-      final payload = dio.FormData.fromMap({'phone': phone, 'otp': otp});
+      final payload = dio.FormData.fromMap({'otp': otp, 'otp_ref': otpRef});
       final res = await apiService.callService(
         requestType: RequestType.post,
         payload: payload,
         endPoint: Env.verifyOtp,
-        // client: DioClient(baseUrl: Env.selfServiceBaseUrl),
       );
       return ApiResponse<List<Message>>.fromJson(
         res,
@@ -74,18 +74,14 @@ class AuthDsImpl implements AuthDs {
   @override
   Future<ApiResponse<Member>> verifyForgotPasswordOTP({
     required String otp,
-    required String emailOrPhone,
+    required String otpRef,
   }) async {
     return await asyncFunctionWrapper.handleAsyncNetworkCall(() async {
-      final payload = dio.FormData.fromMap({
-        'otp': otp,
-        'email_or_phone': emailOrPhone,
-      });
+      final payload = dio.FormData.fromMap({'otp': otp, 'otp_ref': otpRef});
       final res = await apiService.callService(
         requestType: RequestType.post,
         payload: payload,
         endPoint: Env.verifyResetOtp,
-        // client: DioClient(baseUrl: Env.selfServiceBaseUrl),
       );
       return ApiResponse<Member>.fromJson(res, (data) => Member.fromJson(data));
     });
@@ -102,12 +98,10 @@ class AuthDsImpl implements AuthDs {
         'c_password': confirmPassword,
       });
 
-      // pensionAppLogger.e(updatedBaseUrl);
       final res = await apiService.callService(
         requestType: RequestType.post,
         payload: payload,
         endPoint: Env.resetPassword,
-        // client: DioClient(baseUrl: updatedBaseUrl),
       );
       return ApiResponse<List<Message>>.fromJson(
         res,
@@ -116,70 +110,13 @@ class AuthDsImpl implements AuthDs {
     });
   }
 
-  // @override
-  // Future<ApiResponse<Member>> signIn({
-  //   required String phone,
-  //   required String password,
-  // }) async {
-  //   return await asyncFunctionWrapper.handleAsyncNetworkCall(() async {
-  //     final payload = dio.FormData.fromMap({
-  //       'phone': phone,
-  //       'password': password,
-  //     });
-  //     final res = await apiService.callService(
-  //       requestType: RequestType.post,
-  //       payload: payload,
-  //       endPoint: Env.signin,
-  //     );
-  //     return ApiResponse<Member>.fromJson(res, (data) => Member.fromJson(data));
-  //   });
-  // }
-
-  // @override
-  // Future<ApiResponse<List<Message>>> signup({
-  //   required String terms,
-  //   required String phone,
-  // }) async {
-  //   return await asyncFunctionWrapper.handleAsyncNetworkCall(() async {
-  //     final payload = dio.FormData.fromMap({'terms': terms, 'phone': phone});
-  //     final res = await apiService.callService(
-  //       requestType: RequestType.post,
-  //       payload: payload,
-  //       endPoint: Env.signup,
-  //     );
-  //     return ApiResponse<List<Message>>.fromJson(
-  //       res,
-  //       (data) => (data as List).map((e) => Message.fromJson(e)).toList(),
-  //     );
-  //   });
-  // }
-
-  // @override
-  // Future<ApiResponse<Member>> verifyOTP({
-  //   required String phone,
-  //   required String otp,
-  // }) async {
-  //   return await asyncFunctionWrapper.handleAsyncNetworkCall(() async {
-  //     final payload = dio.FormData.fromMap({'phone': phone, 'otp': otp});
-  //     final res = await apiService.callService(
-  //       requestType: RequestType.post,
-  //       payload: payload,
-  //       endPoint: Env.verifyOTP,
-  //     );
-  //     // return ApiResponse<Member>.fromJson(res, (data) => Member.fromJson(data));
-  //     return ApiResponse<Member>.fromJson(res, (data) => Member.fromJson(data));
-  //   });
-  // }
-
   @override
   Future<ApiResponse<List<BioData>>> getBioData() async {
     return await asyncFunctionWrapper.handleAsyncNetworkCall(() async {
       final res = await apiService.callService(
         requestType: RequestType.get,
-        // queryParams: queryParams,
         endPoint: Env.getBiodata,
       );
-      // return ApiResponse<Member>.fromJson(res, (data) => Member.fromJson(data));
 
       return ApiResponse<List<BioData>>.fromJson(
         res,
@@ -231,7 +168,7 @@ class AuthDsImpl implements AuthDs {
   }
 
   @override
-  Future<ApiResponse<List<Message>>> signUp({
+  Future<ApiResponse<Member>> signUp({
     required String email,
     required String phone,
     required String verificationToken,
@@ -250,28 +187,29 @@ class AuthDsImpl implements AuthDs {
         requestType: RequestType.post,
         payload: payload,
         endPoint: Env.createAccount,
-        // client: DioClient(baseUrl: Env.selfServiceBaseUrl),
       );
-      return ApiResponse<List<Message>>.fromJson(
+      return ApiResponse<Member>.fromJson(
         res,
-        (data) => data is List
-            ? data.map((e) => Message.fromJson(e)).toList()
-            : [],
+        (data) =>
+            data is Map<String, dynamic> ? Member.fromJson(data) : Member(),
       );
     });
   }
 
   @override
-  Future<ApiResponse<List<Message>>> resendOtp({required String phone}) async {
+  Future<ApiResponse<Member>> resendOtp({required String otpRef}) async {
     return await asyncFunctionWrapper.handleAsyncNetworkCall(() async {
+      final payload = dio.FormData.fromMap({'otp_ref': otpRef});
       final res = await apiService.callService(
         requestType: RequestType.post,
-        endPoint: '${Env.resendOtp}/$phone',
-        // client: DioClient(baseUrl: Env.selfServiceBaseUrl),
+        payload: payload,
+        endPoint: Env.resendOtp,
       );
-      return ApiResponse<List<Message>>.fromJson(
+      return ApiResponse<Member>.fromJson(
         res,
-        (data) => (data as List).map((e) => Message.fromJson(e)).toList(),
+        (data) => data is Map<String, dynamic>
+            ? Member.fromJson(data)
+            : Member(),
       );
     });
   }
@@ -290,7 +228,6 @@ class AuthDsImpl implements AuthDs {
         requestType: RequestType.post,
         payload: payload,
         endPoint: Env.login,
-        // client: DioClient(baseUrl: Env.selfServiceBaseUrl),
       );
       return ApiResponse<Member>.fromJson(res, (data) => Member.fromJson(data));
     });
@@ -306,12 +243,7 @@ class AuthDsImpl implements AuthDs {
         requestType: RequestType.post,
         payload: payload,
         endPoint: Env.verifyGhanaCard,
-        // client: DioClient(baseUrl: Env.selfServiceBaseUrl),
       );
-      // return ApiResponse<VerificationResponse>.fromJson(
-      //   res,
-      //   (data) => VerificationResponse.fromJson(data),
-      // );
       return ApiResponse<String>.fromJson(res, (data) => data);
     });
   }
@@ -326,7 +258,6 @@ class AuthDsImpl implements AuthDs {
         requestType: RequestType.post,
         payload: payload,
         endPoint: Env.checkGhanaCardVerificationStatus,
-        // client: DioClient(baseUrl: Env.selfServiceBaseUrl),
       );
       return ApiResponse<String>.fromJson(res, (data) => data['status']);
     });
