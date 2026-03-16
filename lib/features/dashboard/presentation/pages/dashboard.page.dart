@@ -114,43 +114,44 @@ class _PDashboardPageState extends State<PDashboardPage> {
           backgroundColor: PHelperFunction.isDarkMode(context)
               ? PAppColor.darkBgColor
               : PAppColor.fillColor,
-          appBar: PreferredSize(
-            preferredSize: Size.fromHeight(MediaQuery.of(context).padding.top),
-            child:
-                // Hide AppBar if user is affluent, but keep status bar spacing
-                ctrl.user.value?.affluent == true
-                ? Container(
+          appBar: // Hide AppBar if user is affluent, but keep status bar spacing
+          ctrl.user.value?.affluent == true
+              ? PreferredSize(
+                  preferredSize: Size.fromHeight(
+                    MediaQuery.of(context).padding.top,
+                  ),
+                  child: Container(
                     color: PHelperFunction.isDarkMode(context)
                         ? PAppColor.darkAppBarColor
                         : PAppColor.whiteColor,
                     height: MediaQuery.of(context).padding.top,
-                  )
-                : AppBar(
-                    title: ctrl.currentIndex.value == 1
-                        ? Text('manage'.tr)
-                        : ctrl.currentIndex.value == 2
-                        ? Text('more'.tr)
-                        : FutureBuilder<String?>(
-                            future: PSecureStorage().getUserFirstName(),
-                            builder: (context, snapshot) {
-                              return Text('Hi ${snapshot.data ?? ''}');
-                            },
-                          ),
-                    actions: [
-                      IconButton(
-                        onPressed: () => PHelperFunction.switchScreen(
-                          destination: Routes.notificationPage,
-                        ),
-                        icon: Assets.icons.notificationIcon.svg(
-                          height: PAppSize.s28,
-                          color: PHelperFunction.isDarkMode(context)
-                              ? PAppColor.whiteColor
-                              : PAppColor.cardDarkColor,
-                        ),
-                      ),
-                    ],
                   ),
-          ),
+                )
+              : AppBar(
+                  title: ctrl.currentIndex.value == 1
+                      ? Text('manage'.tr)
+                      : ctrl.currentIndex.value == 2
+                      ? Text('more'.tr)
+                      : FutureBuilder<String?>(
+                          future: PSecureStorage().getUserFirstName(),
+                          builder: (context, snapshot) {
+                            return Text('Hi ${snapshot.data ?? ''}');
+                          },
+                        ),
+                  actions: [
+                    IconButton(
+                      onPressed: () => PHelperFunction.switchScreen(
+                        destination: Routes.notificationPage,
+                      ),
+                      icon: Assets.icons.notificationIcon.svg(
+                        height: PAppSize.s28,
+                        color: PHelperFunction.isDarkMode(context)
+                            ? PAppColor.whiteColor
+                            : PAppColor.cardDarkColor,
+                      ),
+                    ),
+                  ],
+                ),
           bottomNavigationBar: BottomNavigationBar(
             currentIndex: ctrl.currentIndex.value,
             onTap: ctrl.onPageChanged,
