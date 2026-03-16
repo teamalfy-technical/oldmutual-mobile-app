@@ -136,7 +136,8 @@ class PHomePage extends StatelessWidget {
                         child: policyVm.loading.value == LoadingState.loading
                             ? ListView.builder(
                                 shrinkWrap: true,
-                                itemCount: 5,
+                                itemCount: 3,
+                                scrollDirection: Axis.horizontal,
                                 itemBuilder: (context, index) {
                                   return PensionTierRedactWidget(
                                     loading: policyVm.loading.value,

@@ -110,11 +110,13 @@ class PAffluentVm extends GetxController {
     super.onInit();
     // getAffluentStatus();
 
-    getExclusiveAnnouncements();
-    getBenefitReminders();
-    getBookmarkedArticles();
+    if (isAffluent) {
+      getExclusiveAnnouncements();
+      getBenefitReminders();
+      getBookmarkedArticles();
 
-    _fetchRelationshipOfficer();
+      _fetchRelationshipOfficer();
+    }
   }
 
   Future<void> _fetchRelationshipOfficer() async {

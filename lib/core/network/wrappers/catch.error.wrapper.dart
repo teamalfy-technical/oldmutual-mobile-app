@@ -53,13 +53,13 @@ class CatchApiErrorWrapperImpl implements CatchApiErrorWrapper {
         } else if (statusCode == 403) {
           if (Get.currentRoute != Routes.loginPage) {
             errorMessage =
-                err.response?.data['data']['error'] ??
                 err.response?.data['message'] ??
+                err.response?.data['data']['error'] ??
                 'Forbidden Access';
           } else {
             errorMessage =
-                err.response?.data['data']['error'] ??
                 err.response?.data['message'] ??
+                err.response?.data['data']['error'] ??
                 'Forbidden Access';
           }
           pensionAppLogger.e(err.response?.data);
