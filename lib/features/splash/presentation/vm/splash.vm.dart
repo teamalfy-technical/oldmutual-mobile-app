@@ -44,15 +44,13 @@ class PSplashVm extends GetxController {
         // On a fresh app start, always require re-authentication.
         // Never go directly to the dashboard from splash.
         final userEmail = await PSecureStorage().getUserEmail();
-        final userPassword = await PSecureStorage().getBiometricPassword();
+        // final userPassword = await PSecureStorage().getBiometricPassword();
 
         // Clear any stale session data so user must re-authenticate
         await PSecureStorage().removeSecureData(PSecureStorage().authResKey);
         await PSecureStorage().removeSecureData(PSecureStorage().bioDataKey);
 
-        if (userEmail != null &&
-            userPassword != null &&
-            PSecureStorage().isBiometricEnabled) {
+        if (userEmail != null) {
           // User has saved credentials and biometric enabled - show welcome back for biometric/quick login
           PHelperFunction.switchScreen(
             destination: Routes.welcomeBackPage,

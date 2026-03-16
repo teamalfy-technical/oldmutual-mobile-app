@@ -6,50 +6,110 @@ import 'package:redacted/redacted.dart';
 class PensionTierRedactWidget extends StatelessWidget {
   final Function()? onTap;
   final LoadingState loading;
-  const PensionTierRedactWidget({super.key, this.onTap, required this.loading});
+  final double? width;
+  final double? height;
+  final EdgeInsets? margin;
+  const PensionTierRedactWidget({
+    super.key,
+    this.onTap,
+    required this.loading,
+    this.width,
+    this.height,
+    this.margin,
+  });
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.all(PAppSize.s12),
-      margin: EdgeInsets.only(bottom: PAppSize.s20),
+      padding: EdgeInsets.all(PAppSize.s22),
+      margin: margin ?? EdgeInsets.only(right: PAppSize.s20),
+      height: height,
+      width: width ?? PDeviceUtil.getDeviceWidth(context) * 0.65,
       decoration: BoxDecoration(
-        color:
-            PHelperFunction.isDarkMode(context)
-                ? PAppColor.blackColor
-                : PAppColor.whiteColor,
-        borderRadius: BorderRadius.circular(PAppSize.s10),
-        boxShadow: [
-          BoxShadow(
-            offset: Offset(PAppSize.s0, PAppSize.s2),
-            blurRadius: PAppSize.s4,
-            spreadRadius: PAppSize.s0,
-            color: PAppColor.greyColorShade300,
-          ),
-        ],
+        borderRadius: BorderRadius.circular(PAppSize.s20),
+        color: PHelperFunction.isDarkMode(context)
+            ? PAppColor.darkAppBarColor
+            : PAppColor.whiteColor,
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
-            '******************',
-            style: Theme.of(context).textTheme.titleSmall,
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      '******************',
+                      style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                        fontSize: PAppSize.s16,
+                        fontWeight: FontWeight.w700,
+                      ),
+                    ),
+                    PAppSize.s2.verticalSpace,
+                    Text(
+                      'You have \n** schemes',
+                      softWrap: true,
+                      style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                        fontSize: PAppSize.s16,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                    PAppSize.s8.verticalSpace,
+                    Container(
+                      width: PAppSize.s36,
+                      height: PAppSize.s36,
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: PHelperFunction.isDarkMode(context)
+                            ? PAppColor.whiteColor
+                            : PAppColor.blackColor,
+                      ),
+                    ),
+                    PAppSize.s8.verticalSpace,
+                  ],
+                ),
+              ),
+              Container(
+                width: PAppSize.s20,
+                height: PAppSize.s20,
+                color: PHelperFunction.isDarkMode(context)
+                    ? PAppColor.whiteColor
+                    : PAppColor.blackColor,
+              ),
+            ],
           ),
-          PAppSize.s16.verticalSpace,
-          Text('**************', style: Theme.of(context).textTheme.titleSmall),
-          PAppSize.s4.verticalSpace,
           Text(
-            '*********************',
-            style: Theme.of(context).textTheme.bodySmall?.copyWith(
-              fontSize: PAppSize.s12,
-              color: PAppColor.blackColor.withOpacityExt(PAppSize.s0_5),
+            '**************',
+            style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+              fontSize: PAppSize.s14,
+              fontWeight: FontWeight.w500,
+            ),
+          ),
+          Text(
+            'GHS *,***.**',
+            style: Theme.of(context).textTheme.headlineMedium?.copyWith(
+              fontWeight: FontWeight.w600,
+            ),
+          ),
+          PAppSize.s8.verticalSpace,
+          SizedBox(
+            width: double.infinity,
+            child: Divider(
+              color: PHelperFunction.isDarkMode(context)
+                  ? PAppColor.successLight
+                  : PAppColor.successDark,
+              thickness: PAppSize.s4,
             ),
           ),
         ],
       ),
     ).redacted(
       context: context,
-      redact: loading == LoadingState.loading ? true : false,
+      redact: loading == LoadingState.loading,
     );
   }
 }

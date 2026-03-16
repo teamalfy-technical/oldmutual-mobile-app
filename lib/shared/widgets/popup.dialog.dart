@@ -35,7 +35,7 @@ class PPopupDialog {
       flushbarPosition: FlushbarPosition.TOP,
       flushbarStyle: FlushbarStyle.GROUNDED,
       backgroundColor: PHelperFunction.isDarkMode(context)
-          ? PAppColor.lightBlackColor
+          ? PAppColor.darkBgColor
           : PAppColor.whiteColor,
       icon: Assets.icons.successIcon.svg(
         height: PAppSize.s24,
@@ -61,7 +61,7 @@ class PPopupDialog {
       flushbarPosition: FlushbarPosition.TOP,
       flushbarStyle: FlushbarStyle.GROUNDED,
       backgroundColor: PHelperFunction.isDarkMode(context)
-          ? PAppColor.lightBlackColor
+          ? PAppColor.darkBgColor
           : PAppColor.whiteColor,
       icon: Assets.icons.warningIcon.svg(color: PAppColor.redColor),
       // leftBarIndicatorColor: PAppColor.errorColor,
@@ -84,7 +84,7 @@ class PPopupDialog {
       flushbarPosition: FlushbarPosition.TOP,
       flushbarStyle: FlushbarStyle.GROUNDED,
       backgroundColor: PHelperFunction.isDarkMode(context)
-          ? PAppColor.lightBlackColor
+          ? PAppColor.darkBgColor
           : PAppColor.whiteColor,
       icon: Assets.icons.warningIcon.svg(color: PAppColor.warning700),
       // leftBarIndicatorColor: PAppColor.errorColor,
@@ -107,7 +107,7 @@ class PPopupDialog {
       flushbarPosition: FlushbarPosition.TOP,
       flushbarStyle: FlushbarStyle.GROUNDED,
       backgroundColor: PHelperFunction.isDarkMode(context)
-          ? PAppColor.lightBlackColor
+          ? PAppColor.darkBgColor
           : PAppColor.whiteColor,
       icon: Assets.icons.warningIcon.svg(color: PAppColor.info700),
       // leftBarIndicatorColor: PAppColor.errorColor,

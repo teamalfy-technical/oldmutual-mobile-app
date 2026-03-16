@@ -88,9 +88,9 @@ class PolicyRepoImpl implements PolicyRepo {
 
   @override
   Future<Either<PFailure, ApiResponse<List<PolicyReport>>>>
-  getPolicyReports() async {
+  getPolicyReports({String? policyNumber}) async {
     return await customRepositoryWrapper.wrapRepositoryFunction(
-      function: () async => await policyDs.getPolicyReports(),
+      function: () async => await policyDs.getPolicyReports(policyNumber: policyNumber),
     );
   }
 

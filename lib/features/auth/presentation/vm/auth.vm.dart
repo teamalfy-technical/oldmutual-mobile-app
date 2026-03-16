@@ -1,12 +1,14 @@
 import 'package:country_picker/country_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:oldmutual_pensions_app/core/network/network.dart';
 import 'package:oldmutual_pensions_app/core/utils/utils.dart';
 import 'package:oldmutual_pensions_app/features/auth/auth.dart';
 import 'package:oldmutual_pensions_app/features/notification/notification.dart';
+import 'package:oldmutual_pensions_app/gen/assets.gen.dart';
 import 'package:oldmutual_pensions_app/routes/app.pages.dart';
-import 'package:oldmutual_pensions_app/shared/widgets/popup.dialog.dart';
+import 'package:oldmutual_pensions_app/shared/shared.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 class PAuthVm extends GetxController {
@@ -100,9 +102,12 @@ class PAuthVm extends GetxController {
     selectedCountry.value.flagEmoji;
   }
 
-  Future<void> authenticateWithBiometrics(
-    AnimationController controller,
-  ) async {
+  /// Returns `true` if biometric auth succeeded, `false` otherwise.
+  /// When [silent] is true, no error popup is shown on failure.
+  Future<bool> authenticateWithBiometrics(
+    AnimationController controller, {
+    bool silent = false,
+  }) async {
     // Animate the Face ID icon (shrink → expand → shrink back)
     await controller.forward();
     await controller.reverse();
@@ -113,16 +118,20 @@ class PAuthVm extends GetxController {
     if (!success) {
       // Reset flag - user must enter password manually if biometric fails
       biometricAuthSucceeded = false;
-      PPopupDialog(context).errorMessage(
-        title: 'error'.tr,
-        message: 'Biometric authentication failed. Please enter your password.',
-      );
-      return;
+      if (!silent) {
+        PPopupDialog(context).errorMessage(
+          title: 'error'.tr,
+          message:
+              'Biometric authentication failed. Please enter your password.',
+        );
+      }
+      return false;
     }
 
     // Biometric succeeded - allow stored password usage
     biometricAuthSucceeded = true;
     await login();
+    return true;
   }
 
   /// Function to verify user Ghana Card before signup
@@ -315,6 +324,14 @@ class PAuthVm extends GetxController {
         res.data?.name?.split(' ')[0] ?? '',
       );
     }
+
+    // Check if we should prompt biometric setup after navigating
+    final shouldPromptBiometric =
+        !PSecureStorage().isBiometricEnabled &&
+        await LocalAuthService().isBiometricAvailable();
+
+    pensionAppLogger.d("ShouldPromptBiometric: $shouldPromptBiometric");
+
     clearFields();
     // await getBioData();
     PHelperFunction.switchScreen(
@@ -325,6 +342,98 @@ class PAuthVm extends GetxController {
     PPopupDialog(
       context,
     ).successMessage(title: 'success'.tr, message: res.message ?? '');
+
+    // Prompt user to enable biometric login if not already set up
+    if (shouldPromptBiometric) {
+      _showBiometricSetupPrompt(password);
+    }
+  }
+
+  /// Show a bottom sheet prompting the user to enable biometric authentication
+  void _showBiometricSetupPrompt(String password) {
+    final biometricLabel = PDeviceUtil.isAndroid() ? 'Biometrics' : 'Face ID';
+
+    // Delay slightly so the success message appears first
+    Future.delayed(const Duration(seconds: 2), () {
+      showModalBottomSheet(
+        context: context,
+        backgroundColor: PHelperFunction.isDarkMode(context)
+            ? PAppColor.darkAppBarColor
+            : PAppColor.whiteColor,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(PAppSize.s24),
+        ),
+        builder: (ctx) {
+          return SafeArea(
+            child: Padding(
+              padding: EdgeInsets.symmetric(
+                horizontal: PAppSize.s20,
+                vertical: PAppSize.s10,
+              ),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  PDeviceUtil.isAndroid()
+                      ? Assets.icons.fingerprint.svg(
+                          height: PAppSize.s44,
+                          color: PAppColor.primary,
+                        )
+                      : Assets.icons.faceId.svg(
+                          height: PAppSize.s44,
+                          color: PAppColor.primary,
+                        ),
+                  PAppSize.s16.verticalSpace,
+                  Text(
+                    'Enable $biometricLabel',
+                    style: Theme.of(ctx).textTheme.titleLarge?.copyWith(
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                  PAppSize.s8.verticalSpace,
+                  Text(
+                    'Would you like to enable $biometricLabel for faster login next time?',
+                    textAlign: TextAlign.center,
+                    style: Theme.of(
+                      ctx,
+                    ).textTheme.bodyMedium?.copyWith(fontSize: PAppSize.s14.sp),
+                  ),
+                  PAppSize.s24.verticalSpace,
+                  PGradientButton(
+                    label: 'ENABLE',
+                    showIcon: false,
+                    width: PDeviceUtil.getDeviceWidth(ctx),
+                    onTap: () async {
+                      Navigator.of(ctx).pop();
+                      await PSecureStorage().saveBiometric(true);
+                      await PSecureStorage().saveBiometricPassword(password);
+                      PPopupDialog(context).successMessage(
+                        title: 'success'.tr,
+                        message:
+                            '$biometricLabel has been enabled. You can now login securely with your biometrics.',
+                      );
+                    },
+                  ),
+                  PAppSize.s14.verticalSpace,
+                  OutlinedButton(
+                    onPressed: () => Navigator.of(ctx).pop(),
+                    style: OutlinedButton.styleFrom(
+                      foregroundColor: PAppColor.successDark,
+                      side: BorderSide(color: PAppColor.successDark),
+                      minimumSize: Size.fromHeight(PAppSize.buttonHeight),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(PAppSize.s24),
+                      ),
+                    ),
+                    child: Text('NOT NOW'),
+                  ),
+                  PAppSize.s4.verticalSpace,
+                ],
+              ),
+            ),
+          );
+        },
+      );
+    });
   }
 
   /// Function to sign up user by sending OTP code

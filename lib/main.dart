@@ -14,9 +14,9 @@ import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:oldmutual_pensions_app/core/bindings/bindings.dart';
 import 'package:oldmutual_pensions_app/core/l10n/l10n.dart';
+import 'package:oldmutual_pensions_app/core/services/force.update.service.dart';
 import 'package:oldmutual_pensions_app/core/theme/app.theme.dart';
 import 'package:oldmutual_pensions_app/core/utils/utils.dart';
-import 'package:oldmutual_pensions_app/core/services/force.update.service.dart';
 import 'package:oldmutual_pensions_app/env/env.dart';
 import 'package:oldmutual_pensions_app/features/home/home.dart'
     show PInactivityService;
@@ -67,18 +67,24 @@ Future<void> initDependencies() async {
 
 /// Initialize screen protection to prevent screenshots and screen recording
 Future<void> _initScreenProtection() async {
+  /// Used for internal testing and TestFlight builds.
+  bool isTestMode = Env.baseUrl == apiBaseUrlDev;
   try {
     if (Platform.isIOS) {
       // Protect  screen shot with launch image
       // await ScreenProtector.protectDataLeakageWithImage('LaunchImage');
       // Prevent screenshots on iOS
-      await ScreenProtector.preventScreenshotOn();
-      // Protect against screen recording with blur effect
-      await ScreenProtector.protectDataLeakageWithBlur();
+      if (!isTestMode) {
+        await ScreenProtector.preventScreenshotOn();
+        // Protect against screen recording with blur effect
+        await ScreenProtector.protectDataLeakageWithBlur();
+      }
     } else if (Platform.isAndroid) {
-      // Android uses FLAG_SECURE
-      await ScreenProtector.preventScreenshotOn();
-      await ScreenProtector.protectDataLeakageOn();
+      if (!isTestMode) {
+        // Android uses FLAG_SECURE
+        await ScreenProtector.preventScreenshotOn();
+        await ScreenProtector.protectDataLeakageOn();
+      }
     }
     pensionAppLogger.i("Screen protection enabled");
   } catch (e) {

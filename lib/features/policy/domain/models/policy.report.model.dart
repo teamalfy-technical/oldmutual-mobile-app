@@ -54,16 +54,19 @@ class PolicyReport {
 
 class Filters {
   String? year;
+  String? policyNumber;
 
-  Filters({this.year});
+  Filters({this.year, this.policyNumber});
 
   Filters.fromJson(Map<String, dynamic> json) {
     year = json['year'];
+    policyNumber = json['policy_number'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
     data['year'] = year;
+    data['policy_number'] = policyNumber;
     return data;
   }
 }

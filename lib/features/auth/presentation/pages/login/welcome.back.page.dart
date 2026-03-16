@@ -25,6 +25,13 @@ class _PWelcomeBackPageState extends State<PWelcomeBackPage>
   /// Track if biometric auth is in progress to avoid duplicate prompts
   bool _isBiometricInProgress = false;
 
+  /// Track whether the app was genuinely backgrounded (not just the biometric dialog)
+  bool _wasBackgrounded = false;
+
+  /// Track consecutive biometric failures to silently fall back to password
+  static const int _maxBiometricAttempts = 3;
+  int _biometricFailureCount = 0;
+
   @override
   void initState() {
     super.initState();
@@ -43,52 +50,98 @@ class _PWelcomeBackPageState extends State<PWelcomeBackPage>
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
     super.didChangeAppLifecycleState(state);
-    if (state == AppLifecycleState.resumed && mounted) {
-      // Re-trigger biometric authentication when app resumes (e.g., after device unlock)
-      pensionAppLogger.i('App resumed on Welcome Back page - re-triggering biometrics');
-      _autoTriggerBiometrics();
+    if (state == AppLifecycleState.paused) {
+      // Only mark as backgrounded if biometric auth is NOT in progress.
+      // The biometric dialog causes a pause/resume cycle that should not
+      // be treated as a genuine background event.
+      if (!_isBiometricInProgress) {
+        _wasBackgrounded = true;
+        pensionAppLogger.i('App backgrounded on Welcome Back page');
+      }
+    } else if (state == AppLifecycleState.resumed && mounted) {
+      if (_wasBackgrounded) {
+        _wasBackgrounded = false;
+        pensionAppLogger.i(
+          'App resumed from background - re-triggering biometrics',
+        );
+        _autoTriggerBiometrics();
+      } else {
+        pensionAppLogger.i(
+          'App resumed (biometric dialog dismissed) - skipping re-trigger',
+        );
+      }
     }
   }
 
   Future<void> _autoTriggerBiometrics() async {
-    // Prevent duplicate biometric prompts
+    // Prevent duplicate biometric prompts — set flag immediately before any
+    // async gaps to block concurrent calls (e.g. rapid taps during the delay).
     if (_isBiometricInProgress) {
       pensionAppLogger.i('Biometric auth already in progress - skipping');
       return;
     }
 
-    // Small delay to ensure the page is fully loaded
-    await Future.delayed(const Duration(milliseconds: 300));
-
-    // Check if widget is still mounted after delay
-    if (!mounted) return;
-
-    // Check if biometric authentication is enabled and user email exists
-    if (!PSecureStorage().isBiometricEnabled) {
-      pensionAppLogger.i(
-        'Biometric authentication is not enabled - skipping auto-trigger',
-      );
-      return;
-    }
-
-    final userEmail = await PSecureStorage().getUserEmail();
-    if (userEmail == null) {
-      pensionAppLogger.i('No user email found - skipping auto-trigger');
-      return;
-    }
-
-    // Check biometric availability (in case it's not ready yet)
-    await ctrl.checkBiometricAvailability();
-
-    if (!ctrl.isBiometricAvailable.value) {
-      pensionAppLogger.i('Biometrics not available - skipping auto-trigger');
-      return;
-    }
-
     _isBiometricInProgress = true;
-    pensionAppLogger.i('Auto-triggering biometric authentication');
+
     try {
-      await ctrl.authenticateWithBiometrics(_controller);
+      // Small delay to ensure the page is fully loaded
+      await Future.delayed(const Duration(milliseconds: 300));
+
+      // Check if widget is still mounted after delay
+      if (!mounted) return;
+
+      // Check if biometric authentication is enabled and user email exists
+      if (!PSecureStorage().isBiometricEnabled) {
+        pensionAppLogger.i(
+          'Biometric authentication is not enabled - skipping auto-trigger',
+        );
+        return;
+      }
+
+      final userEmail = await PSecureStorage().getUserEmail();
+      final userPassword = await PSecureStorage().getBiometricPassword();
+      if (userEmail == null || userPassword == null) {
+        pensionAppLogger.i('Missing user credentials - skipping auto-trigger');
+        return;
+      }
+
+      // Check biometric availability (in case it's not ready yet)
+      await ctrl.checkBiometricAvailability();
+
+      if (!ctrl.isBiometricAvailable.value) {
+        pensionAppLogger.i('Biometrics not available - skipping auto-trigger');
+        return;
+      }
+
+      // If max attempts reached, silently default to password login
+      if (_biometricFailureCount >= _maxBiometricAttempts) {
+        pensionAppLogger.i(
+          'Max biometric attempts reached - defaulting to password login',
+        );
+        return;
+      }
+
+      // Suppress error popup on the final allowed attempt
+      final isLastAttempt = _biometricFailureCount == _maxBiometricAttempts - 1;
+
+      pensionAppLogger.i('Auto-triggering biometric authentication');
+      final success = await ctrl.authenticateWithBiometrics(
+        _controller,
+        silent: isLastAttempt,
+      );
+
+      if (!success) {
+        _biometricFailureCount++;
+        pensionAppLogger.i(
+          'Biometric failure count: $_biometricFailureCount/$_maxBiometricAttempts',
+        );
+        if (_biometricFailureCount >= _maxBiometricAttempts && mounted) {
+          setState(() {});
+        }
+      } else {
+        // Reset on success
+        _biometricFailureCount = 0;
+      }
     } finally {
       _isBiometricInProgress = false;
     }
@@ -187,7 +240,8 @@ class _PWelcomeBackPageState extends State<PWelcomeBackPage>
 
                         PAppSize.s20.verticalSpace,
 
-                        if (PSecureStorage().isBiometricEnabled) ...[
+                        if (PSecureStorage().isBiometricEnabled &&
+                            _biometricFailureCount < _maxBiometricAttempts) ...[
                           IconButton(
                             onPressed: () async =>
                                 await _autoTriggerBiometrics(),
@@ -203,35 +257,10 @@ class _PWelcomeBackPageState extends State<PWelcomeBackPage>
                                         : PAppColor.darkBgColor,
                                   ),
                           ),
-                          // ScaleTransition(
-                          //   scale: _controller.drive(
-                          //     CurveTween(curve: Curves.easeInOut),
-                          //   ),
-                          //   child: IconButton(
-                          //     onPressed: () async =>
-                          //         await _autoTriggerBiometrics(),
-                          //     icon: PDeviceUtil.isAndroid()
-                          //         ? Assets.icons.fingerprint.svg(
-                          //             color: PHelperFunction.isDarkMode(context)
-                          //                 ? PAppColor.whiteColor
-                          //                 : PAppColor.darkBgColor,
-                          //           )
-                          //         : Assets.icons.faceId.svg(
-                          //             color: PHelperFunction.isDarkMode(context)
-                          //                 ? PAppColor.whiteColor
-                          //                 : PAppColor.darkBgColor,
-                          //           ),
-                          //   ),
-                          // ),
-
-                          // PAppSize.s4.verticalSpace,
                         ],
 
-                        // Assets.icons.fingerprint.svg(),
                         PAppSize.s8.verticalSpace,
 
-                        // (PDeviceUtil.getDeviceWidth(context) * 0.25)
-                        //     .verticalSpace,
                         TextButton(
                           onPressed: () async {
                             final userEmail = await PSecureStorage()

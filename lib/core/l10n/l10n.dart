@@ -113,6 +113,7 @@ class AppTranslations extends Translations {
       'delete_account': 'Delete account',
       'signout_desc': 'Sign out from your account safely',
       'no_results_found': 'No results found',
+      'select_policy_to_view': 'Select a policy to view statements',
       'no_data_found': 'No data found',
       'noti_empty_title': 'You’re all caught up',
       'noti_empty_subtitle':

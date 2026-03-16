@@ -69,7 +69,7 @@ class PPremiumStatementPage extends StatelessWidget {
                     PCustomDropdownField<Policy>(
                       labelText: 'select_policy'.tr,
                       initialValue: vm.selectedPolicy,
-                      items: Get.find<PPolicyVm>().policies
+                      items: vm.policyOptions
                           .map(
                             (e) => DropdownMenuItem(
                               value: e,

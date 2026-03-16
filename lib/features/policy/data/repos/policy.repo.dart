@@ -31,7 +31,7 @@ abstract class PolicyRepo {
   });
   Future<Either<PFailure, ApiResponse<PolicyReport>>>
   checkPolicyReportDownloadStatus({required String reportId});
-  Future<Either<PFailure, ApiResponse<List<PolicyReport>>>> getPolicyReports();
+  Future<Either<PFailure, ApiResponse<List<PolicyReport>>>> getPolicyReports({String? policyNumber});
   Future<Either<PFailure, ApiResponse<Map<String, dynamic>>>>
   downloadInvestmentStatement({required String policyNumber});
   Future<Either<PFailure, ApiResponse<Map<String, dynamic>>>>

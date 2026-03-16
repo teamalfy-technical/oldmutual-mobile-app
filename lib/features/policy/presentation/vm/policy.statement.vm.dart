@@ -2,6 +2,7 @@ import 'package:get/get.dart';
 import 'package:oldmutual_pensions_app/core/utils/utils.dart';
 import 'package:oldmutual_pensions_app/features/contribution.history/contribution.history.dart';
 import 'package:oldmutual_pensions_app/features/home/home.dart';
+import 'package:oldmutual_pensions_app/features/policy/presentation/vm/policy.vm.dart';
 import 'package:oldmutual_pensions_app/routes/app.pages.dart';
 import 'package:oldmutual_pensions_app/shared/shared.dart';
 
@@ -12,6 +13,12 @@ class PPolicyStatementVm extends GetxController {
 
   ContributedYear? selectedYear;
   Policy? selectedPolicy;
+
+  /// Default "All" policy option
+  final Policy allPolicy = Policy(planDescription: 'all'.tr);
+
+  /// Combined list with "All" + user policies for dropdown
+  var policyOptions = <Policy>[].obs;
 
   var loading = LoadingState.completed.obs;
   var generating = LoadingState.completed.obs;
@@ -32,17 +39,19 @@ class PPolicyStatementVm extends GetxController {
   onYearChanged(value) {
     selectedYear = value;
     generatedReport.value = GenerateReport();
-    print(selectedYear?.fundYear);
     update();
   }
 
   onSelectedPolicyReport(Policy? value) {
     selectedPolicy = value;
+    getAllGeneratedReports();
     update();
   }
 
   @override
   void onInit() {
+    selectedPolicy = allPolicy;
+    policyOptions.value = [allPolicy, ...Get.find<PPolicyVm>().policies];
     getContributedYears();
     getAllGeneratedReports();
     super.onInit();
@@ -51,7 +60,9 @@ class PPolicyStatementVm extends GetxController {
   /// Function to get all generated reports
   Future<void> getAllGeneratedReports() async {
     updateLoadingState(LoadingState.loading);
-    final result = await policyService.getPolicyReports();
+    final result = await policyService.getPolicyReports(
+      policyNumber: selectedPolicy?.policyNo,
+    );
     result.fold(
       (err) {
         updateLoadingState(LoadingState.error);
@@ -109,9 +120,7 @@ class PPolicyStatementVm extends GetxController {
         },
         (res) async {
           PHelperFunction.pop();
-          PPopupDialog(
-            context,
-          ).successMessage(
+          PPopupDialog(context).successMessage(
             title: 'success'.tr,
             message: 'download_complete'.tr,
           );
@@ -124,10 +133,9 @@ class PPolicyStatementVm extends GetxController {
       );
     } catch (e) {
       PHelperFunction.pop();
-      PPopupDialog(context).errorMessage(
-        title: 'error'.tr,
-        message: 'error_occurred_msg'.tr,
-      );
+      PPopupDialog(
+        context,
+      ).errorMessage(title: 'error'.tr, message: 'error_occurred_msg'.tr);
     }
   }
 
@@ -147,9 +155,7 @@ class PPolicyStatementVm extends GetxController {
         },
         (res) async {
           PHelperFunction.pop();
-          PPopupDialog(
-            context,
-          ).successMessage(
+          PPopupDialog(context).successMessage(
             title: 'success'.tr,
             message: 'download_complete'.tr,
           );
@@ -161,10 +167,9 @@ class PPolicyStatementVm extends GetxController {
       );
     } catch (e) {
       PHelperFunction.pop();
-      PPopupDialog(context).errorMessage(
-        title: 'error'.tr,
-        message: 'error_occurred_msg'.tr,
-      );
+      PPopupDialog(
+        context,
+      ).errorMessage(title: 'error'.tr, message: 'error_occurred_msg'.tr);
     }
   }
 
@@ -184,9 +189,7 @@ class PPolicyStatementVm extends GetxController {
         },
         (res) async {
           PHelperFunction.pop();
-          PPopupDialog(
-            context,
-          ).successMessage(
+          PPopupDialog(context).successMessage(
             title: 'success'.tr,
             message: 'download_complete'.tr,
           );
@@ -201,10 +204,9 @@ class PPolicyStatementVm extends GetxController {
       );
     } catch (e) {
       PHelperFunction.pop();
-      PPopupDialog(context).errorMessage(
-        title: 'error'.tr,
-        message: 'error_occurred_msg'.tr,
-      );
+      PPopupDialog(
+        context,
+      ).errorMessage(title: 'error'.tr, message: 'error_occurred_msg'.tr);
     }
   }
 
