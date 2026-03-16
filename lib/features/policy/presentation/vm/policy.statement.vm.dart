@@ -2,6 +2,7 @@ import 'package:get/get.dart';
 import 'package:oldmutual_pensions_app/core/utils/utils.dart';
 import 'package:oldmutual_pensions_app/features/contribution.history/contribution.history.dart';
 import 'package:oldmutual_pensions_app/features/home/home.dart';
+import 'package:oldmutual_pensions_app/features/policy/presentation/vm/policy.vm.dart';
 import 'package:oldmutual_pensions_app/routes/app.pages.dart';
 import 'package:oldmutual_pensions_app/shared/shared.dart';
 
@@ -12,6 +13,12 @@ class PPolicyStatementVm extends GetxController {
 
   ContributedYear? selectedYear;
   Policy? selectedPolicy;
+
+  /// Default "All" policy option
+  final Policy allPolicy = Policy(planDescription: 'all'.tr);
+
+  /// Combined list with "All" + user policies for dropdown
+  var policyOptions = <Policy>[].obs;
 
   var loading = LoadingState.completed.obs;
   var generating = LoadingState.completed.obs;
@@ -27,22 +34,40 @@ class PPolicyStatementVm extends GetxController {
   // Reports variables
   var generatedReport = GenerateReport().obs;
   var reportDownload = ReportDownload().obs;
+  var _allStatements = <PolicyReport>[];
   var statements = <PolicyReport>[].obs;
 
   onYearChanged(value) {
     selectedYear = value;
     generatedReport.value = GenerateReport();
-    print(selectedYear?.fundYear);
     update();
   }
 
   onSelectedPolicyReport(Policy? value) {
     selectedPolicy = value;
+    _filterStatementsByPolicy();
     update();
+  }
+
+  /// Filter statements list based on the selected policy
+  void _filterStatementsByPolicy() {
+    if (selectedPolicy == null || selectedPolicy?.policyNo == null) {
+      statements.value = _allStatements;
+    } else {
+      statements.value = _allStatements
+          .where(
+            (report) =>
+                report.filePath != null &&
+                report.filePath!.contains(selectedPolicy?.policyNo ?? ''),
+          )
+          .toList();
+    }
   }
 
   @override
   void onInit() {
+    selectedPolicy = allPolicy;
+    policyOptions.value = [allPolicy, ...Get.find<PPolicyVm>().policies];
     getContributedYears();
     getAllGeneratedReports();
     super.onInit();
@@ -63,7 +88,8 @@ class PPolicyStatementVm extends GetxController {
         updateLoadingState(LoadingState.completed);
         // if(res.data)
         res.data?.sort((a, b) => b.createdAt!.compareTo(a.createdAt ?? ''));
-        statements.value = res.data ?? [];
+        _allStatements = res.data ?? [];
+        _filterStatementsByPolicy();
         // pensionAppLogger.i('DownloadUrl: ${statements.first.downloadUrl}');
       },
     );
@@ -109,9 +135,7 @@ class PPolicyStatementVm extends GetxController {
         },
         (res) async {
           PHelperFunction.pop();
-          PPopupDialog(
-            context,
-          ).successMessage(
+          PPopupDialog(context).successMessage(
             title: 'success'.tr,
             message: 'download_complete'.tr,
           );
@@ -124,10 +148,9 @@ class PPolicyStatementVm extends GetxController {
       );
     } catch (e) {
       PHelperFunction.pop();
-      PPopupDialog(context).errorMessage(
-        title: 'error'.tr,
-        message: 'error_occurred_msg'.tr,
-      );
+      PPopupDialog(
+        context,
+      ).errorMessage(title: 'error'.tr, message: 'error_occurred_msg'.tr);
     }
   }
 
@@ -147,9 +170,7 @@ class PPolicyStatementVm extends GetxController {
         },
         (res) async {
           PHelperFunction.pop();
-          PPopupDialog(
-            context,
-          ).successMessage(
+          PPopupDialog(context).successMessage(
             title: 'success'.tr,
             message: 'download_complete'.tr,
           );
@@ -161,10 +182,9 @@ class PPolicyStatementVm extends GetxController {
       );
     } catch (e) {
       PHelperFunction.pop();
-      PPopupDialog(context).errorMessage(
-        title: 'error'.tr,
-        message: 'error_occurred_msg'.tr,
-      );
+      PPopupDialog(
+        context,
+      ).errorMessage(title: 'error'.tr, message: 'error_occurred_msg'.tr);
     }
   }
 
@@ -184,9 +204,7 @@ class PPolicyStatementVm extends GetxController {
         },
         (res) async {
           PHelperFunction.pop();
-          PPopupDialog(
-            context,
-          ).successMessage(
+          PPopupDialog(context).successMessage(
             title: 'success'.tr,
             message: 'download_complete'.tr,
           );
@@ -201,10 +219,9 @@ class PPolicyStatementVm extends GetxController {
       );
     } catch (e) {
       PHelperFunction.pop();
-      PPopupDialog(context).errorMessage(
-        title: 'error'.tr,
-        message: 'error_occurred_msg'.tr,
-      );
+      PPopupDialog(
+        context,
+      ).errorMessage(title: 'error'.tr, message: 'error_occurred_msg'.tr);
     }
   }
 

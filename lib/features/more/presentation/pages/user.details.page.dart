@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:oldmutual_pensions_app/core/utils/utils.dart';
 import 'package:oldmutual_pensions_app/features/more/more.services.dart';
+import 'package:oldmutual_pensions_app/features/pension/pension.dart';
 import 'package:oldmutual_pensions_app/gen/assets.gen.dart';
 import 'package:oldmutual_pensions_app/routes/app.pages.dart';
 import 'package:oldmutual_pensions_app/shared/shared.dart';
@@ -10,8 +11,13 @@ import 'package:oldmutual_pensions_app/shared/shared.dart';
 class UserDetailsData {
   final Map<String, String?> biodata;
   final Map<String, String?> profile;
+  final bool hasPensionScheme;
 
-  UserDetailsData({required this.biodata, required this.profile});
+  UserDetailsData({
+    required this.biodata,
+    required this.profile,
+    required this.hasPensionScheme,
+  });
 }
 
 class PUserDetailPage extends StatefulWidget {
@@ -24,30 +30,54 @@ class PUserDetailPage extends StatefulWidget {
 
 class _PUserDetailPageState extends State<PUserDetailPage>
     with SingleTickerProviderStateMixin {
-  late TabController _tabController;
+  TabController? _tabController;
   late Future<UserDetailsData> _userDataFuture;
 
   @override
   void initState() {
     super.initState();
-    _tabController = TabController(length: 2, vsync: this);
-    _tabController.addListener(() {
-      if (!_tabController.indexIsChanging) {
+    _userDataFuture = _loadUserData();
+  }
+
+  void _initTabController(int length) {
+    if (_tabController?.length == length) return;
+    _tabController?.dispose();
+    _tabController = TabController(length: length, vsync: this);
+    _tabController!.addListener(() {
+      if (!_tabController!.indexIsChanging) {
         setState(() {});
       }
     });
-    _userDataFuture = _loadUserData();
   }
 
   @override
   void dispose() {
-    _tabController.dispose();
+    _tabController?.dispose();
     super.dispose();
   }
 
   Future<UserDetailsData> _loadUserData() async {
     final authResponse = await PSecureStorage().getAuthResponse();
-    final bioData = await PSecureStorage().getBioData();
+    var bioData = await PSecureStorage().getBioData();
+
+    // Fetch schemes to determine if user has pension schemes
+    if (bioData == null) {
+      final pensionVm = Get.put(PPensionVm());
+      await pensionVm.fetchSchemesOnFirstLoad();
+
+      final hasPensionSchemes = pensionVm.activeSchemes.isNotEmpty;
+
+      // Auto-select the first active scheme if none is selected yet
+      if (hasPensionSchemes &&
+          pensionVm.selectedScheme.value.memberNumber == null) {
+        await pensionVm.getMemberSelectedScheme(
+          scheme: pensionVm.activeSchemes.first,
+        );
+      }
+
+      // Biodata is populated after a scheme is selected via getBioData()
+      bioData = await PSecureStorage().getBioData();
+    }
 
     pensionAppLogger.e(bioData?.toJson());
 
@@ -78,7 +108,11 @@ class _PUserDetailPageState extends State<PUserDetailPage>
       'dob': authResponse?.dob,
     };
 
-    return UserDetailsData(biodata: biodata, profile: profile);
+    return UserDetailsData(
+      biodata: biodata,
+      profile: profile,
+      hasPensionScheme: bioData != null,
+    );
   }
 
   @override
@@ -95,26 +129,43 @@ class _PUserDetailPageState extends State<PUserDetailPage>
         builder: (context, snapshot) {
           final isLoading = snapshot.connectionState == ConnectionState.waiting;
           final userDetailsData = snapshot.data;
+          final hasPension = userDetailsData?.hasPensionScheme ?? false;
+          final tabCount = hasPension ? 2 : 1;
+
+          // Initialize or update tab controller based on pension scheme availability
+          if (!isLoading) {
+            _initTabController(tabCount);
+          }
+
+          // Show loading state while data is being fetched
+          if (_tabController == null) {
+            return const Center(child: CircularProgressIndicator());
+          }
+
           return SafeArea(
             child: Column(
               children: [
-                PCustomTabBarWidget(
-                  controller: _tabController,
-                  horizontalPadding: PAppSize.s0,
-                  tabs: [
-                    Tab(text: 'biodata'.tr),
-                    Tab(text: 'profile'.tr),
-                  ],
-                ),
+                if (hasPension) ...[
+                  PCustomTabBarWidget(
+                    controller: _tabController!,
+                    horizontalPadding: PAppSize.s0,
+                    tabs: [
+                      Tab(text: 'biodata'.tr),
+                      Tab(text: 'profile'.tr),
+                    ],
+                  ),
+                ],
+
                 PAppSize.s16.verticalSpace,
                 Expanded(
                   child: TabBarView(
-                    controller: _tabController,
+                    controller: _tabController!,
                     children: [
-                      PBiodataTab(
-                        userData: userDetailsData?.biodata ?? {},
-                        isLoading: isLoading,
-                      ),
+                      if (hasPension)
+                        PBiodataTab(
+                          userData: userDetailsData?.biodata ?? {},
+                          isLoading: isLoading,
+                        ),
                       PProfileTab(
                         userData: userDetailsData?.profile ?? {},
                         isLoading: isLoading,
