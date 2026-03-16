@@ -29,8 +29,8 @@ class PolicyServiceImpl implements PolicyService {
   }
 
   @override
-  Future<Either<PFailure, ApiResponse<List<PolicyReport>>>> getPolicyReports() {
-    return policyRepo.getPolicyReports();
+  Future<Either<PFailure, ApiResponse<List<PolicyReport>>>> getPolicyReports({String? policyNumber}) {
+    return policyRepo.getPolicyReports(policyNumber: policyNumber);
   }
 
   @override

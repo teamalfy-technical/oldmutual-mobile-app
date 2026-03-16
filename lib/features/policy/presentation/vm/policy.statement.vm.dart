@@ -34,7 +34,6 @@ class PPolicyStatementVm extends GetxController {
   // Reports variables
   var generatedReport = GenerateReport().obs;
   var reportDownload = ReportDownload().obs;
-  var _allStatements = <PolicyReport>[];
   var statements = <PolicyReport>[].obs;
 
   onYearChanged(value) {
@@ -45,23 +44,8 @@ class PPolicyStatementVm extends GetxController {
 
   onSelectedPolicyReport(Policy? value) {
     selectedPolicy = value;
-    _filterStatementsByPolicy();
+    getAllGeneratedReports();
     update();
-  }
-
-  /// Filter statements list based on the selected policy
-  void _filterStatementsByPolicy() {
-    if (selectedPolicy == null || selectedPolicy?.policyNo == null) {
-      statements.value = _allStatements;
-    } else {
-      statements.value = _allStatements
-          .where(
-            (report) =>
-                report.filePath != null &&
-                report.filePath!.contains(selectedPolicy?.policyNo ?? ''),
-          )
-          .toList();
-    }
   }
 
   @override
@@ -76,7 +60,9 @@ class PPolicyStatementVm extends GetxController {
   /// Function to get all generated reports
   Future<void> getAllGeneratedReports() async {
     updateLoadingState(LoadingState.loading);
-    final result = await policyService.getPolicyReports();
+    final result = await policyService.getPolicyReports(
+      policyNumber: selectedPolicy?.policyNo,
+    );
     result.fold(
       (err) {
         updateLoadingState(LoadingState.error);
@@ -88,8 +74,7 @@ class PPolicyStatementVm extends GetxController {
         updateLoadingState(LoadingState.completed);
         // if(res.data)
         res.data?.sort((a, b) => b.createdAt!.compareTo(a.createdAt ?? ''));
-        _allStatements = res.data ?? [];
-        _filterStatementsByPolicy();
+        statements.value = res.data ?? [];
         // pensionAppLogger.i('DownloadUrl: ${statements.first.downloadUrl}');
       },
     );
