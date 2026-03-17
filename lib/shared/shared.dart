@@ -1,9 +1,11 @@
 export 'pages/custom.loading.page.dart';
 export 'pages/custom.success.page.dart';
+export 'widgets/animated.checkmark.dart';
 export 'widgets/animated.column.dart';
 export 'widgets/animated.listview.dart';
 export 'widgets/annotated.region.dart';
 export 'widgets/auth.link.button.dart';
+export 'widgets/count.up.text.dart';
 export 'widgets/custom.bar.chart.dart';
 export 'widgets/custom.bar.chart.old.dart';
 export 'widgets/custom.card.widget.dart';
@@ -27,5 +29,6 @@ export 'widgets/page.tag.widget.dart';
 export 'widgets/popup.dialog.dart';
 export 'widgets/radio.listtile.widget.dart';
 export 'widgets/see.all.widget.dart';
+export 'widgets/shimmer.wrapper.dart';
 export 'widgets/text.button.dart';
 export 'widgets/textfield.keyboard.actions.dart';

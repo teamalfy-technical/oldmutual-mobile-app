@@ -7,10 +7,8 @@ import 'package:get/get.dart';
 import 'package:oldmutual_pensions_app/core/utils/utils.dart';
 import 'package:oldmutual_pensions_app/features/auth/auth.dart';
 import 'package:oldmutual_pensions_app/features/payments/payments.dart';
-import 'package:oldmutual_pensions_app/features/webview/webview.dart';
 import 'package:oldmutual_pensions_app/routes/app.pages.dart';
 import 'package:oldmutual_pensions_app/shared/shared.dart';
-import 'package:redacted/redacted.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 // Import for iOS/macOS features.
 import 'package:webview_flutter_wkwebview/webview_flutter_wkwebview.dart';
@@ -227,9 +225,36 @@ class _PWebViewState extends State<PWebView> {
                       left: 8.0,
                       right: 8.0,
                     ),
-                    child: const RedactedWidget().redacted(
-                      context: context,
-                      redact: true,
+                    child: PShimmerWrapper(
+                      loading: true,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          PShimmerBox(
+                            width: double.infinity,
+                            height: PAppSize.s200,
+                            borderRadius: PAppSize.s8,
+                          ),
+                          const SizedBox(height: PAppSize.s8),
+                          PShimmerBox(
+                            width: PAppSize.s150,
+                            height: PAppSize.s20,
+                            borderRadius: PAppSize.s8,
+                          ),
+                          const SizedBox(height: PAppSize.s8),
+                          PShimmerBox(
+                            width: PAppSize.s80,
+                            height: PAppSize.s12,
+                            borderRadius: PAppSize.s8,
+                          ),
+                          const SizedBox(height: PAppSize.s8),
+                          PShimmerBox(
+                            width: PAppSize.s60,
+                            height: PAppSize.s22,
+                            borderRadius: PAppSize.s8,
+                          ),
+                        ],
+                      ),
                     ),
                   );
                 },

@@ -1,4 +1,6 @@
-class ReportDownload {
+import 'package:equatable/equatable.dart';
+// ignore: must_be_immutable
+class ReportDownload extends Equatable {
   String? expiresAt;
   String? createdAt;
   String? downloadUrl;
@@ -17,6 +19,10 @@ class ReportDownload {
     downloadUrl = json['download_url'];
     period = json['period'];
   }
+
+  
+  @override
+  List<Object?> get props => [downloadUrl, period];
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
@@ -46,7 +52,8 @@ class ReportDownload {
   }
 }
 
-class ReportStatus {
+// ignore: must_be_immutable
+class ReportStatus extends Equatable {
   String? status;
   String? createdAt;
   String? downloadUrl;
@@ -59,6 +66,10 @@ class ReportStatus {
     createdAt = json['created_at'];
     downloadUrl = json['download_url'];
   }
+
+  
+  @override
+  List<Object?> get props => [status, downloadUrl];
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};

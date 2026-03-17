@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:oldmutual_pensions_app/core/utils/utils.dart';
-import 'package:redacted/redacted.dart';
+import 'package:oldmutual_pensions_app/shared/shared.dart';
 
 class PensionTierRedactWidget extends StatelessWidget {
   final Function()? onTap;
@@ -20,96 +20,59 @@ class PensionTierRedactWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.all(PAppSize.s22),
-      margin: margin ?? EdgeInsets.only(right: PAppSize.s20),
-      height: height,
-      width: width ?? PDeviceUtil.getDeviceWidth(context) * 0.65,
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(PAppSize.s20),
-        color: PHelperFunction.isDarkMode(context)
-            ? PAppColor.darkAppBarColor
-            : PAppColor.whiteColor,
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      '******************',
-                      style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                        fontSize: PAppSize.s16,
-                        fontWeight: FontWeight.w700,
+    return PShimmerWrapper(
+      loading: loading == LoadingState.loading,
+      child: Container(
+        padding: EdgeInsets.all(PAppSize.s22),
+        margin: margin ?? EdgeInsets.only(right: PAppSize.s20),
+        height: height,
+        width: width ?? PDeviceUtil.getDeviceWidth(context) * 0.65,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(PAppSize.s20),
+          color: PHelperFunction.isDarkMode(context)
+              ? PAppColor.darkAppBarColor
+              : PAppColor.whiteColor,
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      PShimmerBox(width: 140, height: PAppSize.s16),
+                      PAppSize.s8.verticalSpace,
+                      PShimmerBox(width: 100, height: PAppSize.s14),
+                      PAppSize.s4.verticalSpace,
+                      PShimmerBox(width: 80, height: PAppSize.s14),
+                      PAppSize.s12.verticalSpace,
+                      Container(
+                        width: PAppSize.s36,
+                        height: PAppSize.s36,
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          color: PAppColor.whiteColor,
+                        ),
                       ),
-                    ),
-                    PAppSize.s2.verticalSpace,
-                    Text(
-                      'You have \n** schemes',
-                      softWrap: true,
-                      style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                        fontSize: PAppSize.s16,
-                        fontWeight: FontWeight.w500,
-                      ),
-                    ),
-                    PAppSize.s8.verticalSpace,
-                    Container(
-                      width: PAppSize.s36,
-                      height: PAppSize.s36,
-                      decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        color: PHelperFunction.isDarkMode(context)
-                            ? PAppColor.whiteColor
-                            : PAppColor.blackColor,
-                      ),
-                    ),
-                    PAppSize.s8.verticalSpace,
-                  ],
+                      PAppSize.s8.verticalSpace,
+                    ],
+                  ),
                 ),
-              ),
-              Container(
-                width: PAppSize.s20,
-                height: PAppSize.s20,
-                color: PHelperFunction.isDarkMode(context)
-                    ? PAppColor.whiteColor
-                    : PAppColor.blackColor,
-              ),
-            ],
-          ),
-          Text(
-            '**************',
-            style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-              fontSize: PAppSize.s14,
-              fontWeight: FontWeight.w500,
+                PShimmerBox(width: PAppSize.s20, height: PAppSize.s20),
+              ],
             ),
-          ),
-          Text(
-            'GHS *,***.**',
-            style: Theme.of(context).textTheme.headlineMedium?.copyWith(
-              fontWeight: FontWeight.w600,
-            ),
-          ),
-          PAppSize.s8.verticalSpace,
-          SizedBox(
-            width: double.infinity,
-            child: Divider(
-              color: PHelperFunction.isDarkMode(context)
-                  ? PAppColor.successLight
-                  : PAppColor.successDark,
-              thickness: PAppSize.s4,
-            ),
-          ),
-        ],
+            PShimmerBox(width: 120, height: PAppSize.s14),
+            PAppSize.s4.verticalSpace,
+            PShimmerBox(width: 160, height: PAppSize.s22),
+            PAppSize.s8.verticalSpace,
+            PShimmerBox(width: double.infinity, height: PAppSize.s4, borderRadius: 2),
+          ],
+        ),
       ),
-    ).redacted(
-      context: context,
-      redact: loading == LoadingState.loading,
     );
   }
 }

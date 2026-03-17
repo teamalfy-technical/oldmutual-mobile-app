@@ -1,4 +1,6 @@
-class BioData {
+import 'package:equatable/equatable.dart';
+// ignore: must_be_immutable
+class BioData extends Equatable {
   String? memberNo;
   String? fullName;
   String? firstName;
@@ -66,6 +68,10 @@ class BioData {
     schemeId = json['scheme_id'];
     schemeName = json['scheme_name'];
   }
+
+  
+  @override
+  List<Object?> get props => [memberNo, ghanaCardNumber, schemeId];
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};

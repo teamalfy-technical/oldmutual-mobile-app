@@ -1,4 +1,6 @@
-class Scheme {
+import 'package:equatable/equatable.dart';
+// ignore: must_be_immutable
+class Scheme extends Equatable {
   String? memberName;
   String? masterSchemeDescription;
   String? penTypeDescription;
@@ -84,6 +86,10 @@ class Scheme {
     if (value is String) return double.tryParse(value);
     return null;
   }
+
+  
+  @override
+  List<Object?> get props => [memberId, memberNumber];
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};

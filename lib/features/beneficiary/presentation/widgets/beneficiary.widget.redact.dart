@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:oldmutual_pensions_app/core/utils/utils.dart';
-import 'package:redacted/redacted.dart';
+import 'package:oldmutual_pensions_app/shared/shared.dart';
 
 class PBeneficiaryWidgetRedact extends StatelessWidget {
   final LoadingState loading;
@@ -9,81 +10,43 @@ class PBeneficiaryWidgetRedact extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // debugPrint(beneficiary['show'].toString());
-    return Column(
-      children: [
-        ExpansionTile(
-          title: Text(
-            '********************',
-            style: Theme.of(context).textTheme.bodyLarge,
-          ).redacted(
-            context: context,
-            redact: loading == LoadingState.loading ? true : false,
-          ),
-          tilePadding: EdgeInsets.symmetric(horizontal: PAppSize.s22),
-          initiallyExpanded: true,
-          expandedAlignment: Alignment.centerLeft,
-          expandedCrossAxisAlignment: CrossAxisAlignment.start,
-          childrenPadding: EdgeInsets.symmetric(
-            horizontal: PAppSize.s22,
-            vertical: PAppSize.s10,
-          ),
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.zero,
-            side: BorderSide.none,
-          ),
-
-          expansionAnimationStyle: AnimationStyle(
-            curve: Curves.linearToEaseOut,
-          ),
-          collapsedShape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.zero,
-            // side: BorderSide(width: 1, color: PAppColor.fillColor),
-            side: BorderSide.none,
-          ),
-
-          trailing: Icon(Icons.abc_outlined).redacted(
-            context: context,
-            redact: loading == LoadingState.loading ? true : false,
-          ),
-          children: [
-            Text('**********************').redacted(
-              context: context,
-              redact: loading == LoadingState.loading ? true : false,
-            ),
-            Text('*******************').redacted(
-              context: context,
-              redact: loading == LoadingState.loading ? true : false,
-            ),
-            Text('*****************').redacted(
-              context: context,
-              redact: loading == LoadingState.loading ? true : false,
-            ),
-          ],
-        ),
-        Divider(color: PAppColor.fillColor),
-      ],
-    );
-  }
-
-  Widget detailWidget(BuildContext context, String label, String value) {
-    return RichText(
-      textAlign: TextAlign.start,
-      text: TextSpan(
-        text: label,
-        style: Theme.of(
-          context,
-        ).textTheme.bodyLarge?.copyWith(fontWeight: FontWeight.w500),
+    return PShimmerWrapper(
+      loading: loading == LoadingState.loading,
+      child: Column(
         children: [
-          TextSpan(
-            text: ' : $value',
-            style: Theme.of(context).textTheme.bodyLarge,
+          ExpansionTile(
+            title: PShimmerBox(width: 160, height: PAppSize.s16),
+            tilePadding: EdgeInsets.symmetric(horizontal: PAppSize.s22),
+            initiallyExpanded: true,
+            expandedAlignment: Alignment.centerLeft,
+            expandedCrossAxisAlignment: CrossAxisAlignment.start,
+            childrenPadding: EdgeInsets.symmetric(
+              horizontal: PAppSize.s22,
+              vertical: PAppSize.s10,
+            ),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.zero,
+              side: BorderSide.none,
+            ),
+            expansionAnimationStyle: AnimationStyle(
+              curve: Curves.linearToEaseOut,
+            ),
+            collapsedShape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.zero,
+              side: BorderSide.none,
+            ),
+            trailing: PShimmerBox(width: PAppSize.s24, height: PAppSize.s24),
+            children: [
+              PShimmerBox(width: 180, height: PAppSize.s14),
+              PAppSize.s6.verticalSpace,
+              PShimmerBox(width: 150, height: PAppSize.s14),
+              PAppSize.s6.verticalSpace,
+              PShimmerBox(width: 130, height: PAppSize.s14),
+            ],
           ),
+          Divider(color: PAppColor.fillColor),
         ],
       ),
-    ).redacted(
-      context: context,
-      redact: loading == LoadingState.loading ? true : false,
     );
   }
 }

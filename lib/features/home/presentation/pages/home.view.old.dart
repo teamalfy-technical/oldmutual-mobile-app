@@ -11,7 +11,7 @@ import 'package:oldmutual_pensions_app/features/home/home.dart';
 import 'package:oldmutual_pensions_app/gen/assets.gen.dart';
 import 'package:oldmutual_pensions_app/routes/app.pages.dart';
 import 'package:oldmutual_pensions_app/shared/shared.dart';
-import 'package:redacted/redacted.dart';
+// redacted package removed
 
 class PHomeViewOld extends StatelessWidget {
   PHomeViewOld({super.key});
@@ -291,11 +291,6 @@ class PHomeViewOld extends StatelessWidget {
                         style: Theme.of(context).textTheme.titleSmall?.copyWith(
                           color: PAppColor.text50,
                         ),
-                      ).redacted(
-                        context: context,
-                        redact: ctrl.loading.value == LoadingState.loading
-                            ? true
-                            : false,
                       ),
                       PAppSize.s4.verticalSpace,
                       Text(
@@ -308,11 +303,6 @@ class PHomeViewOld extends StatelessWidget {
                               color: PAppColor.whiteColor,
                               fontSize: PAppSize.s18,
                             ),
-                      ).redacted(
-                        context: context,
-                        redact: ctrl.loading.value == LoadingState.loading
-                            ? true
-                            : false,
                       ),
                       PAppSize.s4.verticalSpace,
                       if (ctrl.summary.value.lastContributionDate != null)
@@ -323,11 +313,6 @@ class PHomeViewOld extends StatelessWidget {
                                 fontSize: PAppSize.s14,
                                 color: PAppColor.text100,
                               ),
-                        ).redacted(
-                          context: context,
-                          redact: ctrl.loading.value == LoadingState.loading
-                              ? true
-                              : false,
                         ),
                     ],
                   ),

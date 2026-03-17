@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:oldmutual_pensions_app/core/utils/utils.dart';
-import 'package:redacted/redacted.dart';
+import 'package:oldmutual_pensions_app/shared/shared.dart';
 
 class PNotificationRedactWidget extends StatelessWidget {
   const PNotificationRedactWidget({super.key, required this.loading});
@@ -10,62 +10,43 @@ class PNotificationRedactWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-          padding: EdgeInsets.all(16),
-          decoration: BoxDecoration(
-            color: PAppColor.fillColor,
-            borderRadius: BorderRadius.circular(PAppSize.s10),
-          ),
-          child: Row(
-            children: [
-              Container(
-                width: PAppSize.s50,
-                height: PAppSize.s50,
-                decoration: BoxDecoration(
-                  color: PAppColor.blackColor,
-                  borderRadius: BorderRadius.circular(PAppSize.s16),
-                ),
+    return PShimmerWrapper(
+      loading: loading == LoadingState.loading,
+      child: Container(
+        padding: EdgeInsets.all(16),
+        margin: EdgeInsets.symmetric(vertical: PAppSize.s6),
+        decoration: BoxDecoration(
+          color: PHelperFunction.isDarkMode(context)
+              ? PAppColor.darkAppBarColor
+              : PAppColor.fillColor,
+          borderRadius: BorderRadius.circular(PAppSize.s10),
+        ),
+        child: Row(
+          children: [
+            Container(
+              width: PAppSize.s50,
+              height: PAppSize.s50,
+              decoration: BoxDecoration(
+                color: PAppColor.whiteColor,
+                borderRadius: BorderRadius.circular(PAppSize.s16),
               ),
-              PAppSize.s8.horizontalSpace,
-              // title & subtitle
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      '****************************',
-                      style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                        color: PHelperFunction.isDarkMode(context)
-                            ? PAppColor.text50
-                            : PAppColor.text500,
-                        fontSize: PAppSize.s14,
-                        fontWeight: FontWeight.w500,
-                      ),
-                    ),
-                    Text(
-                      '***************************************************',
-                      style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                        fontSize: PAppSize.s13,
-                        fontWeight: FontWeight.w300,
-                      ),
-                    ),
-                    Text(
-                      '**************************',
-                      style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                        fontSize: PAppSize.s13,
-                        fontWeight: FontWeight.w300,
-                      ),
-                    ),
-                  ],
-                ),
+            ),
+            PAppSize.s8.horizontalSpace,
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  PShimmerBox(width: 180, height: PAppSize.s14),
+                  PAppSize.s6.verticalSpace,
+                  PShimmerBox(width: double.infinity, height: PAppSize.s12),
+                  PAppSize.s4.verticalSpace,
+                  PShimmerBox(width: 140, height: PAppSize.s12),
+                ],
               ),
-            ],
-          ),
-        )
-        .symmetric(vertical: PAppSize.s6)
-        .redacted(
-          context: context,
-          redact: loading == LoadingState.loading ? true : false,
-        );
+            ),
+          ],
+        ),
+      ),
+    );
   }
 }

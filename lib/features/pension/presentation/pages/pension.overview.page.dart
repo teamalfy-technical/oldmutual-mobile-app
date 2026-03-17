@@ -48,7 +48,18 @@ class _PPensionOverviewPageState extends State<PPensionOverviewPage>
       backgroundColor: PHelperFunction.isDarkMode(context)
           ? PAppColor.darkBgColor
           : PAppColor.fillColor,
-      appBar: AppBar(title: Text('${widget.product['name']}')),
+      appBar: AppBar(
+        title: Hero(
+          tag: 'product-hero-${widget.product['name']}',
+          child: Material(
+            color: Colors.transparent,
+            child: Text(
+              '${widget.product['name']}',
+              style: Theme.of(context).appBarTheme.titleTextStyle,
+            ),
+          ),
+        ),
+      ),
       body: Stack(
         children: [
           Positioned(top: -16, right: -0, child: Assets.icons.pictogram.svg()),
@@ -67,14 +78,10 @@ class _PPensionOverviewPageState extends State<PPensionOverviewPage>
                     fontWeight: FontWeight.w400,
                   ),
                 ),
-                Text(
-                  PFormatter.formatCurrency(
-                    amount: vm.summary.value.totalInvestment?.toDouble() ?? 0,
-                  ),
+                PCountUpText(
+                  amount: vm.summary.value.totalInvestment?.toDouble() ?? 0,
                   textAlign: TextAlign.center,
-                  softWrap: true,
                   style: Theme.of(context).textTheme.headlineMedium?.copyWith(
-                    // fontSize: PAppSize.s12,
                     fontWeight: FontWeight.w600,
                   ),
                 ),

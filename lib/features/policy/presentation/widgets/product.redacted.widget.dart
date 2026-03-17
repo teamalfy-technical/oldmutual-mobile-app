@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:oldmutual_pensions_app/core/utils/utils.dart';
-import 'package:redacted/redacted.dart';
+import 'package:oldmutual_pensions_app/shared/shared.dart';
 
 class PProductRedactedWidget extends StatelessWidget {
   final LoadingState loading;
@@ -17,54 +18,36 @@ class PProductRedactedWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      margin: EdgeInsets.only(bottom: PAppSize.s16),
-      padding: EdgeInsets.symmetric(horizontal: PAppSize.s16),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(PAppSize.s20),
-        color: PHelperFunction.isDarkMode(context)
-            ? PAppColor.darkAppBarColor
-            : PAppColor.whiteColor,
+    return PShimmerWrapper(
+      loading: _isLoading,
+      child: Container(
+        margin: EdgeInsets.only(bottom: PAppSize.s16),
+        padding: EdgeInsets.symmetric(
+          horizontal: PAppSize.s16,
+          vertical: PAppSize.s12,
+        ),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(PAppSize.s20),
+          color: PHelperFunction.isDarkMode(context)
+              ? PAppColor.darkAppBarColor
+              : PAppColor.whiteColor,
+        ),
+        child: Row(
+          children: [
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  PShimmerBox(width: 180, height: PAppSize.s13),
+                  PAppSize.s8.verticalSpace,
+                  PShimmerBox(width: 120, height: PAppSize.s18),
+                ],
+              ),
+            ),
+            PShimmerBox(width: 40, height: PAppSize.s18),
+          ],
+        ),
       ),
-      child: ListTile(
-        contentPadding: EdgeInsets.zero,
-        title:
-            Text(
-              '************************',
-              style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                fontSize: PAppSize.s13,
-                fontWeight: FontWeight.w400,
-              ),
-            ).redacted(
-              context: context,
-              redact: _isLoading,
-            ),
-        subtitle:
-            Text(
-              '**************',
-              style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                fontSize: PAppSize.s18,
-                fontWeight: FontWeight.w600,
-              ),
-            ).redacted(
-              context: context,
-              redact: _isLoading,
-            ),
-        trailing:
-            Text(
-              '***',
-              style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                fontSize: PAppSize.s18,
-                fontWeight: FontWeight.w600,
-              ),
-            ).redacted(
-              context: context,
-              redact: _isLoading,
-            ),
-      ),
-    ).redacted(
-      context: context,
-      redact: _isLoading,
     );
   }
 }

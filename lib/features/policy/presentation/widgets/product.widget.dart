@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:oldmutual_pensions_app/core/utils/utils.dart';
 import 'package:oldmutual_pensions_app/features/policy/policy.dart';
 import 'package:oldmutual_pensions_app/gen/assets.gen.dart';
+import 'package:oldmutual_pensions_app/shared/shared.dart';
 
 class ProductWidget extends StatelessWidget {
   final Map<String, dynamic> product;
@@ -49,15 +50,21 @@ class ProductWidget extends StatelessWidget {
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(
-                          product['name'],
-                          textAlign: TextAlign.center,
-                          softWrap: true,
-                          style: Theme.of(context).textTheme.titleMedium
-                              ?.copyWith(
-                                fontSize: PAppSize.s16,
-                                fontWeight: FontWeight.w700,
-                              ),
+                        Hero(
+                          tag: 'product-hero-${product['name']}',
+                          child: Material(
+                            color: Colors.transparent,
+                            child: Text(
+                              product['name'],
+                              textAlign: TextAlign.center,
+                              softWrap: true,
+                              style: Theme.of(context).textTheme.titleMedium
+                                  ?.copyWith(
+                                    fontSize: PAppSize.s16,
+                                    fontWeight: FontWeight.w700,
+                                  ),
+                            ),
+                          ),
                         ),
                         PAppSize.s2.verticalSpace,
                         if (product['type'] != ProductType.corporate) ...[
@@ -134,12 +141,9 @@ class ProductWidget extends StatelessWidget {
                           fontWeight: FontWeight.w500,
                         ),
                       ),
-                      Text(
-                        PFormatter.formatCurrency(
-                          amount: product['contribution'],
-                        ),
+                      PCountUpText(
+                        amount: product['contribution'] ?? 0.0,
                         textAlign: TextAlign.center,
-                        softWrap: true,
                         style: Theme.of(context).textTheme.headlineMedium
                             ?.copyWith(fontWeight: FontWeight.w600),
                       ),

@@ -3,7 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:oldmutual_pensions_app/core/utils/utils.dart';
 import 'package:oldmutual_pensions_app/features/more/presentation/widgets/more.listtile.widget.dart';
-import 'package:redacted/redacted.dart';
+import 'package:oldmutual_pensions_app/shared/shared.dart';
 
 class PBiodataTab extends StatelessWidget {
   final Map<String, String?> userData;
@@ -34,12 +34,15 @@ class PBiodataTab extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
-            userData['fullName'] ?? 'not_applicable'.tr,
-            style: Theme.of(
-              context,
-            ).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w600),
-          ).redacted(context: context, redact: isLoading),
+          PShimmerWrapper(
+            loading: isLoading,
+            child: Text(
+              userData['fullName'] ?? 'not_applicable'.tr,
+              style: Theme.of(
+                context,
+              ).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w600),
+            ),
+          ),
           PAppSize.s8.verticalSpace,
           PMoreListTitle(
             title: 'member_no'.tr,

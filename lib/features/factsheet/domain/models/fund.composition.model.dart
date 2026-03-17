@@ -1,4 +1,6 @@
-class FundCompositionModel {
+import 'package:equatable/equatable.dart';
+// ignore: must_be_immutable
+class FundCompositionModel extends Equatable {
   int? id;
   String? asset;
   String? percentage;
@@ -20,6 +22,10 @@ class FundCompositionModel {
     createdAt = json['created_at'];
     updatedAt = json['updated_at'];
   }
+
+  
+  @override
+  List<Object?> get props => [id, asset];
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:oldmutual_pensions_app/core/utils/utils.dart';
-import 'package:redacted/redacted.dart';
+import 'package:oldmutual_pensions_app/shared/shared.dart';
 
 class PMoreListTitle extends StatelessWidget {
   final String title;
@@ -24,26 +24,29 @@ class PMoreListTitle extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ListTile(
-      onTap: onTap,
-      leading: leading,
-      contentPadding:
-          contentPadding ?? EdgeInsets.symmetric(horizontal: PAppSize.s0),
-      title: Text(
-        title,
-        style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-          fontSize: PAppSize.s14.sp,
-          fontWeight: FontWeight.w500,
+    return PShimmerWrapper(
+      loading: isLoading,
+      child: ListTile(
+        onTap: onTap,
+        leading: leading,
+        contentPadding:
+            contentPadding ?? EdgeInsets.symmetric(horizontal: PAppSize.s0),
+        title: Text(
+          title,
+          style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+            fontSize: PAppSize.s14.sp,
+            fontWeight: FontWeight.w500,
+          ),
         ),
-      ).redacted(context: context, redact: isLoading),
-      subtitle: Text(
-        subTitle,
-        style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-          fontSize: PAppSize.s14.sp,
-          fontWeight: FontWeight.w400,
+        subtitle: Text(
+          subTitle,
+          style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+            fontSize: PAppSize.s14.sp,
+            fontWeight: FontWeight.w400,
+          ),
         ),
-      ).redacted(context: context, redact: isLoading),
-      trailing: trailing,
+        trailing: trailing,
+      ),
     );
   }
 }

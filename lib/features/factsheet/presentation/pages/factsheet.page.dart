@@ -7,7 +7,7 @@ import 'package:oldmutual_pensions_app/features/factsheet/presentation/vm/factsh
 import 'package:oldmutual_pensions_app/features/factsheet/presentation/widgets/chart.redact.widget.dart';
 import 'package:oldmutual_pensions_app/gen/assets.gen.dart';
 import 'package:oldmutual_pensions_app/shared/shared.dart';
-import 'package:redacted/redacted.dart';
+import 'package:oldmutual_pensions_app/shared/shared.dart';
 
 class PFactSheetPage extends StatefulWidget {
   const PFactSheetPage({super.key});
@@ -114,25 +114,20 @@ class _PFactSheetPageState extends State<PFactSheetPage> {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     // PAppSize.s22.verticalSpace,
-                                    Text(
-                                          '${'performance_since'.tr} ($lowestYear - $highestYear)',
-                                          textAlign: TextAlign.start,
-                                          style: Theme.of(context)
-                                              .textTheme
-                                              .bodyLarge
-                                              ?.copyWith(
-                                                fontWeight: FontWeight.w600,
-                                              ),
-                                        )
-                                        .symmetric(horizontal: PAppSize.s10)
-                                        .redacted(
-                                          context: context,
-                                          redact:
-                                              ctrl.loading.value ==
-                                                  LoadingState.loading
-                                              ? true
-                                              : false,
-                                        ),
+                                    PShimmerWrapper(
+                                      loading: ctrl.loading.value == LoadingState.loading,
+                                      child: Text(
+                                            '${'performance_since'.tr} ($lowestYear - $highestYear)',
+                                            textAlign: TextAlign.start,
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .bodyLarge
+                                                ?.copyWith(
+                                                  fontWeight: FontWeight.w600,
+                                                ),
+                                          )
+                                          .symmetric(horizontal: PAppSize.s10),
+                                    ),
                                     PAppSize.s8.verticalSpace,
                                     Expanded(
                                       child: Stack(

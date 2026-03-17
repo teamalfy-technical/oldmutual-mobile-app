@@ -1,4 +1,6 @@
-class PaymentMethod {
+import 'package:equatable/equatable.dart';
+// ignore: must_be_immutable
+class PaymentMethod extends Equatable {
   String? name;
   String? code;
 
@@ -9,21 +11,14 @@ class PaymentMethod {
     code = json['emp_code'];
   }
 
+  
+  @override
+  List<Object?> get props => [code, name];
+
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
     data['Name'] = name;
     data['emp_code'] = code;
     return data;
   }
-
-  @override
-  bool operator ==(Object other) {
-    if (identical(this, other)) return true;
-    return other is PaymentMethod &&
-        other.code == code &&
-        other.name == name;
-  }
-
-  @override
-  int get hashCode => code.hashCode ^ name.hashCode;
 }

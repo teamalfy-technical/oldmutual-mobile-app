@@ -1,4 +1,6 @@
-class SelectedSchemeModel {
+import 'package:equatable/equatable.dart';
+// ignore: must_be_immutable
+class SelectedSchemeModel extends Equatable {
   int? id;
   String? name;
   String? memberNumber;
@@ -77,6 +79,10 @@ class SelectedSchemeModel {
     masterScheme = json['master_scheme'];
     schemeType = json['scheme_type'];
   }
+
+  
+  @override
+  List<Object?> get props => [id, memberNumber];
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};

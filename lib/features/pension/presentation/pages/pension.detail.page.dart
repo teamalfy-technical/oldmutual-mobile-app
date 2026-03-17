@@ -13,7 +13,7 @@ import 'package:oldmutual_pensions_app/features/policy/policy.dart';
 import 'package:oldmutual_pensions_app/gen/assets.gen.dart';
 import 'package:oldmutual_pensions_app/routes/app.pages.dart';
 import 'package:oldmutual_pensions_app/shared/shared.dart';
-import 'package:redacted/redacted.dart';
+// redacted import removed - using PShimmerWrapper instead
 
 class PPensionDetailPage extends StatefulWidget {
   final Scheme scheme;
@@ -93,18 +93,11 @@ class _PPensionDetailPageState extends State<PPensionDetailPage> {
                           fontWeight: FontWeight.w400,
                         ),
                       ),
-                      Text(
-                        PFormatter.formatCurrency(
-                          amount:
-                              // vm.summary.value.totalInvestment?.toDouble() ??
-                              // 0.00,
-                              widget.scheme.schemeCurrentValue ?? 0,
-                        ),
+                      PCountUpText(
+                        amount: widget.scheme.schemeCurrentValue ?? 0,
                         textAlign: TextAlign.center,
-                        softWrap: true,
                         style: Theme.of(context).textTheme.headlineMedium
                             ?.copyWith(
-                              // fontSize: PAppSize.s12,
                               fontWeight: FontWeight.w600,
                             ),
                       ),
@@ -548,38 +541,27 @@ class _PPensionDetailPageState extends State<PPensionDetailPage> {
   }
 
   Widget _buildListTile(BuildContext context, String title, String subTitle) {
-    return ListTile(
-      contentPadding: EdgeInsets.symmetric(horizontal: PAppSize.s16),
-      title:
-          Text(
-            title,
-            style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-              fontSize: PAppSize.s14,
-              fontWeight: FontWeight.w400,
-            ),
-          ).redacted(
-            context: context,
-            redact:
-                vm.loading.value == LoadingState.loading ||
-                    contributionVm.loading.value == LoadingState.loading
-                ? true
-                : false,
+    final isLoading = vm.loading.value == LoadingState.loading ||
+        contributionVm.loading.value == LoadingState.loading;
+    return PShimmerWrapper(
+      loading: isLoading,
+      child: ListTile(
+        contentPadding: EdgeInsets.symmetric(horizontal: PAppSize.s16),
+        title: Text(
+          title,
+          style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+            fontSize: PAppSize.s14,
+            fontWeight: FontWeight.w400,
           ),
-      subtitle:
-          Text(
-            subTitle,
-            style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-              fontSize: PAppSize.s18,
-              fontWeight: FontWeight.w500,
-            ),
-          ).redacted(
-            context: context,
-            redact:
-                vm.loading.value == LoadingState.loading ||
-                    contributionVm.loading.value == LoadingState.loading
-                ? true
-                : false,
+        ),
+        subtitle: Text(
+          subTitle,
+          style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+            fontSize: PAppSize.s18,
+            fontWeight: FontWeight.w500,
           ),
+        ),
+      ),
     );
   }
 }

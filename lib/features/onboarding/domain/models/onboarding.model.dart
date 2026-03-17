@@ -1,7 +1,8 @@
+import 'package:equatable/equatable.dart';
 import 'package:get/get.dart';
 import 'package:oldmutual_pensions_app/gen/assets.gen.dart';
 
-class POnboardingModel {
+class POnboardingModel extends Equatable {
   final String image;
   final String title;
   final String description;
@@ -11,6 +12,9 @@ class POnboardingModel {
     required this.title,
     required this.description,
   });
+
+  @override
+  List<Object?> get props => [title, image];
 }
 
 final slides = [

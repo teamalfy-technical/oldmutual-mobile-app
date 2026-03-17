@@ -1,4 +1,6 @@
-class Redemption {
+import 'package:equatable/equatable.dart';
+// ignore: must_be_immutable
+class Redemption extends Equatable {
   String? nationalId;
   String? redemptionType;
   String? percentage;
@@ -50,6 +52,10 @@ class Redemption {
     memberNumber = json['member_number'];
     ssnitNumber = json['ssnit_number'];
   }
+
+  
+  @override
+  List<Object?> get props => [id, userId, memberNumber];
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};

@@ -1,4 +1,6 @@
-class PensionSummary {
+import 'package:equatable/equatable.dart';
+// ignore: must_be_immutable
+class PensionSummary extends Equatable {
   int? totalPensions;
   double? totalInvestment;
 
@@ -8,6 +10,10 @@ class PensionSummary {
     totalPensions = (json['total_pensions'] as num?)?.toInt();
     totalInvestment = (json['total_investment'] as num?)?.toDouble();
   }
+
+  
+  @override
+  List<Object?> get props => [totalPensions];
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};

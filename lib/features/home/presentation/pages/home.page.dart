@@ -3,7 +3,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:oldmutual_pensions_app/core/utils/utils.dart';
 import 'package:oldmutual_pensions_app/features/cross-sell/cross.sell.dart';
-import 'package:oldmutual_pensions_app/features/dashboard/dashboard.dart';
 import 'package:oldmutual_pensions_app/features/home/home.dart';
 import 'package:oldmutual_pensions_app/features/pension/pension.dart';
 import 'package:oldmutual_pensions_app/features/policy/policy.dart';
@@ -73,19 +72,11 @@ class PHomePage extends StatelessWidget {
                         fontWeight: FontWeight.w400,
                       ),
                     ),
-                    Text(
-                      PFormatter.formatCurrency(
-                        amount: policyVm.summary.value.availableBalance == ''
-                            ? 0.0
-                            : policyVm.summary.value.availableBalance ?? 0.0,
-                      ),
+                    PCountUpText(
+                      amount: policyVm.summary.value.availableBalance ?? 0.0,
                       textAlign: TextAlign.center,
-                      softWrap: true,
                       style: Theme.of(context).textTheme.headlineMedium
-                          ?.copyWith(
-                            // fontSize: PAppSize.s12,
-                            fontWeight: FontWeight.w600,
-                          ),
+                          ?.copyWith(fontWeight: FontWeight.w600),
                     ),
 
                     PAppSize.s2.verticalSpace,
@@ -123,16 +114,29 @@ class PHomePage extends StatelessWidget {
                       height: PDeviceUtil.isIOS()
                           ? PDeviceUtil.getDeviceHeight(context) * 0.35
                           : PDeviceUtil.getDeviceHeight(context) * 0.38,
-                      child: policyVm.loading.value == LoadingState.loading
-                          ? ListView.builder(
-                              shrinkWrap: true,
-                              itemCount: 3,
-                              scrollDirection: Axis.horizontal,
-                              itemBuilder: (context, index) {
-                                return PensionTierRedactWidget(
-                                  loading: policyVm.loading.value,
-                                );
-                              },
+                      child: policyVm.loading.value != LoadingState.loading
+                          ? PShimmerWrapper(
+                              loading:
+                                  policyVm.loading.value !=
+                                  LoadingState.loading,
+                              child: ListView.builder(
+                                shrinkWrap: true,
+                                itemCount: 3,
+                                scrollDirection: Axis.horizontal,
+                                itemBuilder: (context, index) {
+                                  return ProductWidget(
+                                    product: {
+                                      'name': 'Pensions',
+                                      'type': ProductType.pensions,
+                                      'num_of_account': 0,
+                                      'contribution': 0.00,
+                                    },
+                                  );
+                                  // return PensionTierRedactWidget(
+                                  //   loading: policyVm.loading.value,
+                                  // );
+                                },
+                              ),
                             )
                           : ((policyVm.summary.value.totalPolicies ?? 0) == 0 &&
                                 (pensionVm.summary.value.totalPensions ?? 0) ==

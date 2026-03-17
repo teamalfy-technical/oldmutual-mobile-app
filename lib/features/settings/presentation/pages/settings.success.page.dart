@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:oldmutual_pensions_app/core/utils/utils.dart';
-import 'package:oldmutual_pensions_app/gen/assets.gen.dart';
 import 'package:oldmutual_pensions_app/shared/shared.dart';
 
 class PSettingsSuccessPage extends StatelessWidget {
@@ -38,7 +37,7 @@ class PSettingsSuccessPage extends StatelessWidget {
                 child: Column(
                   children: [
                     PAppSize.s30.verticalSpace,
-                    Assets.icons.successIcon2.svg(),
+                    const PAnimatedCheckmark(),
                     PAppSize.s30.verticalSpace,
                     Text(
                       message,
