@@ -29,8 +29,7 @@ class _PIdEntryPageState extends State<PIdEntryPage> {
             Expanded(
               child: Form(
                 key: formKey,
-                child: Column(
-                  // crossAxisAlignment: CrossAxisAlignment.start,
+                child: PAnimatedColumnWidget(
                   children: [
                     PAppSize.s8.verticalSpace,
                     Align(

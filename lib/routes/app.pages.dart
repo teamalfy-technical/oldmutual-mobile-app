@@ -220,12 +220,6 @@ class AppPages {
     ),
 
     GetPage(
-      name: _Paths.homePage,
-      page: () => PHomePageOld(),
-      transition: Transition.circularReveal,
-      transitionDuration: const Duration(milliseconds: PAppSize.s700),
-    ),
-    GetPage(
       name: _Paths.profileSettingsPage,
       page: () => PProfileSettingsPage(),
       transition: Transition.circularReveal,
@@ -251,7 +245,7 @@ class AppPages {
     ),
     GetPage(name: _Paths.redemptionPage, page: () => PRedemptionPage()),
     GetPage(name: _Paths.portingPage, page: () => PPortingPage()),
-    GetPage(name: _Paths.beneficiariesPage, page: () => PBeneficiaryListPage()),
+    GetPage(name: _Paths.beneficiariesPage, page: () => PBeneficiaryPage()),
     GetPage(
       name: _Paths.manageBeneficiaryPage,
       page: () => PManageBeneficiaryPage(

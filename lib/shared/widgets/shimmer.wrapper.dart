@@ -19,8 +19,8 @@ class PShimmerWrapper extends StatelessWidget {
     return Skeletonizer(
       enabled: loading,
       effect: ShimmerEffect(
-        baseColor: PAppColor.coolGrey.withValues(alpha: .2),
-        highlightColor: PAppColor.coolGrey.withValues(alpha: 0.1),
+        baseColor: PAppColor.coolGrey.withOpacityExt(PAppSize.s0_2),
+        highlightColor: PAppColor.coolGrey.withOpacityExt(PAppSize.s0_1),
       ),
       child: child,
     );
@@ -33,12 +33,14 @@ class PShimmerBox extends StatelessWidget {
   final double width;
   final double height;
   final double borderRadius;
+  final BoxShape shape;
 
   const PShimmerBox({
     super.key,
     required this.width,
     required this.height,
     this.borderRadius = 8.0,
+    this.shape = BoxShape.rectangle,
   });
 
   @override
@@ -46,7 +48,10 @@ class PShimmerBox extends StatelessWidget {
     return Bone(
       width: width,
       height: height,
-      borderRadius: BorderRadius.circular(borderRadius),
+      shape: shape,
+      borderRadius: shape == BoxShape.rectangle
+          ? BorderRadius.circular(borderRadius)
+          : null,
     );
   }
 }

@@ -116,12 +116,20 @@ class _PPolicyOverviewPageState extends State<PPolicyOverviewPage>
                       onRefresh: vm.getAllPolicies,
                       color: PAppColor.primary,
                       child: vm.loading.value == LoadingState.loading
-                          ? ListView.builder(
-                              shrinkWrap: true,
-                              itemCount: 10,
-                              itemBuilder: (context, index) {
-                                return PProductRedactedWidget(
-                                  loading: vm.loading.value,
+                          ? PShimmerListView<Policy>(
+                              loading: true,
+                              items: const [],
+                              separatorBuilder: (context, index) =>
+                                  PAppSize.s16.verticalSpace,
+                              placeholderItem: Policy(),
+                              itemBuilder: (context, index, product) {
+                                return PPolicyWidget(
+                                  loading: true,
+                                  policy: Policy(
+                                    planDescription:
+                                        'TRANSITION PLUS PLAN - RETAIL',
+                                    sumAssured: 70000,
+                                  ),
                                 );
                               },
                             )

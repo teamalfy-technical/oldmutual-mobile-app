@@ -67,7 +67,33 @@ class _PPaymentHistoryPageState extends State<PPaymentHistoryPage> {
                   horizontal: PAppSize.s4,
                 ),
                 child: ctrl.loading.value == LoadingState.loading
-                    ? _buildLoadingList()
+                    ? PShimmerListView<Payment>(
+                        loading: true,
+                        items: const [],
+                        separatorBuilder: (context, index) =>
+                            PAppSize.s16.verticalSpace,
+                        scrollDirection: Axis.vertical,
+                        placeholderItem: Payment(
+                          product: 'Sample Product',
+                          amount: '500.00',
+                          createdAt: DateTime.now().toIso8601String(),
+                          status: 'SUCCESS',
+                        ),
+                        itemBuilder: (context, index, payment) {
+                          return PTransactionListTile(
+                            title: payment.product ?? '',
+                            subtitle: 'Loading...',
+                            trailing: Text(
+                              '₵0.00',
+                              style: Theme.of(context).textTheme.bodyLarge
+                                  ?.copyWith(
+                                    fontSize: PAppSize.s14,
+                                    fontWeight: FontWeight.w600,
+                                  ),
+                            ),
+                          );
+                        },
+                      )
                     : payments.isEmpty
                     ? PEmptyStateWidget(message: 'no_results_found'.tr)
                     : _buildPaymentList(context, payments),
@@ -80,47 +106,11 @@ class _PPaymentHistoryPageState extends State<PPaymentHistoryPage> {
     );
   }
 
-  Widget _buildLoadingList() {
-    return ListView.builder(
-      shrinkWrap: true,
-      itemCount: 10,
-      itemBuilder: (context, index) {
-        return ListTile(
-          title: Container(
-            height: PAppSize.s14,
-            width: PAppSize.s100,
-            decoration: BoxDecoration(
-              color: PAppColor.greyColor.withOpacityExt(0.2),
-              borderRadius: BorderRadius.circular(PAppSize.s4),
-            ),
-          ),
-          subtitle: Container(
-            height: PAppSize.s12,
-            width: PAppSize.s60,
-            margin: EdgeInsets.only(top: PAppSize.s4),
-            decoration: BoxDecoration(
-              color: PAppColor.greyColor.withOpacityExt(0.1),
-              borderRadius: BorderRadius.circular(PAppSize.s4),
-            ),
-          ),
-          trailing: Container(
-            height: PAppSize.s14,
-            width: PAppSize.s60,
-            decoration: BoxDecoration(
-              color: PAppColor.greyColor.withOpacityExt(0.2),
-              borderRadius: BorderRadius.circular(PAppSize.s4),
-            ),
-          ),
-        );
-      },
-    );
-  }
-
   Widget _buildPaymentList(BuildContext context, List<Payment> payments) {
-    return ListView.separated(
+    return PAnimatedListView<Payment>(
       shrinkWrap: true,
-      itemCount: payments.length,
-      itemBuilder: (context, index) {
+      items: payments,
+      itemBuilder: (index, payment) {
         final payment = payments[index];
         return _buildPaymentTile(context, payment);
       },
@@ -130,30 +120,10 @@ class _PPaymentHistoryPageState extends State<PPaymentHistoryPage> {
   }
 
   Widget _buildPaymentTile(BuildContext context, Payment payment) {
-    return ListTile(
+    return PTransactionListTile(
       onTap: () => showPaymentDetailModal(context, payment),
-      title: Text(
-        payment.product ?? payment.policyNumber ?? '',
-        style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-          fontSize: PAppSize.s14,
-          fontWeight: FontWeight.w500,
-        ),
-        maxLines: 1,
-        overflow: TextOverflow.ellipsis,
-      ),
-      subtitle: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          PAppSize.s4.verticalSpace,
-          Text(
-            _formatDate(payment.createdAt),
-            style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-              fontSize: PAppSize.s13,
-              fontWeight: FontWeight.w400,
-            ),
-          ),
-        ],
-      ),
+      title: payment.product ?? payment.policyNumber ?? '',
+      subtitle: _formatDate(payment.createdAt),
       trailing: Column(
         crossAxisAlignment: CrossAxisAlignment.end,
         children: [
@@ -176,7 +146,6 @@ class _PPaymentHistoryPageState extends State<PPaymentHistoryPage> {
           _buildStatusChip(context, payment.status ?? ''),
         ],
       ),
-      isThreeLine: false,
     );
   }
 
@@ -270,7 +239,7 @@ class _PPaymentHistoryPageState extends State<PPaymentHistoryPage> {
 
                 // PAppSize.s6.verticalSpace,
                 Expanded(
-                  child: Column(
+                  child: PAnimatedColumnWidget(
                     children: [
                       CustomListTile(
                         title: PFormatter.formatCurrency(
@@ -394,7 +363,7 @@ class _PPaymentHistoryPageState extends State<PPaymentHistoryPage> {
                   Divider(),
                   PAppSize.s16.verticalSpace,
                   Expanded(
-                    child: Column(
+                    child: PAnimatedColumnWidget(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         // Amount filter

@@ -16,8 +16,6 @@ export '../policy/domain/models/policy.summary.model.dart';
 export '../policy/domain/models/policy.transaction.model.dart';
 export 'domain/highlight.model.dart';
 export 'presentation/pages/home.page.dart';
-export 'presentation/pages/home.page.old.dart';
-export 'presentation/pages/home.view.old.dart';
 export 'presentation/vm/home.vm.dart';
 export 'presentation/vm/inactivity.service.dart';
 export 'presentation/widgets/highlight.widget.dart';

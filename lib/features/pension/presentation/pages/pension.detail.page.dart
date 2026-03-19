@@ -97,9 +97,7 @@ class _PPensionDetailPageState extends State<PPensionDetailPage> {
                         amount: widget.scheme.schemeCurrentValue ?? 0,
                         textAlign: TextAlign.center,
                         style: Theme.of(context).textTheme.headlineMedium
-                            ?.copyWith(
-                              fontWeight: FontWeight.w600,
-                            ),
+                            ?.copyWith(fontWeight: FontWeight.w600),
                       ),
                       PAppSize.s2.verticalSpace,
 
@@ -459,55 +457,31 @@ class _PPensionDetailPageState extends State<PPensionDetailPage> {
                               ? PEmptyStateWidget(
                                   message: 'no_results_found'.tr,
                                 )
-                              : ListView.separated(
+                              : PAnimatedListView(
                                   shrinkWrap: true,
                                   physics: NeverScrollableScrollPhysics(),
-                                  itemCount:
+                                  items:
                                       (contributionVm
                                                   .history
                                                   .value
                                                   .transactionHistory
-                                                  ?.transactions
-                                                  ?.length ??
-                                              0)
-                                          .clamp(0, 4), // limits to 4 safely
-                                  itemBuilder: (context, index) {
-                                    final contribution = contributionVm
-                                        .history
-                                        .value
-                                        .transactionHistory
-                                        ?.transactions![index];
-                                    return ListTile(
-                                      title: Text(
-                                        contribution?.schemeName ?? '',
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .bodyLarge
-                                            ?.copyWith(
-                                              fontSize: PAppSize.s14,
-                                              fontWeight: FontWeight.w600,
-                                            ),
-                                      ),
-                                      subtitle: Text(
-                                        PFormatter.formatDate(
-                                          dateFormat: DateFormat('yMMMMd'),
-                                          date: DateTime.parse(
-                                            contribution?.paymentDate ??
-                                                DateTime.now()
-                                                    .toIso8601String(),
-                                          ),
+                                                  ?.transactions ??
+                                              [])
+                                          .take(4)
+                                          .toList(),
+                                  itemBuilder: (index, contribution) {
+                                    return PTransactionListTile(
+                                      title: contribution.schemeName ?? '',
+                                      subtitle: PFormatter.formatDate(
+                                        dateFormat: DateFormat('yMMMMd'),
+                                        date: DateTime.parse(
+                                          contribution.paymentDate ??
+                                              DateTime.now().toIso8601String(),
                                         ),
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .bodyMedium
-                                            ?.copyWith(
-                                              fontSize: PAppSize.s13,
-                                              fontWeight: FontWeight.w400,
-                                            ),
                                       ),
                                       trailing: Text(
                                         PFormatter.formatCurrency(
-                                          amount: contribution?.received ?? 0,
+                                          amount: contribution.received ?? 0,
                                         ),
                                         style: Theme.of(context)
                                             .textTheme
@@ -541,7 +515,8 @@ class _PPensionDetailPageState extends State<PPensionDetailPage> {
   }
 
   Widget _buildListTile(BuildContext context, String title, String subTitle) {
-    final isLoading = vm.loading.value == LoadingState.loading ||
+    final isLoading =
+        vm.loading.value == LoadingState.loading ||
         contributionVm.loading.value == LoadingState.loading;
     return PShimmerWrapper(
       loading: isLoading,

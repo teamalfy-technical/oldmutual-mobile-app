@@ -99,7 +99,7 @@ class _PCreateAccountPageState extends State<PCreateAccountPage> {
               child: Obx(
                 () => Form(
                   key: formKey,
-                  child: Column(
+                  child: PAnimatedColumnWidget(
                     // crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       PAppSize.s34.verticalSpace,

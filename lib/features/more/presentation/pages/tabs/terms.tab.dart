@@ -3,6 +3,7 @@ import 'package:flutter_linkify/flutter_linkify.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:oldmutual_pensions_app/core/utils/utils.dart';
 import 'package:oldmutual_pensions_app/features/more/more.services.dart';
+import 'package:oldmutual_pensions_app/shared/shared.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class PTermsTab extends StatelessWidget {
@@ -28,10 +29,10 @@ Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deseru
               ? PAppColor.darkAppBarColor
               : PAppColor.whiteColor,
         ),
-        child: ListView.builder(
-          itemCount: terms.length,
-          itemBuilder: (context, index) {
-            final term = terms[index];
+        child: PAnimatedListView(
+          separatorBuilder: (context, index) => PAppSize.s8.verticalSpace,
+          items: terms,
+          itemBuilder: (index, term) {
             return _buildTermsWidget(
               context: context,
               title: term.title,

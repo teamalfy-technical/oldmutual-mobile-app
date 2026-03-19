@@ -1,215 +1,82 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:oldmutual_pensions_app/core/utils/utils.dart';
 import 'package:oldmutual_pensions_app/features/beneficiary/beneficiary.dart';
-import 'package:oldmutual_pensions_app/features/beneficiary/presentation/vm/beneficiary.vm.dart';
 import 'package:oldmutual_pensions_app/gen/assets.gen.dart';
-import 'package:oldmutual_pensions_app/routes/app.pages.dart';
+import 'package:oldmutual_pensions_app/shared/shared.dart';
 
 class PBeneficiaryWidget extends StatelessWidget {
   final Beneficiary beneficiary;
-  final int index;
-  final LoadingState loading;
-  final Function(bool)? onExpansionChanged;
+  final bool loading;
+  final Function()? onTap;
   const PBeneficiaryWidget({
     super.key,
     required this.beneficiary,
-    required this.index,
-    required this.loading,
-    this.onExpansionChanged,
+    this.loading = false,
+    this.onTap,
   });
 
   @override
   Widget build(BuildContext context) {
-    // debugPrint(beneficiary['show'].toString());
-    return Column(
-      children: [
-        ExpansionTile(
-          title: Text(
-            beneficiary.fullName ?? 'not_applicable'.tr,
-            style: Theme.of(context).textTheme.bodyLarge,
+    return ListTile(
+      onTap: onTap,
+      leading: CircleAvatar(
+        radius: PAppSize.s24,
+        backgroundColor: loading
+            ? PAppColor.coolGrey.withOpacityExt(PAppSize.s0_2)
+            : PAppColor.darkAppBarColor2,
+        child: Text(
+          beneficiary.fullName?.split(' ').first.substring(0, 1) ??
+              'not_applicable'.tr,
+          style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+            fontSize: PAppSize.s15,
+            color: PAppColor.whiteColor,
+            fontWeight: FontWeight.w600,
           ),
-          tilePadding: EdgeInsets.symmetric(
-            horizontal: PAppSize.s22,
-            vertical: PAppSize.s12,
-          ),
-          initiallyExpanded: beneficiary.show ?? false,
-          expandedAlignment: Alignment.centerLeft,
-          expandedCrossAxisAlignment: CrossAxisAlignment.start,
-          childrenPadding: EdgeInsets.symmetric(
-            horizontal: PAppSize.s22,
-            // vertical: PAppSize.s10,
-          ),
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.zero,
-            side: BorderSide.none,
-          ),
-          onExpansionChanged: onExpansionChanged,
-          expansionAnimationStyle: AnimationStyle(
-            curve: Curves.linearToEaseOut,
-          ),
-          collapsedShape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.zero,
-            // side: BorderSide(width: 1, color: PAppColor.fillColor),
-            side: BorderSide.none,
-          ),
-
-          trailing:
-              beneficiary.show == false
-                  ? SizedBox(
-                    width: 125,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: [
-                        Text(
-                          'view_details'.tr,
-                          style: Theme.of(context).textTheme.bodyLarge
-                              ?.copyWith(color: PAppColor.primary),
-                        ),
-                        PAppSize.s8.horizontalSpace,
-                        Assets.icons.arrowForwardIos.svg(),
-                      ],
-                    ),
-                  )
-                  : SizedBox(
-                    width:
-                        beneficiary.schemeName == null
-                            ? PDeviceUtil.getDeviceWidth(context) * 0.50
-                            : null,
-                    child:
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.end,
-                          children: [
-                            beneficiary.schemeName == null
-                                ? Row(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  mainAxisAlignment: MainAxisAlignment.end,
-                                  children: [
-                                    Text(
-                                      'pending_review'.tr,
-                                      style: Theme.of(
-                                        context,
-                                      ).textTheme.bodyLarge?.copyWith(
-                                        color: PAppColor.primary,
-                                        fontSize: PAppSize.s14,
-                                      ),
-                                    ),
-                                    PAppSize.s3.horizontalSpace,
-                                    Assets.icons.arrowDownIos.svg(),
-                                  ],
-                                )
-                                : Assets.icons.arrowDownIos.svg(),
-
-                            // PAppSize.s1.verticalSpace,
-                            Assets.icons.editIcon.svg().onPressed(
-                              onTap:
-                                  () => PHelperFunction.switchScreen(
-                                    destination: Routes.manageBeneficiaryPage,
-                                    args: [beneficiary, true],
-                                  ),
-                            ),
-                            PAppSize.s1.verticalSpace,
-                            Assets.icons.trashRedIcon.svg().onPressed(
-                              onTap: () {
-                                showConfirmDialog(
-                                  context: context,
-                                  content: RichText(
-                                    textAlign: TextAlign.center,
-                                    text: TextSpan(
-                                      text: 'Are you sure you want to',
-                                      style: Theme.of(
-                                        context,
-                                      ).textTheme.bodyLarge?.copyWith(
-                                        color: PAppColor.blackColor,
-                                      ),
-                                      children: [
-                                        TextSpan(
-                                          text: ' delete',
-                                          style: Theme.of(
-                                            context,
-                                          ).textTheme.bodyLarge?.copyWith(
-                                            color: PAppColor.redColor,
-                                          ),
-                                        ),
-                                        TextSpan(
-                                          text: ' this beneficiary?\n',
-                                          style: Theme.of(
-                                            context,
-                                          ).textTheme.bodyLarge?.copyWith(
-                                            color: PAppColor.blackColor,
-                                          ),
-                                        ),
-                                        TextSpan(
-                                          text: 'This action cannot be undone.',
-                                          style: Theme.of(
-                                            context,
-                                          ).textTheme.bodyLarge?.copyWith(
-                                            color: PAppColor.blackColor,
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                  positiveText: 'delete'.tr.toUpperCase(),
-                                  onPositiveTap: () {
-                                    PHelperFunction.pop();
-                                    Get.find<PBeneficiaryVm>()
-                                        .deleteBeneficiary(beneficiary);
-                                  },
-                                );
-                              },
-                            ),
-                          ],
-                        ).scrollable(),
-                  ),
-          children: [
-            PAppSize.s2.verticalSpace,
-            detailWidget(
-              context,
-              'dob'.tr,
-              beneficiary.birthDate == null
-                  ? 'not_applicable'.tr
-                  : PFormatter.formatDate(
-                    dateFormat: DateFormat('dd-MM-yyyy'),
-                    date: DateTime.parse(
-                      beneficiary.birthDate ?? DateTime.now().toIso8601String(),
-                    ),
-                  ),
-            ),
-            detailWidget(
-              context,
-              'benefit_percentage'.tr,
-              '${beneficiary.percAlloc}%',
-            ),
-            detailWidget(
-              context,
-              'relation'.tr,
-              beneficiary.relationship ?? 'not_applicable'.tr,
-            ),
-          ],
         ),
-        Divider(color: PAppColor.fillColor),
-      ],
-    );
-  }
-
-  Widget detailWidget(BuildContext context, String label, String value) {
-    return RichText(
-      textAlign: TextAlign.start,
-      text: TextSpan(
-        text: label,
-        style: Theme.of(
-          context,
-        ).textTheme.bodyLarge?.copyWith(fontWeight: FontWeight.w500),
+      ),
+      title: Text(
+        beneficiary.fullName ?? '',
+        style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+          fontSize: PAppSize.s15,
+          fontWeight: FontWeight.w500,
+        ),
+      ),
+      subtitle: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          TextSpan(
-            text: ' : $value',
-            style: Theme.of(context).textTheme.bodyLarge,
+          Text(
+            beneficiary.percAlloc == 100
+                ? '${beneficiary.percAlloc}%'
+                : '${beneficiary.percAlloc}% Split',
+            style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+              fontSize: PAppSize.s14,
+              fontWeight: FontWeight.w500,
+            ),
+          ),
+
+          Text(
+            // '${beneficiary.relationship}',
+            '${beneficiary.relationship} - ${beneficiary.birthDate == null ? 'not_applicable'.tr : PFormatter.formatDate(dateFormat: DateFormat('d MMMM y'), date: DateTime.parse(beneficiary.birthDate ?? DateTime.now().toIso8601String()))}',
+            style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+              fontSize: PAppSize.s13,
+              fontWeight: FontWeight.w400,
+            ),
           ),
         ],
       ),
+      trailing: loading
+          ? PShimmerBox(
+              width: PAppSize.s20,
+              height: PAppSize.s20,
+              shape: BoxShape.circle,
+            )
+          : Assets.icons.arrowRightBlack.svg(
+              color: PHelperFunction.isDarkMode(context)
+                  ? PAppColor.whiteColor
+                  : PAppColor.blackColor,
+            ),
     );
   }
 }

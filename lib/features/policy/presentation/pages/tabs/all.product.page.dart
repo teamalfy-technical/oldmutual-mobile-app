@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:oldmutual_pensions_app/core/utils/utils.dart';
 import 'package:oldmutual_pensions_app/features/pension/pension.dart';
@@ -39,23 +40,28 @@ class _PAllProductTabState extends State<PAllProductTab> {
       () =>
           (vm.loading.value == LoadingState.loading ||
               pensionVm.loading.value == LoadingState.loading)
-          ? ListView.builder(
-              shrinkWrap: true,
-              itemCount: 10,
-              itemBuilder: (context, index) {
-                return PProductRedactedWidget(
-                  loading: vm.loading.value,
-                  secondaryLoading: pensionVm.loading.value,
-                );
+          ? PShimmerListView<Scheme>(
+              loading: true,
+              items: const [],
+                   separatorBuilder: (context, index) =>
+                          PAppSize.s16.verticalSpace,
+              placeholderItem: Scheme(
+                masterSchemeDescription: 'Sample Scheme Name',
+                employerName: 'Sample Employer',
+                schemeCurrentValue: 50000,
+              ),
+              itemBuilder: (context, index, scheme) {
+                return PPensionWidget(loading: true, scheme: scheme);
               },
             )
           : vm.policies.isEmpty
           ? PEmptyStateWidget(message: 'no_results_found'.tr)
-          : ListView.builder(
+          : PAnimatedListView<Object>(
+              separatorBuilder: (context, index) => PAppSize.s16.verticalSpace,
               shrinkWrap: true,
-              itemCount: products.length,
-              itemBuilder: (context, index) {
-                final product = products[index];
+              items: products,
+              itemBuilder: (index, product) {
+                // final product = products[index];
                 if (product is Policy) {
                   return PPolicyWidget(
                     policy: product,

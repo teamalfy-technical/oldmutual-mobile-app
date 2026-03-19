@@ -101,7 +101,7 @@ class _PPayNowPageState extends State<PPayNowPage> {
                   child: Form(
                     key: ctrl.paymentFormKey,
                     autovalidateMode: AutovalidateMode.onUserInteraction,
-                    child: Column(
+                    child: PAnimatedColumnWidget(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         // Policy/Product info if available
@@ -239,14 +239,13 @@ class _PPayNowPageState extends State<PPayNowPage> {
                         PAppSize.s12.verticalSpace,
 
                         // Currency info
-                        Obx(
-                          () {
-                            // Always read the observable so GetX registers it
-                            final amount = ctrl.amount.value;
-                            final displayAmount = _isFullPayment
-                                ? _totalAmount
-                                : amount;
-                            return Container(
+                        Obx(() {
+                          // Always read the observable so GetX registers it
+                          final amount = ctrl.amount.value;
+                          final displayAmount = _isFullPayment
+                              ? _totalAmount
+                              : amount;
+                          return Container(
                             width: PDeviceUtil.getDeviceWidth(context),
                             padding: EdgeInsets.symmetric(
                               vertical: PAppSize.s16,
@@ -282,8 +281,7 @@ class _PPayNowPageState extends State<PPayNowPage> {
                               ),
                             ),
                           );
-                          },
-                        ),
+                        }),
 
                         // PAppSize.s20.verticalSpace,
 

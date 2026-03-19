@@ -100,12 +100,20 @@ class PContributionHistoryPage extends StatelessWidget {
 
                   Expanded(
                     child: ctrl.loading.value == LoadingState.loading
-                        ? ListView.builder(
-                            shrinkWrap: true,
-                            itemCount: 10,
-                            itemBuilder: (context, index) {
-                              return ContributionHistoryWidgetRedact(
-                                loadingState: ctrl.loading.value,
+                        ? PShimmerListView<Transactions>(
+                            loading: true,
+                            items: const [],
+                            separatorBuilder: (context, index) =>
+                                PAppSize.s12.verticalSpace,
+                            scrollDirection: Axis.vertical,
+                            placeholderItem: Transactions(
+                              schemeName: 'Sample Scheme',
+                              received: 5000.0,
+                              paymentDate: DateTime.now().toIso8601String(),
+                            ),
+                            itemBuilder: (context, index, transaction) {
+                              return ContributionHistoryWidget(
+                                transaction: transaction,
                               );
                             },
                           )
@@ -114,20 +122,19 @@ class PContributionHistoryPage extends StatelessWidget {
                               .toList()
                               .isEmpty
                         ? PEmptyStateWidget(message: 'no_results_found'.tr)
-                        : ListView.builder(
+                        : PAnimatedListView(
+                            separatorBuilder: (context, index) =>
+                                PAppSize.s0.verticalSpace,
                             shrinkWrap: true,
-                            itemCount: ctrl
-                                .history
-                                .value
-                                .transactionHistory
-                                ?.transactions
-                                ?.length,
-                            itemBuilder: (context, index) {
-                              final transaction = ctrl
-                                  .history
-                                  .value
-                                  .transactionHistory!
-                                  .transactions![index];
+                            items:
+                                ctrl
+                                    .history
+                                    .value
+                                    .transactionHistory
+                                    ?.transactions ??
+                                [],
+
+                            itemBuilder: (index, transaction) {
                               return ContributionHistoryWidget(
                                 transaction: transaction,
                               );

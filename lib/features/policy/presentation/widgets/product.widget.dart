@@ -13,6 +13,7 @@ class ProductWidget extends StatelessWidget {
   final EdgeInsets? margin;
   final Function()? onTap;
   final Function()? onAddTap;
+  final bool loading;
   ProductWidget({
     super.key,
     required this.product,
@@ -21,6 +22,7 @@ class ProductWidget extends StatelessWidget {
     this.onTap,
     this.height,
     this.onAddTap,
+    this.loading = false,
   });
   final vm = Get.put(PPolicyVm());
 
@@ -28,7 +30,7 @@ class ProductWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       padding: EdgeInsets.all(PAppSize.s22),
-      margin: margin ?? EdgeInsets.only(right: PAppSize.s20),
+      // margin: margin ?? EdgeInsets.only(right: PAppSize.s20),
       height: height,
       width: width ?? PDeviceUtil.getDeviceWidth(context) * 0.65,
       decoration: BoxDecoration(
@@ -93,7 +95,13 @@ class ProductWidget extends StatelessWidget {
 
                         PAppSize.s8.verticalSpace,
 
-                        product['type'] == ProductType.insurance
+                        loading
+                            ? PShimmerBox(
+                                width: PAppSize.s40,
+                                height: PAppSize.s50,
+                                shape: BoxShape.circle,
+                              )
+                            : product['type'] == ProductType.insurance
                             ? Assets.icons.wallet
                                   .svg(
                                     color: PHelperFunction.isDarkMode(context)
@@ -141,9 +149,12 @@ class ProductWidget extends StatelessWidget {
                           fontWeight: FontWeight.w500,
                         ),
                       ),
-                      PCountUpText(
-                        amount: product['contribution'] ?? 0.0,
+                      Text(
+                        PFormatter.formatCurrency(
+                          amount: product['contribution'] ?? 0.0,
+                        ),
                         textAlign: TextAlign.center,
+                        softWrap: true,
                         style: Theme.of(context).textTheme.headlineMedium
                             ?.copyWith(fontWeight: FontWeight.w600),
                       ),
@@ -163,19 +174,27 @@ class ProductWidget extends StatelessWidget {
                   ],
                 ),
               ),
-              Assets.icons.arrowRightBlack
-                  .svg(
-                    color: PHelperFunction.isDarkMode(context)
-                        ? PAppColor.whiteColor
-                        : PAppColor.blackColor,
-                  )
-                  .onPressed(onTap: onTap),
+              loading
+                  ? PShimmerBox(
+                      width: PAppSize.s20,
+                      height: PAppSize.s20,
+                      shape: BoxShape.circle,
+                    )
+                  : Assets.icons.arrowRightBlack
+                        .svg(
+                          color: PHelperFunction.isDarkMode(context)
+                              ? PAppColor.whiteColor
+                              : PAppColor.blackColor,
+                        )
+                        .onPressed(onTap: onTap),
             ],
           ),
           SizedBox(
             width: double.infinity,
             child: Divider(
-              color: PHelperFunction.isDarkMode(context)
+              color: loading
+                  ? PAppColor.coolGrey.withOpacityExt(PAppSize.s0_2)
+                  : PHelperFunction.isDarkMode(context)
                   ? PAppColor.successLight
                   : PAppColor.successDark,
               thickness: PAppSize.s4,

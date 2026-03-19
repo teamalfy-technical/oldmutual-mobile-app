@@ -123,35 +123,35 @@ class PHomeVm extends GetxController {
       ),
     ),
 
-    Highlight(
-      title: 'transition_plus_plan'.tr,
-      thumbnail: Assets.images.transitionPlusImg.path,
-      image: Assets.images.transitionPlusBg.path,
-      heading: 'Cover the cost of funeral expenses',
-      description:
-          'Give your loved ones a proper send-off without having to worry about funeral expenses',
-      planDescription: 'SAffordable life cover with cashback every 3 years',
-      benefits: [
-        'Prompt payout within 48 hours',
-        '10% cashback every 3 years',
-        'No waiting period for accidental death',
-        'Affordable premiums',
-      ],
-      onLearnMoreTap: () => PHelperFunction.switchScreen(
-        destination: Routes.webviewPage,
-        args: [
-          'transition_plus_plan'.tr.replaceAll('\n', ''),
-          PAppConstant.transitionPlusPlanUrl,
-        ],
-      ),
-      onQuoteTap: () => PHelperFunction.switchScreen(
-        destination: Routes.webviewPage,
-        args: [
-          'transition_plus_plan'.tr.replaceAll('\n', ''),
-          PAppConstant.transitionPlusPlanUrl,
-        ],
-      ),
-    ),
+    // Highlight(
+    //   title: 'transition_plus_plan'.tr,
+    //   thumbnail: Assets.images.transitionPlusImg.path,
+    //   image: Assets.images.transitionPlusBg.path,
+    //   heading: 'Cover the cost of funeral expenses',
+    //   description:
+    //       'Give your loved ones a proper send-off without having to worry about funeral expenses',
+    //   planDescription: 'SAffordable life cover with cashback every 3 years',
+    //   benefits: [
+    //     'Prompt payout within 48 hours',
+    //     '10% cashback every 3 years',
+    //     'No waiting period for accidental death',
+    //     'Affordable premiums',
+    //   ],
+    //   onLearnMoreTap: () => PHelperFunction.switchScreen(
+    //     destination: Routes.webviewPage,
+    //     args: [
+    //       'transition_plus_plan'.tr.replaceAll('\n', ''),
+    //       PAppConstant.transitionPlusPlanUrl,
+    //     ],
+    //   ),
+    //   onQuoteTap: () => PHelperFunction.switchScreen(
+    //     destination: Routes.webviewPage,
+    //     args: [
+    //       'transition_plus_plan'.tr.replaceAll('\n', ''),
+    //       PAppConstant.transitionPlusPlanUrl,
+    //     ],
+    //   ),
+    // ),
     Highlight(
       title: 'mvest_personal_pension'.tr,
       title2: 'mvest'.tr,
@@ -208,41 +208,34 @@ class PHomeVm extends GetxController {
       ),
     ),
 
-    Highlight(
-      title: 'ekyire_asem_nl'.tr,
-      title2: 'digital_funeral'.tr,
-      thumbnail: Assets.images.ekyireAsemImg.path,
-      image: Assets.images.ekyireAsemBg.path,
-      heading: 'ekyire_asem'.tr,
-      description:
-          'An affordable funeral policy that provides all the necessary logistical services for a one-week funeral celebration.',
-      planDescription:
-          'Dignified funeral support with fast claims and logistics help',
-      benefits: [
-        'Claims payment under 24hr',
-        'Affordable premiums',
-        'One Week Funeral Logistics',
-        'Ability to leave a legacy behind',
-        'Security for the family and the future',
-        'Easy application and exit process',
-        'Cash back of 5% of premiums paid',
-        'Optional hospital cover for main life',
-      ],
-      onLearnMoreTap: () => PHelperFunction.switchScreen(
-        destination: Routes.webviewPage,
-        args: ['ekyire_asem'.tr, PAppConstant.ekyireAsemUrl],
-      ),
-      onQuoteTap: () => PHelperFunction.switchScreen(
-        destination: Routes.webviewPage,
-        args: ['ekyire_asem'.tr, PAppConstant.ekyireAsemQuoteUrl],
-      ),
-    ),
     // Highlight(
-    //   title: 'forgot_login_details'.tr,
-    //   thumbnail: Assets.images.forgotDetailsImg.path,
-    //   image: Assets.images.forgotDetailsImg.path,
-    //   onLearnMoreTap: null,
-    //   onQuoteTap: null,
+    //   title: 'ekyire_asem_nl'.tr,
+    //   title2: 'digital_funeral'.tr,
+    //   thumbnail: Assets.images.ekyireAsemImg.path,
+    //   image: Assets.images.ekyireAsemBg.path,
+    //   heading: 'ekyire_asem'.tr,
+    //   description:
+    //       'An affordable funeral policy that provides all the necessary logistical services for a one-week funeral celebration.',
+    //   planDescription:
+    //       'Dignified funeral support with fast claims and logistics help',
+    //   benefits: [
+    //     'Claims payment under 24hr',
+    //     'Affordable premiums',
+    //     'One Week Funeral Logistics',
+    //     'Ability to leave a legacy behind',
+    //     'Security for the family and the future',
+    //     'Easy application and exit process',
+    //     'Cash back of 5% of premiums paid',
+    //     'Optional hospital cover for main life',
+    //   ],
+    //   onLearnMoreTap: () => PHelperFunction.switchScreen(
+    //     destination: Routes.webviewPage,
+    //     args: ['ekyire_asem'.tr, PAppConstant.ekyireAsemUrl],
+    //   ),
+    //   onQuoteTap: () => PHelperFunction.switchScreen(
+    //     destination: Routes.webviewPage,
+    //     args: ['ekyire_asem'.tr, PAppConstant.ekyireAsemQuoteUrl],
+    //   ),
     // ),
   ];
 

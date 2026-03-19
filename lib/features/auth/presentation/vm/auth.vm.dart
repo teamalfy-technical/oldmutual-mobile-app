@@ -119,7 +119,7 @@ class PAuthVm extends GetxController {
       // Reset flag - user must enter password manually if biometric fails
       biometricAuthSucceeded = false;
       if (!silent) {
-        PPopupDialog(context).errorMessage(
+        PPopupDialog(context).warningMessage(
           title: 'error'.tr,
           message:
               'Biometric authentication failed. Please enter your password.',
@@ -330,8 +330,6 @@ class PAuthVm extends GetxController {
         !PSecureStorage().isBiometricEnabled &&
         await LocalAuthService().isBiometricAvailable();
 
-    pensionAppLogger.d("ShouldPromptBiometric: $shouldPromptBiometric");
-
     clearFields();
     // await getBioData();
     PHelperFunction.switchScreen(
@@ -339,9 +337,9 @@ class PAuthVm extends GetxController {
       replace: true,
     );
 
-    PPopupDialog(
-      context,
-    ).successMessage(title: 'success'.tr, message: res.message ?? '');
+    // PPopupDialog(
+    //   context,
+    // ).successMessage(title: 'success'.tr, message: res.message ?? '');
 
     // Prompt user to enable biometric login if not already set up
     if (shouldPromptBiometric) {
@@ -439,8 +437,8 @@ class PAuthVm extends GetxController {
   /// Function to sign up user by sending OTP code
   Future<void> getBioData() async {
     final result = await authService.getBioData();
-    result.fold(
-      (err) {
+    await result.fold(
+      (err) async {
         loading(LoadingState.error);
         PPopupDialog(
           context,

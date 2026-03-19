@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:oldmutual_pensions_app/core/utils/utils.dart';
 import 'package:oldmutual_pensions_app/features/pension/pension.dart';
@@ -24,10 +25,11 @@ class PRetailTab extends StatelessWidget {
                 ? 'no_policy_found'.trParams({'name': type.name})
                 : 'no_product_found'.trParams({'name': type.name}),
           )
-        : ListView.builder(
+        : PAnimatedListView<Object>(
+            separatorBuilder: (context, index) => PAppSize.s16.verticalSpace,
             shrinkWrap: true,
-            itemCount: products.length,
-            itemBuilder: (context, index) {
+            items: products,
+            itemBuilder: (index, product) {
               final product = products[index];
               if (product is Policy) {
                 return PPolicyWidget(

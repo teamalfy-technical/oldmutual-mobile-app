@@ -1,19 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:intl/intl.dart';
 import 'package:oldmutual_pensions_app/core/utils/utils.dart';
 import 'package:oldmutual_pensions_app/features/contribution.history/contribution.history.dart';
 import 'package:oldmutual_pensions_app/features/policy/policy.dart';
-import 'package:oldmutual_pensions_app/features/statements/statements.dart';
 import 'package:oldmutual_pensions_app/shared/shared.dart';
 
 class PPremiumStatementPage extends StatelessWidget {
   PPremiumStatementPage({super.key});
 
   final vm = Get.put(PPolicyStatementVm());
-  // final statementVm = Get.find<PStatementVm>();
-  final statementVm = Get.put(PStatementVm());
+  final policyVm = Get.find<PPolicyVm>();
 
   @override
   Widget build(BuildContext context) {
@@ -50,6 +47,18 @@ class PPremiumStatementPage extends StatelessWidget {
                 ),
                 child: Column(
                   children: [
+                    Align(
+                      alignment: Alignment.topLeft,
+                      child: Text(
+                        '${'policy'.tr}: ${vm.selectedPolicy?.planDescription ?? policyVm.selectedPolicy?.planDescription ?? 'not_applicable'.tr}',
+                        textAlign: TextAlign.start,
+                        style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                          fontWeight: FontWeight.w600,
+                          // fontSize: PAppSize.s10,
+                        ),
+                      ),
+                    ),
+                    PAppSize.s20.verticalSpace,
                     PCustomDropdownField<ContributedYear>(
                       labelText: 'select_year'.tr,
                       initialValue: vm.selectedYear,
@@ -64,32 +73,22 @@ class PPremiumStatementPage extends StatelessWidget {
                       onChanged: vm.onYearChanged,
                     ),
 
-                    PAppSize.s16.verticalSpace,
-
-                    PCustomDropdownField<Policy>(
-                      labelText: 'select_policy'.tr,
-                      initialValue: vm.selectedPolicy,
-                      items: vm.policyOptions
-                          .map(
-                            (e) => DropdownMenuItem(
-                              value: e,
-                              child: Text(e.planDescription ?? ''),
-                            ),
-                          )
-                          .toList(),
-                      onChanged: vm.onSelectedPolicyReport,
-                    ),
-
                     // PAppSize.s16.verticalSpace,
-                    // DropdownButtonFormField<String>(
-                    //   decoration: InputDecoration(labelText: 'select_scheme'.tr),
-                    //   initialValue: 'All',
-                    //   items: ['All', '2024']
-                    //       .map((e) => DropdownMenuItem(value: e, child: Text(e)))
+
+                    // PCustomDropdownField<Policy>(
+                    //   labelText: 'select_policy'.tr,
+                    //   initialValue: vm.matchedSelectedPolicy,
+                    //   items: vm.policyOptions
+                    //       .map(
+                    //         (e) => DropdownMenuItem(
+                    //           value: e,
+                    //           child: Text(e.planDescription ?? ''),
+                    //         ),
+                    //       )
                     //       .toList(),
-                    //   onChanged: (val) {},
+                    //   onChanged: vm.onSelectedPolicyReport,
                     // ),
-                    PAppSize.s16.verticalSpace,
+                    PAppSize.s20.verticalSpace,
                     PGradientButton(
                       label: 'generate_statement'.tr,
                       showIcon: false,
@@ -128,65 +127,37 @@ class PPremiumStatementPage extends StatelessWidget {
                   child: RefreshIndicator.adaptive(
                     onRefresh: () => vm.getAllGeneratedReports(),
                     child: vm.loading.value == LoadingState.loading
-                        ? ListView.builder(
-                            shrinkWrap: true,
-                            itemCount: 5,
-                            padding: EdgeInsets.zero,
-                            itemBuilder: (context, index) {
-                              return PStatementWidgetRedact(
-                                loading: vm.loading.value,
+                        ? PShimmerListView<PolicyReport>(
+                            loading: true,
+                            items: const [],
+                            separatorBuilder: (context, index) =>
+                                PAppSize.s16.verticalSpace,
+                            scrollDirection: Axis.vertical,
+                            placeholderItem: PolicyReport(
+                              id: 0,
+                              type: 'Sample Scheme Name',
+                              createdAt: "2026-03-12T23:30:57.000000Z",
+                              filePath:
+                                  "reports/2026/03/policy-trans-statement_2001OMEP194287_20260312_233057.pdf",
+                              filters: Filters(year: "2026"),
+                              downloadUrl:
+                                  "https://test-app.oldmutual.com.gh/api/reports/378?token=ewqNJj5qYYo6KmPlx6vx7l0R1Pbtt8jC4W9PTEFA&download=true",
+                            ),
+                            itemBuilder: (context, index, statement) {
+                              return PPremiumStatementWidget(
+                                statement: statement,
                               );
                             },
-                          ).symmetric(horizontal: PAppSize.s8)
+                          )
                         : vm.statements.isEmpty
                         ? PEmptyStateWidget(message: 'no_results_found'.tr)
-                        : ListView.separated(
+                        : PAnimatedListView<PolicyReport>(
                             shrinkWrap: true,
-                            itemCount:
-                                vm.statements.length, // limits to 4 safely
-                            itemBuilder: (context, index) {
-                              final statement = vm.statements[index];
-                              return ListTile(
-                                title: Text(
-                                  'Policy contributions (${statement.filters?.year ?? 'All'})',
-                                  style: Theme.of(context).textTheme.bodyLarge
-                                      ?.copyWith(
-                                        fontSize: PAppSize.s14,
-                                        fontWeight: FontWeight.w600,
-                                      ),
-                                ),
-                                subtitle: Text(
-                                  PFormatter.formatDate(
-                                    dateFormat: DateFormat('yMMMMd'),
-                                    date: DateTime.parse(
-                                      statement.createdAt ??
-                                          DateTime.now().toIso8601String(),
-                                    ),
-                                  ),
-                                  style: Theme.of(context).textTheme.bodyMedium
-                                      ?.copyWith(
-                                        fontSize: PAppSize.s13,
-                                        fontWeight: FontWeight.w400,
-                                      ),
-                                ),
-                                trailing: TextButton(
-                                  onPressed: () => PHelperFunction.openFileWithURL(
-                                    url: statement.downloadUrl ?? '',
-                                    fileName:
-                                        vm.selectedYear?.fundYear == 'all'.tr
-                                        ? 'All_Policy_Report.pdf'
-                                        : 'Policy_${statement.filters?.year ?? ''}_Report.pdf',
-                                  ),
-                                  child: Text(
-                                    'view_pdf'.tr,
-                                    style: Theme.of(context).textTheme.bodyLarge
-                                        ?.copyWith(
-                                          fontSize: PAppSize.s14,
-                                          color: PAppColor.successMedium,
-                                          fontWeight: FontWeight.w600,
-                                        ),
-                                  ),
-                                ),
+                            items: vm.statements, // limits to 4 safely
+                            itemBuilder: (index, statement) {
+                              return PPremiumStatementWidget(
+                                statement: statement,
+                                selectedYear: vm.selectedYear,
                               );
                             },
                             separatorBuilder: (context, index) => Divider(

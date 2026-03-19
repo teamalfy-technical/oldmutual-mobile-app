@@ -135,7 +135,7 @@ class Policy extends Equatable {
   }
 
   @override
-  List<Object?> get props => [policyNo, planDescription];
+  List<Object?> get props => [policyNo, planCode];
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};

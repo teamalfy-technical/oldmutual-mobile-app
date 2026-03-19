@@ -114,12 +114,21 @@ class _PPensionOverviewPageState extends State<PPensionOverviewPage>
                       onRefresh: vm.getMemberSchemes,
                       color: PAppColor.primary,
                       child: vm.loading.value == LoadingState.loading
-                          ? ListView.builder(
-                              shrinkWrap: true,
-                              itemCount: 10,
-                              itemBuilder: (context, index) {
-                                return PProductRedactedWidget(
-                                  loading: vm.loading.value,
+                          ? PShimmerListView<Scheme>(
+                              loading: true,
+                              items: const [],
+                              separatorBuilder: (context, index) =>
+                                  PAppSize.s16.verticalSpace,
+                              scrollDirection: Axis.vertical,
+                              placeholderItem: Scheme(
+                                masterSchemeDescription: 'Sample Scheme Name',
+                                employerName: 'Sample Employer',
+                                schemeCurrentValue: 50000,
+                              ),
+                              itemBuilder: (context, index, scheme) {
+                                return PPensionWidget(
+                                  loading: true,
+                                  scheme: scheme,
                                 );
                               },
                             )

@@ -208,23 +208,9 @@ class _PWelcomeBackPageState extends State<PWelcomeBackPage>
                           onObscureChanged: ctrl.onObscureChanged,
                           controller: ctrl.passwordTEC,
                         ),
-                        // PAppSize.s10.verticalSpace,
 
-                        // Align(
-                        //   alignment: Alignment.centerLeft,
-                        //   child: PAuthLinkButton(
-                        //     title: '${'forgot_password'.tr}? ',
-                        //     subtitle: 'reset'.tr,
-                        //     subtitleColor: PAppColor.primary,
-                        //     fontSize: PAppSize.s14,
-                        //     onTap: () => PHelperFunction.switchScreen(
-                        //       destination: Routes.enterEmailPage,
-                        //     ),
-                        //   ),
-                        // ),
                         PAppSize.s25.verticalSpace,
 
-                        // (PDeviceUtil.getDeviceWidth(context) / 3).verticalSpace,
                         PGradientButton(
                           label: 'sign_in'.tr,
                           showIcon: false,
@@ -297,64 +283,11 @@ class _PWelcomeBackPageState extends State<PWelcomeBackPage>
                         PCustomExpansionTile(
                           title: 'explore_other_services'.tr,
                         ),
-                        // Theme(
-                        //   data: Theme.of(
-                        //     context,
-                        //   ).copyWith(dividerColor: Colors.transparent),
-                        //   child: ExpansionTile(
-                        //     initiallyExpanded: false,
-                        //     onExpansionChanged: (value) {},
-                        //     title: Text(
-                        //       'explore_other_services'.tr,
-                        //       style: Theme.of(context).textTheme.headlineSmall,
-                        //     ),
-                        //     trailing: Icon(Icons.keyboard_arrow_down),
-                        //     children: [
-                        //       ServiceLinkWidget(
-                        //         label: 'special_investments_plan'.tr,
-                        //         onLinkTap: () {},
-                        //       ),
-                        //       PAppSize.s10.verticalSpace,
-                        //       ServiceLinkWidget(
-                        //         label: 'special_investments_plan'.tr,
-                        //         onLinkTap: () {},
-                        //       ),
-                        //       PAppSize.s10.verticalSpace,
-                        //       ServiceLinkWidget(
-                        //         label: 'special_investments_plan'.tr,
-                        //         onLinkTap: () {},
-                        //       ),
-                        //       PAppSize.s10.verticalSpace,
-                        //       ServiceLinkWidget(
-                        //         label: 'special_investments_plan'.tr,
-                        //         onLinkTap: () {},
-                        //       ),
-                        //       PAppSize.s10.verticalSpace,
-                        //       ServiceLinkWidget(
-                        //         label: 'special_investments_plan'.tr,
-                        //         onLinkTap: () {},
-                        //       ),
-                        //       PAppSize.s10.verticalSpace,
-                        //       ServiceLinkWidget(
-                        //         label: 'special_investments_plan'.tr,
-                        //         onLinkTap: () {},
-                        //       ),
-                        //     ],
-                        //   ),
-                        // ),
                       ],
                     ).scrollable(),
                   ),
                 ),
               ),
-              // don't have an account
-              // PAuthLinkButton(
-              //   title: '${'dont_have_account'.tr} ',
-              //   subtitle: 'sign_up'.tr,
-              //   onTap: () => PHelperFunction.switchScreen(
-              //     destination: Routes.signupPage,
-              //   ),
-              // ),
             ],
           ).symmetric(horizontal: PAppSize.s24, vertical: PAppSize.s10),
         ),

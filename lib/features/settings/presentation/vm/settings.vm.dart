@@ -180,11 +180,6 @@ class PSettingsVm extends GetxController {
             replace: true,
           );
         }
-        // else {
-        //   PPopupDialog(
-        //     context,
-        //   ).errorMessage(title: err.title ?? 'error'.tr, message: err.message);
-        // }
       },
       (res) {
         loading(LoadingState.completed);
@@ -193,24 +188,9 @@ class PSettingsVm extends GetxController {
           destination: Routes.welcomeBackPage,
           replace: true,
         );
-        PPopupDialog(
-          context,
-        ).successMessage(title: 'success'.tr, message: res.message ?? '');
-        // if (soft) {
-        //   // navigate to next screen
-        //   PHelperFunction.switchScreen(
-        //     destination: Routes.welcomeBackPage,
-        //     replace: true,
-        //   );
-        // } else {
-        //   PHelperFunction.switchScreen(
-        //     destination: Routes.loginPage,
-        //     replace: true,
-        //   );
-        //   PPopupDialog(
-        //     context,
-        //   ).successMessage(title: 'success'.tr, message: res.message ?? '');
-        // }
+        // PPopupDialog(
+        //   context,
+        // ).successMessage(title: 'success'.tr, message: res.message ?? '');
       },
     );
   }
@@ -223,7 +203,7 @@ class PSettingsVm extends GetxController {
   /// true if user was logged out due to inactivity
   Future<void> clearCache(bool soft) async {
     await PSecureStorage().removeSecureData(PSecureStorage().authResKey);
-    await PSecureStorage().removeSecureData(PSecureStorage().bioDataKey);
+    // await PSecureStorage().removeSecureData(PSecureStorage().bioDataKey);
     if (Get.isRegistered<PHomeVm>()) {
       PHomeVm.instance.currentIndex.value = 0;
     }

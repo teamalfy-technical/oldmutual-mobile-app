@@ -48,10 +48,17 @@ class PPolicyStatementVm extends GetxController {
     update();
   }
 
+  /// Returns the selectedPolicy matched from the current policyOptions list,
+  /// ensuring the dropdown always finds the selected value in its items.
+  Policy? get matchedSelectedPolicy {
+    if (selectedPolicy == null) return null;
+    return policyOptions.firstWhereOrNull((p) => p == selectedPolicy);
+  }
+
   @override
   void onInit() {
-    selectedPolicy = allPolicy;
-    policyOptions.value = [allPolicy, ...Get.find<PPolicyVm>().policies];
+    // selectedPolicy = allPolicy;
+    // policyOptions.value = [allPolicy, ...Get.find<PPolicyVm>().policies];
     getContributedYears();
     getAllGeneratedReports();
     super.onInit();
@@ -61,7 +68,9 @@ class PPolicyStatementVm extends GetxController {
   Future<void> getAllGeneratedReports() async {
     updateLoadingState(LoadingState.loading);
     final result = await policyService.getPolicyReports(
-      policyNumber: selectedPolicy?.policyNo,
+      policyNumber:
+          selectedPolicy?.policyNo ??
+          Get.find<PPolicyVm>().selectedPolicy?.policyNo,
     );
     result.fold(
       (err) {

@@ -15,7 +15,7 @@ class PStatementWidgetRedact extends StatelessWidget {
       child: Container(
         width: PDeviceUtil.getDeviceWidth(context),
         padding: EdgeInsets.all(PAppSize.s20),
-        margin: EdgeInsets.only(bottom: PAppSize.s12),
+
         decoration: BoxDecoration(
           color: PHelperFunction.isDarkMode(context)
               ? PAppColor.darkAppBarColor

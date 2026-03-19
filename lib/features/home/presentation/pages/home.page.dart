@@ -114,34 +114,47 @@ class PHomePage extends StatelessWidget {
                       height: PDeviceUtil.isIOS()
                           ? PDeviceUtil.getDeviceHeight(context) * 0.35
                           : PDeviceUtil.getDeviceHeight(context) * 0.38,
-                      child: policyVm.loading.value != LoadingState.loading
-                          ? PShimmerWrapper(
-                              loading:
-                                  policyVm.loading.value !=
-                                  LoadingState.loading,
-                              child: ListView.builder(
-                                shrinkWrap: true,
-                                itemCount: 3,
-                                scrollDirection: Axis.horizontal,
-                                itemBuilder: (context, index) {
-                                  return ProductWidget(
-                                    product: {
+                      child: policyVm.loading.value == LoadingState.loading
+                          ? Column(
+                              children: [
+                                PShimmerWrapper(
+                                  loading:
+                                      policyVm.loading.value ==
+                                      LoadingState.loading,
+                                  child: PSeeAllWidget(
+                                    leadingText: 'products'.tr,
+                                    trailing: Text('see_all'.tr),
+                                    onTap: () {},
+                                  ),
+                                ),
+                                PAppSize.s16.verticalSpace,
+                                Expanded(
+                                  child: PShimmerListView<Map<String, dynamic>>(
+                                    loading: true,
+                                    items: const [],
+                                    separatorBuilder: (context, index) =>
+                                        PAppSize.s20.horizontalSpace,
+                                    scrollDirection: Axis.horizontal,
+                                    placeholderItem: {
                                       'name': 'Pensions',
                                       'type': ProductType.pensions,
                                       'num_of_account': 0,
                                       'contribution': 0.00,
                                     },
-                                  );
-                                  // return PensionTierRedactWidget(
-                                  //   loading: policyVm.loading.value,
-                                  // );
-                                },
-                              ),
+                                    itemBuilder: (context, index, product) {
+                                      return ProductWidget(
+                                        loading: true,
+                                        product: product,
+                                      );
+                                    },
+                                  ),
+                                ),
+                              ],
                             )
                           : ((policyVm.summary.value.totalPolicies ?? 0) == 0 &&
                                 (pensionVm.summary.value.totalPensions ?? 0) ==
                                     0)
-                          ? PEmptyStateWidget(message: 'no_results_found'.tr)
+                          ? PEmptyStateWidget(message: 'no_products_found'.tr)
                           : Column(
                               children: [
                                 PSeeAllWidget(
@@ -165,12 +178,15 @@ class PHomePage extends StatelessWidget {
                                 ),
                                 PAppSize.s16.verticalSpace,
                                 Expanded(
-                                  child: ListView.builder(
+                                  child: PAnimatedListView<Map<String, dynamic>>(
+                                    separatorBuilder: (context, index) =>
+                                        PAppSize.s20.horizontalSpace,
+                                    animateType: AnimateType.slideLeft,
                                     shrinkWrap: true,
-                                    itemCount: policyVm.products.length,
+                                    items: policyVm.products,
                                     scrollDirection: Axis.horizontal,
-                                    itemBuilder: (context, index) {
-                                      final product = policyVm.products[index];
+                                    itemBuilder: (index, product) {
+                                      // final product = policyVm.products[index];
                                       return ProductWidget(
                                         product: product,
                                         onTap: () {

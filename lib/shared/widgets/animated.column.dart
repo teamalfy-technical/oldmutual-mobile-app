@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:oldmutual_pensions_app/core/utils/utils.dart';
 
-class AnimatedColumnWidget extends StatelessWidget {
+class PAnimatedColumnWidget extends StatelessWidget {
   final List<Widget> children;
   final AnimateType animateType;
   final MainAxisAlignment mainAxisAlignment;
@@ -10,7 +10,7 @@ class AnimatedColumnWidget extends StatelessWidget {
   final MainAxisSize mainAxisSize;
   final int duration;
 
-  const AnimatedColumnWidget({
+  const PAnimatedColumnWidget({
     super.key,
     required this.children,
     this.animateType = AnimateType.slideUp,
@@ -30,11 +30,10 @@ class AnimatedColumnWidget extends StatelessWidget {
           mainAxisSize: mainAxisSize,
           children: AnimationConfiguration.toStaggeredList(
             duration: Duration(milliseconds: duration),
-            childAnimationBuilder:
-                (widget) => SlideAnimation(
-                  verticalOffset: PAppSize.s50,
-                  child: SlideAnimation(child: widget),
-                ),
+            childAnimationBuilder: (widget) => SlideAnimation(
+              verticalOffset: PAppSize.s50,
+              child: FadeInAnimation(child: widget),
+            ),
             children: children,
           ),
         ),
@@ -47,11 +46,10 @@ class AnimatedColumnWidget extends StatelessWidget {
           mainAxisSize: mainAxisSize,
           children: AnimationConfiguration.toStaggeredList(
             duration: Duration(milliseconds: duration),
-            childAnimationBuilder:
-                (widget) => SlideAnimation(
-                  horizontalOffset: PAppSize.s50,
-                  child: FadeInAnimation(child: widget),
-                ),
+            childAnimationBuilder: (widget) => SlideAnimation(
+              verticalOffset: PAppSize.s50,
+              child: SlideAnimation(child: widget),
+            ),
             children: children,
           ),
         ),

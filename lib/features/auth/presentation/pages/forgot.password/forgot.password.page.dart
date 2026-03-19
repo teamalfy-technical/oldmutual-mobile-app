@@ -25,7 +25,7 @@ class PForgotPasswordPage extends StatelessWidget {
                 Expanded(
                   child: Form(
                     key: formKey,
-                    child: Column(
+                    child: PAnimatedColumnWidget(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         PAppSize.s8.verticalSpace,

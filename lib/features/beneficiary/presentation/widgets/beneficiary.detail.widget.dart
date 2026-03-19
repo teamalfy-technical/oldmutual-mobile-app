@@ -42,7 +42,7 @@ class PBeneficiaryDetailWidget extends StatelessWidget {
 
             // PAppSize.s6.verticalSpace,
             Expanded(
-              child: Column(
+              child: PAnimatedColumnWidget(
                 children: [
                   CustomListTile(
                     title: beneficiary.fullName ?? 'not_applicable'.tr,

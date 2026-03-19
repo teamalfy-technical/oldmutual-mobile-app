@@ -346,6 +346,8 @@ class AppTranslations extends Translations {
       'updating_beneficiary_msg': 'Updating Beneficiary Details...',
       'check_status': 'Check Status',
       'download': 'Download',
+      'policy': 'Policy',
+      'no_products_found': 'You\'ve no products available',
       'submitting_request_msg': 'We\'re processing your request...',
       'national_id': 'National ID',
       'redemption_by': 'Redemption By',
