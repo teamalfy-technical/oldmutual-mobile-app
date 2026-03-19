@@ -59,7 +59,9 @@ class PPolicyStatementVm extends GetxController {
   void onInit() {
     // selectedPolicy = allPolicy;
     // policyOptions.value = [allPolicy, ...Get.find<PPolicyVm>().policies];
-    getContributedYears();
+    if (contributionYears.isEmpty) {
+      getContributedYears();
+    }
     getAllGeneratedReports();
     super.onInit();
   }
@@ -67,10 +69,11 @@ class PPolicyStatementVm extends GetxController {
   /// Function to get all generated reports
   Future<void> getAllGeneratedReports() async {
     updateLoadingState(LoadingState.loading);
+    final mSelectedPolicy =
+        selectedPolicy?.policyNo ??
+        Get.find<PPolicyVm>().selectedPolicy?.policyNo;
     final result = await policyService.getPolicyReports(
-      policyNumber:
-          selectedPolicy?.policyNo ??
-          Get.find<PPolicyVm>().selectedPolicy?.policyNo,
+      policyNumber: mSelectedPolicy,
     );
     result.fold(
       (err) {
@@ -81,10 +84,8 @@ class PPolicyStatementVm extends GetxController {
       },
       (res) {
         updateLoadingState(LoadingState.completed);
-        // if(res.data)
         res.data?.sort((a, b) => b.createdAt!.compareTo(a.createdAt ?? ''));
         statements.value = res.data ?? [];
-        // pensionAppLogger.i('DownloadUrl: ${statements.first.downloadUrl}');
       },
     );
   }
