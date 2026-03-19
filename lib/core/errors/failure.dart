@@ -11,10 +11,14 @@ abstract class Failure extends Equatable {
 }
 
 class PFailure extends Failure {
-  const PFailure({required this.message, this.title});
+  const PFailure({required this.message, this.title, this.silent = false});
 
   final String message;
   final String? title;
+
+  /// When true, this failure should not be displayed to the user.
+  /// Used to suppress error popups from stale API calls after logout.
+  final bool silent;
 
   @override
   List<Object> get props => [message];
