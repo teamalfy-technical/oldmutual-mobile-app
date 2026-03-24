@@ -209,6 +209,32 @@ class _PWelcomeBackPageState extends State<PWelcomeBackPage>
                           controller: ctrl.passwordTEC,
                         ),
 
+                        PAppSize.s16.verticalSpace,
+
+                        TextButton(
+                          onPressed: () {
+                            PHelperFunction.switchScreen(
+                              destination: Routes.forgotPasswordPage,
+                            );
+                          },
+                          child: Text(
+                            '${'forgot_password'.tr}?',
+                            style: Theme.of(context).textTheme.headlineSmall
+                                ?.copyWith(
+                                  fontWeight: FontWeight.w600,
+                                  decoration: TextDecoration.underline,
+                                  decorationColor:
+                                      PHelperFunction.isDarkMode(context)
+                                      ? PAppColor.primaryRest
+                                      : PAppColor.primary,
+                                  color: PHelperFunction.isDarkMode(context)
+                                      ? PAppColor.primaryRest
+                                      : PAppColor.primary,
+                                  fontSize: PAppSize.s16,
+                                ),
+                          ),
+                        ),
+
                         PAppSize.s25.verticalSpace,
 
                         PGradientButton(
