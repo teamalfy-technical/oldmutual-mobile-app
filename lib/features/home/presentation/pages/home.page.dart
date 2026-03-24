@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:oldmutual_pensions_app/core/services/in.app.review.service.dart';
 import 'package:oldmutual_pensions_app/core/utils/utils.dart';
 import 'package:oldmutual_pensions_app/features/cross-sell/cross.sell.dart';
 import 'package:oldmutual_pensions_app/features/home/home.dart';
@@ -19,6 +21,10 @@ class PHomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    SchedulerBinding.instance.addPostFrameCallback((_) {
+      PInAppReviewService().requestReviewIfEligible();
+    });
+
     return Scaffold(
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,

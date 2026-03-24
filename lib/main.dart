@@ -13,6 +13,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:oldmutual_pensions_app/core/bindings/bindings.dart';
+import 'package:oldmutual_pensions_app/core/services/in.app.review.service.dart';
 import 'package:oldmutual_pensions_app/core/l10n/l10n.dart';
 import 'package:oldmutual_pensions_app/core/services/force.update.service.dart';
 import 'package:oldmutual_pensions_app/core/theme/app.theme.dart';
@@ -48,6 +49,9 @@ Future<void> initDependencies() async {
 
   // Initialize secure storage and migrate existing data
   await PSecureStorage().init();
+
+  // 📊 Initialize in-app review (tracks app open count)
+  await PInAppReviewService().init();
 
   //🔐 Initialize Firebase first
   await initFirebaseApp();
