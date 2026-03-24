@@ -25,6 +25,7 @@ class _PCreateAccountPageState extends State<PCreateAccountPage> {
   bool hasSpecialChar = false;
   String? confirmPasswordError;
   String? emailError;
+  final FocusNode _phoneFocusNode = FocusNode();
 
   int _maxLength = 10;
 
@@ -117,40 +118,44 @@ class _PCreateAccountPageState extends State<PCreateAccountPage> {
                       //   ctrl: ctrl,
                       //   labelText: 'phone_number'.tr,
                       // ),
-                      PCustomTextField(
-                        // labelText: 'password'.tr,
-                        prefixText: '233',
-                        controller: ctrl.phoneTEC,
-                        labelText: 'phone_number'.tr,
-                        textInputType: TextInputType.phone,
-                        maxLength: _maxLength,
-                        validator: PValidator.validatePhoneNumber,
-                        onChanged: (value) {
-                          // Dynamically switch max length
-                          if (value.isNotEmpty) {
-                            if (value.startsWith('0')) {
-                              if (_maxLength != 10) {
-                                setState(() => _maxLength = 10);
-                              }
-                            } else {
-                              if (_maxLength != 9) {
-                                setState(() => _maxLength = 9);
+                      PKeyboardActions(
+                        focusNode: _phoneFocusNode,
+                        child: PCustomTextField(
+                          // labelText: 'password'.tr,
+                          prefixText: '233',
+                          controller: ctrl.phoneTEC,
+                          labelText: 'phone_number'.tr,
+                          textInputType: TextInputType.phone,
+                          maxLength: _maxLength,
+                          focusNode: _phoneFocusNode,
+                          validator: PValidator.validatePhoneNumber,
+                          onChanged: (value) {
+                            // Dynamically switch max length
+                            if (value.isNotEmpty) {
+                              if (value.startsWith('0')) {
+                                if (_maxLength != 10) {
+                                  setState(() => _maxLength = 10);
+                                }
+                              } else {
+                                if (_maxLength != 9) {
+                                  setState(() => _maxLength = 9);
+                                }
                               }
                             }
-                          }
 
-                          // if (value.length == 10 && value.startsWith('0')) {
-                          //   // Delay slightly to allow UI to update safely
-                          //   Future.microtask(() {
-                          //     ctrl.phoneTEC.text = value.substring(1);
-                          //     ctrl
-                          //         .phoneTEC
-                          //         .selection = TextSelection.fromPosition(
-                          //       TextPosition(offset: ctrl.phoneTEC.text.length),
-                          //     );
-                          //   });
-                          // }
-                        },
+                            // if (value.length == 10 && value.startsWith('0')) {
+                            //   // Delay slightly to allow UI to update safely
+                            //   Future.microtask(() {
+                            //     ctrl.phoneTEC.text = value.substring(1);
+                            //     ctrl
+                            //         .phoneTEC
+                            //         .selection = TextSelection.fromPosition(
+                            //       TextPosition(offset: ctrl.phoneTEC.text.length),
+                            //     );
+                            //   });
+                            // }
+                          },
+                        ),
                       ),
                       PAppSize.s20.verticalSpace,
 
@@ -226,7 +231,7 @@ class _PCreateAccountPageState extends State<PCreateAccountPage> {
                       TextButton(
                         onPressed: () {
                           PHelperFunction.switchScreen(
-                            destination: Routes.forgotPasswordPage,
+                            destination: Routes.supportPage,
                           );
                         },
                         child: Text(
