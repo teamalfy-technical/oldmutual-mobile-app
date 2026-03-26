@@ -8,7 +8,8 @@ import 'package:oldmutual_pensions_app/gen/assets.gen.dart';
 
 class PSupportPage extends StatelessWidget {
   final Member? user;
-  const PSupportPage({super.key, this.user});
+  final bool isShowAppBar;
+  const PSupportPage({super.key, this.user, this.isShowAppBar = true});
 
   @override
   Widget build(BuildContext context) {
@@ -18,7 +19,7 @@ class PSupportPage extends StatelessWidget {
       backgroundColor: PHelperFunction.isDarkMode(context)
           ? PAppColor.darkBgColor
           : PAppColor.fillColor,
-      appBar: AppBar(title: Text('my_relationship_manager'.tr)),
+      appBar: isShowAppBar ? AppBar(title: Text('support'.tr)) : null,
       body: Obx(() {
         final officer = affluentVm.relationshipOfficer.value;
         final officerName = officer.name ?? 'not_applicable'.tr;
@@ -26,6 +27,7 @@ class PSupportPage extends StatelessWidget {
         return Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            PAppSize.s6.verticalSpace,
             Container(
               width: double.infinity,
               padding: EdgeInsets.all(PAppSize.s32),
@@ -88,7 +90,7 @@ class PSupportPage extends StatelessWidget {
               ),
             ),
             Text(
-              'Saturday: 9:000 AM - 2:000 PM',
+              'Saturday: 9:00 AM - 2:00 PM',
               textAlign: TextAlign.start,
               style: Theme.of(context).textTheme.headlineLarge?.copyWith(
                 fontSize: PAppSize.s16,

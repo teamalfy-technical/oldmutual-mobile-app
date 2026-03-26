@@ -333,7 +333,8 @@ class _PAffluentCardPageState extends State<PAffluentCardPage> {
             Obx(() {
               if (vm.contentsLoading.value == LoadingState.loading &&
                   vm.bookmarkedContents.isEmpty) {
-                return ShimmerWrapper(
+                return PShimmerWrapper(
+                  loading: true,
                   child: _BookmarkedArticleCard(
                     type: 'Article',
                     duration: '5 mins read',
@@ -387,30 +388,23 @@ class _PAffluentCardPageState extends State<PAffluentCardPage> {
 
             PAppSize.s20.verticalSpace,
 
-            // Text(
-            //   'track_claims_text'.tr,
-            //   style: TextStyle(
-            //     fontSize: PAppSize.s14,
-            //     fontWeight: FontWeight.w400,
+            // PSeeAllWidget(
+            //   leadingText: 'track_claims_text'.tr,
+            //   onTap: () => PHelperFunction.switchScreen(
+            //     destination: Routes.trackClaimsPage,
             //   ),
             // ),
-            PSeeAllWidget(
-              leadingText: 'track_claims_text'.tr,
-              onTap: () => PHelperFunction.switchScreen(
-                destination: Routes.trackClaimsPage,
-              ),
-            ),
 
-            PAppSize.s12.verticalSpace,
+            // PAppSize.s12.verticalSpace,
 
-            // Expandable Claim Tracking Tiles
-            PClaimTrackingList(
-              claims: vm.claims,
-              shrinkWrap: true,
-              physics: const NeverScrollableScrollPhysics(),
-            ),
+            // // Expandable Claim Tracking Tiles
+            // PClaimTrackingList(
+            //   claims: vm.claims,
+            //   shrinkWrap: true,
+            //   physics: const NeverScrollableScrollPhysics(),
+            // ),
 
-            PAppSize.s20.verticalSpace,
+            // PAppSize.s20.verticalSpace,
           ],
         ).all(PAppSize.s20).scrollable(),
       ),

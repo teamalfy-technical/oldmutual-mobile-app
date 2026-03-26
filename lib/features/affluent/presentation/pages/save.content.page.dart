@@ -49,7 +49,8 @@ class _PSaveContentPageState extends State<PSaveContentPage> {
       body: Obx(() {
         if (vm.contentsLoading.value == LoadingState.loading &&
             vm.bookmarkedContents.isEmpty) {
-          return ShimmerWrapper(
+          return PShimmerWrapper(
+            loading: true,
             child: ListView.separated(
               padding: EdgeInsets.all(PAppSize.s20),
               itemCount: 10,

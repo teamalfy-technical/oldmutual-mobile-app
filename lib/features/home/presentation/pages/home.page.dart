@@ -295,57 +295,61 @@ class PHomePage extends StatelessWidget {
                             QuickAccessCard(
                               icon: Assets.icons.trackClaims.svg(),
                               label: 'track_claims'.tr,
-                              onTap: () => PHelperFunction.switchScreen(
-                                destination: Routes.trackClaimsPage,
+                              onTap: () => PPopupDialog(context).warningMessage(
+                                title: 'coming_soon_title'.tr,
+                                message: 'coming_soon_msg'.tr,
                               ),
+                              // onTap: () => PHelperFunction.switchScreen(
+                              //   destination: Routes.trackClaimsPage,
+                              // ),
                             ),
                           ],
                         ),
 
-                        PAppSize.s16.verticalSpace,
+                        // PAppSize.s16.verticalSpace,
 
                         // Exclusive Announcements for Affluent Users
-                        PSeeAllWidget(
-                          leadingText: 'exclusive_announcements'.tr,
-                          showTrailing: false,
-                        ),
+                        // PSeeAllWidget(
+                        //   leadingText: 'exclusive_announcements'.tr,
+                        //   showTrailing: false,
+                        // ),
 
-                        PAppSize.s16.verticalSpace,
+                        // PAppSize.s16.verticalSpace,
 
-                        PAnimatedListView(
-                          separatorBuilder: (context, index) =>
-                              PAppSize.s20.verticalSpace,
-                          items: affluentVm.exclusiveAnnouncements,
-                          shrinkWrap: true,
-                          physics: const NeverScrollableScrollPhysics(),
-                          itemBuilder: (index, announcement) {
-                            final announcement =
-                                affluentVm.exclusiveAnnouncements[index];
-                            return PExclusiveWidget(announcement: announcement);
-                          },
-                        ),
+                        // PAnimatedListView(
+                        //   separatorBuilder: (context, index) =>
+                        //       PAppSize.s20.verticalSpace,
+                        //   items: affluentVm.exclusiveAnnouncements,
+                        //   shrinkWrap: true,
+                        //   physics: const NeverScrollableScrollPhysics(),
+                        //   itemBuilder: (index, announcement) {
+                        //     final announcement =
+                        //         affluentVm.exclusiveAnnouncements[index];
+                        //     return PExclusiveWidget(announcement: announcement);
+                        //   },
+                        // ),
 
-                        PAppSize.s16.verticalSpace,
+                        // PAppSize.s16.verticalSpace,
 
-                        // Benefit Reminders for Affluent Users
-                        PSeeAllWidget(
-                          leadingText: 'benefit_reminders'.tr,
-                          showTrailing: false,
-                        ),
+                        // // Benefit Reminders for Affluent Users
+                        // PSeeAllWidget(
+                        //   leadingText: 'benefit_reminders'.tr,
+                        //   showTrailing: false,
+                        // ),
 
-                        PAppSize.s16.verticalSpace,
+                        // PAppSize.s16.verticalSpace,
 
-                        PAnimatedListView(
-                          separatorBuilder: (context, index) =>
-                              PAppSize.s20.verticalSpace,
-                          items: affluentVm.benefitReminders,
-                          shrinkWrap: true,
-                          physics: const NeverScrollableScrollPhysics(),
-                          itemBuilder: (index, reminder) {
-                            // final reminder = affluentVm.benefitReminders[index];
-                            return PBenefitRemindersWidget(reminder: reminder);
-                          },
-                        ),
+                        // PAnimatedListView(
+                        //   separatorBuilder: (context, index) =>
+                        //       PAppSize.s20.verticalSpace,
+                        //   items: affluentVm.benefitReminders,
+                        //   shrinkWrap: true,
+                        //   physics: const NeverScrollableScrollPhysics(),
+                        //   itemBuilder: (index, reminder) {
+                        //     // final reminder = affluentVm.benefitReminders[index];
+                        //     return PBenefitRemindersWidget(reminder: reminder);
+                        //   },
+                        // ),
                       ],
 
                       // Cross-Sell (Recommendations)

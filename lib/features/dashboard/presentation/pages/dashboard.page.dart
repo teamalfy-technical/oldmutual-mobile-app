@@ -29,7 +29,8 @@ class _PDashboardPageState extends State<PDashboardPage> {
       _cachedPages = [
         PHomePage(),
         PUserDetailPage(isShowAppBar: false),
-        if (isAffluent) PSupportPage(user: ctrl.user.value),
+        if (isAffluent)
+          PSupportPage(user: ctrl.user.value, isShowAppBar: false),
         PMorePage(),
       ];
     }
@@ -115,7 +116,7 @@ class _PDashboardPageState extends State<PDashboardPage> {
               ? PAppColor.darkBgColor
               : PAppColor.fillColor,
           appBar: // Hide AppBar if user is affluent, but keep status bar spacing
-          ctrl.user.value?.affluent == true
+          (ctrl.user.value?.affluent == true && ctrl.currentIndex.value == 0)
               ? PreferredSize(
                   preferredSize: Size.fromHeight(
                     MediaQuery.of(context).padding.top,
@@ -131,11 +132,19 @@ class _PDashboardPageState extends State<PDashboardPage> {
                   title: ctrl.currentIndex.value == 1
                       ? Text('manage'.tr)
                       : ctrl.currentIndex.value == 2
-                      ? Text('more'.tr)
+                      ? Text(
+                          ctrl.user.value?.affluent == true
+                              ? 'support'.tr
+                              : 'more'.tr,
+                        )
                       : FutureBuilder<String?>(
                           future: PSecureStorage().getUserFirstName(),
                           builder: (context, snapshot) {
-                            return Text('Hi ${snapshot.data ?? ''}');
+                            return Text(
+                              ctrl.user.value?.affluent == true
+                                  ? 'more'.tr
+                                  : 'Hi ${snapshot.data ?? ''}',
+                            );
                           },
                         ),
                   actions: [

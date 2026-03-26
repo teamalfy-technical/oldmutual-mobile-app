@@ -2,6 +2,7 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:oldmutual_pensions_app/core/utils/utils.dart';
 import 'package:oldmutual_pensions_app/features/affluent/affluent.dart';
+import 'package:oldmutual_pensions_app/features/home/presentation/vm/home.vm.dart';
 import 'package:oldmutual_pensions_app/shared/shared.dart';
 
 class PAffluentVm extends GetxController {
@@ -76,7 +77,7 @@ class PAffluentVm extends GetxController {
 
   final context = Get.context!;
 
-  bool get isAffluent => affluentStatus.value.isAffluent ?? false;
+  // bool get isAffluent => affluentStatus.value.isAffluent ?? false;
 
   updateLoadingState(LoadingState loadingState) => loading.value = loadingState;
 
@@ -108,7 +109,12 @@ class PAffluentVm extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    // getAffluentStatus();
+    getAffluentStatus();
+  }
+
+  Future<void> getAffluentStatus() async {
+    final isAffluent =
+        (await PSecureStorage().getAuthResponse())?.affluent ?? false;
 
     if (isAffluent) {
       getExclusiveAnnouncements();
@@ -117,6 +123,8 @@ class PAffluentVm extends GetxController {
 
       _fetchRelationshipOfficer();
     }
+
+    pensionAppLogger.d('Affluent: ${Get.find<PHomeVm>().user.value?.affluent}');
   }
 
   Future<void> _fetchRelationshipOfficer() async {

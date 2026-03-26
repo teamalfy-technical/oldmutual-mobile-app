@@ -28,7 +28,8 @@ class PFinancialInsightPage extends StatelessWidget {
             vm.contentsLoading.value == LoadingState.loading
                 ? SizedBox(
                     height: PDeviceUtil.getDeviceHeight(context) * 0.25,
-                    child: ShimmerWrapper(
+                    child: PShimmerWrapper(
+                      loading: true,
                       child: ListView.builder(
                         itemCount: 2,
                         shrinkWrap: true,
@@ -86,7 +87,8 @@ class PFinancialInsightPage extends StatelessWidget {
 
             // Category Pills
             if (vm.contentCategoriesLoading.value == LoadingState.loading)
-              ShimmerWrapper(
+              PShimmerWrapper(
+                loading: true,
                 child: PCategoryPills(
                   categories: ['All', 'Category', 'Category', 'Category'],
                   selectedIndex: 0,
@@ -112,7 +114,8 @@ class PFinancialInsightPage extends StatelessWidget {
             // Contents List
             Expanded(
               child: vm.contentsLoading.value == LoadingState.loading
-                  ? ShimmerWrapper(
+                  ? PShimmerWrapper(
+                      loading: true,
                       child: ListView.separated(
                         itemCount: 3,
                         separatorBuilder: (context, index) =>
