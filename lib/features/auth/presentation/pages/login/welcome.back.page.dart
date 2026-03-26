@@ -209,6 +209,21 @@ class _PWelcomeBackPageState extends State<PWelcomeBackPage>
                           controller: ctrl.passwordTEC,
                         ),
 
+                        PAppSize.s25.verticalSpace,
+
+                        PGradientButton(
+                          label: 'sign_in'.tr,
+                          showIcon: false,
+                          loading: ctrl.loading.value,
+                          width: PDeviceUtil.getDeviceWidth(context),
+                          onTap: () {
+                            if (formKey.currentState!.validate()) {
+                              PDeviceUtil.hideKeyboard(context);
+                              ctrl.login();
+                            }
+                          },
+                        ),
+
                         PAppSize.s16.verticalSpace,
 
                         TextButton(
@@ -235,22 +250,7 @@ class _PWelcomeBackPageState extends State<PWelcomeBackPage>
                           ),
                         ),
 
-                        PAppSize.s25.verticalSpace,
-
-                        PGradientButton(
-                          label: 'sign_in'.tr,
-                          showIcon: false,
-                          loading: ctrl.loading.value,
-                          width: PDeviceUtil.getDeviceWidth(context),
-                          onTap: () {
-                            if (formKey.currentState!.validate()) {
-                              PDeviceUtil.hideKeyboard(context);
-                              ctrl.login();
-                            }
-                          },
-                        ),
-
-                        PAppSize.s20.verticalSpace,
+                        PAppSize.s10.verticalSpace,
 
                         if (PSecureStorage().isBiometricEnabled &&
                             _biometricFailureCount < _maxBiometricAttempts) ...[
