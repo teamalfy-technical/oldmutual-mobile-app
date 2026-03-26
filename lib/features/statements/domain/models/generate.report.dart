@@ -1,4 +1,6 @@
-class GenerateReport {
+import 'package:equatable/equatable.dart';
+// ignore: must_be_immutable
+class GenerateReport extends Equatable {
   String? data;
   IMessage? message;
 
@@ -14,6 +16,10 @@ class GenerateReport {
     return GenerateReport(data: data ?? data, message: message ?? message);
   }
 
+  
+  @override
+  List<Object?> get props => [data];
+
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
     data['data'] = data;
@@ -22,7 +28,8 @@ class GenerateReport {
   }
 }
 
-class IMessage {
+// ignore: must_be_immutable
+class IMessage extends Equatable {
   int? reportId;
 
   IMessage({this.reportId});
@@ -30,6 +37,10 @@ class IMessage {
   IMessage.fromJson(Map<String, dynamic> json) {
     reportId = json['report_id'];
   }
+
+  
+  @override
+  List<Object?> get props => [reportId];
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};

@@ -347,6 +347,8 @@ class AppTranslations extends Translations {
       'updating_beneficiary_msg': 'Updating Beneficiary Details...',
       'check_status': 'Check Status',
       'download': 'Download',
+      'policy': 'Policy',
+      'no_products_found': 'You\'ve no products available',
       'submitting_request_msg': 'We\'re processing your request...',
       'national_id': 'National ID',
       'redemption_by': 'Redemption By',
@@ -506,6 +508,7 @@ class AppTranslations extends Translations {
       // Pension Scheme
       'scheme_name': 'Scheme Name',
       'scheme_type': 'Scheme Type',
+      'scheme': 'Scheme',
       'master_scheme_description': 'Master Scheme Description',
       'pen_type_description': 'Pension Type Description',
       'scheme_current_value': 'Scheme Current Value',

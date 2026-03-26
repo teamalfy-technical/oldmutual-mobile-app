@@ -16,10 +16,7 @@ class PTermsAndConditionsPage extends StatelessWidget {
           ? PAppColor.darkBgColor
           : PAppColor.fillColor,
       appBar: AppBar(title: Text('terms_and_conditions'.tr)),
-      body: PTermsTab().symmetric(
-        horizontal: PAppSize.s0,
-        vertical: PAppSize.s6,
-      ),
+      body: PTermsTab(),
     );
   }
 

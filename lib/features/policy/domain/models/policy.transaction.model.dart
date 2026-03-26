@@ -1,4 +1,6 @@
-class PolicyTransaction {
+import 'package:equatable/equatable.dart';
+// ignore: must_be_immutable
+class PolicyTransaction extends Equatable {
   int? id;
   String? policyNo;
   int? policyId;
@@ -125,6 +127,10 @@ class PolicyTransaction {
     isFirstPremium = json['IsFirstPremium'];
     paymentStatusDesc = json['payment_status_desc'];
   }
+
+  
+  @override
+  List<Object?> get props => [id, policyNo, policyId];
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};

@@ -1,4 +1,6 @@
-class Payment {
+import 'package:equatable/equatable.dart';
+// ignore: must_be_immutable
+class Payment extends Equatable {
   int? id;
   int? userId;
   String? product;
@@ -56,6 +58,10 @@ class Payment {
     failureReason = _parseString(json['failure_reason']);
     failedAt = _parseString(json['failed_at']);
   }
+
+  
+  @override
+  List<Object?> get props => [id, clientReference, paymentReference];
 
   Map<String, dynamic> toJson() {
     return {

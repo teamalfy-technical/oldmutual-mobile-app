@@ -220,46 +220,9 @@ class PPolicyVm extends GetxController {
         inactivePolicies.value = policies
             .where((p) => !activeStatuses.contains(p.status ?? ""))
             .toList();
-
-        // activePolicies.value = policies
-        //     .where(
-        //       (p) =>
-        //           p.status!.contains(PolicyStatus.inforce.name.toUpperCase()),
-        //     )
-        //     .toList();
-        // inactivePolicies.value = policies
-        //     .where((p) => p.status == PolicyStatus.expired.name.toUpperCase())
-        //     .toList();
-        // lapsedPolicies.value = policies
-        //     .where(
-        //       (p) => p.status!.contains(PolicyStatus.lapsed.name.toUpperCase()),
-        //     )
-        //     .toList();
-        // await getMemberSchemes();
-        // getProducts();
-        // pensionAppLogger.i(policies);
       },
     );
   }
-
-  /// Function to get all schemes or retail
-  // Future<void> getMemberSchemes() async {
-  //   updateLoadingState(LoadingState.loading);
-  //   final result = await dashboardService.getMemberSchemes();
-  //   result.fold(
-  //     (err) {
-  //       updateLoadingState(LoadingState.error);
-  //       PPopupDialog(
-  //         context,
-  //       ).errorMessage(title: err.title ?? 'error'.tr, message: err.message);
-  //     },
-  //     (res) {
-  //       updateLoadingState(LoadingState.completed);
-  //       schemes.value = res.data ?? [];
-  //       getProducts();
-  //     },
-  //   );
-  // }
 
   List<Map<String, dynamic>> getProducts() {
     final vm = Get.find<PPensionVm>();

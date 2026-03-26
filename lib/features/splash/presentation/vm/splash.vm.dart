@@ -48,7 +48,6 @@ class PSplashVm extends GetxController {
 
         // Clear any stale session data so user must re-authenticate
         await PSecureStorage().removeSecureData(PSecureStorage().authResKey);
-        await PSecureStorage().removeSecureData(PSecureStorage().bioDataKey);
 
         if (userEmail != null) {
           // User has saved credentials and biometric enabled - show welcome back for biometric/quick login

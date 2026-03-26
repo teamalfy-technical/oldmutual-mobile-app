@@ -16,6 +16,20 @@ abstract class CatchApiErrorWrapper {
 
 // @LazySingleton(as: CatchApiErrorWrapper)
 class CatchApiErrorWrapperImpl implements CatchApiErrorWrapper {
+  /// Check if the user is currently on an auth-related route (i.e. logged out).
+  /// Used to suppress error popups from stale API calls after logout.
+  bool _isOnAuthRoute() {
+    final currentRoute = Get.currentRoute;
+    return currentRoute == Routes.loginPage ||
+        currentRoute == Routes.welcomeBackPage ||
+        currentRoute == Routes.splashPage ||
+        currentRoute == Routes.createAccountPage ||
+        currentRoute == Routes.idEntryPage ||
+        currentRoute == Routes.livenessInfoPage ||
+        currentRoute == Routes.verifyOTPPage ||
+        currentRoute == Routes.forgotPasswordPage;
+  }
+
   @override
   dynamic handleError({err, stackTrace}) {
     pensionAppLogger.e('Error: ${err.toString()}');
@@ -34,6 +48,16 @@ class CatchApiErrorWrapperImpl implements CatchApiErrorWrapper {
         );
         final statusCode = err.response!.statusCode ?? 0;
 
+        // Suppress 401 errors when user is already on an auth route (logged out).
+        // This prevents stale in-flight API calls from showing error popups
+        // after the user has already been navigated away from authenticated pages.
+        if (statusCode == 401 && _isOnAuthRoute()) {
+          pensionAppLogger.w(
+            '401 suppressed on auth route: ${Get.currentRoute}',
+          );
+          return PFailure(message: '', silent: true);
+        }
+
         // Handle 5xx server errors explicitly
         if (statusCode >= 500) {
           pensionAppLogger.e('Server error $statusCode: ${err.response?.data}');
@@ -45,9 +69,6 @@ class CatchApiErrorWrapperImpl implements CatchApiErrorWrapper {
         } else if (statusCode == 400) {
           errorMessage = extractError(err.response?.data);
         } else if (statusCode == 401) {
-          if (Get.currentRoute != Routes.loginPage) {
-            // Get.put(PSettingsVm()).signout(soft: true);
-          }
           errorMessage = err.response?.data['error'] ?? 'Unauthorized request';
           pensionAppLogger.e(err.response?.data);
         } else if (statusCode == 403) {

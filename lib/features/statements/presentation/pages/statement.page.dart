@@ -4,13 +4,15 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:oldmutual_pensions_app/core/utils/utils.dart';
 import 'package:oldmutual_pensions_app/features/contribution.history/contribution.history.dart';
+import 'package:oldmutual_pensions_app/features/pension/presentation/vm/pension.vm.dart';
 import 'package:oldmutual_pensions_app/features/statements/statements.dart';
 import 'package:oldmutual_pensions_app/shared/shared.dart';
 
 class PStatementPage extends StatelessWidget {
   PStatementPage({super.key});
 
-  final ctrl = Get.put(PStatementVm());
+  final vm = Get.put(PStatementVm());
+  final pensionVm = Get.put(PPensionVm());
 
   @override
   Widget build(BuildContext context) {
@@ -47,10 +49,22 @@ class PStatementPage extends StatelessWidget {
                 ),
                 child: Column(
                   children: [
+                    Align(
+                      alignment: Alignment.topLeft,
+                      child: Text(
+                        '${'scheme'.tr}: ${pensionVm.selectedScheme.value.masterSchemeDescription ?? pensionVm.selectedScheme.value.penTypeDescription ?? 'not_applicable'.tr}',
+                        textAlign: TextAlign.start,
+                        style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                          fontWeight: FontWeight.w600,
+                          // fontSize: PAppSize.s10,
+                        ),
+                      ),
+                    ),
+                    PAppSize.s20.verticalSpace,
                     PCustomDropdownField<ContributedYear>(
                       labelText: 'select_year'.tr,
-                      initialValue: ctrl.selectedYear,
-                      items: ctrl.contributionYears
+                      initialValue: vm.selectedYear,
+                      items: vm.contributionYears
                           .map(
                             (e) => DropdownMenuItem(
                               value: e,
@@ -58,7 +72,7 @@ class PStatementPage extends StatelessWidget {
                             ),
                           )
                           .toList(),
-                      onChanged: ctrl.onYearChanged,
+                      onChanged: vm.onYearChanged,
                     ),
 
                     // PAppSize.s16.verticalSpace,
@@ -76,11 +90,11 @@ class PStatementPage extends StatelessWidget {
                       showIcon: false,
                       textColor: PAppColor.whiteColor,
                       radius: PAppSize.s20,
-                      loading: ctrl.generating.value,
+                      loading: vm.generating.value,
                       width: double.infinity,
                       height: PAppSize.s44,
                       onTap: () {
-                        ctrl.generateReportV2();
+                        vm.generateReportV2();
                       },
                     ),
                   ],
@@ -107,27 +121,27 @@ class PStatementPage extends StatelessWidget {
                   ),
 
                   child: RefreshIndicator.adaptive(
-                    onRefresh: () => ctrl.getAllGeneratedReports(),
-                    child: ctrl.loading.value == LoadingState.loading
+                    onRefresh: () => vm.getAllGeneratedReports(),
+                    child: vm.loading.value == LoadingState.loading
                         ? ListView.builder(
                             shrinkWrap: true,
                             itemCount: 5,
                             padding: EdgeInsets.zero,
                             itemBuilder: (context, index) {
                               return PStatementWidgetRedact(
-                                loading: ctrl.loading.value,
+                                loading: vm.loading.value,
                               );
                             },
                           ).symmetric(horizontal: PAppSize.s8)
-                        : ctrl.statements.isEmpty
+                        : vm.statements.isEmpty
                         ? PEmptyStateWidget(message: 'no_results_found'.tr)
                         : ListView.separated(
                             shrinkWrap: true,
 
                             itemCount:
-                                ctrl.statements.length, // limits to 4 safely
+                                vm.statements.length, // limits to 4 safely
                             itemBuilder: (context, index) {
-                              final statement = ctrl.statements[index];
+                              final statement = vm.statements[index];
                               return ListTile(
                                 title: Text(
                                   statement.filters?.year == 'All'

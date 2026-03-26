@@ -1,4 +1,6 @@
-class Factsheet {
+import 'package:equatable/equatable.dart';
+// ignore: must_be_immutable
+class Factsheet extends Equatable {
   int? id;
   String? scheme;
   String? year;
@@ -29,6 +31,10 @@ class Factsheet {
     createdAt = json['created_at'];
     updatedAt = json['updated_at'];
   }
+
+  
+  @override
+  List<Object?> get props => [id, scheme, year, month];
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};

@@ -1,4 +1,6 @@
-class ClaimRequestResponse {
+import 'package:equatable/equatable.dart';
+// ignore: must_be_immutable
+class ClaimRequestResponse extends Equatable {
   String? claimId;
   String? policyNumber;
   double? claimAmount;
@@ -23,6 +25,10 @@ class ClaimRequestResponse {
     message = json['message'];
     createdAt = json['created_at'];
   }
+
+  
+  @override
+  List<Object?> get props => [claimId, policyNumber];
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};

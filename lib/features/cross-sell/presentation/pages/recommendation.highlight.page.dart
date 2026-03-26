@@ -313,10 +313,11 @@ class PRecommendationHighlightPage extends StatelessWidget {
                 ),
                 PAppSize.s10.verticalSpace,
                 Expanded(
-                  child: ListView.builder(
-                    itemCount: highlight.benefits?.length,
-                    itemBuilder: (context, index) {
-                      final benefit = highlight.benefits![index];
+                  child: PAnimatedListView(
+                    separatorBuilder: (context, index) =>
+                        PAppSize.s4.verticalSpace,
+                    items: highlight.benefits ?? [],
+                    itemBuilder: (index, benefit) {
                       return Row(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [

@@ -172,7 +172,10 @@ class PPensionVm extends GetxController {
   }
 
   /// Function to get all selected scheme
-  Future<void> getMemberSelectedScheme({required Scheme scheme}) async {
+  Future<void> getMemberSelectedScheme({
+    required Scheme scheme,
+    bool fetchBioOnly = false,
+  }) async {
     if (selectedScheme.value != scheme) {
       updateLoadingState(LoadingState.loading);
       final result = await pensionService.getSelectedMemberScheme(
@@ -189,10 +192,9 @@ class PPensionVm extends GetxController {
         sex: scheme.sex ?? '',
         nationality: scheme.nationality ?? '',
       );
-      result.fold(
-        (err) {
+      await result.fold(
+        (err) async {
           updateLoadingState(LoadingState.error);
-          // updateSelectingState(LoadingState.error);
           PPopupDialog(
             context,
           ).errorMessage(title: err.title ?? 'error'.tr, message: err.message);
@@ -200,7 +202,6 @@ class PPensionVm extends GetxController {
         (res) async {
           selectedScheme(scheme);
           final authRes = await PSecureStorage().getAuthResponse();
-          // selectedScheme.value = res.data ?? SelectedScheme();
           final updatedMember = authRes?.copyWith(
             masterScheme: res.data?.masterScheme ?? '',
             schemeType: res.data?.schemeType ?? '',
@@ -220,18 +221,23 @@ class PPensionVm extends GetxController {
             employerNumber: res.data?.employerNumber ?? '',
             updatedAt: res.data?.updatedAt ?? '',
           );
-          PSecureStorage().saveAuthResponse(updatedMember?.toJson() ?? {});
-          await Get.put(PContributionHistoryVm()).getContributionsSummary();
+          await PSecureStorage().saveAuthResponse(
+            updatedMember?.toJson() ?? {},
+          );
+          if (!fetchBioOnly) {
+            await Get.put(PContributionHistoryVm()).getContributionsSummary();
+          }
+          // get bio data after selecting scheme
+          await Get.put(PAuthVm()).getBioData();
           updateLoadingState(LoadingState.completed);
-          // await Get.put(
-          //   PAuthVm(),
-          // ).getBioData(); // get bio data after selecting scheme
         },
       );
     } else {
-      await Get.put(PContributionHistoryVm()).getContributionsSummary();
+      if (!fetchBioOnly) {
+        await Get.put(PContributionHistoryVm()).getContributionsSummary();
+      }
+      // get bio data after selecting scheme
+      await Get.put(PAuthVm()).getBioData();
     }
-    // get bio data after selecting scheme
-    await Get.put(PAuthVm()).getBioData();
   }
 }

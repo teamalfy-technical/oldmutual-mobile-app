@@ -25,7 +25,7 @@ class _PLivenessInfoPageState extends State<PLivenessInfoPage> {
           children: [
             PAppSize.s8.verticalSpace,
             Expanded(
-              child: Column(
+              child: PAnimatedColumnWidget(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   PAppSize.s16.verticalSpace,

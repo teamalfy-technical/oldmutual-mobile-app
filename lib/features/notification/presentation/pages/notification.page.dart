@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:oldmutual_pensions_app/core/utils/utils.dart';
 import 'package:oldmutual_pensions_app/features/notification/notification.dart';
 import 'package:oldmutual_pensions_app/gen/assets.gen.dart';
+import 'package:oldmutual_pensions_app/shared/shared.dart';
 
 class PNotificationPage extends StatelessWidget {
   final ctrl = Get.put(PNotificationVM());
@@ -35,10 +36,24 @@ class PNotificationPage extends StatelessWidget {
                 onRefresh: ctrl.getNotifications,
                 color: PAppColor.primary,
                 child: ctrl.loading.value == LoadingState.loading
-                    ? ListView.builder(
-                        itemBuilder: (context, index) {
-                          return PNotificationRedactWidget(
-                            loading: ctrl.loading.value,
+                    ? PShimmerListView<NotificationModel>(
+                        loading: true,
+                        items: const [],
+                        separatorBuilder: (context, index) =>
+                            PAppSize.s12.verticalSpace,
+                        scrollDirection: Axis.vertical,
+                        placeholderCount: 20,
+                        placeholderItem: NotificationModel(
+                          data: Data(
+                            title: 'Notification Title',
+                            message: 'Notification message placeholder',
+                          ),
+                          createdAt: DateTime.now().toIso8601String(),
+                        ),
+                        itemBuilder: (context, index, notification) {
+                          return PNotificationWidget(
+                            loading: ctrl.loading.value == LoadingState.loading,
+                            notification: notification,
                           );
                         },
                       )
@@ -69,25 +84,42 @@ class PNotificationPage extends StatelessWidget {
                               Divider(),
                               PAppSize.s6.verticalSpace,
                               // 📜 Section Items
-                              ListView.separated(
+                              PAnimatedListView<NotificationModel>(
+                                items: sectionItems,
                                 separatorBuilder: (context, index) => Divider(),
                                 physics: NeverScrollableScrollPhysics(),
                                 shrinkWrap: true,
-                                itemCount: sectionItems.length,
-                                itemBuilder: (context, index) {
-                                  final notification = sectionItems[index];
-                                  return PNotificationWidget(
-                                    onTap: () {
-                                      if (notification.readAt == null) {
-                                        ctrl.markNotificationAsRead(
-                                          notificationModel: notification,
-                                        );
-                                      }
-                                    },
-                                    notification: notification,
-                                  );
-                                },
+                                itemBuilder: (index, notification) =>
+                                    PNotificationWidget(
+                                      onTap: () {
+                                        if (notification.readAt == null) {
+                                          ctrl.markNotificationAsRead(
+                                            notificationModel: notification,
+                                          );
+                                        }
+                                      },
+                                      notification: notification,
+                                    ),
                               ),
+                              // ListView.separated(
+                              //   separatorBuilder: (context, index) => Divider(),
+                              //   physics: NeverScrollableScrollPhysics(),
+                              //   shrinkWrap: true,
+                              //   itemCount: sectionItems.length,
+                              //   itemBuilder: (context, index) {
+                              //     final notification = sectionItems[index];
+                              //     return PNotificationWidget(
+                              //       onTap: () {
+                              //         if (notification.readAt == null) {
+                              //           ctrl.markNotificationAsRead(
+                              //             notificationModel: notification,
+                              //           );
+                              //         }
+                              //       },
+                              //       notification: notification,
+                              //     );
+                              //   },
+                              // ),
                             ],
                           );
                         },

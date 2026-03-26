@@ -1,4 +1,6 @@
-class PolicySummary {
+import 'package:equatable/equatable.dart';
+// ignore: must_be_immutable
+class PolicySummary extends Equatable {
   int? totalPolicies;
   int? activePolicies;
   int? expiredPolicies;
@@ -29,6 +31,10 @@ class PolicySummary {
     availableBalance = (json['total_available_balance'] as num?)?.toDouble();
     lastUpdated = json['last_updated'];
   }
+
+  
+  @override
+  List<Object?> get props => [totalPolicies, lastUpdated];
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};

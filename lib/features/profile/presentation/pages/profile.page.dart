@@ -6,7 +6,7 @@ import 'package:oldmutual_pensions_app/core/utils/utils.dart';
 import 'package:oldmutual_pensions_app/features/profile/presentation/vm/profile.vm.dart';
 import 'package:oldmutual_pensions_app/gen/assets.gen.dart';
 import 'package:oldmutual_pensions_app/shared/widgets/custom.listtile.dart';
-import 'package:redacted/redacted.dart';
+import 'package:oldmutual_pensions_app/shared/shared.dart';
 
 class PProfilePage extends StatelessWidget {
   PProfilePage({super.key});
@@ -61,7 +61,9 @@ class PProfilePage extends StatelessWidget {
             PAppSize.s28.verticalSpace,
             Expanded(
               child:
-                  Column(
+                  PShimmerWrapper(
+                    loading: ctrl.loading.value == LoadingState.loading,
+                    child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Divider(color: PAppColor.fillColor),
@@ -72,12 +74,6 @@ class PProfilePage extends StatelessWidget {
                             ctrl.authResponse.value.name ??
                             ctrl.bioData.value.fullName ??
                             'not_applicable'.tr,
-                      ).redacted(
-                        context: context,
-                        redact:
-                            ctrl.loading.value == LoadingState.loading
-                                ? true
-                                : false,
                       ),
                       Divider(color: PAppColor.fillColor),
                       PCustomListTile(
@@ -87,12 +83,6 @@ class PProfilePage extends StatelessWidget {
                             ctrl.authResponse.value.email ??
                             ctrl.bioData.value.email ??
                             'not_applicable'.tr,
-                      ).redacted(
-                        context: context,
-                        redact:
-                            ctrl.loading.value == LoadingState.loading
-                                ? true
-                                : false,
                       ),
                       Divider(color: PAppColor.fillColor),
                       PCustomListTile(
@@ -101,12 +91,6 @@ class PProfilePage extends StatelessWidget {
                             ctrl.authResponse.value.phone ??
                             ctrl.bioData.value.mobileNo ??
                             'not_applicable'.tr,
-                      ).redacted(
-                        context: context,
-                        redact:
-                            ctrl.loading.value == LoadingState.loading
-                                ? true
-                                : false,
                       ),
                       Divider(color: PAppColor.fillColor),
                       PCustomListTile(
@@ -115,12 +99,6 @@ class PProfilePage extends StatelessWidget {
                             ctrl.authResponse.value.memberNumber ??
                             ctrl.profile.value.memberNumber ??
                             'not_applicable'.tr,
-                      ).redacted(
-                        context: context,
-                        redact:
-                            ctrl.loading.value == LoadingState.loading
-                                ? true
-                                : false,
                       ),
                       Divider(color: PAppColor.fillColor),
                       PCustomListTile(
@@ -128,12 +106,6 @@ class PProfilePage extends StatelessWidget {
                         subtitle:
                             ctrl.bioData.value.tin ??
                             'not_applicable'.tr,
-                      ).redacted(
-                        context: context,
-                        redact:
-                            ctrl.loading.value == LoadingState.loading
-                                ? true
-                                : false,
                       ),
 
                       // PCustomListTile(
@@ -151,12 +123,6 @@ class PProfilePage extends StatelessWidget {
                             ctrl.authResponse.value.ssnitNumber ??
                             ctrl.profile.value.ssnitNumber ??
                             'not_applicable'.tr,
-                      ).redacted(
-                        context: context,
-                        redact:
-                            ctrl.loading.value == LoadingState.loading
-                                ? true
-                                : false,
                       ),
 
                       Divider(color: PAppColor.fillColor),
@@ -170,12 +136,6 @@ class PProfilePage extends StatelessWidget {
                                 DateTime.now().toIso8601String(),
                           ),
                         ),
-                      ).redacted(
-                        context: context,
-                        redact:
-                            ctrl.loading.value == LoadingState.loading
-                                ? true
-                                : false,
                       ),
 
                       Divider(color: PAppColor.fillColor),
@@ -186,12 +146,6 @@ class PProfilePage extends StatelessWidget {
                             ctrl.authResponse.value.employerName ??
                             ctrl.bioData.value.employerName ??
                             'not_applicable'.tr,
-                      ).redacted(
-                        context: context,
-                        redact:
-                            ctrl.loading.value == LoadingState.loading
-                                ? true
-                                : false,
                       ),
 
                       Divider(color: PAppColor.fillColor),
@@ -201,12 +155,6 @@ class PProfilePage extends StatelessWidget {
                             ctrl.authResponse.value.masterScheme ??
                             ctrl.bioData.value.schemeName ??
                             'not_applicable'.tr,
-                      ).redacted(
-                        context: context,
-                        redact:
-                            ctrl.loading.value == LoadingState.loading
-                                ? true
-                                : false,
                       ),
 
                       Divider(color: PAppColor.fillColor),
@@ -216,17 +164,12 @@ class PProfilePage extends StatelessWidget {
                             ctrl.authResponse.value.schemeType ??
                             ctrl.bioData.value.pensionTypeName ??
                             'not_applicable'.tr,
-                      ).redacted(
-                        context: context,
-                        redact:
-                            ctrl.loading.value == LoadingState.loading
-                                ? true
-                                : false,
                       ),
 
                       Divider(color: PAppColor.fillColor),
                     ],
                   ).scrollable(),
+                  ),
             ),
 
             // Divider(color: PAppColor.fillColor),

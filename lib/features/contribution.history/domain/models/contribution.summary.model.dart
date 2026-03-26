@@ -1,4 +1,6 @@
-class ContributionSummary {
+import 'package:equatable/equatable.dart';
+// ignore: must_be_immutable
+class ContributionSummary extends Equatable {
   double? totalContributions;
   double? totalEmployerContributions;
   double? totalUnits;
@@ -39,6 +41,10 @@ class ContributionSummary {
     totalRedemption = json['total_redemption']?.toDouble();
     lastContributionDate = json['last_contribution_date'];
   }
+
+  
+  @override
+  List<Object?> get props => [status, lastContributionDate];
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};

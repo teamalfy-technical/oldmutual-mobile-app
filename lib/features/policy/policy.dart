@@ -22,6 +22,7 @@ export 'presentation/pages/tabs/retail.tab.dart';
 export 'presentation/vm/policy.statement.vm.dart';
 export 'presentation/vm/policy.vm.dart';
 export 'presentation/widgets/policy.widget.dart';
+export 'presentation/widgets/premium.statement.widget.dart';
 export 'presentation/widgets/product.redacted.widget.dart';
 export 'presentation/widgets/product.widget.dart';
 export 'presentation/widgets/quick.action.widget.dart';

@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:keyboard_actions/keyboard_actions.dart';
@@ -9,6 +11,7 @@ class PKeyboardActions extends StatelessWidget {
   const PKeyboardActions({super.key, this.child, required this.focusNode});
   @override
   Widget build(BuildContext context) {
+    if (Platform.isAndroid) return child ?? const SizedBox.shrink();
     final isDark = PHelperFunction.isDarkMode(context);
     return KeyboardActions(
       autoScroll: false,

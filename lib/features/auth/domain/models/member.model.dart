@@ -1,4 +1,6 @@
-class Member {
+import 'package:equatable/equatable.dart';
+// ignore: must_be_immutable
+class Member extends Equatable {
   String? token;
   int? id;
   String? name;
@@ -157,6 +159,10 @@ class Member {
     createdAt = json['created_at'];
     updatedAt = json['updated_at'];
   }
+
+  
+  @override
+  List<Object?> get props => [id, memberNumber, ghanaCardNumber];
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};

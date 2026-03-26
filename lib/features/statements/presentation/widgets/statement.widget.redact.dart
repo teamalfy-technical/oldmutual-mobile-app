@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:oldmutual_pensions_app/core/utils/utils.dart';
-import 'package:redacted/redacted.dart';
+import 'package:oldmutual_pensions_app/shared/shared.dart';
 
 class PStatementWidgetRedact extends StatelessWidget {
   final LoadingState loading;
@@ -10,77 +10,34 @@ class PStatementWidgetRedact extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // debugPrint(beneficiary['show'].toString());
-    return Container(
-      width: PDeviceUtil.getDeviceWidth(context),
-      // height: PDeviceUtil.getDeviceHeight(context) * 0.3,
-      padding: EdgeInsets.all(PAppSize.s20),
-      margin: EdgeInsets.only(bottom: PAppSize.s20),
-      color: PAppColor.whiteColor,
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        children: [
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Container(
-                  width: PDeviceUtil.getDeviceWidth(context),
-                  height: PAppSize.s16,
-                  color: PAppColor.whiteColor,
-                ),
-                PAppSize.s16.verticalSpace,
-                Container(
-                  width: PDeviceUtil.getDeviceWidth(context),
-                  height: PAppSize.s16,
-                  color: PAppColor.whiteColor,
-                ),
-              ],
+    return PShimmerWrapper(
+      loading: loading == LoadingState.loading,
+      child: Container(
+        width: PDeviceUtil.getDeviceWidth(context),
+        padding: EdgeInsets.all(PAppSize.s20),
+
+        decoration: BoxDecoration(
+          color: PHelperFunction.isDarkMode(context)
+              ? PAppColor.darkAppBarColor
+              : PAppColor.whiteColor,
+          borderRadius: BorderRadius.circular(PAppSize.s10),
+        ),
+        child: Row(
+          children: [
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  PShimmerBox(width: 180, height: PAppSize.s14),
+                  PAppSize.s8.verticalSpace,
+                  PShimmerBox(width: 120, height: PAppSize.s12),
+                ],
+              ),
             ),
-          ),
-          PAppSize.s8.horizontalSpace,
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Container(
-                  width: PDeviceUtil.getDeviceWidth(context),
-                  height: PAppSize.s16,
-                  color: PAppColor.whiteColor,
-                ),
-                PAppSize.s16.verticalSpace,
-                Container(
-                  width: PDeviceUtil.getDeviceWidth(context),
-                  height: PAppSize.s16,
-                  color: PAppColor.whiteColor,
-                ),
-              ],
-            ),
-          ),
-          PAppSize.s8.horizontalSpace,
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.end,
-              children: [
-                Container(
-                  width: PDeviceUtil.getDeviceWidth(context),
-                  height: PAppSize.s16,
-                  color: PAppColor.whiteColor,
-                ),
-                PAppSize.s16.verticalSpace,
-                Container(
-                  width: PDeviceUtil.getDeviceWidth(context),
-                  height: PAppSize.s16,
-                  color: PAppColor.whiteColor,
-                ),
-              ],
-            ),
-          ),
-        ],
+            PShimmerBox(width: 60, height: PAppSize.s14, borderRadius: 4),
+          ],
+        ),
       ),
-    ).redacted(
-      context: context,
-      redact: loading == LoadingState.loading ? true : false,
     );
   }
 }

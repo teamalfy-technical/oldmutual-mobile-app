@@ -8,25 +8,38 @@ class PNotificationWidget extends StatelessWidget {
     super.key,
     required this.notification,
     this.onTap,
+    this.loading = false,
   });
 
   final NotificationModel notification;
   final Function()? onTap;
+  final bool loading;
 
   @override
   Widget build(BuildContext context) {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Transform.translate(
-          offset: Offset(0, 5),
-          child: PBadgeWidget(
-            showBadge: notification.readAt == null,
-            child: PHelperFunction.getBadgeIcon(
-              notification.data?.title ?? notification.data?.message ?? '',
-            ),
-          ),
-        ),
+        loading
+            ? Container(
+                width: PAppSize.s50,
+                height: PAppSize.s50,
+                decoration: BoxDecoration(
+                  color: PAppColor.coolGrey.withOpacityExt(PAppSize.s0_2),
+                  borderRadius: BorderRadius.circular(PAppSize.s16),
+                ),
+              )
+            : Transform.translate(
+                offset: Offset(0, 5),
+                child: PBadgeWidget(
+                  showBadge: notification.readAt == null,
+                  child: PHelperFunction.getBadgeIcon(
+                    notification.data?.title ??
+                        notification.data?.message ??
+                        '',
+                  ),
+                ),
+              ),
 
         PAppSize.s16.horizontalSpace,
         Expanded(

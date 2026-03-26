@@ -46,44 +46,6 @@ class AuthRepoImpl implements AuthRepo {
     );
   }
 
-  // @override
-  // Future<Either<PFailure, ApiResponse<Member>>> signIn({
-  //   required String phone,
-  //   required String password,
-  // }) async {
-  //   return await customRepositoryWrapper.wrapRepositoryFunction(
-  //     function: () async {
-  //       final res = await authDs.signIn(phone: phone, password: password);
-  //       PSecureStorage().saveAuthResponse(res.data?.toJson());
-  //       return res;
-  //     },
-  //   );
-  // }
-
-  // @override
-  // Future<Either<PFailure, ApiResponse<List<Message>>>> signup({
-  //   required String terms,
-  //   required String phone,
-  // }) async {
-  //   return await customRepositoryWrapper.wrapRepositoryFunction(
-  //     function: () async => await authDs.signup(terms: terms, phone: phone),
-  //   );
-  // }
-
-  // @override
-  // Future<Either<PFailure, ApiResponse<Member>>> verifyOTP({
-  //   required String phone,
-  //   required String otp,
-  // }) async {
-  //   return await customRepositoryWrapper.wrapRepositoryFunction(
-  //     function: () async {
-  //       final res = await authDs.verifyOTP(phone: phone, otp: otp);
-  //       PSecureStorage().saveAuthResponse(res.data?.toJson());
-  //       return res;
-  //     },
-  //   );
-  // }
-
   @override
   Future<Either<PFailure, ApiResponse<List<Message>>>> updateFcmToken({
     required String token,

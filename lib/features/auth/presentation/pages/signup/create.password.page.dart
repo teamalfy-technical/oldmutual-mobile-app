@@ -25,7 +25,7 @@ class PCreatePasswordPage extends StatelessWidget {
                 child: Obx(
                   () => Form(
                     key: formKey,
-                    child: Column(
+                    child: PAnimatedColumnWidget(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         PAppSize.s10.verticalSpace,

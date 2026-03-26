@@ -57,6 +57,8 @@ class PPopupDialog {
   }
 
   void errorMessage({required String title, required String message}) {
+    // Skip showing popup for silent/empty error messages (e.g. suppressed 401s after logout)
+    if (message.isEmpty) return;
     Flushbar(
       flushbarPosition: FlushbarPosition.TOP,
       flushbarStyle: FlushbarStyle.GROUNDED,

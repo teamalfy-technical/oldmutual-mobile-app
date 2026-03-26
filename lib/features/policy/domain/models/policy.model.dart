@@ -1,6 +1,8 @@
+import 'package:equatable/equatable.dart';
 import 'package:oldmutual_pensions_app/features/beneficiary/beneficiary.dart';
 
-class Policy {
+// ignore: must_be_immutable
+class Policy extends Equatable {
   String? policyNo;
   int? planCode;
   String? name;
@@ -131,6 +133,9 @@ class Policy {
     if (value is String) return double.tryParse(value);
     return null;
   }
+
+  @override
+  List<Object?> get props => [policyNo, planCode];
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};

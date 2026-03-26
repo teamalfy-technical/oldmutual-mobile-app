@@ -196,11 +196,15 @@ class PolicyDsImpl implements PolicyDs {
   }
 
   @override
-  Future<ApiResponse<List<PolicyReport>>> getPolicyReports({String? policyNumber}) async {
+  Future<ApiResponse<List<PolicyReport>>> getPolicyReports({
+    String? policyNumber,
+  }) async {
     return await asyncFunctionWrapper.handleAsyncNetworkCall(() async {
       final res = await apiService.callService(
         requestType: RequestType.get,
-        queryParams: {if (policyNumber != null) 'policy_number': policyNumber},
+        queryParams: {
+          if (policyNumber != null) 'filter[policy_number]': policyNumber,
+        },
         endPoint: Env.getPolicyReports,
       );
       return ApiResponse<List<PolicyReport>>.fromJson(

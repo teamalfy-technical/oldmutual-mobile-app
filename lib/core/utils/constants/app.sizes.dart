@@ -101,6 +101,7 @@ class PAppSize {
   static const int s500 = 500;
   static const int s600 = 600;
   static const int s700 = 700;
+  static const int s800 = 800;
   static const int s1000 = 1000;
   static const int s1500 = 1500;
   static const int s2000 = 2000;

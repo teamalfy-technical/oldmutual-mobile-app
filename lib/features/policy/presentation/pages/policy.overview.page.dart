@@ -49,7 +49,18 @@ class _PPolicyOverviewPageState extends State<PPolicyOverviewPage>
       backgroundColor: PHelperFunction.isDarkMode(context)
           ? PAppColor.darkBgColor
           : PAppColor.fillColor,
-      appBar: AppBar(title: Text(widget.product['name'])),
+      appBar: AppBar(
+        title: Hero(
+          tag: 'product-hero-${widget.product['name']}',
+          child: Material(
+            color: Colors.transparent,
+            child: Text(
+              widget.product['name'],
+              style: Theme.of(context).appBarTheme.titleTextStyle,
+            ),
+          ),
+        ),
+      ),
       body: Stack(
         children: [
           Positioned(top: -16, right: -0, child: Assets.icons.pictogram.svg()),
@@ -68,14 +79,10 @@ class _PPolicyOverviewPageState extends State<PPolicyOverviewPage>
                     fontWeight: FontWeight.w400,
                   ),
                 ),
-                Text(
-                  PFormatter.formatCurrency(
-                    amount: widget.product['contribution'],
-                  ),
+                PCountUpText(
+                  amount: widget.product['contribution'] ?? 0.0,
                   textAlign: TextAlign.center,
-                  softWrap: true,
                   style: Theme.of(context).textTheme.headlineMedium?.copyWith(
-                    // fontSize: PAppSize.s12,
                     fontWeight: FontWeight.w600,
                   ),
                 ),
@@ -109,12 +116,20 @@ class _PPolicyOverviewPageState extends State<PPolicyOverviewPage>
                       onRefresh: vm.getAllPolicies,
                       color: PAppColor.primary,
                       child: vm.loading.value == LoadingState.loading
-                          ? ListView.builder(
-                              shrinkWrap: true,
-                              itemCount: 10,
-                              itemBuilder: (context, index) {
-                                return PProductRedactedWidget(
-                                  loading: vm.loading.value,
+                          ? PShimmerListView<Policy>(
+                              loading: true,
+                              items: const [],
+                              separatorBuilder: (context, index) =>
+                                  PAppSize.s16.verticalSpace,
+                              placeholderItem: Policy(),
+                              itemBuilder: (context, index, product) {
+                                return PPolicyWidget(
+                                  loading: true,
+                                  policy: Policy(
+                                    planDescription:
+                                        'TRANSITION PLUS PLAN - RETAIL',
+                                    sumAssured: 70000,
+                                  ),
                                 );
                               },
                             )

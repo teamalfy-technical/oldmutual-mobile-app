@@ -57,21 +57,10 @@ class _PLoginPageState extends State<PLoginPage>
                 child: Obx(
                   () => Form(
                     key: formKey,
-                    child: Column(
+                    child: PAnimatedColumnWidget(
                       children: [
                         PAppSize.s24.verticalSpace,
-                        // PCustomTextField(
-                        //   labelText: 'phone'.tr,
-                        //   hintText: 'enter_phone_number'.tr,
-                        //   prefixIcon: Assets.icons.phoneIcon.path,
-                        //   controller: ctrl.phoneTEC,
-                        //   validator: PValidator.validatePhoneNumber,
-                        //   // focusColor: PAppColor.primary,
-                        // ),
-                        // PCustomPhoneTextfield(
-                        //   ctrl: ctrl,
-                        //   labelText: 'phone'.tr,
-                        // ),
+
                         Text(
                           '${'sign_in'.tr},',
                           style: Theme.of(context).textTheme.headlineLarge
@@ -111,23 +100,8 @@ class _PLoginPageState extends State<PLoginPage>
                           onObscureChanged: ctrl.onObscureChanged,
                         ),
 
-                        // PAppSize.s10.verticalSpace,
-
-                        // Align(
-                        //   alignment: Alignment.centerLeft,
-                        //   child: PAuthLinkButton(
-                        //     title: '${'forgot_password'.tr}? ',
-                        //     subtitle: 'reset'.tr,
-                        //     subtitleColor: PAppColor.primary,
-                        //     fontSize: PAppSize.s14,
-                        //     onTap: () => PHelperFunction.switchScreen(
-                        //       destination: Routes.enterEmailPage,
-                        //     ),
-                        //   ),
-                        // ),
                         PAppSize.s32.verticalSpace,
 
-                        // (PDeviceUtil.getDeviceWidth(context) / 3).verticalSpace,
                         PGradientButton(
                           label: 'sign_in'.tr,
                           showIcon: false,
@@ -142,33 +116,6 @@ class _PLoginPageState extends State<PLoginPage>
                         ),
 
                         PAppSize.s16.verticalSpace,
-
-                        // if (PSecureStorage().isFaceIdEnabled &&
-                        //     ctrl.isBiometricAvailable.value &&
-                        //     PSecureStorage().getAuthResponse() != null) ...[
-                        //   ScaleTransition(
-                        //     scale: _controller.drive(
-                        //       CurveTween(curve: Curves.easeInOut),
-                        //     ),
-                        //     child: IconButton(
-                        //       onPressed: () async => await ctrl
-                        //           .authenticateWithBiometrics(_controller),
-                        //       icon: PDeviceUtil.isAndroid()
-                        //           ? Assets.icons.fingerprint.svg(
-                        //               color: PHelperFunction.isDarkMode(context)
-                        //                   ? PAppColor.whiteColor
-                        //                   : PAppColor.darkBgColor,
-                        //             )
-                        //           : Assets.icons.faceId.svg(
-                        //               color: PHelperFunction.isDarkMode(context)
-                        //                   ? PAppColor.whiteColor
-                        //                   : PAppColor.darkBgColor,
-                        //             ),
-                        //     ),
-                        //   ),
-
-                        //   PAppSize.s4.verticalSpace,
-                        // ],
 
                         // (PDeviceUtil.getDeviceWidth(context) * 0.20)
                         //     .verticalSpace,

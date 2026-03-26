@@ -131,12 +131,29 @@ class PContributionsPage extends StatelessWidget {
                 ),
 
                 child: contributionVm.loading.value == LoadingState.loading
-                    ? ListView.builder(
-                        shrinkWrap: true,
-                        itemCount: 10,
-                        itemBuilder: (context, index) {
-                          return ContributionHistoryWidgetRedact(
-                            loadingState: contributionVm.loading.value,
+                    ? PShimmerListView<Transactions>(
+                        loading: true,
+                        items: const [],
+                        separatorBuilder: (context, index) =>
+                            PAppSize.s12.verticalSpace,
+                        scrollDirection: Axis.vertical,
+                        placeholderItem: Transactions(
+                          schemeName: 'Sample Scheme',
+                          received: 5000.0,
+                          paymentDate: DateTime.now().toIso8601String(),
+                        ),
+                        itemBuilder: (context, index, transaction) {
+                          return PTransactionListTile(
+                            title: transaction.schemeName ?? '',
+                            subtitle: 'Loading...',
+                            trailing: Text(
+                              '₵0.00',
+                              style: Theme.of(context).textTheme.bodyLarge
+                                  ?.copyWith(
+                                    fontSize: PAppSize.s14,
+                                    fontWeight: FontWeight.w600,
+                                  ),
+                            ),
                           );
                         },
                       )
@@ -150,42 +167,25 @@ class PContributionsPage extends StatelessWidget {
                               [])
                           .isEmpty
                     ? PEmptyStateWidget(message: 'no_results_found'.tr)
-                    : ListView.separated(
+                    : PAnimatedListView(
                         shrinkWrap: true,
-                        itemCount: contributionVm
-                            .history
-                            .value
-                            .transactionHistory!
-                            .transactions!
-                            .length,
-                        itemBuilder: (context, index) {
-                          final contribution = contributionVm
-                              .history
-                              .value
-                              .transactionHistory
-                              ?.transactions![index];
-                          return ListTile(
-                            title: Text(
-                              contribution?.schemeName ?? '',
-                              style: Theme.of(context).textTheme.bodyLarge
-                                  ?.copyWith(
-                                    fontSize: PAppSize.s14,
-                                    fontWeight: FontWeight.w500,
-                                  ),
-                            ),
-                            subtitle: Text(
-                              PFormatter.formatDate(
-                                dateFormat: DateFormat('yMMMMd'),
-                                date: DateTime.parse(
-                                  contribution?.paymentDate ??
-                                      DateTime.now().toIso8601String(),
-                                ),
+                        items:
+                            contributionVm
+                                .history
+                                .value
+                                .transactionHistory!
+                                .transactions ??
+                            [],
+
+                        itemBuilder: (index, contribution) {
+                          return PTransactionListTile(
+                            title: contribution?.schemeName ?? '',
+                            subtitle: PFormatter.formatDate(
+                              dateFormat: DateFormat('yMMMMd'),
+                              date: DateTime.parse(
+                                contribution?.paymentDate ??
+                                    DateTime.now().toIso8601String(),
                               ),
-                              style: Theme.of(context).textTheme.bodyMedium
-                                  ?.copyWith(
-                                    fontSize: PAppSize.s13,
-                                    fontWeight: FontWeight.w400,
-                                  ),
                             ),
                             trailing: Text(
                               PFormatter.formatCurrency(

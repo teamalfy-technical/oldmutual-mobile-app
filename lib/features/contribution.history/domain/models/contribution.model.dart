@@ -1,4 +1,6 @@
-class Contribution {
+import 'package:equatable/equatable.dart';
+// ignore: must_be_immutable
+class Contribution extends Equatable {
   String? month;
   double? mainCurrentValue;
   double? monthlyChange;
@@ -20,6 +22,10 @@ class Contribution {
     scheme = json['scheme'];
     lastUpdated = json['last_updated'];
   }
+
+  
+  @override
+  List<Object?> get props => [month, scheme];
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};

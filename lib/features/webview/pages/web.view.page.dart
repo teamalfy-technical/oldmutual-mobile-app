@@ -10,7 +10,6 @@ import 'package:oldmutual_pensions_app/features/payments/payments.dart';
 import 'package:oldmutual_pensions_app/features/webview/webview.dart';
 import 'package:oldmutual_pensions_app/routes/app.pages.dart';
 import 'package:oldmutual_pensions_app/shared/shared.dart';
-import 'package:redacted/redacted.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 // Import for iOS/macOS features.
 import 'package:webview_flutter_wkwebview/webview_flutter_wkwebview.dart';
@@ -116,22 +115,6 @@ class _PWebViewState extends State<PWebView> {
     );
   }
 
-  // Future<void> checkVerificationStatus(context) async {
-  // final vm = Get.find<PAuthVm>();
-  // final checker = ApiStatusChecker(
-  //   sessionId: vm.verificationRes.value.sessionId ?? '',
-  // );
-
-  // checker.statusStream.listen((success) {
-  //   if (success) {
-  //     pensionAppLogger.e(success);
-  //   }
-  //   print(success ? "API is UP ✅" : "API is DOWN ❌");
-  // });
-
-  // checker.start(context);
-  // }
-
   Future<void> checkCallBackResponse() async {
     try {
       // Get the page content
@@ -217,7 +200,6 @@ class _PWebViewState extends State<PWebView> {
         child:
             (Platform.isIOS && percentageProgress < 100) ||
                 (Platform.isAndroid && _loading)
-            //  percentageProgress < 100
             ? ListView.builder(
                 itemCount: 10,
                 itemBuilder: (context, index) {
@@ -227,45 +209,14 @@ class _PWebViewState extends State<PWebView> {
                       left: 8.0,
                       right: 8.0,
                     ),
-                    child: const RedactedWidget().redacted(
-                      context: context,
-                      redact: true,
+                    child: PShimmerWrapper(
+                      loading: true,
+                      child: WebViewShimmerWidget(),
                     ),
                   );
                 },
               )
             : WebViewWidget(controller: _controller),
-
-        // Platform.isIOS
-        //     ? percentageProgress < 100
-        //         ? ListView.builder(
-        //             itemCount: 10,
-        //             itemBuilder: (context, index) {
-        //               return Padding(
-        //                 padding: const EdgeInsets.only(
-        //                     top: 8.0, left: 8.0, right: 8.0),
-        //                 child: const RedactedWidget().redacted(
-        //                   context: context,
-        //                   redact: true,
-        //                 ),
-        //               );
-        //             })
-        //         : WebViewWidget(controller: _controller)
-        //     : Column(
-        //         children: [
-        //           if (percentageProgress < 100)
-        //             LinearProgressIndicator(
-        //               color: Colors.white,
-        //               backgroundColor: GHelperFunction.isDarkMode(context)
-        //                   ? GAppColor.blackColor
-        //                   : GAppColor.primaryDark,
-        //               value: percentageProgress / 100,
-        //             ),
-        //           Expanded(
-        //             child: WebViewWidget(controller: _controller),
-        //           ),
-        //         ],
-        //       ),
       ),
     );
   }

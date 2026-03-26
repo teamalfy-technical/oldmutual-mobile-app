@@ -48,11 +48,20 @@ class PPolicyStatementVm extends GetxController {
     update();
   }
 
+  /// Returns the selectedPolicy matched from the current policyOptions list,
+  /// ensuring the dropdown always finds the selected value in its items.
+  Policy? get matchedSelectedPolicy {
+    if (selectedPolicy == null) return null;
+    return policyOptions.firstWhereOrNull((p) => p == selectedPolicy);
+  }
+
   @override
   void onInit() {
-    selectedPolicy = allPolicy;
-    policyOptions.value = [allPolicy, ...Get.find<PPolicyVm>().policies];
-    getContributedYears();
+    // selectedPolicy = allPolicy;
+    // policyOptions.value = [allPolicy, ...Get.find<PPolicyVm>().policies];
+    if (contributionYears.isEmpty) {
+      getContributedYears();
+    }
     getAllGeneratedReports();
     super.onInit();
   }
@@ -60,8 +69,11 @@ class PPolicyStatementVm extends GetxController {
   /// Function to get all generated reports
   Future<void> getAllGeneratedReports() async {
     updateLoadingState(LoadingState.loading);
+    final mSelectedPolicy =
+        selectedPolicy?.policyNo ??
+        Get.find<PPolicyVm>().selectedPolicy?.policyNo;
     final result = await policyService.getPolicyReports(
-      policyNumber: selectedPolicy?.policyNo,
+      policyNumber: mSelectedPolicy,
     );
     result.fold(
       (err) {
@@ -72,10 +84,8 @@ class PPolicyStatementVm extends GetxController {
       },
       (res) {
         updateLoadingState(LoadingState.completed);
-        // if(res.data)
         res.data?.sort((a, b) => b.createdAt!.compareTo(a.createdAt ?? ''));
         statements.value = res.data ?? [];
-        // pensionAppLogger.i('DownloadUrl: ${statements.first.downloadUrl}');
       },
     );
   }

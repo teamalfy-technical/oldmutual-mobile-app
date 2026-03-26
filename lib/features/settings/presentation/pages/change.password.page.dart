@@ -63,7 +63,7 @@ class _PChangePasswordPageState extends State<PChangePasswordPage> {
                   color: PHelperFunction.isDarkMode(context)
                       ? PAppColor.darkAppBarColor
                       : PAppColor.whiteColor,
-                  child: Column(
+                  child: PAnimatedColumnWidget(
                     children: [
                       // PAppSize.s20.verticalSpace,
                       // PCustomPasswordTextField(

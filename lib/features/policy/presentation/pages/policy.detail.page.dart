@@ -40,12 +40,10 @@ class PPolicyDetailPage extends StatelessWidget {
                 fontWeight: FontWeight.w400,
               ),
             ),
-            Text(
-              PFormatter.formatCurrency(amount: policy.availableBalance ?? 0),
+            PCountUpText(
+              amount: policy.availableBalance ?? 0,
               textAlign: TextAlign.center,
-              softWrap: true,
               style: Theme.of(context).textTheme.headlineMedium?.copyWith(
-                // fontSize: PAppSize.s12,
                 fontWeight: FontWeight.w600,
               ),
             ),

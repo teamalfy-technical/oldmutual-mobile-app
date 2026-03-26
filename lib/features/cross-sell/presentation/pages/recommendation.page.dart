@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:oldmutual_pensions_app/core/utils/utils.dart';
 import 'package:oldmutual_pensions_app/features/cross-sell/presentation/vm/cross.sell.vm.dart';
 import 'package:oldmutual_pensions_app/features/home/home.dart';
 import 'package:oldmutual_pensions_app/routes/app.pages.dart';
+import 'package:oldmutual_pensions_app/shared/widgets/animated.listview.dart';
 
 class PRecommendationPage extends StatelessWidget {
   PRecommendationPage({super.key});
@@ -18,14 +20,13 @@ class PRecommendationPage extends StatelessWidget {
           : PAppColor.fillColor,
       appBar: AppBar(title: Text('recommended_for_you'.tr)),
       body: SafeArea(
-        child: ListView.builder(
+        child: PAnimatedListView(
+          separatorBuilder: (context, index) => PAppSize.s16.verticalSpace,
           shrinkWrap: true,
-          itemCount: vm.recommendations.length,
+          items: vm.recommendations,
           // scrollDirection: Axis.horizontal,
-          itemBuilder: (context, index) {
-            final recommendation = vm.recommendations[index];
+          itemBuilder: (index, recommendation) {
             return RecommendationWidget(
-              margin: EdgeInsets.only(bottom: PAppSize.s16),
               recommendation: recommendation,
               showArrowButton: false,
               onTap: () => PHelperFunction.switchScreen(

@@ -24,7 +24,7 @@ class PVerifyOTPPage extends StatelessWidget {
               PAppSize.s8.verticalSpace,
               Obx(
                 () => Expanded(
-                  child: Column(
+                  child: PAnimatedColumnWidget(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       PAppSize.s20.verticalSpace,
@@ -74,9 +74,6 @@ class PVerifyOTPPage extends StatelessWidget {
                       ),
                       PAppSize.s12.verticalSpace,
 
-                      // final seconds = timerCtrl.seconds.value;
-                      // final formattedTime =
-                      //     "00:${seconds.toString().padLeft(2, '0')}";
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
@@ -122,28 +119,6 @@ class PVerifyOTPPage extends StatelessWidget {
                                   }
                                 : null,
                           ),
-                          // PAuthLinkButton(
-                          //   title: timerCtrl.completed.value
-                          //       ? '${'not_receive_code'.tr}? '
-                          //       : '${'code_expires_in'.tr} ',
-                          //   subtitleColor: timerCtrl.completed.value
-                          //       ? PAppColor.primary
-                          //       : null,
-                          //   subtitle: timerCtrl.completed.value
-                          //       ? 'resend'.tr
-                          //       : 'resend_in'.trParams({
-                          //           'time': timerCtrl.formattedTime,
-                          //         }),
-                          //   onTap: timerCtrl.completed.value
-                          //       ? () {
-                          //           ctrl.verifyOTP(
-                          //             pin: ctrl.otpcode.value,
-                          //             isSignup: isSignup,
-                          //           );
-                          //           timerCtrl.startCountdown();
-                          //         }
-                          //       : null,
-                          // ),
                         ],
                       ),
                       PAppSize.s28.verticalSpace,

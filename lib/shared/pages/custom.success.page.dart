@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:oldmutual_pensions_app/core/utils/utils.dart';
-import 'package:oldmutual_pensions_app/gen/assets.gen.dart';
 import 'package:oldmutual_pensions_app/shared/shared.dart';
 
 class PCustomSuccessPage extends StatelessWidget {
@@ -27,7 +26,7 @@ class PCustomSuccessPage extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               PAppSize.s80.verticalSpace,
-              Assets.icons.successIcon.svg(),
+              const PAnimatedCheckmark(),
               PAppSize.s16.verticalSpace,
               Text(
                 title,
