@@ -28,9 +28,7 @@ class PUserDetailPage extends StatefulWidget {
   State<PUserDetailPage> createState() => _PUserDetailPageState();
 }
 
-class _PUserDetailPageState extends State<PUserDetailPage>
-    with TickerProviderStateMixin {
-  TabController? _tabController;
+class _PUserDetailPageState extends State<PUserDetailPage> {
   bool _isLoading = true;
   UserDetailsData? _userDetailsData;
 
@@ -40,12 +38,6 @@ class _PUserDetailPageState extends State<PUserDetailPage>
     WidgetsBinding.instance.addPostFrameCallback(
       (_) async => await _loadUserData(),
     );
-  }
-
-  @override
-  void dispose() {
-    _tabController?.dispose();
-    super.dispose();
   }
 
   Future<void> _loadUserData() async {
@@ -104,31 +96,18 @@ class _PUserDetailPageState extends State<PUserDetailPage>
 
     if (!mounted) return;
 
-    final data = UserDetailsData(
-      biodata: biodata,
-      profile: profile,
-      hasPensionScheme: bioData != null,
-    );
-
-    final tabCount = data.hasPensionScheme ? 2 : 1;
-    _tabController?.dispose();
-    _tabController = TabController(length: tabCount, vsync: this);
-    _tabController!.addListener(() {
-      if (!_tabController!.indexIsChanging) {
-        setState(() {});
-      }
-    });
-
     setState(() {
-      _userDetailsData = data;
+      _userDetailsData = UserDetailsData(
+        biodata: biodata,
+        profile: profile,
+        hasPensionScheme: bioData != null,
+      );
       _isLoading = false;
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    final hasPension = _userDetailsData?.hasPensionScheme ?? false;
-
     return Scaffold(
       backgroundColor: PHelperFunction.isDarkMode(context)
           ? PAppColor.darkBgColor
@@ -139,35 +118,14 @@ class _PUserDetailPageState extends State<PUserDetailPage>
       body: SafeArea(
         child: Column(
           children: [
-            if (!_isLoading && hasPension) ...[
-              PCustomTabBarWidget(
-                controller: _tabController!,
-                horizontalPadding: PAppSize.s0,
-                tabs: [
-                  Tab(text: 'biodata'.tr),
-                  Tab(text: 'profile'.tr),
-                ],
-              ),
-            ],
-
             PAppSize.s16.verticalSpace,
             Expanded(
-              child: _isLoading
-                  ? PProfileTab(userData: const {}, isLoading: true)
-                  : TabBarView(
-                      controller: _tabController!,
-                      children: [
-                        if (hasPension)
-                          PBiodataTab(
-                            userData: _userDetailsData?.biodata ?? {},
-                            isLoading: false,
-                          ),
-                        PProfileTab(
-                          userData: _userDetailsData?.profile ?? {},
-                          isLoading: false,
-                        ),
-                      ],
-                    ),
+              child: PProfileTab(
+                userData: _isLoading
+                    ? const {}
+                    : _userDetailsData?.profile ?? {},
+                isLoading: _isLoading,
+              ),
             ),
 
             PAppSize.s16.verticalSpace,
