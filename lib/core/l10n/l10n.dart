@@ -507,6 +507,7 @@ class AppTranslations extends Translations {
       // Pension Scheme
       'scheme_name': 'Scheme Name',
       'scheme_type': 'Scheme Type',
+      'scheme': 'Scheme',
       'master_scheme_description': 'Master Scheme Description',
       'pen_type_description': 'Pension Type Description',
       'scheme_current_value': 'Scheme Current Value',
