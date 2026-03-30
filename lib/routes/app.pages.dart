@@ -148,7 +148,7 @@ class AppPages {
     GetPage(
       name: _Paths.dashboardHighlightPage,
       page: () => PDashboardHighlightPage(highlight: Get.arguments),
-      // transition: Transition.circularReveal,
+      transition: Transition.fadeIn,
       transitionDuration: const Duration(milliseconds: PAppSize.s450),
     ),
     GetPage(
