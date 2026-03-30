@@ -8,14 +8,15 @@ final DashboardRepo homeRepo = Get.put(DashboardRepoImpl());
 
 class DashboardRepoImpl implements DashboardRepo {
   @override
-  Future<Either<PFailure, ApiResponse<List<Scheme>>>> getMemberSchemes() async {
+  Future<Either<PFailure, ApiResponse<List<SchemeModel>>>>
+  getMemberSchemes() async {
     return await customRepositoryWrapper.wrapRepositoryFunction(
       function: () async => await homeDs.getMemberSchemes(),
     );
   }
 
   @override
-  Future<Either<PFailure, ApiResponse<SelectedScheme>>>
+  Future<Either<PFailure, ApiResponse<SelectedSchemeModel>>>
   getSelectedMemberScheme({
     required String employerName,
     required String employerNumber,
@@ -31,21 +32,20 @@ class DashboardRepoImpl implements DashboardRepo {
     required String nationality,
   }) async {
     return await customRepositoryWrapper.wrapRepositoryFunction(
-      function:
-          () async => await homeDs.getSelectedMemberScheme(
-            employerName: employerName,
-            employerNumber: employerNumber,
-            ssnitNumber: ssnitNumber,
-            memberName: memberName,
-            memberNumber: memberNumber,
-            masterScheme: masterScheme,
-            schemeType: schemeType,
-            email: email,
-            dob: dob,
-            dateJoined: dateJoined,
-            sex: sex,
-            nationality: nationality,
-          ),
+      function: () async => await homeDs.getSelectedMemberScheme(
+        employerName: employerName,
+        employerNumber: employerNumber,
+        ssnitNumber: ssnitNumber,
+        memberName: memberName,
+        memberNumber: memberNumber,
+        masterScheme: masterScheme,
+        schemeType: schemeType,
+        email: email,
+        dob: dob,
+        dateJoined: dateJoined,
+        sex: sex,
+        nationality: nationality,
+      ),
     );
   }
 }

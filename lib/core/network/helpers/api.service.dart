@@ -36,13 +36,16 @@ class ApiServiceImpl implements ApiService {
     final dioClient =
         client?.getDio ?? DioClient.initWithBaseUrl(baseUrl: Env.baseUrl);
 
+    // Get headers once before the switch statement
+    final headers = await PHelperFunction.appTokenHeader();
+
     // debugPrint('Token: $token');
     switch (requestType) {
       case RequestType.get:
         response = await dioClient.get(
           endPoint,
           queryParameters: queryParams,
-          options: dio.Options(headers: PHelperFunction.appTokenHeader()),
+          options: dio.Options(headers: headers),
           // cancelToken: cancelRequestToken,
         );
         break;
@@ -51,7 +54,7 @@ class ApiServiceImpl implements ApiService {
           endPoint,
           data: payload,
           queryParameters: queryParams,
-          options: dio.Options(headers: PHelperFunction.appTokenHeader()),
+          options: dio.Options(headers: headers),
           // cancelToken: cancelRequestToken,
         );
         break;
@@ -60,19 +63,25 @@ class ApiServiceImpl implements ApiService {
           endPoint,
           data: payload,
           queryParameters: queryParams,
-          options: dio.Options(headers: PHelperFunction.appTokenHeader()),
+          options: dio.Options(headers: headers),
           // cancelToken: cancelRequestToken,
         );
         break;
       case RequestType.patch:
-        // TODO: Handle this case.
+        response = await dioClient.patch(
+          endPoint,
+          data: payload,
+          queryParameters: queryParams,
+          options: dio.Options(headers: headers),
+          // cancelToken: cancelRequestToken,
+        );
         break;
       case RequestType.delete:
         response = await dioClient.delete(
           endPoint,
           data: payload,
           queryParameters: queryParams,
-          options: dio.Options(headers: PHelperFunction.appTokenHeader()),
+          options: dio.Options(headers: headers),
           // cancelToken: cancelRequestToken,
         );
         break;

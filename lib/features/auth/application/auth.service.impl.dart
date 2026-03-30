@@ -21,10 +21,10 @@ class AuthServiceImpl implements AuthService {
   }
 
   @override
-  Future<Either<PFailure, ApiResponse<List<Message>>>> forgotPassword({
-    required String email,
+  Future<Either<PFailure, ApiResponse<Member>>> forgotPassword({
+    required String emailOrPhone,
   }) {
-    return authRepo.forgotPassword(email: email);
+    return authRepo.forgotPassword(emailOrPhone: emailOrPhone);
   }
 
   @override
@@ -38,29 +38,29 @@ class AuthServiceImpl implements AuthService {
     );
   }
 
-  @override
-  Future<Either<PFailure, ApiResponse<Member>>> signIn({
-    required String phone,
-    required String password,
-  }) {
-    return authRepo.signIn(phone: phone, password: password);
-  }
+  // @override
+  // Future<Either<PFailure, ApiResponse<Member>>> signIn({
+  //   required String phone,
+  //   required String password,
+  // }) {
+  //   return authRepo.signIn(phone: phone, password: password);
+  // }
 
-  @override
-  Future<Either<PFailure, ApiResponse<List<Message>>>> signup({
-    required String terms,
-    required String phone,
-  }) {
-    return authRepo.signup(terms: terms, phone: phone);
-  }
+  // @override
+  // Future<Either<PFailure, ApiResponse<List<Message>>>> signup({
+  //   required String terms,
+  //   required String phone,
+  // }) {
+  //   return authRepo.signup(terms: terms, phone: phone);
+  // }
 
-  @override
-  Future<Either<PFailure, ApiResponse<Member>>> verifyOTP({
-    required String phone,
-    required String otp,
-  }) {
-    return authRepo.verifyOTP(phone: phone, otp: otp);
-  }
+  // @override
+  // Future<Either<PFailure, ApiResponse<Member>>> verifyOTP({
+  //   required String phone,
+  //   required String otp,
+  // }) {
+  //   return authRepo.verifyOTP(phone: phone, otp: otp);
+  // }
 
   @override
   Future<Either<PFailure, ApiResponse<List<Message>>>> updateFcmToken({
@@ -76,10 +76,10 @@ class AuthServiceImpl implements AuthService {
 
   @override
   Future<Either<PFailure, ApiResponse<Member>>> verifyForgotPasswordOTP({
-    required String email,
     required String otp,
+    required String otpRef,
   }) {
-    return authRepo.verifyForgotPasswordOTP(email: email, otp: otp);
+    return authRepo.verifyForgotPasswordOTP(otp: otp, otpRef: otpRef);
   }
 
   @override
@@ -94,4 +94,48 @@ class AuthServiceImpl implements AuthService {
       confirmPassword: confirmPassword,
     );
   }
+
+  @override
+  Future<Either<PFailure, ApiResponse<Member>>> signUp({
+    required String email,
+    required String phone,
+    required String verificationToken,
+    required String password,
+    required String confirmPassword,
+  }) {
+    return authRepo.signUp(
+      email: email,
+      phone: phone,
+      verificationToken: verificationToken,
+      password: password,
+      confirmPassword: confirmPassword,
+    );
+  }
+
+  @override
+  Future<Either<PFailure, ApiResponse<Member>>> resendOtp({
+    required String otpRef,
+  }) => authRepo.resendOtp(otpRef: otpRef);
+
+  @override
+  Future<Either<PFailure, ApiResponse<Member>>> signIn({
+    required String emailOrPhone,
+    required String password,
+  }) => authRepo.signIn(emailOrPhone: emailOrPhone, password: password);
+
+  @override
+  Future<Either<PFailure, ApiResponse<String>>> verifyGhanaCard({
+    required String cardNumber,
+  }) => authRepo.verifyGhanaCard(cardNumber: cardNumber);
+
+  @override
+  Future<Either<PFailure, ApiResponse<List<Message>>>> verifySignupOtp({
+    required String otp,
+    required String otpRef,
+  }) => authRepo.verifySignupOtp(otp: otp, otpRef: otpRef);
+
+  @override
+  Future<Either<PFailure, ApiResponse<String>>> checkCardVerificationStatus({
+    required String sessionId,
+  }) => authRepo.checkCardVerificationStatus(sessionId: sessionId);
 }

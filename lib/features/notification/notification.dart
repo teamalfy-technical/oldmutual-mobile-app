@@ -8,5 +8,5 @@ export 'domain/models/notification.dart';
 export 'presentation/pages/notification.page.dart';
 export 'presentation/vm/notification.service.dart';
 export 'presentation/vm/notification.vm.dart';
-export 'presentation/widgets/notification.redact.widget.dart';
+export 'presentation/widgets/badge.widget.dart';
 export 'presentation/widgets/notification.widget.dart';

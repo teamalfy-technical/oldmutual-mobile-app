@@ -4,83 +4,81 @@ import 'package:get/get.dart';
 import 'package:oldmutual_pensions_app/core/utils/utils.dart';
 import 'package:oldmutual_pensions_app/features/beneficiary/beneficiary.dart';
 import 'package:oldmutual_pensions_app/features/beneficiary/presentation/vm/beneficiary.vm.dart';
-import 'package:oldmutual_pensions_app/gen/assets.gen.dart';
-import 'package:oldmutual_pensions_app/routes/app.pages.dart';
 import 'package:oldmutual_pensions_app/shared/shared.dart';
 
-class PBeneficiaryPage extends StatefulWidget {
-  const PBeneficiaryPage({super.key});
+class PBeneficiaryPage extends StatelessWidget {
+  PBeneficiaryPage({super.key});
 
-  @override
-  State<PBeneficiaryPage> createState() => _PBeneficiaryPageState();
-}
+  final vm = Get.put(PBeneficiaryVm());
 
-class _PBeneficiaryPageState extends State<PBeneficiaryPage> {
-  final ctrl = Get.put(PBeneficiaryVm());
+  Future showDetailModal(BuildContext context, Beneficiary beneficiary) {
+    return showModalBottomSheet(
+      context: context,
+      showDragHandle: false,
+      isScrollControlled: true,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadiusGeometry.only(
+          topLeft: Radius.circular(PAppSize.s24),
+          topRight: Radius.circular(PAppSize.s24),
+        ),
+      ),
+      builder: (context) {
+        return PBeneficiaryDetailWidget(beneficiary: beneficiary);
+      },
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: PHelperFunction.isDarkMode(context)
+          ? PAppColor.darkBgColor
+          : PAppColor.fillColor,
       appBar: AppBar(title: Text('beneficiaries'.tr)),
-      body: Obx(
-        () =>
-            Column(
-              children: [
-                PPageTagWidget(
-                  tag: 'beneficiaries_tag'.trParams({
-                    'phone': PAppConstant.beneficiaryPhoneSupport,
-                  }),
-                  icon: Assets.icons.warningGreenIcon.svg(),
-                  textAlign: TextAlign.center,
-                ),
-                // PAppSize.s32.verticalSpace,
-                (PDeviceUtil.getDeviceHeight(context) * 0.045).verticalSpace,
-                ctrl.loading.value == LoadingState.loading
-                    ? ListView.builder(
-                      shrinkWrap: true,
-                      itemCount: 10,
-                      itemBuilder: (context, index) {
-                        return PBeneficiaryWidgetRedact(
-                          loading: ctrl.loading.value,
+      body: SafeArea(
+        child: Obx(
+          () => PCustomCardWidget(
+            padding: EdgeInsets.symmetric(vertical: PAppSize.s6),
+            child: RefreshIndicator.adaptive(
+              onRefresh: () => vm.getBeneficiaries(),
+              child: vm.loading.value != LoadingState.loading
+                  ? PShimmerListView<Beneficiary>(
+                      loading: true,
+                      items: const [],
+                      separatorBuilder: (context, index) =>
+                          PAppSize.s12.verticalSpace,
+                      scrollDirection: Axis.vertical,
+                      placeholderCount: 20,
+                      placeholderItem: Beneficiary(
+                        fullName: 'John Doe',
+                        percAlloc: 50,
+                        relationship: 'Spouse',
+                      ),
+                      itemBuilder: (context, index, beneficiary) {
+                        return PBeneficiaryWidget(
+                          beneficiary: beneficiary,
+                          loading: true,
                         );
                       },
                     )
-                    : ctrl.beneficiaries.isEmpty
-                    ? PEmptyStateWidget(message: 'no_results_found'.tr)
-                    : RefreshIndicator.adaptive(
-                      onRefresh: () => ctrl.getBeneficiaries(),
-                      child: ListView.builder(
-                        shrinkWrap: true,
-                        itemCount: ctrl.beneficiaries.length,
-                        itemBuilder: (context, index) {
-                          final beneficiary = ctrl.beneficiaries[index];
-                          return PBeneficiaryWidget(
-                            beneficiary: beneficiary,
-                            index: index,
-                            loading: ctrl.loading.value,
-                            onExpansionChanged: (value) {
-                              setState(() {
-                                beneficiary.show = value;
-                              });
-                            },
-                          );
-                        },
-                      ),
+                  : vm.beneficiaries.isEmpty
+                  ? PEmptyStateWidget(message: 'no_results_found'.tr)
+                  : PAnimatedListView<Beneficiary>(
+                      shrinkWrap: true,
+                      padding: EdgeInsets.zero,
+                      items: vm.beneficiaries,
+                      itemBuilder: (index, beneficiary) {
+                        return PBeneficiaryWidget(
+                          beneficiary: beneficiary,
+                          onTap: () => showDetailModal(context, beneficiary),
+                        );
+                      },
+                      separatorBuilder: (context, index) =>
+                          Divider().symmetric(horizontal: PAppSize.s20),
                     ),
-
-                (PDeviceUtil.getDeviceHeight(context) * 0.05).verticalSpace,
-
-                PGradientButton(
-                  label: 'add_new_beneficiary'.tr.toUpperCase(),
-                  width: PDeviceUtil.getDeviceWidth(context) * 0.65,
-                  onTap:
-                      () => PHelperFunction.switchScreen(
-                        destination: Routes.manageBeneficiaryPage,
-                        args: [null, false],
-                      ),
-                ),
-              ],
-            ).scrollable(),
+            ),
+          ).all(PAppSize.s20),
+        ),
       ),
     );
   }

@@ -1,4 +1,6 @@
-class Beneficiary {
+import 'package:equatable/equatable.dart';
+// ignore: must_be_immutable
+class Beneficiary extends Equatable {
   int? beneficiaryId;
   String? fullName;
   double? percAlloc;
@@ -27,19 +29,24 @@ class Beneficiary {
 
   Beneficiary.fromJson(Map<String, dynamic> json) {
     beneficiaryId = json['beneficiary_id'];
-    fullName = json['FullName'];
-    percAlloc =
-        json['perc_alloc'] is String
-            ? double.parse(json['perc_alloc'])
-            : json['perc_alloc']?.toDouble();
+    fullName = json['FullName'] ?? json['name'];
+    percAlloc = json['perc_alloc'] is String
+        ? double.tryParse(json['perc_alloc']) ??
+              json['percentage_allocation']?.toDouble()
+        : json['perc_alloc']?.toDouble() ??
+              json['percentage_allocation']?.toDouble();
     birthDate = json['birth_date'];
     address = json['address'];
-    relationship = json['Relationship'];
+    relationship = json['Relationship'] ?? json['relationship'];
     pensionTypeId = json['pension_type_id'];
     pensionTypeName = json['pension_type_name'];
     schemeId = json['scheme_id'];
     schemeName = json['scheme_name'];
   }
+
+  
+  @override
+  List<Object?> get props => [beneficiaryId, fullName, schemeId];
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};

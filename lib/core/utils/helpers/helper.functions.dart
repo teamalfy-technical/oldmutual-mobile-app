@@ -1,10 +1,14 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_image_compress/flutter_image_compress.dart';
 import 'package:get/get.dart';
 import 'package:oldmutual_pensions_app/core/utils/utils.dart';
+import 'package:oldmutual_pensions_app/gen/assets.gen.dart';
+import 'package:open_file/open_file.dart';
+import 'package:path_provider/path_provider.dart';
 
 class PHelperFunction {
   //HHelperFunction._();
@@ -53,13 +57,41 @@ class PHelperFunction {
 
   static List<T> removeDuplicates<T>(List<T> list) => list.toSet().toList();
 
-  static Map<String, String> appTokenHeader() {
-    String? token = PSecureStorage().getAuthResponse()?.token;
+  static Future<Map<String, String>> appTokenHeader() async {
+    final authResponse = await PSecureStorage().getAuthResponse();
+    String? token = authResponse?.token;
     pensionAppLogger.d('Token: $token');
     return {
       'Authorization': 'Bearer $token',
       //'Content-Type': 'application/json'
     };
+  }
+
+  static bool isEmail(String value) {
+    return value.contains('@') && value.contains('.');
+  }
+
+  static bool isPhone(String value) {
+    final phoneRegExp = RegExp(r'^\d[\d*]+$');
+    return phoneRegExp.hasMatch(value);
+  }
+
+  static String formatPhoneNumber(String phone) {
+    // Remove any spaces or dashes the user might enter
+    phone = phone.trim().replaceAll(RegExp(r'\s+|-'), '');
+
+    // If phone starts with "0" (e.g. 054xxxxxxx)
+    if (phone.startsWith('0')) {
+      return '233${phone.substring(1)}';
+    }
+
+    // If phone already starts with "233"
+    if (phone.startsWith('233')) {
+      return phone;
+    }
+
+    // If it's not valid, just return original (or throw an error)
+    return '233$phone';
   }
 
   static Future<File> compressFile(File file) async {
@@ -69,6 +101,21 @@ class PHelperFunction {
       quality: 70, // You can adjust compression ratio
     );
     return File(compressedFile?.path ?? file.path);
+  }
+
+  static String maskEmailDomain(String email) {
+    final parts = email.split('@');
+    if (parts.length != 2) return email; // invalid email, return as is
+    return '${parts[0]}****';
+  }
+
+  static String maskPhoneNumber(String phone) {
+    if (phone.length <= 3) return phone; // if too short, return as is
+
+    final visiblePart = phone.substring(0, 3); // keep first 3
+    final maskedPart = '*' * (phone.length - 3); // mask the rest
+
+    return '$visiblePart$maskedPart';
   }
 
   static Future<String> getFileSize(File file) async {
@@ -129,6 +176,142 @@ class PHelperFunction {
     ];
     return months[month - 1];
   }
+
+  static Widget getBadgeIcon(String status) {
+    if (status.toLowerCase().contains(BadgeType.beneficiary.name)) {
+      return Assets.icons.personBlack.svg(
+        color: isDarkMode(Get.context!)
+            ? PAppColor.whiteColor
+            : PAppColor.darkBgColor,
+      );
+    }
+    if (status.toLowerCase().contains(BadgeType.report.name)) {
+      return Assets.icons.document.svg(
+        color: isDarkMode(Get.context!)
+            ? PAppColor.whiteColor
+            : PAppColor.darkBgColor,
+      );
+    }
+    if (status.toLowerCase().contains(BadgeType.contribution.name)) {
+      return Assets.icons.contributionAlert.svg(
+        color: isDarkMode(Get.context!)
+            ? PAppColor.whiteColor
+            : PAppColor.darkBgColor,
+      );
+    }
+    if (status.toLowerCase().contains(BadgeType.maintenance.name)) {
+      return Assets.icons.maintenance.svg(
+        color: isDarkMode(Get.context!)
+            ? PAppColor.whiteColor
+            : PAppColor.darkBgColor,
+      );
+    }
+    return Assets.icons.contributionAlert.svg(
+      color: isDarkMode(Get.context!)
+          ? PAppColor.whiteColor
+          : PAppColor.darkBgColor,
+    );
+  }
+
+  static Future<void> openFileWithData({
+    required Map<String, dynamic> pdfData,
+    required String name,
+  }) async {
+    // pensionAppLogger.e(url);
+
+    final String fileName = '${name.toLowerCase().split(' ').join('-')}.pdf';
+    //pdfData['fileName'];
+    final String base64String = pdfData['data'];
+    final bytes = base64Decode(base64String);
+
+    // Get a writable directory on the device
+    final dir = await getApplicationDocumentsDirectory();
+    final file = File('${dir.path}/$fileName');
+
+    // Write the file
+    await file.writeAsBytes(bytes);
+
+    pensionAppLogger.d('PDF saved at: ${file.path}');
+
+    // Open the file
+    //   await OpenFilex.open(file.path);
+    // if (file == null) return;
+    try {
+      await OpenFile.open(file.path);
+    } catch (e) {
+      pensionAppLogger.e('Error opening file: ${e.toString()}');
+    }
+  }
+
+  // Download and open file with URL and Filename
+  static openFileWithURL({
+    required String url,
+    required String fileName,
+    bool requiresAuth = true,
+  }) async {
+    pensionAppLogger.e(url);
+    final file = await downloadFile(url, fileName, requiresAuth: requiresAuth);
+    if (file == null) return;
+    OpenFile.open(file.path);
+  }
+
+  // Download file into private folder not visible to user
+  static Future<File?> downloadFile(
+    String url,
+    String fileName, {
+    bool requiresAuth = true,
+  }) async {
+    final appStorage = await getApplicationDocumentsDirectory();
+    final file = File("${appStorage.path}/$fileName");
+
+    // Prepare headers based on authentication requirement
+    Map<String, dynamic> headers = {"Accept": "application/pdf"};
+
+    if (requiresAuth) {
+      String? token = (await PSecureStorage().getAuthResponse())?.token;
+      headers["Authorization"] = "Bearer $token";
+    }
+
+    try {
+      final response = await Dio().get(
+        url,
+        options: Options(
+          responseType: ResponseType.bytes,
+          followRedirects: false,
+          headers: headers,
+        ),
+      );
+
+      pensionAppLogger.e(
+        "Response content-type: ${response.headers['content-type']}",
+      );
+      pensionAppLogger.e("Response status: ${response.statusCode}");
+
+      // Decode bytes to string (just to check what's inside)
+      pensionAppLogger.e(String.fromCharCodes(response.data!));
+
+      final raf = file.openSync(mode: FileMode.write);
+      raf.writeFromSync(response.data);
+      await raf.close();
+      return file;
+    } catch (err) {
+      pensionAppLogger.e("Error: $err");
+      return null;
+    }
+  }
+
+  // static BadgeType getBadgeType(String status) {
+  //   if (status.toLowerCase().contains(BadgeType.beneficiary.name)) {
+  //     return BadgeType.beneficiary;
+  //   }
+  //   if (status.toLowerCase().contains(BadgeType.report.name)) {
+  //     return BadgeType.report;
+  //   }
+  //   if (status.toLowerCase().contains(BadgeType.contribution.name)) {
+  //     return BadgeType.contribution;
+  //   }
+  //   return BadgeType.contribution;
+  // }
 
   // static Future<void> setStatusBarColorForIOS(BuildContext context,
   //     [Color statusBarColor = PAppColor.primaryDark]) async {

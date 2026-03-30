@@ -10,19 +10,21 @@ class POutlinedButtonTheme {
       OutlinedButtonThemeData(
         style: OutlinedButton.styleFrom(
           elevation: PAppSize.s0,
-          foregroundColor: PAppColor.blackColor,
+          foregroundColor: PAppColor.primary,
           side: const BorderSide(color: PAppColor.primary),
-          padding: const EdgeInsets.symmetric(
-            vertical: PAppSize.s16,
-            horizontal: PAppSize.s20,
-          ),
+          minimumSize: const Size.fromHeight(PAppSize.buttonHeightMid),
+          // padding: const EdgeInsets.symmetric(
+          //   vertical: PAppSize.s16,
+          //   horizontal: PAppSize.s20,
+          // ),
           textStyle: const TextStyle(
             fontSize: PAppSize.s16,
             color: PAppColor.blackColor,
+            letterSpacing: PAppSize.s0,
             fontWeight: FontWeight.w600,
           ),
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(PAppSize.s8),
+            borderRadius: BorderRadius.circular(PAppSize.s24),
           ),
         ),
       );
@@ -32,19 +34,21 @@ class POutlinedButtonTheme {
       OutlinedButtonThemeData(
         style: OutlinedButton.styleFrom(
           elevation: PAppSize.s0,
-          foregroundColor: PAppColor.whiteColor,
+          foregroundColor: PAppColor.primary,
           side: const BorderSide(color: PAppColor.primary),
-          padding: const EdgeInsets.symmetric(
-            vertical: PAppSize.s16,
-            horizontal: PAppSize.s20,
-          ),
+          minimumSize: const Size.fromHeight(PAppSize.buttonHeightMid),
+          // padding: const EdgeInsets.symmetric(
+          //   vertical: PAppSize.s16,
+          //   horizontal: PAppSize.s20,
+          // ),
           textStyle: const TextStyle(
             fontSize: PAppSize.s16,
             color: PAppColor.whiteColor,
+            letterSpacing: PAppSize.s0,
             fontWeight: FontWeight.w600,
           ),
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(PAppSize.s8),
+            borderRadius: BorderRadius.circular(PAppSize.s24),
           ),
         ),
       );

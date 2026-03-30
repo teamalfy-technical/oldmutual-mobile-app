@@ -7,6 +7,8 @@ import 'package:oldmutual_pensions_app/routes/app.pages.dart';
 class PSplashVm extends GetxController {
   static PSplashVm get instance => Get.find();
 
+  Timer? _timer;
+
   @override
   void onInit() {
     showSplashPage();
@@ -17,35 +19,67 @@ class PSplashVm extends GetxController {
   /// check if user is logged in or not
   /// [showSplashPage]
   void showSplashPage() async {
-    Timer(Duration(seconds: 3), () {
-      if (PSecureStorage().readData(PSecureStorage().onboardingKey) == null) {
+    _timer = Timer(Duration(seconds: 3), () async {
+      // Perform device security check first
+      final securityStatus = await DeviceSecurityService()
+          .checkDeviceSecurity();
+
+      if (securityStatus.isCompromised) {
+        stop();
         PHelperFunction.switchScreen(
-          destination: Routes.onboardingPage,
+          destination: Routes.securityBlockedPage,
+          replace: true,
+          args: securityStatus.securityIssueMessage,
+        );
+        return;
+      }
+
+      if (PSecureStorage().readData(PSecureStorage().onboardingKey) == null) {
+        stop();
+        PHelperFunction.switchScreen(
+          destination: Routes.welcomePage,
           replace: true,
         );
       } else {
-        if (PSecureStorage().getAuthResponse() != null) {
+        // On a fresh app start, always require re-authentication.
+        // Never go directly to the dashboard from splash.
+        final userEmail = await PSecureStorage().getUserEmail();
+        // final userPassword = await PSecureStorage().getBiometricPassword();
+
+        // Clear any stale session data so user must re-authenticate
+        await PSecureStorage().removeSecureData(PSecureStorage().authResKey);
+
+        if (userEmail != null) {
+          // User has saved credentials and biometric enabled - show welcome back for biometric/quick login
           PHelperFunction.switchScreen(
-            destination: Routes.dashboardPage,
+            destination: Routes.welcomeBackPage,
             replace: true,
           );
         } else {
-          bool? isRegistered = PSecureStorage().readData<bool>(
-            PSecureStorage().registeredKey,
+          // No saved credentials - show full login
+          PHelperFunction.switchScreen(
+            destination: Routes.loginPage,
+            replace: true,
           );
-          if (isRegistered != null && isRegistered) {
-            PHelperFunction.switchScreen(
-              destination: Routes.loginPage,
-              replace: true,
-            );
-          } else {
-            PHelperFunction.switchScreen(
-              destination: Routes.signupPage,
-              replace: true,
-            );
-          }
         }
+        stop();
       }
     });
+  }
+
+  void stop() {
+    _timer?.cancel();
+    _timer = null;
+  }
+
+  @override
+  void onClose() {
+    stop();
+    super.onClose();
+  }
+
+  completeOnboarding(String route) {
+    PSecureStorage().saveData(PSecureStorage().onboardingKey, true);
+    PHelperFunction.switchScreen(destination: route, replace: true);
   }
 }

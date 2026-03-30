@@ -7,6 +7,7 @@ import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:oldmutual_pensions_app/core/utils/utils.dart';
 import 'package:oldmutual_pensions_app/features/redemptions/redemption.dart';
+import 'package:oldmutual_pensions_app/routes/app.pages.dart';
 import 'package:oldmutual_pensions_app/shared/shared.dart';
 
 class PRedemptionVm extends GetxController {
@@ -42,61 +43,82 @@ class PRedemptionVm extends GetxController {
 
   var selectedRedemptionOption = 'withdraw'.obs;
 
-  var priceValue = 'percentage'.obs;
-
   String? selectedRedemptionType = 'Total';
+  String? selectedRedemptionValue = 'Percentage';
   String? selectedRedemptionReason = 'none'.tr;
-  List<String> redemptionTypes =
-      PSecureStorage().getAuthResponse()!.schemeType!.contains('TIER 2')
-          ? ['Total']
-          : ['Total', 'Partial'];
 
-  List<String> redemptionReasons =
-      PSecureStorage().getAuthResponse()!.schemeType!.contains('TIER 2')
-          ? [
-            'None',
-            'Retirement',
-            'Voluntary Retirement',
-            'Death',
-            'Total Incapacity',
-            'Permanent Emigration from Ghana',
-            'Other (Specify)',
-          ]
-          : PSecureStorage().getAuthResponse()!.masterScheme!.contains(
-            'PRESTIGE',
-          )
-          ? [
-            'None',
-            'Voluntary Retirement',
-            'Death',
-            'Total Incapacity',
-            'Permanent Emigration from Ghana',
-            'Other (Specify)',
-          ]
-          : [
-            'None',
-            'Retirement',
-            'Voluntary Retirement',
-            'Resignation',
-            'Death',
-            'Total Incapacity',
-            'Permanent Emigration from Ghana',
-            'Other (Specify)',
-          ];
+  var redemptionTypes = <String>['Total', 'Partial'].obs;
+  var redemptionValues = <String>['Percentage', 'Amount'].obs;
+  var redemptionReasons = <String>[
+    'None',
+    'Retirement',
+    'Voluntary Retirement',
+    'Resignation',
+    'Death',
+    'Total Incapacity',
+    'Permanent Emigration from Ghana',
+    'Other (Specify)',
+  ].obs;
 
-  // @override
-  // void onInit() {
-  //   super.onInit();
-  //   final schemeType =
-  //       PSecureStorage().getAuthResponse()!.schemeType ??
-  //       Get.put(PDashboardVm()).selectedScheme.value.schemeType ??
-  //       '';
-  //   redemptionTypes =
-  //       schemeType.contains('TIER 2') ? ['Total'] : ['Total', 'Partial'];
-  // }
+  @override
+  void onInit() {
+    super.onInit();
+    _initializeRedemptionOptions();
+  }
+
+  Future<void> _initializeRedemptionOptions() async {
+    final authResponse = await PSecureStorage().getAuthResponse();
+    final schemeType = authResponse?.schemeType ?? '';
+    final masterScheme = authResponse?.masterScheme ?? '';
+
+    // Initialize redemption types based on scheme type
+    if (schemeType.contains('TIER 2')) {
+      redemptionTypes.value = ['Total'];
+    } else {
+      redemptionTypes.value = ['Total', 'Partial'];
+    }
+
+    // Initialize redemption reasons based on scheme type and master scheme
+    if (schemeType.contains('TIER 2')) {
+      redemptionReasons.value = [
+        'None',
+        'Retirement',
+        'Voluntary Retirement',
+        'Death',
+        'Total Incapacity',
+        'Permanent Emigration from Ghana',
+        'Other (Specify)',
+      ];
+    } else if (masterScheme.contains('PRESTIGE')) {
+      redemptionReasons.value = [
+        'None',
+        'Voluntary Retirement',
+        'Death',
+        'Total Incapacity',
+        'Permanent Emigration from Ghana',
+        'Other (Specify)',
+      ];
+    } else {
+      redemptionReasons.value = [
+        'None',
+        'Retirement',
+        'Voluntary Retirement',
+        'Resignation',
+        'Death',
+        'Total Incapacity',
+        'Permanent Emigration from Ghana',
+        'Other (Specify)',
+      ];
+    }
+  }
 
   onRedemptionChanged(value) {
     selectedRedemptionType = value;
+    update();
+  }
+
+  onRedemptionValueChanged(value) {
+    selectedRedemptionValue = value;
     update();
   }
 
@@ -104,10 +126,6 @@ class PRedemptionVm extends GetxController {
     selectedRedemptionReason = value;
 
     update();
-  }
-
-  onPriceAmountChanged(val) {
-    priceValue.value = val;
   }
 
   onRedemptionOptionChanged(val) {
@@ -245,24 +263,18 @@ class PRedemptionVm extends GetxController {
       );
       return;
     }
-    showLoadingDialog(
-      context: context,
-      barrierDismissible: true,
-      content: Text(
-        'submitting_request_msg'.tr,
-        style: Theme.of(context).textTheme.bodyMedium,
-      ),
-    );
+
+    loading(LoadingState.loading);
     final result = await redemptionService.createRedemptionRequest(
-      nationId: nationIdTEC.text.trim(),
+      nationId: 'GHA-${nationIdTEC.text.trim()}',
       redemptionType: selectedRedemptionType ?? '',
-      percentage:
-          priceValue.value == 'percentage' ? percentageTEC.text.trim() : '',
-      amount: priceValue.value == 'amount' ? amountTEC.text.trim() : '',
-      redemptionReason:
-          selectedRedemptionReason == 'other'.tr
-              ? otherReasonTEC.text.trim()
-              : selectedRedemptionReason ?? '',
+      percentage: selectedRedemptionValue == 'Percentage'
+          ? percentageTEC.text.trim()
+          : '',
+      amount: selectedRedemptionValue == 'Amount' ? amountTEC.text.trim() : '',
+      redemptionReason: selectedRedemptionReason == 'other'.tr
+          ? otherReasonTEC.text.trim()
+          : selectedRedemptionReason ?? '',
       bankAccount: accountNumberTEC.text.trim(),
       bankName: bankNameTEC.text.trim(),
       accountHolderName: accountHolderNameTEC.text.trim(),
@@ -272,16 +284,33 @@ class PRedemptionVm extends GetxController {
     );
     result.fold(
       (err) {
-        PHelperFunction.pop();
+        loading(LoadingState.error);
         PPopupDialog(
           context,
-        ).errorMessage(title: 'error'.tr, message: err.message);
+        ).errorMessage(title: err.title ?? 'error'.tr, message: err.message);
       },
       (res) async {
-        PHelperFunction.pop();
+        loading(LoadingState.completed);
         clearFields();
-        showMySuccessDialog(message: 'redeem_pension_msg'.tr);
+        navigateToSuccessPage('redeem_pension_msg'.tr);
+        // showMySuccessDialog(message: 'redeem_pension_msg'.tr);
       },
+    );
+  }
+
+  /// Function to navigate user to success screen after report has been generated
+  navigateToSuccessPage(String message) {
+    PHelperFunction.switchScreen(
+      destination: Routes.settingsSuccessPage,
+      args: [
+        message,
+        'success'.tr,
+        'done'.tr,
+        () {
+          PHelperFunction.pop();
+          PHelperFunction.pop();
+        },
+      ],
     );
   }
 
@@ -311,14 +340,8 @@ class PRedemptionVm extends GetxController {
       );
       return;
     }
-    showLoadingDialog(
-      context: context,
-      barrierDismissible: true,
-      content: Text(
-        'submitting_request_msg'.tr,
-        style: Theme.of(context).textTheme.bodyMedium,
-      ),
-    );
+
+    loading(LoadingState.loading);
     final result = await redemptionService.createPortingRequest(
       nameOfCurrentEmployer: currentEmployerNameTEC.text.trim(),
       currentSchemeType: currentSchemeTypeTEC.text.trim(),
@@ -334,35 +357,16 @@ class PRedemptionVm extends GetxController {
     );
     result.fold(
       (err) {
-        PHelperFunction.pop();
+        loading(LoadingState.error);
         PPopupDialog(
           context,
-        ).errorMessage(title: 'error'.tr, message: err.message);
+        ).errorMessage(title: err.title ?? 'error'.tr, message: err.message);
       },
       (res) async {
-        PHelperFunction.pop();
+        loading(LoadingState.completed);
         clearFields();
-        showMySuccessDialog(message: 'porting_msg'.tr);
+        navigateToSuccessPage('porting_msg'.tr);
       },
     );
-  }
-
-  /// show success message after request completes
-  Future<void> showMySuccessDialog({required String message}) async {
-    showSuccessDialog(
-      context: context,
-      mainAxisAlignment: MainAxisAlignment.center,
-      title: '${'success'.tr}!',
-      subtitle: Text(
-        message,
-        style: Theme.of(
-          context,
-        ).textTheme.bodySmall?.copyWith(color: PAppColor.text700),
-      ),
-    );
-    Future.delayed(Duration(milliseconds: PAppSize.s5000), () {
-      PHelperFunction.pop();
-      PHelperFunction.pop();
-    });
   }
 }

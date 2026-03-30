@@ -6,6 +6,7 @@ class PAuthLinkButton extends StatelessWidget {
   final String title;
   final String subtitle;
   final double fontSize;
+  final Color? titleColor;
   final Color? subtitleColor;
   final Function()? onTap;
   const PAuthLinkButton({
@@ -13,8 +14,9 @@ class PAuthLinkButton extends StatelessWidget {
     required this.title,
     required this.subtitle,
     this.subtitleColor,
-    this.fontSize = PAppSize.s16,
+    this.fontSize = PAppSize.s14,
     this.onTap,
+    this.titleColor,
   });
 
   @override
@@ -23,9 +25,12 @@ class PAuthLinkButton extends StatelessWidget {
       textAlign: TextAlign.center,
       text: TextSpan(
         text: title,
-        style: Theme.of(
-          context,
-        ).textTheme.bodyMedium?.copyWith(fontSize: fontSize),
+        style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+          fontWeight: FontWeight.w600,
+          color: titleColor ?? Color(0xFFCCCCCC),
+
+          fontSize: fontSize,
+        ),
         children: [
           TextSpan(
             text: subtitle,

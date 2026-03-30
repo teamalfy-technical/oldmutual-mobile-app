@@ -1,134 +1,202 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:oldmutual_pensions_app/core/services/force.update.service.dart';
 import 'package:oldmutual_pensions_app/core/utils/utils.dart';
-import 'package:oldmutual_pensions_app/features/dashboard/dashboard.dart';
+import 'package:oldmutual_pensions_app/features/affluent/affluent.dart';
+import 'package:oldmutual_pensions_app/features/home/home.dart';
+import 'package:oldmutual_pensions_app/features/more/more.services.dart';
 import 'package:oldmutual_pensions_app/gen/assets.gen.dart';
-import 'package:oldmutual_pensions_app/shared/shared.dart';
+import 'package:oldmutual_pensions_app/routes/app.pages.dart';
+import 'package:oldmutual_pensions_app/shared/widgets/annotated.region.dart';
+import 'package:upgrader/upgrader.dart';
 
-class PDashboardPage extends StatelessWidget {
-  PDashboardPage({super.key});
+class PDashboardPage extends StatefulWidget {
+  const PDashboardPage({super.key});
 
-  final ctrl = Get.put(PDashboardVm());
+  @override
+  State<PDashboardPage> createState() => _PDashboardPageState();
+}
+
+class _PDashboardPageState extends State<PDashboardPage> {
+  final ctrl = Get.put(PHomeVm());
+  List<Widget>? _cachedPages;
+  bool? _lastAffluentState;
+
+  List<Widget> get _pages {
+    final isAffluent = ctrl.user.value?.affluent == true;
+    if (_cachedPages == null || _lastAffluentState != isAffluent) {
+      _lastAffluentState = isAffluent;
+      _cachedPages = [
+        PHomePage(),
+        PUserDetailPage(isShowAppBar: false),
+        if (isAffluent)
+          PSupportPage(user: ctrl.user.value, isShowAppBar: false),
+        PMorePage(),
+      ];
+    }
+    return _cachedPages!;
+  }
+
+  BottomNavigationBarItem _buildNavItem({
+    required BuildContext context,
+    required Widget icon,
+    required String label,
+  }) {
+    final unselectedColor = PHelperFunction.isDarkMode(context)
+        ? PAppColor.whiteColor
+        : PAppColor.blackColor;
+
+    return BottomNavigationBarItem(
+      icon: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          ColorFiltered(
+            colorFilter: ColorFilter.mode(unselectedColor, BlendMode.srcIn),
+            child: icon,
+          ),
+          SizedBox(height: PAppSize.s4),
+          Text(
+            label,
+            style: TextStyle(
+              fontSize: PAppSize.s10,
+              color: unselectedColor,
+              fontWeight: FontWeight.w600,
+            ),
+          ),
+        ],
+      ),
+      activeIcon: ShaderMask(
+        blendMode: BlendMode.srcIn,
+        shaderCallback: (bounds) =>
+            PAppColor.primaryGradient.createShader(bounds),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            ColorFiltered(
+              colorFilter: const ColorFilter.mode(
+                Colors.white,
+                BlendMode.srcIn,
+              ),
+              child: icon,
+            ),
+            SizedBox(height: PAppSize.s4),
+            Text(
+              label,
+              style: TextStyle(
+                fontSize: PAppSize.s10,
+                color: Colors.white,
+                fontWeight: FontWeight.w700,
+              ),
+            ),
+          ],
+        ),
+      ),
+      label: label,
+    );
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      PForceUpdateService().checkForUpdate(context);
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: PAnnotatedRegion(
-        child: Stack(
-          children: [
-            Column(
-              children: [
-                Container(
-                  width: PDeviceUtil.getDeviceWidth(context),
-                  // height: PDeviceUtil.getDeviceHeight(context) / 3.5,
-                  height: PDeviceUtil.getDeviceHeight(context) * 0.3,
-                  decoration: BoxDecoration(color: PAppColor.blackColor),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      Text(
-                        '${'welcome'.tr}, ${PSecureStorage().getAuthResponse()?.name ?? ''}',
-                        style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                          color: PAppColor.whiteColor,
-                        ),
-                      ),
-                      PAppSize.s8.verticalSpace,
-                      Text(
-                        'Your Schemes',
-                        style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                          color: PAppColor.whiteColor,
-                        ),
-                      ),
-                      PAppSize.s6.verticalSpace,
-                    ],
-                  ).only(bottom: PDeviceUtil.getDeviceWidth(context) * 0.15),
-                ),
-                Opacity(
-                  opacity: PAppSize.s0_3,
-                  child: Image.asset(
-                    Assets.images.dashboardBg.path,
-                    fit: BoxFit.cover,
-                    width: PDeviceUtil.getDeviceWidth(context),
-                    height: PDeviceUtil.getDeviceHeight(context) * 0.70,
-                    colorBlendMode: BlendMode.dstATop,
-                    color: PAppColor.whiteColor.withOpacityExt(
-                      PAppSize.s0_6,
-                    ), // Adjust opacity
+    return UpgradeAlert(
+      upgrader: Upgrader(durationUntilAlertAgain: Duration.zero),
+      dialogStyle: PDeviceUtil.isIOS()
+          ? UpgradeDialogStyle.cupertino
+          : UpgradeDialogStyle.material,
+      child: Obx(
+        () => Scaffold(
+          backgroundColor: PHelperFunction.isDarkMode(context)
+              ? PAppColor.darkBgColor
+              : PAppColor.fillColor,
+          appBar: // Hide AppBar if user is affluent, but keep status bar spacing
+          (ctrl.user.value?.affluent == true && ctrl.currentIndex.value == 0)
+              ? PreferredSize(
+                  preferredSize: Size.fromHeight(
+                    MediaQuery.of(context).padding.top,
                   ),
+                  child: Container(
+                    color: PHelperFunction.isDarkMode(context)
+                        ? PAppColor.darkAppBarColor
+                        : PAppColor.whiteColor,
+                    height: MediaQuery.of(context).padding.top,
+                  ),
+                )
+              : AppBar(
+                  title: ctrl.currentIndex.value == 1
+                      ? Text('manage'.tr)
+                      : ctrl.currentIndex.value == 2
+                      ? Text(
+                          ctrl.user.value?.affluent == true
+                              ? 'support'.tr
+                              : 'more'.tr,
+                        )
+                      : FutureBuilder<String?>(
+                          future: PSecureStorage().getUserFirstName(),
+                          builder: (context, snapshot) {
+                            return Text(
+                              ctrl.user.value?.affluent == true
+                                  ? 'more'.tr
+                                  : 'Hi ${snapshot.data ?? ''}',
+                            );
+                          },
+                        ),
+                  actions: [
+                    IconButton(
+                      onPressed: () => PHelperFunction.switchScreen(
+                        destination: Routes.notificationPage,
+                      ),
+                      icon: Assets.icons.notificationIcon.svg(
+                        height: PAppSize.s28,
+                        color: PHelperFunction.isDarkMode(context)
+                            ? PAppColor.whiteColor
+                            : PAppColor.cardDarkColor,
+                      ),
+                    ),
+                  ],
+                ),
+          bottomNavigationBar: BottomNavigationBar(
+            currentIndex: ctrl.currentIndex.value,
+            onTap: ctrl.onPageChanged,
+            elevation: PAppSize.s2,
+            backgroundColor: PHelperFunction.isDarkMode(context)
+                ? PAppColor.darkAppBarColor
+                : PAppColor.whiteColor,
+            showSelectedLabels: false,
+            showUnselectedLabels: false,
+            type: BottomNavigationBarType.fixed,
+            items: [
+              _buildNavItem(
+                context: context,
+                icon: Assets.icons.homeIcon.svg(),
+                label: 'home'.tr,
+              ),
+              _buildNavItem(
+                context: context,
+                icon: Assets.icons.manageIcon.svg(),
+                label: 'manage'.tr,
+              ),
+              if (ctrl.user.value?.affluent == true) ...[
+                _buildNavItem(
+                  context: context,
+                  icon: Assets.icons.supportIcon.svg(),
+                  label: 'support'.tr,
                 ),
               ],
-            ),
-
-            Obx(
-              () => Positioned(
-                top:
-                    (ctrl.schemes.isEmpty &&
-                            ctrl.loading.value == LoadingState.completed)
-                        ? PDeviceUtil.getDeviceHeight(context) * 0.45
-                        : PDeviceUtil.getDeviceHeight(context) * 0.22,
-                // bottom: PDeviceUtil.getDeviceHeight(context) * 0.02,
-                left: PAppSize.s16,
-                right: PAppSize.s16,
-                bottom: PAppSize.s0,
-                child: RefreshIndicator(
-                  onRefresh: ctrl.getMemberSchemes,
-                  color: PAppColor.primary,
-                  child:
-                      ctrl.loading.value == LoadingState.loading
-                          ? ListView.builder(
-                            shrinkWrap: true,
-                            itemCount: 5,
-                            itemBuilder: (context, index) {
-                              return PensionTierRedactWidget(
-                                loading: ctrl.loading.value,
-                              );
-                            },
-                          )
-                          : ctrl.schemes.isEmpty
-                          ? PEmptyStateWidget(message: 'no_results_found'.tr)
-                          : ListView.builder(
-                            itemCount: ctrl.schemes.length,
-                            shrinkWrap: true,
-                            itemBuilder: (context, index) {
-                              final scheme = ctrl.schemes[index];
-                              return PensionTierWidget(
-                                scheme: scheme,
-                                onTap: () {
-                                  // pensionAppLogger.e(scheme.toJson());
-                                  ctrl.getMemberSelectedScheme(
-                                    employerName: scheme.employerName ?? '',
-                                    employerNumber: scheme.employerNumber ?? '',
-                                    memberName: scheme.memberName ?? '',
-                                    memberNumber: scheme.memberNumber ?? '',
-                                    ssnitNumber: scheme.ssnitNumber ?? '',
-                                    masterScheme:
-                                        scheme.masterSchemeDescription ?? '',
-                                    schemeType: scheme.penTypeDescription ?? '',
-                                    email: scheme.email ?? '',
-                                    dob: scheme.dob ?? '',
-                                    dateJoined: scheme.dateJoined ?? '',
-                                    sex: scheme.sex ?? '',
-                                    nationality: scheme.nationality ?? '',
-                                  );
-                                  // PHelperFunction.switchScreen(
-                                  //   destination: Routes.homePage,
-                                  //   replace: false,
-                                  // );
-                                },
-                              );
-                            },
-                          ),
-                ),
+              _buildNavItem(
+                context: context,
+                icon: Assets.icons.moreIcon.svg(),
+                label: 'more'.tr,
               ),
-            ),
-
-            if (ctrl.selecting.value == LoadingState.loading)
-              Align(
-                alignment: Alignment.center,
-                child: PCustomLoadingIndicator(),
-              ),
-          ],
+            ],
+          ),
+          body: PAnnotatedRegion(child: _pages[ctrl.currentIndex.value]),
         ),
       ),
     );

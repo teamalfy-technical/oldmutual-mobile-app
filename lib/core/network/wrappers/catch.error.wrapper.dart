@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:oldmutual_pensions_app/core/errors/errors.dart';
 import 'package:oldmutual_pensions_app/core/utils/utils.dart';
-import 'package:oldmutual_pensions_app/features/settings/presentation/vm/settings.vm.dart';
 import 'package:oldmutual_pensions_app/routes/app.pages.dart';
 
 final CatchApiErrorWrapper catchApiErrorWrapper = Get.put(
@@ -17,11 +16,26 @@ abstract class CatchApiErrorWrapper {
 
 // @LazySingleton(as: CatchApiErrorWrapper)
 class CatchApiErrorWrapperImpl implements CatchApiErrorWrapper {
+  /// Check if the user is currently on an auth-related route (i.e. logged out).
+  /// Used to suppress error popups from stale API calls after logout.
+  bool _isOnAuthRoute() {
+    final currentRoute = Get.currentRoute;
+    return currentRoute == Routes.loginPage ||
+        currentRoute == Routes.welcomeBackPage ||
+        currentRoute == Routes.splashPage ||
+        currentRoute == Routes.createAccountPage ||
+        currentRoute == Routes.idEntryPage ||
+        currentRoute == Routes.livenessInfoPage ||
+        currentRoute == Routes.verifyOTPPage ||
+        currentRoute == Routes.forgotPasswordPage;
+  }
+
   @override
   dynamic handleError({err, stackTrace}) {
     pensionAppLogger.e('Error: ${err.toString()}');
 
     String? errorMessage = '';
+    String? errorTitle;
     // if (err.runtimeType != NoInternetException) {
     //   unawaited(FirebaseCrashlytics.instance.recordError(err, stackTrace));
     // }
@@ -32,72 +46,75 @@ class CatchApiErrorWrapperImpl implements CatchApiErrorWrapper {
           err.response?.data,
           StackTrace.current,
         );
-        if (err.response!.statusCode != 500) {
-          if (err.response?.data['status'] == 'error' &&
-              err.response?.statusCode == 200) {
-            errorMessage = err.response!.data['data'];
-          } else if (err.response?.statusCode == 400) {
-            errorMessage = extractError(err.response?.data);
-            //errorMessage = err.response?.data['error'];
-          } else if (err.response?.statusCode == 401) {
-            if (Get.currentRoute != Routes.loginPage) {
-              Get.put(PSettingsVm()).signout();
-            }
-            errorMessage =
-                err.response?.data['error'] ?? 'Unauthorized request';
-            pensionAppLogger.e(err.response?.data);
-          } else if (err.response?.statusCode == 403) {
-            if (Get.currentRoute != Routes.loginPage) {
-              Get.put(PSettingsVm()).signout();
-            } else {
-              errorMessage =
-                  err.response?.data['message'] ?? 'Forbidden Access';
-            }
-            pensionAppLogger.e(err.response?.data);
-          } else if (err.response?.statusCode == 404) {
+        final statusCode = err.response!.statusCode ?? 0;
+
+        // Suppress 401 errors when user is already on an auth route (logged out).
+        // This prevents stale in-flight API calls from showing error popups
+        // after the user has already been navigated away from authenticated pages.
+        if (statusCode == 401 && _isOnAuthRoute()) {
+          pensionAppLogger.w(
+            '401 suppressed on auth route: ${Get.currentRoute}',
+          );
+          return PFailure(message: '', silent: true);
+        }
+
+        // Handle 5xx server errors explicitly
+        if (statusCode >= 500) {
+          pensionAppLogger.e('Server error $statusCode: ${err.response?.data}');
+          errorTitle = 'server_error_title'.tr;
+          errorMessage = 'error_occurred_msg'.tr;
+        } else if (err.response?.data['status'] == 'error' &&
+            statusCode == 200) {
+          errorMessage = err.response!.data['data'];
+        } else if (statusCode == 400) {
+          errorMessage = extractError(err.response?.data);
+        } else if (statusCode == 401) {
+          errorMessage = err.response?.data['error'] ?? 'Unauthorized request';
+          pensionAppLogger.e(err.response?.data);
+        } else if (statusCode == 403) {
+          if (Get.currentRoute != Routes.loginPage) {
             errorMessage =
                 err.response?.data['message'] ??
-                'Requested resource is not found';
-          } else if (err.response?.statusCode == 422) {
-            // ApiErrorResponse error =
-            //     ApiErrorResponse.fromJson(err.response?.data);
-            pensionAppLogger.e(err.response?.data);
-            errorMessage = err.response?.data['message'] ?? 'Bad request';
-          } else if (err.response?.statusCode == 429) {
-            if (Get.currentRoute != Routes.loginPage) {
-              Get.put(PSettingsVm()).signout();
-            }
-            // ApiErrorResponse error =
-            //     ApiErrorResponse.fromJson(err.response?.data);
-            pensionAppLogger.e(err.response?.data);
-            // errorMessage = err.response?.data['message'] ?? 'Bad request';
-          } else if (err.response?.data is Map &&
-              err.response!.data.containsKey('data')) {
-            final error = err.response!.data['data'];
-            // final error = errorMessageFromJson(e.response!.data.toString()).message;
-            // Check the type of message and handle accordingly
-            if (error is List) {
-              List<String> messages = error.cast<String>();
-              errorMessage = messages.first.toString();
-              // Handle list of messages
-            } else if (error is String) {
-              // Handle single string message
-              errorMessage = error;
-            } else if (error is int) {
-              // Handle integer message
-            } else {
-              // Handle other types of messages
-            }
-          } else if (err.response?.statusCode == 412) {
-            errorMessage = err.message;
+                err.response?.data['data']['error'] ??
+                'Forbidden Access';
+          } else {
+            errorMessage =
+                err.response?.data['message'] ??
+                err.response?.data['data']['error'] ??
+                'Forbidden Access';
           }
-        } else {
-          errorMessage = err.response?.data['error'];
+          pensionAppLogger.e(err.response?.data);
+        } else if (statusCode == 404) {
+          pensionAppLogger.e(err.response?.data);
+          errorMessage = extractError(err.response?.data);
+        } else if (statusCode == 422) {
+          pensionAppLogger.e(err.response?.data);
+          errorMessage = err.response?.data['message'] ?? 'Bad request';
+        } else if (statusCode == 429) {
+          if (Get.currentRoute != Routes.loginPage) {
+            // Get.put(PSettingsVm()).signout(soft: true);
+          }
+          pensionAppLogger.e(err.response?.data);
+          errorMessage = extractError(err.response?.data);
+        } else if (statusCode == 412) {
+          errorMessage = extractError(err.response?.data);
+        } else if (err.response?.data is Map &&
+            err.response!.data.containsKey('data')) {
+          final error = err.response!.data['data'];
+          if (error is List) {
+            List<String> messages = error.cast<String>();
+            errorMessage = messages.first.toString();
+          } else if (error is String) {
+            errorMessage = error;
+          }
         }
       } else {
         errorMessage = ServerException.getErrorMessage(err);
       }
-      return PFailure(message: errorMessage ?? err.toString());
+      return PFailure(
+        message: errorMessage ?? 'error_occurred_msg'.tr,
+        title: errorTitle,
+      );
     } else {
       return UnknownFailure();
     }
@@ -113,6 +130,15 @@ class CatchApiErrorWrapperImpl implements CatchApiErrorWrapper {
         if (entry.value is String && entry.value.isNotEmpty) {
           return entry.value; // Return the error message found
         }
+      }
+    } else if (response.containsKey("error")) {
+      return response['error'];
+    } else if (response.containsKey("message")) {
+      final message = response['message'];
+      if (message is Map) {
+        return message['message'] ?? "Bad Request";
+      } else if (message is String) {
+        return message;
       }
     } else {
       for (var entry in response.entries) {

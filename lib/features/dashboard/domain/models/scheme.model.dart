@@ -1,4 +1,6 @@
-class Scheme {
+import 'package:equatable/equatable.dart';
+// ignore: must_be_immutable
+class SchemeModel extends Equatable {
   String? memberName;
   String? masterSchemeDescription;
   String? penTypeDescription;
@@ -9,7 +11,7 @@ class Scheme {
   String? ssnitNumber;
   String? employerNumber;
   // double?
-  dynamic schemeCurrentValue;
+  double? schemeCurrentValue;
   String? employerName;
   String? email;
   String? dob;
@@ -17,7 +19,7 @@ class Scheme {
   String? sex;
   String? nationality;
 
-  Scheme({
+  SchemeModel({
     this.memberName,
     this.masterSchemeDescription,
     this.penTypeDescription,
@@ -36,7 +38,7 @@ class Scheme {
     this.nationality,
   });
 
-  Scheme.fromJson(Map<String, dynamic> json) {
+  SchemeModel.fromJson(Map<String, dynamic> json) {
     memberName = json['MemberName'];
     masterSchemeDescription = json['MasterSchemeDescription'];
     penTypeDescription = json['PenTypeDescription'];
@@ -46,7 +48,7 @@ class Scheme {
     monthlyContribution = json['MonthlyContribution']?.toDouble();
     ssnitNumber = json['ssnitNumber'];
     employerNumber = json['EmployerNumber'];
-    schemeCurrentValue = json['SchemeCurrentValue'];
+    schemeCurrentValue = json['SchemeCurrentValue']?.toDouble();
     employerName = json['EmployerName'];
     email = json['Email'];
     dob = json['Dob'];
@@ -54,6 +56,10 @@ class Scheme {
     sex = json['Sex'];
     nationality = json['Nationality'];
   }
+
+  
+  @override
+  List<Object?> get props => [memberId, memberNumber];
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};

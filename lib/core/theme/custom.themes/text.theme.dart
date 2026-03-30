@@ -24,7 +24,7 @@ class PTextTheme {
 
     // Title Textstyles
     titleLarge: const TextStyle().copyWith(
-      fontSize: PAppSize.s16,
+      fontSize: PAppSize.s18,
       fontWeight: FontWeight.w700,
       color: PAppColor.textColorDark,
     ),

@@ -1,5 +1,6 @@
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
+import 'package:oldmutual_pensions_app/core/utils/utils.dart';
 
 class PFormatter {
   PFormatter._();
@@ -20,6 +21,12 @@ class PFormatter {
     return DateFormat('yyyy-MM-dd HH:mm:ss').format(parsedDate);
   }
 
+  static String formatAlertDateTime(DateTime date) {
+    final datePart = DateFormat('d MMM yyyy').format(date); // e.g., 24 Feb 2023
+    final timePart = DateFormat('HH:mm').format(date); // e.g., 13:56
+    return '$datePart • $timePart';
+  }
+
   static String formatPhone({required String code, required String phone}) {
     var formatted = phone.startsWith('0') ? phone.substring(1) : phone;
     return '$code$formatted';
@@ -32,15 +39,76 @@ class PFormatter {
     return dtFormat.format(date);
   }
 
+  /// --- calculate difference between two dates (In Days)
+  static int calculateDateDiff(String date, DateDiffUnit unit) {
+    final parseDate = DateTime.parse(date);
+    final now = DateTime.now();
+
+    switch (unit) {
+      case DateDiffUnit.days:
+        return now.difference(parseDate).inDays.abs();
+
+      case DateDiffUnit.months:
+        int months =
+            (now.year - parseDate.year) * 12 + (now.month - parseDate.month);
+        if (now.day < parseDate.day) {
+          months--; // adjust if day not reached yet
+        }
+        return months.abs();
+
+      case DateDiffUnit.years:
+        int years = now.year - parseDate.year;
+        if (now.month < parseDate.month ||
+            (now.month == parseDate.month && now.day < parseDate.day)) {
+          years--; // adjust if birthday/anniversary not reached yet
+        }
+        return years.abs();
+    }
+  }
+
+  /// --- calculate difference between two dates (In Years)
+  // static int calculateDateDiff(String date) {
+  //   final parseDate = DateTime.parse(date);
+  //   final diff = DateTime.now().difference(parseDate);
+  //   return diff.inDays;
+  // }
+
   /// --- format currency
+  // static String formatCurrency({required double amount, String symbol = '₵'}) {
+  //   return NumberFormat.currency(
+  //     locale: 'en_GH',
+  //     symbol: symbol,
+  //   ).format(amount);
+  // }
+
   static String formatCurrency({
     required double amount,
-    String symbol = 'GHS',
+    String? symbol = '₵',
+    bool useSpaceSeparator = true,
   }) {
-    return NumberFormat.currency(
-      locale: 'en_GH',
-      symbol: symbol,
-    ).format(amount);
+    // double value;
+    // if (amount == null) {
+    //   value = 0.0;
+    // } else if (amount is num) {
+    //   value = amount.toDouble();
+    // } else {
+    //   value = double.tryParse(amount.toString()) ?? 0.0;
+    // }
+
+    // Format with comma grouping and two decimals
+    String formatted = NumberFormat("#,##0.00", "en_US").format(amount);
+
+    // Replace commas with spaces if required
+    if (useSpaceSeparator) {
+      formatted = formatted.replaceAll(',', ' ');
+    }
+
+    // Add symbol if provided
+    if (symbol != null && symbol.isNotEmpty) {
+      return "$symbol$formatted";
+    }
+
+    return formatted;
   }
 
   static String formatMoneyValue(double value) {

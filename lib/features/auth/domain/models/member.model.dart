@@ -1,11 +1,16 @@
-class Member {
+import 'package:equatable/equatable.dart';
+// ignore: must_be_immutable
+class Member extends Equatable {
   String? token;
   int? id;
   String? name;
+  String? ghanaCardNumber;
   String? memberNumber;
   String? schemeType;
   String? masterScheme;
   String? phone;
+  String? phoneVerified;
+  String? otpRef;
   String? email;
   String? emailVerifiedAt;
   String? employerName;
@@ -22,6 +27,7 @@ class Member {
   String? lastLoggedInIp;
   String? lastLoggedInAgent;
   String? role;
+  bool? affluent;
   String? createdAt;
   String? updatedAt;
 
@@ -29,10 +35,13 @@ class Member {
     this.token,
     this.id,
     this.name,
+    this.ghanaCardNumber,
     this.memberNumber,
     this.schemeType,
     this.masterScheme,
     this.phone,
+    this.phoneVerified,
+    this.otpRef,
     this.email,
     this.emailVerifiedAt,
     this.employerName,
@@ -49,6 +58,7 @@ class Member {
     this.lastLoggedInIp,
     this.lastLoggedInAgent,
     this.role,
+    this.affluent,
     this.createdAt,
     this.updatedAt,
   });
@@ -57,10 +67,13 @@ class Member {
     String? token,
     int? id,
     String? name,
+    String? ghanaCardNumber,
     String? memberNumber,
     String? schemeType,
     String? masterScheme,
     String? phone,
+    String? phoneVerified,
+    String? otpRef,
     String? email,
     String? emailVerifiedAt,
     String? employerName,
@@ -77,6 +90,7 @@ class Member {
     String? lastLoggedInIp,
     String? lastLoggedInAgent,
     String? role,
+    bool? affluent,
     String? createdAt,
     String? updatedAt,
   }) {
@@ -84,10 +98,13 @@ class Member {
       token: token ?? this.token,
       id: id ?? this.id,
       name: name ?? this.name,
+      ghanaCardNumber: ghanaCardNumber ?? this.ghanaCardNumber,
       memberNumber: memberNumber ?? this.memberNumber,
       schemeType: schemeType ?? this.schemeType,
       masterScheme: masterScheme ?? this.masterScheme,
       phone: phone ?? this.phone,
+      phoneVerified: phoneVerified ?? this.phoneVerified,
+      otpRef: otpRef ?? this.otpRef,
       email: email ?? this.email,
       emailVerifiedAt: emailVerifiedAt ?? this.emailVerifiedAt,
       employerName: employerName ?? this.employerName,
@@ -104,6 +121,7 @@ class Member {
       lastLoggedInIp: lastLoggedInIp ?? this.lastLoggedInIp,
       lastLoggedInAgent: lastLoggedInAgent ?? this.lastLoggedInAgent,
       role: role ?? this.role,
+      affluent: affluent ?? this.affluent,
       createdAt: createdAt ?? this.createdAt,
       updatedAt: updatedAt ?? this.updatedAt,
     );
@@ -113,10 +131,13 @@ class Member {
     token = json['token'];
     id = json['id'];
     name = json['name'];
+    ghanaCardNumber = json['ghana_card_number'];
     memberNumber = json['member_number'];
     schemeType = json['scheme_type'];
     masterScheme = json['master_scheme'];
     phone = json['phone'];
+    phoneVerified = json['phone_verified'];
+    otpRef = json['otp_ref'];
     email = json['email'];
     emailVerifiedAt = json['email_verified_at'];
     employerName = json['employer_name'];
@@ -128,24 +149,33 @@ class Member {
     sex = json['sex'];
     nationality = json['nationality'];
     notificationsEnabled = json['notifications_enabled'];
+    phoneVerified = json['phone_verified'];
     terms = json['terms'];
     lastLoggedIn = json['last_logged_in'];
     lastLoggedInIp = json['last_logged_in_ip'];
     lastLoggedInAgent = json['last_logged_in_agent'];
     role = json['role'];
+    affluent = json['affluent'] ?? false;
     createdAt = json['created_at'];
     updatedAt = json['updated_at'];
   }
+
+  
+  @override
+  List<Object?> get props => [id, memberNumber, ghanaCardNumber];
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
     data['token'] = token;
     data['id'] = id;
     data['name'] = name;
+    data['ghana_card_number'] = ghanaCardNumber;
     data['member_number'] = memberNumber;
     data['scheme_type'] = schemeType;
     data['master_scheme'] = masterScheme;
     data['phone'] = phone;
+    data['phone_verified'] = phoneVerified;
+    data['otp_ref'] = otpRef;
     data['email'] = email;
     data['email_verified_at'] = emailVerifiedAt;
     data['employer_name'] = employerName;
@@ -156,12 +186,14 @@ class Member {
     data['date_joined'] = dateJoined;
     data['sex'] = sex;
     data['nationality'] = nationality;
+    data['phone_verified'] = phoneVerified;
     data['notifications_enabled'] = notificationsEnabled;
     data['terms'] = terms;
     data['last_logged_in'] = lastLoggedIn;
     data['last_logged_in_ip'] = lastLoggedInIp;
     data['last_logged_in_agent'] = lastLoggedInAgent;
     data['role'] = role;
+    data['affluent'] = affluent;
     data['created_at'] = createdAt;
     data['updated_at'] = updatedAt;
     return data;

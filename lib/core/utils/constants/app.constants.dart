@@ -5,6 +5,7 @@ class PAppConstant {
       'https://www.oldmutual.com.gh/personal/mvest-personal-pension-scheme/terms-and-conditions/';
 
   static const String emailSupport = 'DigitalSupport@oldmutual.com.gh';
+  static const String supportEmail = 'support@oldmutual.com.gh';
   static const String phoneSupport = '+233 (0) 303 968 667';
   static const String beneficiaryPhoneSupport = '0303968667 / 0501519374';
 
@@ -13,4 +14,39 @@ class PAppConstant {
   static String notificationChannelName = "Old Mutual Pensions notifications";
   static String notificationChannelDescription =
       "Notification channel to receive notifications on Old Mutual Pensions";
+
+  /// Quote Now URLs
+  static const String travelInsuranceQuoteUrl =
+      'https://www.oldmutual.com.gh/travel-insurance/';
+
+  static const String ekyireAsemQuoteUrl =
+      'https://www.oldmutual.com.gh/ekyire-asem/';
+  static const String personalAccidentQuoteUrl =
+      'https://www.oldmutual.com.gh/personal-accident/';
+
+  static const String internationalTravel = 'INTERNATIONAL TRAVEL';
+
+  /// Learn More URLs
+  // static const String travelInsuranceUrl =
+  //     'https://www.oldmutual.com.gh/travel-insurance/';
+
+  static const String homeUrl = 'https://www.oldmutual.com.gh/';
+
+  static const String travelInsuranceUrl =
+      'https://www.oldmutual.com.gh/personal/international-travel-insurance/';
+  static const String ekyireAsemUrl =
+      'https://www.oldmutual.com.gh/personal/ekyire-asem-plan/';
+  static const String mvestPensionsUrl =
+      'https://www.oldmutual.com.gh/personal/mvest-personal-pension-scheme/';
+  static const String personalAccidentUrl =
+      'https://www.oldmutual.com.gh/personal/personal-accident-policy/';
+  static const String specialInvestmentPlanUrl =
+      'https://www.oldmutual.com.gh/personal/special-investment-plan/';
+  static const String transitionPlusPlanUrl =
+      'https://www.oldmutual.com.gh/personal/transition-plus-plan/';
+  static const String educatorPlanUrl =
+      'https://www.oldmutual.com.gh/personal/education-plan/';
+  static const String retirementSalaryUrl =
+      'https://www.oldmutual.com.gh/personal/old-mutual-retirement-salary/';
+  static const String faqUrl = 'https://www.oldmutual.com.gh/get-help/';
 }

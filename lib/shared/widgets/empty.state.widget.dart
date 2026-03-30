@@ -18,7 +18,7 @@ class PEmptyStateWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Center(
-      child: AnimatedColumnWidget(
+      child: PAnimatedColumnWidget(
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
@@ -26,6 +26,7 @@ class PEmptyStateWidget extends StatelessWidget {
           PAppSize.s8.verticalSpace,
           Text(
             message,
+            textAlign: TextAlign.center,
             style: Theme.of(context).textTheme.titleMedium,
           ).symmetric(horizontal: PAppSize.s30),
         ],

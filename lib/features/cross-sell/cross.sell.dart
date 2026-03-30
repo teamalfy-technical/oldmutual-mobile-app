@@ -1,0 +1,9 @@
+export 'application/services/cross.sell.service.dart';
+export 'application/services/cross.sell.service.impl.dart';
+export 'data/ds/cross.sell.ds.dart';
+export 'data/ds/cross.sell.ds.impl.dart';
+export 'data/repos/cross.sell.repo.dart';
+export 'data/repos/cross.sell.repo.impl.dart';
+export 'presentation/pages/recommendation.page.dart';
+export 'presentation/vm/cross.sell.vm.dart';
+export 'presentation/widgets/recommendation.widget.dart';

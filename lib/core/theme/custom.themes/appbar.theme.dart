@@ -9,7 +9,7 @@ class PAppBarTheme {
     elevation: PAppSize.s0,
     centerTitle: true,
     scrolledUnderElevation: PAppSize.s0,
-    backgroundColor: PAppColor.transparentColor,
+    backgroundColor: PAppColor.whiteColor,
     surfaceTintColor: PAppColor.transparentColor,
     systemOverlayStyle: SystemUiOverlayStyle.dark,
     // systemOverlayStyle: SystemUiOverlayStyle(
@@ -26,8 +26,9 @@ class PAppBarTheme {
       size: PAppSize.s24,
     ),
     titleTextStyle: TextStyle(
-      fontSize: PAppSize.s17,
+      fontSize: PAppSize.s18,
       fontWeight: FontWeight.w600,
+      letterSpacing: PAppSize.s0,
       color: PAppColor.textColorLight,
     ),
   );
@@ -36,16 +37,17 @@ class PAppBarTheme {
     elevation: PAppSize.s0,
     centerTitle: true,
     scrolledUnderElevation: PAppSize.s0,
-    backgroundColor: PAppColor.transparentColor,
+    backgroundColor: PAppColor.darkAppBarColor,
     surfaceTintColor: PAppColor.transparentColor,
     // systemOverlayStyle: SystemUiOverlayStyle.light,
-    iconTheme: IconThemeData(color: PAppColor.blackColor, size: PAppSize.s24),
+    iconTheme: IconThemeData(color: PAppColor.whiteColor, size: PAppSize.s24),
     actionsIconTheme: IconThemeData(
       color: PAppColor.whiteColor,
       size: PAppSize.s24,
     ),
     titleTextStyle: TextStyle(
-      fontSize: PAppSize.s17,
+      fontSize: PAppSize.s18,
+      letterSpacing: PAppSize.s0,
       fontWeight: FontWeight.w600,
       color: PAppColor.whiteColor,
     ),

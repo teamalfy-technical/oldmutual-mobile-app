@@ -17,6 +17,24 @@ class PSplashPage extends StatelessWidget {
       body: Stack(
         children: [
           Positioned.fill(
+            child: Image.asset(
+              Assets.images.splashImg.path,
+              fit: BoxFit.cover,
+              width: PDeviceUtil.getDeviceWidth(context),
+            ),
+          ),
+
+          // Positioned.fill(
+          //   child: Opacity(
+          //     opacity: PAppSize.s0_7,
+          //     child: Image.asset(
+          //       Assets.images.splashOverlayImg.path,
+          //       fit: BoxFit.cover,
+          //       width: PDeviceUtil.getDeviceWidth(context),
+          //     ),
+          //   ),
+          // ),
+          Positioned(
             top: PAppSize.s0,
             bottom: PAppSize.s0,
             left: PAppSize.s0,

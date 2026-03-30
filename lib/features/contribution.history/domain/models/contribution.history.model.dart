@@ -1,4 +1,6 @@
-class ContributionHistory {
+import 'package:equatable/equatable.dart';
+// ignore: must_be_immutable
+class ContributionHistory extends Equatable {
   TransactionHistory? transactionHistory;
   List<dynamic>? memberClaims;
 
@@ -17,6 +19,10 @@ class ContributionHistory {
     }
   }
 
+  
+  @override
+  List<Object?> get props => [transactionHistory];
+
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
     if (transactionHistory != null) {
@@ -29,7 +35,8 @@ class ContributionHistory {
   }
 }
 
-class TransactionHistory {
+// ignore: must_be_immutable
+class TransactionHistory extends Equatable {
   String? status;
   double? accountValue;
   double? totalContributionTally;
@@ -78,6 +85,10 @@ class TransactionHistory {
     }
   }
 
+  
+  @override
+  List<Object?> get props => [status, dateJoined];
+
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
     data['status'] = status;
@@ -98,7 +109,8 @@ class TransactionHistory {
   }
 }
 
-class Transactions {
+// ignore: must_be_immutable
+class Transactions extends Equatable {
   String? paymentDate;
   double? received;
   String? pensionTypeId;
@@ -138,6 +150,10 @@ class Transactions {
     employerContribution = json['employer_contribution']?.toDouble();
     narration = json['narration'];
   }
+
+  
+  @override
+  List<Object?> get props => [paymentDate, pensionTypeId, schemeId];
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};

@@ -27,13 +27,63 @@ class PValidator {
     }
 
     final totalAmount =
-        Get.put(PContributionHistoryVm()).summmary.value.currentValue ?? 0;
+        Get.put(PContributionHistoryVm()).summary.value.currentValue ?? 0;
     if (number > totalAmount) {
       // Replace 100 with your desired max value
       return 'Amount cannot be greater than ${PFormatter.formatCurrency(amount: totalAmount)}';
     }
 
     return null;
+  }
+
+  static String? Function(String?) validateClaimAmount(num maxAmount) {
+    return (String? value) {
+      if (value == null || value.trim().isEmpty) {
+        return 'This field is required';
+      }
+      final amount = double.tryParse(value);
+      if (amount == null) {
+        return 'Please enter a valid amount';
+      }
+      if (amount > maxAmount) {
+        return 'Amount cannot exceed cash value (${maxAmount.toStringAsFixed(2)})';
+      }
+      return null;
+    };
+  }
+
+  static String? validatePaymentAmount(String? value) {
+    if (value == null || value.isEmpty) {
+      return 'amount_required'.tr;
+    }
+    final amount = double.tryParse(value);
+    // TODO: Change minimum amount to 1 when going to production
+    if (amount == null || amount <= 0) {
+      return 'enter_valid_amount'.tr;
+    }
+    return null;
+  }
+
+  String? normalizeAndValidatePhoneNumber(String input) {
+    // Remove spaces and any non-digit characters
+    String cleaned = input.replaceAll(RegExp(r'\D'), '');
+
+    // If number starts with "0", replace with "233"
+    if (cleaned.startsWith('0')) {
+      cleaned = '233${cleaned.substring(1)}';
+    }
+    // If already starts with "233", keep as is
+    else if (!cleaned.startsWith('233')) {
+      // If it doesn’t start with 0 or 233, assume Ghana and prefix "233"
+      cleaned = '233$cleaned';
+    }
+
+    // ✅ Validate length (must be exactly 12 digits: 233 + 9 digits)
+    if (cleaned.length != 12) {
+      return null; // invalid number
+    }
+
+    return cleaned;
   }
 
   static String? validatePercentage(String? value) {
@@ -53,6 +103,16 @@ class PValidator {
     return null;
   }
 
+  static String? validateDelete(value) {
+    if (value == null || value.isEmpty) {
+      return "Please type DELETE to proceed";
+    }
+    if (value.trim() != "DELETE") {
+      return "You must type DELETE to proceed";
+    }
+    return null; // valid input
+  }
+
   static String? validateDate(String? value) {
     if (value == null || value.isEmpty) {
       return 'Please enter a date';
@@ -69,11 +129,12 @@ class PValidator {
     if (value == null || value.isEmpty) {
       return 'Email or phone cannot be empty.';
     }
-    final emailRegExp = RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$');
-    final phoneRegExp = RegExp(r'^\d{10}$');
-    if (!emailRegExp.hasMatch(value) && !phoneRegExp.hasMatch(value)) {
-      return 'Invalid email or phone number';
+    final emailRegex = RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$');
+    final phoneRegex = RegExp(r'^\d{9,10}$');
+    if (!emailRegex.hasMatch(value) && !phoneRegex.hasMatch(value)) {
+      return 'Enter a valid email or phone number';
     }
+
     return null;
   }
 
@@ -90,35 +151,39 @@ class PValidator {
     return null;
   }
 
+  static String? validateConfirmPassword(String? value, String? password) {
+    if (value!.isEmpty) {
+      return 'Confirm password is required';
+    }
+    if (value != password) {
+      return 'Passwords do not match';
+    }
+    return null;
+  }
+
   static String? validatePassword(String? value) {
     if (value == null || value.isEmpty) {
       return 'Password is required.';
     }
 
-    if (!value.contains(RegExp(r'[A-Z]')) &&
-        !value.contains(RegExp(r'[0-9]')) &&
-        !value.contains(RegExp(r'[!@#$%^&*(),.?":{}|<>]'))) {
-      return 'Not strong enough';
-    }
-
     // check for minimum password length
     if (value.length < 8) {
-      return 'Password must be at least 8 characters long.';
+      return 'Must be at least 8 characters long.';
     }
 
     // check of uppercase letters
     if (!value.contains(RegExp(r'[A-Z]'))) {
-      return 'Password must contain at least one uppercase letter.';
+      return 'Must contain at least one uppercase letter.';
     }
 
     // check of number
     if (!value.contains(RegExp(r'[0-9]'))) {
-      return 'Password must contain at least one number.';
+      return 'Must contain at least one number.';
     }
 
     // check of special characters
     if (!value.contains(RegExp(r'[!@#$%^&*(),.?":{}|<>]'))) {
-      return 'Password much contain at least one special character.';
+      return 'Must contain at least one special character.';
     }
 
     return null;
@@ -151,21 +216,83 @@ class PValidator {
     return valid;
   }
 
+  static String? validateIdNumber(String? value) {
+    if (value == null || value.isEmpty) {
+      return "ID number is required";
+    }
+
+    // Pattern: GHA or ZWE prefix, 9 digits, hyphen, 1 digit
+    final regex = RegExp(r'^(GHA|ZWE)-\d{9}-\d{1}$');
+
+    if (!regex.hasMatch(value)) {
+      return "Enter a valid ID (e.g. GHA-234445555-5)";
+    }
+
+    return null; // valid
+  }
+
   static String? validatePhoneNumber(String? value) {
     if (value == null || value.isEmpty) {
       return 'Phone number is required.';
     }
 
     // RegExp for phone number validation (e.g., a 10-digit us phone number format)
-    final phoneRegExp = RegExp(r'^\d{10}$');
+
+    final phoneRegex = RegExp(r'^\d{9,10}$');
 
     // check of special characters
-    if (!phoneRegExp.hasMatch(value)) {
-      return 'Invalid phone number format (10 digits required).';
+    if (!phoneRegex.hasMatch(value)) {
+      return 'Invalid phone number format (9 or 10 digits required).';
     }
 
     return null;
   }
 
   // Add more here as need for your requirements
+
+  static bool validatePasswordLength(String? value) {
+    if (value == null || value.isEmpty) {
+      return false;
+    }
+
+    if (value.length < 8 || value.length > 16) {
+      return false;
+    }
+
+    if (value.contains(' ')) {
+      return false;
+    }
+
+    return true; // ✅ valid
+  }
+
+  static bool validatePasswordCapital(String? value) {
+    if (value == null || value.isEmpty) {
+      return false;
+    }
+
+    if (!RegExp(r'[A-Z]').hasMatch(value)) {
+      return false;
+    }
+
+    return true; // ✅ valid
+  }
+
+  static bool validatePasswordSpecialAndNumber(String? value) {
+    if (value == null || value.isEmpty) {
+      return false;
+    }
+
+    // At least one number
+    if (!RegExp(r'[0-9]').hasMatch(value)) {
+      return false;
+    }
+
+    // At least one special character (!@#$&*~)
+    if (!RegExp(r'[!@#\$&*~]').hasMatch(value)) {
+      return false;
+    }
+
+    return true; // ✅ valid
+  }
 }

@@ -9,9 +9,9 @@ import 'package:oldmutual_pensions_app/shared/shared.dart';
 class PDashboardVm extends GetxController {
   static PDashboardVm get instance => Get.find();
 
-  var schemes = <Scheme>[].obs;
+  var schemes = <SchemeModel>[].obs;
 
-  var selectedScheme = SelectedScheme().obs;
+  var selectedScheme = SelectedSchemeModel().obs;
 
   var loading = LoadingState.completed.obs;
   var selecting = LoadingState.completed.obs;
@@ -36,7 +36,7 @@ class PDashboardVm extends GetxController {
         updateLoadingState(LoadingState.error);
         PPopupDialog(
           context,
-        ).errorMessage(title: 'error'.tr, message: err.message);
+        ).errorMessage(title: err.title ?? 'error'.tr, message: err.message);
       },
       (res) {
         updateLoadingState(LoadingState.completed);
@@ -93,11 +93,12 @@ class PDashboardVm extends GetxController {
         // updateSelectingState(LoadingState.error);
         PPopupDialog(
           context,
-        ).errorMessage(title: 'error'.tr, message: err.message);
+        ).errorMessage(title: err.title ?? 'error'.tr, message: err.message);
       },
       (res) async {
-        selectedScheme.value = res.data ?? SelectedScheme();
-        final updatedMember = PSecureStorage().getAuthResponse()?.copyWith(
+        selectedScheme.value = res.data ?? SelectedSchemeModel();
+        final authResponse = await PSecureStorage().getAuthResponse();
+        final updatedMember = authResponse?.copyWith(
           masterScheme: res.data?.masterScheme ?? '',
           schemeType: res.data?.schemeType ?? '',
           name: res.data?.name ?? '',
@@ -117,8 +118,11 @@ class PDashboardVm extends GetxController {
           updatedAt: res.data?.updatedAt ?? '',
         );
         pensionAppLogger.e(res.data?.toJson());
-        PSecureStorage().saveAuthResponse(updatedMember?.toJson());
-        pensionAppLogger.e(PSecureStorage().getAuthResponse()?.toJson());
+        if (updatedMember != null) {
+          await PSecureStorage().saveAuthResponse(updatedMember.toJson());
+        }
+        final updatedAuthResponse = await PSecureStorage().getAuthResponse();
+        pensionAppLogger.e(updatedAuthResponse?.toJson());
         await Get.put(PContributionHistoryVm()).getContributionsSummary();
         // updateSelectingState(LoadingState.completed);
         PHelperFunction.pop();

@@ -83,7 +83,7 @@ class PBeneficiaryVm extends GetxController {
         updateLoadingState(LoadingState.error);
         PPopupDialog(
           context,
-        ).errorMessage(title: 'error'.tr, message: err.message);
+        ).errorMessage(title: err.title ?? 'error'.tr, message: err.message);
       },
       (res) {
         if (res.data!.isNotEmpty) {
@@ -142,7 +142,7 @@ class PBeneficiaryVm extends GetxController {
         PHelperFunction.pop();
         PPopupDialog(
           context,
-        ).errorMessage(title: 'error'.tr, message: err.message);
+        ).errorMessage(title: err.title ?? 'error'.tr, message: err.message);
       },
       (res) {
         clearFields();
@@ -206,7 +206,7 @@ class PBeneficiaryVm extends GetxController {
         // updateSubmittingState(LoadingState.error);
         PPopupDialog(
           context,
-        ).errorMessage(title: 'error'.tr, message: err.message);
+        ).errorMessage(title: err.title ?? 'error'.tr, message: err.message);
       },
       (res) {
         // updateSubmittingState(LoadingState.completed);
@@ -238,7 +238,7 @@ class PBeneficiaryVm extends GetxController {
         PHelperFunction.pop();
         PPopupDialog(
           context,
-        ).errorMessage(title: 'error'.tr, message: err.message);
+        ).errorMessage(title: err.title ?? 'error'.tr, message: err.message);
       },
       (res) {
         PHelperFunction.pop();

@@ -7,9 +7,15 @@ class PTimerVm extends GetxController {
   Timer? _timer;
   var completed = false.obs;
 
+  @override
+  void onInit() {
+    startCountdown();
+    super.onInit();
+  }
+
   void startCountdown() {
     _timer?.cancel(); // Ensure previous timer is cancelled
-    secondsRemaining.value = 120;
+    secondsRemaining.value = 59;
 
     completed.value = false;
 
@@ -23,10 +29,15 @@ class PTimerVm extends GetxController {
     });
   }
 
+  // String get formattedTime {
+  //   int minutes = secondsRemaining.value ~/ 60;
+  //   int seconds = secondsRemaining.value % 60;
+  //   return "$minutes:${seconds.toString().padLeft(2, '0')}";
+  // }
+
   String get formattedTime {
-    int minutes = secondsRemaining.value ~/ 60;
     int seconds = secondsRemaining.value % 60;
-    return "$minutes:${seconds.toString().padLeft(2, '0')}";
+    return seconds.toString().padLeft(2, '0');
   }
 
   void onCountdownFinished() {

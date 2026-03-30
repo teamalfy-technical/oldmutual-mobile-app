@@ -10,9 +10,12 @@ class PGradientButton extends StatelessWidget {
   final double? height;
   final double radius;
   final double fontSize;
+  final Color textColor;
   final Function()? onTap;
   final bool showIcon;
+  final Widget? icon;
   final LoadingState loading;
+  final IconDirection iconDirection;
   const PGradientButton({
     super.key,
     required this.label,
@@ -22,7 +25,10 @@ class PGradientButton extends StatelessWidget {
     this.showIcon = true,
     this.radius = PAppSize.s24,
     this.loading = LoadingState.completed,
-    this.fontSize = PAppSize.s14,
+    this.fontSize = PAppSize.s16,
+    this.textColor = PAppColor.blackColor,
+    this.icon,
+    this.iconDirection = IconDirection.left,
   });
 
   @override
@@ -35,11 +41,9 @@ class PGradientButton extends StatelessWidget {
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(radius),
         gradient: LinearGradient(
-          colors: [
-            PAppColor.primaryDark,
-            PAppColor.primaryDark,
-            PAppColor.primary,
-          ],
+          colors: onTap == null
+              ? [PAppColor.greyColor, PAppColor.greyColor]
+              : [PAppColor.primaryDark, PAppColor.primary],
         ), // Match button shape
       ),
       child: ElevatedButton(
@@ -53,35 +57,48 @@ class PGradientButton extends StatelessWidget {
             borderRadius: BorderRadius.circular(radius),
           ),
         ),
-        child:
-            loading == LoadingState.loading
-                ? PCustomLoadingIndicator(
-                  size: PAppSize.s10,
-                  color: PAppColor.whiteColor,
-                )
-                : showIcon
-                ? Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
-                      label,
-                      style: TextStyle(
-                        fontWeight: FontWeight.w500,
-                        color: PAppColor.whiteColor,
-                      ),
-                    ),
-                    PAppSize.s8.horizontalSpace,
-                    Assets.icons.arrowIcon.svg(),
-                  ],
-                )
-                : Text(
-                  label,
-                  style: TextStyle(
-                    fontWeight: FontWeight.w500,
-                    color: PAppColor.whiteColor,
-                    fontSize: fontSize,
-                  ),
+        child: loading == LoadingState.loading
+            ? PCustomLoadingIndicator(size: PAppSize.s16, color: textColor)
+            : showIcon
+            ? iconDirection == IconDirection.left
+                  ? Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        icon ?? Assets.icons.arrowIcon.svg(),
+                        PAppSize.s8.horizontalSpace,
+                        Text(
+                          label,
+                          style: TextStyle(
+                            fontWeight: FontWeight.w600,
+                            color: textColor,
+                            fontSize: fontSize,
+                          ),
+                        ),
+                      ],
+                    )
+                  : Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          label,
+                          style: TextStyle(
+                            fontWeight: FontWeight.w600,
+                            color: textColor,
+                            fontSize: fontSize,
+                          ),
+                        ),
+                        PAppSize.s8.horizontalSpace,
+                        icon ?? Assets.icons.arrowIcon.svg(),
+                      ],
+                    )
+            : Text(
+                label,
+                style: TextStyle(
+                  fontWeight: FontWeight.w600,
+                  color: textColor,
+                  fontSize: fontSize,
                 ),
+              ),
       ),
     );
   }

@@ -4,7 +4,6 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:oldmutual_pensions_app/core/utils/utils.dart';
 import 'package:oldmutual_pensions_app/features/contribution.history/domain/models/contribution.history.model.dart';
-import 'package:redacted/redacted.dart';
 
 class ContributionHistoryWidget extends StatelessWidget {
   const ContributionHistoryWidget({super.key, required this.transaction});
@@ -19,39 +18,31 @@ class ContributionHistoryWidget extends StatelessWidget {
         style: Theme.of(
           context,
         ).textTheme.bodyLarge?.copyWith(fontWeight: FontWeight.w500),
-      ).redacted(context: context, redact: false),
+      ),
       contentPadding: EdgeInsets.symmetric(horizontal: PAppSize.s0),
-
       subtitle: Text(
         PFormatter.formatCurrency(amount: transaction.received ?? 0),
         style: Theme.of(
           context,
         ).textTheme.bodySmall?.copyWith(fontWeight: FontWeight.w400),
-      ).redacted(context: context, redact: false),
+      ),
       trailing: Column(
         crossAxisAlignment: CrossAxisAlignment.end,
         children: [
           Text(
-            // transaction.paymentFlag == 'B'
-            //     ?
-            //     'unsuccessful'.tr
-            //     :
             'successful'.tr,
             style: Theme.of(context).textTheme.bodySmall?.copyWith(
               color: PAppColor.primary,
-              // transaction.paymentFlag == 'B'
-              //     ? PAppColor.primary
-              //     : PAppColor.redColor,
               fontWeight: FontWeight.w400,
             ),
-          ).redacted(context: context, redact: false),
+          ),
           PAppSize.s2.verticalSpace,
           Text(
             'Date: ${PFormatter.formatDate(date: DateTime.parse(transaction.paymentDate ?? DateTime.now().toIso8601String()), dateFormat: DateFormat('yyyy-MM-dd'))}',
             style: Theme.of(
               context,
             ).textTheme.bodySmall?.copyWith(fontWeight: FontWeight.w400),
-          ).redacted(context: context, redact: false),
+          ),
         ],
       ),
     );

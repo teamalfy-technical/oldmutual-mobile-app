@@ -1,6 +1,15 @@
-enum AnimateType { slideLeft, slideUp, slideDown, slideRight }
+enum AnimateType {
+  slideLeft,
+  slideUp,
+  scaleIn,
+  scaleOut,
+  slideDown,
+  slideRight,
+}
 
 enum SlideDirection { leftToRight, rightToLeft }
+
+enum IconDirection { left, right }
 
 enum LoadingState { loading, completed, error, empty }
 
@@ -19,7 +28,29 @@ enum FileType { video, image, unknown }
 
 enum Direction { left, right }
 
+enum ProductType { pensions, insurance, corporate }
+
+enum DateDiffUnit { days, months, years }
+
+enum PolicyStatus { active, inactive, lapsed }
+
+enum PaymentStatus {
+  success('Success'),
+  failed('Failed'),
+  pending('Pending');
+
+  final String value;
+  const PaymentStatus(this.value);
+
+  @override
+  String toString() => value;
+}
+
+enum BadgeType { report, beneficiary, contribution, maintenance }
+
 // enum Environment { dev, prod }
 enum SchemeType { anchor, prestige, aspire }
+
+enum ContentType { article, video }
 
 enum ConnectivityStatus { connected, disconnected }

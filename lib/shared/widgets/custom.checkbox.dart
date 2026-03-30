@@ -25,40 +25,40 @@ class PCustomCheckbox extends StatelessWidget {
   Widget build(BuildContext context) {
     return checkboxDirection == Direction.left
         ? Row(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Transform.scale(
-              scale: scale,
-              child: Checkbox(
-                side: side,
-                value: value,
-                onChanged: onChanged,
-                materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                visualDensity: VisualDensity.compact,
-                fillColor: fillColor,
+            // crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Transform.scale(
+                scale: scale,
+                child: Checkbox(
+                  side: side,
+                  value: value,
+                  onChanged: onChanged,
+                  materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                  visualDensity: VisualDensity.compact,
+                  fillColor: fillColor,
+                ),
               ),
-            ),
-            PAppSize.s8.horizontalSpace,
-            Expanded(child: child),
-          ],
-        )
+              PAppSize.s8.horizontalSpace,
+              Expanded(child: child),
+            ],
+          )
         : Row(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Expanded(child: child),
-            PAppSize.s2.horizontalSpace,
-            Transform.scale(
-              scale: scale,
-              child: Checkbox(
-                side: side,
-                value: value,
-                onChanged: onChanged,
-                materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                visualDensity: VisualDensity.compact,
-                fillColor: fillColor,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Expanded(child: child),
+              PAppSize.s2.horizontalSpace,
+              Transform.scale(
+                scale: scale,
+                child: Checkbox(
+                  side: side,
+                  value: value,
+                  onChanged: onChanged,
+                  materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                  visualDensity: VisualDensity.compact,
+                  fillColor: fillColor,
+                ),
               ),
-            ),
-          ],
-        );
+            ],
+          );
   }
 }

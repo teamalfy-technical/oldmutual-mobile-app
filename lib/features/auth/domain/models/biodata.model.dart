@@ -1,6 +1,14 @@
-class BioData {
+import 'package:equatable/equatable.dart';
+// ignore: must_be_immutable
+class BioData extends Equatable {
   String? memberNo;
   String? fullName;
+  String? firstName;
+  String? otherNames;
+  String? dob;
+  String? ghanaCardNumber;
+  String? staffNumber;
+  String? sex;
   double? monthlySalary;
   double? monthlyContribution;
   String? tin;
@@ -17,6 +25,12 @@ class BioData {
   BioData({
     this.memberNo,
     this.fullName,
+    this.firstName,
+    this.otherNames,
+    this.dob,
+    this.ghanaCardNumber,
+    this.staffNumber,
+    this.sex,
     this.monthlySalary,
     this.monthlyContribution,
     this.tin,
@@ -34,6 +48,13 @@ class BioData {
   BioData.fromJson(Map<String, dynamic> json) {
     memberNo = json['member_no'];
     fullName = json['FullName'];
+    firstName = json['FirstName'];
+    otherNames = json['other_names'];
+    dob = json['dob'];
+    ghanaCardNumber = json['GIN'];
+    staffNumber = json['StaffNumber'];
+    sex = json['sex'];
+
     monthlySalary = json['monthly_salary'].toDouble();
     monthlyContribution = json['MonthlyContribution'].toDouble();
     tin = json['tin'];
@@ -48,10 +69,20 @@ class BioData {
     schemeName = json['scheme_name'];
   }
 
+  
+  @override
+  List<Object?> get props => [memberNo, ghanaCardNumber, schemeId];
+
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
     data['member_no'] = memberNo;
     data['FullName'] = fullName;
+    data['FirstName'] = firstName;
+    data['other_names'] = otherNames;
+    data['dob'] = dob;
+    data['GIN'] = ghanaCardNumber;
+    data['StaffNumber'] = staffNumber;
+    data['Sex'] = sex;
     data['monthly_salary'] = monthlySalary;
     data['MonthlyContribution'] = monthlyContribution;
     data['tin'] = tin;

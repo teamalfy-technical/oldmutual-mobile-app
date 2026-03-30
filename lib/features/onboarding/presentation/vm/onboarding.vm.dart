@@ -33,6 +33,9 @@ class POnboardingVm extends GetxController {
     // mark onboarding as completed
     PSecureStorage().saveData(PSecureStorage().onboardingKey, true);
     // navigate to sign up
-    PHelperFunction.switchScreen(destination: Routes.signupPage, replace: true);
+    PHelperFunction.switchScreen(
+      destination: Routes.createAccountPage,
+      replace: true,
+    );
   }
 }

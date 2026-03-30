@@ -1,4 +1,6 @@
-class NotificationModel {
+import 'package:equatable/equatable.dart';
+// ignore: must_be_immutable
+class NotificationModel extends Equatable {
   String? id;
   String? type;
   int? notifiableId;
@@ -30,6 +32,10 @@ class NotificationModel {
     updatedAt = json['updated_at'];
   }
 
+  
+  @override
+  List<Object?> get props => [id, type];
+
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
     data['id'] = id;
@@ -46,7 +52,8 @@ class NotificationModel {
   }
 }
 
-class Data {
+// ignore: must_be_immutable
+class Data extends Equatable {
   String? title;
   String? message;
   String? paymentDate;
@@ -58,6 +65,10 @@ class Data {
     message = json['message'];
     paymentDate = json['payment_date'];
   }
+
+  
+  @override
+  List<Object?> get props => [title, message];
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};

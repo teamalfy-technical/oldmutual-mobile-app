@@ -37,11 +37,9 @@ android {
     }
 
     defaultConfig {
-        // TODO: Specify your own unique Application ID (https://developer.android.com/studio/build/application-id.html).
         applicationId = "com.oldmutual.pensions.app"
-        // You can update the following values to match your application needs.
-        // For more information, see: https://flutter.dev/to/review-gradle-config.
-        minSdk = flutter.minSdkVersion
+        // minSdk must be at least 23 for EncryptedSharedPreferences (secure token storage)
+        minSdk = maxOf(flutter.minSdkVersion, 23)
         targetSdk = flutter.targetSdkVersion
         versionCode = flutter.versionCode
         versionName = flutter.versionName
@@ -62,6 +60,13 @@ android {
         }
         release {
             signingConfig = signingConfigs.getByName("release")
+            // Enable ProGuard/R8 for code obfuscation in protected builds
+            isMinifyEnabled = true
+            isShrinkResources = true
+            proguardFiles(
+                getDefaultProguardFile("proguard-android-optimize.txt"),
+                "proguard-rules.pro"
+            )
         }
     }
 
@@ -83,6 +88,23 @@ android {
                 value = "My OldMutual GH")
             applicationIdSuffix = ""
         }
+        create("prodPentest") {
+            dimension = "default"
+            resValue(
+                type = "string",
+                name = "app_name",
+                value = "My OldMutual GH Pentest")
+            applicationIdSuffix = ".pentest"
+        }
+    }
+
+    // Configure build variants
+    applicationVariants.all {
+        val variant = this
+        // Disable obfuscation for pentest flavor
+        if (variant.flavorName == "prodPentest") {
+            variant.buildConfigField("Boolean", "PENTEST_BUILD", "true")
+        }
     }
 }
 
@@ -94,4 +116,6 @@ dependencies {
     implementation("androidx.window:window:1.0.0")
     implementation("androidx.window:window-java:1.0.0")
     coreLibraryDesugaring("com.android.tools:desugar_jdk_libs:2.1.4")
+    // Security library for EncryptedSharedPreferences (required for flutter_secure_storage)
+    implementation("androidx.security:security-crypto:1.1.0-alpha06")
 }

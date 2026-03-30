@@ -1,258 +1,258 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:oldmutual_pensions_app/core/utils/utils.dart';
 import 'package:oldmutual_pensions_app/features/redemptions/redemption.dart';
 import 'package:oldmutual_pensions_app/shared/shared.dart';
-import 'package:oldmutual_pensions_app/shared/widgets/custom.filled.textfield.dart';
 
 class PRedemptionPage extends StatelessWidget {
   PRedemptionPage({super.key});
 
   final ctrl = Get.put(PRedemptionVm());
 
+  final FocusNode _idFocusNode = FocusNode();
+  final FocusNode _percentageFocusNode = FocusNode();
+  final FocusNode _amountFocusNode = FocusNode();
+  final FocusNode _accountNumberFocusNode = FocusNode();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('redemption'.tr)),
-      body: Obx(
-        () => Column(
+      backgroundColor: PHelperFunction.isDarkMode(context)
+          ? PAppColor.darkBgColor
+          : PAppColor.fillColor,
+      appBar: AppBar(title: Text('withdrawal'.tr)),
+      body: SafeArea(
+        child: Column(
           children: [
-            PPageTagWidget(
-              tag: 'redemption_hint_tag'.tr,
-              textAlign: TextAlign.center,
-            ),
-
-            PAppSize.s25.verticalSpace,
             // Filter
             Expanded(
-              child: Form(
-                key: ctrl.redemptionFormKey,
-                child:
-                    Column(
-                      children: [
-                        PCustomFilledTextfield(
-                          label: 'national_id'.tr,
-                          hint: 'GHA-XXXXXXXXX-X',
-                          textInputType: TextInputType.text,
-                          controller: ctrl.nationIdTEC,
-                        ),
-                        PAppSize.s20.verticalSpace,
-                        GetBuilder<PRedemptionVm>(
-                          builder: (ctrl) {
-                            return PCustomDropdown<String>(
-                              label: 'redemption_type'.tr,
-                              value: ctrl.selectedRedemptionType,
-                              onChanged: ctrl.onRedemptionChanged,
-                              items: ctrl.redemptionTypes,
-                              radius: PAppSize.s5,
-                              height: PAppSize.s36,
-                            );
-                          },
-                        ),
-                        // Row(
-                        //   children: [
-                        //     Expanded(
-                        //       child: PCustomFilledTextfield(
-                        //         label: 'national_id'.tr,
-                        //         hint: 'GHA-XXXXXXXXX-X',
-                        //         textInputType: TextInputType.text,
-                        //         controller: ctrl.nationIdTEC,
-                        //       ),
-                        //     ),
-                        //     PAppSize.s16.horizontalSpace,
-                        //     GetBuilder<PRedemptionVm>(
-                        //       builder: (ctrl) {
-                        //         return Expanded(
-                        //           child: PCustomDropdown<String>(
-                        //             label: 'redemption_type'.tr,
-                        //             value: ctrl.selectedRedemptionType,
-                        //             onChanged: ctrl.onRedemptionChanged,
-                        //             items: ctrl.redemptionTypes,
-                        //             radius: PAppSize.s5,
-                        //             height: PAppSize.s36,
-                        //           ),
-                        //         );
-                        //       },
-                        //     ),
-                        //   ],
-                        // ),
-                        PAppSize.s20.verticalSpace,
-                        GetBuilder<PRedemptionVm>(
-                          builder: (ctrl) {
-                            return PCustomDropdown<String>(
-                              label: 'redemption_reason'.tr,
-                              value: ctrl.selectedRedemptionReason,
-                              onChanged: ctrl.onRedemptionReasonChanged,
-                              items: ctrl.redemptionReasons,
-                              radius: PAppSize.s5,
-                              height: PAppSize.s36,
-                            );
-                          },
-                        ),
+              child: PCustomCardWidget(
+                padding: EdgeInsets.symmetric(
+                  horizontal: PAppSize.s20,
+                  vertical: PAppSize.s22,
+                ),
+                child: GetBuilder<PRedemptionVm>(
+                  builder: (ctrl) {
+                    return Form(
+                      key: ctrl.redemptionFormKey,
+                      child: Column(
+                        children: [
+                          PKeyboardActions(
+                            focusNode: _idFocusNode,
+                            child: PCustomTextField(
+                              labelText: 'national_id'.tr,
+                              hintText: 'XXXXXXXXX-X',
+                              prefixText: 'GHA-',
+                              controller: ctrl.nationIdTEC,
+                              focusNode: _idFocusNode,
+                              textInputType: TextInputType.number,
+                              validator: PValidator.validateIdNumber,
+                              maxLength: 11,
+                              inputFormatters: [
+                                FilteringTextInputFormatter.digitsOnly,
+                                IdNumberFormatter(),
+                              ],
+                            ),
+                          ),
+                          PAppSize.s20.verticalSpace,
+                          PCustomDropdownField<String>(
+                            labelText: 'redemption_type'.tr,
+                            initialValue: ctrl.selectedRedemptionType,
+                            onChanged: ctrl.onRedemptionChanged,
+                            items: ctrl.redemptionTypes
+                                .map(
+                                  (e) => DropdownMenuItem(
+                                    value: e,
+                                    child: Text(e),
+                                  ),
+                                )
+                                .toList(),
+                          ),
 
-                        GetBuilder<PRedemptionVm>(
-                          builder: (ctrl) {
-                            return ctrl.selectedRedemptionReason ==
-                                    'Other (Specify)'
-                                ? Column(
+                          PAppSize.s20.verticalSpace,
+                          PCustomDropdownField<String>(
+                            labelText: 'redemption_reason'.tr,
+                            initialValue: ctrl.selectedRedemptionReason,
+                            onChanged: ctrl.onRedemptionReasonChanged,
+                            items: ctrl.redemptionReasons
+                                .map(
+                                  (e) => DropdownMenuItem(
+                                    value: e,
+                                    child: Text(e),
+                                  ),
+                                )
+                                .toList(),
+                          ),
+
+                          ctrl.selectedRedemptionReason == 'Other (Specify)'
+                              ? Column(
                                   children: [
                                     PAppSize.s20.verticalSpace,
-                                    PCustomFilledTextfield(
-                                      label: 'state_reason'.tr,
-                                      hint: '',
-
-                                      textInputType: TextInputType.multiline,
+                                    PCustomTextField(
+                                      labelText: 'state_reason'.tr,
                                       controller: ctrl.otherReasonTEC,
+                                      textInputType: TextInputType.multiline,
                                     ),
                                   ],
                                 )
-                                : SizedBox.shrink();
-                          },
-                        ),
+                              : SizedBox.shrink(),
+                          PAppSize.s16.verticalSpace,
+                          PCustomDropdownField<String>(
+                            labelText: 'redemption_by'.tr,
+                            initialValue: ctrl.selectedRedemptionValue,
+                            onChanged: ctrl.onRedemptionValueChanged,
+                            items: ctrl.redemptionValues
+                                .map(
+                                  (e) => DropdownMenuItem(
+                                    value: e,
+                                    child: Text(e),
+                                  ),
+                                )
+                                .toList(),
+                          ),
+                          PAppSize.s14.verticalSpace,
+                          ctrl.selectedRedemptionValue == 'Amount'
+                              ? PKeyboardActions(
+                                  focusNode: _amountFocusNode,
+                                  child: PCustomTextField(
+                                    labelText: 'amount_to_redeem'.tr,
+                                    hintText: 'E.g. 35000',
+                                    controller: ctrl.amountTEC,
+                                    focusNode: _amountFocusNode,
+                                    textInputType:
+                                        TextInputType.numberWithOptions(
+                                          decimal: true,
+                                        ),
+                                  ),
+                                )
+                              : PKeyboardActions(
+                                  focusNode: _percentageFocusNode,
+                                  child: PCustomTextField(
+                                    labelText: 'percentage'.tr,
+                                    hintText: 'E.g. 50',
+                                    controller: ctrl.percentageTEC,
+                                    focusNode: _percentageFocusNode,
+                                    textInputType:
+                                        TextInputType.numberWithOptions(
+                                          decimal: true,
+                                        ),
+                                    validator: PValidator.validatePercentage,
+                                    maxLength: PAppSize.s3.toInt(),
+                                    onChanged: (val) {
+                                      PValidator.validatePercentage(val);
+                                      ctrl.redemptionFormKey.currentState
+                                          ?.validate();
+                                    },
+                                  ),
+                                ),
 
-                        PAppSize.s14.verticalSpace,
+                          PAppSize.s20.verticalSpace,
+                          PCustomTextField(
+                            labelText: 'bank_name'.tr,
+                            hintText: 'Ecobank',
+                            controller: ctrl.bankNameTEC,
+                            textInputType: TextInputType.name,
+                          ),
 
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            PRadioListTileWidget(
-                              label: 'by_percentage'.tr,
-                              value: 'percentage',
-                              fontSize: PAppSize.s12,
-                              groupValue: ctrl.priceValue.value,
-                              onChanged: ctrl.onPriceAmountChanged,
+                          PAppSize.s20.verticalSpace,
+                          PCustomTextField(
+                            labelText: 'bank_branch'.tr,
+                            hintText: 'Labadi',
+                            controller: ctrl.bankBranchTEC,
+                            textInputType: TextInputType.name,
+                          ),
+
+                          PAppSize.s20.verticalSpace,
+                          PCustomTextField(
+                            labelText: 'account_holder_name'.tr,
+                            hintText: 'Samuel Ntim',
+                            controller: ctrl.accountHolderNameTEC,
+                            textInputType: TextInputType.name,
+                          ),
+
+                          PAppSize.s20.verticalSpace,
+                          PKeyboardActions(
+                            focusNode: _accountNumberFocusNode,
+                            child: PCustomTextField(
+                              labelText: 'account_number'.tr,
+                              hintText: 'E.g. 14XXXXXXXX097',
+                              focusNode: _accountNumberFocusNode,
+                              controller: ctrl.accountNumberTEC,
+                              textInputType: TextInputType.number,
                             ),
-                            PAppSize.s4.verticalSpace,
-                            PRadioListTileWidget(
-                              label: 'by_amount'.tr,
-                              value: 'amount',
-                              fontSize: PAppSize.s12,
-                              groupValue: ctrl.priceValue.value,
-                              onChanged: ctrl.onPriceAmountChanged,
-                            ),
-                          ],
-                        ),
+                          ),
 
-                        PAppSize.s14.verticalSpace,
-                        ctrl.priceValue.value == 'amount'
-                            ? PCustomFilledTextfield(
-                              label: 'amount_to_redeem'.tr,
-                              hint: 'E.g. 35000',
-                              // validator: PValidator.validateSchemeAmount,
-                              textInputType: TextInputType.numberWithOptions(
-                                decimal: true,
+                          PAppSize.s20.verticalSpace,
+
+                          // front ID upload
+                          Obx(
+                            () => PIdCardWidget(
+                              label: 'upload_front_of_id_card'.tr,
+                              file: ctrl.idFront.value,
+                              onCameraTap: () => ctrl.chooseFromCamera(true),
+                              onGalleryTap: () => ctrl.chooseFromGallery(true),
+                            ),
+                          ),
+
+                          PAppSize.s28.verticalSpace,
+
+                          // Back ID upload
+                          Obx(
+                            () => PIdCardWidget(
+                              label: 'upload_back_of_id_card'.tr,
+                              file: ctrl.idBack.value,
+                              onCameraTap: () => ctrl.chooseFromCamera(false),
+                              onGalleryTap: () => ctrl.chooseFromGallery(false),
+                            ),
+                          ),
+
+                          PAppSize.s16.verticalSpace,
+
+                          Obx(
+                            () => PCustomCheckbox(
+                              value: ctrl.agreeRedemption.value,
+                              onChanged: ctrl.onAgreeToRedemptionChanged,
+                              checkboxDirection: Direction.left,
+
+                              child: Text(
+                                'redemption_confirm_msg'.tr,
+                                style: Theme.of(context).textTheme.bodySmall
+                                    ?.copyWith(
+                                      fontSize: PAppSize.s12,
+                                      fontWeight: FontWeight.w600,
+                                    ),
                               ),
-                              // enabled:
-                              //     ctrl.selectedRedemptionType == 'Total'
-                              //         ? false
-                              //         : true,
-                              controller: ctrl.amountTEC,
-                            )
-                            : PCustomFilledTextfield(
-                              label: 'percentage'.tr,
-                              hint: 'E.g. 50',
-                              validator: PValidator.validatePercentage,
-                              maxLength: PAppSize.s3.toInt(),
-                              onChanged: (val) {
-                                PValidator.validatePercentage(val);
-                                ctrl.redemptionFormKey.currentState?.validate();
+                            ),
+                          ),
+
+                          PAppSize.s16.verticalSpace,
+
+                          Obx(
+                            () => PGradientButton(
+                              label: 'submit_request'.tr,
+                              showIcon: false,
+                              loading: ctrl.loading.value,
+                              textColor: PAppColor.whiteColor,
+                              width: PDeviceUtil.getDeviceWidth(context),
+                              onTap: () {
+                                if (ctrl.redemptionFormKey.currentState!
+                                    .validate()) {
+                                  ctrl.submitRedemptionRequest();
+                                }
                               },
-                              textInputType: TextInputType.numberWithOptions(
-                                decimal: true,
-                              ),
-                              controller: ctrl.percentageTEC,
                             ),
-
-                        PAppSize.s20.verticalSpace,
-                        PCustomFilledTextfield(
-                          label: 'bank_name'.tr,
-                          hint: 'Ecobank',
-                          textInputType: TextInputType.name,
-                          controller: ctrl.bankNameTEC,
-                        ),
-
-                        PAppSize.s20.verticalSpace,
-                        PCustomFilledTextfield(
-                          label: 'bank_branch'.tr,
-                          hint: 'Labadi',
-                          textInputType: TextInputType.name,
-                          controller: ctrl.bankBranchTEC,
-                        ),
-                        PAppSize.s20.verticalSpace,
-                        PCustomFilledTextfield(
-                          label: 'account_holder_name'.tr,
-                          hint: 'Samuel Ntim',
-                          textInputType: TextInputType.name,
-                          controller: ctrl.accountHolderNameTEC,
-                        ),
-                        PAppSize.s20.verticalSpace,
-                        PCustomFilledTextfield(
-                          label: 'account_number'.tr,
-                          hint: 'E.g. 14XXXXXXXX097',
-                          textInputType: TextInputType.number,
-                          controller: ctrl.accountNumberTEC,
-                        ),
-
-                        PAppSize.s20.verticalSpace,
-
-                        // front ID upload
-                        PIdCardWidget(
-                          label: 'upload_front_of_id_card'.tr,
-                          file: ctrl.idFront.value,
-                          onCameraTap: () => ctrl.chooseFromCamera(true),
-                          onGalleryTap: () => ctrl.chooseFromGallery(true),
-                        ),
-
-                        PAppSize.s28.verticalSpace,
-
-                        // Back ID upload
-                        PIdCardWidget(
-                          label: 'upload_back_of_id_card'.tr,
-                          file: ctrl.idBack.value,
-                          onCameraTap: () => ctrl.chooseFromCamera(false),
-                          onGalleryTap: () => ctrl.chooseFromGallery(false),
-                        ),
-                      ],
-                    ).symmetric(horizontal: PAppSize.s22).scrollable(),
+                          ),
+                        ],
+                      ).scrollable(),
+                    );
+                  },
+                ),
               ),
             ),
-
-            PAppSize.s16.verticalSpace,
-
-            PCustomCheckbox(
-              value: ctrl.agreeRedemption.value,
-              onChanged: ctrl.onAgreeToRedemptionChanged,
-              checkboxDirection: Direction.left,
-              fillColor: WidgetStateProperty.resolveWith((states) {
-                if (states.contains(WidgetState.selected)) {
-                  return PAppColor.primary;
-                } else {
-                  return Color(0xFFD9D9D9).withOpacityExt(PAppSize.s0_6);
-                }
-              }),
-              child: Text(
-                'redemption_confirm_msg'.tr,
-                // style: Theme.of(context).textTheme.bodySmall
-                //     ?.copyWith(fontSize: PAppSize.s14),
-              ),
-            ).symmetric(horizontal: PAppSize.s22),
-
-            // (PDeviceUtil.getDeviceHeight(context) * 0.1).verticalSpace,
-            PAppSize.s16.verticalSpace,
-            PGradientButton(
-              label: 'submit_request'.tr,
-              width: PDeviceUtil.getDeviceWidth(context) * 0.50,
-              onTap: () {
-                if (ctrl.redemptionFormKey.currentState!.validate()) {
-                  ctrl.submitRedemptionRequest();
-                }
-              },
-            ),
-            PAppSize.s20.verticalSpace,
           ],
-        ),
+        ).all(PAppSize.s20),
       ),
     );
   }

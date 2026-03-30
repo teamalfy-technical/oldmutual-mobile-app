@@ -1,2 +1,2 @@
 export 'pages/web.view.page.dart';
-export 'widgets/redacted.widget.dart';
+export 'widgets/wbv.shimmer.widget.dart';

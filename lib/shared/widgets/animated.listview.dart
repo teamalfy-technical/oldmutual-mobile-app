@@ -1,57 +1,94 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:oldmutual_pensions_app/core/utils/utils.dart';
 
-class AnimatedListView<T> extends StatelessWidget {
-  final Widget Function(int index, T item) child;
+class PAnimatedListView<T> extends StatelessWidget {
+  final Widget Function(int index, T item) itemBuilder;
   final int duration;
   final List<T> items;
   final bool shrinkWrap;
   final bool animate;
   final ScrollPhysics physics;
   final ScrollController? scrollController;
+  final Widget Function(BuildContext, int) separatorBuilder;
   final Axis scrollDirection;
-  const AnimatedListView({
+  final EdgeInsetsGeometry? padding;
+  final AnimateType animateType;
+  const PAnimatedListView({
     super.key,
-    required this.child,
+    required this.itemBuilder,
     this.scrollController,
     this.scrollDirection = Axis.vertical,
-    this.duration = PAppSize.s500,
+    this.duration = PAppSize.s700,
     this.shrinkWrap = false,
     this.animate = true,
     required this.items,
     this.physics = const BouncingScrollPhysics(),
+    this.animateType = AnimateType.slideUp,
+    required this.separatorBuilder,
+    this.padding,
   });
 
   @override
   Widget build(BuildContext context) {
     return animate
-        ? AnimationLimiter(
-          child: ListView.builder(
+        ? animateType == AnimateType.slideUp
+              ? AnimationLimiter(
+                  child: ListView.separated(
+                    separatorBuilder: separatorBuilder,
+                    itemCount: items.length,
+                    shrinkWrap: shrinkWrap,
+                    controller: scrollController,
+                    scrollDirection: scrollDirection,
+                    physics: physics,
+                    padding: padding,
+                    itemBuilder: (BuildContext context, int index) {
+                      return AnimationConfiguration.staggeredList(
+                        position: index,
+                        duration: Duration(milliseconds: duration),
+                        child: SlideAnimation(
+                          verticalOffset: PAppSize.s50,
+                          child: FadeInAnimation(
+                            child: itemBuilder(index, items[index]),
+                          ),
+                        ),
+                      );
+                    },
+                  ),
+                )
+              : AnimationLimiter(
+                  child: ListView.separated(
+                    separatorBuilder: separatorBuilder,
+                    itemCount: items.length,
+                    shrinkWrap: shrinkWrap,
+                    controller: scrollController,
+                    scrollDirection: scrollDirection,
+                    physics: physics,
+                    padding: padding,
+                    itemBuilder: (BuildContext context, int index) {
+                      return AnimationConfiguration.staggeredList(
+                        position: index,
+                        duration: Duration(milliseconds: duration),
+                        child: SlideAnimation(
+                          horizontalOffset: PAppSize.s50,
+                          child: FadeInAnimation(
+                            child: itemBuilder(index, items[index]),
+                          ),
+                        ),
+                      );
+                    },
+                  ),
+                )
+        : ListView.separated(
+            separatorBuilder: (context, index) => PAppSize.s16.verticalSpace,
             itemCount: items.length,
             shrinkWrap: shrinkWrap,
             controller: scrollController,
-            scrollDirection: scrollDirection,
             physics: physics,
-            itemBuilder: (BuildContext context, int index) {
-              return AnimationConfiguration.staggeredList(
-                position: index,
-                duration: Duration(milliseconds: duration),
-                child: SlideAnimation(
-                  verticalOffset: PAppSize.s50,
-                  child: FadeInAnimation(child: child(index, items[index])),
-                ),
-              );
-            },
-          ),
-        )
-        : ListView.builder(
-          itemCount: items.length,
-          shrinkWrap: shrinkWrap,
-          controller: scrollController,
-          physics: physics,
-          itemBuilder:
-              (BuildContext context, int index) => child(index, items[index]),
-        );
+            padding: padding,
+            itemBuilder: (BuildContext context, int index) =>
+                itemBuilder(index, items[index]),
+          );
   }
 }

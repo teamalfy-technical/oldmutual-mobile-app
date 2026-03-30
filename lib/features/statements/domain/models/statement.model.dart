@@ -1,4 +1,6 @@
-class Statement {
+import 'package:equatable/equatable.dart';
+// ignore: must_be_immutable
+class Statement extends Equatable {
   int? id;
   int? userId;
   String? type;
@@ -61,6 +63,10 @@ class Statement {
     updatedAt = json['updated_at'];
   }
 
+  
+  @override
+  List<Object?> get props => [id, userId, type];
+
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
     data['id'] = id;
@@ -78,7 +84,8 @@ class Statement {
   }
 }
 
-class Filters {
+// ignore: must_be_immutable
+class Filters extends Equatable {
   String? year;
 
   Filters({this.year});
@@ -90,6 +97,10 @@ class Filters {
   Filters.fromJson(Map<String, dynamic> json) {
     year = json['year'];
   }
+
+  
+  @override
+  List<Object?> get props => [year];
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};

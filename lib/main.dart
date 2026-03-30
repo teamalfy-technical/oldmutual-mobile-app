@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:io';
 
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
@@ -12,7 +13,9 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:oldmutual_pensions_app/core/bindings/bindings.dart';
+import 'package:oldmutual_pensions_app/core/services/in.app.review.service.dart';
 import 'package:oldmutual_pensions_app/core/l10n/l10n.dart';
+import 'package:oldmutual_pensions_app/core/services/force.update.service.dart';
 import 'package:oldmutual_pensions_app/core/theme/app.theme.dart';
 import 'package:oldmutual_pensions_app/core/utils/utils.dart';
 import 'package:oldmutual_pensions_app/env/env.dart';
@@ -22,6 +25,7 @@ import 'package:oldmutual_pensions_app/firebase_options_dev.dart' as dev;
 import 'package:oldmutual_pensions_app/firebase_options_prod.dart' as prod;
 import 'package:oldmutual_pensions_app/flavor.config.dart';
 import 'package:oldmutual_pensions_app/routes/app.pages.dart';
+import 'package:screen_protector/screen_protector.dart';
 
 import 'features/notification/presentation/vm/notification.service.dart';
 
@@ -36,12 +40,24 @@ Future<void> main() async {
 
 Future<void> initDependencies() async {
   WidgetsFlutterBinding.ensureInitialized();
+
   await Env.init();
   final currentEnv = await Environment.current();
+  pensionAppLogger.e("Connecting to ${currentEnv.name}");
   pensionAppLogger.e("Connecting to ${currentEnv.apiBaseUrl}");
   await GetStorage.init();
+
+  // Initialize secure storage and migrate existing data
+  await PSecureStorage().init();
+
+  // 📊 Initialize in-app review (tracks app open count)
+  await PInAppReviewService().init();
+
   //🔐 Initialize Firebase first
   await initFirebaseApp();
+
+  // 🔒 Enable screenshot prevention
+  await _initScreenProtection();
 
   await FirebaseCrashlytics.instance.setCrashlyticsCollectionEnabled(
     !kDebugMode,
@@ -51,6 +67,33 @@ Future<void> initDependencies() async {
   FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterFatalError;
 
   FirebaseMessaging.onBackgroundMessage(_backgroundHandler);
+}
+
+/// Initialize screen protection to prevent screenshots and screen recording
+Future<void> _initScreenProtection() async {
+  /// Used for internal testing and TestFlight builds.
+  bool isTestMode = Env.baseUrl == apiBaseUrlDev;
+  try {
+    if (Platform.isIOS) {
+      // Protect  screen shot with launch image
+      // await ScreenProtector.protectDataLeakageWithImage('LaunchImage');
+      // Prevent screenshots on iOS
+      if (!isTestMode) {
+        await ScreenProtector.preventScreenshotOn();
+        // Protect against screen recording with blur effect
+        await ScreenProtector.protectDataLeakageWithBlur();
+      }
+    } else if (Platform.isAndroid) {
+      if (!isTestMode) {
+        // Android uses FLAG_SECURE
+        await ScreenProtector.preventScreenshotOn();
+        await ScreenProtector.protectDataLeakageOn();
+      }
+    }
+    pensionAppLogger.i("Screen protection enabled");
+  } catch (e) {
+    pensionAppLogger.e("Failed to enable screen protection: $e");
+  }
 }
 
 GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
@@ -76,7 +119,7 @@ class MyApp extends StatelessWidget {
         builder: (_, child) {
           return GetMaterialApp(
             debugShowCheckedModeBanner: false,
-            title: 'My OldMutual GH',
+            title: 'My OldMutual',
             useInheritedMediaQuery: true,
             locale: Get.deviceLocale,
             navigatorKey: appNavigatorKey,
@@ -92,7 +135,7 @@ class MyApp extends StatelessWidget {
             getPages: AppPages.routes,
             theme: PAppTheme.lightTheme,
             darkTheme: PAppTheme.darkTheme,
-            themeMode: ThemeMode.light,
+            themeMode: ThemeMode.system,
             scrollBehavior: const CupertinoScrollBehavior(),
           );
         },
@@ -116,6 +159,7 @@ Future<void> initFirebaseApp() async {
   }
 
   await PNotificationService().init();
+  await PForceUpdateService().init();
 }
 
 @pragma('vm:entry-point')

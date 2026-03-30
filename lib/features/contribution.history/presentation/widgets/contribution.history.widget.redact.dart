@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:oldmutual_pensions_app/core/utils/utils.dart';
-import 'package:redacted/redacted.dart';
+import 'package:oldmutual_pensions_app/shared/shared.dart';
 
 class ContributionHistoryWidgetRedact extends StatelessWidget {
   final LoadingState loadingState;
@@ -12,53 +12,24 @@ class ContributionHistoryWidgetRedact extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ListTile(
-      title: Text(
-        '***********************',
-        style: Theme.of(
-          context,
-        ).textTheme.bodyLarge?.copyWith(fontWeight: FontWeight.w500),
-      ).redacted(
-        context: context,
-        redact: loadingState == LoadingState.loading ? true : false,
+    return PShimmerWrapper(
+      loading: loadingState == LoadingState.loading,
+      child: ListTile(
+        contentPadding: EdgeInsets.symmetric(horizontal: PAppSize.s0),
+        title: PShimmerBox(width: 160, height: PAppSize.s14),
+        subtitle: Padding(
+          padding: EdgeInsets.only(top: PAppSize.s4),
+          child: PShimmerBox(width: 120, height: PAppSize.s12),
+        ),
+        trailing: Column(
+          crossAxisAlignment: CrossAxisAlignment.end,
+          children: [
+            PShimmerBox(width: 100, height: PAppSize.s12),
+            PAppSize.s4.verticalSpace,
+            PShimmerBox(width: 80, height: PAppSize.s12),
+          ],
+        ),
       ),
-      contentPadding: EdgeInsets.symmetric(horizontal: PAppSize.s0),
-      subtitle: Text(
-        '******************',
-        style: Theme.of(
-          context,
-        ).textTheme.bodySmall?.copyWith(fontWeight: FontWeight.w400),
-      ).redacted(
-        context: context,
-        redact: loadingState == LoadingState.loading ? true : false,
-      ),
-      trailing: Column(
-        crossAxisAlignment: CrossAxisAlignment.end,
-        children: [
-          Text(
-            '***********************',
-            style: Theme.of(
-              context,
-            ).textTheme.bodySmall?.copyWith(fontWeight: FontWeight.w400),
-          ).redacted(
-            context: context,
-            redact: loadingState == LoadingState.loading ? true : false,
-          ),
-          PAppSize.s2.verticalSpace,
-          Text(
-            '******************',
-            style: Theme.of(
-              context,
-            ).textTheme.bodySmall?.copyWith(fontWeight: FontWeight.w400),
-          ).redacted(
-            context: context,
-            redact: loadingState == LoadingState.loading ? true : false,
-          ),
-        ],
-      ),
-    ).redacted(
-      context: context,
-      redact: loadingState == LoadingState.loading ? true : false,
     );
   }
 }

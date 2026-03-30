@@ -59,15 +59,14 @@ class PContributionHistoryPage extends StatelessWidget {
                             children: [
                               Text(
                                 'clear_filters'.tr,
-                                style: Theme.of(
-                                  context,
-                                ).textTheme.bodySmall?.copyWith(
-                                  color: PAppColor.primary,
-                                  fontWeight: FontWeight.w600,
-                                  decoration: TextDecoration.underline,
-                                  decorationColor: PAppColor.primary,
-                                  //  fontSize: PAppSize.s13,
-                                ),
+                                style: Theme.of(context).textTheme.bodySmall
+                                    ?.copyWith(
+                                      color: PAppColor.primary,
+                                      fontWeight: FontWeight.w600,
+                                      decoration: TextDecoration.underline,
+                                      decorationColor: PAppColor.primary,
+                                      //  fontSize: PAppSize.s13,
+                                    ),
                               ).onPressed(onTap: () => ctrl.resetFilters()),
                               PAppSize.s4.verticalSpace,
                               PGradientButton(
@@ -100,47 +99,47 @@ class PContributionHistoryPage extends StatelessWidget {
                   PAppSize.s25.verticalSpace,
 
                   Expanded(
-                    child:
-                        ctrl.loading.value == LoadingState.loading
-                            ? ListView.builder(
-                              shrinkWrap: true,
-                              itemCount: 10,
-                              itemBuilder: (context, index) {
-                                return ContributionHistoryWidgetRedact(
-                                  loadingState: ctrl.loading.value,
-                                );
-                              },
-                            )
-                            : ctrl
-                                .history
-                                .value
-                                .transactionHistory!
-                                .transactions!
-                                .where((e) => e.paymentFlag != 'B')
-                                .toList()
-                                .isEmpty
-                            ? PEmptyStateWidget(message: 'no_results_found'.tr)
-                            : ListView.builder(
-                              shrinkWrap: true,
-                              itemCount:
-                                  ctrl
-                                      .history
-                                      .value
-                                      .transactionHistory
-                                      ?.transactions
-                                      ?.length,
-                              itemBuilder: (context, index) {
-                                final transaction =
-                                    ctrl
-                                        .history
-                                        .value
-                                        .transactionHistory!
-                                        .transactions![index];
-                                return ContributionHistoryWidget(
-                                  transaction: transaction,
-                                );
-                              },
+                    child: ctrl.loading.value == LoadingState.loading
+                        ? PShimmerListView<Transactions>(
+                            loading: true,
+                            items: const [],
+                            separatorBuilder: (context, index) =>
+                                PAppSize.s12.verticalSpace,
+                            scrollDirection: Axis.vertical,
+                            placeholderItem: Transactions(
+                              schemeName: 'Sample Scheme',
+                              received: 5000.0,
+                              paymentDate: DateTime.now().toIso8601String(),
                             ),
+                            itemBuilder: (context, index, transaction) {
+                              return ContributionHistoryWidget(
+                                transaction: transaction,
+                              );
+                            },
+                          )
+                        : ctrl.history.value.transactionHistory!.transactions!
+                              .where((e) => e.paymentFlag != 'B')
+                              .toList()
+                              .isEmpty
+                        ? PEmptyStateWidget(message: 'no_results_found'.tr)
+                        : PAnimatedListView(
+                            separatorBuilder: (context, index) =>
+                                PAppSize.s0.verticalSpace,
+                            shrinkWrap: true,
+                            items:
+                                ctrl
+                                    .history
+                                    .value
+                                    .transactionHistory
+                                    ?.transactions ??
+                                [],
+
+                            itemBuilder: (index, transaction) {
+                              return ContributionHistoryWidget(
+                                transaction: transaction,
+                              );
+                            },
+                          ),
                   ),
                 ],
               ).all(PAppSize.s20),

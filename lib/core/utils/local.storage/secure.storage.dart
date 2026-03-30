@@ -1,6 +1,15 @@
-import 'package:get_storage/get_storage.dart';
-import 'package:oldmutual_pensions_app/features/auth/auth.dart';
+import 'dart:convert';
 
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:get_storage/get_storage.dart';
+import 'package:oldmutual_pensions_app/core/utils/utils.dart';
+import 'package:oldmutual_pensions_app/env/env.dart';
+import 'package:oldmutual_pensions_app/features/auth/auth.dart';
+import 'package:oldmutual_pensions_app/flavor.config.dart';
+
+/// Hybrid secure storage that uses:
+/// - FlutterSecureStorage for sensitive data (encrypted)
+/// - GetStorage for non-sensitive data (fast, unencrypted)
 class PSecureStorage {
   static final PSecureStorage _instance = PSecureStorage._internal();
 
@@ -8,59 +17,278 @@ class PSecureStorage {
 
   PSecureStorage._internal();
 
+  // GetStorage for non-sensitive data
   final _storage = GetStorage();
 
-  final String onboardingKey = 'onboarding';
-  final String authResKey = 'auth_res_key';
-  final String bioDataKey = 'bio_data_key';
-  final String registeredKey = 'is_registered_key';
-  final String deviceTokenKey = 'device_token_key';
+  // FlutterSecureStorage for sensitive data
+  final _secureStorage = const FlutterSecureStorage(
+    aOptions: AndroidOptions(encryptedSharedPreferences: true),
+    iOptions: IOSOptions(accessibility: KeychainAccessibility.first_unlock),
+  );
 
-  /// Generic function to save data into [GetStorage]
+  // Storage keys
+  // Non-sensitive data (stored in GetStorage)
+  final String onboardingKey = 'onboarding';
+
+  // Sensitive data (stored in FlutterSecureStorage)
+  final String biometricKey = 'enabled_biometric_key';
+  final String authResKey = 'secure_auth_res_key';
+  final String tokenResKey = 'secure_token_res_key';
+  final String bioDataKey = 'secure_bio_data_key';
+  final String emailKey = 'secure_email_key';
+  final String firstNameKey = 'secure_first_name_key';
+  final String deviceTokenKey = 'secure_device_token_key';
+  final String biometricPasswordKey = 'secure_biometric_password_key';
+  final String otpRefKey = 'otp_ref_key';
+
+  bool _migrationCompleted = false;
+  bool _biometricEnabled = false;
+
+  /// Whether the app is running in test mode (test URL with production applicationId).
+  /// Used for internal testing and TestFlight builds.
+  bool get isTestMode => Env.baseUrl == apiBaseUrlDev;
+
+  /// Initialize storage and perform migration if needed
+  Future<void> init() async {
+    await _clearKeychainOnReinstallForTestMode();
+    await _migrateToSecureStorage();
+    await _migrateBiometricFlag();
+    _biometricEnabled = await _readBiometricFlag();
+  }
+
+  /// Clear all keychain data on fresh install/reinstall ONLY in test mode.
+  /// In production, keychain data (email, password, biometric flag) persists
+  /// across reinstalls so biometric users can continue seamlessly.
+  /// In test mode, we clear everything so testers always start fresh.
+  Future<void> _clearKeychainOnReinstallForTestMode() async {
+    if (!isTestMode) return;
+
+    const installedKey = 'has_been_installed';
+    final hasBeenInstalled = _storage.read(installedKey);
+    if (hasBeenInstalled != true) {
+      await _secureStorage.deleteAll();
+      _biometricEnabled = false;
+      await _storage.write(installedKey, true);
+      pensionAppLogger.i(
+        'Test mode fresh install detected — cleared all keychain data',
+      );
+    }
+  }
+
+  /// Migrate the biometric enabled flag from GetStorage to FlutterSecureStorage.
+  /// This ensures existing users don't lose their biometric setting after app updates,
+  /// since GetStorage (file-based) may not persist reliably across store updates,
+  /// while FlutterSecureStorage (Keychain/EncryptedSharedPreferences) does.
+  Future<void> _migrateBiometricFlag() async {
+    try {
+      final oldValue = _storage.read(biometricKey);
+      if (oldValue != null) {
+        await _secureStorage.write(
+          key: biometricKey,
+          value: oldValue.toString(),
+        );
+        await _storage.remove(biometricKey);
+        pensionAppLogger.i('Migrated biometric flag to secure storage');
+      }
+    } catch (e) {
+      pensionAppLogger.e('Error migrating biometric flag: $e');
+    }
+  }
+
+  /// Read biometric flag from FlutterSecureStorage
+  Future<bool> _readBiometricFlag() async {
+    try {
+      final value = await _secureStorage.read(key: biometricKey);
+      return value == 'true';
+    } catch (e) {
+      pensionAppLogger.e('Error reading biometric flag: $e');
+      return false;
+    }
+  }
+
+  /// Migrate existing data from GetStorage to FlutterSecureStorage
+  /// This ensures existing users don't lose their data
+  Future<void> _migrateToSecureStorage() async {
+    if (_migrationCompleted) return;
+
+    try {
+      final oldKeys = {
+        'auth_res_key': authResKey,
+        'bio_data_key': bioDataKey,
+        'email_key': emailKey,
+        'device_token_key': deviceTokenKey,
+        'enabled_face_id_key': biometricKey,
+      };
+
+      for (final entry in oldKeys.entries) {
+        final oldKey = entry.key;
+        final newKey = entry.value;
+
+        // Check if data exists in old storage
+        final oldValue = _storage.read(oldKey);
+        if (oldValue != null) {
+          // Migrate to new storage
+          if (oldKey == 'enabled_face_id_key') {
+            // Biometric flag migrates to FlutterSecureStorage
+            await _secureStorage.write(key: newKey, value: oldValue.toString());
+          } else {
+            // Migrate to FlutterSecureStorage
+            if (oldValue is Map || oldValue is List) {
+              await _secureStorage.write(
+                key: newKey,
+                value: jsonEncode(oldValue),
+              );
+            } else {
+              await _secureStorage.write(
+                key: newKey,
+                value: oldValue.toString(),
+              );
+            }
+          }
+
+          // Remove old data
+          await _storage.remove(oldKey);
+          pensionAppLogger.i('Migrated $oldKey to $newKey');
+        }
+      }
+
+      _migrationCompleted = true;
+      pensionAppLogger.i('Storage migration completed successfully');
+    } catch (e) {
+      pensionAppLogger.e('Error during storage migration: $e');
+    }
+  }
+
+  // ========== NON-SENSITIVE DATA METHODS (GetStorage) ==========
+
+  /// Generic function to save non-sensitive data into GetStorage
   Future<void> saveData<T>(String key, T value) async =>
       await _storage.write(key, value);
 
-  /// Generic function to read data from [GetStorage]
+  /// Generic function to read non-sensitive data from GetStorage
   T? readData<T>(String key) => _storage.read<T>(key);
 
-  /// Generic function to save auth response into [GetStorage]
-  Future<void> saveAuthResponse<T>(T value) async =>
-      await _storage.write(authResKey, value);
-
-  Future<void> saveBioData<T>(T value) async =>
-      await _storage.write(bioDataKey, value);
-
-  /// Generic function to save auth response into [GetStorage]
-  // Future<void> saveBusinessProfile<T>(T value) async =>
-  //     await _storage.write(businessProfileKey, value);
-
-  // /// Non-generic function to read auth response data from [GetStorage]
-  // BusinessProfile? getBusinessProfile() {
-  //   if (_storage.read(businessProfileKey) == null) {
-  //     return null;
-  //   }
-  //   return BusinessProfile.fromJson(
-  //       _storage.read(businessProfileKey) as Map<String, dynamic>);
-  // }
-
-  // /// Non-generic function to read auth response data from [GetStorage]
-  Member? getAuthResponse() {
-    if (_storage.read(authResKey) == null) {
-      return null;
-    }
-    return Member.fromJson(_storage.read(authResKey) as Map<String, dynamic>);
+  /// Save biometric enabled/disabled flag
+  Future<void> saveBiometric(bool value) async {
+    await _secureStorage.write(key: biometricKey, value: value.toString());
+    _biometricEnabled = value;
   }
 
-  BioData? getBioData() {
-    if (_storage.read(authResKey) == null) {
-      return null;
-    }
-    return BioData.fromJson(_storage.read(bioDataKey) as Map<String, dynamic>);
+  /// Check if biometric authentication is enabled (cached, synchronous)
+  bool get isBiometricEnabled => _biometricEnabled;
+
+  // ========== SENSITIVE DATA METHODS (FlutterSecureStorage) ==========
+
+  /// Save auth response securely
+  Future<void> saveAuthResponse(Map<String, dynamic> value) async {
+    await _secureStorage.write(key: authResKey, value: jsonEncode(value));
   }
 
-  /// Generic function to remove data from [GetStorage]
-  Future<void> removeData(String key) async => await _storage.remove(key);
+  /// Save bio data securely
+  Future<void> saveBioData(Map<String, dynamic> value) async {
+    await _secureStorage.write(key: bioDataKey, value: jsonEncode(value));
+  }
 
-  /// Generic function to clear all data from [GetStorage]
-  Future<void> clearAll() async => await _storage.erase();
+  /// Save user email securely
+  Future<void> saveUserEmail(String value) async {
+    await _secureStorage.write(key: emailKey, value: value);
+  }
+
+  /// Save user first name securely
+  Future<void> saveUserFirstName(String value) async {
+    await _secureStorage.write(key: firstNameKey, value: value);
+  }
+
+  /// Save device token securely
+  Future<void> saveDeviceToken(String value) async {
+    await _secureStorage.write(key: deviceTokenKey, value: value);
+  }
+
+  /// Save password securely for biometric authentication
+  Future<void> saveBiometricPassword(String password) async {
+    await _secureStorage.write(key: biometricPasswordKey, value: password);
+  }
+
+  /// Save OTP ref for verification
+  Future<void> saveOtpRef(String value) async {
+    await _storage.write(otpRefKey, value);
+  }
+
+  // ========== READ METHODS (FlutterSecureStorage) ==========
+
+  /// Get user email from secure storage
+  Future<String?> getUserEmail() async {
+    return await _secureStorage.read(key: emailKey);
+  }
+
+  /// Get user first name from secure storage
+  Future<String?> getUserFirstName() async {
+    return await _secureStorage.read(key: firstNameKey);
+  }
+
+  /// Get auth response from secure storage
+  Future<Member?> getAuthResponse() async {
+    try {
+      final data = await _secureStorage.read(key: authResKey);
+      if (data == null) return null;
+      return Member.fromJson(jsonDecode(data) as Map<String, dynamic>);
+    } catch (e) {
+      pensionAppLogger.e('Error reading auth response: $e');
+      return null;
+    }
+  }
+
+  /// Get bio data from secure storage
+  Future<BioData?> getBioData() async {
+    try {
+      final data = await _secureStorage.read(key: bioDataKey);
+      if (data == null) return null;
+      return BioData.fromJson(jsonDecode(data) as Map<String, dynamic>);
+    } catch (e) {
+      pensionAppLogger.e('Error reading bio data: $e');
+      return null;
+    }
+  }
+
+  /// Get biometric password from secure storage
+  Future<String?> getBiometricPassword() async {
+    return await _secureStorage.read(key: biometricPasswordKey);
+  }
+
+  /// Get device token from secure storage
+  Future<String?> getDeviceToken() async {
+    return await _secureStorage.read(key: deviceTokenKey);
+  }
+
+  /// Get OTP ref from storage
+  String? getOtpRef() => _storage.read<String>(otpRefKey);
+
+  // ========== DELETE/REMOVE METHODS ==========
+
+  /// Remove non-sensitive data from GetStorage
+  Future<void> removeData(String key) async {
+    await _storage.remove(key);
+  }
+
+  /// Remove sensitive data from FlutterSecureStorage
+  Future<void> removeSecureData(String key) async {
+    await _secureStorage.delete(key: key);
+  }
+
+  /// Delete biometric password
+  Future<void> deleteBiometricPassword() async {
+    await _secureStorage.delete(key: biometricPasswordKey);
+  }
+
+  /// Remove OTP ref
+  Future<void> removeOtpRef() async {
+    await _storage.remove(otpRefKey);
+  }
+
+  /// Clear all data from both storages
+  Future<void> clearAll() async {
+    await _storage.erase();
+    await _secureStorage.deleteAll();
+    _biometricEnabled = false;
+  }
 }

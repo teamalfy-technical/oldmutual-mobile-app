@@ -1,46 +1,41 @@
 import 'package:flutter/widgets.dart';
 import 'package:oldmutual_pensions_app/core/utils/utils.dart';
-import 'package:redacted/redacted.dart';
+import 'package:oldmutual_pensions_app/shared/shared.dart';
 
 class PChartRedactWidget extends StatelessWidget {
   final LoadingState loadingState;
-  const PChartRedactWidget({super.key, required this.loadingState});
+  final double? height;
+  const PChartRedactWidget({
+    super.key,
+    required this.loadingState,
+    this.height,
+  });
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: PDeviceUtil.getDeviceWidth(context),
-      height: PDeviceUtil.getDeviceHeight(context) * 0.3,
-      padding: EdgeInsets.all(PAppSize.s20),
-      color: PAppColor.whiteColor,
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        children: [
-          Container(
-            width: PDeviceUtil.getDeviceWidth(context),
-            height: PAppSize.s20,
-            color: PAppColor.whiteColor,
+    return PShimmerWrapper(
+      loading: loadingState == LoadingState.loading,
+      child: Container(
+        width: PDeviceUtil.getDeviceWidth(context),
+        height: height ?? PDeviceUtil.getDeviceHeight(context) * 0.40,
+        padding: EdgeInsets.all(PAppSize.s20),
+        decoration: BoxDecoration(
+          color: PHelperFunction.isDarkMode(context)
+              ? PAppColor.darkAppBarColor
+              : PAppColor.whiteColor,
+          borderRadius: BorderRadius.circular(PAppSize.s10),
+        ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: List.generate(
+            5,
+            (_) => PShimmerBox(
+              width: PDeviceUtil.getDeviceWidth(context) - PAppSize.s40,
+              height: PAppSize.s20,
+            ),
           ),
-          Container(
-            width: PDeviceUtil.getDeviceWidth(context),
-            height: PAppSize.s20,
-            color: PAppColor.whiteColor,
-          ),
-          Container(
-            width: PDeviceUtil.getDeviceWidth(context),
-            height: PAppSize.s20,
-            color: PAppColor.whiteColor,
-          ),
-          Container(
-            width: PDeviceUtil.getDeviceWidth(context),
-            height: PAppSize.s20,
-            color: PAppColor.whiteColor,
-          ),
-        ],
+        ),
       ),
-    ).redacted(
-      context: context,
-      redact: loadingState == LoadingState.loading ? true : false,
     );
   }
 }

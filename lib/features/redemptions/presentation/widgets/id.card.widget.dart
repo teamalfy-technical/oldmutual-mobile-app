@@ -39,19 +39,20 @@ class PIdCardWidget extends StatelessWidget {
             ],
           ),
         ),
-        PAppSize.s4.verticalSpace,
+        PAppSize.s6.verticalSpace,
         Container(
           width: PDeviceUtil.getDeviceWidth(context),
           height: PAppSize.s220,
           decoration: BoxDecoration(
-            color: PAppColor.fillColor2,
+            color: PHelperFunction.isDarkMode(context)
+                ? PAppColor.cardDarkColor
+                : PAppColor.fillColor,
             borderRadius: BorderRadius.circular(PAppSize.s5),
             image: DecorationImage(
               fit: file.path.isEmpty ? BoxFit.none : BoxFit.cover,
-              image:
-                  file.path.isEmpty
-                      ? AssetImage(Assets.images.placeholderImg.path)
-                      : FileImage(file),
+              image: file.path.isEmpty
+                  ? AssetImage(Assets.images.placeholderImg.path)
+                  : FileImage(file),
             ),
           ),
         ),
@@ -73,7 +74,9 @@ class PIdCardWidget extends StatelessWidget {
                 style: ElevatedButton.styleFrom(
                   padding: EdgeInsets.zero,
                   foregroundColor: PAppColor.whiteColor,
-                  backgroundColor: Color(0xFF979797),
+                  backgroundColor: PHelperFunction.isDarkMode(context)
+                      ? PAppColor.cardDarkColor
+                      : Color(0xFF979797),
                   side: BorderSide.none,
                   minimumSize: Size.fromHeight(PAppSize.s36),
                 ),

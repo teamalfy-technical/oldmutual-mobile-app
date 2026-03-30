@@ -9,5 +9,4 @@ export 'domain/models/scheme.model.dart';
 export 'domain/models/selected.scheme.model.dart';
 export 'presentation/pages/dashboard.page.dart';
 export 'presentation/vm/dashboard.vm.dart';
-export 'presentation/widgets/pension.tier.redact.widget.dart';
 export 'presentation/widgets/pension.tier.widget.dart';

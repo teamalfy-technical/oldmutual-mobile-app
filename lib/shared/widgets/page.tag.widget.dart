@@ -6,6 +6,7 @@ import 'package:oldmutual_pensions_app/core/utils/utils.dart';
 class PPageTagWidget extends StatelessWidget {
   final String tag;
   final SvgPicture? icon;
+  final Color? bgColor;
   final TextAlign textAlign;
   final double horizontalPadding;
   const PPageTagWidget({
@@ -14,44 +15,44 @@ class PPageTagWidget extends StatelessWidget {
     this.textAlign = TextAlign.start,
     this.icon,
     this.horizontalPadding = PAppSize.s16,
+    this.bgColor,
   });
 
   @override
   Widget build(BuildContext context) {
     return Container(
       width: PDeviceUtil.getDeviceWidth(context),
-      color: PAppColor.blackColor,
+      color: bgColor ?? PAppColor.blackColor,
       padding: EdgeInsets.symmetric(
         vertical: PAppSize.s16,
         horizontal: horizontalPadding,
       ),
-      child:
-          icon == null
-              ? Text(
-                tag,
-                textAlign: textAlign,
-                style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                  color: PAppColor.whiteColor,
-                  fontWeight: FontWeight.w600,
-                ),
-              )
-              : Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  icon ?? SizedBox.shrink(),
-                  PAppSize.s2.horizontalSpace,
-                  Expanded(
-                    child: Text(
-                      tag,
-                      textAlign: TextAlign.start,
-                      style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                        color: PAppColor.whiteColor,
-                        fontWeight: FontWeight.w600,
-                      ),
+      child: icon == null
+          ? Text(
+              tag,
+              textAlign: textAlign,
+              style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                color: PAppColor.whiteColor,
+                fontWeight: FontWeight.w600,
+              ),
+            )
+          : Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                icon ?? SizedBox.shrink(),
+                PAppSize.s2.horizontalSpace,
+                Expanded(
+                  child: Text(
+                    tag,
+                    textAlign: TextAlign.start,
+                    style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                      color: PAppColor.whiteColor,
+                      fontWeight: FontWeight.w600,
                     ),
                   ),
-                ],
-              ),
+                ),
+              ],
+            ),
     );
   }
 }

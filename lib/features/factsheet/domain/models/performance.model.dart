@@ -1,4 +1,6 @@
-class PerformanceModel {
+import 'package:equatable/equatable.dart';
+// ignore: must_be_immutable
+class PerformanceModel extends Equatable {
   int? id;
   int? year;
   String? scheme;
@@ -26,6 +28,10 @@ class PerformanceModel {
     createdAt = json['created_at'];
     updatedAt = json['updated_at'];
   }
+
+  
+  @override
+  List<Object?> get props => [id, year, scheme];
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};

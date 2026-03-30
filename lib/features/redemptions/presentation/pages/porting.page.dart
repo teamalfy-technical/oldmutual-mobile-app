@@ -18,13 +18,16 @@ class _PPortingPageState extends State<PPortingPage> {
 
   @override
   void initState() {
+    init();
     super.initState();
+  }
+
+  init() async {
+    final authRes = await PSecureStorage().getAuthResponse();
     ctrl.currentSchemeNameTEC.text =
-        PSecureStorage().getAuthResponse()?.masterScheme ??
-        ''; // Assign the value here
+        authRes?.masterScheme ?? ''; // Assign the value here
     ctrl.currentSchemeTypeTEC.text =
-        PSecureStorage().getAuthResponse()?.schemeType ??
-        ''; // Assign the value here
+        authRes?.schemeType ?? ''; // Assign the value here
   }
 
   @override
@@ -43,184 +46,183 @@ class _PPortingPageState extends State<PPortingPage> {
             // Filter
             Expanded(
               child: Obx(
-                () =>
-                    Column(
-                      children: [
-                        // Row(
-                        //   children: [
-                        //     Expanded(
-                        //       child: PCustomFilledTextfield(
-                        //         label: 'name_of_current_employer'.tr,
-                        //         hint: '',
-                        //         textInputType: TextInputType.name,
-                        //         controller: ctrl.currentEmployerNameTEC,
-                        //       ),
-                        //     ),
-                        //     PAppSize.s25.horizontalSpace,
-                        //     Expanded(
-                        //       child: PCustomFilledTextfield(
-                        //         label: 'current_scheme_name'.tr,
-                        //         hint: '',
-                        //         textInputType: TextInputType.name,
-                        //         controller: ctrl.currentSchemeNameTEC,
-                        //         enabled: false,
-                        //       ),
-                        //     ),
-                        //   ],
-                        // ),
-                        PCustomFilledTextfield(
-                          label: 'name_of_current_employer'.tr,
-                          hint: 'Old Mutual Limited',
-                          textInputType: TextInputType.name,
-                          controller: ctrl.currentEmployerNameTEC,
-                        ),
-                        PAppSize.s20.verticalSpace,
-                        PCustomFilledTextfield(
-                          label: 'current_scheme_name'.tr,
-                          hint: '',
-                          textInputType: TextInputType.name,
-                          controller: ctrl.currentSchemeNameTEC,
-                          enabled: false,
-                        ),
-                        PAppSize.s20.verticalSpace,
-                        PCustomFilledTextfield(
-                          label: 'current_scheme_type'.tr,
-                          hint: '',
-                          textInputType: TextInputType.text,
-                          controller: ctrl.currentSchemeTypeTEC,
-                          enabled: false,
-                        ),
-                        PAppSize.s20.verticalSpace,
-                        PCustomFilledTextfield(
-                          label: 'name_of_prev_employer'.tr,
-                          hint: 'Old Mutual Limited',
-                          textInputType: TextInputType.name,
-                          controller: ctrl.prevEmployerNameTEC,
-                        ),
-                        // Row(
-                        //   children: [
-                        //     Expanded(
-                        //       child: PCustomFilledTextfield(
-                        //         label: 'current_scheme_type'.tr,
-                        //         hint: '',
-                        //         textInputType: TextInputType.text,
-                        //         controller: ctrl.currentSchemeTypeTEC,
-                        //         enabled: false,
-                        //       ),
-                        //     ),
-                        //     PAppSize.s25.horizontalSpace,
-                        //     Expanded(
-                        //       child: PCustomFilledTextfield(
-                        //         label: 'name_of_prev_employer'.tr,
-                        //         hint: '',
-                        //         textInputType: TextInputType.name,
-                        //         controller: ctrl.prevEmployerNameTEC,
-                        //       ),
-                        //     ),
-                        //   ],
-                        // ),
-                        PAppSize.s20.verticalSpace,
-                        PCustomFilledTextfield(
-                          label: 'prev_scheme_name'.tr,
-                          hint: 'OLD MUTUAL ASPIRE PENSION SCHEME',
-                          textInputType: TextInputType.name,
-                          controller: ctrl.prevSchemeNameTEC,
-                        ),
-                        PAppSize.s20.verticalSpace,
-                        PCustomFilledTextfield(
-                          label: 'prev_scheme_Type'.tr,
-                          hint: 'INDIVIDUAL PENSION',
-                          textInputType: TextInputType.text,
-                          controller: ctrl.prevSchemeTypeTEC,
-                        ),
-                        // Row(
-                        //   children: [
-                        //     Expanded(
-                        //       child: PCustomFilledTextfield(
-                        //         label: 'prev_scheme_name'.tr,
-                        //         hint: '',
-                        //         textInputType: TextInputType.name,
-                        //         controller: ctrl.prevSchemeNameTEC,
-                        //       ),
-                        //     ),
-                        //     PAppSize.s25.horizontalSpace,
-                        //     Expanded(
-                        //       child: PCustomFilledTextfield(
-                        //         label: 'prev_scheme_Type'.tr,
-                        //         hint: '',
-                        //         textInputType: TextInputType.text,
-                        //         controller: ctrl.prevSchemeTypeTEC,
-                        //       ),
-                        //     ),
-                        //   ],
-                        // ),
-                        PAppSize.s20.verticalSpace,
-                        PCustomFilledTextfield(
-                          label: 'name_of_prev_trustee'.tr,
-                          hint: 'Lord Osei',
-                          textInputType: TextInputType.name,
-                          controller: ctrl.prevTrusteeNameTEC,
-                        ),
-                        PAppSize.s20.verticalSpace,
-                        PCustomFilledTextfield(
-                          label: 'prev_trustee_contact_name'.tr,
-                          hint: 'Lord Osei',
-                          textInputType: TextInputType.name,
-                          controller: ctrl.prevTrusteeContactNameTEC,
-                        ),
+                () => Column(
+                  children: [
+                    // Row(
+                    //   children: [
+                    //     Expanded(
+                    //       child: PCustomFilledTextfield(
+                    //         label: 'name_of_current_employer'.tr,
+                    //         hint: '',
+                    //         textInputType: TextInputType.name,
+                    //         controller: ctrl.currentEmployerNameTEC,
+                    //       ),
+                    //     ),
+                    //     PAppSize.s25.horizontalSpace,
+                    //     Expanded(
+                    //       child: PCustomFilledTextfield(
+                    //         label: 'current_scheme_name'.tr,
+                    //         hint: '',
+                    //         textInputType: TextInputType.name,
+                    //         controller: ctrl.currentSchemeNameTEC,
+                    //         enabled: false,
+                    //       ),
+                    //     ),
+                    //   ],
+                    // ),
+                    PCustomFilledTextfield(
+                      label: 'name_of_current_employer'.tr,
+                      hint: 'Old Mutual Limited',
+                      textInputType: TextInputType.name,
+                      controller: ctrl.currentEmployerNameTEC,
+                    ),
+                    PAppSize.s20.verticalSpace,
+                    PCustomFilledTextfield(
+                      label: 'current_scheme_name'.tr,
+                      hint: '',
+                      textInputType: TextInputType.name,
+                      controller: ctrl.currentSchemeNameTEC,
+                      enabled: false,
+                    ),
+                    PAppSize.s20.verticalSpace,
+                    PCustomFilledTextfield(
+                      label: 'current_scheme_type'.tr,
+                      hint: '',
+                      textInputType: TextInputType.text,
+                      controller: ctrl.currentSchemeTypeTEC,
+                      enabled: false,
+                    ),
+                    PAppSize.s20.verticalSpace,
+                    PCustomFilledTextfield(
+                      label: 'name_of_prev_employer'.tr,
+                      hint: 'Old Mutual Limited',
+                      textInputType: TextInputType.name,
+                      controller: ctrl.prevEmployerNameTEC,
+                    ),
+                    // Row(
+                    //   children: [
+                    //     Expanded(
+                    //       child: PCustomFilledTextfield(
+                    //         label: 'current_scheme_type'.tr,
+                    //         hint: '',
+                    //         textInputType: TextInputType.text,
+                    //         controller: ctrl.currentSchemeTypeTEC,
+                    //         enabled: false,
+                    //       ),
+                    //     ),
+                    //     PAppSize.s25.horizontalSpace,
+                    //     Expanded(
+                    //       child: PCustomFilledTextfield(
+                    //         label: 'name_of_prev_employer'.tr,
+                    //         hint: '',
+                    //         textInputType: TextInputType.name,
+                    //         controller: ctrl.prevEmployerNameTEC,
+                    //       ),
+                    //     ),
+                    //   ],
+                    // ),
+                    PAppSize.s20.verticalSpace,
+                    PCustomFilledTextfield(
+                      label: 'prev_scheme_name'.tr,
+                      hint: 'OLD MUTUAL ASPIRE PENSION SCHEME',
+                      textInputType: TextInputType.name,
+                      controller: ctrl.prevSchemeNameTEC,
+                    ),
+                    PAppSize.s20.verticalSpace,
+                    PCustomFilledTextfield(
+                      label: 'prev_scheme_Type'.tr,
+                      hint: 'INDIVIDUAL PENSION',
+                      textInputType: TextInputType.text,
+                      controller: ctrl.prevSchemeTypeTEC,
+                    ),
+                    // Row(
+                    //   children: [
+                    //     Expanded(
+                    //       child: PCustomFilledTextfield(
+                    //         label: 'prev_scheme_name'.tr,
+                    //         hint: '',
+                    //         textInputType: TextInputType.name,
+                    //         controller: ctrl.prevSchemeNameTEC,
+                    //       ),
+                    //     ),
+                    //     PAppSize.s25.horizontalSpace,
+                    //     Expanded(
+                    //       child: PCustomFilledTextfield(
+                    //         label: 'prev_scheme_Type'.tr,
+                    //         hint: '',
+                    //         textInputType: TextInputType.text,
+                    //         controller: ctrl.prevSchemeTypeTEC,
+                    //       ),
+                    //     ),
+                    //   ],
+                    // ),
+                    PAppSize.s20.verticalSpace,
+                    PCustomFilledTextfield(
+                      label: 'name_of_prev_trustee'.tr,
+                      hint: 'Lord Osei',
+                      textInputType: TextInputType.name,
+                      controller: ctrl.prevTrusteeNameTEC,
+                    ),
+                    PAppSize.s20.verticalSpace,
+                    PCustomFilledTextfield(
+                      label: 'prev_trustee_contact_name'.tr,
+                      hint: 'Lord Osei',
+                      textInputType: TextInputType.name,
+                      controller: ctrl.prevTrusteeContactNameTEC,
+                    ),
 
-                        // Row(
-                        //   children: [
-                        //     Expanded(
-                        //       child: PCustomFilledTextfield(
-                        //         label: 'name_of_prev_trustee'.tr,
-                        //         hint: '',
-                        //         textInputType: TextInputType.name,
-                        //         controller: ctrl.prevTrusteeNameTEC,
-                        //       ),
-                        //     ),
-                        //     PAppSize.s25.horizontalSpace,
-                        //     Expanded(
-                        //       child: PCustomFilledTextfield(
-                        //         label: 'prev_trustee_contact_name'.tr,
-                        //         hint: '',
-                        //         textInputType: TextInputType.name,
-                        //         controller: ctrl.prevTrusteeContactNameTEC,
-                        //       ),
-                        //     ),
-                        //   ],
-                        // ),
-                        PAppSize.s20.verticalSpace,
+                    // Row(
+                    //   children: [
+                    //     Expanded(
+                    //       child: PCustomFilledTextfield(
+                    //         label: 'name_of_prev_trustee'.tr,
+                    //         hint: '',
+                    //         textInputType: TextInputType.name,
+                    //         controller: ctrl.prevTrusteeNameTEC,
+                    //       ),
+                    //     ),
+                    //     PAppSize.s25.horizontalSpace,
+                    //     Expanded(
+                    //       child: PCustomFilledTextfield(
+                    //         label: 'prev_trustee_contact_name'.tr,
+                    //         hint: '',
+                    //         textInputType: TextInputType.name,
+                    //         controller: ctrl.prevTrusteeContactNameTEC,
+                    //       ),
+                    //     ),
+                    //   ],
+                    // ),
+                    PAppSize.s20.verticalSpace,
 
-                        PCustomFilledTextfield(
-                          label: 'prev_trustee_contact_number'.tr,
-                          hint: 'E.g. 0566557878',
-                          maxLength: PAppSize.s10.toInt(),
-                          textInputType: TextInputType.number,
-                          controller: ctrl.prevTrusteeContactNumberTEC,
-                        ),
+                    PCustomFilledTextfield(
+                      label: 'prev_trustee_contact_number'.tr,
+                      hint: 'E.g. 0566557878',
+                      maxLength: PAppSize.s10.toInt(),
+                      textInputType: TextInputType.number,
+                      controller: ctrl.prevTrusteeContactNumberTEC,
+                    ),
 
-                        PAppSize.s20.verticalSpace,
+                    PAppSize.s20.verticalSpace,
 
-                        // front ID upload
-                        PIdCardWidget(
-                          label: 'upload_front_of_id_card'.tr,
-                          file: ctrl.idFront.value,
-                          onCameraTap: () => ctrl.chooseFromCamera(true),
-                          onGalleryTap: () => ctrl.chooseFromGallery(true),
-                        ),
+                    // front ID upload
+                    PIdCardWidget(
+                      label: 'upload_front_of_id_card'.tr,
+                      file: ctrl.idFront.value,
+                      onCameraTap: () => ctrl.chooseFromCamera(true),
+                      onGalleryTap: () => ctrl.chooseFromGallery(true),
+                    ),
 
-                        PAppSize.s28.verticalSpace,
+                    PAppSize.s28.verticalSpace,
 
-                        // Back ID upload
-                        PIdCardWidget(
-                          label: 'upload_back_of_id_card'.tr,
-                          file: ctrl.idBack.value,
-                          onCameraTap: () => ctrl.chooseFromCamera(false),
-                          onGalleryTap: () => ctrl.chooseFromGallery(false),
-                        ),
-                      ],
-                    ).symmetric(horizontal: PAppSize.s22).scrollable(),
+                    // Back ID upload
+                    PIdCardWidget(
+                      label: 'upload_back_of_id_card'.tr,
+                      file: ctrl.idBack.value,
+                      onCameraTap: () => ctrl.chooseFromCamera(false),
+                      onGalleryTap: () => ctrl.chooseFromGallery(false),
+                    ),
+                  ],
+                ).symmetric(horizontal: PAppSize.s22).scrollable(),
               ),
             ),
             PAppSize.s16.verticalSpace,

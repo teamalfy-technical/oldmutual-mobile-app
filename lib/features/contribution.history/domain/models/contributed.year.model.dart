@@ -1,4 +1,6 @@
-class ContributedYear {
+import 'package:equatable/equatable.dart';
+// ignore: must_be_immutable
+class ContributedYear extends Equatable {
   String? fundYear;
   double? totalContribution;
   double? employeeContribution;
@@ -14,6 +16,10 @@ class ContributedYear {
     totalContribution = json['TotalContribution']?.toDouble();
     employeeContribution = json['EmployeeContribution']?.toDouble();
   }
+
+  
+  @override
+  List<Object?> get props => [fundYear];
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
