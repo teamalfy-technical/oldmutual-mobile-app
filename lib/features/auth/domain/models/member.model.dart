@@ -27,6 +27,7 @@ class Member extends Equatable {
   String? lastLoggedInIp;
   String? lastLoggedInAgent;
   String? role;
+  bool? affluent;
   String? createdAt;
   String? updatedAt;
 
@@ -57,6 +58,7 @@ class Member extends Equatable {
     this.lastLoggedInIp,
     this.lastLoggedInAgent,
     this.role,
+    this.affluent,
     this.createdAt,
     this.updatedAt,
   });
@@ -88,6 +90,7 @@ class Member extends Equatable {
     String? lastLoggedInIp,
     String? lastLoggedInAgent,
     String? role,
+    bool? affluent,
     String? createdAt,
     String? updatedAt,
   }) {
@@ -118,6 +121,7 @@ class Member extends Equatable {
       lastLoggedInIp: lastLoggedInIp ?? this.lastLoggedInIp,
       lastLoggedInAgent: lastLoggedInAgent ?? this.lastLoggedInAgent,
       role: role ?? this.role,
+      affluent: affluent ?? this.affluent,
       createdAt: createdAt ?? this.createdAt,
       updatedAt: updatedAt ?? this.updatedAt,
     );
@@ -145,11 +149,13 @@ class Member extends Equatable {
     sex = json['sex'];
     nationality = json['nationality'];
     notificationsEnabled = json['notifications_enabled'];
+    phoneVerified = json['phone_verified'];
     terms = json['terms'];
     lastLoggedIn = json['last_logged_in'];
     lastLoggedInIp = json['last_logged_in_ip'];
     lastLoggedInAgent = json['last_logged_in_agent'];
     role = json['role'];
+    affluent = json['affluent'] ?? false;
     createdAt = json['created_at'];
     updatedAt = json['updated_at'];
   }
@@ -180,12 +186,14 @@ class Member extends Equatable {
     data['date_joined'] = dateJoined;
     data['sex'] = sex;
     data['nationality'] = nationality;
+    data['phone_verified'] = phoneVerified;
     data['notifications_enabled'] = notificationsEnabled;
     data['terms'] = terms;
     data['last_logged_in'] = lastLoggedIn;
     data['last_logged_in_ip'] = lastLoggedInIp;
     data['last_logged_in_agent'] = lastLoggedInAgent;
     data['role'] = role;
+    data['affluent'] = affluent;
     data['created_at'] = createdAt;
     data['updated_at'] = updatedAt;
     return data;

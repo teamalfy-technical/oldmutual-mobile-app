@@ -1,17 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:oldmutual_pensions_app/core/utils/utils.dart';
 
 class PSeeAllWidget extends StatelessWidget {
   final String leadingText;
   final double? leadingFontSize;
-  final Widget trailing;
+  final bool showTrailing;
+  final String? trailingText;
   // final String trailingText;
   final Function()? onTap;
   const PSeeAllWidget({
     super.key,
     required this.leadingText,
-    required this.trailing,
+    this.showTrailing = true,
     this.leadingFontSize,
+    this.trailingText,
     this.onTap,
   });
 
@@ -29,8 +32,22 @@ class PSeeAllWidget extends StatelessWidget {
             fontWeight: FontWeight.w600,
           ),
         ),
-        trailing
-        .onPressed(onTap: onTap),
+        if (showTrailing) ...[
+          ShaderMask(
+            shaderCallback: (bounds) =>
+                PAppColor.primaryGradient.createShader(bounds),
+            child: Text(
+              trailingText ?? 'see_all'.tr,
+              textAlign: TextAlign.center,
+              softWrap: true,
+              style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                fontSize: PAppSize.s16,
+                color: PAppColor.whiteColor,
+                fontWeight: FontWeight.w600,
+              ),
+            ),
+          ).onPressed(onTap: onTap),
+        ],
       ],
     );
   }

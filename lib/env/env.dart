@@ -465,4 +465,65 @@ abstract class Env {
   static final String getPolicyPayment = _Env.getPolicyPayment;
 
   /// -------------------- Pay Now Endpoints Ends Here ------------------------- ///
+  ///
+  /// -------------------- Affluent Endpoints Starts Here ------------------------- ///
+
+  /// [GetAffluentRelationshipOfficer] endpoint
+  @EnviedField(defaultValue: '/affluent/relationship-officer', obfuscate: true)
+  static final String getAffluentRelationshipOfficer =
+      _Env.getAffluentRelationshipOfficer;
+
+  /// [GetContentCategories] endpoint
+  @EnviedField(defaultValue: '/affluent/content-categories', obfuscate: true)
+  static final String getContentCategories = _Env.getContentCategories;
+
+  /// [GetContentCategory] endpoint
+  @EnviedField(defaultValue: '/affluent/content-category', obfuscate: true)
+  static final String getContentCategory = _Env.getContentCategory;
+
+  /// [DeleteContentCategory] endpoint
+  @EnviedField(
+    defaultValue: '/affluent/content-category/delete',
+    obfuscate: true,
+  )
+  static final String deleteContentCategory = _Env.deleteContentCategory;
+
+  /// [GetContents] endpoint
+  @EnviedField(defaultValue: '/affluent/contents', obfuscate: true)
+  static final String getContents = _Env.getContents;
+
+  /// [GetContentById] endpoint
+  @EnviedField(defaultValue: '/affluent/content', obfuscate: true)
+  static final String getContentById = _Env.getContentById;
+
+  /// [GetContentBySlug] endpoint
+  @EnviedField(defaultValue: '/affluent/content/slug', obfuscate: true)
+  static final String getContentBySlug = _Env.getContentBySlug;
+
+  /// [GetBookmarkedContents] endpoint
+  @EnviedField(defaultValue: '/affluent/bookmarks', obfuscate: true)
+  static final String getBookmarkedContents = _Env.getBookmarkedContents;
+
+  /// [BookmarkContents] endpoint
+  @EnviedField(defaultValue: '/affluent/bookmark', obfuscate: true)
+  static final String bookmarkContent = _Env.bookmarkContent;
+
+  /// [GetBookmarkContents] endpoint
+  @EnviedField(defaultValue: '/affluent/bookmark', obfuscate: true)
+  static final String getBookmarkedContent = _Env.getBookmarkedContent;
+
+  /// [GetBookmarkedContentCount] endpoint
+  @EnviedField(defaultValue: '/affluent/bookmark/count', obfuscate: true)
+  static final String getBookmarkedContentCount =
+      _Env.getBookmarkedContentCount;
+
+  /// [DeleteBookedContent] endpoint
+  @EnviedField(defaultValue: '/affluent/bookmark/delete', obfuscate: true)
+  static final String deleteBookedContent = _Env.deleteBookedContent;
+
+  /// [ClearBookmarkedContents] endpoint
+  @EnviedField(defaultValue: '/affluent/bookmarks/clear', obfuscate: true)
+  static final String clearBookmarkedContents = _Env.clearBookmarkedContents;
+
+  /// -------------------- Affluent Endpoints Ends Here ------------------------- ///
 }

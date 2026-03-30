@@ -48,7 +48,8 @@ abstract class Routes {
   static const statementPage = _Paths.statementPage;
   static const settingsPage = _Paths.settingsPage;
   static const profileSettingsPage = _Paths.profileSettingsPage;
-  static const supportPage = _Paths.supportPage;
+
+  static const helpPage = _Paths.helpPage;
   static const changePasswordPage = _Paths.changePasswordPage;
   static const webviewPage = _Paths.webviewPage;
   static const successPage = _Paths.successPage;
@@ -65,6 +66,17 @@ abstract class Routes {
   /// ---- Pay Now Feature Routes
   static const payNowPage = _Paths.payNowPage;
   static const paymentHistoryPage = _Paths.paymentHistoryPage;
+
+  /// ---- Affluent Feature Routes
+  static const financialInsightPage = _Paths.financialInsightPage;
+  static const financialInsightDetailPage = _Paths.financialInsightDetailPage;
+  static const complimentaryServicePage = _Paths.complimentaryServicePage;
+  static const complimentaryServiceDetailPage =
+      _Paths.complimentaryServiceDetailPage;
+  static const supportPage = _Paths.supportPage;
+  static const affluentCardPage = _Paths.affluentCardPage;
+  static const saveContentPage = _Paths.saveContentPage;
+  static const trackClaimsPage = _Paths.trackClaimsPage;
 }
 
 abstract class _Paths {
@@ -112,7 +124,8 @@ abstract class _Paths {
   static const statementPage = '/statement-page';
   static const settingsPage = '/settings-page';
   static const profileSettingsPage = '/profile-settings-page';
-  static const supportPage = '/support-page';
+
+  static const helpPage = '/help-page';
   static const changePasswordPage = '/change-password-page';
   static const webviewPage = '/webview-page';
   static const successPage = '/success-page';
@@ -126,7 +139,18 @@ abstract class _Paths {
   static const managePage = '/manage-page';
   static const documentsPage = '/documents-page';
 
-  /// --- Pay Nnow Feature Paths
+  /// --- Pay Now Feature Paths
   static const payNowPage = '/pay-now-page';
   static const paymentHistoryPage = '/payment-history-page';
+
+  /// --- Affluent Feature Paths
+  static const financialInsightPage = '/financial-insight-page';
+  static const financialInsightDetailPage = '/financial-insight-detail-page';
+  static const complimentaryServicePage = '/complimentary-service-page';
+  static const complimentaryServiceDetailPage =
+      '/complimentary-service-detail-page';
+  static const supportPage = '/support-page';
+  static const affluentCardPage = '/affluent-card-page';
+  static const saveContentPage = '/save-content-page';
+  static const trackClaimsPage = '/track-claims-page';
 }

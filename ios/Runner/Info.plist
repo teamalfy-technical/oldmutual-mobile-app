@@ -38,6 +38,8 @@
 	<string>This app requires access to your microphone for face verification and identity authentication.</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>This app requires access to your photo library to allow you to select and upload images.</string>
+	<key>NSPhotoLibraryAddUsageDescription</key>
+	<string>This app requires access to save your Affluent Card to your photo library.</string>
 	<key>NSFaceIDUsageDescription</key>
 	<string>We use Face ID to protect your financial data and allow secure access to your account.</string>
 	<key>UIApplicationSupportsIndirectInputEvents</key>

@@ -6,8 +6,8 @@ import 'package:oldmutual_pensions_app/features/more/more.services.dart';
 import 'package:oldmutual_pensions_app/gen/assets.gen.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-class PSupportPage extends StatelessWidget {
-  const PSupportPage({super.key});
+class PHelpPage extends StatelessWidget {
+  const PHelpPage({super.key});
 
   @override
   Widget build(BuildContext context) {

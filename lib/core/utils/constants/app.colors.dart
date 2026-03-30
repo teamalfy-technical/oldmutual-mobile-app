@@ -21,6 +21,7 @@ class PAppColor {
   static const Color fillColor2 = Color(0xFFCCCCCC);
   static const Color fillColor = Color(0xFFF2F2F2);
   static const Color fillColor3 = Color(0xFFF9F9F9);
+  static const Color fillColor4 = Color(0xFFE5E5E5);
 
   static const Color orangeColor = Color(0xFFF5823D);
   static const Color yellowColor = Color(0xFFFFDD1A);
@@ -54,6 +55,10 @@ class PAppColor {
   static const Color transparentColor = Colors.transparent;
   static const Color errorColor = Color(0xFFfa4b69);
   static const Color focusedErrorColor = Color(0xFFE4A11B);
+
+  // Gold
+  static const Color darkGold = Color(0xFFD4AF37);
+  static const Color lightGold = Color(0xFFF4E5B0);
 
   // bars color
   static const Color voiletLight = Color(0xF08061DB);
@@ -127,13 +132,15 @@ class PAppColor {
   static const Color info300 = Color(0xFF9271ec);
   static const Color info500 = Color(0xFF5c2be2);
   static const Color info700 = Color(0xFF411fa0);
+
+  static final primaryGradient = LinearGradient(
+  colors: [PAppColor.primaryDark, PAppColor.primary],
+  begin: Alignment.centerLeft,
+  end: Alignment.centerRight,
+);
 }
 
-final gradient = LinearGradient(
-  begin: Alignment.bottomCenter,
-  end: Alignment.topCenter,
-  colors: [PAppColor.voiletLight, PAppColor.voiletDark],
-);
+
 
 final borderRadius = BorderRadius.only(
   topLeft: Radius.circular(PAppSize.s6),

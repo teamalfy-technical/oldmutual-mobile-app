@@ -4,7 +4,6 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:oldmutual_pensions_app/core/utils/utils.dart';
 import 'package:oldmutual_pensions_app/features/beneficiary/beneficiary.dart';
-import 'package:oldmutual_pensions_app/gen/assets.gen.dart';
 import 'package:oldmutual_pensions_app/shared/shared.dart';
 
 class PBeneficiaryDetailWidget extends StatelessWidget {
@@ -27,16 +26,11 @@ class PBeneficiaryDetailWidget extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             PAppSize.s8.verticalSpace,
-            PSeeAllWidget(
-              leadingText: 'beneficiary'.tr,
-              leadingFontSize: PAppSize.s20,
-              trailing: Assets.icons.closeIcon.svg(
-                color: PHelperFunction.isDarkMode(context)
-                    ? PAppColor.whiteColor
-                    : PAppColor.blackColor,
-              ),
-              onTap: () => PHelperFunction.pop(),
+            PDialogTitleWidget(
+              title: 'beneficiary'.tr,
+              onClose: () => PHelperFunction.pop(),
             ),
+
             PAppSize.s14.verticalSpace,
             Divider(),
 

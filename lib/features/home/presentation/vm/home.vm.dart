@@ -1,5 +1,6 @@
 import 'package:get/get.dart';
 import 'package:oldmutual_pensions_app/core/utils/utils.dart';
+import 'package:oldmutual_pensions_app/features/auth/domain/models/member.model.dart';
 import 'package:oldmutual_pensions_app/features/home/domain/highlight.model.dart';
 import 'package:oldmutual_pensions_app/gen/assets.gen.dart';
 import 'package:oldmutual_pensions_app/routes/app.pages.dart';
@@ -8,6 +9,17 @@ class PHomeVm extends GetxController {
   static PHomeVm get instance => Get.find();
 
   var currentIndex = 0.obs;
+  var user = Rxn<Member>();
+
+  @override
+  void onInit() {
+    super.onInit();
+    _loadUser();
+  }
+
+  Future<void> _loadUser() async {
+    user.value = await PSecureStorage().getAuthResponse();
+  }
 
   onPageChanged(int val) {
     currentIndex.value = val;

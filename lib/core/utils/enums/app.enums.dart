@@ -1,4 +1,11 @@
-enum AnimateType { slideLeft, slideUp, slideDown, slideRight }
+enum AnimateType {
+  slideLeft,
+  slideUp,
+  scaleIn,
+  scaleOut,
+  slideDown,
+  slideRight,
+}
 
 enum SlideDirection { leftToRight, rightToLeft }
 
@@ -43,5 +50,7 @@ enum BadgeType { report, beneficiary, contribution, maintenance }
 
 // enum Environment { dev, prod }
 enum SchemeType { anchor, prestige, aspire }
+
+enum ContentType { article, video }
 
 enum ConnectivityStatus { connected, disconnected }

@@ -14,8 +14,8 @@ class PPolicyDetailPage extends StatelessWidget {
   final Policy policy;
   PPolicyDetailPage({super.key, required this.policy});
 
-  final vm = Get.put(PPolicyVm());
-  final policyStatementVm = Get.find<PPolicyStatementVm>();
+  final vm = PPolicyVm.instance;
+  final policyStatementVm = PPolicyStatementVm.instance;
 
   @override
   Widget build(BuildContext context) {
@@ -43,9 +43,9 @@ class PPolicyDetailPage extends StatelessWidget {
             PCountUpText(
               amount: policy.availableBalance ?? 0,
               textAlign: TextAlign.center,
-              style: Theme.of(context).textTheme.headlineMedium?.copyWith(
-                fontWeight: FontWeight.w600,
-              ),
+              style: Theme.of(
+                context,
+              ).textTheme.headlineMedium?.copyWith(fontWeight: FontWeight.w600),
             ),
             PAppSize.s2.verticalSpace,
 
@@ -90,13 +90,8 @@ class PPolicyDetailPage extends StatelessWidget {
                           ? PAppColor.successLight
                           : PAppColor.successDark,
                     ),
-                    onTap: () {
-                      showPayModal(context: context, product: policy);
-                      // PPopupDialog(context).warningMessage(
-                      //   title: 'coming_soon_title'.tr,
-                      //   message: 'coming_soon_msg'.tr,
-                      // );
-                    },
+                    onTap: () =>
+                        showPayModal(context: context, product: policy),
                   ),
                   PAppSize.s8.horizontalSpace,
                 ],

@@ -1,5 +1,6 @@
 import 'package:get/get.dart';
 import 'package:oldmutual_pensions_app/core/utils/utils.dart';
+import 'package:oldmutual_pensions_app/features/affluent/affluent.dart';
 import 'package:oldmutual_pensions_app/features/auth/auth.dart';
 import 'package:oldmutual_pensions_app/features/auth/presentation/pages/forgot.password/forgot.password.page.dart';
 import 'package:oldmutual_pensions_app/features/auth/presentation/pages/login/welcome.back.page.dart';
@@ -13,7 +14,6 @@ import 'package:oldmutual_pensions_app/features/future.value.calculator/future.v
 import 'package:oldmutual_pensions_app/features/home/home.dart';
 import 'package:oldmutual_pensions_app/features/manage/manage.dart';
 import 'package:oldmutual_pensions_app/features/more/more.services.dart';
-import 'package:oldmutual_pensions_app/features/more/presentation/pages/support.page.dart';
 import 'package:oldmutual_pensions_app/features/notification/notification.dart';
 import 'package:oldmutual_pensions_app/features/pension/pension.dart';
 import 'package:oldmutual_pensions_app/features/policy/policy.dart';
@@ -23,7 +23,8 @@ import 'package:oldmutual_pensions_app/features/redemptions/redemption.dart';
 import 'package:oldmutual_pensions_app/features/settings/presentation/pages/change.password.page.dart';
 import 'package:oldmutual_pensions_app/features/settings/presentation/pages/profile.settings.page.dart';
 import 'package:oldmutual_pensions_app/features/settings/presentation/pages/settings.success.page.dart';
-import 'package:oldmutual_pensions_app/features/settings/settings.dart';
+import 'package:oldmutual_pensions_app/features/settings/settings.dart'
+    hide PHelpPage;
 import 'package:oldmutual_pensions_app/features/splash/presentation/pages/security.blocked.page.dart';
 import 'package:oldmutual_pensions_app/features/splash/splash.dart';
 import 'package:oldmutual_pensions_app/features/statements/presentation/pages/statement.page.dart';
@@ -147,7 +148,7 @@ class AppPages {
     GetPage(
       name: _Paths.dashboardHighlightPage,
       page: () => PDashboardHighlightPage(highlight: Get.arguments),
-      // transition: Transition.circularReveal,
+      transition: Transition.fadeIn,
       transitionDuration: const Duration(milliseconds: PAppSize.s450),
     ),
     GetPage(
@@ -294,5 +295,30 @@ class AppPages {
       page: () => PPayNowPage(product: Get.arguments),
     ),
     GetPage(name: _Paths.paymentHistoryPage, page: () => PPaymentHistoryPage()),
+
+    /// --- Affluent Feature Pages
+    GetPage(
+      name: _Paths.financialInsightPage,
+      page: () => PFinancialInsightPage(),
+    ),
+    GetPage(
+      name: _Paths.financialInsightDetailPage,
+      page: () => PFinancialInsightDetailPage(content: Get.arguments),
+    ),
+    GetPage(
+      name: _Paths.complimentaryServicePage,
+      page: () => PComplimentaryServicePage(),
+    ),
+    GetPage(
+      name: _Paths.complimentaryServiceDetailPage,
+      page: () => PComplimentaryServiceDetailPage(service: Get.arguments),
+    ),
+    GetPage(name: _Paths.helpPage, page: () => PHelpPage()),
+    GetPage(
+      name: _Paths.affluentCardPage,
+      page: () => PAffluentCardPage(user: Get.arguments),
+    ),
+    GetPage(name: _Paths.saveContentPage, page: () => PSaveContentPage()),
+    GetPage(name: _Paths.trackClaimsPage, page: () => PTrackClaimsPage()),
   ];
 }

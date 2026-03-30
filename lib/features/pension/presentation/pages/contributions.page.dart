@@ -39,16 +39,7 @@ class PContributionsPage extends StatelessWidget {
                 PSeeAllWidget(
                   leadingText: 'filter'.tr,
                   leadingFontSize: PAppSize.s20,
-                  trailing: Text(
-                    'done'.tr,
-                    textAlign: TextAlign.center,
-                    softWrap: true,
-                    style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                      fontSize: PAppSize.s16,
-                      color: PAppColor.successMedium,
-                      fontWeight: FontWeight.w600,
-                    ),
-                  ),
+                  trailingText: 'done'.tr,
                   onTap: () => PHelperFunction.pop(),
                 ),
                 PAppSize.s8.verticalSpace,

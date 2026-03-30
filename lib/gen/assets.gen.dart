@@ -64,6 +64,22 @@ class $AssetsIconsGen {
   /// File path: assets/icons/add.icon.svg
   SvgGenImage get addIcon => const SvgGenImage('assets/icons/add.icon.svg');
 
+  /// File path: assets/icons/affluent-card.svg
+  SvgGenImage get affluentCard =>
+      const SvgGenImage('assets/icons/affluent-card.svg');
+
+  /// File path: assets/icons/affluent.avatar.svg
+  SvgGenImage get affluentAvatar =>
+      const SvgGenImage('assets/icons/affluent.avatar.svg');
+
+  /// File path: assets/icons/affluent.badge.svg
+  SvgGenImage get affluentBadge =>
+      const SvgGenImage('assets/icons/affluent.badge.svg');
+
+  /// File path: assets/icons/airport.security.icon.svg
+  SvgGenImage get airportSecurityIcon =>
+      const SvgGenImage('assets/icons/airport.security.icon.svg');
+
   /// File path: assets/icons/anchor.icon.svg
   SvgGenImage get anchorIcon =>
       const SvgGenImage('assets/icons/anchor.icon.svg');
@@ -90,6 +106,17 @@ class $AssetsIconsGen {
   SvgGenImage get benchmarkIcon =>
       const SvgGenImage('assets/icons/benchmark.icon.svg');
 
+  /// File path: assets/icons/book.icon.svg
+  SvgGenImage get bookIcon => const SvgGenImage('assets/icons/book.icon.svg');
+
+  /// File path: assets/icons/bookmark.icon.solid.svg
+  SvgGenImage get bookmarkIconSolid =>
+      const SvgGenImage('assets/icons/bookmark.icon.solid.svg');
+
+  /// File path: assets/icons/bookmark.icon.svg
+  SvgGenImage get bookmarkIcon =>
+      const SvgGenImage('assets/icons/bookmark.icon.svg');
+
   /// File path: assets/icons/bottom.logo.banner.svg
   SvgGenImage get bottomLogoBanner =>
       const SvgGenImage('assets/icons/bottom.logo.banner.svg');
@@ -101,11 +128,21 @@ class $AssetsIconsGen {
   /// File path: assets/icons/calculate.svg
   SvgGenImage get calculate => const SvgGenImage('assets/icons/calculate.svg');
 
+  /// File path: assets/icons/calendar.icon.svg
+  SvgGenImage get calendarIcon =>
+      const SvgGenImage('assets/icons/calendar.icon.svg');
+
   /// File path: assets/icons/call.icon.svg
   SvgGenImage get callIcon => const SvgGenImage('assets/icons/call.icon.svg');
 
+  /// File path: assets/icons/call.svg
+  SvgGenImage get call => const SvgGenImage('assets/icons/call.svg');
+
   /// File path: assets/icons/chart_data.svg
   SvgGenImage get chartData => const SvgGenImage('assets/icons/chart_data.svg');
+
+  /// File path: assets/icons/chat.svg
+  SvgGenImage get chat => const SvgGenImage('assets/icons/chat.svg');
 
   /// File path: assets/icons/check.dark.svg
   SvgGenImage get checkDark => const SvgGenImage('assets/icons/check.dark.svg');
@@ -117,8 +154,19 @@ class $AssetsIconsGen {
   SvgGenImage get checkWhite =>
       const SvgGenImage('assets/icons/check.white.svg');
 
+  /// File path: assets/icons/clock.icon.svg
+  SvgGenImage get clockIcon => const SvgGenImage('assets/icons/clock.icon.svg');
+
   /// File path: assets/icons/close.icon.svg
   SvgGenImage get closeIcon => const SvgGenImage('assets/icons/close.icon.svg');
+
+  /// File path: assets/icons/color.food.icon.svg
+  SvgGenImage get colorFoodIcon =>
+      const SvgGenImage('assets/icons/color.food.icon.svg');
+
+  /// File path: assets/icons/complimentary-services.svg
+  SvgGenImage get complimentaryServices =>
+      const SvgGenImage('assets/icons/complimentary-services.svg');
 
   /// File path: assets/icons/contribution.alert.svg
   SvgGenImage get contributionAlert =>
@@ -170,6 +218,10 @@ class $AssetsIconsGen {
   /// File path: assets/icons/filter.svg
   SvgGenImage get filter => const SvgGenImage('assets/icons/filter.svg');
 
+  /// File path: assets/icons/financial-insight.svg
+  SvgGenImage get financialInsight =>
+      const SvgGenImage('assets/icons/financial-insight.svg');
+
   /// File path: assets/icons/fingerprint.svg
   SvgGenImage get fingerprint =>
       const SvgGenImage('assets/icons/fingerprint.svg');
@@ -177,11 +229,21 @@ class $AssetsIconsGen {
   /// File path: assets/icons/ghana.flag.svg
   SvgGenImage get ghanaFlag => const SvgGenImage('assets/icons/ghana.flag.svg');
 
+  /// File path: assets/icons/golf.icon.svg
+  SvgGenImage get golfIcon => const SvgGenImage('assets/icons/golf.icon.svg');
+
+  /// File path: assets/icons/health.icons.svg
+  SvgGenImage get healthIcons =>
+      const SvgGenImage('assets/icons/health.icons.svg');
+
   /// File path: assets/icons/help.icon.svg
   SvgGenImage get helpIcon => const SvgGenImage('assets/icons/help.icon.svg');
 
   /// File path: assets/icons/home.icon.svg
   SvgGenImage get homeIcon => const SvgGenImage('assets/icons/home.icon.svg');
+
+  /// File path: assets/icons/hotel.icon.svg
+  SvgGenImage get hotelIcon => const SvgGenImage('assets/icons/hotel.icon.svg');
 
   /// File path: assets/icons/info.icon.svg
   SvgGenImage get infoIcon => const SvgGenImage('assets/icons/info.icon.svg');
@@ -208,9 +270,15 @@ class $AssetsIconsGen {
   SvgGenImage get lockOutline =>
       const SvgGenImage('assets/icons/lock.outline.svg');
 
+  /// File path: assets/icons/logomark.svg
+  SvgGenImage get logomark => const SvgGenImage('assets/icons/logomark.svg');
+
   /// File path: assets/icons/logout.icon.svg
   SvgGenImage get logoutIcon =>
       const SvgGenImage('assets/icons/logout.icon.svg');
+
+  /// File path: assets/icons/mail.svg
+  SvgGenImage get mail => const SvgGenImage('assets/icons/mail.svg');
 
   /// File path: assets/icons/maintenance.svg
   SvgGenImage get maintenance =>
@@ -308,6 +376,10 @@ class $AssetsIconsGen {
   SvgGenImage get topLogoBanner =>
       const SvgGenImage('assets/icons/top.logo.banner.svg');
 
+  /// File path: assets/icons/track-claims.svg
+  SvgGenImage get trackClaims =>
+      const SvgGenImage('assets/icons/track-claims.svg');
+
   /// File path: assets/icons/trash.red.icon.svg
   SvgGenImage get trashRedIcon =>
       const SvgGenImage('assets/icons/trash.red.icon.svg');
@@ -360,6 +432,10 @@ class $AssetsIconsGen {
     accessTime,
     accountBalanceWallet,
     addIcon,
+    affluentCard,
+    affluentAvatar,
+    affluentBadge,
+    airportSecurityIcon,
     anchorIcon,
     arrowDownIos,
     arrowForwardIos,
@@ -367,15 +443,24 @@ class $AssetsIconsGen {
     arrowRightBlack,
     article,
     benchmarkIcon,
+    bookIcon,
+    bookmarkIconSolid,
+    bookmarkIcon,
     bottomLogoBanner,
     brightness,
     calculate,
+    calendarIcon,
     callIcon,
+    call,
     chartData,
+    chat,
     checkDark,
     checkIcon,
     checkWhite,
+    clockIcon,
     closeIcon,
+    colorFoodIcon,
+    complimentaryServices,
     contributionAlert,
     deleteIcon,
     document,
@@ -391,10 +476,14 @@ class $AssetsIconsGen {
     faqIcon,
     fileDownload,
     filter,
+    financialInsight,
     fingerprint,
     ghanaFlag,
+    golfIcon,
+    healthIcons,
     helpIcon,
     homeIcon,
+    hotelIcon,
     infoIcon,
     invest,
     keyboardArrowDown,
@@ -402,7 +491,9 @@ class $AssetsIconsGen {
     linkBtnIcon,
     lockIcon,
     lockOutline,
+    logomark,
     logoutIcon,
+    mail,
     maintenance,
     manageIcon,
     memberIcon,
@@ -430,6 +521,7 @@ class $AssetsIconsGen {
     supportIcon,
     termsIcon,
     topLogoBanner,
+    trackClaims,
     trashRedIcon,
     upgradeDark,
     upgradeIcon,

@@ -4,23 +4,35 @@ import 'package:oldmutual_pensions_app/core/utils/utils.dart';
 
 /// extensions on any [Widget]
 extension AppWidgetExtension on Widget {
-  Widget horizontal(double spacing) =>
-      Padding(padding: EdgeInsets.symmetric(horizontal: spacing), child: this);
+  Widget horizontal(double spacing) => Padding(
+    padding: EdgeInsets.symmetric(horizontal: spacing),
+    child: this,
+  );
 
-  Widget vertical(double spacing) =>
-      Padding(padding: EdgeInsets.symmetric(vertical: spacing), child: this);
+  Widget vertical(double spacing) => Padding(
+    padding: EdgeInsets.symmetric(vertical: spacing),
+    child: this,
+  );
 
-  Widget bottom(double spacing) =>
-      Padding(padding: EdgeInsets.only(bottom: spacing), child: this);
+  Widget bottom(double spacing) => Padding(
+    padding: EdgeInsets.only(bottom: spacing),
+    child: this,
+  );
 
-  Widget top(double spacing) =>
-      Padding(padding: EdgeInsets.only(top: spacing), child: this);
+  Widget top(double spacing) => Padding(
+    padding: EdgeInsets.only(top: spacing),
+    child: this,
+  );
 
-  Widget left(double spacing) =>
-      Padding(padding: EdgeInsets.only(left: spacing), child: this);
+  Widget left(double spacing) => Padding(
+    padding: EdgeInsets.only(left: spacing),
+    child: this,
+  );
 
-  Widget right(double spacing) =>
-      Padding(padding: EdgeInsets.only(right: spacing), child: this);
+  Widget right(double spacing) => Padding(
+    padding: EdgeInsets.only(right: spacing),
+    child: this,
+  );
 
   Widget all(double spacing) =>
       Padding(padding: EdgeInsets.all(spacing), child: this);
@@ -83,8 +95,10 @@ extension AppWidgetExtension on Widget {
   Widget scrollable({
     Axis scrollDirection = Axis.vertical,
     ScrollPhysics physics = const BouncingScrollPhysics(),
+    EdgeInsetsGeometry? padding,
   }) => SingleChildScrollView(
     scrollDirection: scrollDirection,
+    padding: padding,
     physics: physics,
     child: this,
   );

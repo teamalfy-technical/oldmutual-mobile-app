@@ -11,10 +11,12 @@ class HighlightWidget extends StatelessWidget {
     required this.index,
     this.onTap,
     required this.vm,
+    this.affluent = false,
   });
 
   final Highlight highlight;
   final PHomeVm vm;
+  final bool affluent;
   final Function()? onTap;
 
   final int index;
@@ -37,12 +39,14 @@ class HighlightWidget extends StatelessWidget {
                             // index == vm.highlights.length - 1
                             //     ? [Color(0xFFA7A9AC), Color(0xFFA7A9AC)]
                             //     :
-                            [PAppColor.primaryDark, PAppColor.primary],
+                            affluent
+                            ? [PAppColor.darkGold, PAppColor.lightGold]
+                            : [PAppColor.primaryDark, PAppColor.primary],
                       ), //
                     ),
                     child: Container(
-                      height: PAppSize.s70,
-                      width: PAppSize.s70,
+                      height: PAppSize.s60,
+                      width: PAppSize.s60,
                       decoration: BoxDecoration(
                         shape: BoxShape.circle,
                         border: Border.all(

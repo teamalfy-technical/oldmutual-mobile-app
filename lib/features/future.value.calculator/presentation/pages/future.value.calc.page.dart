@@ -4,7 +4,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:oldmutual_pensions_app/core/utils/utils.dart';
 import 'package:oldmutual_pensions_app/features/future.value.calculator/presentation/vm/future.value.calc.vm.dart';
-import 'package:oldmutual_pensions_app/gen/assets.gen.dart';
 import 'package:oldmutual_pensions_app/shared/shared.dart';
 
 class PFutureValueCalcPage extends StatefulWidget {
@@ -46,16 +45,11 @@ class _PFutureValueCalcPageState extends State<PFutureValueCalcPage> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 PAppSize.s10.verticalSpace,
-                PSeeAllWidget(
-                  leadingText: 'parameters'.tr,
-                  leadingFontSize: PAppSize.s20,
-                  trailing: Assets.icons.closeIcon.svg(
-                    color: PHelperFunction.isDarkMode(context)
-                        ? PAppColor.whiteColor
-                        : PAppColor.blackColor,
-                  ),
-                  onTap: () => PHelperFunction.pop(),
+                PDialogTitleWidget(
+                  title: 'parameters'.tr,
+                  onClose: () => PHelperFunction.pop(),
                 ),
+
                 PAppSize.s14.verticalSpace,
                 Divider(),
 

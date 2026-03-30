@@ -84,16 +84,19 @@ class PDashboardHighlightPage extends StatelessWidget {
                     BuildContext fromHeroContext,
                     BuildContext toHeroContext,
                   ) {
+                    final isForward =
+                        flightDirection == HeroFlightDirection.push;
+                    final sourceRadius = PAppSize.s60 / 2; // circle radius
+                    final destRadius = PAppSize.s12;
                     return AnimatedBuilder(
                       animation: animation,
                       builder: (context, child) {
+                        final t = isForward ? animation.value : 1 - animation.value;
+                        final radius = sourceRadius + (destRadius - sourceRadius) * t;
                         return Container(
+                          clipBehavior: Clip.antiAlias,
                           decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(
-                              PAppSize.s12 +
-                                  (PAppSize.s32 - PAppSize.s12) *
-                                      (1 - animation.value),
-                            ),
+                            borderRadius: BorderRadius.circular(radius),
                             image: DecorationImage(
                               image: AssetImage(highlight.image),
                               fit: BoxFit.cover,

@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:oldmutual_pensions_app/features/affluent/presentation/vm/affluent.vm.dart';
 import 'package:oldmutual_pensions_app/features/auth/auth.dart';
 import 'package:oldmutual_pensions_app/features/beneficiary/presentation/vm/beneficiary.vm.dart';
 import 'package:oldmutual_pensions_app/features/contribution.history/presentation/vm/contribution.history.vm.dart';
@@ -24,6 +25,7 @@ class InitialBinding implements Bindings {
     Get.lazyPut(() => PAuthVm(), fenix: true);
     Get.lazyPut(() => PTimerVm());
     Get.lazyPut(() => PHomeVm());
+    Get.lazyPut(() => PAffluentVm());
     Get.lazyPut(() => PPolicyVm());
     Get.lazyPut(() => PPensionVm());
     Get.lazyPut(() => PDashboardVm());
