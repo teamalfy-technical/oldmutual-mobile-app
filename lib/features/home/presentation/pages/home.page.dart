@@ -247,7 +247,7 @@ class PHomePage extends StatelessWidget {
 
                       PAppSize.s16.verticalSpace,
 
-                      if (user?.affluent == false) ...[
+                      if (user?.affluent == true) ...[
                         PAppSize.s16.verticalSpace,
                         // Quick Actions for Affluent Users
                         PSeeAllWidget(
