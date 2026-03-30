@@ -29,6 +29,7 @@ class PSecureStorage {
   // Storage keys
   // Non-sensitive data (stored in GetStorage)
   final String onboardingKey = 'onboarding';
+  final String _environmentKey = 'stored_environment_key';
 
   // Sensitive data (stored in FlutterSecureStorage)
   final String biometricKey = 'enabled_biometric_key';
@@ -50,30 +51,39 @@ class PSecureStorage {
 
   /// Initialize storage and perform migration if needed
   Future<void> init() async {
-    await _clearKeychainOnReinstallForTestMode();
+    await _clearOnEnvironmentChange();
     await _migrateToSecureStorage();
     await _migrateBiometricFlag();
     _biometricEnabled = await _readBiometricFlag();
   }
 
-  /// Clear all keychain data on fresh install/reinstall ONLY in test mode.
-  /// In production, keychain data (email, password, biometric flag) persists
-  /// across reinstalls so biometric users can continue seamlessly.
-  /// In test mode, we clear everything so testers always start fresh.
-  Future<void> _clearKeychainOnReinstallForTestMode() async {
-    if (!isTestMode) return;
+  /// Clear all cached credentials when the app switches between
+  /// dev and prod environments (e.g. installing a prod build over a dev build
+  /// from TestFlight/Internal Testing). Prevents stale test credentials
+  /// from being used against the production API.
+  Future<void> _clearOnEnvironmentChange() async {
+    final storedEnv = await _secureStorage.read(key: _environmentKey);
+    final currentEnv = Env.baseUrl;
 
-    const installedKey = 'has_been_installed';
-    final hasBeenInstalled = _storage.read(installedKey);
-    if (hasBeenInstalled != true) {
+    if (storedEnv == null) {
+      // One-time clear on first launch after this update.
+      // Ensures stale credentials from a previous environment are wiped.
       await _secureStorage.deleteAll();
       _biometricEnabled = false;
-      await _storage.write(installedKey, true);
       pensionAppLogger.i(
-        'Test mode fresh install detected — cleared all keychain data',
+        'First launch with env tracking — cleared credentials for fresh start',
+      );
+    } else if (storedEnv != currentEnv) {
+      await _secureStorage.deleteAll();
+      _biometricEnabled = false;
+      pensionAppLogger.i(
+        'Environment changed from $storedEnv to $currentEnv — cleared cached credentials',
       );
     }
+
+    await _secureStorage.write(key: _environmentKey, value: currentEnv);
   }
+
 
   /// Migrate the biometric enabled flag from GetStorage to FlutterSecureStorage.
   /// This ensures existing users don't lose their biometric setting after app updates,
