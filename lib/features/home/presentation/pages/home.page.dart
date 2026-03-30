@@ -247,7 +247,7 @@ class PHomePage extends StatelessWidget {
 
                       PAppSize.s16.verticalSpace,
 
-                      if (user?.affluent == true) ...[
+                      if (user?.affluent == false) ...[
                         PAppSize.s16.verticalSpace,
                         // Quick Actions for Affluent Users
                         PSeeAllWidget(
@@ -258,9 +258,10 @@ class PHomePage extends StatelessWidget {
                         PAppSize.s16.verticalSpace,
 
                         // Quick Access Grid
-                        GridView.count(
+                        PAnimatedGridView(
                           crossAxisCount: 2,
                           shrinkWrap: true,
+                          animateType: AnimateType.scaleOut,
                           physics: const NeverScrollableScrollPhysics(),
                           mainAxisSpacing: PAppSize.s20,
                           crossAxisSpacing: PAppSize.s20,
@@ -269,9 +270,13 @@ class PHomePage extends StatelessWidget {
                             QuickAccessCard(
                               icon: Assets.icons.financialInsight.svg(),
                               label: 'financial_insights'.tr,
-                              onTap: () => PHelperFunction.switchScreen(
-                                destination: Routes.financialInsightPage,
+                              onTap: () => PPopupDialog(context).warningMessage(
+                                title: 'coming_soon_title'.tr,
+                                message: 'coming_soon_msg'.tr,
                               ),
+                              // onTap: () => PHelperFunction.switchScreen(
+                              //   destination: Routes.financialInsightPage,
+                              // ),
                             ),
                             QuickAccessCard(
                               icon: Assets.icons.complimentaryServices.svg(),

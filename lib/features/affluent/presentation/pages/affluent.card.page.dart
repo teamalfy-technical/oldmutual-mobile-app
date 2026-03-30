@@ -10,7 +10,6 @@ import 'package:intl/intl.dart';
 import 'package:oldmutual_pensions_app/core/utils/utils.dart';
 import 'package:oldmutual_pensions_app/features/affluent/affluent.dart';
 import 'package:oldmutual_pensions_app/features/auth/auth.dart';
-import 'package:oldmutual_pensions_app/routes/app.pages.dart';
 import 'package:oldmutual_pensions_app/shared/shared.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:share_plus/share_plus.dart';
@@ -309,84 +308,84 @@ class _PAffluentCardPageState extends State<PAffluentCardPage> {
 
             PAppSize.s20.verticalSpace,
             // Bookmarked Articles Section
-            PSeeAllWidget(
-              leadingText: 'save_content'.tr,
+            // PSeeAllWidget(
+            //   leadingText: 'save_content'.tr,
 
-              onTap: () => PHelperFunction.switchScreen(
-                destination: Routes.saveContentPage,
-              ),
-            ),
+            //   onTap: () => PHelperFunction.switchScreen(
+            //     destination: Routes.saveContentPage,
+            //   ),
+            // ),
 
-            PAppSize.s4.verticalSpace,
+            // PAppSize.s4.verticalSpace,
 
-            Text(
-              'bookmarked_articles'.tr,
-              style: TextStyle(
-                fontSize: PAppSize.s14,
-                fontWeight: FontWeight.w500,
-              ),
-            ),
+            // Text(
+            //   'bookmarked_articles'.tr,
+            //   style: TextStyle(
+            //     fontSize: PAppSize.s14,
+            //     fontWeight: FontWeight.w500,
+            //   ),
+            // ),
 
-            PAppSize.s12.verticalSpace,
+            // PAppSize.s12.verticalSpace,
 
-            // Bookmarked Articles List
-            Obx(() {
-              if (vm.contentsLoading.value == LoadingState.loading &&
-                  vm.bookmarkedContents.isEmpty) {
-                return PShimmerWrapper(
-                  loading: true,
-                  child: _BookmarkedArticleCard(
-                    type: 'Article',
-                    duration: '5 mins read',
-                    title: 'Placeholder title here',
-                    description:
-                        'Placeholder description text goes here for shimmer',
-                  ),
-                );
-              }
+            // // Bookmarked Articles List
+            // Obx(() {
+            //   if (vm.contentsLoading.value == LoadingState.loading &&
+            //       vm.bookmarkedContents.isEmpty) {
+            //     return PShimmerWrapper(
+            //       loading: true,
+            //       child: _BookmarkedArticleCard(
+            //         type: 'Article',
+            //         duration: '5 mins read',
+            //         title: 'Placeholder title here',
+            //         description:
+            //             'Placeholder description text goes here for shimmer',
+            //       ),
+            //     );
+            //   }
 
-              if (vm.bookmarkedContents.isEmpty) {
-                return Center(
-                  child: Text(
-                    'no_saved_content'.tr,
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      fontSize: PAppSize.s14,
-                      fontWeight: FontWeight.w400,
-                    ),
-                  ),
-                );
-              }
+            //   if (vm.bookmarkedContents.isEmpty) {
+            //     return Center(
+            //       child: Text(
+            //         'no_saved_content'.tr,
+            //         textAlign: TextAlign.center,
+            //         style: TextStyle(
+            //           fontSize: PAppSize.s14,
+            //           fontWeight: FontWeight.w400,
+            //         ),
+            //       ),
+            //     );
+            //   }
 
-              return ListView.separated(
-                shrinkWrap: true,
-                physics: NeverScrollableScrollPhysics(),
-                itemCount: vm.bookmarkedContents.take(1).length,
-                separatorBuilder: (context, index) =>
-                    PAppSize.s12.verticalSpace,
-                itemBuilder: (context, index) {
-                  final bookmarked = vm.bookmarkedContents[index];
-                  final content = bookmarked.content;
-                  return _BookmarkedArticleCard(
-                    onTap: () {
-                      if (content != null) {
-                        PHelperFunction.switchScreen(
-                          destination: Routes.financialInsightDetailPage,
-                          args: content,
-                        );
-                      }
-                    },
-                    type: content?.contentType?.capitalizeFirst ?? '',
-                    duration:
-                        '${content?.duration ?? 'default_duration'.tr} read',
-                    title: content?.title ?? '',
-                    description: content?.description ?? '',
-                  );
-                },
-              );
-            }),
+            //   return ListView.separated(
+            //     shrinkWrap: true,
+            //     physics: NeverScrollableScrollPhysics(),
+            //     itemCount: vm.bookmarkedContents.take(1).length,
+            //     separatorBuilder: (context, index) =>
+            //         PAppSize.s12.verticalSpace,
+            //     itemBuilder: (context, index) {
+            //       final bookmarked = vm.bookmarkedContents[index];
+            //       final content = bookmarked.content;
+            //       return _BookmarkedArticleCard(
+            //         onTap: () {
+            //           if (content != null) {
+            //             PHelperFunction.switchScreen(
+            //               destination: Routes.financialInsightDetailPage,
+            //               args: content,
+            //             );
+            //           }
+            //         },
+            //         type: content?.contentType?.capitalizeFirst ?? '',
+            //         duration:
+            //             '${content?.duration ?? 'default_duration'.tr} read',
+            //         title: content?.title ?? '',
+            //         description: content?.description ?? '',
+            //       );
+            //     },
+            //   );
+            // }),
 
-            PAppSize.s20.verticalSpace,
+            // PAppSize.s20.verticalSpace,
 
             // PSeeAllWidget(
             //   leadingText: 'track_claims_text'.tr,

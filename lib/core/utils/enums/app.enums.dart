@@ -1,4 +1,11 @@
-enum AnimateType { slideLeft, slideUp, slideDown, slideRight }
+enum AnimateType {
+  slideLeft,
+  slideUp,
+  scaleIn,
+  scaleOut,
+  slideDown,
+  slideRight,
+}
 
 enum SlideDirection { leftToRight, rightToLeft }
 

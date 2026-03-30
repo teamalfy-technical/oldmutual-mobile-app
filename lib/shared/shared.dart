@@ -2,6 +2,7 @@ export 'pages/custom.loading.page.dart';
 export 'pages/custom.success.page.dart';
 export 'widgets/animated.checkmark.dart';
 export 'widgets/animated.column.dart';
+export 'widgets/animated.gridview.dart';
 export 'widgets/animated.listview.dart';
 export 'widgets/annotated.region.dart';
 export 'widgets/auth.link.button.dart';
