@@ -386,14 +386,14 @@ class PAuthVm extends GetxController {
                   ),
                   PAppSize.s16.verticalSpace,
                   Text(
-                    'Disclaimer',
+                    'disclaimer'.tr,
                     style: Theme.of(ctx).textTheme.titleLarge?.copyWith(
                       fontWeight: FontWeight.w600,
                     ),
                   ),
                   PAppSize.s8.verticalSpace,
                   Text(
-                    'Please note that the reported returns reflect the performance of equities and other underlying assets of the fund. Subsequent returns may either follow a similar trend or diverge, depending on prevailing market conditions.',
+                    'disclaimer_message'.tr,
                     textAlign: TextAlign.center,
                     style: Theme.of(ctx).textTheme.bodyMedium?.copyWith(
                       fontSize: PAppSize.s14.sp,
@@ -401,7 +401,7 @@ class PAuthVm extends GetxController {
                   ),
                   PAppSize.s24.verticalSpace,
                   PGradientButton(
-                    label: 'I UNDERSTAND',
+                    label: 'i_understand'.tr,
                     showIcon: false,
                     width: PDeviceUtil.getDeviceWidth(ctx),
                     onTap: () async {
