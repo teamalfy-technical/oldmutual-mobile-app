@@ -41,6 +41,7 @@ class PSecureStorage {
   final String deviceTokenKey = 'secure_device_token_key';
   final String biometricPasswordKey = 'secure_biometric_password_key';
   final String otpRefKey = 'otp_ref_key';
+  final String disclaimerAcknowledgedKey = 'disclaimer_acknowledged_key';
 
   bool _migrationCompleted = false;
   bool _biometricEnabled = false;
@@ -186,6 +187,14 @@ class PSecureStorage {
 
   /// Check if biometric authentication is enabled (cached, synchronous)
   bool get isBiometricEnabled => _biometricEnabled;
+
+  /// Save disclaimer acknowledged flag
+  Future<void> saveDisclaimerAcknowledged(bool value) async =>
+      await _storage.write(disclaimerAcknowledgedKey, value);
+
+  /// Check if disclaimer has been acknowledged
+  bool get isDisclaimerAcknowledged =>
+      _storage.read<bool>(disclaimerAcknowledgedKey) ?? false;
 
   // ========== SENSITIVE DATA METHODS (FlutterSecureStorage) ==========
 

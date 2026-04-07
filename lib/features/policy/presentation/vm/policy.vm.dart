@@ -132,7 +132,7 @@ class PPolicyVm extends GetxController {
           : double.parse(amountTEC.text),
       claimDefaultMomoWallet: accountNumberTEC.text,
       claimDefaultTelcomethod: selectedPaymentMethod?.code ?? '',
-      currentCashValue: selectedPolicy?.cashValue ?? 0,
+      currentCashValue: selectedPolicy?.availableBalance ?? 0,
       policyNumber: selectedPolicy?.policyNo ?? '',
     );
     result.fold(
