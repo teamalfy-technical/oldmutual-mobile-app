@@ -23,7 +23,9 @@ abstract class PolicyDs {
   Future<ApiResponse<PolicyReport>> checkPolicyReportDownloadStatus({
     required String reportId,
   });
-  Future<ApiResponse<List<PolicyReport>>> getPolicyReports({String? policyNumber});
+  Future<ApiResponse<List<PolicyReport>>> getPolicyReports({
+    String? policyNumber,
+  });
   Future<ApiResponse<Map<String, dynamic>>> downloadInvestmentStatement({
     required String policyNumber,
   });
@@ -34,11 +36,13 @@ abstract class PolicyDs {
     required String policyNumber,
   });
   Future<ApiResponse<List<PaymentMethod>>> getPaymentMethods();
-  Future<ApiResponse<List<Message>>> submitClaimRequest({
+  Future<ApiResponse<List<WithdrawalReason>>> getWithdrawalReasons();
+  Future<ApiResponse<List<Message>>> submitInstantClaimRequest({
     required String policyNumber,
     required double currentCashValue,
     required double claimAmount,
     required String claimDefaultTelcomethod,
     required String claimDefaultMomoWallet,
+    required int withdrawalPurpose,
   });
 }

@@ -29,7 +29,9 @@ class PolicyServiceImpl implements PolicyService {
   }
 
   @override
-  Future<Either<PFailure, ApiResponse<List<PolicyReport>>>> getPolicyReports({String? policyNumber}) {
+  Future<Either<PFailure, ApiResponse<List<PolicyReport>>>> getPolicyReports({
+    String? policyNumber,
+  }) {
     return policyRepo.getPolicyReports(policyNumber: policyNumber);
   }
 
@@ -98,19 +100,28 @@ class PolicyServiceImpl implements PolicyService {
   }
 
   @override
-  Future<Either<PFailure, ApiResponse<List<Message>>>> submitClaimRequest({
+  Future<Either<PFailure, ApiResponse<List<WithdrawalReason>>>>
+  getWithdrawalReasons() {
+    return policyRepo.getWithdrawalReasons();
+  }
+
+  @override
+  Future<Either<PFailure, ApiResponse<List<Message>>>>
+  submitInstantClaimRequest({
     required String policyNumber,
     required double currentCashValue,
     required double claimAmount,
     required String claimDefaultTelcomethod,
     required String claimDefaultMomoWallet,
+    required int withdrawalPurpose,
   }) {
-    return policyRepo.submitClaimRequest(
+    return policyRepo.submitInstantClaimRequest(
       policyNumber: policyNumber,
       currentCashValue: currentCashValue,
       claimAmount: claimAmount,
       claimDefaultTelcomethod: claimDefaultTelcomethod,
       claimDefaultMomoWallet: claimDefaultMomoWallet,
+      withdrawalPurpose: withdrawalPurpose,
     );
   }
 }

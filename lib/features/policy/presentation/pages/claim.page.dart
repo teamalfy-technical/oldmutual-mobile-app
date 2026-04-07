@@ -21,9 +21,10 @@ class _PClaimPageState extends State<PClaimPage> {
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance.addPostFrameCallback(
-      (_) => ctrl.getPaymentMethods(),
-    );
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      ctrl.getPaymentMethods();
+      ctrl.getWithdrawalReasons();
+    });
   }
 
   @override
@@ -57,22 +58,6 @@ class _PClaimPageState extends State<PClaimPage> {
 
                 PAppSize.s10.verticalSpace,
 
-                PKeyboardActions(
-                  focusNode: _amountFocusNode,
-                  child: PCustomTextField(
-                    labelText: 'withdrawal_amount'.tr,
-                    hintText: 'claim_amount_hint'.tr,
-                    controller: ctrl.amountTEC,
-                    focusNode: _amountFocusNode,
-                    textInputType: TextInputType.number,
-                    validator: PValidator.validateClaimAmount(
-                      ctrl.selectedPolicy?.availableBalance ?? 0,
-                    ),
-                  ),
-                ),
-
-                PAppSize.s20.verticalSpace,
-
                 GetBuilder<PPolicyVm>(
                   builder: (ctrl) {
                     // Remove duplicates and skip placeholder
@@ -95,6 +80,42 @@ class _PClaimPageState extends State<PClaimPage> {
                           .toList(),
                     );
                   },
+                ),
+
+                PAppSize.s20.verticalSpace,
+
+                GetBuilder<PPolicyVm>(
+                  builder: (ctrl) {
+                    return PCustomDropdownField<WithdrawalReason>(
+                      labelText: 'withdrawal_purpose'.tr,
+                      initialValue: ctrl.selectedWithdrawalReason,
+                      onChanged: ctrl.onWithdrawalReasonChanged,
+                      items: ctrl.withdrawalReasons
+                          .map(
+                            (reason) => DropdownMenuItem<WithdrawalReason>(
+                              value: reason,
+                              child: Text(reason.description ?? ''),
+                            ),
+                          )
+                          .toList(),
+                    );
+                  },
+                ),
+
+                PAppSize.s20.verticalSpace,
+
+                PKeyboardActions(
+                  focusNode: _amountFocusNode,
+                  child: PCustomTextField(
+                    labelText: 'withdrawal_amount'.tr,
+                    hintText: 'claim_amount_hint'.tr,
+                    controller: ctrl.amountTEC,
+                    focusNode: _amountFocusNode,
+                    textInputType: TextInputType.number,
+                    validator: PValidator.validateClaimAmount(
+                      ctrl.selectedPolicy?.availableBalance ?? 0,
+                    ),
+                  ),
                 ),
 
                 PAppSize.s20.verticalSpace,
@@ -123,7 +144,7 @@ class _PClaimPageState extends State<PClaimPage> {
                     width: PDeviceUtil.getDeviceWidth(context),
                     onTap: () {
                       if (ctrl.claimFormKey.currentState!.validate()) {
-                        ctrl.submitClaimRequest();
+                        ctrl.submitInstantClaimRequest();
                       }
                     },
                   ),
