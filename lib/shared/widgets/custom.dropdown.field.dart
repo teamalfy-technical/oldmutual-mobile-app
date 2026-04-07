@@ -21,6 +21,7 @@ class PCustomDropdownField<T> extends StatelessWidget {
       dropdownColor: PHelperFunction.isDarkMode(context)
           ? PAppColor.cardDarkColor
           : PAppColor.whiteColor,
+      menuMaxHeight: PDeviceUtil.getDeviceHeight(context) * 0.30,
       decoration: InputDecoration(labelText: labelText),
       initialValue: initialValue,
       onChanged: onChanged,

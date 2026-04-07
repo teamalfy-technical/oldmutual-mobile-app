@@ -13,6 +13,7 @@ export 'domain/models/policy.model.dart';
 export 'domain/models/policy.report.model.dart';
 export 'domain/models/policy.summary.model.dart';
 export 'domain/models/policy.transaction.model.dart';
+export 'domain/models/withdrawal.reason.model.dart';
 export 'presentation/pages/policy.detail.page.dart';
 export 'presentation/pages/policy.overview.page.dart';
 export 'presentation/pages/policy.page.dart';
