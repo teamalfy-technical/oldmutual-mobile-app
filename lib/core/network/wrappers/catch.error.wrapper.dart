@@ -121,8 +121,18 @@ class CatchApiErrorWrapperImpl implements CatchApiErrorWrapper {
   }
 
   String extractError(Map<String, dynamic> response) {
-    pensionAppLogger.e(response);
-    if (response.containsKey("data")) {
+    if (response.containsKey('message')) {
+      final message = response['message'];
+      if (message is Map) {
+        if (message.containsKey('Current_cash_value')) {
+          return message['Current_cash_value'][0];
+        }
+        return message['message'] ?? "Bad Request";
+        // pensionAppLogger.e('Error: ${message['Current_cash_value'][0]}');
+      } else if (message is String) {
+        return message;
+      }
+    } else if (response.containsKey("data")) {
       for (var entry in response["data"].entries) {
         if (entry.value is List && entry.value.isNotEmpty) {
           return entry.value.first; // Return the first error message found
@@ -131,15 +141,8 @@ class CatchApiErrorWrapperImpl implements CatchApiErrorWrapper {
           return entry.value; // Return the error message found
         }
       }
-    } else if (response.containsKey("error")) {
+    } else if (response.containsKey('error')) {
       return response['error'];
-    } else if (response.containsKey("message")) {
-      final message = response['message'];
-      if (message is Map) {
-        return message['message'] ?? "Bad Request";
-      } else if (message is String) {
-        return message;
-      }
     } else {
       for (var entry in response.entries) {
         if (entry.value is List && entry.value.isNotEmpty) {

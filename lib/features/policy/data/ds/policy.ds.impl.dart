@@ -265,25 +265,42 @@ class PolicyDsImpl implements PolicyDs {
   }
 
   @override
-  Future<ApiResponse<List<Message>>> submitClaimRequest({
+  Future<ApiResponse<List<WithdrawalReason>>> getWithdrawalReasons() async {
+    return await asyncFunctionWrapper.handleAsyncNetworkCall(() async {
+      final res = await apiService.callService(
+        requestType: RequestType.get,
+        endPoint: Env.getWithdrawalReasons,
+      );
+      return ApiResponse<List<WithdrawalReason>>.fromJson(
+        res,
+        (data) =>
+            (data as List).map((e) => WithdrawalReason.fromJson(e)).toList(),
+      );
+    });
+  }
+
+  @override
+  Future<ApiResponse<List<Message>>> submitInstantClaimRequest({
     required String policyNumber,
     required double currentCashValue,
     required double claimAmount,
     required String claimDefaultTelcomethod,
     required String claimDefaultMomoWallet,
+    required int withdrawalPurpose,
   }) async {
     return await asyncFunctionWrapper.handleAsyncNetworkCall(() async {
       final payload = dio.FormData.fromMap({
         'policy_number': policyNumber,
-        'CurrentCashValue': currentCashValue,
+        'Current_cash_value': currentCashValue,
         'claim_amount': claimAmount,
         'claim_default_telcomethod': claimDefaultTelcomethod,
         'claim_default_momo_wallet': claimDefaultMomoWallet,
+        'withdrawal_purpose': withdrawalPurpose,
       });
       final res = await apiService.callService(
         requestType: RequestType.post,
         payload: payload,
-        endPoint: Env.submitClaimRequest,
+        endPoint: Env.submitInstantClaimRequest,
       );
       return ApiResponse<List<Message>>.fromJson(
         res,

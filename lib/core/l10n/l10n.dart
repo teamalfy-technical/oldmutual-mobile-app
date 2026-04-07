@@ -88,6 +88,7 @@ class AppTranslations extends Translations {
       'momo_wallet_number': 'MOMO Wallet Number',
       'withdrawal_amount': 'Withdrawal Amount',
       'payment_method': 'Payment Method',
+      'withdrawal_purpose': 'Withdrawal Purpose',
       'supportive_text': 'Supportive text',
       'password_special_char_msg': '1 special character & 1 number',
       'beneficiaries_tag': 'Contact @phone for any detail changes',
