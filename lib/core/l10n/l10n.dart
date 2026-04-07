@@ -257,6 +257,10 @@ class AppTranslations extends Translations {
       'call_support': 'Call Support',
       'email_support': 'Email Support',
       'disclaimers': 'Disclaimers',
+      'disclaimer': 'Disclaimer',
+      'disclaimer_message':
+          'Please note that the reported returns reflect the performance of equities and other underlying assets of the fund. Subsequent returns may either follow a similar trend or diverge, depending on prevailing market conditions.',
+      'i_understand': 'I UNDERSTAND',
       'manage_ur_personal_details': 'Manage your personal details',
       'slide_one_title': 'Secure Your Future \nwith Ease',
       'slide_one_desc':

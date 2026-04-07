@@ -341,10 +341,83 @@ class PAuthVm extends GetxController {
     //   context,
     // ).successMessage(title: 'success'.tr, message: res.message ?? '');
 
-    // Prompt user to enable biometric login if not already set up
-    if (shouldPromptBiometric) {
+    // Show disclaimer first if not yet acknowledged, then biometric prompt
+    final shouldShowDisclaimer = !PSecureStorage().isDisclaimerAcknowledged;
+
+    if (shouldShowDisclaimer) {
+      _showDisclaimerPrompt(
+        onAcknowledged: () {
+          if (shouldPromptBiometric) {
+            _showBiometricSetupPrompt(password);
+          }
+        },
+      );
+    } else if (shouldPromptBiometric) {
       _showBiometricSetupPrompt(password);
     }
+  }
+
+  /// Show a disclaimer bottom sheet about reported returns
+  void _showDisclaimerPrompt({VoidCallback? onAcknowledged}) {
+    Future.delayed(const Duration(seconds: 2), () {
+      showModalBottomSheet(
+        context: context,
+        isDismissible: false,
+        enableDrag: false,
+        backgroundColor: PHelperFunction.isDarkMode(context)
+            ? PAppColor.darkAppBarColor
+            : PAppColor.whiteColor,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(PAppSize.s24),
+        ),
+        builder: (ctx) {
+          return SafeArea(
+            child: Padding(
+              padding: EdgeInsets.symmetric(
+                horizontal: PAppSize.s20,
+                vertical: PAppSize.s10,
+              ),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Assets.icons.infoIcon.svg(
+                    height: PAppSize.s44,
+                    color: PAppColor.primary,
+                  ),
+                  PAppSize.s16.verticalSpace,
+                  Text(
+                    'disclaimer'.tr,
+                    style: Theme.of(ctx).textTheme.titleLarge?.copyWith(
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                  PAppSize.s8.verticalSpace,
+                  Text(
+                    'disclaimer_message'.tr,
+                    textAlign: TextAlign.center,
+                    style: Theme.of(ctx).textTheme.bodyMedium?.copyWith(
+                      fontSize: PAppSize.s14.sp,
+                    ),
+                  ),
+                  PAppSize.s24.verticalSpace,
+                  PGradientButton(
+                    label: 'i_understand'.tr,
+                    showIcon: false,
+                    width: PDeviceUtil.getDeviceWidth(ctx),
+                    onTap: () async {
+                      Navigator.of(ctx).pop();
+                      await PSecureStorage().saveDisclaimerAcknowledged(true);
+                      onAcknowledged?.call();
+                    },
+                  ),
+                  PAppSize.s4.verticalSpace,
+                ],
+              ),
+            ),
+          );
+        },
+      );
+    });
   }
 
   /// Show a bottom sheet prompting the user to enable biometric authentication
