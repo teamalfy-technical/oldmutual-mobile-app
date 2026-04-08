@@ -371,47 +371,50 @@ class PAuthVm extends GetxController {
           borderRadius: BorderRadius.circular(PAppSize.s24),
         ),
         builder: (ctx) {
-          return SafeArea(
-            child: Padding(
-              padding: EdgeInsets.symmetric(
-                horizontal: PAppSize.s20,
-                vertical: PAppSize.s10,
-              ),
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Assets.icons.infoIcon.svg(
-                    height: PAppSize.s44,
-                    color: PAppColor.primary,
-                  ),
-                  PAppSize.s16.verticalSpace,
-                  Text(
-                    'disclaimer'.tr,
-                    style: Theme.of(ctx).textTheme.titleLarge?.copyWith(
-                      fontWeight: FontWeight.w600,
+          return PopScope(
+            canPop: false,
+            child: SafeArea(
+              child: Padding(
+                padding: EdgeInsets.symmetric(
+                  horizontal: PAppSize.s20,
+                  vertical: PAppSize.s10,
+                ),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Assets.icons.infoIcon.svg(
+                      height: PAppSize.s44,
+                      color: PAppColor.primary,
                     ),
-                  ),
-                  PAppSize.s8.verticalSpace,
-                  Text(
-                    'disclaimer_message'.tr,
-                    textAlign: TextAlign.center,
-                    style: Theme.of(ctx).textTheme.bodyMedium?.copyWith(
-                      fontSize: PAppSize.s14.sp,
+                    PAppSize.s16.verticalSpace,
+                    Text(
+                      'disclaimer'.tr,
+                      style: Theme.of(ctx).textTheme.titleLarge?.copyWith(
+                        fontWeight: FontWeight.w600,
+                      ),
                     ),
-                  ),
-                  PAppSize.s24.verticalSpace,
-                  PGradientButton(
-                    label: 'i_understand'.tr,
-                    showIcon: false,
-                    width: PDeviceUtil.getDeviceWidth(ctx),
-                    onTap: () async {
-                      Navigator.of(ctx).pop();
-                      await PSecureStorage().saveDisclaimerAcknowledged(true);
-                      onAcknowledged?.call();
-                    },
-                  ),
-                  PAppSize.s4.verticalSpace,
-                ],
+                    PAppSize.s8.verticalSpace,
+                    Text(
+                      'disclaimer_message'.tr,
+                      textAlign: TextAlign.center,
+                      style: Theme.of(ctx).textTheme.bodyMedium?.copyWith(
+                        fontSize: PAppSize.s14.sp,
+                      ),
+                    ),
+                    PAppSize.s24.verticalSpace,
+                    PGradientButton(
+                      label: 'i_understand'.tr,
+                      showIcon: false,
+                      width: PDeviceUtil.getDeviceWidth(ctx),
+                      onTap: () async {
+                        Navigator.of(ctx).pop();
+                        await PSecureStorage().saveDisclaimerAcknowledged(true);
+                        onAcknowledged?.call();
+                      },
+                    ),
+                    PAppSize.s4.verticalSpace,
+                  ],
+                ),
               ),
             ),
           );
