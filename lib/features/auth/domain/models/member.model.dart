@@ -1,4 +1,5 @@
 import 'package:equatable/equatable.dart';
+
 // ignore: must_be_immutable
 class Member extends Equatable {
   String? token;
@@ -160,7 +161,6 @@ class Member extends Equatable {
     updatedAt = json['updated_at'];
   }
 
-  
   @override
   List<Object?> get props => [id, memberNumber, ghanaCardNumber];
 
