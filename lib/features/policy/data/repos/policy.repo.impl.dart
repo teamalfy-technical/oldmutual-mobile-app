@@ -87,10 +87,12 @@ class PolicyRepoImpl implements PolicyRepo {
   }
 
   @override
-  Future<Either<PFailure, ApiResponse<List<PolicyReport>>>>
-  getPolicyReports({String? policyNumber}) async {
+  Future<Either<PFailure, ApiResponse<List<PolicyReport>>>> getPolicyReports({
+    String? policyNumber,
+  }) async {
     return await customRepositoryWrapper.wrapRepositoryFunction(
-      function: () async => await policyDs.getPolicyReports(policyNumber: policyNumber),
+      function: () async =>
+          await policyDs.getPolicyReports(policyNumber: policyNumber),
     );
   }
 
@@ -131,20 +133,31 @@ class PolicyRepoImpl implements PolicyRepo {
   }
 
   @override
-  Future<Either<PFailure, ApiResponse<List<Message>>>> submitClaimRequest({
+  Future<Either<PFailure, ApiResponse<List<WithdrawalReason>>>>
+  getWithdrawalReasons() async {
+    return await customRepositoryWrapper.wrapRepositoryFunction(
+      function: () async => await policyDs.getWithdrawalReasons(),
+    );
+  }
+
+  @override
+  Future<Either<PFailure, ApiResponse<List<Message>>>>
+  submitInstantClaimRequest({
     required String policyNumber,
     required double currentCashValue,
     required double claimAmount,
     required String claimDefaultTelcomethod,
     required String claimDefaultMomoWallet,
+    required int withdrawalPurpose,
   }) async {
     return await customRepositoryWrapper.wrapRepositoryFunction(
-      function: () async => await policyDs.submitClaimRequest(
+      function: () async => await policyDs.submitInstantClaimRequest(
         policyNumber: policyNumber,
         currentCashValue: currentCashValue,
         claimAmount: claimAmount,
         claimDefaultTelcomethod: claimDefaultTelcomethod,
         claimDefaultMomoWallet: claimDefaultMomoWallet,
+        withdrawalPurpose: withdrawalPurpose,
       ),
     );
   }

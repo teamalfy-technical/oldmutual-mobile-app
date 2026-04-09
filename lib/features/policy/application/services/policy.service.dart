@@ -31,7 +31,9 @@ abstract class PolicyService {
   });
   Future<Either<PFailure, ApiResponse<PolicyReport>>>
   checkPolicyReportDownloadStatus({required String reportId});
-  Future<Either<PFailure, ApiResponse<List<PolicyReport>>>> getPolicyReports({String? policyNumber});
+  Future<Either<PFailure, ApiResponse<List<PolicyReport>>>> getPolicyReports({
+    String? policyNumber,
+  });
   Future<Either<PFailure, ApiResponse<Map<String, dynamic>>>>
   downloadInvestmentStatement({required String policyNumber});
   Future<Either<PFailure, ApiResponse<Map<String, dynamic>>>>
@@ -40,11 +42,15 @@ abstract class PolicyService {
   downloadPolicyStatement({required String policyNumber});
   Future<Either<PFailure, ApiResponse<List<PaymentMethod>>>>
   getPaymentMethods();
-  Future<Either<PFailure, ApiResponse<List<Message>>>> submitClaimRequest({
+  Future<Either<PFailure, ApiResponse<List<WithdrawalReason>>>>
+  getWithdrawalReasons();
+  Future<Either<PFailure, ApiResponse<List<Message>>>>
+  submitInstantClaimRequest({
     required String policyNumber,
     required double currentCashValue,
     required double claimAmount,
     required String claimDefaultTelcomethod,
     required String claimDefaultMomoWallet,
+    required int withdrawalPurpose,
   });
 }

@@ -395,9 +395,14 @@ abstract class Env {
   @EnviedField(defaultValue: '/policy/telco/pay-methods', obfuscate: true)
   static final String getPaymentMethods = _Env.getPaymentMethods;
 
+  /// [GetWithdrawalReasons] endpoint
+  @EnviedField(defaultValue: '/policy/withdrawal-reasons', obfuscate: true)
+  static final String getWithdrawalReasons = _Env.getWithdrawalReasons;
+
   /// [SubmitClaimRequest] endpoint
-  @EnviedField(defaultValue: '/policy/claim-request', obfuscate: true)
-  static final String submitClaimRequest = _Env.submitClaimRequest;
+  @EnviedField(defaultValue: '/policy/instant-claim-request', obfuscate: true)
+  static final String submitInstantClaimRequest =
+      _Env.submitInstantClaimRequest;
 
   /// -------------------- Policies Endpoints Ends Here ------------------------- ///
   ///

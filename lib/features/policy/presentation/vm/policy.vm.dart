@@ -33,8 +33,10 @@ class PPolicyVm extends GetxController {
   var products = <Map<String, dynamic>>[].obs;
 
   var paymentMethods = <PaymentMethod>[].obs;
+  var withdrawalReasons = <WithdrawalReason>[].obs;
 
   PaymentMethod? selectedPaymentMethod;
+  WithdrawalReason? selectedWithdrawalReason;
   Policy? selectedPolicy;
 
   var summary = PolicySummary().obs;
@@ -70,6 +72,11 @@ class PPolicyVm extends GetxController {
 
   onPaymentMethodChanged(value) {
     selectedPaymentMethod = value;
+    update();
+  }
+
+  onWithdrawalReasonChanged(value) {
+    selectedWithdrawalReason = value;
     update();
   }
 
@@ -122,18 +129,38 @@ class PPolicyVm extends GetxController {
     );
   }
 
-  /// Function to get all schemes or retail
-  Future<void> submitClaimRequest() async {
+  /// Function to get all withdrawal reasons
+  Future<void> getWithdrawalReasons() async {
+    updateLoadingState(LoadingState.loading);
+    final result = await policyService.getWithdrawalReasons();
+    result.fold(
+      (err) {
+        updateLoadingState(LoadingState.error);
+        PPopupDialog(
+          context,
+        ).errorMessage(title: err.title ?? 'error'.tr, message: err.message);
+      },
+      (res) async {
+        updateLoadingState(LoadingState.completed);
+        withdrawalReasons.value = res.data ?? [];
+        update();
+      },
+    );
+  }
+
+  /// Function to submit instant claim request
+  Future<void> submitInstantClaimRequest() async {
     submitting(LoadingState.loading);
 
-    final result = await policyService.submitClaimRequest(
+    final result = await policyService.submitInstantClaimRequest(
       claimAmount: amountTEC.text.trim().isEmpty
           ? 0.0
           : double.parse(amountTEC.text),
       claimDefaultMomoWallet: accountNumberTEC.text,
       claimDefaultTelcomethod: selectedPaymentMethod?.code ?? '',
-      currentCashValue: selectedPolicy?.cashValue ?? 0,
+      currentCashValue: selectedPolicy?.availableBalance ?? 0,
       policyNumber: selectedPolicy?.policyNo ?? '',
+      withdrawalPurpose: selectedWithdrawalReason?.id ?? 0,
     );
     result.fold(
       (err) {
