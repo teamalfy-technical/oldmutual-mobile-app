@@ -44,8 +44,7 @@ abstract class PolicyService {
   getPaymentMethods();
   Future<Either<PFailure, ApiResponse<List<WithdrawalReason>>>>
   getWithdrawalReasons();
-  Future<Either<PFailure, ApiResponse<List<Message>>>>
-  submitInstantClaimRequest({
+  Future<Either<PFailure, ApiResponse<Message>>> submitInstantClaimRequest({
     required String policyNumber,
     required double currentCashValue,
     required double claimAmount,

@@ -142,6 +142,7 @@ class AppTranslations extends Translations {
       'certificate': 'Certificate',
       'withdrawal': 'Withdrawal',
       'or': 'or',
+      'sorry': 'Sorry',
       'downloading_msg': 'Downloading.\nPlease wait...',
       'download_complete': 'Download complete',
       'server_error_title': 'Something Went Wrong',

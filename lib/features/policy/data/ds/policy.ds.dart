@@ -37,7 +37,7 @@ abstract class PolicyDs {
   });
   Future<ApiResponse<List<PaymentMethod>>> getPaymentMethods();
   Future<ApiResponse<List<WithdrawalReason>>> getWithdrawalReasons();
-  Future<ApiResponse<List<Message>>> submitInstantClaimRequest({
+  Future<ApiResponse<Message>> submitInstantClaimRequest({
     required String policyNumber,
     required double currentCashValue,
     required double claimAmount,
