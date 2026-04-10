@@ -280,7 +280,7 @@ class PolicyDsImpl implements PolicyDs {
   }
 
   @override
-  Future<ApiResponse<List<Message>>> submitInstantClaimRequest({
+  Future<ApiResponse<Message>> submitInstantClaimRequest({
     required String policyNumber,
     required double currentCashValue,
     required double claimAmount,
@@ -302,10 +302,12 @@ class PolicyDsImpl implements PolicyDs {
         payload: payload,
         endPoint: Env.submitInstantClaimRequest,
       );
-      return ApiResponse<List<Message>>.fromJson(
-        res,
-        (data) => (data as List).map((e) => Message.fromJson(e)).toList(),
-      );
+      return ApiResponse<Message>.fromJson(res, (data) {
+        if (data is Map<String, dynamic>) {
+          return Message.fromJson(data);
+        }
+        return Message(success: true, message: res['message'] ?? res['data']);
+      });
     });
   }
 }

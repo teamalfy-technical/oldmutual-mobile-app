@@ -173,6 +173,16 @@ class PPolicyVm extends GetxController {
       (res) async {
         submitting(LoadingState.completed);
 
+        /// Backend may wrap a failure inside a successful envelope:
+        /// { success: true, data: { success: false, message: "..." } }
+        if (res.data?.success == false) {
+          PPopupDialog(context).warningMessage(
+            title: 'sorry'.tr,
+            message: res.data?.message ?? 'error_occurred_msg'.tr,
+          );
+          return;
+        }
+
         /// Navigate to success page
         navigateToSuccessPage();
       },

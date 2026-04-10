@@ -121,6 +121,7 @@ class CatchApiErrorWrapperImpl implements CatchApiErrorWrapper {
   }
 
   String extractError(Map<String, dynamic> response) {
+    // pensionAppLogger.e('Response: $response');
     if (response.containsKey('message')) {
       final message = response['message'];
       if (message is Map) {
@@ -132,13 +133,19 @@ class CatchApiErrorWrapperImpl implements CatchApiErrorWrapper {
       } else if (message is String) {
         return message;
       }
-    } else if (response.containsKey("data")) {
-      for (var entry in response["data"].entries) {
-        if (entry.value is List && entry.value.isNotEmpty) {
-          return entry.value.first; // Return the first error message found
-        }
-        if (entry.value is String && entry.value.isNotEmpty) {
-          return entry.value; // Return the error message found
+    }
+    if (response.containsKey("data")) {
+      pensionAppLogger.e('Response: $response');
+      if (response["data"] is String) {
+        return response["data"];
+      } else {
+        for (var entry in response["data"].entries) {
+          if (entry.value is List && entry.value.isNotEmpty) {
+            return entry.value.first; // Return the first error message found
+          }
+          if (entry.value is String && entry.value.isNotEmpty) {
+            return entry.value; // Return the error message found
+          }
         }
       }
     } else if (response.containsKey('error')) {

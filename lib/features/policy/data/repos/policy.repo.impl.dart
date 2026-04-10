@@ -141,8 +141,7 @@ class PolicyRepoImpl implements PolicyRepo {
   }
 
   @override
-  Future<Either<PFailure, ApiResponse<List<Message>>>>
-  submitInstantClaimRequest({
+  Future<Either<PFailure, ApiResponse<Message>>> submitInstantClaimRequest({
     required String policyNumber,
     required double currentCashValue,
     required double claimAmount,
