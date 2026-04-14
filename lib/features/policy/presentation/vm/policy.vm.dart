@@ -1,9 +1,7 @@
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:oldmutual_pensions_app/core/utils/utils.dart';
 import 'package:oldmutual_pensions_app/features/pension/pension.dart';
 import 'package:oldmutual_pensions_app/features/policy/policy.dart';
-import 'package:oldmutual_pensions_app/routes/app.pages.dart';
 import 'package:oldmutual_pensions_app/shared/shared.dart';
 
 final activeStatuses = {
@@ -24,27 +22,15 @@ class PPolicyVm extends GetxController {
   var inactivePolicies = <Policy>[].obs;
   // var lapsedPolicies = <Policy>[].obs;
 
-  final claimFormKey = GlobalKey<FormState>();
-
-  final amountTEC = TextEditingController();
-  final accountNumberTEC = TextEditingController();
-
   // var schemes = <Scheme>[].obs;
   var products = <Map<String, dynamic>>[].obs;
 
-  var paymentMethods = <PaymentMethod>[].obs;
-  var withdrawalReasons = <WithdrawalReason>[].obs;
-
-  PaymentMethod? selectedPaymentMethod;
-  WithdrawalReason? selectedWithdrawalReason;
   Policy? selectedPolicy;
 
   var summary = PolicySummary().obs;
   // var pensionSummary = PensionSummary().obs;
 
   var loading = LoadingState.completed.obs;
-  var submitting = LoadingState.completed.obs;
-
   /// Flag to track if policies have been fetched at least once
   var _hasFetchedPolicies = false;
 
@@ -68,16 +54,6 @@ class PPolicyVm extends GetxController {
   void onInit() {
     getPolicySummary();
     super.onInit();
-  }
-
-  onPaymentMethodChanged(value) {
-    selectedPaymentMethod = value;
-    update();
-  }
-
-  onWithdrawalReasonChanged(value) {
-    selectedWithdrawalReason = value;
-    update();
   }
 
   /// Function to get all schemes or retail
@@ -109,85 +85,6 @@ class PPolicyVm extends GetxController {
     );
   }
 
-  /// Function to get all payment methods
-  Future<void> getPaymentMethods() async {
-    updateLoadingState(LoadingState.loading);
-    final result = await policyService.getPaymentMethods();
-    result.fold(
-      (err) {
-        updateLoadingState(LoadingState.error);
-        PPopupDialog(
-          context,
-        ).errorMessage(title: err.title ?? 'error'.tr, message: err.message);
-      },
-      (res) async {
-        updateLoadingState(LoadingState.completed);
-        paymentMethods.value = res.data ?? [];
-        pensionAppLogger.d(paymentMethods.map((e) => e.toJson()));
-        update();
-      },
-    );
-  }
-
-  /// Function to get all withdrawal reasons
-  Future<void> getWithdrawalReasons() async {
-    updateLoadingState(LoadingState.loading);
-    final result = await policyService.getWithdrawalReasons();
-    result.fold(
-      (err) {
-        updateLoadingState(LoadingState.error);
-        PPopupDialog(
-          context,
-        ).errorMessage(title: err.title ?? 'error'.tr, message: err.message);
-      },
-      (res) async {
-        updateLoadingState(LoadingState.completed);
-        withdrawalReasons.value = res.data ?? [];
-        update();
-      },
-    );
-  }
-
-  /// Function to submit instant claim request
-  Future<void> submitInstantClaimRequest() async {
-    submitting(LoadingState.loading);
-
-    final result = await policyService.submitInstantClaimRequest(
-      claimAmount: amountTEC.text.trim().isEmpty
-          ? 0.0
-          : double.parse(amountTEC.text),
-      claimDefaultMomoWallet: accountNumberTEC.text,
-      claimDefaultTelcomethod: selectedPaymentMethod?.code ?? '',
-      currentCashValue: selectedPolicy?.availableBalance ?? 0,
-      policyNumber: selectedPolicy?.policyNo ?? '',
-      withdrawalPurpose: selectedWithdrawalReason?.id ?? 0,
-    );
-    result.fold(
-      (err) {
-        submitting(LoadingState.error);
-
-        PPopupDialog(
-          context,
-        ).errorMessage(title: err.title ?? 'error'.tr, message: err.message);
-      },
-      (res) async {
-        submitting(LoadingState.completed);
-
-        /// Backend may wrap a failure inside a successful envelope:
-        /// { success: true, data: { success: false, message: "..." } }
-        if (res.data?.success == false) {
-          PPopupDialog(context).warningMessage(
-            title: 'sorry'.tr,
-            message: res.data?.message ?? 'error_occurred_msg'.tr,
-          );
-          return;
-        }
-
-        /// Navigate to success page
-        navigateToSuccessPage();
-      },
-    );
-  }
 
   /// Function to get summary for pensions
   // Future<void> getPensionSummary() async {
@@ -298,24 +195,4 @@ class PPolicyVm extends GetxController {
     return products;
   }
 
-  // Future<void> submitWithdrawalRequest() async {
-  //   amountTEC.clear();
-  //   navigateToSuccessPage();
-  // }
-
-  /// Function to navigate user to success screen after report has been generated
-  navigateToSuccessPage() {
-    PHelperFunction.switchScreen(
-      destination: Routes.settingsSuccessPage,
-      args: [
-        'claim_req_success_subtitle'.tr,
-        'claim_req_success_title'.tr,
-        'done'.tr.toUpperCase(),
-        () {
-          PHelperFunction.pop();
-          PHelperFunction.pop();
-        },
-      ],
-    );
-  }
 }

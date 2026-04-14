@@ -35,14 +35,4 @@ abstract class PolicyDs {
   Future<ApiResponse<Map<String, dynamic>>> downloadPolicyStatement({
     required String policyNumber,
   });
-  Future<ApiResponse<List<PaymentMethod>>> getPaymentMethods();
-  Future<ApiResponse<List<WithdrawalReason>>> getWithdrawalReasons();
-  Future<ApiResponse<Message>> submitInstantClaimRequest({
-    required String policyNumber,
-    required double currentCashValue,
-    required double claimAmount,
-    required String claimDefaultTelcomethod,
-    required String claimDefaultMomoWallet,
-    required int withdrawalPurpose,
-  });
 }

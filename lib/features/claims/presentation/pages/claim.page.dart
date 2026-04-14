@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:oldmutual_pensions_app/core/utils/utils.dart';
-import 'package:oldmutual_pensions_app/features/policy/policy.dart';
+import 'package:oldmutual_pensions_app/features/claims/claims.dart';
 import 'package:oldmutual_pensions_app/shared/shared.dart';
 
 class PClaimPage extends StatefulWidget {
@@ -13,7 +13,7 @@ class PClaimPage extends StatefulWidget {
 }
 
 class _PClaimPageState extends State<PClaimPage> {
-  final ctrl = Get.put(PPolicyVm());
+  final ctrl = Get.put(PClaimsVm());
 
   final FocusNode _amountFocusNode = FocusNode();
   final FocusNode _accountNumberFocusNode = FocusNode();
@@ -52,20 +52,15 @@ class _PClaimPageState extends State<PClaimPage> {
                   softWrap: true,
                   style: Theme.of(context).textTheme.bodySmall?.copyWith(
                     fontSize: PAppSize.s15,
-                    // fontWeight: FontWeight.w600,
                   ),
                 ),
-
                 PAppSize.s10.verticalSpace,
-
-                GetBuilder<PPolicyVm>(
+                GetBuilder<PClaimsVm>(
                   builder: (ctrl) {
-                    // Remove duplicates and skip placeholder
                     final uniqueMethods = ctrl.paymentMethods
-                        .skip(1) // Skip the first placeholder item
+                        .skip(1)
                         .toSet()
                         .toList();
-
                     return PCustomDropdownField<PaymentMethod>(
                       labelText: 'payment_method'.tr,
                       initialValue: ctrl.selectedPaymentMethod,
@@ -81,10 +76,8 @@ class _PClaimPageState extends State<PClaimPage> {
                     );
                   },
                 ),
-
                 PAppSize.s20.verticalSpace,
-
-                GetBuilder<PPolicyVm>(
+                GetBuilder<PClaimsVm>(
                   builder: (ctrl) {
                     return PCustomDropdownField<WithdrawalReason>(
                       labelText: 'withdrawal_purpose'.tr,
@@ -101,9 +94,7 @@ class _PClaimPageState extends State<PClaimPage> {
                     );
                   },
                 ),
-
                 PAppSize.s20.verticalSpace,
-
                 PKeyboardActions(
                   focusNode: _amountFocusNode,
                   child: PCustomTextField(
@@ -117,9 +108,7 @@ class _PClaimPageState extends State<PClaimPage> {
                     ),
                   ),
                 ),
-
                 PAppSize.s20.verticalSpace,
-
                 PKeyboardActions(
                   focusNode: _accountNumberFocusNode,
                   child: PCustomTextField(
@@ -131,9 +120,7 @@ class _PClaimPageState extends State<PClaimPage> {
                     validator: PValidator.validateText,
                   ),
                 ),
-
                 PAppSize.s25.verticalSpace,
-
                 Obx(
                   () => PGradientButton(
                     label: 'continue'.tr,
@@ -149,7 +136,6 @@ class _PClaimPageState extends State<PClaimPage> {
                     },
                   ),
                 ),
-
                 PAppSize.s32.verticalSpace,
               ],
             ).scrollable(),

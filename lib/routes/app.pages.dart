@@ -8,6 +8,7 @@ import 'package:oldmutual_pensions_app/features/auth/presentation/pages/signup/c
 import 'package:oldmutual_pensions_app/features/auth/presentation/pages/verify.otp.page.dart';
 import 'package:oldmutual_pensions_app/features/beneficiary/beneficiary.dart';
 import 'package:oldmutual_pensions_app/features/beneficiary/presentation/pages/add.beneficiary.page.dart';
+import 'package:oldmutual_pensions_app/features/claims/claims.dart';
 import 'package:oldmutual_pensions_app/features/contribution.history/contribution.history.dart';
 import 'package:oldmutual_pensions_app/features/cross-sell/presentation/pages/recommendation.highlight.page.dart';
 import 'package:oldmutual_pensions_app/features/future.value.calculator/future.value.calculator.dart';
@@ -17,7 +18,6 @@ import 'package:oldmutual_pensions_app/features/more/more.services.dart';
 import 'package:oldmutual_pensions_app/features/notification/notification.dart';
 import 'package:oldmutual_pensions_app/features/pension/pension.dart';
 import 'package:oldmutual_pensions_app/features/policy/policy.dart';
-import 'package:oldmutual_pensions_app/features/policy/presentation/pages/claim.page.dart';
 import 'package:oldmutual_pensions_app/features/redemptions/presentation/pages/porting.page.dart';
 import 'package:oldmutual_pensions_app/features/redemptions/redemption.dart';
 import 'package:oldmutual_pensions_app/features/settings/presentation/pages/change.password.page.dart';
@@ -31,6 +31,7 @@ import 'package:oldmutual_pensions_app/features/statements/presentation/pages/st
 import 'package:oldmutual_pensions_app/features/webview/webview.dart';
 import 'package:oldmutual_pensions_app/shared/shared.dart';
 
+import '../features/claims/presentation/pages/instant.claim.page.dart';
 import '../features/onboarding/presentation/pages/onboarding.page.dart';
 
 part 'app.routes.dart';
@@ -320,5 +321,12 @@ class AppPages {
     ),
     GetPage(name: _Paths.saveContentPage, page: () => PSaveContentPage()),
     GetPage(name: _Paths.trackClaimsPage, page: () => PTrackClaimsPage()),
+
+    /// --- Instant Claim Feature
+    GetPage(
+      name: _Paths.partialWithdrawalPage,
+      page: () => PPartialWithdrawalPage(),
+    ),
+    GetPage(name: _Paths.instantClaimPage, page: () => PInstantClaimPage()),
   ];
 }
