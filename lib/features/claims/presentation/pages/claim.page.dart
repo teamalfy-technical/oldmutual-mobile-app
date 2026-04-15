@@ -50,9 +50,9 @@ class _PClaimPageState extends State<PClaimPage> {
                   'claim_hint'.tr,
                   textAlign: TextAlign.start,
                   softWrap: true,
-                  style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                    fontSize: PAppSize.s15,
-                  ),
+                  style: Theme.of(
+                    context,
+                  ).textTheme.bodySmall?.copyWith(fontSize: PAppSize.s15),
                 ),
                 PAppSize.s10.verticalSpace,
                 GetBuilder<PClaimsVm>(
@@ -115,7 +115,7 @@ class _PClaimPageState extends State<PClaimPage> {
                     labelText: 'momo_wallet_number'.tr,
                     hintText: 'momo_wallet_hint'.tr,
                     focusNode: _accountNumberFocusNode,
-                    controller: ctrl.accountNumberTEC,
+                    controller: ctrl.momoNumberTEC,
                     textInputType: TextInputType.number,
                     validator: PValidator.validateText,
                   ),

@@ -26,9 +26,9 @@ class PPartialWithdrawalPage extends StatelessWidget {
             title: 'instant_claim'.tr,
             subtitle: 'get_funds_title'.tr,
             options: [
-              'Max 40% of cash value (up to GH₵3,000)'.tr,
-              '2% processing charge applies'.tr,
-              'Mobile money disbursement only'.tr,
+              'instant_claim_option_max'.tr,
+              'instant_claim_option_charge'.tr,
+              'instant_claim_option_disbursement'.tr,
             ],
             onTap: () {
               PHelperFunction.switchScreen(
@@ -45,9 +45,9 @@ class PPartialWithdrawalPage extends StatelessWidget {
             title: 'standard_claim'.tr,
             subtitle: 'get_funds_title'.tr,
             options: [
-              'Max 50% of cash value (up to GH₵3,000)'.tr,
-              'No monetary caps or charges'.tr,
-              'Mobile money or Bank Payment'.tr,
+              'standard_claim_option_max'.tr,
+              'standard_claim_option_no_caps'.tr,
+              'standard_claim_option_disbursement'.tr,
             ],
             onTap: () {
               // Handle Instant Claim Option Tap

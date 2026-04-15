@@ -12,7 +12,7 @@ class PClaimsVm extends GetxController {
   final claimFormKey = GlobalKey<FormState>();
 
   final amountTEC = TextEditingController();
-  final accountNumberTEC = TextEditingController();
+  final momoNumberTEC = TextEditingController();
   var amount = 0.0.obs;
 
   var paymentMethods = <PaymentMethod>[].obs;
@@ -95,7 +95,7 @@ class PClaimsVm extends GetxController {
       claimAmount: amountTEC.text.trim().isEmpty
           ? 0.0
           : double.parse(amountTEC.text),
-      claimDefaultMomoWallet: accountNumberTEC.text,
+      claimDefaultMomoWallet: momoNumberTEC.text,
       claimDefaultTelcomethod: selectedPaymentMethod?.code ?? '',
       currentCashValue: selectedPolicy?.availableBalance ?? 0,
       policyNumber: selectedPolicy?.policyNo ?? '',

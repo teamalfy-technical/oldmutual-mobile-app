@@ -88,7 +88,7 @@ class AppTranslations extends Translations {
       'momo_wallet_number': 'MOMO Wallet Number',
       'withdrawal_amount': 'Withdrawal Amount',
       'payment_method': 'Payment Method',
-      'withdrawal_purpose': 'Withdrawal Purpose',
+      'withdrawal_purpose': 'Select Withdrawal Purpose',
       'supportive_text': 'Supportive text',
       'password_special_char_msg': '1 special character & 1 number',
       'beneficiaries_tag': 'Contact @phone for any detail changes',
@@ -641,6 +641,36 @@ class AppTranslations extends Translations {
       'instant_claim': 'Instant Claim',
       'refund_claim_desc': 'Request reimbursement under policy guidelines',
       'get_funds_title': 'Get funds immediately via mobile money',
+
+      // Instant Claim Page
+      'enter_claim_amount_hint': 'Enter the amount you want to claim',
+      'charge': 'Charge',
+      'youll_receive': 'You\u2019ll Receive',
+      'available_cash_value': 'Available cash value',
+      'maximum_claimable': 'Maximum claimable',
+      'processing_charge': 'Processing charge',
+      'processing_charge_value': '2% of claim amount',
+
+      // Partial Withdrawal Page - Instant Claim Options
+      'instant_claim_option_max': 'Max 40% of cash value (up to GH\u20B53,000)',
+      'instant_claim_option_charge': '2% processing charge applies',
+      'instant_claim_option_disbursement': 'Mobile money disbursement only',
+
+      // Partial Withdrawal Page - Standard Claim Options
+      'standard_claim_option_max':
+          'Max 50% of cash value (up to GH\u20B53,000)',
+      'standard_claim_option_no_caps': 'No monetary caps or charges',
+      'standard_claim_option_disbursement': 'Mobile money or Bank Payment',
+
+      // Select Payment Method - Instant Claim Page
+      'mobile_money': 'Mobile money',
+      'select_telco_operator': 'Select Telco Operator',
+      'registered_phone_number': 'Registered Phone Number',
+      'hubtel_identity_validation_note':
+          'Identity validation will be performed via Hubtel. At least two names must match in any order.',
+
+      // Summary Page
+      'summary': 'Summary',
     },
     'hi_IN': {'app_name': 'Pensions App'},
     'fr_FR': {'app_name': 'Pensions App'},

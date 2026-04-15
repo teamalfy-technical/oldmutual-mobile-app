@@ -6,6 +6,7 @@ export 'widgets/animated.gridview.dart';
 export 'widgets/animated.listview.dart';
 export 'widgets/annotated.region.dart';
 export 'widgets/auth.link.button.dart';
+export 'widgets/blue.tag.widget.dart';
 export 'widgets/count.up.text.dart';
 export 'widgets/custom.bar.chart.dart';
 export 'widgets/custom.bar.chart.old.dart';

@@ -9,6 +9,7 @@ import 'package:oldmutual_pensions_app/features/auth/presentation/pages/verify.o
 import 'package:oldmutual_pensions_app/features/beneficiary/beneficiary.dart';
 import 'package:oldmutual_pensions_app/features/beneficiary/presentation/pages/add.beneficiary.page.dart';
 import 'package:oldmutual_pensions_app/features/claims/claims.dart';
+import 'package:oldmutual_pensions_app/features/claims/presentation/pages/select.pm.instant.claim.page.dart';
 import 'package:oldmutual_pensions_app/features/contribution.history/contribution.history.dart';
 import 'package:oldmutual_pensions_app/features/cross-sell/presentation/pages/recommendation.highlight.page.dart';
 import 'package:oldmutual_pensions_app/features/future.value.calculator/future.value.calculator.dart';
@@ -328,5 +329,9 @@ class AppPages {
       page: () => PPartialWithdrawalPage(),
     ),
     GetPage(name: _Paths.instantClaimPage, page: () => PInstantClaimPage()),
+    GetPage(
+      name: _Paths.selectPMInstantClaimPage,
+      page: () => PSelectPMInstantClaimPage(),
+    ),
   ];
 }

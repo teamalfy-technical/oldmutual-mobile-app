@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:oldmutual_pensions_app/core/utils/utils.dart';
 import 'package:oldmutual_pensions_app/features/claims/claims.dart';
+import 'package:oldmutual_pensions_app/routes/app.pages.dart';
 import 'package:oldmutual_pensions_app/shared/shared.dart';
 
 class PInstantClaimPage extends StatelessWidget {
@@ -23,7 +24,7 @@ class PInstantClaimPage extends StatelessWidget {
         children: [
           PAppSize.s12.verticalSpace,
           Text(
-            'Enter the amount you want to claim'.tr,
+            'enter_claim_amount_hint'.tr,
             textAlign: TextAlign.start,
             style: Theme.of(
               context,
@@ -61,6 +62,21 @@ class PInstantClaimPage extends StatelessWidget {
                     Divider(),
                     PAppSize.s12.verticalSpace,
 
+                    PBlueTagWidget(
+                      child: Column(
+                        children: [
+                          _summaryRow(label: 'charge'.tr, value: '-GH₵ 40.00'),
+                          PAppSize.s12.verticalSpace,
+                          _summaryRow(
+                            label: 'youll_receive'.tr,
+                            value: 'GH₵ 1,960.00',
+                          ),
+                        ],
+                      ),
+                    ),
+
+                    PAppSize.s20.verticalSpace,
+
                     /// Summary of Charges
                     PCustomCardWidget(
                       borderRadius: BorderRadius.circular(PAppSize.s8),
@@ -73,19 +89,19 @@ class PInstantClaimPage extends StatelessWidget {
                       child: Column(
                         children: [
                           _summaryRow(
-                            label: 'Available cash value',
+                            label: 'available_cash_value'.tr,
                             value: 'GH₵ 12,500.00',
                           ),
                           PAppSize.s14.verticalSpace,
                           _summaryRow(
-                            label: 'Maximum claimable',
+                            label: 'maximum_claimable'.tr,
                             value: 'GH₵ 3,000.00',
                             valueColor: PAppColor.primary,
                           ),
                           PAppSize.s14.verticalSpace,
                           _summaryRow(
-                            label: 'Processing charge',
-                            value: '2% of claim amount',
+                            label: 'processing_charge'.tr,
+                            value: 'processing_charge_value'.tr,
                           ),
                         ],
                       ),
@@ -100,7 +116,11 @@ class PInstantClaimPage extends StatelessWidget {
                       iconDirection: IconDirection.right,
                       textColor: PAppColor.whiteColor,
                       width: PDeviceUtil.getDeviceWidth(context),
-                      onTap: () {},
+                      onTap: () {
+                        PHelperFunction.switchScreen(
+                          destination: Routes.selectPMInstantClaimPage,
+                        );
+                      },
                     ),
 
                     PAppSize.s16.verticalSpace,
