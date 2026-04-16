@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:oldmutual_pensions_app/core/utils/utils.dart';
 
 class PSummaryRowWidget extends StatelessWidget {
   const PSummaryRowWidget({
@@ -24,6 +26,7 @@ class PSummaryRowWidget extends StatelessWidget {
             context,
           ).textTheme.bodyMedium?.copyWith(fontWeight: FontWeight.w400),
         ),
+        PAppSize.s8.horizontalSpace,
         Expanded(
           child: Text(
             value,

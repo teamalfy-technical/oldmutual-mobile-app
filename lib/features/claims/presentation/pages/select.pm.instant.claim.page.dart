@@ -48,6 +48,7 @@ class _PSelectPMInstantClaimPageState extends State<PSelectPMInstantClaimPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       backgroundColor: PHelperFunction.isDarkMode(context)
           ? PAppColor.darkBgColor
           : PAppColor.fillColor,

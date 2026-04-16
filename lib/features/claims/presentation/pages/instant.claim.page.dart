@@ -15,6 +15,7 @@ class PInstantClaimPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       backgroundColor: PHelperFunction.isDarkMode(context)
           ? PAppColor.darkBgColor
           : PAppColor.fillColor,
@@ -46,9 +47,9 @@ class PInstantClaimPage extends StatelessWidget {
                     PKeyboardActions(
                       focusNode: _amountFocusNode,
                       child: PCustomTextField(
-                        labelText: '3,000',
+                        labelText:
+                            'Amount (e.g. max = ${PFormatter.formatCurrency(amount: 3000)})',
                         hintText: '',
-                        maxLength: 4,
                         controller: ctrl.amountTEC,
                         focusNode: _amountFocusNode,
                         textInputType: TextInputType.numberWithOptions(
@@ -57,6 +58,9 @@ class PInstantClaimPage extends StatelessWidget {
                         textInputAction: TextInputAction.done,
                         onChanged: ctrl.onAmountChanged,
                         validator: PValidator.validatePaymentAmount,
+                        inputFormatters: [
+                          MaxAmountFormatter(() => ctrl.maximumClaimable),
+                        ],
                       ),
                     ),
                     PAppSize.s12.verticalSpace,
@@ -112,7 +116,9 @@ class PInstantClaimPage extends StatelessWidget {
                           PAppSize.s14.verticalSpace,
                           PSummaryRowWidget(
                             label: 'maximum_claimable'.tr,
-                            value: 'GH₵ 3,000.00',
+                            value: PFormatter.formatCurrency(
+                              amount: ctrl.maximumClaimable,
+                            ),
                             valueColor: PAppColor.primary,
                           ),
                           PAppSize.s14.verticalSpace,
@@ -129,7 +135,7 @@ class PInstantClaimPage extends StatelessWidget {
                     Obx(() {
                       final isValid =
                           ctrl.amount.value > 0 &&
-                          ctrl.amount.value <= PClaimsVm.instantClaimMaxAmount;
+                          ctrl.amount.value <= ctrl.maximumClaimable;
                       return PGradientButton(
                         label: 'continue'.tr,
                         showIcon: true,

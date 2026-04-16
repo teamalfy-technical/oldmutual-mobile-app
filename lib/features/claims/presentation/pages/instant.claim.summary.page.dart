@@ -107,13 +107,9 @@ class PInstantClaimSummaryPage extends StatelessWidget {
                 showIcon: true,
                 loading: ctrl.submitting.value,
                 iconDirection: IconDirection.right,
-
                 textColor: PAppColor.whiteColor,
                 width: PDeviceUtil.getDeviceWidth(context),
-                onTap: () {
-                  ctrl.navigateToSuccessPage();
-                },
-                // onTap: ctrl.submitInstantClaimRequest,
+                onTap: ctrl.submitInstantClaimRequest,
               );
             }),
 

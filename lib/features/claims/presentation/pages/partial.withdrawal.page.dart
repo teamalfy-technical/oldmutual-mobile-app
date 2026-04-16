@@ -64,7 +64,7 @@ class PPartialWithdrawalPage extends StatelessWidget {
             },
           ),
         ],
-      ).all(PAppSize.s20),
+      ).all(PAppSize.s20).scrollable(),
     );
   }
 

@@ -14,16 +14,25 @@ class PClaimsVm extends GetxController {
   final policyVm = Get.find<PPolicyVm>();
   final policyStatementVm = Get.find<PPolicyStatementVm>();
 
-  static const double instantClaimMaxAmount = 3000.0;
+  static const double instantClaimMaxAmount = 3000.00;
   static const double instantClaimChargeRate = 0.02;
+  static const double instantClaimCashValueCap = 0.40;
   var reference = ''.obs;
 
   final amountTEC = TextEditingController();
   final momoNumberTEC = TextEditingController();
   var amount = 0.0.obs;
 
+  double get maximumClaimable {
+    final cashValue = (selectedPolicy?.availableBalance ?? 0).toDouble();
+    return (cashValue * instantClaimCashValueCap).clamp(
+      0.0,
+      instantClaimMaxAmount,
+    );
+  }
+
   double get claimableAmount =>
-      amount.value.clamp(0.0, instantClaimMaxAmount).toDouble();
+      amount.value.clamp(0.0, maximumClaimable).toDouble();
   double get charge => claimableAmount * instantClaimChargeRate;
   double get amountReceivable => claimableAmount - charge;
 
@@ -119,6 +128,7 @@ class PClaimsVm extends GetxController {
       claimAmount: amountTEC.text.trim().isEmpty
           ? 0.0
           : double.parse(amountTEC.text),
+      // claimDefaultMomoWallet: momoNumberTEC.text.trim(),
       claimDefaultMomoWallet: PHelperFunction.formatPhoneNumber(
         momoNumberTEC.text.trim(),
       ),

@@ -44,3 +44,20 @@ class UpperCaseTextFormatter extends TextInputFormatter {
     );
   }
 }
+
+class MaxAmountFormatter extends TextInputFormatter {
+  MaxAmountFormatter(this.maxAmount);
+
+  final double Function() maxAmount;
+
+  @override
+  TextEditingValue formatEditUpdate(
+    TextEditingValue oldValue,
+    TextEditingValue newValue,
+  ) {
+    if (newValue.text.isEmpty) return newValue;
+    final parsed = double.tryParse(newValue.text);
+    if (parsed == null) return oldValue;
+    return parsed > maxAmount() ? oldValue : newValue;
+  }
+}
