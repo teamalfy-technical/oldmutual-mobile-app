@@ -47,8 +47,8 @@ class PAnimatedColumnWidget extends StatelessWidget {
           children: AnimationConfiguration.toStaggeredList(
             duration: Duration(milliseconds: duration),
             childAnimationBuilder: (widget) => SlideAnimation(
-              verticalOffset: PAppSize.s50,
-              child: SlideAnimation(child: widget),
+              horizontalOffset: PAppSize.s50,
+              child: FadeInAnimation(child: widget),
             ),
             children: children,
           ),

@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:oldmutual_pensions_app/core/utils/utils.dart';
 import 'package:oldmutual_pensions_app/features/auth/auth.dart';
 import 'package:oldmutual_pensions_app/features/claims/claims.dart';
+import 'package:oldmutual_pensions_app/routes/app.pages.dart';
 import 'package:oldmutual_pensions_app/shared/shared.dart';
 
 class PSelectPMInstantClaimPage extends StatefulWidget {
@@ -19,9 +20,12 @@ class _PSelectPMInstantClaimPageState extends State<PSelectPMInstantClaimPage> {
 
   final PClaimsVm ctrl = Get.put(PClaimsVm());
 
+  int _maxLength = 10;
+
   @override
   void initState() {
     super.initState();
+    ctrl.momoNumberTEC.addListener(_onFormChanged);
     WidgetsBinding.instance.addPostFrameCallback((_) {
       ctrl.getPaymentMethods();
       ctrl.getWithdrawalReasons();
@@ -30,8 +34,16 @@ class _PSelectPMInstantClaimPageState extends State<PSelectPMInstantClaimPage> {
 
   @override
   void dispose() {
+    ctrl.momoNumberTEC.removeListener(_onFormChanged);
     super.dispose();
   }
+
+  void _onFormChanged() => setState(() {});
+
+  bool get _canContinue =>
+      ctrl.selectedPaymentMethod != null &&
+      ctrl.selectedWithdrawalReason != null &&
+      ctrl.momoNumberTEC.text.trim().isNotEmpty;
 
   @override
   Widget build(BuildContext context) {
@@ -51,7 +63,7 @@ class _PSelectPMInstantClaimPageState extends State<PSelectPMInstantClaimPage> {
                 vertical: PAppSize.s25,
               ),
               child: Form(
-                child: Column(
+                child: PAnimatedColumnWidget(
                   children: [
                     PAppSize.s10.verticalSpace,
                     GetBuilder<PClaimsVm>(
@@ -63,7 +75,10 @@ class _PSelectPMInstantClaimPageState extends State<PSelectPMInstantClaimPage> {
                         return PCustomDropdownField<PaymentMethod>(
                           labelText: 'select_telco_operator'.tr,
                           initialValue: ctrl.selectedPaymentMethod,
-                          onChanged: ctrl.onPaymentMethodChanged,
+                          onChanged: (value) {
+                            ctrl.onPaymentMethodChanged(value);
+                            _onFormChanged();
+                          },
                           items: uniqueMethods
                               .map(
                                 (method) => DropdownMenuItem<PaymentMethod>(
@@ -81,7 +96,10 @@ class _PSelectPMInstantClaimPageState extends State<PSelectPMInstantClaimPage> {
                         return PCustomDropdownField<WithdrawalReason>(
                           labelText: 'withdrawal_purpose'.tr,
                           initialValue: ctrl.selectedWithdrawalReason,
-                          onChanged: ctrl.onWithdrawalReasonChanged,
+                          onChanged: (value) {
+                            ctrl.onWithdrawalReasonChanged(value);
+                            _onFormChanged();
+                          },
                           items: ctrl.withdrawalReasons
                               .map(
                                 (reason) => DropdownMenuItem<WithdrawalReason>(
@@ -98,12 +116,29 @@ class _PSelectPMInstantClaimPageState extends State<PSelectPMInstantClaimPage> {
                     PKeyboardActions(
                       focusNode: _momoNumberFocusNode,
                       child: PCustomTextField(
+                        prefixText: '233 ',
                         labelText: 'registered_phone_number'.tr,
-                        hintText: 'registered_phone_number'.tr,
+                        hintText: '240xxxx08'.tr,
                         focusNode: _momoNumberFocusNode,
                         controller: ctrl.momoNumberTEC,
-                        textInputType: TextInputType.number,
-                        validator: PValidator.validateText,
+                        textInputType: TextInputType.phone,
+                        maxLength:
+                            _maxLength, // Dynamically set max length based on input
+                        validator: PValidator.validatePhoneNumber,
+                        onChanged: (value) {
+                          // Dynamically switch max length
+                          if (value.isNotEmpty) {
+                            if (value.startsWith('0')) {
+                              if (_maxLength != 10) {
+                                setState(() => _maxLength = 10);
+                              }
+                            } else {
+                              if (_maxLength != 9) {
+                                setState(() => _maxLength = 9);
+                              }
+                            }
+                          }
+                        },
                       ),
                     ),
 
@@ -125,7 +160,11 @@ class _PSelectPMInstantClaimPageState extends State<PSelectPMInstantClaimPage> {
                       iconDirection: IconDirection.right,
                       textColor: PAppColor.whiteColor,
                       width: PDeviceUtil.getDeviceWidth(context),
-                      onTap: () {},
+                      onTap: _canContinue
+                          ? () => PHelperFunction.switchScreen(
+                              destination: Routes.instantClaimSummaryPage,
+                            )
+                          : null,
                     ),
                   ],
                 ),

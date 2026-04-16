@@ -11,9 +11,21 @@ class PClaimsVm extends GetxController {
 
   final claimFormKey = GlobalKey<FormState>();
 
+  final policyVm = Get.find<PPolicyVm>();
+  final policyStatementVm = Get.find<PPolicyStatementVm>();
+
+  static const double instantClaimMaxAmount = 3000.0;
+  static const double instantClaimChargeRate = 0.02;
+  var reference = ''.obs;
+
   final amountTEC = TextEditingController();
   final momoNumberTEC = TextEditingController();
   var amount = 0.0.obs;
+
+  double get claimableAmount =>
+      amount.value.clamp(0.0, instantClaimMaxAmount).toDouble();
+  double get charge => claimableAmount * instantClaimChargeRate;
+  double get amountReceivable => claimableAmount - charge;
 
   var paymentMethods = <PaymentMethod>[].obs;
   var withdrawalReasons = <WithdrawalReason>[].obs;
@@ -21,6 +33,8 @@ class PClaimsVm extends GetxController {
   PaymentMethod? selectedPaymentMethod;
   WithdrawalReason? selectedWithdrawalReason;
   Policy? selectedPolicy;
+  ClaimType? selectedClaimType;
+  ClaimType? selectedWithdrawalClaimType;
 
   var loading = LoadingState.completed.obs;
   var submitting = LoadingState.completed.obs;
@@ -31,6 +45,16 @@ class PClaimsVm extends GetxController {
 
   onSelectedPolicy(Policy val) {
     selectedPolicy = val;
+    update();
+  }
+
+  onSelectedClaimType(ClaimType type) {
+    selectedClaimType = type;
+    update();
+  }
+
+  onSelectedWithdrawalClaimType(ClaimType type) {
+    selectedWithdrawalClaimType = type;
     update();
   }
 
@@ -95,7 +119,9 @@ class PClaimsVm extends GetxController {
       claimAmount: amountTEC.text.trim().isEmpty
           ? 0.0
           : double.parse(amountTEC.text),
-      claimDefaultMomoWallet: momoNumberTEC.text,
+      claimDefaultMomoWallet: PHelperFunction.formatPhoneNumber(
+        momoNumberTEC.text.trim(),
+      ),
       claimDefaultTelcomethod: selectedPaymentMethod?.code ?? '',
       currentCashValue: selectedPolicy?.availableBalance ?? 0,
       policyNumber: selectedPolicy?.policyNo ?? '',
@@ -122,6 +148,8 @@ class PClaimsVm extends GetxController {
           return;
         }
 
+        reference.value = res.data?.message ?? 'not_applicable'.tr;
+
         /// Navigate to success page
         navigateToSuccessPage();
       },
@@ -129,16 +157,23 @@ class PClaimsVm extends GetxController {
   }
 
   /// Function to navigate user to success screen after claim has been submitted
-  navigateToSuccessPage() {
+  void navigateToSuccessPage() {
     PHelperFunction.switchScreen(
-      destination: Routes.settingsSuccessPage,
+      destination: Routes.claimSuccessPage,
       args: [
-        'claim_req_success_subtitle'.tr,
-        'claim_req_success_title'.tr,
-        'done'.tr.toUpperCase(),
+        'claimed_processed'.tr,
+        'claimed_processed_subtitle'.tr,
         () {
           PHelperFunction.pop();
-          PHelperFunction.pop();
+          if (selectedPolicy != null) {
+            policyVm.onSelectedPolicy(selectedPolicy!); // keep selected policy
+            policyStatementVm.onSelectedPolicyReport(selectedPolicy);
+            PHelperFunction.switchScreen(
+              destination: Routes.policyDetailPage,
+              args: selectedPolicy,
+            );
+          }
+          Get.delete<PClaimsVm>();
         },
       ],
     );

@@ -9,7 +9,6 @@ import 'package:oldmutual_pensions_app/features/auth/presentation/pages/verify.o
 import 'package:oldmutual_pensions_app/features/beneficiary/beneficiary.dart';
 import 'package:oldmutual_pensions_app/features/beneficiary/presentation/pages/add.beneficiary.page.dart';
 import 'package:oldmutual_pensions_app/features/claims/claims.dart';
-import 'package:oldmutual_pensions_app/features/claims/presentation/pages/select.pm.instant.claim.page.dart';
 import 'package:oldmutual_pensions_app/features/contribution.history/contribution.history.dart';
 import 'package:oldmutual_pensions_app/features/cross-sell/presentation/pages/recommendation.highlight.page.dart';
 import 'package:oldmutual_pensions_app/features/future.value.calculator/future.value.calculator.dart';
@@ -32,7 +31,6 @@ import 'package:oldmutual_pensions_app/features/statements/presentation/pages/st
 import 'package:oldmutual_pensions_app/features/webview/webview.dart';
 import 'package:oldmutual_pensions_app/shared/shared.dart';
 
-import '../features/claims/presentation/pages/instant.claim.page.dart';
 import '../features/onboarding/presentation/pages/onboarding.page.dart';
 
 part 'app.routes.dart';
@@ -332,6 +330,18 @@ class AppPages {
     GetPage(
       name: _Paths.selectPMInstantClaimPage,
       page: () => PSelectPMInstantClaimPage(),
+    ),
+    GetPage(
+      name: _Paths.instantClaimSummaryPage,
+      page: () => PInstantClaimSummaryPage(),
+    ),
+    GetPage(
+      name: _Paths.claimSuccessPage,
+      page: () => PClaimSuccessPage(
+        title: Get.arguments[0],
+        message: Get.arguments[1],
+        onTap: Get.arguments[2],
+      ),
     ),
   ];
 }

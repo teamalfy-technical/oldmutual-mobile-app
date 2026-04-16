@@ -19,7 +19,7 @@ class PInstantClaimPage extends StatelessWidget {
           ? PAppColor.darkBgColor
           : PAppColor.fillColor,
       appBar: AppBar(title: Text('instant_claim'.tr)),
-      body: PAnimatedColumnWidget(
+      body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           PAppSize.s12.verticalSpace,
@@ -41,13 +41,14 @@ class PInstantClaimPage extends StatelessWidget {
                 vertical: PAppSize.s20,
               ),
               child: Form(
-                child: Column(
+                child: PAnimatedColumnWidget(
                   children: [
                     PKeyboardActions(
                       focusNode: _amountFocusNode,
                       child: PCustomTextField(
                         labelText: '3,000',
                         hintText: '',
+                        maxLength: 4,
                         controller: ctrl.amountTEC,
                         focusNode: _amountFocusNode,
                         textInputType: TextInputType.numberWithOptions(
@@ -62,18 +63,27 @@ class PInstantClaimPage extends StatelessWidget {
                     Divider(),
                     PAppSize.s12.verticalSpace,
 
-                    PBlueTagWidget(
-                      child: Column(
-                        children: [
-                          _summaryRow(label: 'charge'.tr, value: '-GH₵ 40.00'),
-                          PAppSize.s12.verticalSpace,
-                          _summaryRow(
-                            label: 'youll_receive'.tr,
-                            value: 'GH₵ 1,960.00',
-                          ),
-                        ],
-                      ),
-                    ),
+                    Obx(() {
+                      ctrl.amount.value;
+                      return PBlueTagWidget(
+                        child: Column(
+                          children: [
+                            PSummaryRowWidget(
+                              label: 'charge'.tr,
+                              value:
+                                  '- ${PFormatter.formatCurrency(amount: ctrl.charge)}',
+                            ),
+                            PAppSize.s12.verticalSpace,
+                            PSummaryRowWidget(
+                              label: 'youll_receive'.tr,
+                              value: PFormatter.formatCurrency(
+                                amount: ctrl.amountReceivable,
+                              ),
+                            ),
+                          ],
+                        ),
+                      );
+                    }),
 
                     PAppSize.s20.verticalSpace,
 
@@ -81,25 +91,32 @@ class PInstantClaimPage extends StatelessWidget {
                     PCustomCardWidget(
                       borderRadius: BorderRadius.circular(PAppSize.s8),
                       useBorder: false,
-                      color: PAppColor.fillColor5,
+                      color: PHelperFunction.isDarkMode(context)
+                          ? PAppColor.cardDarkColor.withOpacityExt(
+                              PAppSize.s0_5,
+                            )
+                          : PAppColor.fillColor5,
                       padding: EdgeInsets.symmetric(
                         horizontal: PAppSize.s20,
                         vertical: PAppSize.s25,
                       ),
                       child: Column(
                         children: [
-                          _summaryRow(
+                          PSummaryRowWidget(
                             label: 'available_cash_value'.tr,
-                            value: 'GH₵ 12,500.00',
+                            value: PFormatter.formatCurrency(
+                              amount:
+                                  ctrl.selectedPolicy?.availableBalance ?? 0,
+                            ),
                           ),
                           PAppSize.s14.verticalSpace,
-                          _summaryRow(
+                          PSummaryRowWidget(
                             label: 'maximum_claimable'.tr,
                             value: 'GH₵ 3,000.00',
                             valueColor: PAppColor.primary,
                           ),
                           PAppSize.s14.verticalSpace,
-                          _summaryRow(
+                          PSummaryRowWidget(
                             label: 'processing_charge'.tr,
                             value: 'processing_charge_value'.tr,
                           ),
@@ -109,19 +126,26 @@ class PInstantClaimPage extends StatelessWidget {
 
                     PAppSize.s20.verticalSpace,
 
-                    PGradientButton(
-                      label: 'continue'.tr,
-                      showIcon: true,
-                      loading: ctrl.submitting.value,
-                      iconDirection: IconDirection.right,
-                      textColor: PAppColor.whiteColor,
-                      width: PDeviceUtil.getDeviceWidth(context),
-                      onTap: () {
-                        PHelperFunction.switchScreen(
-                          destination: Routes.selectPMInstantClaimPage,
-                        );
-                      },
-                    ),
+                    Obx(() {
+                      final isValid =
+                          ctrl.amount.value > 0 &&
+                          ctrl.amount.value <= PClaimsVm.instantClaimMaxAmount;
+                      return PGradientButton(
+                        label: 'continue'.tr,
+                        showIcon: true,
+                        loading: ctrl.submitting.value,
+                        iconDirection: IconDirection.right,
+                        textColor: PAppColor.whiteColor,
+                        width: PDeviceUtil.getDeviceWidth(context),
+                        onTap: isValid
+                            ? () {
+                                PHelperFunction.switchScreen(
+                                  destination: Routes.selectPMInstantClaimPage,
+                                );
+                              }
+                            : null,
+                      );
+                    }),
 
                     PAppSize.s16.verticalSpace,
 

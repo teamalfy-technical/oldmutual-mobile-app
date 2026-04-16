@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:oldmutual_pensions_app/core/utils/utils.dart';
+import 'package:oldmutual_pensions_app/features/claims/claims.dart';
 import 'package:oldmutual_pensions_app/gen/assets.gen.dart';
 import 'package:oldmutual_pensions_app/routes/app.pages.dart';
 import 'package:oldmutual_pensions_app/shared/shared.dart';
@@ -31,6 +32,9 @@ class PPartialWithdrawalPage extends StatelessWidget {
               'instant_claim_option_disbursement'.tr,
             ],
             onTap: () {
+              PClaimsVm.instance.onSelectedWithdrawalClaimType(
+                ClaimType.instant,
+              );
               PHelperFunction.switchScreen(
                 destination: Routes.instantClaimPage,
               );
@@ -50,7 +54,13 @@ class PPartialWithdrawalPage extends StatelessWidget {
               'standard_claim_option_disbursement'.tr,
             ],
             onTap: () {
-              // Handle Instant Claim Option Tap
+              PClaimsVm.instance.onSelectedWithdrawalClaimType(
+                ClaimType.standard,
+              );
+              PPopupDialog(context).warningMessage(
+                title: 'coming_soon_title'.tr,
+                message: 'coming_soon_msg'.tr,
+              );
             },
           ),
         ],

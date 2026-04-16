@@ -52,7 +52,9 @@ class PCustomSuccessPage extends StatelessWidget {
                       : PAppColor.textColorLight,
                 ),
               ),
+
               PAppSize.s18.verticalSpace,
+
               PGradientButton(
                 label: buttonTitle ?? 'continue'.tr,
                 showIcon: false,

@@ -634,6 +634,7 @@ class AppTranslations extends Translations {
       'yes': 'Yes',
       'default_duration': '6 mins',
       'select_claim_type': 'Select Claim Type',
+      'claim_type': 'Claim Type',
       'partial_withdrawal': 'Partial Withdrawal',
       'partial_withdrawal_desc': 'Withdrawal a portion of your cash value',
       'standard_claim': 'Standard Claim',
@@ -657,6 +658,10 @@ class AppTranslations extends Translations {
       'instant_claim_option_disbursement': 'Mobile money disbursement only',
 
       // Partial Withdrawal Page - Standard Claim Options
+      'claimed_processed': 'Claim Processed!',
+      'claimed_processed_subtitle':
+          'Your withdrawal has been processed through Hubtel.',
+      'close': 'Close',
       'standard_claim_option_max':
           'Max 50% of cash value (up to GH\u20B53,000)',
       'standard_claim_option_no_caps': 'No monetary caps or charges',

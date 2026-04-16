@@ -95,7 +95,9 @@ Future<dynamic> showClaimModal({
                 darkColor: PAppColor.cardDarkColor,
                 onTap: () {
                   PHelperFunction.pop();
-                  Get.put(PClaimsVm()).onSelectedPolicy(product as Policy);
+                  Get.put(PClaimsVm())
+                    ..onSelectedPolicy(product as Policy)
+                    ..onSelectedClaimType(ClaimType.partialWithdrawal);
                   PHelperFunction.switchScreen(
                     destination: Routes.partialWithdrawalPage,
                     args: product,
@@ -133,8 +135,11 @@ Future<dynamic> showClaimModal({
                 darkColor: PAppColor.cardDarkColor,
                 onTap: () {
                   PHelperFunction.pop();
-                  PHelperFunction.switchScreen(
-                    destination: Routes.paymentHistoryPage,
+                  Get.put(PClaimsVm()).onSelectedClaimType(ClaimType.refund);
+
+                  PPopupDialog(context).warningMessage(
+                    title: 'coming_soon_title'.tr,
+                    message: 'coming_soon_msg'.tr,
                   );
                 },
                 child: ListTile(

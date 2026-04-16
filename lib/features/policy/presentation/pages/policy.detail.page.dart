@@ -138,27 +138,18 @@ class PPolicyDetailPage extends StatelessWidget {
                       policyStatementVm.downloadInvestmentStatement();
                     },
                   ),
-                ],
-
-                PAppSize.s8.horizontalSpace,
-                QuickActionWidget(
-                  label: 'claim'.tr,
-                  icon: Assets.icons.withdrawIcon.svg(
-                    color: PHelperFunction.isDarkMode(context)
-                        ? PAppColor.successLight
-                        : PAppColor.successDark,
+                  PAppSize.s8.horizontalSpace,
+                  QuickActionWidget(
+                    label: 'claim'.tr,
+                    icon: Assets.icons.withdrawIcon.svg(
+                      color: PHelperFunction.isDarkMode(context)
+                          ? PAppColor.successLight
+                          : PAppColor.successDark,
+                    ),
+                    onTap: () =>
+                        showClaimModal(context: context, product: policy),
                   ),
-                  onTap: () =>
-                      showClaimModal(context: context, product: policy),
-
-                  // onTap: () => PPopupDialog(context).warningMessage(
-                  //   title: 'coming_soon_title'.tr,
-                  //   message: 'coming_soon_msg'.tr,
-                  // ),
-                  // onTap: () => PHelperFunction.switchScreen(
-                  //   destination: Routes.policyClaimPage,
-                  // ),
-                ),
+                ],
               ],
             ).scrollable(scrollDirection: Axis.horizontal),
 
