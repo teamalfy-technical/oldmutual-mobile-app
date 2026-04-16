@@ -1,0 +1,145 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
+import 'package:oldmutual_pensions_app/core/utils/utils.dart';
+import 'package:oldmutual_pensions_app/features/claims/claims.dart';
+import 'package:oldmutual_pensions_app/gen/assets.gen.dart';
+import 'package:oldmutual_pensions_app/routes/app.pages.dart';
+import 'package:oldmutual_pensions_app/shared/shared.dart';
+
+class PPartialWithdrawalPage extends StatelessWidget {
+  const PPartialWithdrawalPage({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: PHelperFunction.isDarkMode(context)
+          ? PAppColor.darkBgColor
+          : PAppColor.fillColor,
+      appBar: AppBar(title: Text('partial_withdrawal'.tr)),
+      body: PAnimatedColumnWidget(
+        children: [
+          PAppSize.s14.verticalSpace,
+
+          // Instant Claim Option
+          _buildClaimOption(
+            context: context,
+            title: 'instant_claim'.tr,
+            subtitle: 'get_funds_title'.tr,
+            options: [
+              'instant_claim_option_max'.tr,
+              'instant_claim_option_charge'.tr,
+              'instant_claim_option_disbursement'.tr,
+            ],
+            onTap: () {
+              PClaimsVm.instance.onSelectedWithdrawalClaimType(
+                ClaimType.instant,
+              );
+              PHelperFunction.switchScreen(
+                destination: Routes.instantClaimPage,
+              );
+            },
+          ),
+
+          PAppSize.s20.verticalSpace,
+
+          // Standard Claim Option
+          _buildClaimOption(
+            context: context,
+            title: 'standard_claim'.tr,
+            subtitle: 'get_funds_title'.tr,
+            options: [
+              'standard_claim_option_max'.tr,
+              'standard_claim_option_no_caps'.tr,
+              'standard_claim_option_disbursement'.tr,
+            ],
+            onTap: () {
+              PClaimsVm.instance.onSelectedWithdrawalClaimType(
+                ClaimType.standard,
+              );
+              PPopupDialog(context).warningMessage(
+                title: 'coming_soon_title'.tr,
+                message: 'coming_soon_msg'.tr,
+              );
+            },
+          ),
+        ],
+      ).all(PAppSize.s20).scrollable(),
+    );
+  }
+
+  Widget _buildRowOption({
+    required BuildContext context,
+    required String title,
+    required Widget icon,
+  }) {
+    return Row(
+      children: [
+        Assets.icons.checkDark.svg(
+          color: PHelperFunction.isDarkMode(context)
+              ? PAppColor.whiteColor
+              : PAppColor.darkAppBarColor,
+        ),
+        PAppSize.s6.horizontalSpace,
+        Expanded(
+          child: Text(
+            title,
+            style: Theme.of(
+              context,
+            ).textTheme.bodyMedium?.copyWith(fontWeight: FontWeight.w400),
+          ),
+        ),
+      ],
+    ).marginOnly(bottom: PAppSize.s8);
+  }
+
+  Widget _buildClaimOption({
+    required BuildContext context,
+    required String title,
+    required String subtitle,
+    required List<String> options,
+    required VoidCallback onTap,
+  }) {
+    return PCustomCardWidget(
+      useBorder: false,
+
+      darkColor: PAppColor.cardDarkColor,
+      onTap: onTap,
+      child: Column(
+        children: [
+          ListTile(
+            contentPadding: EdgeInsets.zero,
+            trailing: Assets.icons.arrowForwardIos.svg(
+              color: PHelperFunction.isDarkMode(context)
+                  ? PAppColor.whiteColor
+                  : PAppColor.darkAppBarColor,
+            ),
+            title: Text(
+              title,
+              style: Theme.of(
+                context,
+              ).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w600),
+            ),
+            subtitle: Text(
+              subtitle,
+              style: Theme.of(
+                context,
+              ).textTheme.bodySmall?.copyWith(fontWeight: FontWeight.w400),
+            ),
+          ),
+          ...options.map(
+            (element) => _buildRowOption(
+              context: context,
+              title: element,
+              icon: Assets.icons.checkDark.svg(
+                color: PHelperFunction.isDarkMode(context)
+                    ? PAppColor.whiteColor
+                    : PAppColor.darkAppBarColor,
+              ),
+            ),
+          ),
+        ],
+      ).paddingSymmetric(horizontal: PAppSize.s20, vertical: PAppSize.s25),
+    );
+  }
+}

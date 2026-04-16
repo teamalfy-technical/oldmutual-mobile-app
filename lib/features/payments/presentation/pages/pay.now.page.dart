@@ -245,18 +245,7 @@ class _PPayNowPageState extends State<PPayNowPage> {
                           final displayAmount = _isFullPayment
                               ? _totalAmount
                               : amount;
-                          return Container(
-                            width: PDeviceUtil.getDeviceWidth(context),
-                            padding: EdgeInsets.symmetric(
-                              vertical: PAppSize.s16,
-                              horizontal: PAppSize.s16,
-                            ),
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(PAppSize.s8),
-                              color: PHelperFunction.isDarkMode(context)
-                                  ? PAppColor.cardDarkColor
-                                  : PAppColor.lightBlueColor,
-                            ),
+                          return PBlueTagWidget(
                             child: RichText(
                               textAlign: TextAlign.center,
                               text: TextSpan(

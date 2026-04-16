@@ -6,6 +6,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:logger/logger.dart';
 import 'package:oldmutual_pensions_app/core/utils/utils.dart';
+import 'package:oldmutual_pensions_app/features/claims/claims.dart';
+import 'package:oldmutual_pensions_app/features/policy/policy.dart';
 import 'package:oldmutual_pensions_app/gen/assets.gen.dart';
 import 'package:oldmutual_pensions_app/routes/app.pages.dart';
 import 'package:oldmutual_pensions_app/shared/shared.dart';
@@ -26,6 +28,148 @@ Future showCustomBottomSheet({
     // shape: customRectShape,
     context: context,
     builder: (context) => child,
+  );
+}
+
+/// Shows modal to make claim
+Future<dynamic> showClaimModal({
+  required BuildContext context,
+  required Object product,
+}) {
+  return showModalBottomSheet(
+    context: context,
+    backgroundColor: PHelperFunction.isDarkMode(context)
+        ? PAppColor.darkAppBarColor
+        : PAppColor.fillColor,
+    shape: RoundedRectangleBorder(
+      borderRadius: BorderRadius.circular(PAppSize.s24),
+    ),
+    builder: (context) {
+      return SafeArea(
+        child: Container(
+          padding: EdgeInsets.symmetric(
+            horizontal: PAppSize.s16,
+            vertical: PAppSize.s8,
+          ),
+          height: PDeviceUtil.getDeviceHeight(context) * 0.30,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              // Title section
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          'select_claim_type'.tr,
+                          style: Theme.of(context).textTheme.titleLarge
+                              ?.copyWith(
+                                fontSize: PAppSize.s15.sp,
+                                fontWeight: FontWeight.w600,
+                              ),
+                        ),
+                        Assets.icons.closeIcon
+                            .svg(
+                              color: PHelperFunction.isDarkMode(context)
+                                  ? PAppColor.whiteColor
+                                  : PAppColor.darkAppBarColor,
+                            )
+                            .onPressed(
+                              onTap: PHelperFunction.pop,
+                              radius: BorderRadius.circular(PAppSize.s20),
+                            ),
+                      ],
+                    ),
+                  ],
+                ).scrollable(),
+              ),
+
+              PAppSize.s16.verticalSpace,
+              // Action buttons
+              PCustomCardWidget(
+                useBorder: false,
+                padding: EdgeInsets.all(PAppSize.s8),
+                darkColor: PAppColor.cardDarkColor,
+                onTap: () {
+                  PHelperFunction.pop();
+                  Get.put(PClaimsVm())
+                    ..onSelectedPolicy(product as Policy)
+                    ..onSelectedClaimType(ClaimType.partialWithdrawal);
+                  PHelperFunction.switchScreen(
+                    destination: Routes.partialWithdrawalPage,
+                    args: product,
+                  );
+                },
+
+                child: ListTile(
+                  trailing: Assets.icons.arrowForwardIos.svg(
+                    color: PHelperFunction.isDarkMode(context)
+                        ? PAppColor.whiteColor
+                        : PAppColor.darkAppBarColor,
+                  ),
+
+                  title: Text(
+                    'partial_withdrawal'.tr,
+                    style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                  subtitle: Text(
+                    'partial_withdrawal_desc'.tr,
+                    style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                      fontWeight: FontWeight.w400,
+                    ),
+                  ),
+                ),
+              ),
+
+              PAppSize.s16.verticalSpace,
+
+              // Refund Claim
+              PCustomCardWidget(
+                useBorder: false,
+                padding: EdgeInsets.all(PAppSize.s8),
+                darkColor: PAppColor.cardDarkColor,
+                onTap: () {
+                  PHelperFunction.pop();
+                  Get.put(PClaimsVm()).onSelectedClaimType(ClaimType.refund);
+
+                  PPopupDialog(context).warningMessage(
+                    title: 'coming_soon_title'.tr,
+                    message: 'coming_soon_msg'.tr,
+                  );
+                },
+                child: ListTile(
+                  trailing: Assets.icons.arrowForwardIos.svg(
+                    color: PHelperFunction.isDarkMode(context)
+                        ? PAppColor.whiteColor
+                        : PAppColor.darkAppBarColor,
+                  ),
+
+                  title: Text(
+                    'refund_claim'.tr,
+                    style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                  subtitle: Text(
+                    'refund_claim_desc'.tr,
+                    style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                      fontWeight: FontWeight.w400,
+                    ),
+                  ),
+                ),
+              ),
+
+              PAppSize.s4.verticalSpace,
+            ],
+          ),
+        ),
+      );
+    },
   );
 }
 

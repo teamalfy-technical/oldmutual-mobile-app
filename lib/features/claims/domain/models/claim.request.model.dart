@@ -26,7 +26,7 @@ class ClaimRequestResponse extends Equatable {
     createdAt = json['created_at'];
   }
 
-  
+
   @override
   List<Object?> get props => [claimId, policyNumber];
 

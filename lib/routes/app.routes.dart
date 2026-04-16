@@ -77,6 +77,13 @@ abstract class Routes {
   static const affluentCardPage = _Paths.affluentCardPage;
   static const saveContentPage = _Paths.saveContentPage;
   static const trackClaimsPage = _Paths.trackClaimsPage;
+
+  /// ---- Claims Feature
+  static const partialWithdrawalPage = _Paths.partialWithdrawalPage;
+  static const instantClaimPage = _Paths.instantClaimPage;
+  static const selectPMInstantClaimPage = _Paths.selectPMInstantClaimPage;
+  static const instantClaimSummaryPage = _Paths.instantClaimSummaryPage;
+  static const claimSuccessPage = _Paths.claimSuccessPage;
 }
 
 abstract class _Paths {
@@ -153,4 +160,11 @@ abstract class _Paths {
   static const affluentCardPage = '/affluent-card-page';
   static const saveContentPage = '/save-content-page';
   static const trackClaimsPage = '/track-claims-page';
+
+  /// --- Instant Feature
+  static const partialWithdrawalPage = '/partial-withdrawal-page';
+  static const instantClaimPage = '/instant-claim-page';
+  static const selectPMInstantClaimPage = '/select-pm-instant-claim-page';
+  static const instantClaimSummaryPage = '/instant-claim-summary-page';
+  static const claimSuccessPage = '/claim-success-page';
 }
