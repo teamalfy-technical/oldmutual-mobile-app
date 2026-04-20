@@ -76,7 +76,7 @@ class PolicyRepoImpl implements PolicyRepo {
   @override
   Future<Either<PFailure, ApiResponse<PolicyReport>>> generatePolicyReports({
     required String policyNumber,
-    required int year,
+    required String year,
   }) async {
     return await customRepositoryWrapper.wrapRepositoryFunction(
       function: () async => await policyDs.generatePolicyReports(
@@ -123,5 +123,4 @@ class PolicyRepoImpl implements PolicyRepo {
           await policyDs.downloadPolicyStatement(policyNumber: policyNumber),
     );
   }
-
 }

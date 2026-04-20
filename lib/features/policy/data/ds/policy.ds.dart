@@ -18,7 +18,7 @@ abstract class PolicyDs {
   });
   Future<ApiResponse<PolicyReport>> generatePolicyReports({
     required String policyNumber,
-    required int year,
+    required String year,
   });
   Future<ApiResponse<PolicyReport>> checkPolicyReportDownloadStatus({
     required String reportId,
