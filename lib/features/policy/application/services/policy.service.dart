@@ -27,7 +27,7 @@ abstract class PolicyService {
   });
   Future<Either<PFailure, ApiResponse<PolicyReport>>> generatePolicyReports({
     required String policyNumber,
-    required int year,
+    required String year,
   });
   Future<Either<PFailure, ApiResponse<PolicyReport>>>
   checkPolicyReportDownloadStatus({required String reportId});

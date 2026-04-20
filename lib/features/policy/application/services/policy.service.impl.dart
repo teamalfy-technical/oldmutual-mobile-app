@@ -67,7 +67,7 @@ class PolicyServiceImpl implements PolicyService {
   @override
   Future<Either<PFailure, ApiResponse<PolicyReport>>> generatePolicyReports({
     required String policyNumber,
-    required int year,
+    required String year,
   }) {
     return policyRepo.generatePolicyReports(
       policyNumber: policyNumber,
@@ -92,5 +92,4 @@ class PolicyServiceImpl implements PolicyService {
   downloadPolicyStatement({required String policyNumber}) {
     return policyRepo.downloadPolicyStatement(policyNumber: policyNumber);
   }
-
 }

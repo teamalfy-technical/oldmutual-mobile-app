@@ -179,7 +179,7 @@ class PolicyDsImpl implements PolicyDs {
   @override
   Future<ApiResponse<PolicyReport>> generatePolicyReports({
     required String policyNumber,
-    required int year,
+    required String year,
   }) async {
     return await asyncFunctionWrapper.handleAsyncNetworkCall(() async {
       final res = await apiService.callService(
@@ -248,5 +248,4 @@ class PolicyDsImpl implements PolicyDs {
     );
     return ApiResponse<Map<String, dynamic>>.fromJson(res, (data) => data);
   }
-
 }
