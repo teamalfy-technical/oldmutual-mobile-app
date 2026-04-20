@@ -671,7 +671,9 @@ class PAuthVm extends GetxController {
 
   /// [Function] Forgot password to send password reset link
   Future<void> forgotPassword() async {
-    String emailOrPhone = emailOrPhoneTEC.text.trim();
+    String emailOrPhone = emailOrPhoneTEC.text.trim().isNumericOnly
+        ? PHelperFunction.formatPhoneNumber(emailOrPhoneTEC.text.trim())
+        : emailOrPhoneTEC.text.trim();
     maskedValue.value = emailOrPhone.isNumericOnly
         ? PHelperFunction.maskPhoneNumber(emailOrPhone)
         : PHelperFunction.maskEmailDomain(emailOrPhone);
