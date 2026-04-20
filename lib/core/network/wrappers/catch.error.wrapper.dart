@@ -72,17 +72,7 @@ class CatchApiErrorWrapperImpl implements CatchApiErrorWrapper {
           errorMessage = err.response?.data['error'] ?? 'Unauthorized request';
           pensionAppLogger.e(err.response?.data);
         } else if (statusCode == 403) {
-          if (Get.currentRoute != Routes.loginPage) {
-            errorMessage =
-                err.response?.data['message'] ??
-                err.response?.data['data']['error'] ??
-                'Forbidden Access';
-          } else {
-            errorMessage =
-                err.response?.data['message'] ??
-                err.response?.data['data']['error'] ??
-                'Forbidden Access';
-          }
+          errorMessage = extractError(err.response?.data);
           pensionAppLogger.e(err.response?.data);
         } else if (statusCode == 404) {
           pensionAppLogger.e(err.response?.data);
@@ -121,8 +111,30 @@ class CatchApiErrorWrapperImpl implements CatchApiErrorWrapper {
   }
 
   String extractError(Map<String, dynamic> response) {
-    // pensionAppLogger.e('Response: $response');
-    if (response.containsKey('message')) {
+    if (response.containsKey("data")) {
+      pensionAppLogger.e('Response: $response');
+      if (response["data"] is String) {
+        return response["data"];
+      } else if (response['data'] is Map &&
+          response['data']['error'] is String) {
+        final dataError = response['data']['error'] as String;
+        if (dataError.isNotEmpty) {
+          return dataError;
+        }
+      } else {
+        for (var entry in response["data"].entries) {
+          if (entry.value is List && entry.value.isNotEmpty) {
+            return entry.value.first; // Return the first error message found
+          }
+          if (entry.value is Map) {
+            return entry.value['error'];
+          }
+          if (entry.value is String && entry.value.isNotEmpty) {
+            return entry.value; // Return the error message found
+          }
+        }
+      }
+    } else if (response.containsKey('message')) {
       final message = response['message'];
       if (message is Map) {
         if (message.containsKey('Current_cash_value')) {
@@ -132,21 +144,6 @@ class CatchApiErrorWrapperImpl implements CatchApiErrorWrapper {
         // pensionAppLogger.e('Error: ${message['Current_cash_value'][0]}');
       } else if (message is String) {
         return message;
-      }
-    }
-    if (response.containsKey("data")) {
-      pensionAppLogger.e('Response: $response');
-      if (response["data"] is String) {
-        return response["data"];
-      } else {
-        for (var entry in response["data"].entries) {
-          if (entry.value is List && entry.value.isNotEmpty) {
-            return entry.value.first; // Return the first error message found
-          }
-          if (entry.value is String && entry.value.isNotEmpty) {
-            return entry.value; // Return the error message found
-          }
-        }
       }
     } else if (response.containsKey('error')) {
       return response['error'];
