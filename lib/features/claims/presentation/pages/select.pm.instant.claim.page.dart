@@ -147,8 +147,9 @@ class _PSelectPMInstantClaimPageState extends State<PSelectPMInstantClaimPage> {
 
                     NoteWidget(
                       borderRadius: BorderRadius.circular(PAppSize.s16),
-                      color: Color(0xFFFEEFCD),
-                      borderColor: Color(0xFF913C08),
+                      color: PAppColor.warningNoteFill,
+                      borderColor: PAppColor.warningNoteBorder,
+                      textColor: PAppColor.warningNoteBorder,
                       description: 'hubtel_identity_validation_note'.tr,
                     ),
 

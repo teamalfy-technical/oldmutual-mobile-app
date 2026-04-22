@@ -21,8 +21,8 @@ class PTextFormFieldTheme {
       color: PAppColor.text300,
     ),
     hintStyle: const TextStyle().copyWith(
-      fontSize: PAppSize.s16,
-      fontWeight: FontWeight.w500,
+      fontSize: PAppSize.s15,
+      fontWeight: FontWeight.w400,
       color: PAppColor.hintTextColor,
     ),
     errorStyle: const TextStyle().copyWith(
@@ -84,8 +84,8 @@ class PTextFormFieldTheme {
       color: PAppColor.text300,
     ),
     hintStyle: const TextStyle().copyWith(
-      fontSize: PAppSize.s16,
-      fontWeight: FontWeight.w500,
+      fontSize: PAppSize.s15,
+      fontWeight: FontWeight.w400,
       color: PAppColor.hintTextColor,
     ),
     errorStyle: const TextStyle().copyWith(

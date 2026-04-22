@@ -18,10 +18,12 @@ class PCustomTextField extends StatefulWidget {
   final bool? alignLabelWithHint;
   final List<TextInputFormatter>? inputFormatters;
   final String? Function(String?)? validator;
+  final double? labelFontSize;
   final Function(String)? onChanged;
   final TextCapitalization textCapitalization;
   final String? errorText;
   final FocusNode? focusNode;
+  final TextAlign? textAlign;
   final TextInputAction? textInputAction;
 
   const PCustomTextField({
@@ -46,6 +48,8 @@ class PCustomTextField extends StatefulWidget {
     this.errorText,
     this.focusNode,
     this.textInputAction,
+    this.textAlign,
+    this.labelFontSize,
   });
 
   @override
@@ -80,6 +84,7 @@ class _PCustomTextFieldState extends State<PCustomTextField> {
   Widget build(BuildContext context) {
     return TextFormField(
       focusNode: _focusNode,
+      textAlign: widget.textAlign ?? TextAlign.start,
       controller: widget.controller,
       validator: widget.validator,
       textCapitalization: widget.textCapitalization,
@@ -96,6 +101,7 @@ class _PCustomTextFieldState extends State<PCustomTextField> {
             : PAppColor.text500,
         fontWeight: FontWeight.w600,
       ),
+
       onChanged: widget.onChanged,
       decoration: InputDecoration(
         alignLabelWithHint: widget.alignLabelWithHint,
@@ -114,6 +120,7 @@ class _PCustomTextFieldState extends State<PCustomTextField> {
         label: Text(
           widget.labelText,
           style: TextStyle(
+            fontSize: widget.labelFontSize,
             color: _focusNode.hasFocus
                 ? PAppColor.primaryBorderColor
                 : PAppColor.hintTextColor,

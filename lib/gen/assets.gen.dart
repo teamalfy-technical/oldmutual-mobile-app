@@ -128,6 +128,10 @@ class $AssetsIconsGen {
   /// File path: assets/icons/calculate.svg
   SvgGenImage get calculate => const SvgGenImage('assets/icons/calculate.svg');
 
+  /// File path: assets/icons/calendar.dotted.icon.svg
+  SvgGenImage get calendarDottedIcon =>
+      const SvgGenImage('assets/icons/calendar.dotted.icon.svg');
+
   /// File path: assets/icons/calendar.icon.svg
   SvgGenImage get calendarIcon =>
       const SvgGenImage('assets/icons/calendar.icon.svg');
@@ -245,8 +249,16 @@ class $AssetsIconsGen {
   /// File path: assets/icons/hotel.icon.svg
   SvgGenImage get hotelIcon => const SvgGenImage('assets/icons/hotel.icon.svg');
 
+  /// File path: assets/icons/increase.interest.icon.svg
+  SvgGenImage get increaseInterestIcon =>
+      const SvgGenImage('assets/icons/increase.interest.icon.svg');
+
   /// File path: assets/icons/info.icon.svg
   SvgGenImage get infoIcon => const SvgGenImage('assets/icons/info.icon.svg');
+
+  /// File path: assets/icons/insure.outline.svg
+  SvgGenImage get insureOutline =>
+      const SvgGenImage('assets/icons/insure.outline.svg');
 
   /// File path: assets/icons/invest.svg
   SvgGenImage get invest => const SvgGenImage('assets/icons/invest.svg');
@@ -335,6 +347,10 @@ class $AssetsIconsGen {
 
   /// File path: assets/icons/plus.icon.svg
   SvgGenImage get plusIcon => const SvgGenImage('assets/icons/plus.icon.svg');
+
+  /// File path: assets/icons/savings.icon.svg
+  SvgGenImage get savingsIcon =>
+      const SvgGenImage('assets/icons/savings.icon.svg');
 
   /// File path: assets/icons/selfie.svg
   SvgGenImage get selfie => const SvgGenImage('assets/icons/selfie.svg');
@@ -426,6 +442,10 @@ class $AssetsIconsGen {
   SvgGenImage get withdrawIcon =>
       const SvgGenImage('assets/icons/withdraw.icon.svg');
 
+  /// File path: assets/icons/withdrawal.svg
+  SvgGenImage get withdrawal =>
+      const SvgGenImage('assets/icons/withdrawal.svg');
+
   /// List of all assets
   List<SvgGenImage> get values => [
     insure,
@@ -449,6 +469,7 @@ class $AssetsIconsGen {
     bottomLogoBanner,
     brightness,
     calculate,
+    calendarDottedIcon,
     calendarIcon,
     callIcon,
     call,
@@ -484,7 +505,9 @@ class $AssetsIconsGen {
     helpIcon,
     homeIcon,
     hotelIcon,
+    increaseInterestIcon,
     infoIcon,
+    insureOutline,
     invest,
     keyboardArrowDown,
     keyboardArrowRight,
@@ -510,6 +533,7 @@ class $AssetsIconsGen {
     phoneIcon,
     pictogram,
     plusIcon,
+    savingsIcon,
     selfie,
     settingsIcon,
     shieldDark,
@@ -534,6 +558,7 @@ class $AssetsIconsGen {
     warningRedIcon,
     warning,
     withdrawIcon,
+    withdrawal,
   ];
 }
 

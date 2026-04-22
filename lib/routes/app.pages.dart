@@ -15,6 +15,7 @@ import 'package:oldmutual_pensions_app/features/future.value.calculator/future.v
 import 'package:oldmutual_pensions_app/features/home/home.dart';
 import 'package:oldmutual_pensions_app/features/manage/manage.dart';
 import 'package:oldmutual_pensions_app/features/more/more.services.dart';
+import 'package:oldmutual_pensions_app/features/mvest/mvest.dart';
 import 'package:oldmutual_pensions_app/features/notification/notification.dart';
 import 'package:oldmutual_pensions_app/features/pension/pension.dart';
 import 'package:oldmutual_pensions_app/features/policy/policy.dart';
@@ -342,6 +343,17 @@ class AppPages {
         message: Get.arguments[1],
         onTap: Get.arguments[2],
       ),
+    ),
+
+    /// --- Mvest  Feature
+    GetPage(name: _Paths.mvestPage, page: () => PMVestPage()),
+    GetPage(
+      name: _Paths.mvestSchemeDetailsPage,
+      page: () => PSchemeDetailsPage(),
+    ),
+    GetPage(
+      name: _Paths.mvestBeneficiariesPage,
+      page: () => PMVestBeneficiariesPage(),
     ),
   ];
 }

@@ -422,6 +422,7 @@ class AppTranslations extends Translations {
       'no_policy_found': 'You\'ve no @name policies available',
       'no_product_found': 'You\'ve no @name products available',
       'total_cover': 'Your total cover',
+      'mvest_personal_pension_scheme': 'Mvest Personal Pension Scheme',
       'see_all': 'see all',
       'biodata': 'Biodata',
       'products': 'Products',
@@ -440,7 +441,7 @@ class AppTranslations extends Translations {
       'monthly_premium': 'Monthly premium',
       'withdraw': 'Withdraw',
       'claim': 'Claim',
-      'add_beneficiary': 'Add beneficiary',
+      'add_beneficiary': 'Add Beneficiary',
       'policy_number': 'Policy number',
       'investment_term': 'Investment term',
       'policy_detail': 'Policy Details',
@@ -676,6 +677,56 @@ class AppTranslations extends Translations {
 
       // Summary Page
       'summary': 'Summary',
+
+      // MVest Page
+      'mvest_title': 'MVest',
+      'mvest_intro':
+          'Build your wealth with a flexible investment plan tailored to your goals.',
+      'flexible_contributions': 'Flexible Contributions',
+      'flexible_contributions_desc':
+          'Contribute anytime with no fixed commitments',
+      'competitive_returns': 'Competitive Returns',
+      'competitive_returns_desc':
+          'Grow your money with strong consistent returns',
+      'secure_and_regulated': 'Secure and regulated',
+      'secure_and_regulated_desc':
+          'Your funds protected under strict regulation',
+      'easy_withdrawals': 'Easy withdrawals',
+      'easy_withdrawals_desc': 'Access your money quickly whenever you need',
+      'mvest_note':
+          'MVest allows you to invest monthly, yearly, or as a lump sum. Assign beneficiaries and manage your portfolio — all from your phone.',
+      'start_investing': 'Start Investing',
+
+      // MVest Scheme Details Page
+      'scheme_details': 'Scheme details',
+      'step_n_of_n': 'Step @current of @total',
+      'choose_contribution_hint':
+          'Choose how you\'d like to contribute to your MVest plan.',
+      'monthly': 'Monthly',
+      'yearly': 'Yearly',
+      'lump_sum': 'Lump Sum',
+      'contribution_amount_ghc': 'Contribution Amount in GH₵',
+
+      // MVest Beneficiaries Page
+      'beneficiaries_allocation_hint':
+          'Add up to @max beneficiaries and assign percentage allocation.',
+      'allocated_of_total': 'Allocated @value% of 100%',
+      'teen': 'Teen',
+      'adult': 'Adult',
+      'beneficiary_duplicate_title': 'Already Added',
+      'beneficiary_duplicate_msg':
+          'This person is already on your beneficiaries list.',
+
+      // MVest Add Beneficiary Sheet
+      'from_existing': 'From Existing',
+      'first_name': 'First Name',
+      'last_name': 'Last Name',
+      'gender_optional': 'Gender (Optional)',
+      'id_type_optional': 'ID Type (Optional)',
+      'allocation_percentage': 'Allocation(%)',
+      'save_beneficiary': 'Save Beneficiary',
+      'select_existing_beneficiaries_hint':
+          'Select a beneficiary from your other schemes and assign percentage allocation.',
     },
     'hi_IN': {'app_name': 'Pensions App'},
     'fr_FR': {'app_name': 'Pensions App'},

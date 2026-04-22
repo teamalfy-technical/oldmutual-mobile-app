@@ -7,6 +7,7 @@ class NoteWidget extends StatelessWidget {
   final String description;
   final Color? color;
   final Color? borderColor;
+  final Color? textColor;
   final BorderRadiusGeometry? borderRadius;
   const NoteWidget({
     super.key,
@@ -15,6 +16,7 @@ class NoteWidget extends StatelessWidget {
     this.color,
     this.borderColor,
     this.borderRadius,
+    this.textColor,
   });
 
   @override
@@ -48,7 +50,7 @@ class NoteWidget extends StatelessWidget {
             description,
             textAlign: TextAlign.start,
             style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-              color: borderColor ?? PAppColor.darkAppBarColor,
+              color: textColor ?? PAppColor.darkAppBarColor,
               fontSize: PAppSize.s14,
             ),
           ),

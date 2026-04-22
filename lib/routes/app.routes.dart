@@ -84,6 +84,11 @@ abstract class Routes {
   static const selectPMInstantClaimPage = _Paths.selectPMInstantClaimPage;
   static const instantClaimSummaryPage = _Paths.instantClaimSummaryPage;
   static const claimSuccessPage = _Paths.claimSuccessPage;
+
+  /// ---- Mvest Feature
+  static const mvestPage = _Paths.mvestPage;
+  static const mvestSchemeDetailsPage = _Paths.mvestSchemeDetailsPage;
+  static const mvestBeneficiariesPage = _Paths.mvestBeneficiariesPage;
 }
 
 abstract class _Paths {
@@ -167,4 +172,9 @@ abstract class _Paths {
   static const selectPMInstantClaimPage = '/select-pm-instant-claim-page';
   static const instantClaimSummaryPage = '/instant-claim-summary-page';
   static const claimSuccessPage = '/claim-success-page';
+
+  /// --- MVest Feature
+  static const mvestPage = '/mvest-page';
+  static const mvestSchemeDetailsPage = '/mvest-scheme-details-page';
+  static const mvestBeneficiariesPage = '/mvest-beneficiaries-page';
 }

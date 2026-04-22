@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:oldmutual_pensions_app/core/utils/utils.dart';
 import 'package:oldmutual_pensions_app/features/home/home.dart';
 import 'package:oldmutual_pensions_app/gen/assets.gen.dart';
+import 'package:oldmutual_pensions_app/routes/app.pages.dart';
 import 'package:oldmutual_pensions_app/shared/shared.dart';
 
 class PDashboardHighlightPage extends StatelessWidget {
@@ -91,8 +92,11 @@ class PDashboardHighlightPage extends StatelessWidget {
                     return AnimatedBuilder(
                       animation: animation,
                       builder: (context, child) {
-                        final t = isForward ? animation.value : 1 - animation.value;
-                        final radius = sourceRadius + (destRadius - sourceRadius) * t;
+                        final t = isForward
+                            ? animation.value
+                            : 1 - animation.value;
+                        final radius =
+                            sourceRadius + (destRadius - sourceRadius) * t;
                         return Container(
                           clipBehavior: Clip.antiAlias,
                           decoration: BoxDecoration(
@@ -185,25 +189,47 @@ class PDashboardHighlightPage extends StatelessWidget {
                 PAppSize.s20.verticalSpace,
 
                 if (highlight.title2 != 'new_feature'.tr) ...[
-                  if (highlight.onQuoteTap != null) ...[
-                    PGradientButton(
-                      label: 'quote_now'.tr.toUpperCase(),
-                      textColor: PAppColor.whiteColor,
-                      height: PAppSize.buttonHeightMid,
-                      showIcon: false,
-                      fontSize: PAppSize.s14,
-                      width: PDeviceUtil.getDeviceWidth(context) * 0.40,
-                      onTap: highlight.onQuoteTap,
-                    ),
-                    PAppSize.s8.verticalSpace,
-                  ],
+                  //   if (highlight.onQuoteTap != null) ...[
+                  //     PGradientButton(
+                  //       label: 'quote_now'.tr.toUpperCase(),
+                  //       textColor: PAppColor.whiteColor,
+                  //       height: PAppSize.buttonHeightMid,
+                  //       showIcon: false,
+                  //       fontSize: PAppSize.s14,
+                  //       width: PDeviceUtil.getDeviceWidth(context) * 0.40,
+                  //       onTap: highlight.onQuoteTap,
+                  //     ),
+                  //     PAppSize.s8.verticalSpace,
+                  //   ],
 
-                  SizedBox(
-                    width: PDeviceUtil.getDeviceWidth(context) * 0.40,
-                    child: TextButton.icon(
-                      iconAlignment: IconAlignment.end,
-                      onPressed: highlight.onLearnMoreTap,
-                      label: Text(
+                  //   SizedBox(
+                  //     width: PDeviceUtil.getDeviceWidth(context) * 0.40,
+                  //     child: TextButton.icon(
+                  //       iconAlignment: IconAlignment.end,
+                  //       onPressed: highlight.onLearnMoreTap,
+                  //       label: Text(
+                  //         'learn_more'.tr.toUpperCase(),
+                  //         textAlign: TextAlign.center,
+                  //         style: TextStyle(
+                  //           fontWeight: FontWeight.w600,
+                  //           color: PHelperFunction.isDarkMode(context)
+                  //               ? PAppColor.whiteColor
+                  //               : PAppColor.textColorDark,
+                  //           fontSize: PAppSize.s14,
+                  //         ),
+                  //       ),
+                  //       icon: Assets.icons.arrowIcon.svg(
+                  //         color: PHelperFunction.isDarkMode(context)
+                  //             ? PAppColor.whiteColor
+                  //             : PAppColor.textColorDark,
+                  //       ),
+                  //     ),
+                  //   ),
+                  // PAppSize.s20.verticalSpace,
+                  Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Text(
                         'learn_more'.tr.toUpperCase(),
                         textAlign: TextAlign.center,
                         style: TextStyle(
@@ -214,88 +240,66 @@ class PDashboardHighlightPage extends StatelessWidget {
                           fontSize: PAppSize.s14,
                         ),
                       ),
-                      icon: Assets.icons.arrowIcon.svg(
+                      PAppSize.s8.horizontalSpace,
+                      Assets.icons.arrowIcon.svg(
                         color: PHelperFunction.isDarkMode(context)
                             ? PAppColor.whiteColor
                             : PAppColor.textColorDark,
                       ),
+                    ],
+                  ).onPressed(onTap: highlight.onLearnMoreTap),
+
+                  PAppSize.s20.verticalSpace,
+                  if (highlight.title != 'retirement_savings'.tr)
+                    Row(
+                      children: [
+                        PGradientButton(
+                          label: 'apply_now'.tr.toUpperCase(),
+                          textColor: PAppColor.whiteColor,
+                          height: PAppSize.buttonHeightMid,
+                          showIcon: false,
+                          fontSize: PAppSize.s14,
+                          width: PDeviceUtil.getDeviceWidth(context) * 0.40,
+                          onTap: () {
+                            if (highlight.planDescription != null &&
+                                highlight.benefits != null) {
+                              showApplyModal(context, highlight);
+                            }
+                          },
+                        ),
+                        PAppSize.s8.horizontalSpace,
+                        SizedBox(
+                          width: PDeviceUtil.getDeviceWidth(context) * 0.42,
+                          child: OutlinedButton(
+                            style: OutlinedButton.styleFrom(
+                              side: BorderSide(
+                                width: PAppSize.s1,
+                                color: PHelperFunction.isDarkMode(context)
+                                    ? PAppColor.whiteColor
+                                    : PAppColor.textColorDark,
+                              ),
+                            ),
+                            onPressed: () =>
+                                PPopupDialog(context).warningMessage(
+                                  title: 'coming_soon_title'.tr,
+                                  message: 'coming_soon_msg'.tr,
+                                ),
+
+                            // PHelperFunction.pop(),
+                            child: Text(
+                              'im_interested'.tr.toUpperCase(),
+                              style: TextStyle(
+                                fontWeight: FontWeight.w600,
+                                color: PHelperFunction.isDarkMode(context)
+                                    ? PAppColor.whiteColor
+                                    : PAppColor.textColorDark,
+                                fontSize: PAppSize.s16,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
-                  ),
-                  // PAppSize.s20.verticalSpace,
-                  // Row(
-                  //   mainAxisSize: MainAxisSize.min,
-                  //   children: [
-                  //     Text(
-                  //       'learn_more'.tr.toUpperCase(),
-                  //       textAlign: TextAlign.center,
-                  //       style: TextStyle(
-                  //         fontWeight: FontWeight.w600,
-                  //         color: PHelperFunction.isDarkMode(context)
-                  //             ? PAppColor.whiteColor
-                  //             : PAppColor.textColorDark,
-                  //         fontSize: PAppSize.s14,
-                  //       ),
-                  //     ),
-                  //     PAppSize.s8.horizontalSpace,
-                  //     Assets.icons.arrowIcon.svg(
-                  //       color: PHelperFunction.isDarkMode(context)
-                  //           ? PAppColor.whiteColor
-                  //           : PAppColor.textColorDark,
-                  //     ),
-                  //   ],
-                  // ).onPressed(onTap: highlight.onLearnMoreTap),
-
-                  // PAppSize.s16.verticalSpace,
-                  // if (highlight.title != 'retirement_savings'.tr)
-                  //   Row(
-                  //     children: [
-                  //       PGradientButton(
-                  //         label: 'apply_now'.tr.toUpperCase(),
-                  //         textColor: PAppColor.whiteColor,
-                  //         height: PAppSize.buttonHeightMid,
-                  //         showIcon: false,
-                  //         fontSize: PAppSize.s14,
-                  //         width: PDeviceUtil.getDeviceWidth(context) * 0.40,
-                  //         onTap: () {
-                  //           if (highlight.planDescription != null &&
-                  //               highlight.benefits != null) {
-                  //             showApplyModal(context, highlight);
-                  //           }
-                  //         },
-                  //       ),
-                  //       PAppSize.s8.horizontalSpace,
-                  //       SizedBox(
-                  //         width: PDeviceUtil.getDeviceWidth(context) * 0.42,
-                  //         child: OutlinedButton(
-                  //           style: OutlinedButton.styleFrom(
-                  //             side: BorderSide(
-                  //               width: PAppSize.s1,
-                  //               color: PHelperFunction.isDarkMode(context)
-                  //                   ? PAppColor.whiteColor
-                  //                   : PAppColor.textColorDark,
-                  //             ),
-                  //           ),
-                  //           onPressed: () =>
-                  //               PPopupDialog(context).warningMessage(
-                  //                 title: 'coming_soon_title'.tr,
-                  //                 message: 'coming_soon_msg'.tr,
-                  //               ),
-
-                  //           // PHelperFunction.pop(),
-                  //           child: Text(
-                  //             'im_interested'.tr.toUpperCase(),
-                  //             style: TextStyle(
-                  //               fontWeight: FontWeight.w600,
-                  //               color: PHelperFunction.isDarkMode(context)
-                  //                   ? PAppColor.whiteColor
-                  //                   : PAppColor.textColorDark,
-                  //               fontSize: PAppSize.s16,
-                  //             ),
-                  //           ),
-                  //         ),
-                  //       ),
-                  //     ],
-                  //   ),
                 ],
               ],
             ).scrollable(),
@@ -310,6 +314,7 @@ class PDashboardHighlightPage extends StatelessWidget {
   Future<dynamic> showApplyModal(BuildContext context, Highlight highlight) {
     return showModalBottomSheet(
       context: context,
+      isScrollControlled: true,
       backgroundColor: PHelperFunction.isDarkMode(context)
           ? PAppColor.darkAppBarColor
           : PAppColor.whiteColor,
@@ -323,7 +328,7 @@ class PDashboardHighlightPage extends StatelessWidget {
               horizontal: PAppSize.s16,
               vertical: PAppSize.s8,
             ),
-            height: PDeviceUtil.getDeviceHeight(context) * 0.50,
+            height: PDeviceUtil.getDeviceHeight(context) * 0.60,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -332,7 +337,9 @@ class PDashboardHighlightPage extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      highlight.title.split('\n').join('') ?? '',
+                      highlight.title == 'mvest_personal_pension'.tr
+                          ? 'mvest_personal_pension_scheme'.tr
+                          : highlight.title.split('\n').join('') ?? '',
                       style: Theme.of(context).textTheme.titleLarge?.copyWith(
                         fontSize: PAppSize.s16.sp,
                         fontWeight: FontWeight.w600,
@@ -358,7 +365,7 @@ class PDashboardHighlightPage extends StatelessWidget {
                 Text(
                   highlight.planDescription ?? '',
                   style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                    fontSize: PAppSize.s16.sp,
+                    fontSize: PAppSize.s14.sp,
                     fontWeight: FontWeight.w400,
                   ),
                 ),
@@ -375,6 +382,7 @@ class PDashboardHighlightPage extends StatelessWidget {
                 Expanded(
                   child: ListView.builder(
                     itemCount: highlight.benefits?.length,
+                    shrinkWrap: true,
                     itemBuilder: (context, index) {
                       final benefit = highlight.benefits![index];
                       return Row(
@@ -412,11 +420,25 @@ class PDashboardHighlightPage extends StatelessWidget {
                         loading: LoadingState.completed,
                         textColor: PAppColor.whiteColor,
                         width: PDeviceUtil.getDeviceWidth(context),
-                        onTap: () => PPopupDialog(context).warningMessage(
-                          title: 'coming_soon_title'.tr,
-                          message: 'coming_soon_msg'.tr,
-                        ),
-                        //PHelperFunction.pop,
+                        onTap: () {
+                          PHelperFunction.pop();
+                          if (highlight.title == 'mvest_personal_pension'.tr) {
+                            PHelperFunction.switchScreen(
+                              destination: Routes.mvestPage,
+                            );
+                          } else {
+                            PPopupDialog(context).warningMessage(
+                              title: 'coming_soon_title'.tr,
+                              message: 'coming_soon_msg'.tr,
+                            );
+                          }
+                        },
+
+                        // PPopupDialog(context).warningMessage(
+                        //   title: 'coming_soon_title'.tr,
+                        //   message: 'coming_soon_msg'.tr,
+                        // ),
+                        // //PHelperFunction.pop,
                       ),
                     ),
                     PAppSize.s8.horizontalSpace,

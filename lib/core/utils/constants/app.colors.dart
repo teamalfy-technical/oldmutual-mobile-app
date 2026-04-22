@@ -115,6 +115,8 @@ class PAppColor {
   static const Color warning300 = Color(0xFFedc066);
   static const Color warning500 = Color(0xFFe4a11b);
   static const Color warning700 = Color(0xFFa27213);
+  static const Color warningNoteFill = Color(0xFFFEEFCD);
+  static const Color warningNoteBorder = Color(0xFF913C08);
 
   // Success Colors
   static const Color success50 = Color(0xFFe8f6ed);
@@ -135,13 +137,11 @@ class PAppColor {
   static const Color info700 = Color(0xFF411fa0);
 
   static final primaryGradient = LinearGradient(
-  colors: [PAppColor.primaryDark, PAppColor.primary],
-  begin: Alignment.centerLeft,
-  end: Alignment.centerRight,
-);
+    colors: [PAppColor.primaryDark, PAppColor.primary],
+    begin: Alignment.centerLeft,
+    end: Alignment.centerRight,
+  );
 }
-
-
 
 final borderRadius = BorderRadius.only(
   topLeft: Radius.circular(PAppSize.s6),
