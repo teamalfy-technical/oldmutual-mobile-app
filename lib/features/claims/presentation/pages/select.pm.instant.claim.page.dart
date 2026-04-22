@@ -42,7 +42,7 @@ class _PSelectPMInstantClaimPageState extends State<PSelectPMInstantClaimPage> {
 
   bool get _canContinue =>
       ctrl.selectedPaymentMethod != null &&
-      ctrl.selectedWithdrawalReason != null &&
+      // ctrl.selectedWithdrawalReason != null &&
       ctrl.momoNumberTEC.text.trim().isNotEmpty;
 
   @override
@@ -91,28 +91,28 @@ class _PSelectPMInstantClaimPageState extends State<PSelectPMInstantClaimPage> {
                         );
                       },
                     ),
-                    PAppSize.s20.verticalSpace,
-                    GetBuilder<PClaimsVm>(
-                      builder: (ctrl) {
-                        return PCustomDropdownField<WithdrawalReason>(
-                          labelText: 'withdrawal_purpose'.tr,
-                          initialValue: ctrl.selectedWithdrawalReason,
-                          onChanged: (value) {
-                            ctrl.onWithdrawalReasonChanged(value);
-                            _onFormChanged();
-                          },
-                          items: ctrl.withdrawalReasons
-                              .map(
-                                (reason) => DropdownMenuItem<WithdrawalReason>(
-                                  value: reason,
-                                  child: Text(reason.description ?? ''),
-                                ),
-                              )
-                              .toList(),
-                        );
-                      },
-                    ),
 
+                    // PAppSize.s20.verticalSpace,
+                    // GetBuilder<PClaimsVm>(
+                    //   builder: (ctrl) {
+                    //     return PCustomDropdownField<WithdrawalReason>(
+                    //       labelText: 'withdrawal_purpose'.tr,
+                    //       initialValue: ctrl.selectedWithdrawalReason,
+                    //       onChanged: (value) {
+                    //         ctrl.onWithdrawalReasonChanged(value);
+                    //         _onFormChanged();
+                    //       },
+                    //       items: ctrl.withdrawalReasons
+                    //           .map(
+                    //             (reason) => DropdownMenuItem<WithdrawalReason>(
+                    //               value: reason,
+                    //               child: Text(reason.description ?? ''),
+                    //             ),
+                    //           )
+                    //           .toList(),
+                    //     );
+                    //   },
+                    // ),
                     PAppSize.s20.verticalSpace,
                     PKeyboardActions(
                       focusNode: _momoNumberFocusNode,
