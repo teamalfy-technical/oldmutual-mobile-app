@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:oldmutual_pensions_app/core/utils/utils.dart';
 import 'package:oldmutual_pensions_app/features/mvest/mvest.dart';
+import 'package:oldmutual_pensions_app/routes/app.pages.dart';
 import 'package:oldmutual_pensions_app/shared/shared.dart';
 
 class PMVestBeneficiariesPage extends StatelessWidget {
@@ -115,7 +116,11 @@ class PMVestBeneficiariesPage extends StatelessWidget {
                   showIcon: false,
                   textColor: PAppColor.whiteColor,
                   width: PDeviceUtil.getDeviceWidth(context),
-                  onTap: ctrl.beneficiaries.isNotEmpty ? () {} : null,
+                  onTap: ctrl.beneficiaries.isNotEmpty
+                      ? () => PHelperFunction.switchScreen(
+                          destination: Routes.mvestReviewPage,
+                        )
+                      : null,
                 ),
               ),
             ],
@@ -152,9 +157,7 @@ class _BeneficiaryCard extends StatelessWidget {
           decoration: BoxDecoration(
             color: isDark ? PAppColor.cardDarkColor : PAppColor.whiteColor,
             border: Border.all(
-              color: isDark
-                  ? PAppColor.darkBorderColor
-                  : PAppColor.fillColor4,
+              color: isDark ? PAppColor.darkBorderColor : PAppColor.fillColor4,
               width: PAppSize.s1,
             ),
             borderRadius: BorderRadius.circular(PAppSize.s12),
@@ -187,8 +190,8 @@ class _BeneficiaryCard extends StatelessWidget {
           ),
         ),
         Positioned(
-          top: -PAppSize.s8,
-          right: PAppSize.s16,
+          top: PAppSize.s0,
+          right: PAppSize.s0,
           child: _AgeBadge(isTeen: isTeen),
         ),
       ],
@@ -219,7 +222,7 @@ class _PhoneAndAllocationLine extends StatelessWidget {
             text: '${beneficiary.percentage.toStringAsFixed(0)}%',
             style: baseStyle?.copyWith(
               color: PAppColor.primaryDark,
-              fontWeight: FontWeight.w600,
+              fontWeight: FontWeight.w500,
             ),
           ),
         ],
@@ -259,15 +262,24 @@ class _AgeBadge extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final color = isTeen ? PAppColor.orangeColor : PAppColor.primaryDark;
+    // final color = isTeen ? PAppColor.orangeColor : PAppColor.primaryDark;
     return Container(
       padding: EdgeInsets.symmetric(
         horizontal: PAppSize.s10,
         vertical: PAppSize.s3,
       ),
       decoration: BoxDecoration(
-        color: color,
-        borderRadius: BorderRadius.circular(PAppSize.s12),
+        gradient: LinearGradient(
+          colors: isTeen
+              ? [PAppColor.orangeColor, PAppColor.orangeColor]
+              : [PAppColor.primaryDark, PAppColor.primary],
+        ),
+        borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(PAppSize.s12),
+          topRight: Radius.circular(PAppSize.s12),
+          bottomLeft: Radius.circular(PAppSize.s12),
+          bottomRight: Radius.circular(PAppSize.s0),
+        ),
       ),
       child: Text(
         isTeen ? 'teen'.tr : 'adult'.tr,

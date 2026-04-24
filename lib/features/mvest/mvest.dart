@@ -5,7 +5,11 @@
 // export 'data/repos/mvest.repo.dart';
 // export 'domain/models/mvest.model.dart';
 export 'presentation/pages/beneficiaries.page.dart';
+export 'presentation/pages/mvest.mobile.money.page.dart';
 export 'presentation/pages/mvest.page.dart';
+export 'presentation/pages/mvest.payment.page.dart';
+export 'presentation/pages/mvest.review.page.dart';
+export 'presentation/pages/mvest.success.page.dart';
 export 'presentation/pages/scheme.details.page.dart';
 export 'presentation/vm/mvest.vm.dart';
 export 'presentation/widgets/add.beneficiary.sheet.dart';

@@ -727,6 +727,31 @@ class AppTranslations extends Translations {
       'save_beneficiary': 'Save Beneficiary',
       'select_existing_beneficiaries_hint':
           'Select a beneficiary from your other schemes and assign percentage allocation.',
+
+      // MVest Review Page
+      'review': 'Review',
+      'review_investment_hint':
+          'Please confirm your investment details before proceeding to payment.',
+      'payment_summary': 'Payment Summary',
+      'contribution_type': 'Contribution type',
+      'proceed_to_payment': 'Proceed to payment',
+      'mvest_declaration':
+          'I hereby declare that the information provided is accurate and I accept the terms and conditions of the MVest investment product by Old Mutual.',
+
+      // MVest Payment Page
+      'payment': 'Payment',
+      'complete_subscription_hint':
+          'Complete your investment subscription via mobile money.',
+      'frequency': 'Frequency',
+      'mobile_money_desc': 'Pay via MTN, Vodafone, or AirtelTigo',
+      'confirm_and_pay': 'Confirm and Pay',
+
+      // MVest Success Page
+      'investment_created': 'Investment created!',
+      'payment_processed_hubtel':
+          'Your payment has been processed through Hubtel.',
+      'reference': 'Reference',
+      'plan': 'Plan',
     },
     'hi_IN': {'app_name': 'Pensions App'},
     'fr_FR': {'app_name': 'Pensions App'},

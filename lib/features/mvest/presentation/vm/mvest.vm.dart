@@ -5,6 +5,8 @@ enum MVestFrequency { monthly, yearly, lumpSum }
 
 enum MVestAgeCategory { teen, adult }
 
+enum MVestPaymentMethod { mobileMoney }
+
 class MVestBeneficiary {
   final String name;
   final String relationship;
@@ -20,7 +22,7 @@ class MVestBeneficiary {
     required this.name,
     required this.relationship,
     required this.percentage,
-    this.phone = '',
+    this.phone = '233275534095',
     this.dateOfBirth,
     this.sourceId,
   });
@@ -131,6 +133,16 @@ class PMVestVm extends GetxController {
 
   final RxMap<String, double> existingAllocations = <String, double>{}.obs;
 
+  // Review page state
+  final RxBool declarationAccepted = false.obs;
+
+  // Payment page state
+  final Rx<MVestPaymentMethod?> selectedPaymentMethod =
+      Rx<MVestPaymentMethod?>(MVestPaymentMethod.mobileMoney);
+
+  // Mobile money page state
+  final momoNumberTEC = TextEditingController();
+
   // --- Derived state ---
   double get allocatedPercentage =>
       beneficiaries.fold(0.0, (sum, b) => sum + b.percentage);
@@ -138,10 +150,31 @@ class PMVestVm extends GetxController {
   bool get canAddMoreBeneficiaries =>
       beneficiaries.length < maxBeneficiaries && allocatedPercentage < 100;
 
-  double get sheetExistingAllocatedPercentage =>
-      existingAllocations.values.fold(0.0, (sum, v) => sum + v);
+  /// Total allocation attributed to existing-pool beneficiaries: the sum of
+  /// in-progress selections in the sheet plus allocations for pool items that
+  /// are already committed to the beneficiaries list. Keeps the sheet's
+  /// progress indicator consistent after saving and re-opening.
+  double get sheetExistingAllocatedPercentage {
+    final committed = beneficiaries
+        .where((b) => b.sourceId != null)
+        .where((b) => !existingAllocations.containsKey(b.sourceId))
+        .fold(0.0, (sum, b) => sum + b.percentage);
+    final inProgress = existingAllocations.values.fold(
+      0.0,
+      (sum, v) => sum + v,
+    );
+    return committed + inProgress;
+  }
 
   bool isExistingSelected(String id) => (existingAllocations[id] ?? 0) > 0;
+
+  /// Committed allocation for an existing-pool id, if it's already on the
+  /// beneficiaries list.
+  double committedExistingAllocation(String id) =>
+      beneficiaries
+          .firstWhereOrNull((b) => b.sourceId == id)
+          ?.percentage ??
+      0;
 
   /// Returns true if the list already contains a beneficiary matching the
   /// given identity. Matches by `sourceId` when both sides have one, else by
@@ -186,10 +219,17 @@ class PMVestVm extends GetxController {
       existingAllocations.remove(id);
       return 0;
     }
-    final othersTotal = existingAllocations.entries
+    final othersInProgress = existingAllocations.entries
         .where((e) => e.key != id)
         .fold(0.0, (sum, e) => sum + e.value);
-    final headroom = (100 - othersTotal).clamp(0.0, 100.0);
+    final committedTotal = beneficiaries
+        .where((b) => b.sourceId != null && b.sourceId != id)
+        .where((b) => !existingAllocations.containsKey(b.sourceId))
+        .fold(0.0, (sum, b) => sum + b.percentage);
+    final headroom = (100 - othersInProgress - committedTotal).clamp(
+      0.0,
+      100.0,
+    );
     final clamped = parsed > headroom ? headroom : parsed;
     if (clamped <= 0) {
       existingAllocations.remove(id);
@@ -209,6 +249,18 @@ class PMVestVm extends GetxController {
     selectedGender.value = null;
     selectedIdType.value = null;
     existingAllocations.clear();
+  }
+
+  /// Clears all state accumulated through the MVest onboarding flow so a
+  /// user returning to the feature starts from a clean slate.
+  void resetInvestmentFlow() {
+    contributionAmountTEC.clear();
+    momoNumberTEC.clear();
+    selectedFrequency.value = MVestFrequency.monthly;
+    beneficiaries.clear();
+    declarationAccepted.value = false;
+    selectedPaymentMethod.value = MVestPaymentMethod.mobileMoney;
+    resetAddSheet();
   }
 
   /// Returns `null` on success or a translation key describing the failure.
@@ -277,6 +329,7 @@ class PMVestVm extends GetxController {
     dobTEC.dispose();
     phoneTEC.dispose();
     allocationTEC.dispose();
+    momoNumberTEC.dispose();
     super.onClose();
   }
 }

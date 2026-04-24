@@ -383,9 +383,11 @@ class _ExistingBeneficiaryTileState extends State<_ExistingBeneficiaryTile> {
   @override
   void initState() {
     super.initState();
-    final existing = widget.ctrl.existingAllocations[widget.option.id];
+    final inProgress = widget.ctrl.existingAllocations[widget.option.id];
+    final committed = widget.ctrl.committedExistingAllocation(widget.option.id);
+    final initial = inProgress ?? (committed > 0 ? committed : null);
     _allocationTEC = TextEditingController(
-      text: existing != null ? existing.toStringAsFixed(0) : '',
+      text: initial != null ? initial.toStringAsFixed(0) : '',
     );
   }
 

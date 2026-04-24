@@ -89,6 +89,10 @@ abstract class Routes {
   static const mvestPage = _Paths.mvestPage;
   static const mvestSchemeDetailsPage = _Paths.mvestSchemeDetailsPage;
   static const mvestBeneficiariesPage = _Paths.mvestBeneficiariesPage;
+  static const mvestReviewPage = _Paths.mvestReviewPage;
+  static const mvestPaymentPage = _Paths.mvestPaymentPage;
+  static const mvestMobileMoneyPage = _Paths.mvestMobileMoneyPage;
+  static const mvestSuccessPage = _Paths.mvestSuccessPage;
 }
 
 abstract class _Paths {
@@ -177,4 +181,8 @@ abstract class _Paths {
   static const mvestPage = '/mvest-page';
   static const mvestSchemeDetailsPage = '/mvest-scheme-details-page';
   static const mvestBeneficiariesPage = '/mvest-beneficiaries-page';
+  static const mvestReviewPage = '/mvest-review-page';
+  static const mvestPaymentPage = '/mvest-payment-page';
+  static const mvestMobileMoneyPage = '/mvest-mobile-money-page';
+  static const mvestSuccessPage = '/mvest-success-page';
 }

@@ -355,5 +355,22 @@ class AppPages {
       name: _Paths.mvestBeneficiariesPage,
       page: () => PMVestBeneficiariesPage(),
     ),
+    GetPage(name: _Paths.mvestReviewPage, page: () => const PMVestReviewPage()),
+    GetPage(
+      name: _Paths.mvestPaymentPage,
+      page: () => const PMVestPaymentPage(),
+    ),
+    GetPage(
+      name: _Paths.mvestMobileMoneyPage,
+      page: () => const PMVestMobileMoneyPage(),
+    ),
+    GetPage(
+      name: _Paths.mvestSuccessPage,
+      page: () => PMVestSuccessPage(
+        title: Get.arguments[0],
+        message: Get.arguments[1],
+        onTap: Get.arguments[2],
+      ),
+    ),
   ];
 }

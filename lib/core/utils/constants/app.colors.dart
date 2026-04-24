@@ -9,6 +9,8 @@ class PAppColor {
   static const Color primaryLight = Color(0xFFDCF1DA);
   static const Color primaryDark = Color(0xFF009979);
   static const Color primaryRest = Color(0xFFB9E2B6);
+  static const Color primaryActiveRest = Color(0xFF306E2B);
+
   static const Color primaryBorderColor = Color(0xFF96D491);
   static const Color primary950 = Color(0xFFD9E7E3);
   static const Color primaryBorderLight = Color(0xFFF6FFED);
@@ -24,7 +26,7 @@ class PAppColor {
   static const Color fillColor4 = Color(0xFFE5E5E5);
   static const Color fillColor5 = Color(0xFFFAFAFA);
 
-  static const Color orangeColor = Color(0xFFF5823D);
+  static const Color orangeColor = Color(0xFFF2630D);
   static const Color yellowColor = Color(0xFFFFDD1A);
   static const Color lightBlueColor = Color(0xFFD1D9FA);
 

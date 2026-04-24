@@ -31,12 +31,8 @@ class _PSchemeDetailsPageState extends State<PSchemeDetailsPage> {
   void _onAmountChanged() => setState(() {});
 
   bool get _canContinue {
-    final amount = double.tryParse(
-      ctrl.contributionAmountTEC.text.trim(),
-    );
-    return ctrl.selectedFrequency.value != null &&
-        amount != null &&
-        amount > 0;
+    final amount = double.tryParse(ctrl.contributionAmountTEC.text.trim());
+    return ctrl.selectedFrequency.value != null && amount != null && amount > 0;
   }
 
   @override
@@ -82,16 +78,16 @@ class _PSchemeDetailsPageState extends State<PSchemeDetailsPage> {
                         setState(() {});
                       },
                     ),
-                    PAppSize.s12.verticalSpace,
-                    _FrequencyOptionTile(
-                      label: 'yearly'.tr,
-                      value: MVestFrequency.yearly,
-                      groupValue: ctrl.selectedFrequency.value,
-                      onChanged: (v) {
-                        ctrl.onFrequencyChanged(v);
-                        setState(() {});
-                      },
-                    ),
+                    // PAppSize.s12.verticalSpace,
+                    // _FrequencyOptionTile(
+                    //   label: 'yearly'.tr,
+                    //   value: MVestFrequency.yearly,
+                    //   groupValue: ctrl.selectedFrequency.value,
+                    //   onChanged: (v) {
+                    //     ctrl.onFrequencyChanged(v);
+                    //     setState(() {});
+                    //   },
+                    // ),
                     PAppSize.s12.verticalSpace,
                     _FrequencyOptionTile(
                       label: 'lump_sum'.tr,
@@ -163,7 +159,7 @@ class _FrequencyOptionTile extends StatelessWidget {
               ? (isDark
                     ? PAppColor.primaryBorderColor.withOpacityExt(PAppSize.s0_1)
                     : PAppColor.primaryBorderLight)
-              : (isDark ? PAppColor.cardDarkColor : PAppColor.fillColor5),
+              : (isDark ? PAppColor.transparentColor : PAppColor.fillColor5),
           border: Border.all(
             color: isSelected
                 ? PAppColor.primaryBorderColor
@@ -177,7 +173,7 @@ class _FrequencyOptionTile extends StatelessWidget {
             Icon(
               isSelected ? Icons.radio_button_checked : Icons.radio_button_off,
               color: isSelected
-                  ? PAppColor.primaryDark
+                  ? PAppColor.primaryBorderColor
                   : (isDark ? PAppColor.fillColor2 : PAppColor.text700),
               size: PAppSize.s22,
             ),
