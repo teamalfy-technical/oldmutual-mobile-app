@@ -7,6 +7,7 @@ import 'package:get/get.dart';
 import 'package:logger/logger.dart';
 import 'package:oldmutual_pensions_app/core/utils/utils.dart';
 import 'package:oldmutual_pensions_app/features/claims/claims.dart';
+import 'package:oldmutual_pensions_app/features/payments/payments.dart';
 import 'package:oldmutual_pensions_app/features/policy/policy.dart';
 import 'package:oldmutual_pensions_app/gen/assets.gen.dart';
 import 'package:oldmutual_pensions_app/routes/app.pages.dart';
@@ -177,6 +178,7 @@ Future<dynamic> showClaimModal({
 Future<dynamic> showPayModal({
   required BuildContext context,
   required Object product,
+  required PaymentType paymentType,
 }) {
   return showModalBottomSheet(
     context: context,
@@ -281,6 +283,7 @@ Future<dynamic> showPayModal({
                   PHelperFunction.pop();
                   PHelperFunction.switchScreen(
                     destination: Routes.paymentHistoryPage,
+                    args: paymentType,
                   );
                 },
                 child: ListTile(
