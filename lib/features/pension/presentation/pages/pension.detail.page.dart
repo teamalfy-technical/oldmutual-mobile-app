@@ -7,6 +7,7 @@ import 'package:oldmutual_pensions_app/core/utils/utils.dart';
 import 'package:oldmutual_pensions_app/features/contribution.history/contribution.history.dart';
 import 'package:oldmutual_pensions_app/features/factsheet/factsheet.dart';
 import 'package:oldmutual_pensions_app/features/home/home.dart';
+import 'package:oldmutual_pensions_app/features/payments/payments.dart';
 import 'package:oldmutual_pensions_app/features/pension/domain/models/scheme.model.dart';
 import 'package:oldmutual_pensions_app/features/pension/presentation/vm/pension.vm.dart';
 import 'package:oldmutual_pensions_app/features/policy/policy.dart';
@@ -148,12 +149,11 @@ class _PPensionDetailPageState extends State<PPensionDetailPage> {
                                     ? PAppColor.successLight
                                     : PAppColor.successDark,
                               ),
-                              onTap: () {
-                                showPayModal(
-                                  context: context,
-                                  product: widget.scheme,
-                                );
-                              },
+                              onTap: () => showPayModal(
+                                context: context,
+                                product: widget.scheme,
+                                paymentType: PaymentType.pensions,
+                              ),
                             ),
                             PAppSize.s8.horizontalSpace,
                           ],

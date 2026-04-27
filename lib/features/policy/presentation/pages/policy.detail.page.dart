@@ -5,6 +5,7 @@ import 'package:intl/intl.dart';
 import 'package:oldmutual_pensions_app/core/utils/utils.dart';
 import 'package:oldmutual_pensions_app/features/beneficiary/beneficiary.dart';
 import 'package:oldmutual_pensions_app/features/home/home.dart';
+import 'package:oldmutual_pensions_app/features/payments/payments.dart';
 import 'package:oldmutual_pensions_app/features/policy/policy.dart';
 import 'package:oldmutual_pensions_app/gen/assets.gen.dart';
 import 'package:oldmutual_pensions_app/routes/app.pages.dart';
@@ -90,8 +91,11 @@ class PPolicyDetailPage extends StatelessWidget {
                           ? PAppColor.successLight
                           : PAppColor.successDark,
                     ),
-                    onTap: () =>
-                        showPayModal(context: context, product: policy),
+                    onTap: () => showPayModal(
+                      context: context,
+                      product: policy,
+                      paymentType: PaymentType.policy,
+                    ),
                   ),
                   PAppSize.s8.horizontalSpace,
                 ],

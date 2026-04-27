@@ -294,7 +294,10 @@ class AppPages {
       name: _Paths.payNowPage,
       page: () => PPayNowPage(product: Get.arguments),
     ),
-    GetPage(name: _Paths.paymentHistoryPage, page: () => PPaymentHistoryPage()),
+    GetPage(
+      name: _Paths.paymentHistoryPage,
+      page: () => PPaymentHistoryPage(paymentType: Get.arguments),
+    ),
 
     /// --- Affluent Feature Pages
     GetPage(
