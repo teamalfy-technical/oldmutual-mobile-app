@@ -323,9 +323,13 @@
 			inputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-Runner/Pods-Runner-resources-${CONFIGURATION}-input-files.xcfilelist",
 			);
+			inputPaths = (
+			);
 			name = "[CP] Copy Pods Resources";
 			outputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-Runner/Pods-Runner-resources-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -538,11 +542,11 @@
 				CODE_SIGN_ENTITLEMENTS = Runner/Runner.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 84;
+				CURRENT_PROJECT_VERSION = 85;
 				DEVELOPMENT_TEAM = F58VWJ2VT4;
 				ENABLE_BITCODE = NO;
-				FLUTTER_BUILD_NAME = 2.3.7;
-				FLUTTER_BUILD_NUMBER = 84;
+				FLUTTER_BUILD_NAME = 2.4.0;
+				FLUTTER_BUILD_NUMBER = 85;
 				INFOPLIST_FILE = Runner/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "My OldMutual GH";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.finance";
@@ -551,7 +555,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.3.7;
+				MARKETING_VERSION = 2.4.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.oldmutual.pensions.app.devo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -649,11 +653,11 @@
 				CODE_SIGN_ENTITLEMENTS = Runner/Runner.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 84;
+				CURRENT_PROJECT_VERSION = 85;
 				DEVELOPMENT_TEAM = F58VWJ2VT4;
 				ENABLE_BITCODE = NO;
-				FLUTTER_BUILD_NAME = 2.3.7;
-				FLUTTER_BUILD_NUMBER = 84;
+				FLUTTER_BUILD_NAME = 2.4.0;
+				FLUTTER_BUILD_NUMBER = 85;
 				INFOPLIST_FILE = Runner/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "My OldMutual GH";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.finance";
@@ -662,7 +666,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.3.7;
+				MARKETING_VERSION = 2.4.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.oldmutual.pensions.app.devo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -760,12 +764,12 @@
 				CODE_SIGN_ENTITLEMENTS = Runner/Runner.entitlements;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 84;
+				CURRENT_PROJECT_VERSION = 85;
 				DEVELOPMENT_TEAM = "";
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = F58VWJ2VT4;
 				ENABLE_BITCODE = NO;
-				FLUTTER_BUILD_NAME = 2.3.7;
-				FLUTTER_BUILD_NUMBER = 84;
+				FLUTTER_BUILD_NAME = 2.4.0;
+				FLUTTER_BUILD_NUMBER = 85;
 				INFOPLIST_FILE = Runner/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "My OldMutual GH";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.finance";
@@ -774,7 +778,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.3.7;
+				MARKETING_VERSION = 2.4.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.oldmutual.pensions.app.prod;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -873,12 +877,12 @@
 				CODE_SIGN_ENTITLEMENTS = Runner/Runner.entitlements;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 84;
+				CURRENT_PROJECT_VERSION = 85;
 				DEVELOPMENT_TEAM = "";
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = F58VWJ2VT4;
 				ENABLE_BITCODE = NO;
-				FLUTTER_BUILD_NAME = 2.3.7;
-				FLUTTER_BUILD_NUMBER = 84;
+				FLUTTER_BUILD_NAME = 2.4.0;
+				FLUTTER_BUILD_NUMBER = 85;
 				INFOPLIST_FILE = Runner/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "My OldMutual GH";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.finance";
@@ -887,7 +891,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.3.7;
+				MARKETING_VERSION = 2.4.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.oldmutual.pensions.app.prod;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -981,11 +985,11 @@
 				CODE_SIGN_ENTITLEMENTS = Runner/Runner.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 84;
+				CURRENT_PROJECT_VERSION = 85;
 				DEVELOPMENT_TEAM = F58VWJ2VT4;
 				ENABLE_BITCODE = NO;
-				FLUTTER_BUILD_NAME = 2.3.7;
-				FLUTTER_BUILD_NUMBER = 84;
+				FLUTTER_BUILD_NAME = 2.4.0;
+				FLUTTER_BUILD_NUMBER = 85;
 				INFOPLIST_FILE = Runner/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "My OldMutual GH";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.finance";
@@ -994,7 +998,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.3.7;
+				MARKETING_VERSION = 2.4.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.oldmutual.pensions.app.devo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -1087,12 +1091,12 @@
 				CODE_SIGN_ENTITLEMENTS = Runner/Runner.entitlements;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 84;
+				CURRENT_PROJECT_VERSION = 85;
 				DEVELOPMENT_TEAM = "";
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = F58VWJ2VT4;
 				ENABLE_BITCODE = NO;
-				FLUTTER_BUILD_NAME = 2.3.7;
-				FLUTTER_BUILD_NUMBER = 84;
+				FLUTTER_BUILD_NAME = 2.4.0;
+				FLUTTER_BUILD_NUMBER = 85;
 				INFOPLIST_FILE = Runner/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "My OldMutual GH";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.finance";
@@ -1101,7 +1105,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.3.7;
+				MARKETING_VERSION = 2.4.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.oldmutual.pensions.app.prod;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
