@@ -238,6 +238,15 @@ class AppTranslations extends Translations {
       'enter_reason': 'Enter reason',
       'head_up': 'Head Up! ⚠️',
       'delete_account_meaning': 'Deleting your account will mean the following',
+      'delete_account_lose_policies':
+          'You lose access to all your policies and journeys',
+      'delete_account_temporary':
+          'Your account will be temporary deleted but will be permanently deleted after 30 days',
+      'delete_account_lose_funds': 'You lose access to funds kept with us',
+      'delete_account_no_recovery':
+          'You will not be able to recover your account',
+      'delete_account_pensions_inaccessible':
+          'Your pensions will no longer be accessible',
       'go_back': 'Go Back',
       'confirm_delete': 'Confirm Delete',
       'confirm_delete_msg': 'Type “DELETE” to confirm delete of your \naccount',

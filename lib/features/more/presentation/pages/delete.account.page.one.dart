@@ -59,7 +59,7 @@ class PDeleteAccountPageOne extends StatelessWidget {
                       PAppSize.s12.verticalSpace,
 
                       Text(
-                        'You lose access to all your policies and journeys',
+                        'delete_account_lose_policies'.tr,
                         style: Theme.of(context).textTheme.titleSmall?.copyWith(
                           fontWeight: FontWeight.w400,
                         ),
@@ -68,7 +68,7 @@ class PDeleteAccountPageOne extends StatelessWidget {
                       PAppSize.s12.verticalSpace,
 
                       Text(
-                        'Your account will be temporary deleted but will be permanently deleted after 30 days',
+                        'delete_account_temporary'.tr,
                         style: Theme.of(context).textTheme.titleSmall?.copyWith(
                           fontWeight: FontWeight.w400,
                         ),
@@ -77,7 +77,7 @@ class PDeleteAccountPageOne extends StatelessWidget {
                       PAppSize.s12.verticalSpace,
 
                       Text(
-                        'You lose access to funds kept with us',
+                        'delete_account_lose_funds'.tr,
                         style: Theme.of(context).textTheme.titleSmall?.copyWith(
                           fontWeight: FontWeight.w400,
                         ),
@@ -85,7 +85,7 @@ class PDeleteAccountPageOne extends StatelessWidget {
                       PAppSize.s12.verticalSpace,
 
                       Text(
-                        'You will not be able to recover your account',
+                        'delete_account_no_recovery'.tr,
                         style: Theme.of(context).textTheme.titleSmall?.copyWith(
                           fontWeight: FontWeight.w400,
                         ),
@@ -93,7 +93,7 @@ class PDeleteAccountPageOne extends StatelessWidget {
                       PAppSize.s12.verticalSpace,
 
                       Text(
-                        'Your pensions will no longer be accessible',
+                        'delete_account_pensions_inaccessible'.tr,
                         style: Theme.of(context).textTheme.titleSmall?.copyWith(
                           fontWeight: FontWeight.w400,
                         ),
