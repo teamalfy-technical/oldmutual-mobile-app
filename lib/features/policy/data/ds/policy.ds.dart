@@ -18,7 +18,7 @@ abstract class PolicyDs {
   });
   Future<ApiResponse<PolicyReport>> generatePolicyReports({
     required String policyNumber,
-    required int year,
+    required String year,
   });
   Future<ApiResponse<PolicyReport>> checkPolicyReportDownloadStatus({
     required String reportId,
@@ -34,15 +34,5 @@ abstract class PolicyDs {
   });
   Future<ApiResponse<Map<String, dynamic>>> downloadPolicyStatement({
     required String policyNumber,
-  });
-  Future<ApiResponse<List<PaymentMethod>>> getPaymentMethods();
-  Future<ApiResponse<List<WithdrawalReason>>> getWithdrawalReasons();
-  Future<ApiResponse<Message>> submitInstantClaimRequest({
-    required String policyNumber,
-    required double currentCashValue,
-    required double claimAmount,
-    required String claimDefaultTelcomethod,
-    required String claimDefaultMomoWallet,
-    required int withdrawalPurpose,
   });
 }

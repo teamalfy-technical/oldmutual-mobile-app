@@ -88,7 +88,7 @@ class AppTranslations extends Translations {
       'momo_wallet_number': 'MOMO Wallet Number',
       'withdrawal_amount': 'Withdrawal Amount',
       'payment_method': 'Payment Method',
-      'withdrawal_purpose': 'Withdrawal Purpose',
+      'withdrawal_purpose': 'Select Withdrawal Purpose',
       'supportive_text': 'Supportive text',
       'password_special_char_msg': '1 special character & 1 number',
       'beneficiaries_tag': 'Contact @phone for any detail changes',
@@ -238,6 +238,15 @@ class AppTranslations extends Translations {
       'enter_reason': 'Enter reason',
       'head_up': 'Head Up! ⚠️',
       'delete_account_meaning': 'Deleting your account will mean the following',
+      'delete_account_lose_policies':
+          'You lose access to all your policies and journeys',
+      'delete_account_temporary':
+          'Your account will be temporary deleted but will be permanently deleted after 30 days',
+      'delete_account_lose_funds': 'You lose access to funds kept with us',
+      'delete_account_no_recovery':
+          'You will not be able to recover your account',
+      'delete_account_pensions_inaccessible':
+          'Your pensions will no longer be accessible',
       'go_back': 'Go Back',
       'confirm_delete': 'Confirm Delete',
       'confirm_delete_msg': 'Type “DELETE” to confirm delete of your \naccount',
@@ -633,6 +642,49 @@ class AppTranslations extends Translations {
           'Are you sure you want to remove this content from your bookmarks?',
       'yes': 'Yes',
       'default_duration': '6 mins',
+      'select_claim_type': 'Select Claim Type',
+      'claim_type': 'Claim Type',
+      'partial_withdrawal': 'Partial Withdrawal',
+      'partial_withdrawal_desc': 'Withdrawal a portion of your cash value',
+      'standard_claim': 'Standard Claim',
+      'refund_claim': 'Refund Claim',
+      'instant_claim': 'Instant Claim',
+      'refund_claim_desc': 'Request reimbursement under policy guidelines',
+      'get_funds_title': 'Get funds immediately via mobile money',
+
+      // Instant Claim Page
+      'enter_claim_amount_hint': 'Enter the amount you want to claim',
+      'charge': 'Charge',
+      'youll_receive': 'You\u2019ll Receive',
+      'available_cash_value': 'Available cash value',
+      'maximum_claimable': 'Maximum claimable',
+      'processing_charge': 'Processing charge',
+      'processing_charge_value': '2% of claim amount',
+
+      // Partial Withdrawal Page - Instant Claim Options
+      'instant_claim_option_max': 'Max 40% of cash value (up to GH\u20B53,000)',
+      'instant_claim_option_charge': '2% processing charge applies',
+      'instant_claim_option_disbursement': 'Mobile money disbursement only',
+
+      // Partial Withdrawal Page - Standard Claim Options
+      'claimed_processed': 'Claim Processed!',
+      'claimed_processed_subtitle':
+          'Your withdrawal has been processed through Hubtel.',
+      'close': 'Close',
+      'standard_claim_option_max':
+          'Max 50% of cash value (up to GH\u20B53,000)',
+      'standard_claim_option_no_caps': 'No monetary caps or charges',
+      'standard_claim_option_disbursement': 'Mobile money or Bank Payment',
+
+      // Select Payment Method - Instant Claim Page
+      'mobile_money': 'Mobile money',
+      'select_telco_operator': 'Select Telco Operator',
+      'registered_phone_number': 'Registered Phone Number',
+      'hubtel_identity_validation_note':
+          'Identity validation will be performed via Hubtel. At least two names must match in any order.',
+
+      // Summary Page
+      'summary': 'Summary',
     },
     'hi_IN': {'app_name': 'Pensions App'},
     'fr_FR': {'app_name': 'Pensions App'},

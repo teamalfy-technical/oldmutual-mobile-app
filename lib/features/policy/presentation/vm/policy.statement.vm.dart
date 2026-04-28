@@ -171,7 +171,7 @@ class PPolicyStatementVm extends GetxController {
           );
           await PHelperFunction.openFileWithData(
             pdfData: res.data ?? Map<String, dynamic>.from({}),
-            name: selectedPolicy?.planDescription ?? '',
+            name: 'Premium_Statement_${selectedYear?.fundYear ?? ''}',
           );
         },
       );
@@ -240,8 +240,8 @@ class PPolicyStatementVm extends GetxController {
     final result = await policyService.generatePolicyReports(
       policyNumber: selectedPolicy?.policyNo ?? '',
       year: selectedYear?.fundYear == 'all'.tr
-          ? DateTime.now().year
-          : int.parse(selectedYear?.fundYear ?? DateTime.now().year.toString()),
+          ? ''
+          : selectedYear?.fundYear ?? DateTime.now().year.toString(),
     );
     result.fold(
       (err) {

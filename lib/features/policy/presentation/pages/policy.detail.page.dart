@@ -5,6 +5,7 @@ import 'package:intl/intl.dart';
 import 'package:oldmutual_pensions_app/core/utils/utils.dart';
 import 'package:oldmutual_pensions_app/features/beneficiary/beneficiary.dart';
 import 'package:oldmutual_pensions_app/features/home/home.dart';
+import 'package:oldmutual_pensions_app/features/payments/payments.dart';
 import 'package:oldmutual_pensions_app/features/policy/policy.dart';
 import 'package:oldmutual_pensions_app/gen/assets.gen.dart';
 import 'package:oldmutual_pensions_app/routes/app.pages.dart';
@@ -90,8 +91,11 @@ class PPolicyDetailPage extends StatelessWidget {
                           ? PAppColor.successLight
                           : PAppColor.successDark,
                     ),
-                    onTap: () =>
-                        showPayModal(context: context, product: policy),
+                    onTap: () => showPayModal(
+                      context: context,
+                      product: policy,
+                      paymentType: PaymentType.policy,
+                    ),
                   ),
                   PAppSize.s8.horizontalSpace,
                 ],
@@ -138,25 +142,18 @@ class PPolicyDetailPage extends StatelessWidget {
                       policyStatementVm.downloadInvestmentStatement();
                     },
                   ),
+                  PAppSize.s8.horizontalSpace,
+                  QuickActionWidget(
+                    label: 'claim'.tr,
+                    icon: Assets.icons.withdrawIcon.svg(
+                      color: PHelperFunction.isDarkMode(context)
+                          ? PAppColor.successLight
+                          : PAppColor.successDark,
+                    ),
+                    onTap: () =>
+                        showClaimModal(context: context, product: policy),
+                  ),
                 ],
-
-                PAppSize.s8.horizontalSpace,
-                QuickActionWidget(
-                  label: 'claim'.tr,
-                  icon: Assets.icons.withdrawIcon.svg(
-                    color: PHelperFunction.isDarkMode(context)
-                        ? PAppColor.successLight
-                        : PAppColor.successDark,
-                  ),
-
-                  // onTap: () => PPopupDialog(context).warningMessage(
-                  //   title: 'coming_soon_title'.tr,
-                  //   message: 'coming_soon_msg'.tr,
-                  // ),
-                  onTap: () => PHelperFunction.switchScreen(
-                    destination: Routes.policyClaimPage,
-                  ),
-                ),
               ],
             ).scrollable(scrollDirection: Axis.horizontal),
 

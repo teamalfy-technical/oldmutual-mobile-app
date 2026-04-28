@@ -67,7 +67,7 @@ class PolicyServiceImpl implements PolicyService {
   @override
   Future<Either<PFailure, ApiResponse<PolicyReport>>> generatePolicyReports({
     required String policyNumber,
-    required int year,
+    required String year,
   }) {
     return policyRepo.generatePolicyReports(
       policyNumber: policyNumber,
@@ -91,36 +91,5 @@ class PolicyServiceImpl implements PolicyService {
   Future<Either<PFailure, ApiResponse<Map<String, dynamic>>>>
   downloadPolicyStatement({required String policyNumber}) {
     return policyRepo.downloadPolicyStatement(policyNumber: policyNumber);
-  }
-
-  @override
-  Future<Either<PFailure, ApiResponse<List<PaymentMethod>>>>
-  getPaymentMethods() {
-    return policyRepo.getPaymentMethods();
-  }
-
-  @override
-  Future<Either<PFailure, ApiResponse<List<WithdrawalReason>>>>
-  getWithdrawalReasons() {
-    return policyRepo.getWithdrawalReasons();
-  }
-
-  @override
-  Future<Either<PFailure, ApiResponse<Message>>> submitInstantClaimRequest({
-    required String policyNumber,
-    required double currentCashValue,
-    required double claimAmount,
-    required String claimDefaultTelcomethod,
-    required String claimDefaultMomoWallet,
-    required int withdrawalPurpose,
-  }) {
-    return policyRepo.submitInstantClaimRequest(
-      policyNumber: policyNumber,
-      currentCashValue: currentCashValue,
-      claimAmount: claimAmount,
-      claimDefaultTelcomethod: claimDefaultTelcomethod,
-      claimDefaultMomoWallet: claimDefaultMomoWallet,
-      withdrawalPurpose: withdrawalPurpose,
-    );
   }
 }

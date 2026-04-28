@@ -25,11 +25,13 @@ class _PPaymentHistoryPageState extends State<PPaymentHistoryPage> {
     ctrl = Get.put(PPaymentVm());
 
     // Fetch payments based on type
-    WidgetsBinding.instance.addPostFrameCallback((_) {
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
       if (widget.paymentType == PaymentType.pensions) {
-        ctrl.getPensionsPayments();
+        await ctrl.getPensionsPayments();
+        pensionAppLogger.d('Fetching pensions payments');
       } else {
-        ctrl.getPolicyPayments();
+        await ctrl.getPolicyPayments();
+        pensionAppLogger.d('Fetching policy payments');
       }
     });
   }

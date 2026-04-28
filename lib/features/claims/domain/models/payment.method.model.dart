@@ -11,7 +11,7 @@ class PaymentMethod extends Equatable {
     code = json['emp_code'];
   }
 
-  
+
   @override
   List<Object?> get props => [code, name];
 
