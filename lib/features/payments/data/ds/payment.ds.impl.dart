@@ -77,6 +77,7 @@ class PaymentDsImpl implements PaymentDs {
       if (status != null) queryParams['filter[status]'] = status;
       if (paymentReference != null)
         queryParams['filter[payment_reference]'] = paymentReference;
+
       if (clientReference != null)
         queryParams['filter[client_reference]'] = clientReference;
 
@@ -107,6 +108,7 @@ class PaymentDsImpl implements PaymentDs {
       if (amount != null) queryParams['filter[amount]'] = amount;
       if (policyNumber != null)
         queryParams['filter[policy_number]'] = policyNumber;
+
       if (status != null) queryParams['filter[status]'] = status;
       if (paymentReference != null)
         queryParams['filter[payment_reference]'] = paymentReference;
