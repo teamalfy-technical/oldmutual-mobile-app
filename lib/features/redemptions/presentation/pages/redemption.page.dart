@@ -39,23 +39,23 @@ class PRedemptionPage extends StatelessWidget {
                       key: ctrl.redemptionFormKey,
                       child: Column(
                         children: [
-                          PKeyboardActions(
-                            focusNode: _idFocusNode,
-                            child: PCustomTextField(
-                              labelText: 'national_id'.tr,
-                              hintText: 'XXXXXXXXX-X',
-                              prefixText: 'GHA-',
-                              controller: ctrl.nationIdTEC,
-                              focusNode: _idFocusNode,
-                              textInputType: TextInputType.number,
-                              validator: PValidator.validateIdNumber,
-                              maxLength: 11,
-                              inputFormatters: [
-                                FilteringTextInputFormatter.digitsOnly,
-                                IdNumberFormatter(),
-                              ],
-                            ),
-                          ),
+
+
+                     PCustomTextField(
+                      controller: ctrl.nationIdTEC,
+                      labelText: 'GHA-XXXXXXXXX-X',
+                      textInputType: TextInputType.text,
+                      validator: PValidator.validateIdNumber,
+                      maxLength: 15,
+                      inputFormatters: [
+                        FilteringTextInputFormatter.allow(
+                          RegExp(r'[A-Za-z0-9\-]'),
+                        ),
+                        IdNumberFormatter(),
+                      ],
+                    ),
+
+                         
                           PAppSize.s20.verticalSpace,
                           PCustomDropdownField<String>(
                             labelText: 'redemption_type'.tr,
