@@ -11,7 +11,10 @@ class PMVestReviewPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final ctrl = Get.find<PMVestVm>();
+    final ctrl = Get.isRegistered<PMVestVm>()
+        ? Get.find<PMVestVm>()
+        : Get.put(PMVestVm());
+
     final isDark = PHelperFunction.isDarkMode(context);
     return Scaffold(
       resizeToAvoidBottomInset: false,

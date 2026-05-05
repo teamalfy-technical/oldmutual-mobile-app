@@ -716,6 +716,12 @@ class AppTranslations extends Translations {
       'beneficiary_duplicate_title': 'Already Added',
       'beneficiary_duplicate_msg':
           'This person is already on your beneficiaries list.',
+      'beneficiary_allocation_exceeds_title': 'Allocation Exceeded',
+      'beneficiary_allocation_exceeds_msg':
+          'Total allocation across beneficiaries cannot exceed 100%.',
+      'beneficiary_relationship_required_title': 'Relationship Required',
+      'beneficiary_relationship_required_msg':
+          'Please select a relationship for this beneficiary.',
 
       // MVest Add Beneficiary Sheet
       'from_existing': 'From Existing',
@@ -727,6 +733,9 @@ class AppTranslations extends Translations {
       'save_beneficiary': 'Save Beneficiary',
       'select_existing_beneficiaries_hint':
           'Select a beneficiary from your other schemes and assign percentage allocation.',
+      'no_existing_beneficiaries':
+          'You have no existing beneficiaries to choose from.',
+      'edit_beneficiary': 'Edit Beneficiary',
 
       // MVest Review Page
       'review': 'Review',

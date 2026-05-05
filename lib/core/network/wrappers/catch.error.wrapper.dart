@@ -73,18 +73,17 @@ class CatchApiErrorWrapperImpl implements CatchApiErrorWrapper {
           pensionAppLogger.e(err.response?.data);
         } else if (statusCode == 403) {
           errorMessage = extractError(err.response?.data);
-          pensionAppLogger.e(err.response?.data);
         } else if (statusCode == 404) {
-          pensionAppLogger.e(err.response?.data);
+          errorMessage = extractError(err.response?.data);
+        } else if (statusCode == 409) {
           errorMessage = extractError(err.response?.data);
         } else if (statusCode == 422) {
-          pensionAppLogger.e(err.response?.data);
           errorMessage = err.response?.data['message'] ?? 'Bad request';
         } else if (statusCode == 429) {
           if (Get.currentRoute != Routes.loginPage) {
             // Get.put(PSettingsVm()).signout(soft: true);
           }
-          pensionAppLogger.e(err.response?.data);
+
           errorMessage = extractError(err.response?.data);
         } else if (statusCode == 412) {
           errorMessage = extractError(err.response?.data);
@@ -111,10 +110,10 @@ class CatchApiErrorWrapperImpl implements CatchApiErrorWrapper {
   }
 
   String extractError(Map<String, dynamic> response) {
+    pensionAppLogger.e('Response: $response');
     if (response.containsKey("data")) {
-      pensionAppLogger.e('Response: $response');
       if (response["data"] is String) {
-        return response["data"];
+        return response["message"];
       } else if (response['data'] is Map &&
           response['data']['error'] is String) {
         final dataError = response['data']['error'] as String;

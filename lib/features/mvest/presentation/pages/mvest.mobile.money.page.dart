@@ -17,8 +17,13 @@ class PMVestMobileMoneyPage extends StatefulWidget {
 
 class _PMVestMobileMoneyPageState extends State<PMVestMobileMoneyPage> {
   final FocusNode _momoNumberFocusNode = FocusNode();
-  final PMVestVm ctrl = Get.find<PMVestVm>();
-  final PClaimsVm claimsCtrl = Get.put(PClaimsVm());
+  final PMVestVm ctrl = Get.isRegistered<PMVestVm>()
+      ? Get.find<PMVestVm>()
+      : Get.put(PMVestVm());
+
+  final PClaimsVm claimsCtrl = Get.isRegistered<PClaimsVm>()
+      ? Get.find<PClaimsVm>()
+      : Get.put(PClaimsVm());
 
   int _maxLength = 10;
 
@@ -43,6 +48,27 @@ class _PMVestMobileMoneyPageState extends State<PMVestMobileMoneyPage> {
   bool get _canContinue =>
       claimsCtrl.selectedPaymentMethod != null &&
       ctrl.momoNumberTEC.text.trim().isNotEmpty;
+
+  /// Replaces the webview with the MVest success page once the payment
+  /// gateway reports success. Captures the contribution amount up front
+  /// because the success-page close handler resets the flow state.
+  void _onMVestPaymentSuccess(PClaimsVm claimsCtrl) {
+    final amount = double.tryParse(ctrl.contributionAmountTEC.text.trim()) ?? 0;
+    final formattedAmount = PFormatter.formatCurrency(amount: amount);
+    PHelperFunction.switchScreen(
+      destination: Routes.mvestSuccessPage,
+      popAndPush: true,
+      args: [
+        'payment_success_title'.tr,
+        'payment_success_msg'.trParams({'amount': '**$formattedAmount**'}),
+        () {
+          ctrl.resetInvestmentFlow();
+          claimsCtrl.onPaymentMethodChanged(null);
+          Get.until((route) => route.settings.name == Routes.mvestPage);
+        },
+      ],
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -126,29 +152,36 @@ class _PMVestMobileMoneyPageState extends State<PMVestMobileMoneyPage> {
                       description: 'hubtel_identity_validation_note'.tr,
                     ),
                     PAppSize.s40.verticalSpace,
-                    PGradientButton(
-                      label: 'continue'.tr,
-                      showIcon: true,
-                      iconDirection: IconDirection.right,
-                      textColor: PAppColor.whiteColor,
-                      width: PDeviceUtil.getDeviceWidth(context),
-                      onTap: _canContinue
-                          ? () => PHelperFunction.switchScreen(
-                              destination: Routes.mvestSuccessPage,
-                              args: [
-                                'investment_created'.tr,
-                                'payment_processed_hubtel'.tr,
-                                () {
-                                  ctrl.resetInvestmentFlow();
-                                  claimsCtrl.onPaymentMethodChanged(null);
-                                  PHelperFunction.switchScreen(
-                                    destination: Routes.dashboardPage,
-                                    replace: true,
-                                  );
-                                },
-                              ],
-                            )
-                          : null,
+                    Obx(
+                      () => PGradientButton(
+                        label: 'continue'.tr,
+                        showIcon: true,
+                        iconDirection: IconDirection.right,
+                        textColor: PAppColor.whiteColor,
+                        width: PDeviceUtil.getDeviceWidth(context),
+                        loading: ctrl.submitting.value,
+                        onTap: _canContinue
+                            ? () async {
+                                final ok = await ctrl
+                                    .submitAndInitiatePayment();
+                                if (!ok) return;
+                                final checkoutUrl =
+                                    ctrl.paymentResponse.value?.checkoutUrl;
+                                if (checkoutUrl == null ||
+                                    checkoutUrl.isEmpty) {
+                                  return;
+                                }
+                                PHelperFunction.switchScreen(
+                                  destination: Routes.webviewPage,
+                                  args: [
+                                    'make_payment'.tr,
+                                    checkoutUrl,
+                                    () => _onMVestPaymentSuccess(claimsCtrl),
+                                  ],
+                                );
+                              }
+                            : null,
+                      ),
                     ),
                   ],
                 ),

@@ -9,6 +9,8 @@ import 'package:oldmutual_pensions_app/shared/shared.dart';
 
 Future<void> showAddBeneficiarySheet(BuildContext context) {
   final isDark = PHelperFunction.isDarkMode(context);
+  final ctrl = Get.find<PMVestVm>();
+  final wasEditing = ctrl.isEditingBeneficiary;
   return showModalBottomSheet(
     context: context,
     isScrollControlled: true,
@@ -21,7 +23,12 @@ Future<void> showAddBeneficiarySheet(BuildContext context) {
       ),
     ),
     builder: (_) => const _AddBeneficiarySheet(),
-  );
+  ).whenComplete(() {
+    // Drop in-flight edit state if the sheet was dismissed without saving.
+    if (wasEditing && ctrl.isEditingBeneficiary) {
+      ctrl.cancelEditingBeneficiary();
+    }
+  });
 }
 
 class _AddBeneficiarySheet extends StatefulWidget {
@@ -43,6 +50,10 @@ class _AddBeneficiarySheetState extends State<_AddBeneficiarySheet>
     _tabController.addListener(() {
       if (!_tabController.indexIsChanging) setState(() {});
     });
+    if (ctrl.apiBeneficiaries.isEmpty &&
+        ctrl.loading.value != LoadingState.loading) {
+      ctrl.getBeneficiariesRemote();
+    }
   }
 
   @override
@@ -55,6 +66,7 @@ class _AddBeneficiarySheetState extends State<_AddBeneficiarySheet>
   Widget build(BuildContext context) {
     final isDark = PHelperFunction.isDarkMode(context);
     final bottomInset = MediaQuery.of(context).viewInsets.bottom;
+    final isEditing = ctrl.isEditingBeneficiary;
     return Padding(
       padding: EdgeInsets.only(bottom: bottomInset),
       child: SafeArea(
@@ -62,7 +74,7 @@ class _AddBeneficiarySheetState extends State<_AddBeneficiarySheet>
         child: Container(
           padding: EdgeInsets.symmetric(horizontal: PAppSize.s20),
           constraints: BoxConstraints(
-            maxHeight: PDeviceUtil.getDeviceHeight(context) * 0.90,
+            maxHeight: PDeviceUtil.getDeviceHeight(context) * 0.85,
           ),
           child: Column(
             mainAxisSize: MainAxisSize.min,
@@ -84,7 +96,7 @@ class _AddBeneficiarySheetState extends State<_AddBeneficiarySheet>
                 children: [
                   Expanded(
                     child: Text(
-                      'add_beneficiary'.tr,
+                      isEditing ? 'edit_beneficiary'.tr : 'add_beneficiary'.tr,
                       style: Theme.of(context).textTheme.titleLarge?.copyWith(
                         fontSize: PAppSize.s20,
                         fontWeight: FontWeight.w600,
@@ -112,29 +124,33 @@ class _AddBeneficiarySheetState extends State<_AddBeneficiarySheet>
                 ],
               ),
               PAppSize.s16.verticalSpace,
-              SizedBox(
-                height: PAppSize.s40,
-                child: PCustomTabBarWidget(
-                  controller: _tabController,
-                  horizontalPadding: PAppSize.s4,
-                  verticalPadding: PAppSize.s0,
-                  verticalIndicatorPadding: PAppSize.s6,
-                  borderRadius: BorderRadius.circular(PAppSize.s8),
-                  tabs: [
-                    Tab(text: 'new'.tr),
-                    Tab(text: 'from_existing'.tr),
-                  ],
+              if (!isEditing) ...[
+                SizedBox(
+                  height: PAppSize.s40,
+                  child: PCustomTabBarWidget(
+                    controller: _tabController,
+                    horizontalPadding: PAppSize.s4,
+                    verticalPadding: PAppSize.s0,
+                    verticalIndicatorPadding: PAppSize.s6,
+                    borderRadius: BorderRadius.circular(PAppSize.s8),
+                    tabs: [
+                      Tab(text: 'new'.tr),
+                      Tab(text: 'from_existing'.tr),
+                    ],
+                  ),
                 ),
-              ),
-              PAppSize.s16.verticalSpace,
+                PAppSize.s16.verticalSpace,
+              ],
               Expanded(
-                child: IndexedStack(
-                  index: _tabController.index,
-                  children: [
-                    _NewBeneficiaryTab(ctrl: ctrl),
-                    _ExistingBeneficiariesTab(ctrl: ctrl),
-                  ],
-                ),
+                child: isEditing
+                    ? _NewBeneficiaryTab(ctrl: ctrl)
+                    : IndexedStack(
+                        index: _tabController.index,
+                        children: [
+                          _NewBeneficiaryTab(ctrl: ctrl),
+                          _ExistingBeneficiariesTab(ctrl: ctrl),
+                        ],
+                      ),
               ),
             ],
           ),
@@ -196,6 +212,7 @@ class _NewBeneficiaryTab extends StatelessWidget {
                     labelText: 'date_of_birth'.tr,
                     controller: ctrl.dobTEC,
                     enabled: false,
+                    validator: PValidator.validateDate,
                     suffixIcon: Assets.icons.calendarIcon.svg(
                       color: isDark
                           ? PAppColor.whiteColor
@@ -221,38 +238,6 @@ class _NewBeneficiaryTab extends StatelessWidget {
                     validator: PValidator.validatePhoneNumber,
                   ),
                   PAppSize.s16.verticalSpace,
-                  Obx(
-                    () => PCustomDropdownField<String>(
-                      labelText: 'gender_optional'.tr,
-                      initialValue: ctrl.selectedGender.value,
-                      onChanged: (v) => ctrl.selectedGender.value = v,
-                      items: ctrl.genders
-                          .map(
-                            (g) => DropdownMenuItem<String>(
-                              value: g,
-                              child: Text(g),
-                            ),
-                          )
-                          .toList(),
-                    ),
-                  ),
-                  PAppSize.s16.verticalSpace,
-                  Obx(
-                    () => PCustomDropdownField<String>(
-                      labelText: 'id_type_optional'.tr,
-                      initialValue: ctrl.selectedIdType.value,
-                      onChanged: (v) => ctrl.selectedIdType.value = v,
-                      items: ctrl.idTypes
-                          .map(
-                            (t) => DropdownMenuItem<String>(
-                              value: t,
-                              child: Text(t),
-                            ),
-                          )
-                          .toList(),
-                    ),
-                  ),
-                  PAppSize.s16.verticalSpace,
                   PCustomTextField(
                     labelText: 'allocation_percentage'.tr,
                     controller: ctrl.allocationTEC,
@@ -267,7 +252,9 @@ class _NewBeneficiaryTab extends StatelessWidget {
           ),
           PAppSize.s8.verticalSpace,
           PGradientButton(
-            label: 'save_beneficiary'.tr,
+            label: ctrl.isEditingBeneficiary
+                ? 'save_changes'.tr
+                : 'save_beneficiary'.tr,
             showIcon: false,
             textColor: PAppColor.whiteColor,
             width: PDeviceUtil.getDeviceWidth(context),
@@ -276,8 +263,15 @@ class _NewBeneficiaryTab extends StatelessWidget {
                   false) {
                 final error = ctrl.commitNewBeneficiaryFromSheet();
                 if (error != null) {
+                  final title = switch (error) {
+                    'beneficiary_allocation_exceeds_msg' =>
+                      'beneficiary_allocation_exceeds_title'.tr,
+                    'beneficiary_relationship_required_msg' =>
+                      'beneficiary_relationship_required_title'.tr,
+                    _ => 'beneficiary_duplicate_title'.tr,
+                  };
                   PPopupDialog(context).warningMessage(
-                    title: 'beneficiary_duplicate_title'.tr,
+                    title: title,
                     message: error.tr,
                   );
                   return;
@@ -338,17 +332,43 @@ class _ExistingBeneficiariesTab extends StatelessWidget {
         ),
         PAppSize.s16.verticalSpace,
         Expanded(
-          child: Obx(
-            () => ListView.separated(
+          child: Obx(() {
+            final isLoading =
+                ctrl.loading.value == LoadingState.loading &&
+                ctrl.apiBeneficiaries.isEmpty;
+            final options = ctrl.existingBeneficiaries;
+            if (!isLoading && options.isEmpty) {
+              return Center(
+                child: Text(
+                  'no_existing_beneficiaries'.tr,
+                  textAlign: TextAlign.center,
+                  style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                    fontSize: PAppSize.s13,
+                    color: isDark ? PAppColor.fillColor2 : PAppColor.text500,
+                  ),
+                ),
+              );
+            }
+            return PShimmerListView<ExistingBeneficiaryOption>(
+              loading: isLoading,
+              items: options,
               padding: EdgeInsets.zero,
-              itemCount: ctrl.existingBeneficiaries.length,
+              placeholderCount: 4,
+              placeholderItem: const ExistingBeneficiaryOption(
+                id: '__placeholder__',
+                name: 'Beneficiary name',
+                relationship: 'Relationship',
+                dob: '',
+                phone: '',
+              ),
               separatorBuilder: (_, _) => PAppSize.s12.verticalSpace,
-              itemBuilder: (_, i) {
-                final option = ctrl.existingBeneficiaries[i];
-                return _ExistingBeneficiaryTile(option: option, ctrl: ctrl);
-              },
-            ),
-          ),
+              itemBuilder: (_, i, option) => _ExistingBeneficiaryTile(
+                key: isLoading ? ValueKey('shimmer-$i') : ValueKey(option.id),
+                option: option,
+                ctrl: ctrl,
+              ),
+            );
+          }),
         ),
         PAppSize.s8.verticalSpace,
         PGradientButton(
@@ -370,7 +390,11 @@ class _ExistingBeneficiariesTab extends StatelessWidget {
 class _ExistingBeneficiaryTile extends StatefulWidget {
   final ExistingBeneficiaryOption option;
   final PMVestVm ctrl;
-  const _ExistingBeneficiaryTile({required this.option, required this.ctrl});
+  const _ExistingBeneficiaryTile({
+    super.key,
+    required this.option,
+    required this.ctrl,
+  });
 
   @override
   State<_ExistingBeneficiaryTile> createState() =>
@@ -383,11 +407,11 @@ class _ExistingBeneficiaryTileState extends State<_ExistingBeneficiaryTile> {
   @override
   void initState() {
     super.initState();
-    final inProgress = widget.ctrl.existingAllocations[widget.option.id];
-    final committed = widget.ctrl.committedExistingAllocation(widget.option.id);
-    final initial = inProgress ?? (committed > 0 ? committed : null);
+    // Allocation is sourced from the backend's `percAlloc` and is read-only;
+    // ignore any in-progress / committed sheet state for the displayed value.
+    final backend = widget.option.percentageAllocation ?? 0;
     _allocationTEC = TextEditingController(
-      text: initial != null ? initial.toStringAsFixed(0) : '',
+      text: backend > 0 ? backend.toStringAsFixed(0) : '',
     );
   }
 
@@ -401,9 +425,7 @@ class _ExistingBeneficiaryTileState extends State<_ExistingBeneficiaryTile> {
   Widget build(BuildContext context) {
     final isDark = PHelperFunction.isDarkMode(context);
     return Obx(() {
-      final alreadyAdded = widget.ctrl.isExistingAlreadyAdded(
-        widget.option.id,
-      );
+      final alreadyAdded = widget.ctrl.isExistingAlreadyAdded(widget.option.id);
       final isSelected =
           !alreadyAdded && widget.ctrl.isExistingSelected(widget.option.id);
       final tile = Container(
@@ -456,41 +478,36 @@ class _ExistingBeneficiaryTileState extends State<_ExistingBeneficiaryTile> {
               child: PCustomTextField(
                 labelText: 'allocation_percentage'.tr,
                 controller: _allocationTEC,
-                // textAlign: TextAlign.center,
+                enabled: false,
                 labelFontSize: PAppSize.s12,
-                textInputType: const TextInputType.numberWithOptions(
-                  decimal: true,
-                ),
                 hintText: 'allocation_percentage'.tr,
-
-                onChanged: (v) {
-                  final stored = widget.ctrl.setExistingAllocation(
-                    widget.option.id,
-                    v,
-                  );
-                  final expected = stored > 0 ? stored.toStringAsFixed(0) : '';
-                  final typed = double.tryParse(v.trim()) ?? 0;
-                  if (typed > stored && expected != _allocationTEC.text) {
-                    _allocationTEC.value = TextEditingValue(
-                      text: expected,
-                      selection: TextSelection.collapsed(
-                        offset: expected.length,
-                      ),
-                    );
-                  }
-                },
               ),
             ),
           ],
         ),
       );
       if (alreadyAdded) {
-        return Opacity(
-          opacity: 0.5,
-          child: AbsorbPointer(child: tile),
-        );
+        return Opacity(opacity: 0.5, child: AbsorbPointer(child: tile));
       }
-      return tile;
+      // Allocation field is read-only, so tile body drives selection.
+      // Tapping toggles the backend's `percAlloc` into the in-progress map;
+      // an already-selected tile is cleared on tap.
+      return GestureDetector(
+        behavior: HitTestBehavior.opaque,
+        onTap: () {
+          if (isSelected) {
+            widget.ctrl.setExistingAllocation(widget.option.id, '');
+            return;
+          }
+          final allocation = widget.option.percentageAllocation ?? 0;
+          if (allocation <= 0) return;
+          widget.ctrl.setExistingAllocation(
+            widget.option.id,
+            allocation.toString(),
+          );
+        },
+        child: tile,
+      );
     });
   }
 }

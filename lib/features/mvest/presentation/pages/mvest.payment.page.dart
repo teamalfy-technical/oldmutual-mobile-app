@@ -2,12 +2,42 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:oldmutual_pensions_app/core/utils/utils.dart';
+import 'package:oldmutual_pensions_app/features/claims/claims.dart';
 import 'package:oldmutual_pensions_app/features/mvest/mvest.dart';
 import 'package:oldmutual_pensions_app/routes/app.pages.dart';
 import 'package:oldmutual_pensions_app/shared/shared.dart';
 
 class PMVestPaymentPage extends StatelessWidget {
-  const PMVestPaymentPage({super.key});
+  PMVestPaymentPage({super.key});
+
+  final PMVestVm ctrl = Get.isRegistered<PMVestVm>()
+      ? Get.find<PMVestVm>()
+      : Get.put(PMVestVm());
+
+  final PClaimsVm claimsCtrl = Get.isRegistered<PClaimsVm>()
+      ? Get.find<PClaimsVm>()
+      : Get.put(PClaimsVm());
+
+  /// Replaces the webview with the MVest success page once the payment
+  /// gateway reports success. Captures the contribution amount up front
+  /// because the success-page close handler resets the flow state.
+  void _onMVestPaymentSuccess(PClaimsVm claimsCtrl) {
+    final amount = double.tryParse(ctrl.contributionAmountTEC.text.trim()) ?? 0;
+    final formattedAmount = PFormatter.formatCurrency(amount: amount);
+    PHelperFunction.switchScreen(
+      destination: Routes.mvestSuccessPage,
+      popAndPush: true,
+      args: [
+        'payment_success_title'.tr,
+        'payment_success_msg'.trParams({'amount': '**$formattedAmount**'}),
+        () {
+          ctrl.resetInvestmentFlow();
+          claimsCtrl.onPaymentMethodChanged(null);
+          Get.until((route) => route.settings.name == Routes.mvestPage);
+        },
+      ],
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -68,11 +98,29 @@ class PMVestPaymentPage extends StatelessWidget {
                   showIcon: true,
                   iconDirection: IconDirection.right,
                   textColor: PAppColor.whiteColor,
+                  loading: ctrl.submitting.value,
                   width: PDeviceUtil.getDeviceWidth(context),
                   onTap: ctrl.selectedPaymentMethod.value != null
-                      ? () => PHelperFunction.switchScreen(
-                          destination: Routes.mvestMobileMoneyPage,
-                        )
+                      ? () async {
+                          final ok = await ctrl.submitAndInitiatePayment();
+                          if (!ok) return;
+                          final checkoutUrl =
+                              ctrl.paymentResponse.value?.checkoutUrl;
+                          if (checkoutUrl == null || checkoutUrl.isEmpty) {
+                            return;
+                          }
+                          PHelperFunction.switchScreen(
+                            destination: Routes.webviewPage,
+                            args: [
+                              'make_payment'.tr,
+                              checkoutUrl,
+                              () => _onMVestPaymentSuccess(claimsCtrl),
+                            ],
+                          );
+                        }
+                      // () => PHelperFunction.switchScreen(
+                      //     destination: Routes.mvestMobileMoneyPage,
+                      //   )
                       : null,
                 ),
               ),

@@ -14,7 +14,11 @@ class PSchemeDetailsPage extends StatefulWidget {
 }
 
 class _PSchemeDetailsPageState extends State<PSchemeDetailsPage> {
-  final ctrl = Get.put(PMVestVm());
+  // Reuse the existing VM across the onboarding flow rather than wiping
+  // collected state when the user navigates back to this page.
+  final ctrl = Get.isRegistered<PMVestVm>()
+      ? Get.find<PMVestVm>()
+      : Get.put(PMVestVm());
 
   @override
   void initState() {

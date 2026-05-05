@@ -80,7 +80,7 @@ class PMVestSuccessPage extends StatelessWidget {
                     children: [
                       _Row(
                         label: 'reference'.tr,
-                        value: _generatedReference(),
+                        value: _reference(),
                       ),
                       PAppSize.s14.verticalSpace,
                       _Row(
@@ -142,7 +142,12 @@ class PMVestSuccessPage extends StatelessWidget {
     return PFormatter.formatCurrency(amount: amount, useSpaceSeparator: false);
   }
 
-  String _generatedReference() {
+  /// Prefer the payment gateway's reference (Hubtel `clientReference`); fall
+  /// back to a client-side timestamp only if the response somehow didn't
+  /// surface one.
+  String _reference() {
+    final fromGateway = ctrl.paymentResponse.value?.clientReference;
+    if (fromGateway != null && fromGateway.isNotEmpty) return fromGateway;
     final ts = DateTime.now().millisecondsSinceEpoch.toRadixString(36);
     return 'SLAMS-${ts.toUpperCase()}';
   }

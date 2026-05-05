@@ -9,7 +9,13 @@ import 'package:oldmutual_pensions_app/shared/shared.dart';
 class PMVestBeneficiariesPage extends StatelessWidget {
   PMVestBeneficiariesPage({super.key});
 
-  final ctrl = Get.put(PMVestVm());
+  // Reuse the in-progress flow's VM if it's already registered (typical case:
+  // the user came from scheme-details). Only create a fresh one if this page
+  // is reached out-of-flow (e.g. deep link), so we never wipe collected
+  // state mid-onboarding.
+  final ctrl = Get.isRegistered<PMVestVm>()
+      ? Get.find<PMVestVm>()
+      : Get.put(PMVestVm());
 
   @override
   Widget build(BuildContext context) {
@@ -72,7 +78,10 @@ class PMVestBeneficiariesPage extends StatelessWidget {
                       padding: EdgeInsets.only(bottom: PAppSize.s12),
                       child: _BeneficiaryCard(
                         beneficiary: b,
-                        onEdit: () {},
+                        onEdit: () {
+                          ctrl.beginEditingBeneficiary(i);
+                          showAddBeneficiarySheet(context);
+                        },
                         onDelete: () => ctrl.removeBeneficiaryAt(i),
                       ),
                     );
@@ -110,19 +119,20 @@ class PMVestBeneficiariesPage extends StatelessWidget {
                 ),
               ),
               PAppSize.s12.verticalSpace,
-              Obx(
-                () => PGradientButton(
+              Obx(() {
+                final canContinue = ctrl.beneficiaries.isNotEmpty;
+                return PGradientButton(
                   label: 'continue'.tr,
                   showIcon: false,
                   textColor: PAppColor.whiteColor,
                   width: PDeviceUtil.getDeviceWidth(context),
-                  onTap: ctrl.beneficiaries.isNotEmpty
+                  onTap: canContinue
                       ? () => PHelperFunction.switchScreen(
                           destination: Routes.mvestReviewPage,
                         )
                       : null,
-                ),
-              ),
+                );
+              }),
             ],
           ),
         ),

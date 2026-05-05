@@ -17,7 +17,14 @@ import 'package:webview_flutter_wkwebview/webview_flutter_wkwebview.dart';
 class PWebView extends StatefulWidget {
   final String? title;
   final String? url;
-  const PWebView({super.key, this.url, this.title});
+
+  /// Invoked when the webview lands on a page whose body is a JSON payload
+  /// containing `data.message` — the success signal returned by the payment
+  /// gateway. When omitted, falls back to [PPaymentVm.navigateToSuccessPage]
+  /// so existing top-up callers behave as before.
+  final VoidCallback? onPaymentSuccess;
+
+  const PWebView({super.key, this.url, this.title, this.onPaymentSuccess});
 
   @override
   State<PWebView> createState() => _PWebViewState();
@@ -171,7 +178,11 @@ class _PWebViewState extends State<PWebView> {
       } else if (json is Map<String, dynamic> &&
           json.containsKey('data') &&
           json['data'].containsKey('message')) {
-        Get.find<PPaymentVm>().navigateToSuccessPage();
+        if (widget.onPaymentSuccess != null) {
+          widget.onPaymentSuccess!();
+        } else {
+          Get.find<PPaymentVm>().navigateToSuccessPage();
+        }
       }
     } catch (e) {
       pensionAppLogger.e("❌ Not valid JSON: $e");

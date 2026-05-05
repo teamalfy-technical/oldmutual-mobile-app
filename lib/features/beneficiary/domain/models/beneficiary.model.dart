@@ -29,15 +29,24 @@ class Beneficiary extends Equatable {
 
   Beneficiary.fromJson(Map<String, dynamic> json) {
     beneficiaryId = json['beneficiary_id'];
-    fullName = json['FullName'] ?? json['name'];
-    percAlloc = json['perc_alloc'] is String
-        ? double.tryParse(json['perc_alloc']) ??
-              json['percentage_allocation']?.toDouble()
-        : json['perc_alloc']?.toDouble() ??
-              json['percentage_allocation']?.toDouble();
+    final firstname = json['firstname'];
+    final otherName = json['OtherName'] ?? json['othername'];
+    final composed = [
+      firstname,
+      otherName,
+    ].whereType<String>().where((s) => s.isNotEmpty).join(' ');
+    fullName = json['FullName'] ?? json['name'] ??
+        (composed.isNotEmpty ? composed : null);
+    final rawPerc = json['perc_alloc'] ??
+        json['percentage_allocation'] ??
+        json['percentageAllocation'];
+    percAlloc = rawPerc is String
+        ? double.tryParse(rawPerc)
+        : (rawPerc as num?)?.toDouble();
     birthDate = json['birth_date'];
-    address = json['address'];
-    relationship = json['Relationship'] ?? json['relationship'];
+    address = json['address'] ?? json['beneficiaryContact'];
+    relationship =
+        json['Relationship'] ?? json['relationship'] ?? json['relation'];
     pensionTypeId = json['pension_type_id'];
     pensionTypeName = json['pension_type_name'];
     schemeId = json['scheme_id'];

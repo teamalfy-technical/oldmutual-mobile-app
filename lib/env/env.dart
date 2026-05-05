@@ -531,4 +531,32 @@ abstract class Env {
   static final String clearBookmarkedContents = _Env.clearBookmarkedContents;
 
   /// -------------------- Affluent Endpoints Ends Here ------------------------- ///
+  ///
+  /// -------------------- MVest Endpoints Starts Here ------------------------- ///
+
+  /// [CreateMVestAccount] endpoint
+  @EnviedField(defaultValue: '/mvest-account/create', obfuscate: true)
+  static final String createMVestAccount = _Env.createMVestAccount;
+
+  /// [AddMVestBeneficiary] endpoint
+  @EnviedField(defaultValue: '/mvest/add-beneficiary', obfuscate: true)
+  static final String addMVestBeneficiary = _Env.addMVestBeneficiary;
+
+  /// [DeleteMVestBeneficiary] endpoint — append `/{beneficiaryContact}`
+  @EnviedField(defaultValue: '/mvest/delete-beneficiary', obfuscate: true)
+  static final String deleteMVestBeneficiary = _Env.deleteMVestBeneficiary;
+
+  /// [GetMVestBeneficiaries] endpoint
+  @EnviedField(defaultValue: '/mvest/beneficiaries', obfuscate: true)
+  static final String getMVestBeneficiaries = _Env.getMVestBeneficiaries;
+
+  /// [UpdateMVestBeneficiary] endpoint — append `/{id}`
+  @EnviedField(defaultValue: '/mvest/update-beneficiary', obfuscate: true)
+  static final String updateMVestBeneficiary = _Env.updateMVestBeneficiary;
+
+  /// [InitiateMVestPayment] endpoint
+  @EnviedField(defaultValue: '/mvest/payment/initiate', obfuscate: true)
+  static final String initiateMVestPayment = _Env.initiateMVestPayment;
+
+  /// -------------------- MVest Endpoints Ends Here ------------------------- ///
 }

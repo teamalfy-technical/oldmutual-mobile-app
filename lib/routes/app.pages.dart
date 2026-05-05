@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
 import 'package:oldmutual_pensions_app/core/utils/utils.dart';
 import 'package:oldmutual_pensions_app/features/affluent/affluent.dart';
@@ -283,7 +284,14 @@ class AppPages {
     ),
     GetPage(
       name: _Paths.webviewPage,
-      page: () => PWebView(title: Get.arguments[0], url: Get.arguments[1]),
+      page: () {
+        final args = Get.arguments as List;
+        return PWebView(
+          title: args[0],
+          url: args[1],
+          onPaymentSuccess: args.length > 2 ? args[2] as VoidCallback? : null,
+        );
+      },
     ),
 
     /// --- Manage Feature Pages
@@ -356,10 +364,7 @@ class AppPages {
       page: () => PMVestBeneficiariesPage(),
     ),
     GetPage(name: _Paths.mvestReviewPage, page: () => const PMVestReviewPage()),
-    GetPage(
-      name: _Paths.mvestPaymentPage,
-      page: () => const PMVestPaymentPage(),
-    ),
+    GetPage(name: _Paths.mvestPaymentPage, page: () => PMVestPaymentPage()),
     GetPage(
       name: _Paths.mvestMobileMoneyPage,
       page: () => const PMVestMobileMoneyPage(),

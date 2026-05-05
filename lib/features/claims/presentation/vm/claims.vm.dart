@@ -11,8 +11,12 @@ class PClaimsVm extends GetxController {
 
   final claimFormKey = GlobalKey<FormState>();
 
-  final policyVm = Get.find<PPolicyVm>();
-  final policyStatementVm = Get.find<PPolicyStatementVm>();
+  final policyVm = Get.isRegistered<PPolicyVm>()
+      ? Get.find<PPolicyVm>()
+      : Get.put(PPolicyVm());
+  final policyStatementVm = Get.isRegistered<PPolicyStatementVm>()
+      ? Get.find<PPolicyStatementVm>()
+      : Get.put(PPolicyStatementVm());
 
   static const double instantClaimMaxAmount = 3000.00;
   static const double instantClaimChargeRate = 0.02;
