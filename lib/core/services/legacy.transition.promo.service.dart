@@ -16,15 +16,28 @@ class PLegacyTransitionPromoService {
   static const String _weekKey = 'legacy_transition_promo_week';
   static const String _yearKey = 'legacy_transition_promo_year';
   static const String _countKey = 'legacy_transition_promo_count';
+  static const String _lastShownKey = 'legacy_transition_promo_last_shown';
 
   /// Maximum displays per ISO week.
   static const int _maxPerWeek = 3;
 
+  /// Minimum days between consecutive displays.
+  static const int _minDaysBetweenShows = 1;
+
   final _storage = GetStorage();
 
-  /// Shows the promo dialog if the weekly cap hasn't been reached.
-  /// Increments the counter on display.
+  /// True while a promo dialog is on screen. Synchronous re-entry guard
+  /// for the window between deciding to show and actually awaiting the
+  /// dialog — without this, a rebuild storm could queue multiple dialogs
+  /// before the storage timestamp lands.
+  bool _isShowing = false;
+
+  /// Shows the promo dialog if the weekly cap hasn't been reached AND
+  /// at least [_minDaysBetweenShows] days have passed since the last
+  /// display. Increments the stored counter on display.
   Future<void> showIfEligible(BuildContext context) async {
+    if (_isShowing) return;
+
     final now = DateTime.now();
     final week = _isoWeekOfYear(now);
     final year = _isoWeekYear(now);
@@ -43,12 +56,30 @@ class PLegacyTransitionPromoService {
       return;
     }
 
-    if (!context.mounted) return;
-    await showLegacyTransitionPromoDialog(context);
+    final lastShownMs = _storage.read<int>(_lastShownKey);
+    if (lastShownMs != null) {
+      final lastShown = DateTime.fromMillisecondsSinceEpoch(lastShownMs);
+      final hoursSince = now.difference(lastShown).inHours;
+      if (hoursSince < _minDaysBetweenShows * 24) {
+        pensionAppLogger.i(
+          'Legacy promo skipped: only ${hoursSince}h since last show '
+          '(min ${_minDaysBetweenShows * 24}h)',
+        );
+        return;
+      }
+    }
 
+    if (!context.mounted) return;
+    _isShowing = true;
     _storage.write(_weekKey, week);
     _storage.write(_yearKey, year);
     _storage.write(_countKey, count + 1);
+    _storage.write(_lastShownKey, now.millisecondsSinceEpoch);
+    try {
+      await showLegacyTransitionPromoDialog(context);
+    } finally {
+      _isShowing = false;
+    }
   }
 
   /// ISO 8601 week number (1–53). Mirrors the algorithm used by most
