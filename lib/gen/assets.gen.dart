@@ -576,6 +576,10 @@ class $AssetsImagesGen {
   AssetGenImage get internationalTravelImg =>
       const AssetGenImage('assets/images/international.travel.img.png');
 
+  /// File path: assets/images/legacy.transition.png
+  AssetGenImage get legacyTransition =>
+      const AssetGenImage('assets/images/legacy.transition.png');
+
   /// File path: assets/images/light.blur.bg.png
   AssetGenImage get lightBlurBg =>
       const AssetGenImage('assets/images/light.blur.bg.png');
@@ -670,6 +674,7 @@ class $AssetsImagesGen {
     forgotDetailsImg,
     internationalTravelBg,
     internationalTravelImg,
+    legacyTransition,
     lightBlurBg,
     maskBg,
     mvestBg,
