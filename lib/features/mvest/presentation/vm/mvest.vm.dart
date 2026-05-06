@@ -531,9 +531,9 @@ class PMVestVm extends GetxController {
     result.fold(
       (err) {
         loading.value = LoadingState.error;
-        PPopupDialog(
-          _context,
-        ).errorMessage(title: err.title ?? 'error'.tr, message: err.message);
+        // PPopupDialog(
+        //   _context,
+        // ).errorMessage(title: err.title ?? 'error'.tr, message: err.message);
       },
       (res) {
         loading.value = LoadingState.completed;

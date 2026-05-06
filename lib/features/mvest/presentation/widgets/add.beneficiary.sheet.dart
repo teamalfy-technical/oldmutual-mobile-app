@@ -222,7 +222,10 @@ class _NewBeneficiaryTab extends StatelessWidget {
                     ),
                   ).onPressed(
                     onTap: () async {
-                      final date = await showDatePickerModal(context);
+                      final date = await showDatePickerModal(
+                        context,
+                        maximumDate: DateTime.now(),
+                      );
                       if (date != null) {
                         ctrl.dobTEC.text = DateFormat(
                           'dd-MM-yyyy',
@@ -270,10 +273,9 @@ class _NewBeneficiaryTab extends StatelessWidget {
                       'beneficiary_relationship_required_title'.tr,
                     _ => 'beneficiary_duplicate_title'.tr,
                   };
-                  PPopupDialog(context).warningMessage(
-                    title: title,
-                    message: error.tr,
-                  );
+                  PPopupDialog(
+                    context,
+                  ).warningMessage(title: title, message: error.tr);
                   return;
                 }
                 PHelperFunction.pop();
@@ -338,16 +340,7 @@ class _ExistingBeneficiariesTab extends StatelessWidget {
                 ctrl.apiBeneficiaries.isEmpty;
             final options = ctrl.existingBeneficiaries;
             if (!isLoading && options.isEmpty) {
-              return Center(
-                child: Text(
-                  'no_existing_beneficiaries'.tr,
-                  textAlign: TextAlign.center,
-                  style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                    fontSize: PAppSize.s13,
-                    color: isDark ? PAppColor.fillColor2 : PAppColor.text500,
-                  ),
-                ),
-              );
+              return PEmptyStateWidget(message: 'no_existing_beneficiaries'.tr);
             }
             return PShimmerListView<ExistingBeneficiaryOption>(
               loading: isLoading,
